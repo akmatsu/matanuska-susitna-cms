@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'sites/cms/**'
-      - 'packages/md-editor/**'
+      - 'apps/cms/**'
       - '.github/workflows/deploy-cms.yml'
 
 permissions:
@@ -53,7 +52,7 @@ jobs:
 
       - name: 'Create Env File'
         run: |
-          cat <<EOT > ./sites/cms/.env
+          cat <<EOT > ./apps/cms/.env
           NODE_ENV=production
           DATABASE=${{secrets.DB_NAME}}
           DATABASE_USER=${{secrets.DB_USER}}
@@ -102,7 +101,7 @@ jobs:
         run: pnpm run cms:build
 
       - name: Zip the required files
-        run: zip -rq --symlinks cms.zip ./sites/cms/ ./packages/md-editor/dist/ ./packages/md-editor/package.json ./node_modules/ ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./turbo.json ./.npmrc
+        run: zip -rq --symlinks cms.zip ./apps/cms/ ./packages/md-editor/dist/ ./packages/md-editor/package.json ./node_modules/ ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./turbo.json ./.npmrc
 
       - name: Upload zipped repo to server
         run: |
