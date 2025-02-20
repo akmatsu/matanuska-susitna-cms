@@ -16,7 +16,7 @@ export const processSchema = $node('process', (ctx) => ({
   toDOM: (node) => [
     'ol',
     {
-      class: 'process',
+      class: 'process list-none relative pl-6 py-4 [counter-reset:muffins]',
       start: node.attrs.order === 1 ? null : node.attrs.order,
       'data-spread': node.attrs.spread ? 'true' : 'false',
     },
