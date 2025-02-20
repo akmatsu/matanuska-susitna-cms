@@ -1,4 +1,5 @@
 // React imports
+'use client';
 import React from 'react';
 import { Milkdown, MilkdownProvider } from '@milkdown/react';
 import { ProsemirrorAdapterProvider } from '@prosemirror-adapter/react';
