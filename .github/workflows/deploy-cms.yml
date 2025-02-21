@@ -101,7 +101,7 @@ jobs:
         run: pnpm run cms:build
 
       - name: Zip the required files
-        run: zip -rq --symlinks cms.zip ./apps/cms/ ./packages/md-editor/dist/ ./packages/md-editor/package.json ./node_modules/ ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./turbo.json ./.npmrc
+        run: zip -rq --symlinks cms.zip ./apps/cms/ ./node_modules/ ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./turbo.json ./.npmrc
 
       - name: Upload zipped repo to server
         run: |
