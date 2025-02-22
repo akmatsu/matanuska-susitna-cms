@@ -1,4 +1,4 @@
-// admin/pages/custom-page.tsx
+import '../../src/styles/global.css';
 import { useEffect, useState } from 'react';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import { TYPESENSE_CLIENT } from '../../src/utils/typesense';
@@ -88,29 +88,35 @@ export default function CustomPage() {
   }
 
   return (
-    <PageContainer header="Typesense Management">
-      <h1>This is a custom Admin UI Page</h1>
+    <PageContainer header="Typesense">
+      <h1 className="text-4xl font-bold">Typesense</h1>
       {loading ? (
         <p>Checking Typesense health...</p>
       ) : health ? (
-        <p>Typesense is healthy</p>
+        <p className="flex items-center gap-2 mb-4">
+          <span className="font-bold">Typesense Status: </span>
+          <span>Typesense is healthy</span>
+          <span className="icon-[mdi--check-circle] text-green-700"></span>
+        </p>
       ) : (
         <p>Typesense is not healthy</p>
       )}
 
-      <Button onClick={createCollections} isLoading={createLoading}>
-        Create Collections
-      </Button>
+      <div className="flex gap-2">
+        <Button onClick={createCollections} isLoading={createLoading}>
+          Create Collections
+        </Button>
 
-      <Button onClick={removePagesCollection} isLoading={createLoading}>
-        Remove Pages Collection
-      </Button>
-      <Button onClick={importServices} isLoading={createLoading}>
-        Import Services
-      </Button>
-      <Button onClick={importCommunities} isLoading={createLoading}>
-        Import Communities
-      </Button>
+        <Button onClick={removePagesCollection} isLoading={createLoading}>
+          Remove Pages Collection
+        </Button>
+        <Button onClick={importServices} isLoading={createLoading}>
+          Import Services
+        </Button>
+        <Button onClick={importCommunities} isLoading={createLoading}>
+          Import Communities
+        </Button>
+      </div>
     </PageContainer>
   );
 }

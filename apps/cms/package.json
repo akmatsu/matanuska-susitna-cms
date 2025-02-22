@@ -40,6 +40,7 @@
     "passport": "^0.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
     "react-select": "^5.10.0",
     "remark-directive": "^3.0.1",
     "typesense": "^1.8.2"
