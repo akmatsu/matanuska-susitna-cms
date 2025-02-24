@@ -19,14 +19,14 @@
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@keystone-6/auth": "^8.1.0",
-    "@keystone-6/core": "^6.3.1",
+    "@keystone-6/core": "^6.4.0",
     "@keystone-6/fields-document": "^9.1.1",
     "@keystone-ui/button": "^7.0.2",
     "@keystone-ui/fields": "^7.2.0",
-    "@milkdown/crepe": "^7.5.7",
-    "@milkdown/kit": "^7.5.5",
-    "@milkdown/react": "^7.5.0",
-    "@milkdown/theme-nord": "^7.5.0",
+    "@milkdown/crepe": "^7.6.3",
+    "@milkdown/kit": "^7.6.3",
+    "@milkdown/react": "^7.6.3",
+    "@milkdown/theme-nord": "^7.6.3",
     "@prisma/client": "^5.22.0",
     "@prosemirror-adapter/react": "0.2.6",
     "@types/express-session": "^1.18.1",
@@ -46,7 +46,7 @@
     "typesense": "^1.8.2"
   },
   "devDependencies": {
-    "@iconify/json": "^2.2.306",
+    "@iconify/json": "^2.2.310",
     "@iconify/tailwind": "^1.2.0",
     "@tsconfig/next": "^2.0.3",
     "@tsconfig/node22": "^22.0.0",
