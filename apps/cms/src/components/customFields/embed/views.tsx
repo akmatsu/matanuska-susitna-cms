@@ -26,7 +26,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
         {field.description}
       </FieldDescription>
       <div className="flex w-full max-w-[382px] gap-4">
-        <code className="whitespace-pre w-full overflow-x-auto block bg-gray-100 p-2 rounded border border-gray-200">
+        <code className="whitespace-pre w-full overflow-x-auto block bg-gray-100 p-2 rounded-sm border border-gray-200">
           {embedHTML}
         </code>
         <Button

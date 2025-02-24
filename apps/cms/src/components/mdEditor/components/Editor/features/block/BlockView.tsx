@@ -56,11 +56,11 @@ export function BlockView() {
       ref={ref}
       className="absolute flex flex-col gap-2 transition-all data-[show=false]:opacity-0"
     >
-      <div className="h-auto w-auto p-1 bg-gray-200 rounded hover:bg-gray-300 shadow cursor-move transition-all flex flex-col justify-center">
+      <div className="h-auto w-auto p-1 bg-gray-200 rounded-sm hover:bg-gray-300 shadow-sm cursor-move transition-all flex flex-col justify-center">
         <span className="icon-[icon-park-outline--drag] size-4"></span>
       </div>
       <div
-        className="h-auto w-auto p-1 bg-gray-200 rounded hover:bg-gray-300 shadow cursor-pointer transition-all flex flex-col justify-center"
+        className="h-auto w-auto p-1 bg-gray-200 rounded-sm hover:bg-gray-300 shadow-sm cursor-pointer transition-all flex flex-col justify-center"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       >
