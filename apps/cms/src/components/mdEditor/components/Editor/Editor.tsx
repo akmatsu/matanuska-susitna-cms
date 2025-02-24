@@ -1,4 +1,3 @@
-// React imports
 'use client';
 import React from 'react';
 import { Milkdown, MilkdownProvider } from '@milkdown/react';
