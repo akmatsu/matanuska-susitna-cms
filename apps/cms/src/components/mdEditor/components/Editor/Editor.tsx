@@ -6,9 +6,6 @@ import { ProsemirrorAdapterProvider } from '@prosemirror-adapter/react';
 import { MdEditorProps } from './types';
 import { useEditorConfig } from './hooks';
 
-import '@milkdown/crepe/theme/common/style.css';
-import '@milkdown/crepe/theme/frame.css';
-
 export function Editor(props: MdEditorProps) {
   const { get } = useEditorConfig(props);
   return <Milkdown />;
