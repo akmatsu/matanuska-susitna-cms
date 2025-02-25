@@ -30,6 +30,19 @@ const CREATE_DOCUMENTS_MUTATION = gql`
         filesize
         url
       }
+      tags {
+        id
+        name
+      }
+    }
+  }
+`;
+
+const GET_TAGS_QUERY = gql`
+  query Tags {
+    tags {
+      id
+      name
     }
   }
 `;
@@ -46,6 +59,7 @@ const GET_DOCUMENT_COLLECTIONS_QUERY = gql`
 export default function BulkDocumentUpload() {
   const [uploadDocuments] = useMutation(CREATE_DOCUMENTS_MUTATION);
   const collections = useQuery(GET_DOCUMENT_COLLECTIONS_QUERY);
+  const tags = useQuery(GET_TAGS_QUERY);
   const [isDragging, setIsDragging] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const { addToast } = useToasts();
@@ -66,6 +80,9 @@ export default function BulkDocumentUpload() {
       id: string;
     }[]
   >([]);
+  const [selectedTags, setSelectedTags] = useState<
+    { id: string; name: string }[]
+  >([]);
 
   const allowedMimeTypes = [
     'application/pdf',
@@ -82,6 +99,7 @@ export default function BulkDocumentUpload() {
     uploadFiles(
       data.files,
       selectedCollections.map((c) => c.id),
+      selectedTags.map((t) => t.id),
     );
   };
 
@@ -99,7 +117,11 @@ export default function BulkDocumentUpload() {
     return true;
   }
 
-  async function uploadFiles(files?: FileList, collectionIds?: string[]) {
+  async function uploadFiles(
+    files?: FileList,
+    collectionIds?: string[],
+    tags?: string[],
+  ) {
     if (!files) return;
 
     const uploads = Array.from(files).map((file) => ({
@@ -113,6 +135,9 @@ export default function BulkDocumentUpload() {
               id: c,
             }))
           : [],
+      },
+      tags: {
+        connect: tags ? tags.map((t) => ({ id: t })) : [],
       },
     }));
 
@@ -203,6 +228,60 @@ export default function BulkDocumentUpload() {
                   )}
                 >
                   {collection.title}
+                </ListboxOption>
+              ))}
+            </ListboxOptions>
+          </Listbox>
+        </FieldContainer>
+        <FieldContainer>
+          <FieldLabel htmlFor="tags">Tags</FieldLabel>
+          <Listbox
+            value={selectedTags}
+            onChange={setSelectedTags}
+            multiple
+            name="tags"
+          >
+            <ListboxButton
+              id="tags"
+              className={clsx(
+                'flex h-9 w-80 items-center justify-between border bg-gray-50 px-2 hover:cursor-pointer hover:bg-gray-100',
+              )}
+            >
+              <div className="flex gap-1 overflow-auto py-2">
+                {selectedTags.map((t) => (
+                  <span className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap">
+                    {t.name}
+                  </span>
+                ))}
+              </div>
+              <div className="border-l pl-2">
+                <span
+                  className={clsx(
+                    'icon-[mdi--chevron-down] size-5 leading-5 data-[open]:rotate-180',
+                  )}
+                ></span>
+              </div>
+            </ListboxButton>
+
+            <ListboxOptions
+              transition
+              className={clsx(
+                'mt-2 flex max-h-[250px] w-[var(--button-width)] flex-col gap-1 overflow-auto rounded border bg-gray-50 p-2 shadow',
+                'transition duration-100 ease-in data-[closed]:opacity-0',
+              )}
+              anchor="bottom"
+            >
+              {tags.data?.tags.map((tag: { id: string; name: string }) => (
+                <ListboxOption
+                  key={tag.id}
+                  value={tag}
+                  className={clsx(
+                    'rounded p-1',
+                    'transition-colors duration-100 hover:cursor-pointer hover:bg-gray-100',
+                    'data-[selected]:bg-blue-100',
+                  )}
+                >
+                  {tag.name}
                 </ListboxOption>
               ))}
             </ListboxOptions>
