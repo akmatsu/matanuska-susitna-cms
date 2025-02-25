@@ -1,15 +1,23 @@
 import '../../src/styles/global.css';
-import { FieldContainer } from '@keystone-ui/fields';
+import { FieldContainer, FieldLabel } from '@keystone-ui/fields';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
-import { Button, Input } from '@headlessui/react';
+import {
+  Button,
+  Input,
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { gql, useMutation } from '@keystone-6/core/admin-ui/apollo';
+import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import { useRef, useState } from 'react';
 import { useToasts } from '@keystone-ui/toast';
 import clsx from 'clsx';
 
 type FormData = {
   files: FileList;
+  document_collection?: string[];
 };
 
 const CREATE_DOCUMENTS_MUTATION = gql`
@@ -26,8 +34,18 @@ const CREATE_DOCUMENTS_MUTATION = gql`
   }
 `;
 
+const GET_DOCUMENT_COLLECTIONS_QUERY = gql`
+  query Query {
+    documentCollections {
+      id
+      title
+    }
+  }
+`;
+
 export default function BulkDocumentUpload() {
   const [uploadDocuments] = useMutation(CREATE_DOCUMENTS_MUTATION);
+  const collections = useQuery(GET_DOCUMENT_COLLECTIONS_QUERY);
   const [isDragging, setIsDragging] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const { addToast } = useToasts();
@@ -42,6 +60,12 @@ export default function BulkDocumentUpload() {
   } = useForm<FormData>();
 
   const files = watch('files');
+  const [selectedCollections, setSelectedCollections] = useState<
+    {
+      title: string;
+      id: string;
+    }[]
+  >([]);
 
   const allowedMimeTypes = [
     'application/pdf',
@@ -55,11 +79,13 @@ export default function BulkDocumentUpload() {
   ];
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    uploadFiles(data.files);
+    uploadFiles(
+      data.files,
+      selectedCollections.map((c) => c.id),
+    );
   };
 
   function validateFiles(files: FileList) {
-    console.log('Validate');
     if (!files || files.length === 0) {
       console.log('no files');
       return 'Please upload a file';
@@ -73,13 +99,20 @@ export default function BulkDocumentUpload() {
     return true;
   }
 
-  async function uploadFiles(files?: FileList) {
+  async function uploadFiles(files?: FileList, collectionIds?: string[]) {
     if (!files) return;
 
     const uploads = Array.from(files).map((file) => ({
       title: file.name,
       file: {
         upload: file,
+      },
+      collections: {
+        connect: collectionIds
+          ? collectionIds.map((c) => ({
+              id: c,
+            }))
+          : [],
       },
     }));
 
@@ -118,6 +151,63 @@ export default function BulkDocumentUpload() {
         className="flex flex-col items-start gap-4"
         ref={formRef}
       >
+        <FieldContainer>
+          <FieldLabel htmlFor="document_collection">
+            Document Collections
+          </FieldLabel>
+
+          <Listbox
+            value={selectedCollections}
+            onChange={setSelectedCollections}
+            multiple
+            name="document_collection"
+          >
+            <ListboxButton
+              id="document_collection"
+              className={clsx(
+                'flex h-9 w-80 items-center justify-between border bg-gray-50 px-2 hover:cursor-pointer hover:bg-gray-100',
+              )}
+            >
+              <div className="flex gap-1 overflow-auto py-2">
+                {selectedCollections.map((c) => (
+                  <span className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap">
+                    {c.title}
+                  </span>
+                ))}
+              </div>
+              <div className="border-l pl-2">
+                <span
+                  className={clsx(
+                    'icon-[mdi--chevron-down] size-5 leading-5 data-[open]:rotate-180',
+                  )}
+                ></span>
+              </div>
+            </ListboxButton>
+
+            <ListboxOptions
+              transition
+              className={clsx(
+                'mt-2 flex max-h-[250px] w-[var(--button-width)] flex-col gap-1 overflow-auto rounded border bg-gray-50 p-2 shadow',
+                'transition duration-100 ease-in data-[closed]:opacity-0',
+              )}
+              anchor="bottom"
+            >
+              {collections.data?.documentCollections.map((collection: any) => (
+                <ListboxOption
+                  key={collection.id}
+                  value={collection}
+                  className={clsx(
+                    'rounded p-1',
+                    'transition-colors duration-100 hover:cursor-pointer hover:bg-gray-100',
+                    'data-[selected]:bg-blue-100',
+                  )}
+                >
+                  {collection.title}
+                </ListboxOption>
+              ))}
+            </ListboxOptions>
+          </Listbox>
+        </FieldContainer>
         <FieldContainer className="w-3xl max-w-full">
           <Input
             type="file"
@@ -186,7 +276,7 @@ export default function BulkDocumentUpload() {
             <span className="icon-[mdi--file-plus] size-20"></span>
             <p>Click or drop files to upload</p>
           </div>
-          <h4 className="text-2xl font-bold">Files</h4>
+          <p className="mt-4 font-bold">Selected Files</p>
           <ul>
             {files &&
               Array.from(files).map((file) => (
