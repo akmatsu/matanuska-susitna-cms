@@ -41,7 +41,7 @@ export function DocCollectionView() {
       {loading ? (
         <div>loading...</div>
       ) : data ? (
-        <div ref={contentRef} className="border shadow-sm overflow-hidden my-4">
+        <div ref={contentRef} className="border shadow-xs overflow-hidden my-4">
           <div className="flex p-2 bg-zinc-100 border-b justify-between">
             <span className="text-2xl">{data.documentCollection.title}</span>{' '}
             <a href={`/document-collections/${data.documentCollection.id}`}>

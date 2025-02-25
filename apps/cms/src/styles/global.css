@@ -1,6 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Disabled automatic source detection. */
+@import 'tailwindcss' important;
+@import './milkdown//style.css';
+@plugin '@iconify/tailwind4';
+@plugin '@tailwindcss/typography';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 .milkdown * {
   padding: unset;
@@ -9,7 +29,7 @@
 
 .card,
 .milkdown .card {
-  @apply bg-white drop-shadow-lg rounded p-2;
+  @apply rounded-sm bg-white p-2 drop-shadow-lg;
 }
 
 .icon,
@@ -58,7 +78,7 @@ button,
 .btn,
 .milkdown .btn,
 .milkdown button {
-  @apply px-2 py-1 rounded transition-colors flex justify-center items-center;
+  @apply flex items-center justify-center rounded-sm px-2 py-1 transition-colors;
   &.btn--default {
     @apply bg-gray-200 hover:bg-gray-300;
   }
@@ -68,13 +88,13 @@ button,
   }
 
   &.btn--icon {
-    @apply px-1 py-1 rounded-full;
+    @apply rounded-full px-1 py-1;
   }
 }
 
 .milkdown {
   .menu {
-    @apply bg-white drop-shadow-lg rounded flex flex-col min-w-52 data-[show=false]:hidden gap-2 p-2;
+    @apply flex min-w-52 flex-col gap-2 rounded-sm bg-white p-2 drop-shadow-lg data-[show=false]:hidden;
   }
 
   /* ICONS */
@@ -86,32 +106,32 @@ button,
       padding: 24px;
 
       h1 {
-        @apply text-6xl my-4 !important;
+        @apply my-4! text-6xl!;
       }
 
       h2 {
-        @apply text-5xl my-4  !important;
+        @apply my-4! text-5xl!;
       }
 
       h3 {
-        @apply text-4xl my-3  !important;
+        @apply my-3! text-4xl!;
       }
 
       h4 {
-        @apply text-3xl my-3  !important;
+        @apply my-3! text-3xl!;
       }
 
       h5 {
-        @apply text-2xl my-2  !important;
+        @apply my-2! text-2xl!;
       }
 
       h6 {
-        @apply text-xl my-2  !important;
+        @apply my-2! text-xl!;
       }
 
       p {
         &.primary-action {
-          @apply bg-blue-600 rounded text-white w-fit py-1 px-2 !important;
+          @apply w-fit! rounded-sm! bg-blue-600! px-2! py-1! text-white!;
         }
       }
     }

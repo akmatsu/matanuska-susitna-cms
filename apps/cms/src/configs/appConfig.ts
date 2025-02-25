@@ -1,6 +1,12 @@
 import 'dotenv/config';
 import { DatabaseProvider, StorageConfig } from '@keystone-6/core/types';
+
 export const baseURL = 'http://localhost:3333';
+
+export const PAGES = {
+  BULK_DOCUMENT_UPLOAD: '/bulk-document-upload',
+  TYPESENSE: '/typesense',
+};
 
 export const appConfig = {
   nodeEnv: process.env.NODE_ENV,

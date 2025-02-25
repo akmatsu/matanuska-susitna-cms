@@ -150,7 +150,7 @@ export function DocCollectionSearchView() {
           <ComboboxInput
             className={clsx(
               'w-full rounded-lg border-none  py-1.5 pr-8 pl-3 text-sm/6',
-              'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25',
+              'focus:outline-hidden data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25',
             )}
             displayValue={(collection?: { title: string; id: string }) =>
               collection?.title
@@ -173,7 +173,7 @@ export function DocCollectionSearchView() {
             <ComboboxOption
               key={collection.id}
               value={collection}
-              className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-[focus]:bg-blue-300"
+              className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-focus:bg-blue-300"
             >
               <div className="text-sm/6">{collection.title}</div>
             </ComboboxOption>

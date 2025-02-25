@@ -1,0 +1,42 @@
+@import '@milkdown/kit/prose/view/style/prosemirror.css';
+
+.milkdown {
+  --crepe-color-background: var(--color-white);
+  --crepe-color-on-background: var(--color-black);
+  --crepe-color-surface: var(--color-gray-50);
+  --crepe-color-surface-low: var(--color-gray-100);
+  --crepe-color-on-surface: var(--color-gray-900);
+  --crepe-color-on-surface-variant: var(--color-gray-800);
+  --crepe-color-outline: var(--color-gray-600);
+  --crepe-color-primary: var(--color-gray-700);
+  --crepe-color-secondary: var(--color-gray-500);
+  --crepe-color-on-secondary: var(--color-black);
+  --crepe-color-inverse: var(--color-gray-50);
+  --crepe-color-on-inverse: var(--color-gray-800);
+  --crepe-color-inline-code: var(--color-red-700);
+  --crepe-color-error: var(--color-red-700);
+  --crepe-color-hover: var(--color-gray-200);
+  --crepe-color-selected: var(--color-gray-300);
+  --crepe-color-inline-area: var(--color-gray-400);
+
+  --crepe-font-title: 'Noto Serif', Cambria, 'Times New Roman', Times, serif;
+  --crepe-font-default: 'Noto Sans', Arial, Helvetica, sans-serif;
+  --crepe-font-code:
+    'Space Mono', Fira Code, Menlo, Monaco, 'Courier New', Courier, monospace;
+
+  --crepe-shadow-1:
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+  --crepe-shadow-2:
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
+@import './block-edit.css';
+@import './code-mirror.css';
+@import './cursor.css';
+@import './image-block.css';
+@import './link-tooltip.css';
+@import './list-item.css';
+@import './placeholder.css';
+@import './table.css';
+@import './toolbar.css';
+@import './overrides.css';

@@ -1,4 +1,9 @@
-import { defaultValueCtx, Editor, rootCtx } from '@milkdown/kit/core';
+import {
+  defaultValueCtx,
+  Editor,
+  editorViewOptionsCtx,
+  rootCtx,
+} from '@milkdown/kit/core';
 import { MdEditorProps } from '../../types';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { commonmark } from '@milkdown/kit/preset/commonmark';
@@ -16,6 +21,12 @@ export function configureBaseFeatures(
 ) {
   editor
     .config((ctx) => {
+      // ctx.update(editorViewOptionsCtx, (prev) => ({
+      //   ...prev,
+      //   attributes: {
+      //     class: 'milkdown prose',
+      //   },
+      // }));
       ctx.set(rootCtx, root);
       ctx.set(defaultValueCtx, props.initialValue);
       ctx.get(listenerCtx).markdownUpdated((_, md) => {
