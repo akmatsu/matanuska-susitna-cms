@@ -337,6 +337,7 @@ input DocumentCollectionRelateToManyForCreateInput {
 type Contact {
   id: ID!
   name: String
+  title: String
   phone: String
   email: String
   primaryServices(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -361,6 +362,7 @@ input ContactWhereInput {
   NOT: [ContactWhereInput!]
   id: IDFilter
   name: StringFilter
+  title: StringNullableFilter
   phone: StringNullableFilter
   email: StringNullableFilter
   primaryServices: ServiceManyRelationFilter
@@ -395,6 +397,7 @@ input OrgUnitManyRelationFilter {
 input ContactOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  title: OrderDirection
   phone: OrderDirection
   email: OrderDirection
   editorNotes: OrderDirection
@@ -402,6 +405,7 @@ input ContactOrderByInput {
 
 input ContactUpdateInput {
   name: String
+  title: String
   phone: String
   email: String
   primaryServices: ServiceRelateToManyForUpdateInput
@@ -426,6 +430,7 @@ input ContactUpdateArgs {
 
 input ContactCreateInput {
   name: String
+  title: String
   phone: String
   email: String
   primaryServices: ServiceRelateToManyForCreateInput

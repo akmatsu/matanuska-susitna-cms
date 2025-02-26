@@ -59,24 +59,10 @@ export default function CustomPage() {
     }
   }
 
-  async function importServices() {
+  async function importPages(list: string) {
     try {
       setCreateLoading(true);
-      const res = fetch('/typesense/import-services', {
-        method: 'POST',
-      });
-      console.log(res);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setCreateLoading(false);
-    }
-  }
-
-  async function importCommunities() {
-    try {
-      setCreateLoading(true);
-      const res = fetch('/typesense/import-communities', {
+      const res = fetch(`/typesense/import-${list}`, {
         method: 'POST',
       });
       console.log(res);
@@ -90,17 +76,25 @@ export default function CustomPage() {
   return (
     <PageContainer header="Typesense">
       <h1 className="text-4xl font-bold">Typesense</h1>
-      {loading ? (
-        <p>Checking Typesense health...</p>
-      ) : health ? (
-        <p className="flex items-center gap-2 mb-4">
-          <span className="font-bold">Typesense Status: </span>
-          <span>Typesense is healthy</span>
-          <span className="icon-[mdi--check-circle] text-green-700"></span>
-        </p>
-      ) : (
-        <p>Typesense is not healthy</p>
-      )}
+      <p className="mb-4 flex items-center gap-2">
+        <span className="font-bold">Typesense Status: </span>
+        {loading ? (
+          <>
+            <span>Checking Typesense health</span>
+            <span className="icon-[mdi--loading] animate-spin"></span>
+          </>
+        ) : health ? (
+          <>
+            <span>Typesense is healthy</span>
+            <span className="icon-[mdi--check-circle] text-green-700"></span>
+          </>
+        ) : (
+          <>
+            <span>Typesense is not healthy</span>
+            <span className="icon-[mdi--alert-circle] text-red-700"></span>
+          </>
+        )}
+      </p>
 
       <div className="flex gap-2">
         <Button onClick={createCollections} isLoading={createLoading}>
@@ -110,11 +104,23 @@ export default function CustomPage() {
         <Button onClick={removePagesCollection} isLoading={createLoading}>
           Remove Pages Collection
         </Button>
-        <Button onClick={importServices} isLoading={createLoading}>
+        <Button
+          onClick={() => importPages('services')}
+          isLoading={createLoading}
+        >
           Import Services
         </Button>
-        <Button onClick={importCommunities} isLoading={createLoading}>
+        <Button
+          onClick={() => importPages('communities')}
+          isLoading={createLoading}
+        >
           Import Communities
+        </Button>
+        <Button
+          onClick={() => importPages('departments')}
+          isLoading={createLoading}
+        >
+          Import Departments
         </Button>
       </div>
     </PageContainer>
