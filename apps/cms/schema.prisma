@@ -49,6 +49,7 @@ model UserGroup {
 model Contact {
   id              String      @id @default(cuid())
   name            String      @default("")
+  title           String?
   phone           String?
   email           String?
   primaryServices Service[]   @relation("Service_primaryContact")

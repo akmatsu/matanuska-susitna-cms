@@ -36,6 +36,14 @@ export const Contact: ListConfig<any> = list({
         isRequired: true,
       },
     }),
+    title: text({
+      validation: {
+        isRequired: false,
+      },
+      db: {
+        isNullable: true,
+      },
+    }),
     phone: text({
       validation: {
         match: {
