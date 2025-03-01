@@ -3,12 +3,8 @@ import { config } from '@keystone-6/core';
 import { lists } from './src/app';
 import { TypeInfo } from '.keystone/types';
 import { appConfig } from './src/configs/appConfig';
-import {
-  type Session,
-  passportMiddleware,
-  setupAzureADClient,
-  session,
-} from './src/auth';
+import { type Session } from './src/session';
+
 import {
   COLLECTIONS,
   TYPESENSE_CLIENT,
@@ -18,6 +14,7 @@ import { json } from 'express';
 import { serviceToSearchableObj } from './src/app/models/Service';
 import { toSearchableObj } from './src/app/models/Community';
 import { orgUnitToSearchableObj } from './src/app/models/OrgUnit';
+import { nextAuthSessionStrategy } from './src/session';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -45,8 +42,6 @@ export default config<TypeInfo<Session>>({
     },
     maxFileSize: 500 * 1024 * 124,
     async extendExpressApp(app, commonContext) {
-      await setupAzureADClient();
-      app.use(passportMiddleware(commonContext));
       app.use(json());
       app.post('/typesense/create-collections', async (req, res) => {
         try {
@@ -203,7 +198,7 @@ export default config<TypeInfo<Session>>({
   },
 
   // https://keystonejs.com/docs/config/session
-  session,
+  session: nextAuthSessionStrategy,
 
   // https://keystonejs.com/docs/guides/images-and-files
   storage: appConfig.storage,
@@ -213,23 +208,25 @@ export default config<TypeInfo<Session>>({
 
   // https://keystonejs.com/docs/config/config#ui
   ui: {
+    publicPages: [
+      '/api/auth/csrf',
+      '/api/auth/signin',
+      '/api/auth/callback',
+      '/api/auth/session',
+      '/api/auth/providers',
+      '/api/auth/signout',
+      '/api/auth/error',
+
+      // each provider will need a separate callback and signin page listed here
+      '/api/auth/signin/azure-ad',
+    ],
     async pageMiddleware({ wasAccessAllowed, context }) {
       if (wasAccessAllowed) {
-        const user = await context.prisma.user.findUnique({
-          where: { id: context.session?.id },
-        });
-
-        if (user) {
-          context.sessionStrategy?.start({
-            context,
-            data: user,
-          });
-          return;
-        }
+        return;
       } else {
         return {
           kind: 'redirect',
-          to: '/auth/azure',
+          to: '/api/auth/signin',
         };
       }
     },
