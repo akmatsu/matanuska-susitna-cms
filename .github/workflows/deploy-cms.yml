@@ -63,6 +63,7 @@ jobs:
           DATABASE_PROTOCOL=postgres
           WEB_PORT=3333
           ORIGIN_HOST=https://www.matsu.gov
+          NEXTAUTH_URL=https://cms.matsu.gov
           SESSION_SECRET=${{secrets.SESSION_SECRET}}
           AD_TENANT_ID=${{secrets.AD_TENANT_ID}}
           AD_CLIENT_ID=${{secrets.AD_CLIENT_ID}}
