@@ -42,8 +42,7 @@ export default config<TypeInfo<Session>>({
     },
     maxFileSize: 500 * 1024 * 124,
     async extendExpressApp(app, commonContext) {
-      app.use(json());
-      app.post('/typesense/create-collections', async (req, res) => {
+      app.post('/typesense/create-collections', json(), async (req, res) => {
         try {
           await Promise.all(
             COLLECTIONS.map(async (collection) => {
@@ -69,7 +68,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/remove-collection', async (req, res) => {
+      app.post('/typesense/remove-collection', json(), async (req, res) => {
         try {
           const collection: string = req.body.collection;
 
@@ -94,7 +93,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/import-services', async (_, res) => {
+      app.post('/typesense/import-services', json(), async (_, res) => {
         try {
           const services = await commonContext.prisma.service.findMany({
             select: {
@@ -124,7 +123,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/import-communities', async (_, res) => {
+      app.post('/typesense/import-communities', json(), async (_, res) => {
         try {
           const communities = await commonContext.prisma.community.findMany({
             select: {
@@ -158,7 +157,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/import-departments', async (_, res) => {
+      app.post('/typesense/import-departments', json(), async (_, res) => {
         try {
           const departments = await commonContext.prisma.orgUnit.findMany({
             select: {
@@ -219,6 +218,7 @@ export default config<TypeInfo<Session>>({
 
       // each provider will need a separate callback and signin page listed here
       '/api/auth/signin/azure-ad',
+      '/api/auth/callback/azure-ad',
     ],
     async pageMiddleware({ wasAccessAllowed, context }) {
       if (wasAccessAllowed) {

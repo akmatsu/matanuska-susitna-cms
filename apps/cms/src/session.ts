@@ -1,11 +1,6 @@
 import { Context } from '@keystone-6/core/admin-ui/apollo';
 import { getContext } from '@keystone-6/core/context';
-import {
-  AuthOptions,
-  DefaultSession,
-  DefaultUser,
-  getServerSession,
-} from 'next-auth';
+import { AuthOptions, DefaultSession, getServerSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';
 import AzureADProvider from 'next-auth/providers/azure-ad';
 
@@ -30,7 +25,6 @@ export const nextAuthOptions: AuthOptions = {
 
   callbacks: {
     async signIn({ user }) {
-      console.log('RAN SIGN IN', user);
       const sudoContext = (await getKeystoneContext()).sudo();
 
       const u = await sudoContext.query.User.findOne({
@@ -56,7 +50,6 @@ export const nextAuthOptions: AuthOptions = {
       session: DefaultSession;
       token: DefaultJWT;
     }) {
-      console.log('RAN SESSION', session, token);
       return {
         ...session,
         keystone: {
@@ -86,11 +79,9 @@ export type Session = {
 
 export const nextAuthSessionStrategy = {
   async get({ context }: { context: Context }) {
-    console.log('RAN GET');
     const { req, res } = context;
     const { headers } = req ?? {};
     if (!headers?.cookie || !res) {
-      console.log('NO COOKIE');
       return;
     }
 
@@ -108,13 +99,13 @@ export const nextAuthSessionStrategy = {
       nextAuthOptions,
     );
     if (!nextAuthSession) {
-      console.log('NO NEXT AUTH SESSION');
+      console.warn('NO NEXT AUTH SESSION');
       return;
     }
 
     const { authId } = nextAuthSession.keystone;
     if (!authId) {
-      console.log('NO AUTH ID');
+      console.warn('NO AUTH ID');
       return;
     }
 
@@ -122,7 +113,7 @@ export const nextAuthSessionStrategy = {
       where: { authId },
     });
     if (!user) {
-      console.log('NO USER');
+      console.warn('NO USER');
       return;
     }
 
