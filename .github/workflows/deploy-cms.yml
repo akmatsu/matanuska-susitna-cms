@@ -53,7 +53,6 @@ jobs:
       - name: 'Create Env File'
         run: |
           cat <<EOT > ./apps/cms/.env
-          NODE_ENV=production
           DATABASE=${{secrets.DB_NAME}}
           DATABASE_USER=${{secrets.DB_USER}}
           DATABASE_HOST=${{secrets.DB_HOST}}
