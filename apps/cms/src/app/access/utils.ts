@@ -59,20 +59,20 @@ export const elevatedOperationAccess: Operation = {
  * create, update, and delete to {@link isAdmin|Admins}.
  */
 export const internalMaxOperationAccess: Operation = {
-  query: ({ session }) => isContributor(session),
-  create: ({ session }) => isAdmin(session),
-  update: ({ session }) => isAdmin(session),
-  delete: ({ session }) => isAdmin(session),
+  query: isContributor,
+  create: isAdmin,
+  update: isAdmin,
+  delete: isAdmin,
 };
 
 /**
  * Limits all operations to {@link isAdmin|Admins} only.
  */
 export const adminOnlyOperationAccess: Operation = {
-  query: ({ session }) => isAdmin(session),
-  create: ({ session }) => isAdmin(session),
-  update: ({ session }) => isAdmin(session),
-  delete: ({ session }) => isAdmin(session),
+  query: isAdmin,
+  create: isAdmin,
+  update: isAdmin,
+  delete: isAdmin,
 };
 
 /**
@@ -82,7 +82,7 @@ export const adminOnlyOperationAccess: Operation = {
  * 3. {@link belongsToGroup|Group Members} can update and delete
  */
 export const generalItemAccess: Item = {
-  update: async ({ session, item, context }) =>
+  update: async (args) =>
     isContentManager(session) ||
     isOwner(session, item) ||
     belongsToGroup(session, item, context, 'Service'),

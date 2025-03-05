@@ -3,14 +3,17 @@ import { password, relationship, select, text } from '@keystone-6/core/fields';
 import { timestamps } from '../fieldUtils';
 import { isAdmin, ROLES } from '../access/roles';
 import { internalMaxOperationAccess } from '../access';
+import { allowAll } from '@keystone-6/core/access';
 
 export const User: ListConfig<any> = list({
   access: {
     operation: internalMaxOperationAccess,
   },
+
   ui: {
     hideCreate: true,
-    isHidden: ({ session }) => !isAdmin(session),
+    isHidden: async ({ session, context }) =>
+      !(await isAdmin(session, context)),
   },
   fields: {
     authId: text({
