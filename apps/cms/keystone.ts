@@ -3,12 +3,8 @@ import { config } from '@keystone-6/core';
 import { lists } from './src/app';
 import { TypeInfo } from '.keystone/types';
 import { appConfig } from './src/configs/appConfig';
-import {
-  type Session,
-  passportMiddleware,
-  setupAzureADClient,
-  session,
-} from './src/auth';
+import { type Session } from './src/session';
+
 import {
   COLLECTIONS,
   TYPESENSE_CLIENT,
@@ -18,6 +14,7 @@ import { json } from 'express';
 import { serviceToSearchableObj } from './src/app/models/Service';
 import { toSearchableObj } from './src/app/models/Community';
 import { orgUnitToSearchableObj } from './src/app/models/OrgUnit';
+import { nextAuthSessionStrategy } from './src/session';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -45,10 +42,7 @@ export default config<TypeInfo<Session>>({
     },
     maxFileSize: 500 * 1024 * 124,
     async extendExpressApp(app, commonContext) {
-      await setupAzureADClient();
-      app.use(passportMiddleware(commonContext));
-      app.use(json());
-      app.post('/typesense/create-collections', async (req, res) => {
+      app.post('/typesense/create-collections', json(), async (req, res) => {
         try {
           await Promise.all(
             COLLECTIONS.map(async (collection) => {
@@ -74,7 +68,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/remove-collection', async (req, res) => {
+      app.post('/typesense/remove-collection', json(), async (req, res) => {
         try {
           const collection: string = req.body.collection;
 
@@ -99,7 +93,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/import-services', async (_, res) => {
+      app.post('/typesense/import-services', json(), async (_, res) => {
         try {
           const services = await commonContext.prisma.service.findMany({
             select: {
@@ -129,7 +123,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/import-communities', async (_, res) => {
+      app.post('/typesense/import-communities', json(), async (_, res) => {
         try {
           const communities = await commonContext.prisma.community.findMany({
             select: {
@@ -163,7 +157,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
-      app.post('/typesense/import-departments', async (_, res) => {
+      app.post('/typesense/import-departments', json(), async (_, res) => {
         try {
           const departments = await commonContext.prisma.orgUnit.findMany({
             select: {
@@ -203,7 +197,7 @@ export default config<TypeInfo<Session>>({
   },
 
   // https://keystonejs.com/docs/config/session
-  session,
+  session: nextAuthSessionStrategy,
 
   // https://keystonejs.com/docs/guides/images-and-files
   storage: appConfig.storage,
@@ -213,23 +207,26 @@ export default config<TypeInfo<Session>>({
 
   // https://keystonejs.com/docs/config/config#ui
   ui: {
+    publicPages: [
+      '/api/auth/csrf',
+      '/api/auth/signin',
+      '/api/auth/callback',
+      '/api/auth/session',
+      '/api/auth/providers',
+      '/api/auth/signout',
+      '/api/auth/error',
+
+      // each provider will need a separate callback and signin page listed here
+      '/api/auth/signin/azure-ad',
+      '/api/auth/callback/azure-ad',
+    ],
     async pageMiddleware({ wasAccessAllowed, context }) {
       if (wasAccessAllowed) {
-        const user = await context.prisma.user.findUnique({
-          where: { id: context.session?.id },
-        });
-
-        if (user) {
-          context.sessionStrategy?.start({
-            context,
-            data: user,
-          });
-          return;
-        }
+        return;
       } else {
         return {
           kind: 'redirect',
-          to: '/auth/azure',
+          to: '/api/auth/signin',
         };
       }
     },

@@ -1,26 +1,32 @@
-import { KeystoneContext } from '@keystone-6/core/types';
-import { Session } from '../../auth';
+import { BaseListTypeInfo, KeystoneContext } from '@keystone-6/core/types';
+import { BaseAccessArgs, findUser } from './roles';
 
 /**
  * Checks if the user is the owner of the item.
  */
-export function isOwner(user: Session, item: any) {
-  return user.id === item.ownerId;
+export async function isOwner(
+  args: BaseAccessArgs<BaseListTypeInfo>,
+): Promise<boolean> {
+  const user = await findUser(args);
+  if (!user) return false;
+
+  return user.id === args.item.ownerId;
 }
 
 /**
  * Checks if the user belongs to any groups that have access to the given item.
  */
 export async function belongsToGroup(
-  user: Session,
-  item: any,
-  context: KeystoneContext,
+  args: BaseAccessArgs<BaseListTypeInfo>,
   listKey: string,
 ): Promise<boolean> {
+  const user = await findUser(args);
+  if (!user) return false;
+
   const [userGroups, ownedGroups, itemGroups] = await Promise.all([
-    getActiveUserGroups(user.id, context),
-    getActiveUserOwnedGroups(user.id, context),
-    getItemsGroups(item.id, listKey, context),
+    getActiveUserGroups(user.id.toString(), args.context),
+    getActiveUserOwnedGroups(user.id.toString(), args.context),
+    getItemsGroups(args.item.id, listKey, args.context),
   ]);
 
   const combinedGroups = [...userGroups, ...ownedGroups];

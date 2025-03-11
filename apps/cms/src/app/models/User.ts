@@ -8,9 +8,10 @@ export const User: ListConfig<any> = list({
   access: {
     operation: internalMaxOperationAccess,
   },
+
   ui: {
     hideCreate: true,
-    isHidden: ({ session }) => !isAdmin(session),
+    isHidden: async (args) => !(await isAdmin(args)),
   },
   fields: {
     authId: text({

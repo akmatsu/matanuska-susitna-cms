@@ -7,7 +7,12 @@ import {
   BaseListTypeInfo,
   ListOperationAccessControl,
 } from '@keystone-6/core/types';
-import { isAdmin, isContentManager, isContributor } from './roles';
+import {
+  BaseAccessArgs,
+  isAdmin,
+  isContentManager,
+  isContributor,
+} from './roles';
 import { belongsToGroup, isOwner } from './group';
 import 'dotenv/config';
 
@@ -38,9 +43,9 @@ type Filter = {
  */
 export const generalOperationAccess: Operation = {
   query: () => true,
-  create: ({ session }) => isContributor(session),
-  update: ({ session }) => isContributor(session),
-  delete: ({ session }) => isContributor(session),
+  create: isContributor,
+  update: isContributor,
+  delete: isContributor,
 };
 
 /**
@@ -49,9 +54,9 @@ export const generalOperationAccess: Operation = {
  */
 export const elevatedOperationAccess: Operation = {
   query: () => true,
-  create: ({ session }) => isContentManager(session),
-  update: ({ session }) => isContentManager(session),
-  delete: ({ session }) => isContentManager(session),
+  create: isContentManager,
+  update: isContentManager,
+  delete: isContentManager,
 };
 
 /**
@@ -59,20 +64,20 @@ export const elevatedOperationAccess: Operation = {
  * create, update, and delete to {@link isAdmin|Admins}.
  */
 export const internalMaxOperationAccess: Operation = {
-  query: ({ session }) => isContributor(session),
-  create: ({ session }) => isAdmin(session),
-  update: ({ session }) => isAdmin(session),
-  delete: ({ session }) => isAdmin(session),
+  query: isContributor,
+  create: isAdmin,
+  update: isAdmin,
+  delete: isAdmin,
 };
 
 /**
  * Limits all operations to {@link isAdmin|Admins} only.
  */
 export const adminOnlyOperationAccess: Operation = {
-  query: ({ session }) => isAdmin(session),
-  create: ({ session }) => isAdmin(session),
-  update: ({ session }) => isAdmin(session),
-  delete: ({ session }) => isAdmin(session),
+  query: isAdmin,
+  create: isAdmin,
+  update: isAdmin,
+  delete: isAdmin,
 };
 
 /**
@@ -82,22 +87,18 @@ export const adminOnlyOperationAccess: Operation = {
  * 3. {@link belongsToGroup|Group Members} can update and delete
  */
 export const generalItemAccess: Item = {
-  update: async ({ session, item, context }) =>
-    isContentManager(session) ||
-    isOwner(session, item) ||
-    belongsToGroup(session, item, context, 'Service'),
+  update: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
+    isContentManager(args) || isOwner(args) || belongsToGroup(args, 'Service'),
 
-  delete: async ({ session, item, context }) =>
-    isContentManager(session) ||
-    isOwner(session, item) ||
-    belongsToGroup(session, item, context, 'Service'),
-};
+  delete: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
+    isContentManager(args) || isOwner(args) || belongsToGroup(args, 'Service'),
+} satisfies Item;
 
 /**
  * Filters out unpublished items from query results from public requests.
  */
 export const filterByPubDates: Filter = {
-  query: async ({ session }) => {
+  query: async ({ session }: BaseAccessArgs<BaseListTypeInfo>) => {
     if (session) return {};
     return {
       AND: [
