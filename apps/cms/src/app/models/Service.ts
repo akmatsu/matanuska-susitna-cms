@@ -133,6 +133,37 @@ export const Service: ListConfig<any> = list({
         hideCreate: true,
       },
     }),
+    trails: relationship({
+      ref: 'Trail.services',
+      many: true,
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        hideCreate: true,
+      },
+    }),
+    parks: relationship({
+      ref: 'Park.services',
+      many: true,
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        hideCreate: true,
+      },
+    }),
+    facilities: relationship({
+      ref: 'Facility.services',
+      many: true,
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        hideCreate: true,
+      },
+    }),
+
     ...timestamps,
     editorNotes: text({
       ui: {

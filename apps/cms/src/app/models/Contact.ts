@@ -89,6 +89,21 @@ export const Contact: ListConfig<any> = list({
       many: true,
       ui: { hideCreate: true },
     }),
+    facilities: relationship({
+      ref: 'Facility.contacts',
+      many: true,
+      ui: { hideCreate: true },
+    }),
+    parks: relationship({
+      ref: 'Park.contacts',
+      many: true,
+      ui: { hideCreate: true },
+    }),
+    trails: relationship({
+      ref: 'Trail.contacts',
+      many: true,
+      ui: { hideCreate: true },
+    }),
     user: relationship({ ref: 'User.contact', ui: { hideCreate: true } }),
     editorNotes: text({
       ui: {

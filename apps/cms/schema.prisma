@@ -12,55 +12,6 @@ generator client {
   provider      = "prisma-client-js"
 }
 
-model User {
-  id                            String               @id @default(cuid())
-  authId                        String               @unique @default("")
-  name                          String               @default("")
-  email                         String               @unique @default("")
-  password                      String?
-  contact                       Contact?             @relation("Contact_user")
-  role                          Int?                 @default(4)
-  groups                        UserGroup[]          @relation("User_groups")
-  createdAt                     DateTime?            @default(now())
-  updatedAt                     DateTime?            @default(now()) @updatedAt
-  from_UserGroup_owner          UserGroup[]          @relation("UserGroup_owner")
-  from_Service_owner            Service[]            @relation("Service_owner")
-  from_Community_owner          Community[]          @relation("Community_owner")
-  from_AssemblyDistrict_owner   AssemblyDistrict[]   @relation("AssemblyDistrict_owner")
-  from_DocumentCollection_owner DocumentCollection[] @relation("DocumentCollection_owner")
-  from_ApiKey_user              ApiKey[]             @relation("ApiKey_user")
-  from_OrgUnit_owner            OrgUnit[]            @relation("OrgUnit_owner")
-}
-
-model UserGroup {
-  id                  String               @id @default(cuid())
-  name                String               @default("")
-  owner               User?                @relation("UserGroup_owner", fields: [ownerId], references: [id])
-  ownerId             String?              @map("owner")
-  description         String               @default("")
-  users               User[]               @relation("User_groups")
-  services            Service[]            @relation("Service_userGroups")
-  communities         Community[]          @relation("Community_userGroups")
-  documentCollections DocumentCollection[] @relation("DocumentCollection_userGroups")
-
-  @@index([ownerId])
-}
-
-model Contact {
-  id              String      @id @default(cuid())
-  name            String      @default("")
-  title           String?
-  phone           String?
-  email           String?
-  primaryServices Service[]   @relation("Service_primaryContact")
-  services        Service[]   @relation("Contact_services")
-  communities     Community[] @relation("Community_contacts")
-  orgUnits        OrgUnit[]   @relation("Contact_orgUnits")
-  user            User?       @relation("Contact_user", fields: [userId], references: [id])
-  userId          String?     @unique @map("user")
-  editorNotes     String      @default("")
-}
-
 model Alert {
   id          String    @id @default(cuid())
   title       String    @default("")
@@ -71,44 +22,40 @@ model Alert {
   editorNotes String    @default("")
 }
 
-model Tag {
-  id                  String               @id @default(cuid())
-  name                String               @default("")
-  services            Service[]            @relation("Service_tags")
-  communities         Community[]          @relation("Community_tags")
-  documents           Document[]           @relation("Document_tags")
-  images              Image[]              @relation("Image_tags")
-  documentCollections DocumentCollection[] @relation("DocumentCollection_tags")
-  orgUnits            OrgUnit[]            @relation("OrgUnit_tags")
+model ApiKey {
+  id          String   @id @default(cuid())
+  name        String   @default("")
+  description String   @default("")
+  token       String   @unique @default("")
+  user        User?    @relation("ApiKey_user", fields: [userId], references: [id])
+  userId      String?  @map("user")
+  expiresAt   DateTime
+
+  @@index([userId])
 }
 
-model Service {
-  id               String      @id @default(cuid())
-  title            String      @default("")
-  description      String      @default("")
-  publishAt        DateTime?
-  unpublishAt      DateTime?
-  reviewDate       DateTime?
-  slug             String      @unique @default("")
-  owner            User?       @relation("Service_owner", fields: [ownerId], references: [id])
-  ownerId          String?     @map("owner")
-  body             String?
-  actionLabel      String?
-  actionUrl        String?
-  tags             Tag[]       @relation("Service_tags")
-  userGroups       UserGroup[] @relation("Service_userGroups")
-  primaryContact   Contact?    @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
-  primaryContactId String?     @map("primaryContact")
-  contacts         Contact[]   @relation("Contact_services")
-  communities      Community[] @relation("Community_services")
-  orgUnits         OrgUnit[]   @relation("OrgUnit_services")
-  createdAt        DateTime?   @default(now())
-  updatedAt        DateTime?   @default(now()) @updatedAt
-  editorNotes      String      @default("")
+model AssemblyDistrict {
+  id                       String      @id @default(cuid())
+  title                    String      @default("")
+  description              String      @default("")
+  slug                     String      @unique @default("")
+  owner                    User?       @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
+  ownerId                  String?     @map("owner")
+  photo                    Image?      @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
+  photoId                  String?     @map("photo")
+  memberName               String      @default("")
+  bio                      String      @default("")
+  address                  String      @default("")
+  email                    String?
+  phone                    String?
+  fax                      String?
+  termStart                DateTime?
+  termEnd                  DateTime?
+  from_Community_districts Community[] @relation("Community_districts")
 
   @@index([title])
   @@index([ownerId])
-  @@index([primaryContactId])
+  @@index([photoId])
 }
 
 model Community {
@@ -135,28 +82,69 @@ model Community {
   @@index([ownerId])
 }
 
-model AssemblyDistrict {
-  id                       String      @id @default(cuid())
-  title                    String      @default("")
-  description              String      @default("")
-  slug                     String      @unique @default("")
-  owner                    User?       @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
-  ownerId                  String?     @map("owner")
-  photo                    Image?      @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
-  photoId                  String?     @map("photo")
-  memberName               String      @default("")
-  bio                      String      @default("")
-  address                  String      @default("")
-  email                    String?
-  phone                    String?
-  fax                      String?
-  termStart                DateTime?
-  termEnd                  DateTime?
-  from_Community_districts Community[] @relation("Community_districts")
+model Contact {
+  id              String      @id @default(cuid())
+  name            String      @default("")
+  title           String?
+  phone           String?
+  email           String?
+  primaryServices Service[]   @relation("Service_primaryContact")
+  services        Service[]   @relation("Contact_services")
+  communities     Community[] @relation("Community_contacts")
+  orgUnits        OrgUnit[]   @relation("Contact_orgUnits")
+  facilities      Facility[]  @relation("Contact_facilities")
+  parks           Park[]      @relation("Contact_parks")
+  trails          Trail[]     @relation("Contact_trails")
+  user            User?       @relation("Contact_user", fields: [userId], references: [id])
+  userId          String?     @unique @map("user")
+  editorNotes     String      @default("")
+}
+
+model Document {
+  id            String               @id @default(cuid())
+  title         String               @default("")
+  description   String               @default("")
+  tags          Tag[]                @relation("Document_tags")
+  file_filesize Int?
+  file_filename String?
+  collections   DocumentCollection[] @relation("Document_collections")
+  editorNotes   String               @default("")
+
+  @@index([title])
+}
+
+model DocumentCollection {
+  id          String      @id @default(cuid())
+  title       String      @default("")
+  owner       User?       @relation("DocumentCollection_owner", fields: [ownerId], references: [id])
+  ownerId     String?     @map("owner")
+  documents   Document[]  @relation("Document_collections")
+  tags        Tag[]       @relation("DocumentCollection_tags")
+  userGroups  UserGroup[] @relation("DocumentCollection_userGroups")
+  editorNotes String      @default("")
+
+  @@index([ownerId])
+}
+
+model Facility {
+  id          String    @id @default(cuid())
+  heroImage   String?
+  title       String    @default("")
+  description String    @default("")
+  slug        String    @unique @default("")
+  owner       User?     @relation("Facility_owner", fields: [ownerId], references: [id])
+  ownerId     String?   @map("owner")
+  tags        Tag[]     @relation("Facility_tags")
+  contacts    Contact[] @relation("Contact_facilities")
+  services    Service[] @relation("Facility_services")
+  park        Park?     @relation("Facility_park", fields: [parkId], references: [id])
+  parkId      String?   @map("park")
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @default(now()) @updatedAt
 
   @@index([title])
   @@index([ownerId])
-  @@index([photoId])
+  @@index([parkId])
 }
 
 model Highlight {
@@ -187,44 +175,6 @@ model Image {
   @@index([title])
 }
 
-model Document {
-  id            String               @id @default(cuid())
-  title         String               @default("")
-  description   String               @default("")
-  tags          Tag[]                @relation("Document_tags")
-  file_filesize Int?
-  file_filename String?
-  collections   DocumentCollection[] @relation("Document_collections")
-  editorNotes   String               @default("")
-
-  @@index([title])
-}
-
-model DocumentCollection {
-  id          String      @id @default(cuid())
-  title       String      @default("")
-  owner       User?       @relation("DocumentCollection_owner", fields: [ownerId], references: [id])
-  ownerId     String?     @map("owner")
-  documents   Document[]  @relation("Document_collections")
-  tags        Tag[]       @relation("DocumentCollection_tags")
-  userGroups  UserGroup[] @relation("DocumentCollection_userGroups")
-  editorNotes String      @default("")
-
-  @@index([ownerId])
-}
-
-model ApiKey {
-  id          String   @id @default(cuid())
-  name        String   @default("")
-  description String   @default("")
-  token       String   @unique @default("")
-  user        User?    @relation("ApiKey_user", fields: [userId], references: [id])
-  userId      String?  @map("user")
-  expiresAt   DateTime
-
-  @@index([userId])
-}
-
 model OrgUnit {
   id          String    @id @default(cuid())
   heroImage   String?
@@ -246,4 +196,128 @@ model OrgUnit {
   @@index([title])
   @@index([ownerId])
   @@index([parentId])
+}
+
+model Park {
+  id          String     @id @default(cuid())
+  heroImage   String?
+  title       String     @default("")
+  description String     @default("")
+  slug        String     @unique @default("")
+  owner       User?      @relation("Park_owner", fields: [ownerId], references: [id])
+  ownerId     String?    @map("owner")
+  tags        Tag[]      @relation("Park_tags")
+  contacts    Contact[]  @relation("Contact_parks")
+  services    Service[]  @relation("Park_services")
+  trails      Trail[]    @relation("Trail_park")
+  facilities  Facility[] @relation("Facility_park")
+  createdAt   DateTime?  @default(now())
+  updatedAt   DateTime?  @default(now()) @updatedAt
+
+  @@index([title])
+  @@index([ownerId])
+}
+
+model Service {
+  id               String      @id @default(cuid())
+  title            String      @default("")
+  description      String      @default("")
+  publishAt        DateTime?
+  unpublishAt      DateTime?
+  reviewDate       DateTime?
+  slug             String      @unique @default("")
+  owner            User?       @relation("Service_owner", fields: [ownerId], references: [id])
+  ownerId          String?     @map("owner")
+  body             String?
+  actionLabel      String?
+  actionUrl        String?
+  tags             Tag[]       @relation("Service_tags")
+  userGroups       UserGroup[] @relation("Service_userGroups")
+  primaryContact   Contact?    @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
+  primaryContactId String?     @map("primaryContact")
+  contacts         Contact[]   @relation("Contact_services")
+  communities      Community[] @relation("Community_services")
+  orgUnits         OrgUnit[]   @relation("OrgUnit_services")
+  trails           Trail[]     @relation("Service_trails")
+  parks            Park[]      @relation("Park_services")
+  facilities       Facility[]  @relation("Facility_services")
+  createdAt        DateTime?   @default(now())
+  updatedAt        DateTime?   @default(now()) @updatedAt
+  editorNotes      String      @default("")
+
+  @@index([title])
+  @@index([ownerId])
+  @@index([primaryContactId])
+}
+
+model Tag {
+  id                  String               @id @default(cuid())
+  name                String               @default("")
+  services            Service[]            @relation("Service_tags")
+  communities         Community[]          @relation("Community_tags")
+  documents           Document[]           @relation("Document_tags")
+  images              Image[]              @relation("Image_tags")
+  documentCollections DocumentCollection[] @relation("DocumentCollection_tags")
+  orgUnits            OrgUnit[]            @relation("OrgUnit_tags")
+  facilities          Facility[]           @relation("Facility_tags")
+  parks               Park[]               @relation("Park_tags")
+  trails              Trail[]              @relation("Tag_trails")
+}
+
+model Trail {
+  id          String    @id @default(cuid())
+  heroImage   String?
+  title       String    @default("")
+  description String    @default("")
+  slug        String    @unique @default("")
+  owner       User?     @relation("Trail_owner", fields: [ownerId], references: [id])
+  ownerId     String?   @map("owner")
+  tags        Tag[]     @relation("Tag_trails")
+  contacts    Contact[] @relation("Contact_trails")
+  services    Service[] @relation("Service_trails")
+  park        Park?     @relation("Trail_park", fields: [parkId], references: [id])
+  parkId      String?   @map("park")
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @default(now()) @updatedAt
+
+  @@index([title])
+  @@index([ownerId])
+  @@index([parkId])
+}
+
+model User {
+  id                            String               @id @default(cuid())
+  authId                        String               @unique @default("")
+  name                          String               @default("")
+  email                         String               @unique @default("")
+  password                      String?
+  contact                       Contact?             @relation("Contact_user")
+  role                          Int?                 @default(4)
+  groups                        UserGroup[]          @relation("User_groups")
+  createdAt                     DateTime?            @default(now())
+  updatedAt                     DateTime?            @default(now()) @updatedAt
+  from_ApiKey_user              ApiKey[]             @relation("ApiKey_user")
+  from_AssemblyDistrict_owner   AssemblyDistrict[]   @relation("AssemblyDistrict_owner")
+  from_Community_owner          Community[]          @relation("Community_owner")
+  from_DocumentCollection_owner DocumentCollection[] @relation("DocumentCollection_owner")
+  from_Facility_owner           Facility[]           @relation("Facility_owner")
+  from_OrgUnit_owner            OrgUnit[]            @relation("OrgUnit_owner")
+  from_Park_owner               Park[]               @relation("Park_owner")
+  from_Service_owner            Service[]            @relation("Service_owner")
+  from_Trail_owner              Trail[]              @relation("Trail_owner")
+  from_UserGroup_owner          UserGroup[]          @relation("UserGroup_owner")
+}
+
+model UserGroup {
+  id                  String               @id @default(cuid())
+  name                String               @default("")
+  owner               User?                @relation("UserGroup_owner", fields: [ownerId], references: [id])
+  ownerId             String?              @map("owner")
+  description         String               @default("")
+  users               User[]               @relation("User_groups")
+  services            Service[]            @relation("Service_userGroups")
+  communities         Community[]          @relation("Community_userGroups")
+  documentCollections DocumentCollection[] @relation("DocumentCollection_userGroups")
+
+  @@index([ownerId])
 }
