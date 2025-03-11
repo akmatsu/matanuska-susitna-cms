@@ -98,7 +98,7 @@ export const generalItemAccess: Item = {
  * Filters out unpublished items from query results from public requests.
  */
 export const filterByPubDates: Filter = {
-  query: async ({ session }) => {
+  query: async ({ session }: BaseAccessArgs<BaseListTypeInfo>) => {
     if (session) return {};
     return {
       AND: [

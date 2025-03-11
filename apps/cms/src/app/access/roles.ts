@@ -9,7 +9,7 @@ import { key } from '@milkdown/kit/plugin/listener';
 export type BaseAccessArgs<ListTypeInfo extends BaseListTypeInfo> = {
   context: KeystoneContext<ListTypeInfo['all']>;
   session?: Session;
-  listKey: ListTypeInfo['key'];
+  listKey?: ListTypeInfo['key'];
   [key: string]: any;
 };
 
