@@ -51,9 +51,10 @@ export function CustomNavigation({
   const systemLists = lists.filter((list) =>
     /Alert|Tag|Highlight|ApiKey/g.test(list.key),
   );
-
   const pageLists = lists.filter((list) =>
-    /Service|Community|AssemblyDistrict|OrgUnit/gi.test(list.key),
+    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail/gi.test(
+      list.key,
+    ),
   );
 
   const excludeKeys = new Set([

@@ -238,8 +238,7 @@ export const owner = relationship({
     resolveInput: relateActiveUser,
   },
   access: {
-    update: ({ session, item, context }) =>
-      isAdmin(session, context) || isOwner(session, item),
+    update: (args) => isAdmin(args) || isOwner(args),
   },
 });
 
@@ -260,9 +259,9 @@ export function relateActiveUser({
   return resolvedData?.[fieldKey];
 }
 
-export function tags(listKey: string) {
+export function tags(listKey?: string) {
   return relationship({
-    ref: `Tag.${listKey}`,
+    ref: listKey ? `Tag.${listKey}` : 'Tag',
     many: true,
     ui: {
       displayMode: 'select',
@@ -296,7 +295,7 @@ export function userGroups(listKey: string) {
       },
     },
     access: {
-      update: (args) => isAdmin(args) || isOwner(args.session, args.item),
+      update: (args) => isAdmin(args) || isOwner(args),
     },
   });
 }

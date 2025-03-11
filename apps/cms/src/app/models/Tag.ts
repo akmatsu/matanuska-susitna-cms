@@ -8,7 +8,7 @@ export const Tag: ListConfig<any> = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: ({ session, context }) => !isAdmin(session, context),
+    isHidden: (args) => !isAdmin(args),
   },
   fields: {
     name: text(),
@@ -21,5 +21,8 @@ export const Tag: ListConfig<any> = list({
       many: true,
     }),
     orgUnits: relationship({ ref: 'OrgUnit.tags', many: true }),
+    facilities: relationship({ ref: 'Facility.tags', many: true }),
+    parks: relationship({ ref: 'Park.tags', many: true }),
+    trails: relationship({ ref: 'Trail.tags', many: true }),
   },
 });
