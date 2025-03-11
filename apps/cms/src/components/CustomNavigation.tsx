@@ -1,5 +1,4 @@
 import {
-  ListNavItem,
   ListNavItems,
   NavigationContainer,
   NavItem,

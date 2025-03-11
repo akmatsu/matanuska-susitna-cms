@@ -1,4 +1,3 @@
-import '../../src/styles/global.css';
 import { FieldContainer, FieldLabel } from '@keystone-ui/fields';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import {

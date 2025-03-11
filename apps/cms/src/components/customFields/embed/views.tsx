@@ -9,7 +9,6 @@ import {
   FieldDescription,
   FieldLabel,
 } from '@keystone-ui/fields';
-import '../../../styles/global.css';
 import { Button } from '@keystone-ui/button';
 
 export function Field({ field, value }: FieldProps<typeof controller>) {
@@ -26,7 +25,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
         {field.description}
       </FieldDescription>
       <div className="flex w-full max-w-[382px] gap-4">
-        <code className="whitespace-pre w-full overflow-x-auto block bg-gray-100 p-2 rounded-sm border border-gray-200">
+        <code className="block w-full overflow-x-auto rounded-sm border border-gray-200 bg-gray-100 p-2 whitespace-pre">
           {embedHTML}
         </code>
         <Button

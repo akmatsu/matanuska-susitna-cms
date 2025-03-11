@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import { MdEditorProps } from './mdEditor/components/Editor/types';
 import { Button } from '@keystone-ui/button';
 import { TextArea } from '@keystone-ui/fields';
-import '../styles/global.css';
 
 const MdEditor = dynamic(
   () => import('./mdEditor').then((mod) => mod.MdEditor),

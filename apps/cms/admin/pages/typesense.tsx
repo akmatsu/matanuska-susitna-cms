@@ -1,4 +1,3 @@
-import '../../src/styles/global.css';
 import { useEffect, useState } from 'react';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import { TYPESENSE_CLIENT } from '../../src/utils/typesense';
