@@ -4,11 +4,13 @@ import {
   KeystoneContext,
 } from '@keystone-6/core/types';
 import { Session } from '../../session';
+import { key } from '@milkdown/kit/plugin/listener';
 
-type BaseAccessArgs<ListTypeInfo extends BaseListTypeInfo> = {
+export type BaseAccessArgs<ListTypeInfo extends BaseListTypeInfo> = {
   context: KeystoneContext<ListTypeInfo['all']>;
   session?: Session;
   listKey: ListTypeInfo['key'];
+  [key: string]: any;
 };
 
 export const ROLES = {
@@ -141,7 +143,7 @@ export async function checkRole(
     : false;
 }
 
-async function findUser({
+export async function findUser({
   session,
   context,
 }: BaseAccessArgs<BaseListTypeInfo>): Promise<
@@ -150,5 +152,5 @@ async function findUser({
     } & BaseItem)
   | null
 > {
-  return context.sudo().db.User.findOne({ where: { id: session?.id } });
+  return context?.sudo().db.User.findOne({ where: { id: session?.id } });
 }

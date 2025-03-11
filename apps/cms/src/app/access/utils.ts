@@ -7,7 +7,12 @@ import {
   BaseListTypeInfo,
   ListOperationAccessControl,
 } from '@keystone-6/core/types';
-import { isAdmin, isContentManager, isContributor } from './roles';
+import {
+  BaseAccessArgs,
+  isAdmin,
+  isContentManager,
+  isContributor,
+} from './roles';
 import { belongsToGroup, isOwner } from './group';
 import 'dotenv/config';
 
@@ -38,9 +43,9 @@ type Filter = {
  */
 export const generalOperationAccess: Operation = {
   query: () => true,
-  create: ({ session }) => isContributor(session),
-  update: ({ session }) => isContributor(session),
-  delete: ({ session }) => isContributor(session),
+  create: isContributor,
+  update: isContributor,
+  delete: isContributor,
 };
 
 /**
@@ -49,9 +54,9 @@ export const generalOperationAccess: Operation = {
  */
 export const elevatedOperationAccess: Operation = {
   query: () => true,
-  create: ({ session }) => isContentManager(session),
-  update: ({ session }) => isContentManager(session),
-  delete: ({ session }) => isContentManager(session),
+  create: isContentManager,
+  update: isContentManager,
+  delete: isContentManager,
 };
 
 /**
@@ -82,16 +87,12 @@ export const adminOnlyOperationAccess: Operation = {
  * 3. {@link belongsToGroup|Group Members} can update and delete
  */
 export const generalItemAccess: Item = {
-  update: async (args) =>
-    isContentManager(session) ||
-    isOwner(session, item) ||
-    belongsToGroup(session, item, context, 'Service'),
+  update: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
+    isContentManager(args) || isOwner(args) || belongsToGroup(args, 'Service'),
 
-  delete: async ({ session, item, context }) =>
-    isContentManager(session) ||
-    isOwner(session, item) ||
-    belongsToGroup(session, item, context, 'Service'),
-};
+  delete: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
+    isContentManager(args) || isOwner(args) || belongsToGroup(args, 'Service'),
+} satisfies Item;
 
 /**
  * Filters out unpublished items from query results from public requests.
