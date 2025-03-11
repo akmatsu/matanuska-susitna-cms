@@ -9,7 +9,7 @@ export const ApiKey: ListConfig<any> = list({
     operation: adminOnlyOperationAccess,
   },
   ui: {
-    isHidden: ({ session }) => !isAdmin(session),
+    isHidden: ({ session, context }) => !isAdmin(session, context),
   },
 
   fields: {

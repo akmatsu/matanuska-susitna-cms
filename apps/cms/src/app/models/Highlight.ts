@@ -10,7 +10,7 @@ export const Highlight: ListConfig<any> = list({
     operation: adminOnlyOperationAccess,
   },
   ui: {
-    isHidden: ({ session }) => !isAdmin(session),
+    isHidden: ({ session, context }) => !isAdmin(session, context),
   },
   graphql: {
     maxTake: 100,

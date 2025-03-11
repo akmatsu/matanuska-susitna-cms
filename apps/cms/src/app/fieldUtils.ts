@@ -238,7 +238,8 @@ export const owner = relationship({
     resolveInput: relateActiveUser,
   },
   access: {
-    update: ({ session, item }) => isAdmin(session) || isOwner(session, item),
+    update: ({ session, item, context }) =>
+      isAdmin(session, context) || isOwner(session, item),
   },
 });
 
@@ -295,7 +296,7 @@ export function userGroups(listKey: string) {
       },
     },
     access: {
-      update: ({ session, item }) => isAdmin(session) || isOwner(session, item),
+      update: (args) => isAdmin(args) || isOwner(args.session, args.item),
     },
   });
 }

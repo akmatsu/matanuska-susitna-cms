@@ -1,4 +1,17 @@
-import { Session } from '../../auth';
+import {
+  BaseItem,
+  BaseListTypeInfo,
+  KeystoneContext,
+} from '@keystone-6/core/types';
+import { Session } from '../../session';
+import { key } from '@milkdown/kit/plugin/listener';
+
+export type BaseAccessArgs<ListTypeInfo extends BaseListTypeInfo> = {
+  context: KeystoneContext<ListTypeInfo['all']>;
+  session?: Session;
+  listKey?: ListTypeInfo['key'];
+  [key: string]: any;
+};
 
 export const ROLES = {
   /**
@@ -59,8 +72,11 @@ export const ROLES = {
  *
  * @see {@link ROLES.ADMIN}
  */
-export function isAdmin(user: Session): boolean {
-  return checkRole(user.role, ROLES.ADMIN);
+export async function isAdmin(
+  args: BaseAccessArgs<BaseListTypeInfo>,
+): Promise<boolean> {
+  const user = await findUser(args);
+  return checkRole(user?.role, ROLES.ADMIN);
 }
 
 /**
@@ -68,8 +84,11 @@ export function isAdmin(user: Session): boolean {
  *
  * @see {@link ROLES.CONTENT_MANAGER}
  */
-export function isContentManager(user: Session): boolean {
-  return checkRole(user.role, ROLES.CONTENT_MANAGER);
+export async function isContentManager(
+  args: BaseAccessArgs<BaseListTypeInfo>,
+): Promise<boolean> {
+  const user = await findUser(args);
+  return checkRole(user?.role, ROLES.CONTENT_MANAGER);
 }
 
 /**
@@ -77,8 +96,11 @@ export function isContentManager(user: Session): boolean {
  *
  * @see {@link ROLES.CONTRIBUTOR}
  */
-export function isContributor(user: Session): boolean {
-  return checkRole(user.role, ROLES.CONTRIBUTOR);
+export async function isContributor(
+  args: BaseAccessArgs<BaseListTypeInfo>,
+): Promise<boolean> {
+  const user = await findUser(args);
+  return checkRole(user?.role, ROLES.CONTRIBUTOR);
 }
 
 /**
@@ -88,8 +110,11 @@ export function isContributor(user: Session): boolean {
  *
  * @see {@link ROLES.COLLABORATOR}
  */
-export function isCollaborator(user: Session): boolean {
-  return checkRole(user.role, ROLES.COLLABORATOR);
+export async function isCollaborator(
+  args: BaseAccessArgs<BaseListTypeInfo>,
+): Promise<boolean> {
+  const user = await findUser(args);
+  return checkRole(user?.role, ROLES.COLLABORATOR);
 }
 
 /**
@@ -97,10 +122,10 @@ export function isCollaborator(user: Session): boolean {
  *
  * @see {@link ROLES}
  */
-export function checkRole(
-  currentRole: Session['role'],
+export async function checkRole(
+  currentRole: number | null | undefined,
   minRole: number,
-): boolean {
+): Promise<boolean> {
   /*
     Roles are assigned ascending numerical values in descending order of permissions.
     Higher roles (like ADMIN) have lower numerical values, so they are checked as follows:
@@ -113,5 +138,19 @@ export function checkRole(
     This allows roles with higher permissions (lower numerical values) to pass the check.
   */
 
-  return currentRole !== null ? currentRole <= minRole : false;
+  return currentRole !== undefined && currentRole !== null
+    ? currentRole <= minRole
+    : false;
+}
+
+export async function findUser({
+  session,
+  context,
+}: BaseAccessArgs<BaseListTypeInfo>): Promise<
+  | ({
+      role?: number | null;
+    } & BaseItem)
+  | null
+> {
+  return context?.sudo().db.User.findOne({ where: { id: session?.id } });
 }
