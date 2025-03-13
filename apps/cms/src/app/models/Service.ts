@@ -57,8 +57,48 @@ export const Service: ListConfig<any> = list({
     owner,
     body: customText(),
 
+    primaryAction: relationship({
+      ref: 'ExternalLink',
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        displayMode: 'cards',
+        cardFields: ['title', 'url'],
+        inlineCreate: {
+          fields: ['title', 'url'],
+        },
+        inlineConnect: true,
+        inlineEdit: {
+          fields: ['title', 'url'],
+        },
+      },
+      many: false,
+    }),
+
+    secondaryActions: relationship({
+      ref: 'ExternalLink',
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        displayMode: 'cards',
+        cardFields: ['title', 'url'],
+        inlineCreate: {
+          fields: ['title', 'url'],
+        },
+        inlineConnect: true,
+        inlineEdit: {
+          fields: ['title', 'url'],
+        },
+      },
+      many: true,
+    }),
+
     ...group({
       label: 'Primary Action',
+      description:
+        'Deprecated, made readonly for now. Will be removed eventually.',
       fields: {
         actionLabel: text({
           validation: {
@@ -72,6 +112,10 @@ export const Service: ListConfig<any> = list({
           ui: {
             itemView: {
               fieldPosition: 'sidebar',
+              fieldMode: 'read',
+            },
+            createView: {
+              fieldMode: 'hidden',
             },
           },
         }),
@@ -87,6 +131,10 @@ export const Service: ListConfig<any> = list({
           ui: {
             itemView: {
               fieldPosition: 'sidebar',
+              fieldMode: 'read',
+            },
+            createView: {
+              fieldMode: 'hidden',
             },
           },
         }),

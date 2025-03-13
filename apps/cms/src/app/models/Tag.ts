@@ -8,7 +8,7 @@ export const Tag: ListConfig<any> = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: (args) => !isAdmin(args),
+    isHidden: async (args) => !(await isAdmin(args)),
   },
   fields: {
     name: text(),

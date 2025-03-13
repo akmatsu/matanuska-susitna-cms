@@ -22,21 +22,9 @@ model Alert {
   editorNotes String    @default("")
 }
 
-model ApiKey {
-  id          String   @id @default(cuid())
-  name        String   @default("")
-  description String   @default("")
-  token       String   @unique @default("")
-  user        User?    @relation("ApiKey_user", fields: [userId], references: [id])
-  userId      String?  @map("user")
-  expiresAt   DateTime
-
-  @@index([userId])
-}
-
 model AssemblyDistrict {
   id                       String      @id @default(cuid())
-  title                    String      @default("")
+  title                    String      @unique @default("")
   description              String      @default("")
   slug                     String      @unique @default("")
   owner                    User?       @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
@@ -53,7 +41,6 @@ model AssemblyDistrict {
   termEnd                  DateTime?
   from_Community_districts Community[] @relation("Community_districts")
 
-  @@index([title])
   @@index([ownerId])
   @@index([photoId])
 }
@@ -61,7 +48,7 @@ model AssemblyDistrict {
 model Community {
   id          String             @id @default(cuid())
   heroImage   String?
-  title       String             @default("")
+  title       String             @unique @default("")
   description String             @default("")
   publishAt   DateTime?
   unpublishAt DateTime?
@@ -78,7 +65,6 @@ model Community {
   createdAt   DateTime?          @default(now())
   updatedAt   DateTime?          @default(now()) @updatedAt
 
-  @@index([title])
   @@index([ownerId])
 }
 
@@ -126,10 +112,19 @@ model DocumentCollection {
   @@index([ownerId])
 }
 
+model ExternalLink {
+  id                            String    @id @default(cuid())
+  title                         String    @unique @default("")
+  description                   String    @default("")
+  url                           String    @unique @default("")
+  from_Service_primaryAction    Service[] @relation("Service_primaryAction")
+  from_Service_secondaryActions Service[] @relation("Service_secondaryActions")
+}
+
 model Facility {
   id          String    @id @default(cuid())
   heroImage   String?
-  title       String    @default("")
+  title       String    @unique @default("")
   description String    @default("")
   slug        String    @unique @default("")
   owner       User?     @relation("Facility_owner", fields: [ownerId], references: [id])
@@ -142,7 +137,6 @@ model Facility {
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @default(now()) @updatedAt
 
-  @@index([title])
   @@index([ownerId])
   @@index([parkId])
 }
@@ -162,7 +156,7 @@ model Highlight {
 
 model Image {
   id                          String             @id @default(cuid())
-  title                       String             @default("")
+  title                       String             @unique @default("")
   description                 String             @default("")
   tags                        Tag[]              @relation("Image_tags")
   file_id                     String?
@@ -171,14 +165,24 @@ model Image {
   file_height                 Int?
   file_extension              String?
   from_AssemblyDistrict_photo AssemblyDistrict[] @relation("AssemblyDistrict_photo")
+}
 
-  @@index([title])
+model Location {
+  id                String @id @default(cuid())
+  title             String @unique @default("")
+  description       String @default("")
+  lineOne           String @default("")
+  lineTwo           String @default("")
+  city              String @default("")
+  state             String @default("AK")
+  zip               String
+  from_Park_address Park[] @relation("Park_address")
 }
 
 model OrgUnit {
   id          String    @id @default(cuid())
   heroImage   String?
-  title       String    @default("")
+  title       String    @unique @default("")
   description String    @default("")
   slug        String    @unique @default("")
   owner       User?     @relation("OrgUnit_owner", fields: [ownerId], references: [id])
@@ -193,7 +197,6 @@ model OrgUnit {
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @default(now()) @updatedAt
 
-  @@index([title])
   @@index([ownerId])
   @@index([parentId])
 }
@@ -201,12 +204,15 @@ model OrgUnit {
 model Park {
   id          String     @id @default(cuid())
   heroImage   String?
-  title       String     @default("")
+  title       String     @unique @default("")
   description String     @default("")
   slug        String     @unique @default("")
   owner       User?      @relation("Park_owner", fields: [ownerId], references: [id])
   ownerId     String?    @map("owner")
+  body        String?
   tags        Tag[]      @relation("Park_tags")
+  address     Location?  @relation("Park_address", fields: [addressId], references: [id])
+  addressId   String?    @map("address")
   contacts    Contact[]  @relation("Contact_parks")
   services    Service[]  @relation("Park_services")
   trails      Trail[]    @relation("Trail_park")
@@ -214,39 +220,42 @@ model Park {
   createdAt   DateTime?  @default(now())
   updatedAt   DateTime?  @default(now()) @updatedAt
 
-  @@index([title])
   @@index([ownerId])
+  @@index([addressId])
 }
 
 model Service {
-  id               String      @id @default(cuid())
-  title            String      @default("")
-  description      String      @default("")
+  id               String         @id @default(cuid())
+  title            String         @unique @default("")
+  description      String         @default("")
   publishAt        DateTime?
   unpublishAt      DateTime?
   reviewDate       DateTime?
-  slug             String      @unique @default("")
-  owner            User?       @relation("Service_owner", fields: [ownerId], references: [id])
-  ownerId          String?     @map("owner")
+  slug             String         @unique @default("")
+  owner            User?          @relation("Service_owner", fields: [ownerId], references: [id])
+  ownerId          String?        @map("owner")
   body             String?
+  primaryAction    ExternalLink?  @relation("Service_primaryAction", fields: [primaryActionId], references: [id])
+  primaryActionId  String?        @map("primaryAction")
+  secondaryActions ExternalLink[] @relation("Service_secondaryActions")
   actionLabel      String?
   actionUrl        String?
-  tags             Tag[]       @relation("Service_tags")
-  userGroups       UserGroup[] @relation("Service_userGroups")
-  primaryContact   Contact?    @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
-  primaryContactId String?     @map("primaryContact")
-  contacts         Contact[]   @relation("Contact_services")
-  communities      Community[] @relation("Community_services")
-  orgUnits         OrgUnit[]   @relation("OrgUnit_services")
-  trails           Trail[]     @relation("Service_trails")
-  parks            Park[]      @relation("Park_services")
-  facilities       Facility[]  @relation("Facility_services")
-  createdAt        DateTime?   @default(now())
-  updatedAt        DateTime?   @default(now()) @updatedAt
-  editorNotes      String      @default("")
+  tags             Tag[]          @relation("Service_tags")
+  userGroups       UserGroup[]    @relation("Service_userGroups")
+  primaryContact   Contact?       @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
+  primaryContactId String?        @map("primaryContact")
+  contacts         Contact[]      @relation("Contact_services")
+  communities      Community[]    @relation("Community_services")
+  orgUnits         OrgUnit[]      @relation("OrgUnit_services")
+  trails           Trail[]        @relation("Service_trails")
+  parks            Park[]         @relation("Park_services")
+  facilities       Facility[]     @relation("Facility_services")
+  createdAt        DateTime?      @default(now())
+  updatedAt        DateTime?      @default(now()) @updatedAt
+  editorNotes      String         @default("")
 
-  @@index([title])
   @@index([ownerId])
+  @@index([primaryActionId])
   @@index([primaryContactId])
 }
 
@@ -267,7 +276,7 @@ model Tag {
 model Trail {
   id          String    @id @default(cuid())
   heroImage   String?
-  title       String    @default("")
+  title       String    @unique @default("")
   description String    @default("")
   slug        String    @unique @default("")
   owner       User?     @relation("Trail_owner", fields: [ownerId], references: [id])
@@ -280,7 +289,6 @@ model Trail {
   createdAt   DateTime? @default(now())
   updatedAt   DateTime? @default(now()) @updatedAt
 
-  @@index([title])
   @@index([ownerId])
   @@index([parkId])
 }
@@ -296,7 +304,6 @@ model User {
   groups                        UserGroup[]          @relation("User_groups")
   createdAt                     DateTime?            @default(now())
   updatedAt                     DateTime?            @default(now()) @updatedAt
-  from_ApiKey_user              ApiKey[]             @relation("ApiKey_user")
   from_AssemblyDistrict_owner   AssemblyDistrict[]   @relation("AssemblyDistrict_owner")
   from_Community_owner          Community[]          @relation("Community_owner")
   from_DocumentCollection_owner DocumentCollection[] @relation("DocumentCollection_owner")
