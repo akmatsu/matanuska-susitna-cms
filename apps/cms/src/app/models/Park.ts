@@ -1,4 +1,4 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { group, list, ListConfig } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import {
@@ -12,6 +12,7 @@ import {
   titleAndDescription,
 } from '../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
+import { customText } from '../../components/customFields/Markdown';
 
 const listPlural = 'parks';
 
@@ -26,7 +27,23 @@ export const Park: ListConfig<any> = list({
     liveUrl: liveUrl(listPlural),
     slug,
     owner,
+    body: customText(),
     tags: tags(listPlural),
+    address: relationship({
+      ref: 'Location',
+      many: false,
+      ui: {
+        displayMode: 'cards',
+        cardFields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
+        inlineCreate: {
+          fields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
+        },
+        inlineConnect: true,
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+      },
+    }),
     contacts: contacts(listPlural),
     services: services(listPlural),
     trails: relationship({ ref: 'Trail.park', many: true }),

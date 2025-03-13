@@ -1,14 +1,15 @@
 import { type Lists } from '.keystone/types';
 import { Alert } from './Alert';
-import { ApiKey } from './ApiKey';
 import { AssemblyDistrict } from './AssemblyDistrict';
 import { Community } from './Community';
 import { Contact } from './Contact';
 import { Document } from './Document';
 import { DocumentCollection } from './DocumentCollection';
+import { ExternalLink } from './ExternalLink';
 import { Facility } from './Facility';
 import { Highlight } from './Highlight';
 import { Image } from './Image';
+import { Location } from './Location';
 import { OrgUnit } from './OrgUnit';
 import { Park } from './Park';
 import { Service } from './Service';
@@ -19,15 +20,16 @@ import { UserGroup } from './UserGroup';
 
 export const lists = {
   Alert,
-  ApiKey,
   AssemblyDistrict,
   Community,
   Contact,
   Document,
   DocumentCollection,
+  ExternalLink,
   Facility,
   Highlight,
   Image,
+  Location,
   OrgUnit,
   Park,
   Service,

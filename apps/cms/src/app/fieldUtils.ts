@@ -187,7 +187,7 @@ export function titleAndDescription(opts?: {
       ui: {
         displayMode: 'input',
       },
-      isIndexed: true,
+      isIndexed: 'unique',
     }),
     description: text({
       validation: {
