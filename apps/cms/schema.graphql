@@ -924,6 +924,8 @@ type Facility {
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
@@ -953,6 +955,7 @@ input FacilityWhereInput {
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   services: ServiceManyRelationFilter
@@ -987,6 +990,7 @@ input FacilityUpdateInput {
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
@@ -1028,6 +1032,7 @@ input FacilityCreateInput {
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
@@ -1433,6 +1438,8 @@ type Park {
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
@@ -1465,6 +1472,7 @@ input ParkWhereInput {
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   services: ServiceManyRelationFilter
@@ -1494,6 +1502,7 @@ input ParkUpdateInput {
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
@@ -1517,6 +1526,7 @@ input ParkCreateInput {
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
@@ -1826,6 +1836,8 @@ type Trail {
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
   address: Location
   open: Boolean
   summer: Boolean
@@ -1874,6 +1886,7 @@ input TrailWhereInput {
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
   address: LocationWhereInput
   open: BooleanFilter
   summer: BooleanFilter
@@ -1943,6 +1956,7 @@ input TrailUpdateInput {
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   open: Boolean
   summer: Boolean
@@ -1985,6 +1999,7 @@ input TrailCreateInput {
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   open: Boolean
   summer: Boolean
@@ -2117,6 +2132,12 @@ type UserGroup {
   usersCount(where: UserWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   documentCollections(where: DocumentCollectionWhereInput! = {}, orderBy: [DocumentCollectionOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentCollectionWhereUniqueInput): [DocumentCollection!]
@@ -2137,6 +2158,9 @@ input UserGroupWhereInput {
   description: StringFilter
   users: UserManyRelationFilter
   services: ServiceManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
   communities: CommunityManyRelationFilter
   documentCollections: DocumentCollectionManyRelationFilter
 }
@@ -2159,6 +2183,9 @@ input UserGroupUpdateInput {
   description: String
   users: UserRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   documentCollections: DocumentCollectionRelateToManyForUpdateInput
 }
@@ -2181,6 +2208,9 @@ input UserGroupCreateInput {
   description: String
   users: UserRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   documentCollections: DocumentCollectionRelateToManyForCreateInput
 }
