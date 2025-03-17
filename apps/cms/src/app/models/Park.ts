@@ -106,7 +106,6 @@ export const Park: ListConfig<any> = list({
     async afterOperation({ operation, context, item }) {
       if (operation === 'update' || operation === 'create') {
         try {
-          console.log('ran UPDATE!');
           const park = await context.query.Park.findOne({
             where: { id: item.id.toString() },
             query:
