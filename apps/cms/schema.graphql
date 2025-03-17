@@ -918,6 +918,9 @@ type Facility {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   liveUrl: String
   slug: String
   owner: User
@@ -951,6 +954,9 @@ input FacilityWhereInput {
   id: IDFilter
   title: StringFilter
   description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
   slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
@@ -976,6 +982,9 @@ input FacilityOrderByInput {
   heroImage: BlueHarvestImageOrderDirection
   title: OrderDirection
   description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
   createdAt: OrderDirection
@@ -986,6 +995,9 @@ input FacilityUpdateInput {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
@@ -1028,6 +1040,9 @@ input FacilityCreateInput {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
