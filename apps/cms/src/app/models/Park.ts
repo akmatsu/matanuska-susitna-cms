@@ -48,6 +48,20 @@ export const Park: ListConfig<any> = list({
     services: services(listPlural),
     trails: relationship({ ref: 'Trail.park', many: true }),
     facilities: relationship({ ref: 'Facility.park', many: true }),
+    hours: relationship({
+      ref: 'OperatingHour',
+      many: true,
+      ui: {
+        displayMode: 'cards',
+        cardFields: ['day', 'open', 'close'],
+        inlineCreate: {
+          fields: ['day', 'open', 'close'],
+        },
+        inlineEdit: {
+          fields: ['day', 'open', 'close'],
+        },
+      },
+    }),
     ...timestamps,
   },
 });
