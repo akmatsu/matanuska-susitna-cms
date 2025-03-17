@@ -10,6 +10,7 @@ import {
   tags,
   timestamps,
   titleAndDescription,
+  userGroups,
 } from '../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
 import { customText } from '../../components/customFields/Markdown';
@@ -29,6 +30,7 @@ export const Facility: ListConfig<any> = list({
     owner,
     body: customText(),
     tags: tags(listPlural),
+    userGroups: userGroups(listPlural),
     address: relationship({
       ref: 'Location',
       many: false,

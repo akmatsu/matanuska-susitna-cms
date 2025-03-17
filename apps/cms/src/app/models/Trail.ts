@@ -9,6 +9,7 @@ import {
   tags,
   timestamps,
   titleAndDescription,
+  userGroups,
 } from '../fieldUtils';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
@@ -29,6 +30,7 @@ export const Trail: ListConfig<any> = list({
     owner,
     body: customText(),
     tags: tags(listPlural),
+    userGroups: userGroups(listPlural),
     address: relationship({
       ref: 'Location',
       many: false,
