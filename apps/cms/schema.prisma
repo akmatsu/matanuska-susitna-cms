@@ -126,6 +126,9 @@ model Facility {
   heroImage   String?
   title       String          @unique @default("")
   description String          @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
   slug        String          @unique @default("")
   owner       User?           @relation("Facility_owner", fields: [ownerId], references: [id])
   ownerId     String?         @map("owner")
