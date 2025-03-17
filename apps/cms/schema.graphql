@@ -921,13 +921,17 @@ type Facility {
   liveUrl: String
   slug: String
   owner: User
+  body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
+  hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
+  hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -947,12 +951,21 @@ input FacilityWhereInput {
   description: StringFilter
   slug: StringFilter
   owner: UserWhereInput
+  body: MyStringFilter
   tags: TagManyRelationFilter
+  address: LocationWhereInput
   contacts: ContactManyRelationFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
+  hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+}
+
+input OperatingHourManyRelationFilter {
+  every: OperatingHourWhereInput
+  some: OperatingHourWhereInput
+  none: OperatingHourWhereInput
 }
 
 input FacilityOrderByInput {
@@ -961,6 +974,7 @@ input FacilityOrderByInput {
   title: OrderDirection
   description: OrderDirection
   slug: OrderDirection
+  body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -971,18 +985,34 @@ input FacilityUpdateInput {
   description: String
   slug: String
   owner: UserRelateToOneForUpdateInput
+  body: String
   tags: TagRelateToManyForUpdateInput
+  address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
+  hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input LocationRelateToOneForUpdateInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ParkRelateToOneForUpdateInput {
   create: ParkCreateInput
   connect: ParkWhereUniqueInput
   disconnect: Boolean
+}
+
+input OperatingHourRelateToManyForUpdateInput {
+  disconnect: [OperatingHourWhereUniqueInput!]
+  set: [OperatingHourWhereUniqueInput!]
+  create: [OperatingHourCreateInput!]
+  connect: [OperatingHourWhereUniqueInput!]
 }
 
 input FacilityUpdateArgs {
@@ -996,17 +1026,30 @@ input FacilityCreateInput {
   description: String
   slug: String
   owner: UserRelateToOneForCreateInput
+  body: String
   tags: TagRelateToManyForCreateInput
+  address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
+  hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input LocationRelateToOneForCreateInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
 }
 
 input ParkRelateToOneForCreateInput {
   create: ParkCreateInput
   connect: ParkWhereUniqueInput
+}
+
+input OperatingHourRelateToManyForCreateInput {
+  create: [OperatingHourCreateInput!]
+  connect: [OperatingHourWhereUniqueInput!]
 }
 
 type Highlight {
@@ -1334,6 +1377,51 @@ input OrgUnitRelateToOneForCreateInput {
   connect: OrgUnitWhereUniqueInput
 }
 
+type OperatingHour {
+  id: ID!
+  day: String
+  open: String
+  close: String
+}
+
+input OperatingHourWhereUniqueInput {
+  id: ID
+}
+
+input OperatingHourWhereInput {
+  AND: [OperatingHourWhereInput!]
+  OR: [OperatingHourWhereInput!]
+  NOT: [OperatingHourWhereInput!]
+  id: IDFilter
+  day: StringFilter
+  open: StringFilter
+  close: StringFilter
+}
+
+input OperatingHourOrderByInput {
+  id: OrderDirection
+  day: OrderDirection
+  open: OrderDirection
+  close: OrderDirection
+}
+
+input OperatingHourUpdateInput {
+  day: String
+  open: String
+  close: String
+}
+
+input OperatingHourUpdateArgs {
+  where: OperatingHourWhereUniqueInput!
+  data: OperatingHourUpdateInput!
+}
+
+input OperatingHourCreateInput {
+  day: String
+  open: String
+  close: String
+}
+
 type Park {
   id: ID!
   heroImage: String
@@ -1354,6 +1442,8 @@ type Park {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
+  hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -1380,6 +1470,7 @@ input ParkWhereInput {
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -1408,14 +1499,9 @@ input ParkUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input LocationRelateToOneForUpdateInput {
-  create: LocationCreateInput
-  connect: LocationWhereUniqueInput
-  disconnect: Boolean
 }
 
 input ParkUpdateArgs {
@@ -1436,13 +1522,9 @@ input ParkCreateInput {
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input LocationRelateToOneForCreateInput {
-  create: LocationCreateInput
-  connect: LocationWhereUniqueInput
 }
 
 type Service {
@@ -1741,8 +1823,31 @@ type Trail {
   liveUrl: String
   slug: String
   owner: User
+  body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  address: Location
+  open: Boolean
+  summer: Boolean
+  fall: Boolean
+  winter: Boolean
+  spring: Boolean
+  hiking: Boolean
+  biking: Boolean
+  horsebackRiding: Boolean
+  crossCountrySkiing: Boolean
+  snowshoeing: Boolean
+  frisbeeGolf: Boolean
+  dogWalking: Boolean
+  running: Boolean
+  snowMachining: Boolean
+  atv: Boolean
+  dirtBiking: Boolean
+  mushing: Boolean
+  difficulty: String
+  length: String
+  elevationChange: String
+  groomed: Boolean
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -1767,7 +1872,30 @@ input TrailWhereInput {
   description: StringFilter
   slug: StringFilter
   owner: UserWhereInput
+  body: MyStringFilter
   tags: TagManyRelationFilter
+  address: LocationWhereInput
+  open: BooleanFilter
+  summer: BooleanFilter
+  fall: BooleanFilter
+  winter: BooleanFilter
+  spring: BooleanFilter
+  hiking: BooleanFilter
+  biking: BooleanFilter
+  horsebackRiding: BooleanFilter
+  crossCountrySkiing: BooleanFilter
+  snowshoeing: BooleanFilter
+  frisbeeGolf: BooleanFilter
+  dogWalking: BooleanFilter
+  running: BooleanFilter
+  snowMachining: BooleanFilter
+  atv: BooleanFilter
+  dirtBiking: BooleanFilter
+  mushing: BooleanFilter
+  difficulty: StringNullableFilter
+  length: StringFilter
+  elevationChange: StringFilter
+  groomed: BooleanFilter
   contacts: ContactManyRelationFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
@@ -1781,6 +1909,28 @@ input TrailOrderByInput {
   title: OrderDirection
   description: OrderDirection
   slug: OrderDirection
+  body: MyOrderDirection
+  open: OrderDirection
+  summer: OrderDirection
+  fall: OrderDirection
+  winter: OrderDirection
+  spring: OrderDirection
+  hiking: OrderDirection
+  biking: OrderDirection
+  horsebackRiding: OrderDirection
+  crossCountrySkiing: OrderDirection
+  snowshoeing: OrderDirection
+  frisbeeGolf: OrderDirection
+  dogWalking: OrderDirection
+  running: OrderDirection
+  snowMachining: OrderDirection
+  atv: OrderDirection
+  dirtBiking: OrderDirection
+  mushing: OrderDirection
+  difficulty: OrderDirection
+  length: OrderDirection
+  elevationChange: OrderDirection
+  groomed: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -1791,7 +1941,30 @@ input TrailUpdateInput {
   description: String
   slug: String
   owner: UserRelateToOneForUpdateInput
+  body: String
   tags: TagRelateToManyForUpdateInput
+  address: LocationRelateToOneForUpdateInput
+  open: Boolean
+  summer: Boolean
+  fall: Boolean
+  winter: Boolean
+  spring: Boolean
+  hiking: Boolean
+  biking: Boolean
+  horsebackRiding: Boolean
+  crossCountrySkiing: Boolean
+  snowshoeing: Boolean
+  frisbeeGolf: Boolean
+  dogWalking: Boolean
+  running: Boolean
+  snowMachining: Boolean
+  atv: Boolean
+  dirtBiking: Boolean
+  mushing: Boolean
+  difficulty: String
+  length: String
+  elevationChange: String
+  groomed: Boolean
   contacts: ContactRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
@@ -1810,7 +1983,30 @@ input TrailCreateInput {
   description: String
   slug: String
   owner: UserRelateToOneForCreateInput
+  body: String
   tags: TagRelateToManyForCreateInput
+  address: LocationRelateToOneForCreateInput
+  open: Boolean
+  summer: Boolean
+  fall: Boolean
+  winter: Boolean
+  spring: Boolean
+  hiking: Boolean
+  biking: Boolean
+  horsebackRiding: Boolean
+  crossCountrySkiing: Boolean
+  snowshoeing: Boolean
+  frisbeeGolf: Boolean
+  dogWalking: Boolean
+  running: Boolean
+  snowMachining: Boolean
+  atv: Boolean
+  dirtBiking: Boolean
+  mushing: Boolean
+  difficulty: String
+  length: String
+  elevationChange: String
+  groomed: Boolean
   contacts: ContactRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
@@ -2072,6 +2268,12 @@ type Mutation {
   updateOrgUnits(data: [OrgUnitUpdateArgs!]!): [OrgUnit]
   deleteOrgUnit(where: OrgUnitWhereUniqueInput!): OrgUnit
   deleteOrgUnits(where: [OrgUnitWhereUniqueInput!]!): [OrgUnit]
+  createOperatingHour(data: OperatingHourCreateInput!): OperatingHour
+  createOperatingHours(data: [OperatingHourCreateInput!]!): [OperatingHour]
+  updateOperatingHour(where: OperatingHourWhereUniqueInput!, data: OperatingHourUpdateInput!): OperatingHour
+  updateOperatingHours(data: [OperatingHourUpdateArgs!]!): [OperatingHour]
+  deleteOperatingHour(where: OperatingHourWhereUniqueInput!): OperatingHour
+  deleteOperatingHours(where: [OperatingHourWhereUniqueInput!]!): [OperatingHour]
   createPark(data: ParkCreateInput!): Park
   createParks(data: [ParkCreateInput!]!): [Park]
   updatePark(where: ParkWhereUniqueInput!, data: ParkUpdateInput!): Park
@@ -2148,6 +2350,9 @@ type Query {
   orgUnit(where: OrgUnitWhereUniqueInput!): OrgUnit
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  operatingHour(where: OperatingHourWhereUniqueInput!): OperatingHour
+  operatingHours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
+  operatingHoursCount(where: OperatingHourWhereInput! = {}): Int
   park(where: ParkWhereUniqueInput!): Park
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int

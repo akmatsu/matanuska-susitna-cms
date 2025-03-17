@@ -122,22 +122,27 @@ model ExternalLink {
 }
 
 model Facility {
-  id          String    @id @default(cuid())
+  id          String          @id @default(cuid())
   heroImage   String?
-  title       String    @unique @default("")
-  description String    @default("")
-  slug        String    @unique @default("")
-  owner       User?     @relation("Facility_owner", fields: [ownerId], references: [id])
-  ownerId     String?   @map("owner")
-  tags        Tag[]     @relation("Facility_tags")
-  contacts    Contact[] @relation("Contact_facilities")
-  services    Service[] @relation("Facility_services")
-  park        Park?     @relation("Facility_park", fields: [parkId], references: [id])
-  parkId      String?   @map("park")
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @default(now()) @updatedAt
+  title       String          @unique @default("")
+  description String          @default("")
+  slug        String          @unique @default("")
+  owner       User?           @relation("Facility_owner", fields: [ownerId], references: [id])
+  ownerId     String?         @map("owner")
+  body        String?
+  tags        Tag[]           @relation("Facility_tags")
+  address     Location?       @relation("Facility_address", fields: [addressId], references: [id])
+  addressId   String?         @map("address")
+  contacts    Contact[]       @relation("Contact_facilities")
+  services    Service[]       @relation("Facility_services")
+  park        Park?           @relation("Facility_park", fields: [parkId], references: [id])
+  parkId      String?         @map("park")
+  hours       OperatingHour[] @relation("Facility_hours")
+  createdAt   DateTime?       @default(now())
+  updatedAt   DateTime?       @default(now()) @updatedAt
 
   @@index([ownerId])
+  @@index([addressId])
   @@index([parkId])
 }
 
@@ -168,15 +173,17 @@ model Image {
 }
 
 model Location {
-  id                String @id @default(cuid())
-  title             String @unique @default("")
-  description       String @default("")
-  lineOne           String @default("")
-  lineTwo           String @default("")
-  city              String @default("")
-  state             String @default("AK")
-  zip               String
-  from_Park_address Park[] @relation("Park_address")
+  id                    String     @id @default(cuid())
+  title                 String     @unique @default("")
+  description           String     @default("")
+  lineOne               String     @default("")
+  lineTwo               String     @default("")
+  city                  String     @default("")
+  state                 String     @default("AK")
+  zip                   String
+  from_Facility_address Facility[] @relation("Facility_address")
+  from_Park_address     Park[]     @relation("Park_address")
+  from_Trail_address    Trail[]    @relation("Trail_address")
 }
 
 model OrgUnit {
@@ -201,24 +208,34 @@ model OrgUnit {
   @@index([parentId])
 }
 
+model OperatingHour {
+  id                  String     @id @default(cuid())
+  day                 String
+  open                String     @default("")
+  close               String     @default("")
+  from_Facility_hours Facility[] @relation("Facility_hours")
+  from_Park_hours     Park[]     @relation("Park_hours")
+}
+
 model Park {
-  id          String     @id @default(cuid())
+  id          String          @id @default(cuid())
   heroImage   String?
-  title       String     @unique @default("")
-  description String     @default("")
-  slug        String     @unique @default("")
-  owner       User?      @relation("Park_owner", fields: [ownerId], references: [id])
-  ownerId     String?    @map("owner")
+  title       String          @unique @default("")
+  description String          @default("")
+  slug        String          @unique @default("")
+  owner       User?           @relation("Park_owner", fields: [ownerId], references: [id])
+  ownerId     String?         @map("owner")
   body        String?
-  tags        Tag[]      @relation("Park_tags")
-  address     Location?  @relation("Park_address", fields: [addressId], references: [id])
-  addressId   String?    @map("address")
-  contacts    Contact[]  @relation("Contact_parks")
-  services    Service[]  @relation("Park_services")
-  trails      Trail[]    @relation("Trail_park")
-  facilities  Facility[] @relation("Facility_park")
-  createdAt   DateTime?  @default(now())
-  updatedAt   DateTime?  @default(now()) @updatedAt
+  tags        Tag[]           @relation("Park_tags")
+  address     Location?       @relation("Park_address", fields: [addressId], references: [id])
+  addressId   String?         @map("address")
+  contacts    Contact[]       @relation("Contact_parks")
+  services    Service[]       @relation("Park_services")
+  trails      Trail[]         @relation("Trail_park")
+  facilities  Facility[]      @relation("Facility_park")
+  hours       OperatingHour[] @relation("Park_hours")
+  createdAt   DateTime?       @default(now())
+  updatedAt   DateTime?       @default(now()) @updatedAt
 
   @@index([ownerId])
   @@index([addressId])
@@ -274,22 +291,47 @@ model Tag {
 }
 
 model Trail {
-  id          String    @id @default(cuid())
-  heroImage   String?
-  title       String    @unique @default("")
-  description String    @default("")
-  slug        String    @unique @default("")
-  owner       User?     @relation("Trail_owner", fields: [ownerId], references: [id])
-  ownerId     String?   @map("owner")
-  tags        Tag[]     @relation("Tag_trails")
-  contacts    Contact[] @relation("Contact_trails")
-  services    Service[] @relation("Service_trails")
-  park        Park?     @relation("Trail_park", fields: [parkId], references: [id])
-  parkId      String?   @map("park")
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @default(now()) @updatedAt
+  id                 String    @id @default(cuid())
+  heroImage          String?
+  title              String    @unique @default("")
+  description        String    @default("")
+  slug               String    @unique @default("")
+  owner              User?     @relation("Trail_owner", fields: [ownerId], references: [id])
+  ownerId            String?   @map("owner")
+  body               String?
+  tags               Tag[]     @relation("Tag_trails")
+  address            Location? @relation("Trail_address", fields: [addressId], references: [id])
+  addressId          String?   @map("address")
+  open               Boolean   @default(false)
+  summer             Boolean   @default(false)
+  fall               Boolean   @default(false)
+  winter             Boolean   @default(false)
+  spring             Boolean   @default(false)
+  hiking             Boolean   @default(false)
+  biking             Boolean   @default(false)
+  horsebackRiding    Boolean   @default(false)
+  crossCountrySkiing Boolean   @default(false)
+  snowshoeing        Boolean   @default(false)
+  frisbeeGolf        Boolean   @default(false)
+  dogWalking         Boolean   @default(false)
+  running            Boolean   @default(false)
+  snowMachining      Boolean   @default(false)
+  atv                Boolean   @default(false)
+  dirtBiking         Boolean   @default(false)
+  mushing            Boolean   @default(false)
+  difficulty         String?
+  length             String    @default("")
+  elevationChange    String    @default("")
+  groomed            Boolean   @default(false)
+  contacts           Contact[] @relation("Contact_trails")
+  services           Service[] @relation("Service_trails")
+  park               Park?     @relation("Trail_park", fields: [parkId], references: [id])
+  parkId             String?   @map("park")
+  createdAt          DateTime? @default(now())
+  updatedAt          DateTime? @default(now()) @updatedAt
 
   @@index([ownerId])
+  @@index([addressId])
   @@index([parkId])
 }
 

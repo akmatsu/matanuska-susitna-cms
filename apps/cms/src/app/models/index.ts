@@ -11,6 +11,7 @@ import { Highlight } from './Highlight';
 import { Image } from './Image';
 import { Location } from './Location';
 import { OrgUnit } from './OrgUnit';
+import { OperatingHour } from './OperatingHour';
 import { Park } from './Park';
 import { Service } from './Service';
 import { Tag } from './Tag';
@@ -31,6 +32,7 @@ export const lists = {
   Image,
   Location,
   OrgUnit,
+  OperatingHour,
   Park,
   Service,
   Tag,
