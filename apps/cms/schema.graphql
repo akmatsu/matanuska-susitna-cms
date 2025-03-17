@@ -1432,6 +1432,9 @@ type Park {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   liveUrl: String
   slug: String
   owner: User
@@ -1468,6 +1471,9 @@ input ParkWhereInput {
   id: IDFilter
   title: StringFilter
   description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
   slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
@@ -1488,6 +1494,9 @@ input ParkOrderByInput {
   heroImage: BlueHarvestImageOrderDirection
   title: OrderDirection
   description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
   createdAt: OrderDirection
@@ -1498,6 +1507,9 @@ input ParkUpdateInput {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
@@ -1522,6 +1534,9 @@ input ParkCreateInput {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
