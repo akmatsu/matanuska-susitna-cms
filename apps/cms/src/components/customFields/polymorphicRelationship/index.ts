@@ -6,9 +6,7 @@ import {
 } from '@keystone-6/core/types';
 
 export function polymorphicRelationship<ListTypeInfo extends BaseListTypeInfo>(
-  config: CommonFieldConfig<ListTypeInfo> & {
-    availableTypes: { value: string; label: string }[];
-  },
+  config: CommonFieldConfig<ListTypeInfo> = {},
 ): FieldTypeFunc<ListTypeInfo> {
   return json({
     ...config,

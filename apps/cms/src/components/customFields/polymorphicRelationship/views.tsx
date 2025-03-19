@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {
   FieldController,
@@ -6,9 +7,18 @@ import {
 } from '@keystone-6/core/types';
 
 type PolymorphicValue = {
-  itemType?: string | null;
-  itemId?: string | null;
+  itemType?: { label: string; value: string } | null;
+  itemId?: { label: string; value: string } | null;
 };
+
+import {
+  FieldContainer,
+  FieldLabel,
+  FieldDescription,
+  Select,
+} from '@keystone-ui/fields';
+import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import pluralize from 'pluralize';
 
 type AvailableType = {
   value: string;
@@ -20,57 +30,87 @@ export function Field({
   value,
   onChange,
 }: FieldProps<typeof controller>) {
+  const plural = pluralize(value?.itemType?.value || 'services');
+  const { data } = useQuery(
+    gql`
+      query Get${plural}($where: ${value?.itemType?.label?.replace(' ', 'Service') || ''}WhereInput!) {
+        ${plural}(where: $where) {
+          title
+          id
+        }
+      }
+    `,
+    {
+      variables: {
+        where: {
+          title: {
+            contains: value?.itemId || '',
+            mode: 'insensitive',
+          },
+        },
+      },
+      skip: !value?.itemType?.value,
+    },
+  );
+
   return (
-    <div>
-      <div>{field.label}</div>
-      <div>{field.description}</div>
+    <FieldContainer>
+      <FieldLabel>{field.label}</FieldLabel>
+      <FieldDescription id={`${field.path}-description`}>
+        {field.description}
+      </FieldDescription>
       <div>
-        <select
-          value={value?.itemType || ''}
-          onChange={(event) => {
+        <Select
+          value={value?.itemType || null}
+          placeholder="Select a type..."
+          options={field.availableTypes}
+          onChange={(item) => {
             onChange?.({
-              itemType: event.target.value,
+              itemType: item,
               itemId: null,
             });
           }}
-        >
-          <option value="">Select a type</option>
-          {field.availableTypes.map((type) => (
-            <option key={type.value} value={type.value}>
-              {type.label}
-            </option>
-          ))}
-        </select>
-        {value?.itemType ? (
-          <input
-            value={value.itemId || ''}
-            onChange={(event) => {
-              onChange?.({
-                itemType: value.itemType,
-                itemId: event.target.value,
-              });
-            }}
-          />
-        ) : null}
+        ></Select>
       </div>
-    </div>
+      {value && value?.itemType && (
+        <Select
+          value={value?.itemId || null}
+          options={data?.[plural].map((i: { title: string; id: string }) => ({
+            label: i.title,
+            value: i.id,
+          }))}
+          onChange={(item) => {
+            onChange?.({
+              itemType: value?.itemType,
+              itemId: item,
+            });
+          }}
+        ></Select>
+      )}
+    </FieldContainer>
   );
 }
 
 export const controller = (
-  config: FieldControllerConfig<{ availableTypes: AvailableType[] }>,
+  config: FieldControllerConfig<{}>,
 ): FieldController<PolymorphicValue | null, string> & {
   availableTypes: AvailableType[];
 } => {
   return {
-    availableTypes: config.fieldMeta?.availableTypes,
+    availableTypes: [
+      { value: 'service', label: 'Service' },
+      { value: 'park', label: 'Park' },
+      { value: 'trail', label: 'Trail' },
+      { value: 'facility', label: 'Facility' },
+      { value: 'community', label: 'Community' },
+      { value: 'assemblyDistrict', label: 'Assembly District' },
+      { value: 'orgUnit', label: 'Org Unit' },
+      { value: 'externalLink', label: 'External Link' },
+    ],
     path: config.path,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path} {
-      itemType
-      itemId
-    }`,
+    graphqlSelection: `${config.path}`,
     defaultValue: null,
     deserialize: (data: any) => {
       const value = data[config.path];

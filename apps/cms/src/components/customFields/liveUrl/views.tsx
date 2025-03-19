@@ -32,7 +32,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
 export const Cell: CellComponent = ({ item, field }) => {
   return (
     <CellContainer>
-      <p>I AM A CELL</p>
+      <Link href={item.liveUrl}>{item.liveUrl}</Link>
     </CellContainer>
   );
 };

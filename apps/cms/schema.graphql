@@ -1075,18 +1075,22 @@ input OperatingHourRelateToManyForCreateInput {
 type Highlight {
   id: ID!
   title: String
+  description: String
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
   image: String
   message: String
-  internalLink: String
-  externalLink: String
+  link: JSON
+  linkedItem: LinkedItemUnion
   editorNotes: String
 }
 
+union LinkedItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | ExternalLink
+
 input HighlightWhereUniqueInput {
   id: ID
+  title: String
 }
 
 input HighlightWhereInput {
@@ -1095,42 +1099,36 @@ input HighlightWhereInput {
   NOT: [HighlightWhereInput!]
   id: IDFilter
   title: StringFilter
+  description: StringFilter
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
   image: StringFilter
   message: StringFilter
-  externalLink: StringNullableFilter
   editorNotes: StringFilter
 }
 
 input HighlightOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  description: OrderDirection
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   image: OrderDirection
   message: OrderDirection
-  internalLink: LinkOrderDirection
-  externalLink: OrderDirection
   editorNotes: OrderDirection
-}
-
-enum LinkOrderDirection {
-  asc
-  desc
 }
 
 input HighlightUpdateInput {
   title: String
+  description: String
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
   image: String
   message: String
-  internalLink: String
-  externalLink: String
+  link: JSON
   editorNotes: String
 }
 
@@ -1141,13 +1139,13 @@ input HighlightUpdateArgs {
 
 input HighlightCreateInput {
   title: String
+  description: String
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
   image: String
   message: String
-  internalLink: String
-  externalLink: String
+  link: JSON
   editorNotes: String
 }
 

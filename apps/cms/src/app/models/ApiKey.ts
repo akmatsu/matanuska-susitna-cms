@@ -23,10 +23,8 @@ export const ApiKey: ListConfig<any> = list({
       },
       hooks: {
         resolveInput({ operation, resolvedData, fieldKey }) {
-          console.log(operation);
           if (operation === 'create') {
             const key = randomBytes(32).toString('hex');
-            console.log(key);
             return key;
           }
           return resolvedData?.[fieldKey];

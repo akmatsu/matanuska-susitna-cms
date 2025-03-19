@@ -66,10 +66,6 @@ export function CustomNavigation({
 
   const otherLists = lists.filter((list) => !excludeKeys.has(list.key));
 
-  useEffect(() => {
-    console.log('CustomNavigation', otherLists);
-  }, [authenticatedItem, lists]);
-
   return (
     <NavigationContainer authenticatedItem={authenticatedItem}>
       <ListSection title="Home">

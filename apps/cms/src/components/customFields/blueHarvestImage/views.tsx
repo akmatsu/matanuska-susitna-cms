@@ -96,10 +96,10 @@ export function Field({
   );
 }
 
-export const Cell: CellComponent = ({ item, field }) => {
+export const Cell: CellComponent = ({ item }) => {
   return (
     <CellContainer>
-      <p>I AM A CELL</p>
+      <p>{item.heroImage}</p>
     </CellContainer>
   );
 };

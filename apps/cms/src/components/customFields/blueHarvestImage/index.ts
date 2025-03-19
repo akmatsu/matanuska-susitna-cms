@@ -24,6 +24,12 @@ export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
       scalar: 'String',
     })({
       ...config,
+      ui: {
+        ...config.ui,
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
       input: {
         create: {
           arg: graphql.arg({ type: graphql.String }),
@@ -45,6 +51,7 @@ export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
         },
       }),
       views: './src/components/customFields/blueHarvestImage/views.tsx',
+
       getAdminMeta() {
         return {};
       },
