@@ -151,16 +151,16 @@ model Facility {
 }
 
 model Highlight {
-  id           String    @id @default(cuid())
-  title        String    @default("")
-  publishAt    DateTime?
-  unpublishAt  DateTime?
-  reviewDate   DateTime?
-  image        String    @default("")
-  message      String    @default("")
-  internalLink String?
-  externalLink String?
-  editorNotes  String    @default("")
+  id          String    @id @default(cuid())
+  title       String    @unique @default("")
+  description String    @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  image       String    @default("")
+  message     String    @default("")
+  link        Json?
+  editorNotes String    @default("")
 }
 
 model Image {

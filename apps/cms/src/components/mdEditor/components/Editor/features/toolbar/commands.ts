@@ -36,15 +36,6 @@ function toggleNode(
       const isNotTheSameLevel =
         hasLevelAttr && node.attrs.level !== attrs?.level;
 
-      console.log('Is not current node type: ', isNotCurrentNodeType);
-      console.log('Is header: ', isHeader);
-      console.log(
-        'Has the level attribute: ',
-        hasLevelAttr,
-        node.attrs.level,
-        attrs?.level,
-      );
-
       if (isNotCurrentNodeType || (isHeader && isNotTheSameLevel)) {
         dispatch(tr.setBlockType($from.pos, $to.pos, nodeType, attrs));
       } else {
