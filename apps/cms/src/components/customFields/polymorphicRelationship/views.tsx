@@ -19,6 +19,7 @@ import {
 } from '@keystone-ui/fields';
 import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import pluralize from 'pluralize';
+import { capitalizeFirstLetter, toPascalCase } from '../../../utils';
 
 type AvailableType = {
   value: string;
@@ -31,9 +32,10 @@ export function Field({
   onChange,
 }: FieldProps<typeof controller>) {
   const plural = pluralize(value?.itemType?.value || 'services');
+
   const { data } = useQuery(
     gql`
-      query Get${plural}($where: ${value?.itemType?.label?.replace(' ', 'Service') || ''}WhereInput!) {
+      query Get${capitalizeFirstLetter(plural)}($where: ${value?.itemType?.label ? toPascalCase(value.itemType.label) : ''}WhereInput!) {
         ${plural}(where: $where) {
           title
           id

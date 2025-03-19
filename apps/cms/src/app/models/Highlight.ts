@@ -100,6 +100,7 @@ export const Highlight: ListConfig<any> = list({
                 const itemId = item.link.itemId.value as string;
 
                 const capitalizedListKey = capitalizeFirstLetter(listKey);
+                console.log(capitalizedListKey);
                 try {
                   const linkedItem = await context.query[
                     capitalizedListKey
@@ -119,8 +120,8 @@ export const Highlight: ListConfig<any> = list({
                   });
 
                   return {
+                    ...linkedItem,
                     id: linkedItem.id,
-                    title: linkedItem.title,
                     __typename: linkedItem.__typename,
                   };
                 } catch (err) {
