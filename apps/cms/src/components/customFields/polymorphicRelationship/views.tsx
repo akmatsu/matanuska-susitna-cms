@@ -107,7 +107,7 @@ export const controller = (
       { value: 'community', label: 'Community' },
       { value: 'assemblyDistrict', label: 'Assembly District' },
       { value: 'orgUnit', label: 'Org Unit' },
-      { value: 'externalLink', label: 'External Link' },
+      { value: 'url', label: 'Url' },
     ],
     path: config.path,
     label: config.label,

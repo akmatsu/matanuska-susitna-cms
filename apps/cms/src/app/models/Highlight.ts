@@ -1,136 +1,49 @@
-import { graphql, group, list, ListConfig } from '@keystone-6/core';
-import { publishable, titleAndDescription, urlRegex } from '../fieldUtils';
-import { text, virtual } from '@keystone-6/core/fields';
-import { isAdmin } from '../access/roles';
-import { adminOnlyOperationAccess } from '../access';
-import { polymorphicRelationship } from '../../components/customFields/polymorphicRelationship';
-import { capitalizeFirstLetter } from '../../utils';
+import { list, ListConfig } from '@keystone-6/core';
+import { publishable, timestamps, titleAndDescription } from '../fieldUtils';
+import { relationship, text } from '@keystone-6/core/fields';
+import { isContentManager } from '../access/roles';
+import { elevatedOperationAccess } from '../access';
+
+import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 
 export const Highlight: ListConfig<any> = list({
   access: {
-    operation: adminOnlyOperationAccess,
+    operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: (args) => !isAdmin(args),
+    isHidden: (args) => !isContentManager(args),
   },
   graphql: {
     maxTake: 100,
   },
   fields: {
-    ...titleAndDescription(),
-    ...publishable,
-    image: text({
-      ui: {
-        description:
-          'URL to a web hosted image. See images.matsu.gov for internal Borough images.',
-      },
+    title: text({
       validation: {
         isRequired: true,
-        match: {
-          regex: urlRegex,
-          explanation: 'Use a valid URL to a web hosted image.',
+        length: {
+          max: 100,
+          min: 2,
         },
       },
+      ui: {
+        displayMode: 'input',
+      },
+      isIndexed: 'unique',
     }),
-    ...group({
-      label: 'Call to Action',
-      description:
-        'These fields are for controlling the call to action display on the highlight',
-      fields: {
-        message: text({ ui: { displayMode: 'textarea' } }),
-        link: polymorphicRelationship({}),
-        linkedItem: virtual({
-          ui: {
-            query: `{
-              __typename
-              ... on Service { id title slug description}
-              ... on Park { id title slug description}
-              ... on Trail { id title slug description}
-              ... on Facility { id title slug description}
-              ... on Community { id title slug description}
-              ... on AssemblyDistrict { id title slug description}
-              ... on OrgUnit { id title slug description}
-              ... on ExternalLink { id title description url}
-            }`,
-          },
-          field: (lists) =>
-            graphql.field({
-              type: graphql.union({
-                name: 'LinkedItemUnion',
-                types: [
-                  lists.Service.types.output,
-                  lists.Park.types.output,
-                  lists.Trail.types.output,
-                  lists.Facility.types.output,
-                  lists.Community.types.output,
-                  lists.AssemblyDistrict.types.output,
-                  lists.OrgUnit.types.output,
-                  lists.ExternalLink.types.output,
-                ],
-                resolveType(item) {
-                  return item.__typename as string;
-                },
-              }),
-              async resolve(
-                item: {
-                  link?: {
-                    itemType?: {
-                      value?: string | null;
-                      label?: string | null;
-                    } | null;
-                    itemId?: {
-                      value?: string | null;
-                      label?: string | null;
-                    } | null;
-                  } | null;
-                },
-                args,
-                context,
-              ) {
-                if (
-                  !item.link ||
-                  !item.link.itemType ||
-                  !item.link.itemId ||
-                  !item.link.itemType.value ||
-                  !item.link.itemId.value
-                ) {
-                  return null;
-                }
-                const listKey = item.link.itemType.value as string;
-                const itemId = item.link.itemId.value as string;
+    ...publishable,
 
-                const capitalizedListKey = capitalizeFirstLetter(listKey);
-                console.log(capitalizedListKey);
-                try {
-                  const linkedItem = await context.query[
-                    capitalizedListKey
-                  ].findOne({
-                    where: { id: itemId },
-                    query: `
-                      __typename 
-                      ${capitalizedListKey === 'Service' ? 'id title slug description' : ''}
-                      ${capitalizedListKey === 'Park' ? 'id title slug description' : ''}
-                      ${capitalizedListKey === 'Trail' ? 'id title slug description' : ''}
-                      ${capitalizedListKey === 'Facility' ? 'id title description' : ''}
-                      ${capitalizedListKey === 'Community' ? 'id title description' : ''}
-                      ${capitalizedListKey === 'AssemblyDistrict' ? 'id title slug description' : ''}
-                      ${capitalizedListKey === 'OrgUnit' ? 'id title slug description' : ''}
-                      ${capitalizedListKey === 'ExternalLink' ? 'id title description url' : ''}
-                    `.trim(),
-                  });
+    image: blueHarvestImage({
+      notBanner: true,
+    }),
 
-                  return {
-                    ...linkedItem,
-                    id: linkedItem.id,
-                    __typename: linkedItem.__typename,
-                  };
-                } catch (err) {
-                  console.error(err);
-                  return null;
-                }
-              },
-            }),
-        }),
+    message: text({ ui: { displayMode: 'textarea' } }),
+    linkedItem: relationship({
+      ref: 'InternalLink',
+      ui: {
+        displayMode: 'cards',
+        cardFields: ['label', 'item'],
+        inlineCreate: { fields: ['label', 'selectItem'] },
+        inlineEdit: { fields: ['label', 'selectItem'] },
       },
     }),
     editorNotes: text({
@@ -138,5 +51,6 @@ export const Highlight: ListConfig<any> = list({
         displayMode: 'textarea',
       },
     }),
+    ...timestamps,
   },
 });

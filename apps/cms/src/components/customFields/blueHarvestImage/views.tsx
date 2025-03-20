@@ -58,6 +58,7 @@ export function Field({
   }
 
   useEffect(() => {
+    console.log(field);
     onChange?.(`${image}?position=${backgroundPosition}`);
   }, [backgroundPosition]);
 
@@ -76,7 +77,9 @@ export function Field({
         value={value || ''}
         onChange={(e) => onChange?.(e.target.value)}
       />
-      {value && (
+      {field.notBanner ? (
+        <img src={image}></img>
+      ) : (
         <div
           onMouseDown={() => setIsDragging(true)}
           onMouseUp={() => setIsDragging(false)}
@@ -114,9 +117,12 @@ export const CardValue: CardValueComponent = ({ field, item }) => {
 };
 
 export const controller = (
-  config: FieldControllerConfig<{}>,
-): FieldController<string | null, string> => {
+  config: FieldControllerConfig<{ notBanner?: boolean }>,
+): FieldController<string | null, string> & {
+  notBanner?: boolean;
+} => {
   return {
+    notBanner: config.fieldMeta.notBanner,
     path: config.path,
     label: config.label,
     description: config.description,

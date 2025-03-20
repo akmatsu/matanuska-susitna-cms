@@ -4,7 +4,6 @@ import {
   KeystoneContext,
 } from '@keystone-6/core/types';
 import { Session } from '../../session';
-import { key } from '@milkdown/kit/plugin/listener';
 
 export type BaseAccessArgs<ListTypeInfo extends BaseListTypeInfo> = {
   context: KeystoneContext<ListTypeInfo['all']>;

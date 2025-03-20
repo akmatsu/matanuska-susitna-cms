@@ -1,7 +1,6 @@
 import { list, ListConfig } from '@keystone-6/core';
 import { generalOperationAccess, isAdmin } from '../access';
-import { titleAndDescription, urlRegex } from '../fieldUtils';
-import { text } from '@keystone-6/core/fields';
+import { relationship, text } from '@keystone-6/core/fields';
 
 export const ExternalLink: ListConfig<any> = list({
   access: {
@@ -11,14 +10,22 @@ export const ExternalLink: ListConfig<any> = list({
     isHidden: async (args) => !(await isAdmin(args)),
   },
   fields: {
-    ...titleAndDescription(),
-    url: text({
-      isIndexed: 'unique',
+    label: text({
       validation: {
         isRequired: true,
-        match: {
-          regex: urlRegex,
-          explanation: 'Must be a valid URL.',
+      },
+    }),
+    url: relationship({
+      ref: 'Url',
+      ui: {
+        displayMode: 'cards',
+        cardFields: ['title', 'description', 'url', 'owner'],
+        inlineCreate: {
+          fields: ['title', 'description', 'url'],
+        },
+        inlineConnect: true,
+        inlineEdit: {
+          fields: ['url'],
         },
       },
     }),
