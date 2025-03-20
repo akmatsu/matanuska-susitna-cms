@@ -24,7 +24,7 @@ export const User: ListConfig<any> = list({
     }),
     name: text({ validation: { isRequired: true } }),
     email: text({
-      validation: { isRequired: true },
+      validation: { isRequired: false },
       isIndexed: 'unique',
     }),
     password: password({
