@@ -37,7 +37,7 @@ export function trailToSearchableObj(item: any) {
 export const Trail: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('Trail'),
   },
   fields: {
     heroImage: blueHarvestImage(),

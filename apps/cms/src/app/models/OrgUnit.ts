@@ -35,7 +35,7 @@ export function orgUnitToSearchableObj(item: any): TypeSensePageDocument {
 export const OrgUnit: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('OrgUnit'),
   },
   fields: {
     heroImage: blueHarvestImage(),

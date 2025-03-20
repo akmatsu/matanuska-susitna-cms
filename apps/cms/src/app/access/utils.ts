@@ -86,13 +86,18 @@ export const adminOnlyOperationAccess: Operation = {
  * 2. {@link isOwner|Owners} can update and delete
  * 3. {@link belongsToGroup|Group Members} can update and delete
  */
-export const generalItemAccess: Item = {
-  update: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
-    isContentManager(args) || isOwner(args) || belongsToGroup(args, 'Service'),
+export const generalItemAccess = (listKey: string) =>
+  ({
+    update: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
+      (await isContentManager(args)) ||
+      (await isOwner(args)) ||
+      (await belongsToGroup(args, listKey)),
 
-  delete: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
-    isContentManager(args) || isOwner(args) || belongsToGroup(args, 'Service'),
-} satisfies Item;
+    delete: async (args: BaseAccessArgs<BaseListTypeInfo>) =>
+      (await isContentManager(args)) ||
+      (await isOwner(args)) ||
+      (await belongsToGroup(args, listKey)),
+  }) satisfies Item;
 
 /**
  * Filters out unpublished items from query results from public requests.

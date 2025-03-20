@@ -15,7 +15,7 @@ import { text } from '@keystone-6/core/fields';
 export const Url: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('Url'),
   },
   ui: {
     isHidden: async (args) => !(await isContentManager(args)),

@@ -6,7 +6,7 @@ import { generalItemAccess, generalOperationAccess } from '../access';
 export const UserGroup: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('UserGroup'),
   },
   fields: {
     name: text({ validation: { isRequired: true } }),

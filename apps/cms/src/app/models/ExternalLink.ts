@@ -11,22 +11,20 @@ export const ExternalLink: ListConfig<any> = list({
   },
   fields: {
     label: text({
-      validation: {
-        isRequired: true,
+      ui: {
+        description:
+          'The text that will be displayed for the link. If not provided, the URL title will be used.',
       },
     }),
     url: relationship({
       ref: 'Url',
       ui: {
         displayMode: 'cards',
-        cardFields: ['title', 'description', 'url', 'owner'],
+        cardFields: ['title', 'url', 'owner'],
         inlineCreate: {
-          fields: ['title', 'description', 'url'],
+          fields: ['title', 'url'],
         },
         inlineConnect: true,
-        inlineEdit: {
-          fields: ['url'],
-        },
       },
     }),
   },

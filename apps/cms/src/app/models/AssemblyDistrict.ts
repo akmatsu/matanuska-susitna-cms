@@ -13,7 +13,7 @@ import { relationship, text, timestamp } from '@keystone-6/core/fields';
 export const AssemblyDistrict: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('AssemblyDistrict'),
   },
   fields: {
     ...titleAndDescription(),

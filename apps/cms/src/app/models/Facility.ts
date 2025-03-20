@@ -37,7 +37,7 @@ export function facilityToSearchableObj(item: any) {
 export const Facility: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('Facility'),
   },
   fields: {
     heroImage: blueHarvestImage(),

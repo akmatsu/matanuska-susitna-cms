@@ -44,7 +44,7 @@ export function parkToSearchableObj(item: any) {
 export const Park: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('Park'),
   },
   fields: {
     heroImage: blueHarvestImage(),

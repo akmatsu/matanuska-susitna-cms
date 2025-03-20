@@ -43,7 +43,7 @@ export function serviceToSearchableObj(item: any): TypeSensePageDocument {
 export const Service: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('Service'),
     filter: filterByPubDates,
   },
   graphql: {
@@ -162,6 +162,7 @@ export const Service: ListConfig<any> = list({
         },
       },
     }),
+
     communities: relationship({
       ref: 'Community.services',
       many: true,
@@ -172,6 +173,7 @@ export const Service: ListConfig<any> = list({
         hideCreate: true,
       },
     }),
+
     orgUnits: relationship({
       ref: 'OrgUnit.services',
       many: true,
@@ -179,15 +181,22 @@ export const Service: ListConfig<any> = list({
         itemView: {
           fieldPosition: 'sidebar',
         },
+        createView: {
+          fieldMode: 'hidden',
+        },
         hideCreate: true,
       },
     }),
+
     trails: relationship({
       ref: 'Trail.services',
       many: true,
       ui: {
         itemView: {
           fieldPosition: 'sidebar',
+        },
+        createView: {
+          fieldMode: 'hidden',
         },
         hideCreate: true,
       },
@@ -199,6 +208,9 @@ export const Service: ListConfig<any> = list({
         itemView: {
           fieldPosition: 'sidebar',
         },
+        createView: {
+          fieldMode: 'hidden',
+        },
         hideCreate: true,
       },
     }),
@@ -208,6 +220,9 @@ export const Service: ListConfig<any> = list({
       ui: {
         itemView: {
           fieldPosition: 'sidebar',
+        },
+        createView: {
+          fieldMode: 'hidden',
         },
         hideCreate: true,
       },

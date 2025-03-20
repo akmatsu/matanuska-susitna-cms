@@ -57,7 +57,7 @@ export function toSearchableObj(item: any): TypeSensePageDocument {
 export const Community: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess,
+    item: generalItemAccess('Community'),
     filter: filterByPubDates,
   },
   graphql: {
