@@ -61,10 +61,11 @@ export const Park: ListConfig<any> = list({
       many: false,
       ui: {
         displayMode: 'cards',
-        cardFields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
+        cardFields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
         inlineCreate: {
           fields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
         },
+        inlineEdit: { fields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'] },
         inlineConnect: true,
         itemView: {
           fieldPosition: 'sidebar',
