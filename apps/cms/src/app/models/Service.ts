@@ -64,13 +64,13 @@ export const Service: ListConfig<any> = list({
           fieldPosition: 'sidebar',
         },
         displayMode: 'cards',
-        cardFields: ['title', 'url'],
+        cardFields: ['label', 'url'],
         inlineCreate: {
-          fields: ['title', 'url'],
+          fields: ['label', 'url'],
         },
         inlineConnect: true,
         inlineEdit: {
-          fields: ['title', 'url'],
+          fields: ['label', 'url'],
         },
       },
       many: false,
@@ -83,13 +83,13 @@ export const Service: ListConfig<any> = list({
           fieldPosition: 'sidebar',
         },
         displayMode: 'cards',
-        cardFields: ['title', 'url'],
+        cardFields: ['label', 'url'],
         inlineCreate: {
-          fields: ['title', 'url'],
+          fields: ['label', 'url'],
         },
         inlineConnect: true,
         inlineEdit: {
-          fields: ['title', 'url'],
+          fields: ['label', 'url'],
         },
       },
       many: true,
@@ -119,6 +119,7 @@ export const Service: ListConfig<any> = list({
             },
           },
         }),
+
         actionUrl: text({
           validation: {
             match: {

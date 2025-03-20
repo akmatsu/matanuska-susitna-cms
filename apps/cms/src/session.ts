@@ -32,10 +32,11 @@ export const nextAuthOptions: AuthOptions = {
       });
 
       if (!u) {
-        await sudoContext.query.u.createOne({
+        await sudoContext.query.User.createOne({
           data: {
             authId: user.id,
             name: user.name,
+            email: user.email,
           },
         });
       }

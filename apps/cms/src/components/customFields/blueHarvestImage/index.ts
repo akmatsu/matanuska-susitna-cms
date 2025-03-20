@@ -7,7 +7,9 @@ import {
 } from '@keystone-6/core/types';
 
 type BlueHarvestImageConfig<ListTypeInfo extends BaseListTypeInfo> =
-  CommonFieldConfig<ListTypeInfo>;
+  CommonFieldConfig<ListTypeInfo> & {
+    notBanner?: boolean;
+  };
 
 const BlueHarvestImageOrderDirectionEnum = graphql.enum({
   name: 'BlueHarvestImageOrderDirection',
@@ -15,6 +17,7 @@ const BlueHarvestImageOrderDirectionEnum = graphql.enum({
 });
 
 export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
+  notBanner,
   ...config
 }: BlueHarvestImageConfig<ListTypeInfo> = {}): FieldTypeFunc<ListTypeInfo> {
   return (meta) =>
@@ -53,7 +56,9 @@ export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
       views: './src/components/customFields/blueHarvestImage/views.tsx',
 
       getAdminMeta() {
-        return {};
+        return {
+          ...(notBanner && { notBanner }),
+        };
       },
     });
 }

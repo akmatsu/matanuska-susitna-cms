@@ -868,15 +868,12 @@ input DocumentRelateToManyForCreateInput {
 
 type ExternalLink {
   id: ID!
-  title: String
-  description: String
-  url: String
+  label: String
+  url: Url
 }
 
 input ExternalLinkWhereUniqueInput {
   id: ID
-  title: String
-  url: String
 }
 
 input ExternalLinkWhereInput {
@@ -884,22 +881,24 @@ input ExternalLinkWhereInput {
   OR: [ExternalLinkWhereInput!]
   NOT: [ExternalLinkWhereInput!]
   id: IDFilter
-  title: StringFilter
-  description: StringFilter
-  url: StringFilter
+  label: StringFilter
+  url: UrlWhereInput
 }
 
 input ExternalLinkOrderByInput {
   id: OrderDirection
-  title: OrderDirection
-  description: OrderDirection
-  url: OrderDirection
+  label: OrderDirection
 }
 
 input ExternalLinkUpdateInput {
-  title: String
-  description: String
-  url: String
+  label: String
+  url: UrlRelateToOneForUpdateInput
+}
+
+input UrlRelateToOneForUpdateInput {
+  create: UrlCreateInput
+  connect: UrlWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ExternalLinkUpdateArgs {
@@ -908,9 +907,13 @@ input ExternalLinkUpdateArgs {
 }
 
 input ExternalLinkCreateInput {
-  title: String
-  description: String
-  url: String
+  label: String
+  url: UrlRelateToOneForCreateInput
+}
+
+input UrlRelateToOneForCreateInput {
+  create: UrlCreateInput
+  connect: UrlWhereUniqueInput
 }
 
 type Facility {
@@ -1075,18 +1078,16 @@ input OperatingHourRelateToManyForCreateInput {
 type Highlight {
   id: ID!
   title: String
-  description: String
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
   image: String
   message: String
-  link: JSON
-  linkedItem: LinkedItemUnion
+  linkedItem: InternalLink
   editorNotes: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
-
-union LinkedItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | ExternalLink
 
 input HighlightWhereUniqueInput {
   id: ID
@@ -1099,37 +1100,46 @@ input HighlightWhereInput {
   NOT: [HighlightWhereInput!]
   id: IDFilter
   title: StringFilter
-  description: StringFilter
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
-  image: StringFilter
   message: StringFilter
+  linkedItem: InternalLinkWhereInput
   editorNotes: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
 }
 
 input HighlightOrderByInput {
   id: OrderDirection
   title: OrderDirection
-  description: OrderDirection
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
-  image: OrderDirection
+  image: BlueHarvestImageOrderDirection
   message: OrderDirection
   editorNotes: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
 }
 
 input HighlightUpdateInput {
   title: String
-  description: String
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
   image: String
   message: String
-  link: JSON
+  linkedItem: InternalLinkRelateToOneForUpdateInput
   editorNotes: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input InternalLinkRelateToOneForUpdateInput {
+  create: InternalLinkCreateInput
+  connect: InternalLinkWhereUniqueInput
+  disconnect: Boolean
 }
 
 input HighlightUpdateArgs {
@@ -1139,14 +1149,20 @@ input HighlightUpdateArgs {
 
 input HighlightCreateInput {
   title: String
-  description: String
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
   image: String
   message: String
-  link: JSON
+  linkedItem: InternalLinkRelateToOneForCreateInput
   editorNotes: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input InternalLinkRelateToOneForCreateInput {
+  create: InternalLinkCreateInput
+  connect: InternalLinkWhereUniqueInput
 }
 
 type Image {
@@ -1216,6 +1232,47 @@ input ImageCreateInput {
   description: String
   tags: TagRelateToManyForCreateInput
   file: ImageFieldInput
+}
+
+type InternalLink {
+  id: ID!
+  label: String
+  selectItem: JSON
+  item: LinkedItemUnion
+}
+
+union LinkedItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url
+
+input InternalLinkWhereUniqueInput {
+  id: ID
+}
+
+input InternalLinkWhereInput {
+  AND: [InternalLinkWhereInput!]
+  OR: [InternalLinkWhereInput!]
+  NOT: [InternalLinkWhereInput!]
+  id: IDFilter
+  label: StringFilter
+}
+
+input InternalLinkOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+}
+
+input InternalLinkUpdateInput {
+  label: String
+  selectItem: JSON
+}
+
+input InternalLinkUpdateArgs {
+  where: InternalLinkWhereUniqueInput!
+  data: InternalLinkUpdateInput!
+}
+
+input InternalLinkCreateInput {
+  label: String
+  selectItem: JSON
 }
 
 type Location {
@@ -2072,6 +2129,67 @@ input TrailCreateInput {
   updatedAt: DateTime
 }
 
+type Url {
+  id: ID!
+  title: String
+  description: String
+  url: String
+  owner: User
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input UrlWhereUniqueInput {
+  id: ID
+  title: String
+  url: String
+}
+
+input UrlWhereInput {
+  AND: [UrlWhereInput!]
+  OR: [UrlWhereInput!]
+  NOT: [UrlWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  url: StringFilter
+  owner: UserWhereInput
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input UrlOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  url: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input UrlUpdateInput {
+  title: String
+  description: String
+  url: String
+  owner: UserRelateToOneForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input UrlUpdateArgs {
+  where: UrlWhereUniqueInput!
+  data: UrlUpdateInput!
+}
+
+input UrlCreateInput {
+  title: String
+  description: String
+  url: String
+  owner: UserRelateToOneForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type User {
   id: ID!
   authId: String
@@ -2329,6 +2447,12 @@ type Mutation {
   updateImages(data: [ImageUpdateArgs!]!): [Image]
   deleteImage(where: ImageWhereUniqueInput!): Image
   deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
+  createInternalLink(data: InternalLinkCreateInput!): InternalLink
+  createInternalLinks(data: [InternalLinkCreateInput!]!): [InternalLink]
+  updateInternalLink(where: InternalLinkWhereUniqueInput!, data: InternalLinkUpdateInput!): InternalLink
+  updateInternalLinks(data: [InternalLinkUpdateArgs!]!): [InternalLink]
+  deleteInternalLink(where: InternalLinkWhereUniqueInput!): InternalLink
+  deleteInternalLinks(where: [InternalLinkWhereUniqueInput!]!): [InternalLink]
   createLocation(data: LocationCreateInput!): Location
   createLocations(data: [LocationCreateInput!]!): [Location]
   updateLocation(where: LocationWhereUniqueInput!, data: LocationUpdateInput!): Location
@@ -2371,6 +2495,12 @@ type Mutation {
   updateTrails(data: [TrailUpdateArgs!]!): [Trail]
   deleteTrail(where: TrailWhereUniqueInput!): Trail
   deleteTrails(where: [TrailWhereUniqueInput!]!): [Trail]
+  createUrl(data: UrlCreateInput!): Url
+  createUrls(data: [UrlCreateInput!]!): [Url]
+  updateUrl(where: UrlWhereUniqueInput!, data: UrlUpdateInput!): Url
+  updateUrls(data: [UrlUpdateArgs!]!): [Url]
+  deleteUrl(where: UrlWhereUniqueInput!): Url
+  deleteUrls(where: [UrlWhereUniqueInput!]!): [Url]
   createUser(data: UserCreateInput!): User
   createUsers(data: [UserCreateInput!]!): [User]
   updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
@@ -2417,6 +2547,9 @@ type Query {
   image(where: ImageWhereUniqueInput!): Image
   images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ImageWhereUniqueInput): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int
+  internalLink(where: InternalLinkWhereUniqueInput!): InternalLink
+  internalLinks(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  internalLinksCount(where: InternalLinkWhereInput! = {}): Int
   location(where: LocationWhereUniqueInput!): Location
   locations(where: LocationWhereInput! = {}, orderBy: [LocationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LocationWhereUniqueInput): [Location!]
   locationsCount(where: LocationWhereInput! = {}): Int
@@ -2438,6 +2571,9 @@ type Query {
   trail(where: TrailWhereUniqueInput!): Trail
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  url(where: UrlWhereUniqueInput!): Url
+  urls(where: UrlWhereInput! = {}, orderBy: [UrlOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UrlWhereUniqueInput): [Url!]
+  urlsCount(where: UrlWhereInput! = {}): Int
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int

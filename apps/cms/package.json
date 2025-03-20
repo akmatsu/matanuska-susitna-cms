@@ -14,7 +14,9 @@
     "collections:create": "npx ts-node ./scripts/createCollections.ts",
     "collections:remove": "npx ts-node ./scripts/removeCollection.ts",
     "typesense:import:services": "npx ts-node ./scripts/importServices.ts",
-    "typesense:import:communities": "npx ts-node ./scripts/importCommunities.ts"
+    "typesense:import:communities": "npx ts-node ./scripts/importCommunities.ts",
+    "migration:resolve": "keystone prisma migrate resolve --rolled-back \"20250320194427_create_internal_links_and_updated_external_links\"",
+    "migration:status": "keystone prisma migrate status"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

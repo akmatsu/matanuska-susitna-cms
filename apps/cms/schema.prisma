@@ -114,11 +114,13 @@ model DocumentCollection {
 
 model ExternalLink {
   id                            String    @id @default(cuid())
-  title                         String    @unique @default("")
-  description                   String    @default("")
-  url                           String    @unique @default("")
+  label                         String    @default("")
+  url                           Url?      @relation("ExternalLink_url", fields: [urlId], references: [id])
+  urlId                         String?   @map("url")
   from_Service_primaryAction    Service[] @relation("Service_primaryAction")
   from_Service_secondaryActions Service[] @relation("Service_secondaryActions")
+
+  @@index([urlId])
 }
 
 model Facility {
@@ -151,16 +153,20 @@ model Facility {
 }
 
 model Highlight {
-  id          String    @id @default(cuid())
-  title       String    @unique @default("")
-  description String    @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  image       String    @default("")
-  message     String    @default("")
-  link        Json?
-  editorNotes String    @default("")
+  id           String        @id @default(cuid())
+  title        String        @unique @default("")
+  publishAt    DateTime?
+  unpublishAt  DateTime?
+  reviewDate   DateTime?
+  image        String?
+  message      String        @default("")
+  linkedItem   InternalLink? @relation("Highlight_linkedItem", fields: [linkedItemId], references: [id])
+  linkedItemId String?       @map("linkedItem")
+  editorNotes  String        @default("")
+  createdAt    DateTime?     @default(now())
+  updatedAt    DateTime?     @default(now()) @updatedAt
+
+  @@index([linkedItemId])
 }
 
 model Image {
@@ -174,6 +180,13 @@ model Image {
   file_height                 Int?
   file_extension              String?
   from_AssemblyDistrict_photo AssemblyDistrict[] @relation("AssemblyDistrict_photo")
+}
+
+model InternalLink {
+  id                        String      @id @default(cuid())
+  label                     String      @default("")
+  selectItem                Json?
+  from_Highlight_linkedItem Highlight[] @relation("Highlight_linkedItem")
 }
 
 model Location {
@@ -347,6 +360,20 @@ model Trail {
   @@index([parkId])
 }
 
+model Url {
+  id                    String         @id @default(cuid())
+  title                 String         @unique @default("")
+  description           String         @default("")
+  url                   String         @unique @default("")
+  owner                 User?          @relation("Url_owner", fields: [ownerId], references: [id])
+  ownerId               String?        @map("owner")
+  createdAt             DateTime?      @default(now())
+  updatedAt             DateTime?      @default(now()) @updatedAt
+  from_ExternalLink_url ExternalLink[] @relation("ExternalLink_url")
+
+  @@index([ownerId])
+}
+
 model User {
   id                            String               @id @default(cuid())
   authId                        String               @unique @default("")
@@ -366,6 +393,7 @@ model User {
   from_Park_owner               Park[]               @relation("Park_owner")
   from_Service_owner            Service[]            @relation("Service_owner")
   from_Trail_owner              Trail[]              @relation("Trail_owner")
+  from_Url_owner                Url[]                @relation("Url_owner")
   from_UserGroup_owner          UserGroup[]          @relation("UserGroup_owner")
 }
 
