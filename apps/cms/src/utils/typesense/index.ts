@@ -1,6 +1,7 @@
 import Typesense from 'typesense';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
+import { KeystoneContext } from '@keystone-6/core/types';
 
 export type TypeSensePageDocument = {
   id: string;
@@ -13,6 +14,8 @@ export type TypeSensePageDocument = {
   tags?: string[];
   url?: string;
   districts?: string[];
+  departments?: string[];
+  communities?: string[];
   type?: string;
 };
 
@@ -48,7 +51,113 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
       { name: 'tags', type: 'string[]', optional: true, facet: true },
       { name: 'url', type: 'string', optional: true },
       { name: 'districts', type: 'string[]', optional: true, facet: true },
+      { name: 'departments', type: 'string[]', optional: true, facet: true },
+      { name: 'communities', type: 'string[]', optional: true, facet: true },
       { name: 'type', type: 'string', optional: true, facet: true },
     ],
   },
 ];
+
+export const PAGE_TYPES = [
+  {
+    type: 'service',
+    async getItems(context: KeystoneContext<any>) {
+      const services = await context.prisma.service.findMany({
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          description: true,
+          body: true,
+          actionLabel: true,
+          publishAt: true,
+          tags: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      return services.map((service: any) => {
+        toSearchableObj(service, 'service');
+      });
+    },
+  },
+  {
+    type: 'community',
+    async getItems(context: KeystoneContext<any>) {
+      const communities = await context.prisma.community.findMany({
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          description: true,
+          publishAt: true,
+          districts: {
+            select: {
+              title: true,
+            },
+          },
+          tags: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      return communities.map((community: any) =>
+        toSearchableObj(community, 'community'),
+      );
+    },
+  },
+  {
+    type: 'department',
+    async getItems(context: KeystoneContext<any>) {
+      const departments = await context.prisma.orgUnit.findMany({
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          description: true,
+          publishAt: true,
+          tags: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      return departments.map((department: any) => {
+        toSearchableObj(department, 'department');
+      });
+    },
+  },
+];
+
+function toSearchableObj(item: any, type: string): TypeSensePageDocument {
+  return {
+    type,
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    body: item.body,
+    slug: item.slug,
+    action_label: item.actionLabel,
+    published_at: item.publishAt
+      ? Math.floor(new Date(item.publishAt).getTime() / 1000)
+      : undefined,
+    tags: item.tags.map((tag: { name: string }) => tag.name || ''),
+    departments: item.departments?.map(
+      (department: { title: string }) => department.title || '',
+    ),
+    districts: item.districts?.map(
+      (district: { title: string }) => district.title || '',
+    ),
+    communities: item.communities?.map(
+      (community: { title: string }) => community.title || '',
+    ),
+  };
+}

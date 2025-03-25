@@ -7,13 +7,11 @@ import { type Session } from './src/session';
 
 import {
   COLLECTIONS,
+  PAGE_TYPES,
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
 } from './src/utils/typesense';
 import { json } from 'express';
-import { serviceToSearchableObj } from './src/app/models/Service';
-import { toSearchableObj } from './src/app/models/Community';
-import { orgUnitToSearchableObj } from './src/app/models/OrgUnit';
 import { nextAuthSessionStrategy } from './src/session';
 
 export default config<TypeInfo<Session>>({
@@ -68,6 +66,56 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json(error);
         }
       });
+
+      app.post('/typesense/update-schema', json(), async (req, res) => {
+        try {
+          await Promise.all(
+            COLLECTIONS.map(async (collection) => {
+              const exists = await TYPESENSE_CLIENT.collections(
+                collection.name,
+              ).exists();
+              if (exists) {
+                const existingDocs = await TYPESENSE_CLIENT.collections(
+                  collection.name,
+                )
+                  .documents()
+                  .export();
+                await TYPESENSE_CLIENT.collections(collection.name).delete();
+                await TYPESENSE_CLIENT.collections().create(collection);
+                await TYPESENSE_CLIENT.collections(collection.name)
+                  .documents()
+                  .import(existingDocs, { action: 'upsert' });
+
+                console.log(
+                  `Collection ${collection.name} updated successfully`,
+                );
+              } else {
+                console.log(
+                  `Collection ${collection.name} does not exist. Skipping...`,
+                );
+              }
+            }),
+          );
+        } catch (error: any) {
+          return res.status(500).json(error);
+        }
+      });
+
+      app.post('/typesense/import-pages', json(), async (_, res) => {
+        try {
+          await Promise.all(
+            PAGE_TYPES.map(async (pageType) => {
+              const items = await pageType.getItems(commonContext);
+
+              TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+                .documents()
+                .import(items, { action: 'upsert' });
+            }),
+          );
+        } catch (error: any) {
+          return res.status(500).json;
+        }
+      });
       app.post('/typesense/remove-collection', json(), async (req, res) => {
         try {
           const collection: string = req.body.collection;
@@ -89,105 +137,6 @@ export default config<TypeInfo<Session>>({
           return res
             .status(204)
             .json({ message: `Collection ${collection} removed successfully` });
-        } catch (error: any) {
-          return res.status(500).json(error);
-        }
-      });
-      app.post('/typesense/import-services', json(), async (_, res) => {
-        try {
-          const services = await commonContext.prisma.service.findMany({
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              description: true,
-              body: true,
-              actionLabel: true,
-              publishAt: true,
-              tags: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          });
-          const formatted = services.map((service: any) =>
-            serviceToSearchableObj(service),
-          );
-
-          await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-            .documents()
-            .import(formatted, { action: 'upsert' });
-          return res.status(200).json({ message: 'Services imported.' });
-        } catch (error: any) {
-          return res.status(500).json(error);
-        }
-      });
-      app.post('/typesense/import-communities', json(), async (_, res) => {
-        try {
-          const communities = await commonContext.prisma.community.findMany({
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              description: true,
-              publishAt: true,
-              districts: {
-                select: {
-                  title: true,
-                },
-              },
-              tags: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          });
-
-          const formatted = communities.map((service: any) =>
-            toSearchableObj(service),
-          );
-
-          await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-            .documents()
-            .import(formatted, { action: 'upsert' });
-          return res.status(200).json({ message: 'Communities imported.' });
-        } catch (error: any) {
-          return res.status(500).json(error);
-        }
-      });
-      app.post('/typesense/import-departments', json(), async (_, res) => {
-        try {
-          const departments = await commonContext.prisma.orgUnit.findMany({
-            select: {
-              id: true,
-
-              title: true,
-
-              slug: true,
-
-              description: true,
-
-              tags: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          });
-
-          const formatted = departments.map((department: any) =>
-            orgUnitToSearchableObj(department),
-          );
-
-          await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-
-            .documents()
-
-            .import(formatted, { action: 'upsert' });
-
-          return res.status(200).json({ message: 'Departments imported.' });
         } catch (error: any) {
           return res.status(500).json(error);
         }
