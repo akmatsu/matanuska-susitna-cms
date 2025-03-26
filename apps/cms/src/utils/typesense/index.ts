@@ -71,6 +71,16 @@ export const PAGE_TYPES = [
           body: true,
           actionLabel: true,
           publishAt: true,
+          orgUnits: {
+            select: {
+              title: true,
+            },
+          },
+          communities: {
+            select: {
+              title: true,
+            },
+          },
           tags: {
             select: {
               name: true,
@@ -79,9 +89,9 @@ export const PAGE_TYPES = [
         },
       });
 
-      return services.map((service: any) => {
-        toSearchableObj(service, 'service');
-      });
+      return services.map((service: any) =>
+        toSearchableObj(service, 'service'),
+      );
     },
   },
   {
@@ -130,34 +140,45 @@ export const PAGE_TYPES = [
         },
       });
 
-      return departments.map((department: any) => {
-        toSearchableObj(department, 'department');
-      });
+      return departments.map((department: any) =>
+        toSearchableObj(department, 'department'),
+      );
     },
   },
 ];
 
-function toSearchableObj(item: any, type: string): TypeSensePageDocument {
+export function toSearchableObj(
+  item: any,
+  type: string,
+): TypeSensePageDocument {
   return {
     type,
     id: item.id,
-    title: item.title,
-    description: item.description,
-    body: item.body,
     slug: item.slug,
-    action_label: item.actionLabel,
-    published_at: item.publishAt
-      ? Math.floor(new Date(item.publishAt).getTime() / 1000)
-      : undefined,
-    tags: item.tags.map((tag: { name: string }) => tag.name || ''),
-    departments: item.departments?.map(
-      (department: { title: string }) => department.title || '',
-    ),
-    districts: item.districts?.map(
-      (district: { title: string }) => district.title || '',
-    ),
-    communities: item.communities?.map(
-      (community: { title: string }) => community.title || '',
-    ),
+    title: item.title,
+    ...(item.description && { description: item.description }),
+    ...(item.body && { body: item.body }),
+    ...(item.actionLabel && { action_label: item.actionLabel }),
+    ...(item.publishAt && {
+      published_at: Math.floor(new Date(item.publishAt).getTime() / 1000),
+    }),
+    ...(item.tags && {
+      tags: item.tags.map((tag: { name: string }) => tag.name || ''),
+    }),
+    ...(item.orgUnits && {
+      departments: item.orgUnits.map(
+        (department: { title: string }) => department.title || '',
+      ),
+    }),
+    ...(item.districts && {
+      districts: item.districts.map(
+        (district: { title: string }) => district.title || '',
+      ),
+    }),
+    ...(item.communities && {
+      communities: item.communities.map(
+        (community: { title: string }) => community.title || '',
+      ),
+    }),
   };
 }

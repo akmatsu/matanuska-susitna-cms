@@ -3,6 +3,7 @@ import {
   contacts,
   liveUrl,
   owner,
+  publishable,
   services,
   slug,
   tags,
@@ -13,6 +14,7 @@ import { generalItemAccess, generalOperationAccess } from '../access';
 import { checkbox, relationship } from '@keystone-6/core/fields';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import {
+  toSearchableObj,
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
   TypeSensePageDocument,
@@ -40,6 +42,7 @@ export const OrgUnit: ListConfig<any> = list({
   fields: {
     heroImage: blueHarvestImage(),
     ...titleAndDescription(),
+    ...publishable,
     liveUrl: liveUrl('departments'),
     slug,
     owner,
@@ -60,9 +63,9 @@ export const OrgUnit: ListConfig<any> = list({
         try {
           const orgUnit = await context.query.OrgUnit.findOne({
             where: { id: item.id.toString() },
-            query: 'id title description slug tags { name }',
+            query: 'id title publishAt description slug tags { name }',
           });
-          const document = orgUnitToSearchableObj(orgUnit);
+          const document = toSearchableObj(orgUnit, 'department');
           await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
             .documents()
             .upsert(document);

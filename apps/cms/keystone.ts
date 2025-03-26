@@ -68,6 +68,7 @@ export default config<TypeInfo<Session>>({
       });
 
       app.post('/typesense/update-schema', json(), async (req, res) => {
+        commonContext.prisma;
         try {
           await Promise.all(
             COLLECTIONS.map(async (collection) => {
@@ -106,8 +107,9 @@ export default config<TypeInfo<Session>>({
           await Promise.all(
             PAGE_TYPES.map(async (pageType) => {
               const items = await pageType.getItems(commonContext);
+              console.log(pageType.type, items);
 
-              TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+              await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
                 .documents()
                 .import(items, { action: 'upsert' });
             }),
@@ -116,6 +118,7 @@ export default config<TypeInfo<Session>>({
           return res.status(500).json;
         }
       });
+
       app.post('/typesense/remove-collection', json(), async (req, res) => {
         try {
           const collection: string = req.body.collection;
