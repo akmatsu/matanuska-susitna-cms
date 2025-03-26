@@ -19,6 +19,7 @@ import {
   generalOperationAccess,
 } from '../access/utils';
 import {
+  toSearchableObj,
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
   TypeSensePageDocument,
@@ -254,9 +255,10 @@ export const Service: ListConfig<any> = list({
           const service = await context.query.Service.findOne({
             where: { id: item.id.toString() },
             query:
-              'id title description body slug owner {name} actionLabel publishAt tags {name}',
+              'id title description body slug owner {name} actionLabel publishAt tags {name} districts {title} orgUnits {title} communities {title}',
           });
-          const document = serviceToSearchableObj(service);
+
+          const document = toSearchableObj(service, 'service');
 
           await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
             .documents()

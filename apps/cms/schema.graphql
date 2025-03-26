@@ -1346,6 +1346,9 @@ type OrgUnit {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   liveUrl: String
   slug: String
   owner: User
@@ -1376,6 +1379,9 @@ input OrgUnitWhereInput {
   id: IDFilter
   title: StringFilter
   description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
   slug: StringFilter
   owner: UserWhereInput
   showPage: BooleanFilter
@@ -1398,6 +1404,9 @@ input OrgUnitOrderByInput {
   heroImage: BlueHarvestImageOrderDirection
   title: OrderDirection
   description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
   slug: OrderDirection
   showPage: OrderDirection
   createdAt: OrderDirection
@@ -1408,6 +1417,9 @@ input OrgUnitUpdateInput {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   slug: String
   owner: UserRelateToOneForUpdateInput
   showPage: Boolean
@@ -1435,6 +1447,9 @@ input OrgUnitCreateInput {
   heroImage: String
   title: String
   description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
   slug: String
   owner: UserRelateToOneForCreateInput
   showPage: Boolean

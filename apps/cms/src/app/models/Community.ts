@@ -18,7 +18,11 @@ import {
 } from '../fieldUtils';
 import { relationship, text } from '@keystone-6/core/fields';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
-import { TYPESENSE_CLIENT, TYPESENSE_COLLECTIONS } from '../../utils/typesense';
+import {
+  toSearchableObj,
+  TYPESENSE_CLIENT,
+  TYPESENSE_COLLECTIONS,
+} from '../../utils/typesense';
 
 /*
 TODO: Fields to add
@@ -36,23 +40,6 @@ SPUD(s)
 */
 
 const pluralFieldKey = 'communities';
-
-export function toSearchableObj(item: any): TypeSensePageDocument {
-  return {
-    id: item.id,
-    title: item.title || '',
-    description: item.description || '',
-    slug: item.slug || '',
-    published_at: item.publishAt
-      ? Math.floor(new Date(item.publishAt).getTime() / 1000)
-      : undefined,
-    tags: item.tags.map((tag: { name: string }) => tag.name || ''),
-    districts: item.districts.map(
-      (district: { title: string }) => district.title || '',
-    ),
-    type: 'community',
-  };
-}
 
 export const Community: ListConfig<any> = list({
   access: {
@@ -108,27 +95,23 @@ export const Community: ListConfig<any> = list({
     async afterOperation({ operation, item, context }) {
       if (operation === 'create' || operation === 'update') {
         try {
-          const service = await context.prisma.community.findOne({
-            where: { id: item.id },
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              description: true,
-              publishAt: true,
-              tags: {
-                select: {
-                  name: true,
-                },
-              },
-              districts: {
-                select: {
-                  title: true,
-                },
-              },
-            },
+          const service = await context.query.Community.findOne({
+            where: { id: item.id.toString() },
+            query: `
+              id
+              title
+              slug
+              description
+              publishAt
+              tags {
+                name
+              }
+              districts {
+                title
+              }
+            `,
           });
-          const formatted = toSearchableObj(service);
+          const formatted = toSearchableObj(service, 'community');
           await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
             .documents()
             .upsert(formatted);
