@@ -115,7 +115,7 @@ export default config<TypeInfo<Session>>({
             }),
           );
         } catch (error: any) {
-          return res.status(500).json;
+          return res.status(500).json(error);
         }
       });
 
