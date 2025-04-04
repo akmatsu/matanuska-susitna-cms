@@ -10,7 +10,7 @@ import {
 
 import { Cmd, editorViewCtx } from '@milkdown/kit/core';
 import { createTable } from '@milkdown/kit/preset/gfm';
-import { MD_PAYMENTS_ALL_STEPS } from './mdTemplates';
+import { MD_PAYMENTS_ALL_STEPS, MD_STEP_TEMPLATE } from './mdTemplates';
 import {
   blockquoteSchema,
   bulletListSchema,
@@ -21,8 +21,6 @@ import {
 import { NodeSelection } from '@milkdown/kit/prose/state';
 import { PrimaryActionButtonNode } from '../PrimaryAction';
 import { DocCollectionNode } from '../DocCollection/schema';
-import { $command } from '@milkdown/kit/utils';
-import { toggleMark } from '@milkdown/kit/prose/commands';
 
 export const SLASH_COMMANDS = [
   {
@@ -148,6 +146,12 @@ export const SLASH_COMMANDS = [
         ctx,
         clearContentAndAddBlockType(DocCollectionNode.type(ctx), { id: '' }),
       );
+    },
+  },
+  {
+    label: 'Step',
+    action: (ctx: Ctx) => {
+      return runCommand(ctx, clearContentAndInsert(ctx, MD_STEP_TEMPLATE));
     },
   },
   {

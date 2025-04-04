@@ -76,3 +76,9 @@ Once you reach the location you can drop your check in the secure drop box.
 :::
 ::::
 `;
+
+export const MD_STEP_TEMPLATE = `::::process
+:::step
+
+:::
+::::`;

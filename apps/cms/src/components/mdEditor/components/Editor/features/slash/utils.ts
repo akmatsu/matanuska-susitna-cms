@@ -1,6 +1,6 @@
-import { editorViewCtx } from '@milkdown/kit/core';
+import { editorViewCtx, parserCtx } from '@milkdown/kit/core';
 import { Ctx } from '@milkdown/kit/ctx';
-import { NodeType, Attrs } from '@milkdown/kit/prose/model';
+import { NodeType, Attrs, Slice } from '@milkdown/kit/prose/model';
 import { Command, Selection, Transaction } from '@milkdown/kit/prose/state';
 import { findWrapping } from '@milkdown/kit/prose/transform';
 import { insert } from '@milkdown/kit/utils';
@@ -67,9 +67,27 @@ export function addBlockType(
 export function clearContentAndInsert(ctx: Ctx, value: string): Command {
   return (state, dispatch) => {
     if (dispatch) {
-      const tr = clearRange(state.tr);
-      insert(value)(ctx);
-      dispatch(tr);
+      let { tr } = state;
+      const { from } = tr.selection;
+      const nodeStart = from - state.selection.$from.parentOffset;
+      const nodeEnd = nodeStart + state.selection.$from.parent.content.size;
+      tr = tr.deleteRange(nodeStart, nodeEnd);
+
+      const parser = ctx.get(parserCtx);
+      const doc = parser(value);
+      if (!doc) return;
+      const contentSlice = state.selection.content();
+      dispatch(
+        tr
+          .replaceSelection(
+            new Slice(
+              doc.content,
+              contentSlice.openStart,
+              contentSlice.openEnd,
+            ),
+          )
+          .scrollIntoView(),
+      );
     }
     return true;
   };

@@ -2,7 +2,7 @@
 
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
-import { useEffect, useState, type MouseEvent } from 'react';
+import { ChangeEvent, useEffect, useState, type MouseEvent } from 'react';
 import {
   CardValueComponent,
   CellComponent,
@@ -62,6 +62,12 @@ export function Field({
     onChange?.(`${image}?position=${backgroundPosition}`);
   }, [backgroundPosition]);
 
+  function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
+    value = e.target.value;
+    setImage(value);
+    onChange?.(value);
+  }
+
   return (
     <FieldContainer as="fieldset">
       <FieldLabel>{field.label}</FieldLabel>
@@ -73,10 +79,7 @@ export function Field({
         </Link>{' '}
         and paste the URL in the input below.
       </FieldDescription>
-      <TextInput
-        value={value || ''}
-        onChange={(e) => onChange?.(e.target.value)}
-      />
+      <TextInput value={value || ''} onChange={handleImageChange} />
       {field.notBanner ? (
         <img src={image}></img>
       ) : (
