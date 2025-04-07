@@ -41,8 +41,8 @@ export function DocCollectionView() {
       {loading ? (
         <div>loading...</div>
       ) : data ? (
-        <div ref={contentRef} className="border shadow-xs overflow-hidden my-4">
-          <div className="flex p-2 bg-zinc-100 border-b justify-between">
+        <div ref={contentRef} className="my-4 overflow-hidden border shadow-xs">
+          <div className="flex justify-between border-b bg-zinc-100 p-2">
             <span className="text-2xl">{data.documentCollection.title}</span>{' '}
             <a href={`/document-collections/${data.documentCollection.id}`}>
               Manage collection
@@ -60,7 +60,9 @@ export function DocCollectionView() {
           </ul>
         </div>
       ) : (
-        <div>Collection not found</div>
+        <div className="my-4 w-full border p-4 shadow-xs transition-colors hover:cursor-pointer hover:bg-zinc-100">
+          <p>No Collection selected. Click to select one.</p>
+        </div>
       )}
     </>
   );
