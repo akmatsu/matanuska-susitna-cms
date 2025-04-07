@@ -1,7 +1,7 @@
 .milkdown {
   milkdown-link-preview {
     position: absolute;
-    z-index: 10;
+    z-index: 20;
     &[data-show='false'] {
       display: none;
     }

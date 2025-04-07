@@ -47,7 +47,10 @@ export const ToolbarView = () => {
 
         const activeElement = (view.dom.getRootNode() as ShadowRoot | Document)
           .activeElement;
+
         const isTooltipChildren = div.contains(activeElement);
+
+        console.log('isTooltipChildren', isTooltipChildren);
 
         const notHasFocus = !view.hasFocus() && !isTooltipChildren;
 
@@ -84,7 +87,7 @@ export const ToolbarView = () => {
 
   return (
     <div
-      className="absolute card data-[show=false]:hidden flex gap-2 z-10"
+      className="card absolute z-10 flex gap-2 data-[show=false]:hidden"
       ref={ref}
     >
       {TOOLBAR_COMMANDS.map((cmd) =>
@@ -106,7 +109,7 @@ export const ToolbarView = () => {
                       action(child.action(view));
                     }}
                   >
-                    <span className={`${child.icon} size-4 mr-4`}></span>
+                    <span className={`${child.icon} mr-4 size-4`}></span>
                     {child.label}
                   </button>
                 </MenuItem>
