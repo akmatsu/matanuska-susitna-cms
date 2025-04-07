@@ -16,6 +16,11 @@ export const Image: ListConfig<any> = list({
     tags: tags('images'),
     file: image({
       storage: appConfig.nodeEnv === 'production' ? 's3Images' : 'localImages',
+      ui: {
+        listView: {
+          fieldMode: 'read',
+        },
+      },
     }),
   },
 });
