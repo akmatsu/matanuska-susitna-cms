@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { MdEditorProps } from './mdEditor/components/Editor/types';
 import { Button } from '@keystone-ui/button';
 import { TextArea } from '@keystone-ui/fields';
+import clsx from 'clsx';
 
 const MdEditor = dynamic(
   () => import('./mdEditor').then((mod) => mod.MdEditor),
@@ -41,12 +42,32 @@ export function RichEditor(props: MdEditorProps) {
       <div
         className={`rich-editor-container ${isFullscreen ? 'fullscreen' : ''}`}
       >
-        <div>
-          <Button onClick={() => setShowCode(!showCode)}>
-            {showCode ? 'Rich Editor' : 'View Markdown'}
+        <div className="mb-2 flex gap-2">
+          <Button
+            onClick={() => setShowCode(!showCode)}
+            title={showCode ? 'View Markdown' : 'View Rich Editor'}
+          >
+            <span className="flex items-center gap-1">
+              <span
+                className={clsx('size-6', {
+                  'icon-[mdi--text-box]': showCode,
+                  'icon-[mdi--markdown]': !showCode,
+                })}
+              ></span>
+            </span>
           </Button>
-          <Button onClick={() => setIsFullscreen((v) => !v)}>
-            {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+          <Button
+            onClick={() => setIsFullscreen((v) => !v)}
+            title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+          >
+            <span className="flex items-center gap-1">
+              <span
+                className={clsx('size-6', {
+                  'icon-[mdi--fullscreen]': !isFullscreen,
+                  'icon-[mdi--fullscreen-exit]': isFullscreen,
+                })}
+              ></span>
+            </span>
           </Button>
         </div>
         <div className="editors">
