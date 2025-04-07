@@ -24,7 +24,7 @@ eCheck Account & Routing Number - you MUST enter your full account number or you
 
 ::::process
 :::step
-Go to the DJS Building
+Go to the DSJ Building
 
 Go to the Main Borough Building located at 350 E. Dahlia Ave. in Palmer.
 :::
