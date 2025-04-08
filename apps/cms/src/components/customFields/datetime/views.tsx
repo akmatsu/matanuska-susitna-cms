@@ -1,17 +1,16 @@
-import React from 'react';
-import { CellLink, CellContainer } from '@keystone-6/core/admin-ui/components';
+import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-
 import {
   FieldContainer,
   FieldDescription,
   FieldLabel,
 } from '@keystone-ui/fields';
+import { DateTimePicker } from '../../DateTimePicker';
 
 export function Field({
   field,
@@ -24,11 +23,8 @@ export function Field({
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
       </FieldDescription>
-      <input
-        type="time"
-        value={value || ''}
-        onChange={(e) => onChange?.(e.target.value)}
-      />
+
+      <DateTimePicker onChange={onChange} value={value} />
     </FieldContainer>
   );
 }

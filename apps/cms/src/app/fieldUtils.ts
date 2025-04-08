@@ -111,10 +111,16 @@ export const publishable: BaseFields<any> = {
         db: {
           isNullable: true,
         },
+        ui: {
+          views: './src/components/customFields/datetime/views.tsx',
+        },
       }),
       unpublishAt: timestamp({
         db: {
           isNullable: true,
+        },
+        ui: {
+          views: './src/components/customFields/datetime/views.tsx',
         },
         hooks: {
           validate: ({ resolvedData, item, addValidationError }) => {
@@ -146,6 +152,7 @@ export const publishable: BaseFields<any> = {
         },
         ui: {
           createView: { fieldMode: 'hidden' },
+          views: './src/components/customFields/datetime/views.tsx',
         },
         hooks: {
           resolveInput: ({ operation, resolvedData }) => {
