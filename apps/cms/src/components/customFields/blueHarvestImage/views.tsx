@@ -93,7 +93,7 @@ export function Field({
             width: '100%',
             backgroundPosition,
             backgroundSize: 'cover',
-            cursor: 'move',
+            cursor: 'move',``
             aspectRatio: '6.4/1',
           }}
         />
