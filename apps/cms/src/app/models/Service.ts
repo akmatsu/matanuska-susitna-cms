@@ -48,7 +48,7 @@ export const Service: ListConfig<any> = list({
     item: generalItemAccess('Service'),
     filter: filterByPubDates,
   },
-  graphql: {``
+  graphql: {
     maxTake: 100,
   },
   fields: {
