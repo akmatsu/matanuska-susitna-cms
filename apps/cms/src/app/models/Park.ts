@@ -1,4 +1,4 @@
-import { group, list, ListConfig } from '@keystone-6/core';
+import { list, ListConfig } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import {

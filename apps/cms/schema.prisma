@@ -267,6 +267,7 @@ model Park {
 
 model Service {
   id               String         @id @default(cuid())
+  heroImage        String?
   title            String         @unique @default("")
   description      String         @default("")
   publishAt        DateTime?
