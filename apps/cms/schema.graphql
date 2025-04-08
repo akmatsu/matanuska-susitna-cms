@@ -1639,6 +1639,7 @@ input ParkCreateInput {
 
 type Service {
   id: ID!
+  heroImage: String
   title: String
   description: String
   publishAt: DateTime
@@ -1720,6 +1721,7 @@ input ExternalLinkManyRelationFilter {
 
 input ServiceOrderByInput {
   id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
   title: OrderDirection
   description: OrderDirection
   publishAt: OrderDirection
@@ -1735,6 +1737,7 @@ input ServiceOrderByInput {
 }
 
 input ServiceUpdateInput {
+  heroImage: String
   title: String
   description: String
   publishAt: DateTime
@@ -1786,6 +1789,7 @@ input ServiceUpdateArgs {
 }
 
 input ServiceCreateInput {
+  heroImage: String
   title: String
   description: String
   publishAt: DateTime

@@ -24,6 +24,7 @@ import {
   TYPESENSE_COLLECTIONS,
   TypeSensePageDocument,
 } from '../../utils/typesense';
+import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 
 export function serviceToSearchableObj(item: any): TypeSensePageDocument {
   return {
@@ -51,6 +52,7 @@ export const Service: ListConfig<any> = list({
     maxTake: 100,
   },
   fields: {
+    heroImage: blueHarvestImage(),
     ...titleAndDescription(),
     ...publishable,
     liveUrl: liveUrl('services'),
