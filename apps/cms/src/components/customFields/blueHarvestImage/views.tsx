@@ -58,8 +58,9 @@ export function Field({
   }
 
   useEffect(() => {
-    console.log(field);
-    onChange?.(`${image}?position=${backgroundPosition}`);
+    if (value) {
+      onChange?.(`${image}?position=${backgroundPosition}`);
+    }
   }, [backgroundPosition]);
 
   function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
@@ -80,24 +81,25 @@ export function Field({
         and paste the URL in the input below.
       </FieldDescription>
       <TextInput value={value || ''} onChange={handleImageChange} />
-      {field.notBanner ? (
-        <img src={image}></img>
-      ) : (
-        <div
-          onMouseDown={() => setIsDragging(true)}
-          onMouseUp={() => setIsDragging(false)}
-          onMouseLeave={() => setIsDragging(false)}
-          onMouseMove={drag}
-          style={{
-            backgroundImage: `url(${image})`,
-            width: '100%',
-            backgroundPosition,
-            backgroundSize: 'cover',
-            cursor: 'move',
-            aspectRatio: '6.4/1',
-          }}
-        />
-      )}
+      {value &&
+        (field.notBanner ? (
+          <img src={image}></img>
+        ) : (
+          <div
+            onMouseDown={() => setIsDragging(true)}
+            onMouseUp={() => setIsDragging(false)}
+            onMouseLeave={() => setIsDragging(false)}
+            onMouseMove={drag}
+            style={{
+              backgroundImage: `url(${image})`,
+              width: '100%',
+              backgroundPosition,
+              backgroundSize: 'cover',
+              cursor: 'move',
+              aspectRatio: '6.4/1',
+            }}
+          />
+        ))}
     </FieldContainer>
   );
 }
