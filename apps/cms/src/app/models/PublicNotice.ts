@@ -24,9 +24,6 @@ export const PublicNotice: ListConfig<any> = list({
       },
       ui: {
         views: './src/components/customFields/datetime/views.tsx',
-        // itemView: {
-        //   fieldPosition: 'sidebar',
-        // },
       },
     }),
     endDate: timestamp({
@@ -35,9 +32,6 @@ export const PublicNotice: ListConfig<any> = list({
       },
       ui: {
         views: './src/components/customFields/datetime/views.tsx',
-        // itemView: {
-        //   fieldPosition: 'sidebar',
-        // },
       },
     }),
   },
