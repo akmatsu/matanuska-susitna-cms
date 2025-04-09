@@ -5,33 +5,18 @@ import {
   typesenseDelete,
   typesenseUpsert,
 } from '../fieldUtils';
-import { generalItemAccess, generalOperationAccess } from '../access';
-import { checkbox, relationship } from '@keystone-6/core/fields';
 import {
-  toSearchableObj,
-  TYPESENSE_CLIENT,
-  TYPESENSE_COLLECTIONS,
-  TypeSensePageDocument,
-} from '../../utils/typesense';
-
-export function orgUnitToSearchableObj(item: any): TypeSensePageDocument {
-  return {
-    id: item.id,
-    title: item.title,
-    slug: item.slug,
-    description: item.description,
-    type: 'department',
-    tags: item.tags.map((tag: { name: string }) => tag?.name || ''),
-    published_at: item.publishAt
-      ? Math.floor(new Date(item.publishAt).getTime() / 1000)
-      : Math.floor(new Date().getTime() / 1000),
-  };
-}
+  filterByPubDates,
+  generalItemAccess,
+  generalOperationAccess,
+} from '../access';
+import { checkbox, relationship } from '@keystone-6/core/fields';
 
 export const OrgUnit: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
     item: generalItemAccess('OrgUnit'),
+    filter: filterByPubDates,
   },
   fields: {
     ...basePage('orgUnits'),

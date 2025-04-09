@@ -591,6 +591,8 @@ type Contact {
   trailsCount(where: TrailWhereInput! = {}): Int
   user: User
   editorNotes: String
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
 }
 
 input ContactWhereUniqueInput {
@@ -616,6 +618,7 @@ input ContactWhereInput {
   trails: TrailManyRelationFilter
   user: UserWhereInput
   editorNotes: StringFilter
+  publicNotices: PublicNoticeManyRelationFilter
 }
 
 input CommunityManyRelationFilter {
@@ -648,6 +651,12 @@ input TrailManyRelationFilter {
   none: TrailWhereInput
 }
 
+input PublicNoticeManyRelationFilter {
+  every: PublicNoticeWhereInput
+  some: PublicNoticeWhereInput
+  none: PublicNoticeWhereInput
+}
+
 input ContactOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -672,6 +681,7 @@ input ContactUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   user: UserRelateToOneForUpdateInput
   editorNotes: String
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
 }
 
 input CommunityRelateToManyForUpdateInput {
@@ -709,6 +719,13 @@ input TrailRelateToManyForUpdateInput {
   connect: [TrailWhereUniqueInput!]
 }
 
+input PublicNoticeRelateToManyForUpdateInput {
+  disconnect: [PublicNoticeWhereUniqueInput!]
+  set: [PublicNoticeWhereUniqueInput!]
+  create: [PublicNoticeCreateInput!]
+  connect: [PublicNoticeWhereUniqueInput!]
+}
+
 input ContactUpdateArgs {
   where: ContactWhereUniqueInput!
   data: ContactUpdateInput!
@@ -729,6 +746,7 @@ input ContactCreateInput {
   trails: TrailRelateToManyForCreateInput
   user: UserRelateToOneForCreateInput
   editorNotes: String
+  publicNotices: PublicNoticeRelateToManyForCreateInput
 }
 
 input CommunityRelateToManyForCreateInput {
@@ -754,6 +772,11 @@ input ParkRelateToManyForCreateInput {
 input TrailRelateToManyForCreateInput {
   create: [TrailCreateInput!]
   connect: [TrailWhereUniqueInput!]
+}
+
+input PublicNoticeRelateToManyForCreateInput {
+  create: [PublicNoticeCreateInput!]
+  connect: [PublicNoticeWhereUniqueInput!]
 }
 
 type Document {
@@ -1706,6 +1729,126 @@ input ParkCreateInput {
   facilities: FacilityRelateToManyForCreateInput
 }
 
+type PublicNotice {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions: InternalLink
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  effectiveDate: DateTime
+  endDate: DateTime
+}
+
+input PublicNoticeWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+}
+
+input PublicNoticeWhereInput {
+  AND: [PublicNoticeWhereInput!]
+  OR: [PublicNoticeWhereInput!]
+  NOT: [PublicNoticeWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkWhereInput
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  effectiveDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
+}
+
+input PublicNoticeOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  effectiveDate: OrderDirection
+  endDate: OrderDirection
+}
+
+input PublicNoticeUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effectiveDate: DateTime
+  endDate: DateTime
+}
+
+input PublicNoticeUpdateArgs {
+  where: PublicNoticeWhereUniqueInput!
+  data: PublicNoticeUpdateInput!
+}
+
+input PublicNoticeCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effectiveDate: DateTime
+  endDate: DateTime
+}
+
 type Service {
   id: ID!
   heroImage: String
@@ -1913,6 +2056,8 @@ type Tag {
   trailsCount(where: TrailWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
 }
 
 input TagWhereUniqueInput {
@@ -1935,6 +2080,7 @@ input TagWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
 }
 
 input ImageManyRelationFilter {
@@ -1960,6 +2106,7 @@ input TagUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
 }
 
 input ImageRelateToManyForUpdateInput {
@@ -1986,6 +2133,7 @@ input TagCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
 }
 
 input ImageRelateToManyForCreateInput {
@@ -2385,6 +2533,8 @@ type UserGroup {
   documentCollectionsCount(where: DocumentCollectionWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
 }
 
 input UserGroupWhereUniqueInput {
@@ -2408,6 +2558,7 @@ input UserGroupWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   documentCollections: DocumentCollectionManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
 }
 
 input UserManyRelationFilter {
@@ -2435,6 +2586,7 @@ input UserGroupUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   documentCollections: DocumentCollectionRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
 }
 
 input UserRelateToManyForUpdateInput {
@@ -2462,6 +2614,7 @@ input UserGroupCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   documentCollections: DocumentCollectionRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
 }
 
 input UserRelateToManyForCreateInput {
@@ -2565,6 +2718,12 @@ type Mutation {
   updateParks(data: [ParkUpdateArgs!]!): [Park]
   deletePark(where: ParkWhereUniqueInput!): Park
   deleteParks(where: [ParkWhereUniqueInput!]!): [Park]
+  createPublicNotice(data: PublicNoticeCreateInput!): PublicNotice
+  createPublicNotices(data: [PublicNoticeCreateInput!]!): [PublicNotice]
+  updatePublicNotice(where: PublicNoticeWhereUniqueInput!, data: PublicNoticeUpdateInput!): PublicNotice
+  updatePublicNotices(data: [PublicNoticeUpdateArgs!]!): [PublicNotice]
+  deletePublicNotice(where: PublicNoticeWhereUniqueInput!): PublicNotice
+  deletePublicNotices(where: [PublicNoticeWhereUniqueInput!]!): [PublicNotice]
   createService(data: ServiceCreateInput!): Service
   createServices(data: [ServiceCreateInput!]!): [Service]
   updateService(where: ServiceWhereUniqueInput!, data: ServiceUpdateInput!): Service
@@ -2650,6 +2809,9 @@ type Query {
   park(where: ParkWhereUniqueInput!): Park
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
+  publicNotice(where: PublicNoticeWhereUniqueInput!): PublicNotice
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
   service(where: ServiceWhereUniqueInput!): Service
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int

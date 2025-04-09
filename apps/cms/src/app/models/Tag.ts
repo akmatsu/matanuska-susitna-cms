@@ -28,5 +28,9 @@ export const Tag: ListConfig<any> = list({
       ref: 'AssemblyDistrict.tags',
       many: true,
     }),
+    publicNotices: relationship({
+      ref: 'PublicNotice.tags',
+      many: true,
+    }),
   },
 });

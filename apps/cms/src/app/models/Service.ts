@@ -1,17 +1,11 @@
 import { list, ListConfig } from '@keystone-6/core';
 import { relationship, text } from '@keystone-6/core/fields';
 import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
-
 import {
   filterByPubDates,
   generalItemAccess,
   generalOperationAccess,
 } from '../access/utils';
-import {
-  toSearchableObj,
-  TYPESENSE_CLIENT,
-  TYPESENSE_COLLECTIONS,
-} from '../../utils/typesense';
 
 export const Service: ListConfig<any> = list({
   access: {

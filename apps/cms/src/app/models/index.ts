@@ -14,6 +14,7 @@ import { Location } from './Location';
 import { OrgUnit } from './OrgUnit';
 import { OperatingHour } from './OperatingHour';
 import { Park } from './Park';
+import { PublicNotice } from './PublicNotice';
 import { Service } from './Service';
 import { Tag } from './Tag';
 import { Trail } from './Trail';
@@ -37,6 +38,7 @@ export const lists = {
   OrgUnit,
   OperatingHour,
   Park,
+  PublicNotice,
   Service,
   Tag,
   Trail,

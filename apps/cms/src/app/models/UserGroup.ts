@@ -2,7 +2,6 @@ import { list, ListConfig } from '@keystone-6/core';
 import { relationship, text } from '@keystone-6/core/fields';
 import { owner } from '../fieldUtils';
 import { generalItemAccess, generalOperationAccess } from '../access';
-import { AssemblyDistrict } from './AssemblyDistrict';
 
 export const UserGroup: ListConfig<any> = list({
   access: {
@@ -26,6 +25,10 @@ export const UserGroup: ListConfig<any> = list({
     }),
     assemblyDistricts: relationship({
       ref: 'AssemblyDistrict.userGroups',
+      many: true,
+    }),
+    publicNotices: relationship({
+      ref: 'PublicNotice.userGroups',
       many: true,
     }),
   },
