@@ -2,6 +2,7 @@ import { list, ListConfig } from '@keystone-6/core';
 import { relationship, text } from '@keystone-6/core/fields';
 import { owner } from '../fieldUtils';
 import { generalItemAccess, generalOperationAccess } from '../access';
+import { AssemblyDistrict } from './AssemblyDistrict';
 
 export const UserGroup: ListConfig<any> = list({
   access: {
@@ -18,8 +19,13 @@ export const UserGroup: ListConfig<any> = list({
     trails: relationship({ ref: 'Trail.userGroups', many: true }),
     facilities: relationship({ ref: 'Facility.userGroups', many: true }),
     communities: relationship({ ref: 'Community.userGroups', many: true }),
+    orgUnits: relationship({ ref: 'OrgUnit.userGroups', many: true }),
     documentCollections: relationship({
       ref: 'DocumentCollection.userGroups',
+      many: true,
+    }),
+    assemblyDistricts: relationship({
+      ref: 'AssemblyDistrict.userGroups',
       many: true,
     }),
   },

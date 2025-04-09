@@ -104,11 +104,11 @@ export const Service: ListConfig<any> = list({
   },
   hooks: {
     async beforeOperation(args) {
-      typesenseDelete(args);
+      await typesenseDelete(args);
     },
 
     async afterOperation(args) {
-      typesenseUpsert(
+      await typesenseUpsert(
         'service',
         `id title description body slug owner {name} actionLabel publishAt tags {name} districts {title} orgUnits {title} communities {title}`,
         args,

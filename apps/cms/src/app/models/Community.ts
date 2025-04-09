@@ -5,24 +5,12 @@ import {
   generalOperationAccess,
 } from '../access';
 import {
-  contacts,
-  liveUrl,
-  owner,
-  publishable,
+  basePage,
   services,
-  slug,
-  tags,
-  timestamps,
-  titleAndDescription,
-  userGroups,
+  typesenseDelete,
+  typesenseUpsert,
 } from '../fieldUtils';
 import { relationship, text } from '@keystone-6/core/fields';
-import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
-import {
-  toSearchableObj,
-  TYPESENSE_CLIENT,
-  TYPESENSE_COLLECTIONS,
-} from '../../utils/typesense';
 
 /*
 TODO: Fields to add
@@ -39,7 +27,7 @@ SSA(s)
 SPUD(s)
 */
 
-const pluralFieldKey = 'communities';
+const listPlural = 'communities';
 
 export const Community: ListConfig<any> = list({
   access: {
@@ -51,12 +39,7 @@ export const Community: ListConfig<any> = list({
     maxTake: 100,
   },
   fields: {
-    heroImage: blueHarvestImage(),
-    ...titleAndDescription(),
-    ...publishable,
-    liveUrl: liveUrl(pluralFieldKey),
-    slug,
-    owner,
+    ...basePage(listPlural),
     mapId: text({
       label: 'Map ID',
       ui: {
@@ -65,10 +48,7 @@ export const Community: ListConfig<any> = list({
         },
       },
     }),
-    tags: tags(pluralFieldKey),
-    userGroups: userGroups(pluralFieldKey),
-    contacts: contacts(pluralFieldKey),
-    services: services(pluralFieldKey),
+    services: services(listPlural),
     districts: relationship({
       ref: 'AssemblyDistrict',
       many: true,
@@ -77,48 +57,18 @@ export const Community: ListConfig<any> = list({
         inlineConnect: true,
       },
     }),
-    ...timestamps,
   },
   hooks: {
-    async beforeOperation({ operation, item, context }) {
-      if (operation === 'delete') {
-        try {
-          await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-            .documents(item.id.toString())
-            .delete();
-        } catch (error) {
-          console.error('Error deleting from Typesense index:', error);
-        }
-      }
+    async beforeOperation(args) {
+      await typesenseDelete(args);
     },
 
-    async afterOperation({ operation, item, context }) {
-      if (operation === 'create' || operation === 'update') {
-        try {
-          const service = await context.query.Community.findOne({
-            where: { id: item.id.toString() },
-            query: `
-              id
-              title
-              slug
-              description
-              publishAt
-              tags {
-                name
-              }
-              districts {
-                title
-              }
-            `,
-          });
-          const formatted = toSearchableObj(service, 'community');
-          await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-            .documents()
-            .upsert(formatted);
-        } catch (error) {
-          console.error('Error updating Typesense index:', error);
-        }
-      }
+    async afterOperation(args) {
+      await typesenseUpsert(
+        'community',
+        'id title slug description publishAt tags {name} districts {title}',
+        args,
+      );
     },
   },
 });

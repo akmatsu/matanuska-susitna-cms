@@ -26,11 +26,11 @@ export const Park: ListConfig<any> = list({
     facilities: relationship({ ref: 'Facility.park', many: true }),
   },
   hooks: {
-    beforeOperation(args) {
-      typesenseDelete(args);
+    async beforeOperation(args) {
+      await typesenseDelete(args);
     },
     async afterOperation(args) {
-      typesenseUpsert(
+      await typesenseUpsert(
         'park',
         'id title description body slug liveUrl publishAt owner {name} tags {name} services {title} trails {title} facilities {title}',
         args,
