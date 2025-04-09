@@ -6,7 +6,7 @@ import {
   FieldTypeFunc,
 } from '@keystone-6/core/types';
 
-type BlueHarvestImageConfig<ListTypeInfo extends BaseListTypeInfo> =
+export type BlueHarvestImageConfig<ListTypeInfo extends BaseListTypeInfo> =
   CommonFieldConfig<ListTypeInfo> & {
     notBanner?: boolean;
   };

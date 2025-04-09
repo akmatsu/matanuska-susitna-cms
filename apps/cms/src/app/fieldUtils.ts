@@ -5,11 +5,22 @@ import {
   timestamp,
   virtual,
 } from '@keystone-6/core/fields';
-import { KeystoneContextFromListTypeInfo } from '@keystone-6/core/types';
+import {
+  BaseListTypeInfo,
+  KeystoneContextFromListTypeInfo,
+} from '@keystone-6/core/types';
 import { isAdmin } from './access/roles';
 import { isOwner } from './access/group';
 import { appConfig } from '../configs/appConfig';
 import { getDatetimeISOString } from './access';
+import {
+  blueHarvestImage,
+  BlueHarvestImageConfig,
+} from '../components/customFields/blueHarvestImage';
+import {
+  customText,
+  CustomTextOpts,
+} from '../components/customFields/Markdown';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -169,7 +180,7 @@ export const publishable: BaseFields<any> = {
   }),
 };
 
-export function titleAndDescription(opts?: {
+type titleAndDescriptionOpts = {
   title?: {
     required?: boolean;
     lengthMin?: number;
@@ -179,7 +190,11 @@ export function titleAndDescription(opts?: {
   description?: {
     description?: string;
   };
-}): BaseFields<any> {
+};
+
+export function titleAndDescription(
+  opts?: titleAndDescriptionOpts,
+): BaseFields<any> {
   return {
     title: text({
       validation: {
@@ -312,4 +327,25 @@ export function services(listKey: string) {
     ref: `Service.${listKey}`,
     many: true,
   });
+}
+
+export function basePage(opts: {
+  listName: string;
+  customTextOpts?: CustomTextOpts<BaseListTypeInfo>;
+  heroImageConfig?: BlueHarvestImageConfig<BaseListTypeInfo>;
+  titleAndDescriptionOpts?: titleAndDescriptionOpts;
+}): BaseFields<any> {
+  return {
+    heroImage: blueHarvestImage(opts.heroImageConfig),
+    ...titleAndDescription(opts.titleAndDescriptionOpts),
+    ...publishable,
+    liveUrl: liveUrl(opts.listName),
+    slug,
+    owner,
+    body: customText(opts.customTextOpts),
+    tags: tags(opts.listName),
+    userGroups: userGroups(opts.listName),
+    contacts: contacts(opts.listName),
+    ...timestamps,
+  };
 }
