@@ -170,6 +170,11 @@ export function toSearchableObj(
         (department: { title: string }) => department.title || '',
       ),
     }),
+    ...(item.services && {
+      services: item.services.map(
+        (service: { title: string }) => service.title || '',
+      ),
+    }),
     ...(item.districts && {
       districts: item.districts.map(
         (district: { title: string }) => district.title || '',

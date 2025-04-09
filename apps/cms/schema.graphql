@@ -1531,16 +1531,16 @@ type Park {
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
+  hoursCount(where: OperatingHourWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
-  hoursCount(where: OperatingHourWhereInput! = {}): Int
-  createdAt: DateTime
-  updatedAt: DateTime
 }
 
 input ParkWhereUniqueInput {
@@ -1566,12 +1566,12 @@ input ParkWhereInput {
   userGroups: UserGroupManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
-  services: ServiceManyRelationFilter
-  trails: TrailManyRelationFilter
-  facilities: FacilityManyRelationFilter
   hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  services: ServiceManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
 }
 
 input ParkOrderByInput {
@@ -1602,12 +1602,12 @@ input ParkUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
-  services: ServiceRelateToManyForUpdateInput
-  trails: TrailRelateToManyForUpdateInput
-  facilities: FacilityRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  services: ServiceRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
 }
 
 input ParkUpdateArgs {
@@ -1629,12 +1629,12 @@ input ParkCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
-  services: ServiceRelateToManyForCreateInput
-  trails: TrailRelateToManyForCreateInput
-  facilities: FacilityRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  services: ServiceRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
 }
 
 type Service {
@@ -1656,9 +1656,9 @@ type Service {
   primaryAction: ExternalLink
   secondaryActions(where: ExternalLinkWhereInput! = {}, orderBy: [ExternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExternalLinkWhereUniqueInput): [ExternalLink!]
   secondaryActionsCount(where: ExternalLinkWhereInput! = {}): Int
+  primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
-  primaryContact: Contact
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -1697,8 +1697,8 @@ input ServiceWhereInput {
   userGroups: UserGroupManyRelationFilter
   primaryAction: ExternalLinkWhereInput
   secondaryActions: ExternalLinkManyRelationFilter
-  contacts: ContactManyRelationFilter
   primaryContact: ContactWhereInput
+  contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -1744,8 +1744,8 @@ input ServiceUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   primaryAction: ExternalLinkRelateToOneForUpdateInput
   secondaryActions: ExternalLinkRelateToManyForUpdateInput
-  contacts: ContactRelateToManyForUpdateInput
   primaryContact: ContactRelateToOneForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -1794,8 +1794,8 @@ input ServiceCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   primaryAction: ExternalLinkRelateToOneForCreateInput
   secondaryActions: ExternalLinkRelateToManyForCreateInput
-  contacts: ContactRelateToManyForCreateInput
   primaryContact: ContactRelateToOneForCreateInput
+  contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
