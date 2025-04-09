@@ -32,6 +32,8 @@ export function DateTimePicker({
         timeIntervals={15}
         dateFormat="Pp"
         className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        withPortal
+        isClearable
       />
       {startDate && (
         <p className="mt-2 text-sm text-gray-600">
