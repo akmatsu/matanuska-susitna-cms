@@ -1649,18 +1649,18 @@ type Service {
   slug: String
   owner: User
   body: String
-  primaryAction: ExternalLink
-  secondaryActions(where: ExternalLinkWhereInput! = {}, orderBy: [ExternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExternalLinkWhereUniqueInput): [ExternalLink!]
-  secondaryActionsCount(where: ExternalLinkWhereInput! = {}): Int
-  actionLabel: String
-  actionUrl: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  primaryContact: Contact
+  primaryAction: ExternalLink
+  secondaryActions(where: ExternalLinkWhereInput! = {}, orderBy: [ExternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExternalLinkWhereUniqueInput): [ExternalLink!]
+  secondaryActionsCount(where: ExternalLinkWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  primaryContact: Contact
+  createdAt: DateTime
+  updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
@@ -1671,8 +1671,6 @@ type Service {
   parksCount(where: ParkWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  createdAt: DateTime
-  updatedAt: DateTime
   editorNotes: String
 }
 
@@ -1695,21 +1693,19 @@ input ServiceWhereInput {
   slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
-  primaryAction: ExternalLinkWhereInput
-  secondaryActions: ExternalLinkManyRelationFilter
-  actionLabel: StringNullableFilter
-  actionUrl: StringNullableFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  primaryContact: ContactWhereInput
+  primaryAction: ExternalLinkWhereInput
+  secondaryActions: ExternalLinkManyRelationFilter
   contacts: ContactManyRelationFilter
+  primaryContact: ContactWhereInput
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
-  createdAt: DateTimeNullableFilter
-  updatedAt: DateTimeNullableFilter
   editorNotes: StringFilter
 }
 
@@ -1729,8 +1725,6 @@ input ServiceOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
-  actionLabel: OrderDirection
-  actionUrl: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   editorNotes: OrderDirection
@@ -1746,21 +1740,19 @@ input ServiceUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
-  primaryAction: ExternalLinkRelateToOneForUpdateInput
-  secondaryActions: ExternalLinkRelateToManyForUpdateInput
-  actionLabel: String
-  actionUrl: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  primaryContact: ContactRelateToOneForUpdateInput
+  primaryAction: ExternalLinkRelateToOneForUpdateInput
+  secondaryActions: ExternalLinkRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  primaryContact: ContactRelateToOneForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   editorNotes: String
 }
 
@@ -1798,21 +1790,19 @@ input ServiceCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
-  primaryAction: ExternalLinkRelateToOneForCreateInput
-  secondaryActions: ExternalLinkRelateToManyForCreateInput
-  actionLabel: String
-  actionUrl: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  primaryContact: ContactRelateToOneForCreateInput
+  primaryAction: ExternalLinkRelateToOneForCreateInput
+  secondaryActions: ExternalLinkRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  primaryContact: ContactRelateToOneForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   editorNotes: String
 }
 
