@@ -171,10 +171,13 @@ const MyOrderDirectionEnum = graphql.enum({
   values: graphql.enumValues(['asc', 'desc']),
 });
 
+export type CustomTextOpts<ListTypeInfo extends BaseListTypeInfo> =
+  TextFieldConfig<ListTypeInfo>;
+
 export function customText<ListTypeInfo extends BaseListTypeInfo>({
   isIndexed,
   ...config
-}: TextFieldConfig<ListTypeInfo> = {}): FieldTypeFunc<ListTypeInfo> {
+}: CustomTextOpts<ListTypeInfo> = {}): FieldTypeFunc<ListTypeInfo> {
   return (meta) =>
     fieldType({
       kind: 'scalar',
