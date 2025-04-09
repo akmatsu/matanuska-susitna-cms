@@ -1,12 +1,11 @@
 import { group, list, ListConfig } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import {
+  basePage,
   emailRegex,
-  liveUrl,
-  owner,
   phoneNumberRegex,
-  slug,
-  titleAndDescription,
+  typesenseDelete,
+  typesenseUpsert,
 } from '../fieldUtils';
 import { relationship, text, timestamp } from '@keystone-6/core/fields';
 
@@ -16,10 +15,7 @@ export const AssemblyDistrict: ListConfig<any> = list({
     item: generalItemAccess('AssemblyDistrict'),
   },
   fields: {
-    ...titleAndDescription(),
-    liveUrl: liveUrl(''),
-    slug,
-    owner,
+    ...basePage('assemblyDistricts'),
     ...group({
       label: 'Assembly Member Information',
       fields: {
@@ -117,5 +113,17 @@ export const AssemblyDistrict: ListConfig<any> = list({
         }),
       },
     }),
+  },
+  hooks: {
+    beforeOperation(args) {
+      typesenseDelete(args);
+    },
+    async afterOperation(args) {
+      typesenseUpsert(
+        'assemblyDistrict',
+        'id title description body slug liveUrl publishAt tags {name}',
+        args,
+      );
+    },
   },
 });

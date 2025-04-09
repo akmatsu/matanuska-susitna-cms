@@ -1,18 +1,12 @@
 import { list, ListConfig } from '@keystone-6/core';
 import {
-  contacts,
-  liveUrl,
-  owner,
-  publishable,
+  basePage,
   services,
-  slug,
-  tags,
-  timestamps,
-  titleAndDescription,
+  typesenseDelete,
+  typesenseUpsert,
 } from '../fieldUtils';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import { checkbox, relationship } from '@keystone-6/core/fields';
-import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import {
   toSearchableObj,
   TYPESENSE_CLIENT,
@@ -40,39 +34,25 @@ export const OrgUnit: ListConfig<any> = list({
     item: generalItemAccess('OrgUnit'),
   },
   fields: {
-    heroImage: blueHarvestImage(),
-    ...titleAndDescription(),
-    ...publishable,
-    liveUrl: liveUrl('departments'),
-    slug,
-    owner,
+    ...basePage('orgUnits'),
     showPage: checkbox({
       defaultValue: true,
       ui: { itemView: { fieldPosition: 'sidebar' } },
     }),
-    tags: tags('orgUnits'),
-    contacts: contacts('orgUnits'),
     services: services('orgUnits'),
     children: relationship({ ref: 'OrgUnit.parent', many: true }),
     parent: relationship({ ref: 'OrgUnit.children', many: false }),
-    ...timestamps,
   },
   hooks: {
-    async afterOperation({ operation, item, context }) {
-      if (operation === 'create' || operation === 'update') {
-        try {
-          const orgUnit = await context.query.OrgUnit.findOne({
-            where: { id: item.id.toString() },
-            query: 'id title publishAt description slug tags { name }',
-          });
-          const document = toSearchableObj(orgUnit, 'department');
-          await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-            .documents()
-            .upsert(document);
-        } catch (e: any) {
-          console.error('Error updating typesense document: ', e);
-        }
-      }
+    async beforeOperation(args) {
+      await typesenseDelete(args);
+    },
+    async afterOperation(args) {
+      await typesenseUpsert(
+        'orgUnit',
+        'id title slug description body publishAt tags {name}',
+        args,
+      );
     },
   },
 });

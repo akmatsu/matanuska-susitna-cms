@@ -1,7 +1,5 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { allowAll } from '@keystone-6/core/access';
 import { relationship, text } from '@keystone-6/core/fields';
-import { isCollaborator, isContributor } from '../access/roles';
 import { generalOperationAccess } from '../access';
 
 const phoneNumberRegex =
@@ -96,6 +94,11 @@ export const Contact: ListConfig<any> = list({
     }),
     parks: relationship({
       ref: 'Park.contacts',
+      many: true,
+      ui: { hideCreate: true },
+    }),
+    assemblyDistricts: relationship({
+      ref: 'AssemblyDistrict.contacts',
       many: true,
       ui: { hideCreate: true },
     }),

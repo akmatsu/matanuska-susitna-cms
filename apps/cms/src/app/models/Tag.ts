@@ -24,5 +24,9 @@ export const Tag: ListConfig<any> = list({
     facilities: relationship({ ref: 'Facility.tags', many: true }),
     parks: relationship({ ref: 'Park.tags', many: true }),
     trails: relationship({ ref: 'Trail.tags', many: true }),
+    assemblyDistricts: relationship({
+      ref: 'AssemblyDistrict.tags',
+      many: true,
+    }),
   },
 });

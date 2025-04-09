@@ -24,11 +24,21 @@ model Alert {
 
 model AssemblyDistrict {
   id                       String      @id @default(cuid())
+  heroImage                String?
   title                    String      @unique @default("")
   description              String      @default("")
+  publishAt                DateTime?
+  unpublishAt              DateTime?
+  reviewDate               DateTime?
   slug                     String      @unique @default("")
   owner                    User?       @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
   ownerId                  String?     @map("owner")
+  body                     String?
+  tags                     Tag[]       @relation("AssemblyDistrict_tags")
+  userGroups               UserGroup[] @relation("AssemblyDistrict_userGroups")
+  contacts                 Contact[]   @relation("AssemblyDistrict_contacts")
+  createdAt                DateTime?   @default(now())
+  updatedAt                DateTime?   @default(now()) @updatedAt
   photo                    Image?      @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
   photoId                  String?     @map("photo")
   memberName               String      @default("")
@@ -56,34 +66,36 @@ model Community {
   slug        String             @unique @default("")
   owner       User?              @relation("Community_owner", fields: [ownerId], references: [id])
   ownerId     String?            @map("owner")
-  mapId       String             @default("")
+  body        String?
   tags        Tag[]              @relation("Community_tags")
   userGroups  UserGroup[]        @relation("Community_userGroups")
   contacts    Contact[]          @relation("Community_contacts")
-  services    Service[]          @relation("Community_services")
-  districts   AssemblyDistrict[] @relation("Community_districts")
   createdAt   DateTime?          @default(now())
   updatedAt   DateTime?          @default(now()) @updatedAt
+  mapId       String             @default("")
+  services    Service[]          @relation("Community_services")
+  districts   AssemblyDistrict[] @relation("Community_districts")
 
   @@index([ownerId])
 }
 
 model Contact {
-  id              String      @id @default(cuid())
-  name            String      @default("")
-  title           String?
-  phone           String?
-  email           String?
-  primaryServices Service[]   @relation("Service_primaryContact")
-  services        Service[]   @relation("Contact_services")
-  communities     Community[] @relation("Community_contacts")
-  orgUnits        OrgUnit[]   @relation("Contact_orgUnits")
-  facilities      Facility[]  @relation("Contact_facilities")
-  parks           Park[]      @relation("Contact_parks")
-  trails          Trail[]     @relation("Contact_trails")
-  user            User?       @relation("Contact_user", fields: [userId], references: [id])
-  userId          String?     @unique @map("user")
-  editorNotes     String      @default("")
+  id                String             @id @default(cuid())
+  name              String             @default("")
+  title             String?
+  phone             String?
+  email             String?
+  primaryServices   Service[]          @relation("Service_primaryContact")
+  services          Service[]          @relation("Contact_services")
+  communities       Community[]        @relation("Community_contacts")
+  orgUnits          OrgUnit[]          @relation("Contact_orgUnits")
+  facilities        Facility[]         @relation("Contact_facilities")
+  parks             Park[]             @relation("Contact_parks")
+  assemblyDistricts AssemblyDistrict[] @relation("AssemblyDistrict_contacts")
+  trails            Trail[]            @relation("Contact_trails")
+  user              User?              @relation("Contact_user", fields: [userId], references: [id])
+  userId            String?            @unique @map("user")
+  editorNotes       String             @default("")
 }
 
 model Document {
@@ -140,12 +152,12 @@ model Facility {
   address     Location?       @relation("Facility_address", fields: [addressId], references: [id])
   addressId   String?         @map("address")
   contacts    Contact[]       @relation("Contact_facilities")
-  services    Service[]       @relation("Facility_services")
-  park        Park?           @relation("Facility_park", fields: [parkId], references: [id])
-  parkId      String?         @map("park")
   hours       OperatingHour[] @relation("Facility_hours")
   createdAt   DateTime?       @default(now())
   updatedAt   DateTime?       @default(now()) @updatedAt
+  services    Service[]       @relation("Facility_services")
+  park        Park?           @relation("Facility_park", fields: [parkId], references: [id])
+  parkId      String?         @map("park")
 
   @@index([ownerId])
   @@index([addressId])
@@ -204,25 +216,27 @@ model Location {
 }
 
 model OrgUnit {
-  id          String    @id @default(cuid())
+  id          String      @id @default(cuid())
   heroImage   String?
-  title       String    @unique @default("")
-  description String    @default("")
+  title       String      @unique @default("")
+  description String      @default("")
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
-  slug        String    @unique @default("")
-  owner       User?     @relation("OrgUnit_owner", fields: [ownerId], references: [id])
-  ownerId     String?   @map("owner")
-  showPage    Boolean   @default(true)
-  tags        Tag[]     @relation("OrgUnit_tags")
-  contacts    Contact[] @relation("Contact_orgUnits")
-  services    Service[] @relation("OrgUnit_services")
-  children    OrgUnit[] @relation("OrgUnit_parent")
-  parent      OrgUnit?  @relation("OrgUnit_parent", fields: [parentId], references: [id])
-  parentId    String?   @map("parent")
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @default(now()) @updatedAt
+  slug        String      @unique @default("")
+  owner       User?       @relation("OrgUnit_owner", fields: [ownerId], references: [id])
+  ownerId     String?     @map("owner")
+  body        String?
+  tags        Tag[]       @relation("OrgUnit_tags")
+  userGroups  UserGroup[] @relation("OrgUnit_userGroups")
+  contacts    Contact[]   @relation("Contact_orgUnits")
+  createdAt   DateTime?   @default(now())
+  updatedAt   DateTime?   @default(now()) @updatedAt
+  showPage    Boolean     @default(true)
+  services    Service[]   @relation("OrgUnit_services")
+  children    OrgUnit[]   @relation("OrgUnit_parent")
+  parent      OrgUnit?    @relation("OrgUnit_parent", fields: [parentId], references: [id])
+  parentId    String?     @map("parent")
 
   @@index([ownerId])
   @@index([parentId])
@@ -311,6 +325,7 @@ model Tag {
   facilities          Facility[]           @relation("Facility_tags")
   parks               Park[]               @relation("Park_tags")
   trails              Trail[]              @relation("Tag_trails")
+  assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_tags")
 }
 
 model Trail {
@@ -329,6 +344,9 @@ model Trail {
   userGroups         UserGroup[] @relation("Trail_userGroups")
   address            Location?   @relation("Trail_address", fields: [addressId], references: [id])
   addressId          String?     @map("address")
+  contacts           Contact[]   @relation("Contact_trails")
+  createdAt          DateTime?   @default(now())
+  updatedAt          DateTime?   @default(now()) @updatedAt
   open               Boolean     @default(false)
   summer             Boolean     @default(false)
   fall               Boolean     @default(false)
@@ -349,13 +367,9 @@ model Trail {
   difficulty         String?
   length             String      @default("")
   elevationChange    String      @default("")
-  groomed            Boolean     @default(false)
-  contacts           Contact[]   @relation("Contact_trails")
   services           Service[]   @relation("Service_trails")
   park               Park?       @relation("Trail_park", fields: [parkId], references: [id])
   parkId             String?     @map("park")
-  createdAt          DateTime?   @default(now())
-  updatedAt          DateTime?   @default(now()) @updatedAt
 
   @@index([ownerId])
   @@index([addressId])
@@ -411,7 +425,9 @@ model UserGroup {
   trails              Trail[]              @relation("Trail_userGroups")
   facilities          Facility[]           @relation("Facility_userGroups")
   communities         Community[]          @relation("Community_userGroups")
+  orgUnits            OrgUnit[]            @relation("OrgUnit_userGroups")
   documentCollections DocumentCollection[] @relation("DocumentCollection_userGroups")
+  assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_userGroups")
 
   @@index([ownerId])
 }
