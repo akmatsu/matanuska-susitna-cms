@@ -277,23 +277,21 @@ model Service {
   owner            User?          @relation("Service_owner", fields: [ownerId], references: [id])
   ownerId          String?        @map("owner")
   body             String?
+  tags             Tag[]          @relation("Service_tags")
+  userGroups       UserGroup[]    @relation("Service_userGroups")
   primaryAction    ExternalLink?  @relation("Service_primaryAction", fields: [primaryActionId], references: [id])
   primaryActionId  String?        @map("primaryAction")
   secondaryActions ExternalLink[] @relation("Service_secondaryActions")
-  actionLabel      String?
-  actionUrl        String?
-  tags             Tag[]          @relation("Service_tags")
-  userGroups       UserGroup[]    @relation("Service_userGroups")
+  contacts         Contact[]      @relation("Contact_services")
   primaryContact   Contact?       @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
   primaryContactId String?        @map("primaryContact")
-  contacts         Contact[]      @relation("Contact_services")
+  createdAt        DateTime?      @default(now())
+  updatedAt        DateTime?      @default(now()) @updatedAt
   communities      Community[]    @relation("Community_services")
   orgUnits         OrgUnit[]      @relation("OrgUnit_services")
   trails           Trail[]        @relation("Service_trails")
   parks            Park[]         @relation("Park_services")
   facilities       Facility[]     @relation("Facility_services")
-  createdAt        DateTime?      @default(now())
-  updatedAt        DateTime?      @default(now()) @updatedAt
   editorNotes      String         @default("")
 
   @@index([ownerId])

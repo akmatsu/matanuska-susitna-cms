@@ -6,6 +6,7 @@ import {
   virtual,
 } from '@keystone-6/core/fields';
 import {
+  BaseItem,
   BaseListTypeInfo,
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
@@ -21,6 +22,12 @@ import {
   customText,
   CustomTextOpts,
 } from '../components/customFields/Markdown';
+import {
+  toSearchableObj,
+  TYPESENSE_CLIENT,
+  TYPESENSE_COLLECTIONS,
+} from '../utils/typesense';
+import { capitalizeFirstLetter } from '../utils';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -329,23 +336,131 @@ export function services(listKey: string) {
   });
 }
 
-export function basePage(opts: {
-  listName: string;
-  customTextOpts?: CustomTextOpts<BaseListTypeInfo>;
-  heroImageConfig?: BlueHarvestImageConfig<BaseListTypeInfo>;
-  titleAndDescriptionOpts?: titleAndDescriptionOpts;
-}): BaseFields<any> {
+export function basePage(
+  listNamePlural: string,
+  opts?: {
+    customTextOpts?: CustomTextOpts<BaseListTypeInfo>;
+    heroImageConfig?: BlueHarvestImageConfig<BaseListTypeInfo>;
+    titleAndDescriptionOpts?: titleAndDescriptionOpts;
+    primaryAction?: boolean;
+    secondaryActions?: boolean;
+    primaryContact?: boolean;
+  },
+): BaseFields<any> {
   return {
-    heroImage: blueHarvestImage(opts.heroImageConfig),
-    ...titleAndDescription(opts.titleAndDescriptionOpts),
+    heroImage: blueHarvestImage(opts?.heroImageConfig),
+    ...titleAndDescription(opts?.titleAndDescriptionOpts),
     ...publishable,
-    liveUrl: liveUrl(opts.listName),
+    liveUrl: liveUrl(listNamePlural),
     slug,
     owner,
-    body: customText(opts.customTextOpts),
-    tags: tags(opts.listName),
-    userGroups: userGroups(opts.listName),
-    contacts: contacts(opts.listName),
+    body: customText(opts?.customTextOpts),
+    tags: tags(listNamePlural),
+    userGroups: userGroups(listNamePlural),
+
+    ...(opts?.primaryAction && {
+      primaryAction: relationship({
+        ref: 'ExternalLink',
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+          displayMode: 'cards',
+          cardFields: ['label', 'url'],
+          inlineCreate: {
+            fields: ['label', 'url'],
+          },
+          inlineConnect: true,
+          inlineEdit: {
+            fields: ['label', 'url'],
+          },
+        },
+        many: false,
+      }),
+    }),
+    ...(opts?.secondaryActions && {
+      secondaryActions: relationship({
+        ref: 'ExternalLink',
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+          displayMode: 'cards',
+          cardFields: ['label', 'url'],
+          inlineCreate: {
+            fields: ['label', 'url'],
+          },
+          inlineConnect: true,
+          inlineEdit: {
+            fields: ['label', 'url'],
+          },
+        },
+        many: true,
+      }),
+    }),
+    contacts: contacts(listNamePlural),
+    ...(opts?.primaryContact && {
+      primaryContact: relationship({
+        ref: `Contact.primary${capitalizeFirstLetter(listNamePlural)}`,
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+        },
+      }),
+    }),
+
     ...timestamps,
   };
+}
+
+export async function typesenseUpsert(
+  listNameSingular: string,
+  query: string,
+  {
+    operation,
+    context,
+    item,
+  }: {
+    operation: 'create' | 'update' | 'delete';
+    context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
+    item?: BaseItem;
+  },
+) {
+  if ((operation === 'update' || operation === 'create') && item) {
+    try {
+      const doc = await context.query[
+        capitalizeFirstLetter(listNameSingular)
+      ]?.findOne({
+        where: { id: item.id.toString() },
+        query,
+      });
+
+      const document = toSearchableObj(doc, listNameSingular);
+
+      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+        .documents()
+        .upsert(document);
+    } catch (error: any) {
+      console.error('Error updating Typesense document:', error);
+    }
+  }
+}
+
+export async function typesenseDelete({
+  operation,
+  item,
+}: {
+  operation: 'create' | 'update' | 'delete';
+  item?: BaseItem;
+}) {
+  if (operation === 'delete' && item) {
+    try {
+      TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+        .documents(item.id.toString())
+        .delete();
+    } catch (error: any) {
+      console.error('Error deleting Typesense document', error);
+    }
+  }
 }
