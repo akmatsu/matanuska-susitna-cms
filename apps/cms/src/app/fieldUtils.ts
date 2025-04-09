@@ -347,6 +347,8 @@ export function basePage(
     primaryContact?: boolean;
     address?: boolean;
     hours?: boolean;
+    documents?: boolean;
+    actions?: boolean;
   },
 ): BaseFields<any> {
   return {
@@ -398,6 +400,35 @@ export function basePage(
           },
         },
         many: true,
+      }),
+    }),
+
+    ...(opts?.actions && {
+      actions: relationship({
+        ref: 'InternalLink',
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+          displayMode: 'cards',
+          cardFields: ['label', 'item'],
+          inlineCreate: { fields: ['label', 'selectItem'] },
+          inlineEdit: { fields: ['label', 'selectItem'] },
+        },
+      }),
+    }),
+
+    ...(opts?.documents && {
+      documents: relationship({
+        ref: 'Document',
+        many: true,
+        ui: {
+          displayMode: 'cards',
+          inlineConnect: true,
+          cardFields: ['title', 'description', 'file', 'tags'],
+          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
+          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+        },
       }),
     }),
 

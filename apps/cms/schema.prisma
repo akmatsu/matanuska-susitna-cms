@@ -96,17 +96,19 @@ model Contact {
   user              User?              @relation("Contact_user", fields: [userId], references: [id])
   userId            String?            @unique @map("user")
   editorNotes       String             @default("")
+  publicNotices     PublicNotice[]     @relation("Contact_publicNotices")
 }
 
 model Document {
-  id            String               @id @default(cuid())
-  title         String               @default("")
-  description   String               @default("")
-  tags          Tag[]                @relation("Document_tags")
-  file_filesize Int?
-  file_filename String?
-  collections   DocumentCollection[] @relation("Document_collections")
-  editorNotes   String               @default("")
+  id                          String               @id @default(cuid())
+  title                       String               @default("")
+  description                 String               @default("")
+  tags                        Tag[]                @relation("Document_tags")
+  file_filesize               Int?
+  file_filename               String?
+  collections                 DocumentCollection[] @relation("Document_collections")
+  editorNotes                 String               @default("")
+  from_PublicNotice_documents PublicNotice[]       @relation("PublicNotice_documents")
 
   @@index([title])
 }
@@ -195,10 +197,11 @@ model Image {
 }
 
 model InternalLink {
-  id                        String      @id @default(cuid())
-  label                     String      @default("")
+  id                        String         @id @default(cuid())
+  label                     String         @default("")
   selectItem                Json?
-  from_Highlight_linkedItem Highlight[] @relation("Highlight_linkedItem")
+  from_Highlight_linkedItem Highlight[]    @relation("Highlight_linkedItem")
+  from_PublicNotice_actions PublicNotice[] @relation("PublicNotice_actions")
 }
 
 model Location {
@@ -279,6 +282,33 @@ model Park {
   @@index([addressId])
 }
 
+model PublicNotice {
+  id            String        @id @default(cuid())
+  heroImage     String?
+  title         String        @unique @default("")
+  description   String        @default("")
+  publishAt     DateTime?
+  unpublishAt   DateTime?
+  reviewDate    DateTime?
+  slug          String        @unique @default("")
+  owner         User?         @relation("PublicNotice_owner", fields: [ownerId], references: [id])
+  ownerId       String?       @map("owner")
+  body          String?
+  tags          Tag[]         @relation("PublicNotice_tags")
+  userGroups    UserGroup[]   @relation("PublicNotice_userGroups")
+  actions       InternalLink? @relation("PublicNotice_actions", fields: [actionsId], references: [id])
+  actionsId     String?       @map("actions")
+  documents     Document[]    @relation("PublicNotice_documents")
+  contacts      Contact[]     @relation("Contact_publicNotices")
+  createdAt     DateTime?     @default(now())
+  updatedAt     DateTime?     @default(now()) @updatedAt
+  effectiveDate DateTime?
+  endDate       DateTime?
+
+  @@index([ownerId])
+  @@index([actionsId])
+}
+
 model Service {
   id               String         @id @default(cuid())
   heroImage        String?
@@ -326,6 +356,7 @@ model Tag {
   parks               Park[]               @relation("Park_tags")
   trails              Trail[]              @relation("Tag_trails")
   assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_tags")
+  publicNotices       PublicNotice[]       @relation("PublicNotice_tags")
 }
 
 model Trail {
@@ -407,6 +438,7 @@ model User {
   from_Facility_owner           Facility[]           @relation("Facility_owner")
   from_OrgUnit_owner            OrgUnit[]            @relation("OrgUnit_owner")
   from_Park_owner               Park[]               @relation("Park_owner")
+  from_PublicNotice_owner       PublicNotice[]       @relation("PublicNotice_owner")
   from_Service_owner            Service[]            @relation("Service_owner")
   from_Trail_owner              Trail[]              @relation("Trail_owner")
   from_Url_owner                Url[]                @relation("Url_owner")
@@ -428,6 +460,7 @@ model UserGroup {
   orgUnits            OrgUnit[]            @relation("OrgUnit_userGroups")
   documentCollections DocumentCollection[] @relation("DocumentCollection_userGroups")
   assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_userGroups")
+  publicNotices       PublicNotice[]       @relation("PublicNotice_userGroups")
 
   @@index([ownerId])
 }

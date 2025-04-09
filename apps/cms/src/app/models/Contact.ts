@@ -113,5 +113,9 @@ export const Contact: ListConfig<any> = list({
         displayMode: 'textarea',
       },
     }),
+    publicNotices: relationship({
+      ref: 'PublicNotice.contacts',
+      many: true,
+    }),
   },
 });
