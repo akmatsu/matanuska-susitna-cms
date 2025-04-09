@@ -254,12 +254,12 @@ model Park {
   address     Location?       @relation("Park_address", fields: [addressId], references: [id])
   addressId   String?         @map("address")
   contacts    Contact[]       @relation("Contact_parks")
-  services    Service[]       @relation("Park_services")
-  trails      Trail[]         @relation("Trail_park")
-  facilities  Facility[]      @relation("Facility_park")
   hours       OperatingHour[] @relation("Park_hours")
   createdAt   DateTime?       @default(now())
   updatedAt   DateTime?       @default(now()) @updatedAt
+  services    Service[]       @relation("Park_services")
+  trails      Trail[]         @relation("Trail_park")
+  facilities  Facility[]      @relation("Facility_park")
 
   @@index([ownerId])
   @@index([addressId])
@@ -282,9 +282,9 @@ model Service {
   primaryAction    ExternalLink?  @relation("Service_primaryAction", fields: [primaryActionId], references: [id])
   primaryActionId  String?        @map("primaryAction")
   secondaryActions ExternalLink[] @relation("Service_secondaryActions")
-  contacts         Contact[]      @relation("Contact_services")
   primaryContact   Contact?       @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
   primaryContactId String?        @map("primaryContact")
+  contacts         Contact[]      @relation("Contact_services")
   createdAt        DateTime?      @default(now())
   updatedAt        DateTime?      @default(now()) @updatedAt
   communities      Community[]    @relation("Community_services")

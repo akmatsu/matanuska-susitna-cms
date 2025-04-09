@@ -345,6 +345,8 @@ export function basePage(
     primaryAction?: boolean;
     secondaryActions?: boolean;
     primaryContact?: boolean;
+    address?: boolean;
+    hours?: boolean;
   },
 ): BaseFields<any> {
   return {
@@ -398,13 +400,51 @@ export function basePage(
         many: true,
       }),
     }),
-    contacts: contacts(listNamePlural),
+
+    ...(opts?.address && {
+      address: relationship({
+        ref: 'Location',
+        many: false,
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
+          inlineCreate: {
+            fields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
+          },
+          inlineEdit: {
+            fields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
+          },
+          inlineConnect: true,
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+        },
+      }),
+    }),
+
     ...(opts?.primaryContact && {
       primaryContact: relationship({
         ref: `Contact.primary${capitalizeFirstLetter(listNamePlural)}`,
         ui: {
           itemView: {
             fieldPosition: 'sidebar',
+          },
+        },
+      }),
+    }),
+    contacts: contacts(listNamePlural),
+    ...(opts?.hours && {
+      hours: relationship({
+        ref: 'OperatingHour',
+        many: true,
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['day', 'open', 'close'],
+          inlineCreate: {
+            fields: ['day', 'open', 'close'],
+          },
+          inlineEdit: {
+            fields: ['day', 'open', 'close'],
           },
         },
       }),
