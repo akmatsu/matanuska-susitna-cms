@@ -23,58 +23,60 @@ model Alert {
 }
 
 model AssemblyDistrict {
-  id                       String      @id @default(cuid())
-  heroImage                String?
-  title                    String      @unique @default("")
-  description              String      @default("")
-  publishAt                DateTime?
-  unpublishAt              DateTime?
-  reviewDate               DateTime?
-  slug                     String      @unique @default("")
-  owner                    User?       @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
-  ownerId                  String?     @map("owner")
-  body                     String?
-  tags                     Tag[]       @relation("AssemblyDistrict_tags")
-  userGroups               UserGroup[] @relation("AssemblyDistrict_userGroups")
-  contacts                 Contact[]   @relation("AssemblyDistrict_contacts")
-  createdAt                DateTime?   @default(now())
-  updatedAt                DateTime?   @default(now()) @updatedAt
-  photo                    Image?      @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
-  photoId                  String?     @map("photo")
-  memberName               String      @default("")
-  bio                      String      @default("")
-  address                  String      @default("")
-  email                    String?
-  phone                    String?
-  fax                      String?
-  termStart                DateTime?
-  termEnd                  DateTime?
-  from_Community_districts Community[] @relation("Community_districts")
+  id                                  String         @id @default(cuid())
+  heroImage                           String?
+  title                               String         @unique @default("")
+  description                         String         @default("")
+  publishAt                           DateTime?
+  unpublishAt                         DateTime?
+  reviewDate                          DateTime?
+  slug                                String         @unique @default("")
+  owner                               User?          @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
+  ownerId                             String?        @map("owner")
+  body                                String?
+  tags                                Tag[]          @relation("AssemblyDistrict_tags")
+  userGroups                          UserGroup[]    @relation("AssemblyDistrict_userGroups")
+  contacts                            Contact[]      @relation("AssemblyDistrict_contacts")
+  createdAt                           DateTime?      @default(now())
+  updatedAt                           DateTime?      @default(now()) @updatedAt
+  photo                               Image?         @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
+  photoId                             String?        @map("photo")
+  memberName                          String         @default("")
+  bio                                 String         @default("")
+  address                             String         @default("")
+  email                               String?
+  phone                               String?
+  fax                                 String?
+  termStart                           DateTime?
+  termEnd                             DateTime?
+  from_Community_districts            Community[]    @relation("Community_districts")
+  from_PublicNotice_assemblyDistricts PublicNotice[] @relation("PublicNotice_assemblyDistricts")
 
   @@index([ownerId])
   @@index([photoId])
 }
 
 model Community {
-  id          String             @id @default(cuid())
-  heroImage   String?
-  title       String             @unique @default("")
-  description String             @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  slug        String             @unique @default("")
-  owner       User?              @relation("Community_owner", fields: [ownerId], references: [id])
-  ownerId     String?            @map("owner")
-  body        String?
-  tags        Tag[]              @relation("Community_tags")
-  userGroups  UserGroup[]        @relation("Community_userGroups")
-  contacts    Contact[]          @relation("Community_contacts")
-  createdAt   DateTime?          @default(now())
-  updatedAt   DateTime?          @default(now()) @updatedAt
-  mapId       String             @default("")
-  services    Service[]          @relation("Community_services")
-  districts   AssemblyDistrict[] @relation("Community_districts")
+  id                            String             @id @default(cuid())
+  heroImage                     String?
+  title                         String             @unique @default("")
+  description                   String             @default("")
+  publishAt                     DateTime?
+  unpublishAt                   DateTime?
+  reviewDate                    DateTime?
+  slug                          String             @unique @default("")
+  owner                         User?              @relation("Community_owner", fields: [ownerId], references: [id])
+  ownerId                       String?            @map("owner")
+  body                          String?
+  tags                          Tag[]              @relation("Community_tags")
+  userGroups                    UserGroup[]        @relation("Community_userGroups")
+  contacts                      Contact[]          @relation("Community_contacts")
+  createdAt                     DateTime?          @default(now())
+  updatedAt                     DateTime?          @default(now()) @updatedAt
+  mapId                         String             @default("")
+  services                      Service[]          @relation("Community_services")
+  districts                     AssemblyDistrict[] @relation("Community_districts")
+  from_PublicNotice_communities PublicNotice[]     @relation("PublicNotice_communities")
 
   @@index([ownerId])
 }
@@ -138,28 +140,29 @@ model ExternalLink {
 }
 
 model Facility {
-  id          String          @id @default(cuid())
-  heroImage   String?
-  title       String          @unique @default("")
-  description String          @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  slug        String          @unique @default("")
-  owner       User?           @relation("Facility_owner", fields: [ownerId], references: [id])
-  ownerId     String?         @map("owner")
-  body        String?
-  tags        Tag[]           @relation("Facility_tags")
-  userGroups  UserGroup[]     @relation("Facility_userGroups")
-  address     Location?       @relation("Facility_address", fields: [addressId], references: [id])
-  addressId   String?         @map("address")
-  contacts    Contact[]       @relation("Contact_facilities")
-  hours       OperatingHour[] @relation("Facility_hours")
-  createdAt   DateTime?       @default(now())
-  updatedAt   DateTime?       @default(now()) @updatedAt
-  services    Service[]       @relation("Facility_services")
-  park        Park?           @relation("Facility_park", fields: [parkId], references: [id])
-  parkId      String?         @map("park")
+  id                           String          @id @default(cuid())
+  heroImage                    String?
+  title                        String          @unique @default("")
+  description                  String          @default("")
+  publishAt                    DateTime?
+  unpublishAt                  DateTime?
+  reviewDate                   DateTime?
+  slug                         String          @unique @default("")
+  owner                        User?           @relation("Facility_owner", fields: [ownerId], references: [id])
+  ownerId                      String?         @map("owner")
+  body                         String?
+  tags                         Tag[]           @relation("Facility_tags")
+  userGroups                   UserGroup[]     @relation("Facility_userGroups")
+  address                      Location?       @relation("Facility_address", fields: [addressId], references: [id])
+  addressId                    String?         @map("address")
+  contacts                     Contact[]       @relation("Contact_facilities")
+  hours                        OperatingHour[] @relation("Facility_hours")
+  createdAt                    DateTime?       @default(now())
+  updatedAt                    DateTime?       @default(now()) @updatedAt
+  services                     Service[]       @relation("Facility_services")
+  park                         Park?           @relation("Facility_park", fields: [parkId], references: [id])
+  parkId                       String?         @map("park")
+  from_PublicNotice_facilities PublicNotice[]  @relation("PublicNotice_facilities")
 
   @@index([ownerId])
   @@index([addressId])
@@ -167,20 +170,58 @@ model Facility {
 }
 
 model Highlight {
-  id           String        @id @default(cuid())
-  title        String        @unique @default("")
-  publishAt    DateTime?
-  unpublishAt  DateTime?
-  reviewDate   DateTime?
-  image        String?
-  message      String        @default("")
-  linkedItem   InternalLink? @relation("Highlight_linkedItem", fields: [linkedItemId], references: [id])
-  linkedItemId String?       @map("linkedItem")
-  editorNotes  String        @default("")
-  createdAt    DateTime?     @default(now())
-  updatedAt    DateTime?     @default(now()) @updatedAt
+  id                           String        @id @default(cuid())
+  title                        String        @unique @default("")
+  publishAt                    DateTime?
+  unpublishAt                  DateTime?
+  reviewDate                   DateTime?
+  image                        String?
+  message                      String        @default("")
+  linkedItem                   InternalLink? @relation("Highlight_linkedItem", fields: [linkedItemId], references: [id])
+  linkedItemId                 String?       @map("linkedItem")
+  editorNotes                  String        @default("")
+  createdAt                    DateTime?     @default(now())
+  updatedAt                    DateTime?     @default(now()) @updatedAt
+  from_HomePage_toolbeltOne    HomePage[]    @relation("HomePage_toolbeltOne")
+  from_HomePage_toolbeltTwo    HomePage[]    @relation("HomePage_toolbeltTwo")
+  from_HomePage_toolbeltThree  HomePage[]    @relation("HomePage_toolbeltThree")
+  from_HomePage_toolbeltFour   HomePage[]    @relation("HomePage_toolbeltFour")
+  from_HomePage_highlightOne   HomePage[]    @relation("HomePage_highlightOne")
+  from_HomePage_highlightTwo   HomePage[]    @relation("HomePage_highlightTwo")
+  from_HomePage_highlightThree HomePage[]    @relation("HomePage_highlightThree")
 
   @@index([linkedItemId])
+}
+
+model HomePage {
+  id               Int        @id
+  heroImage        String?
+  title            String     @unique @default("")
+  description      String     @default("")
+  toolbeltOne      Highlight? @relation("HomePage_toolbeltOne", fields: [toolbeltOneId], references: [id])
+  toolbeltOneId    String?    @map("toolbeltOne")
+  toolbeltTwo      Highlight? @relation("HomePage_toolbeltTwo", fields: [toolbeltTwoId], references: [id])
+  toolbeltTwoId    String?    @map("toolbeltTwo")
+  toolbeltThree    Highlight? @relation("HomePage_toolbeltThree", fields: [toolbeltThreeId], references: [id])
+  toolbeltThreeId  String?    @map("toolbeltThree")
+  toolbeltFour     Highlight? @relation("HomePage_toolbeltFour", fields: [toolbeltFourId], references: [id])
+  toolbeltFourId   String?    @map("toolbeltFour")
+  highlightOne     Highlight? @relation("HomePage_highlightOne", fields: [highlightOneId], references: [id])
+  highlightOneId   String?    @map("highlightOne")
+  highlightTwo     Highlight? @relation("HomePage_highlightTwo", fields: [highlightTwoId], references: [id])
+  highlightTwoId   String?    @map("highlightTwo")
+  highlightThree   Highlight? @relation("HomePage_highlightThree", fields: [highlightThreeId], references: [id])
+  highlightThreeId String?    @map("highlightThree")
+  createdAt        DateTime?  @default(now())
+  updatedAt        DateTime?  @default(now()) @updatedAt
+
+  @@index([toolbeltOneId])
+  @@index([toolbeltTwoId])
+  @@index([toolbeltThreeId])
+  @@index([toolbeltFourId])
+  @@index([highlightOneId])
+  @@index([highlightTwoId])
+  @@index([highlightThreeId])
 }
 
 model Image {
@@ -219,27 +260,28 @@ model Location {
 }
 
 model OrgUnit {
-  id          String      @id @default(cuid())
-  heroImage   String?
-  title       String      @unique @default("")
-  description String      @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  slug        String      @unique @default("")
-  owner       User?       @relation("OrgUnit_owner", fields: [ownerId], references: [id])
-  ownerId     String?     @map("owner")
-  body        String?
-  tags        Tag[]       @relation("OrgUnit_tags")
-  userGroups  UserGroup[] @relation("OrgUnit_userGroups")
-  contacts    Contact[]   @relation("Contact_orgUnits")
-  createdAt   DateTime?   @default(now())
-  updatedAt   DateTime?   @default(now()) @updatedAt
-  showPage    Boolean     @default(true)
-  services    Service[]   @relation("OrgUnit_services")
-  children    OrgUnit[]   @relation("OrgUnit_parent")
-  parent      OrgUnit?    @relation("OrgUnit_parent", fields: [parentId], references: [id])
-  parentId    String?     @map("parent")
+  id                         String         @id @default(cuid())
+  heroImage                  String?
+  title                      String         @unique @default("")
+  description                String         @default("")
+  publishAt                  DateTime?
+  unpublishAt                DateTime?
+  reviewDate                 DateTime?
+  slug                       String         @unique @default("")
+  owner                      User?          @relation("OrgUnit_owner", fields: [ownerId], references: [id])
+  ownerId                    String?        @map("owner")
+  body                       String?
+  tags                       Tag[]          @relation("OrgUnit_tags")
+  userGroups                 UserGroup[]    @relation("OrgUnit_userGroups")
+  contacts                   Contact[]      @relation("Contact_orgUnits")
+  createdAt                  DateTime?      @default(now())
+  updatedAt                  DateTime?      @default(now()) @updatedAt
+  showPage                   Boolean        @default(true)
+  services                   Service[]      @relation("OrgUnit_services")
+  children                   OrgUnit[]      @relation("OrgUnit_parent")
+  parent                     OrgUnit?       @relation("OrgUnit_parent", fields: [parentId], references: [id])
+  parentId                   String?        @map("parent")
+  from_PublicNotice_orgUnits PublicNotice[] @relation("PublicNotice_orgUnits")
 
   @@index([ownerId])
   @@index([parentId])
@@ -255,88 +297,97 @@ model OperatingHour {
 }
 
 model Park {
-  id          String          @id @default(cuid())
-  heroImage   String?
-  title       String          @unique @default("")
-  description String          @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  slug        String          @unique @default("")
-  owner       User?           @relation("Park_owner", fields: [ownerId], references: [id])
-  ownerId     String?         @map("owner")
-  body        String?
-  tags        Tag[]           @relation("Park_tags")
-  userGroups  UserGroup[]     @relation("Park_userGroups")
-  address     Location?       @relation("Park_address", fields: [addressId], references: [id])
-  addressId   String?         @map("address")
-  contacts    Contact[]       @relation("Contact_parks")
-  hours       OperatingHour[] @relation("Park_hours")
-  createdAt   DateTime?       @default(now())
-  updatedAt   DateTime?       @default(now()) @updatedAt
-  services    Service[]       @relation("Park_services")
-  trails      Trail[]         @relation("Trail_park")
-  facilities  Facility[]      @relation("Facility_park")
+  id                      String          @id @default(cuid())
+  heroImage               String?
+  title                   String          @unique @default("")
+  description             String          @default("")
+  publishAt               DateTime?
+  unpublishAt             DateTime?
+  reviewDate              DateTime?
+  slug                    String          @unique @default("")
+  owner                   User?           @relation("Park_owner", fields: [ownerId], references: [id])
+  ownerId                 String?         @map("owner")
+  body                    String?
+  tags                    Tag[]           @relation("Park_tags")
+  userGroups              UserGroup[]     @relation("Park_userGroups")
+  address                 Location?       @relation("Park_address", fields: [addressId], references: [id])
+  addressId               String?         @map("address")
+  contacts                Contact[]       @relation("Contact_parks")
+  hours                   OperatingHour[] @relation("Park_hours")
+  createdAt               DateTime?       @default(now())
+  updatedAt               DateTime?       @default(now()) @updatedAt
+  services                Service[]       @relation("Park_services")
+  trails                  Trail[]         @relation("Trail_park")
+  facilities              Facility[]      @relation("Facility_park")
+  from_PublicNotice_parks PublicNotice[]  @relation("PublicNotice_parks")
 
   @@index([ownerId])
   @@index([addressId])
 }
 
 model PublicNotice {
-  id            String        @id @default(cuid())
-  heroImage     String?
-  title         String        @unique @default("")
-  description   String        @default("")
-  publishAt     DateTime?
-  unpublishAt   DateTime?
-  reviewDate    DateTime?
-  slug          String        @unique @default("")
-  owner         User?         @relation("PublicNotice_owner", fields: [ownerId], references: [id])
-  ownerId       String?       @map("owner")
-  body          String?
-  tags          Tag[]         @relation("PublicNotice_tags")
-  userGroups    UserGroup[]   @relation("PublicNotice_userGroups")
-  actions       InternalLink? @relation("PublicNotice_actions", fields: [actionsId], references: [id])
-  actionsId     String?       @map("actions")
-  documents     Document[]    @relation("PublicNotice_documents")
-  contacts      Contact[]     @relation("Contact_publicNotices")
-  createdAt     DateTime?     @default(now())
-  updatedAt     DateTime?     @default(now()) @updatedAt
-  effectiveDate DateTime?
-  endDate       DateTime?
+  id                String             @id @default(cuid())
+  heroImage         String?
+  title             String             @unique @default("")
+  description       String             @default("")
+  publishAt         DateTime?
+  unpublishAt       DateTime?
+  reviewDate        DateTime?
+  slug              String             @unique @default("")
+  owner             User?              @relation("PublicNotice_owner", fields: [ownerId], references: [id])
+  ownerId           String?            @map("owner")
+  body              String?
+  tags              Tag[]              @relation("PublicNotice_tags")
+  userGroups        UserGroup[]        @relation("PublicNotice_userGroups")
+  actions           InternalLink?      @relation("PublicNotice_actions", fields: [actionsId], references: [id])
+  actionsId         String?            @map("actions")
+  documents         Document[]         @relation("PublicNotice_documents")
+  contacts          Contact[]          @relation("Contact_publicNotices")
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now()) @updatedAt
+  effectiveDate     DateTime?
+  endDate           DateTime?
+  parks             Park[]             @relation("PublicNotice_parks")
+  services          Service[]          @relation("PublicNotice_services")
+  orgUnits          OrgUnit[]          @relation("PublicNotice_orgUnits")
+  facilities        Facility[]         @relation("PublicNotice_facilities")
+  trails            Trail[]            @relation("PublicNotice_trails")
+  communities       Community[]        @relation("PublicNotice_communities")
+  assemblyDistricts AssemblyDistrict[] @relation("PublicNotice_assemblyDistricts")
 
   @@index([ownerId])
   @@index([actionsId])
 }
 
 model Service {
-  id               String         @id @default(cuid())
-  heroImage        String?
-  title            String         @unique @default("")
-  description      String         @default("")
-  publishAt        DateTime?
-  unpublishAt      DateTime?
-  reviewDate       DateTime?
-  slug             String         @unique @default("")
-  owner            User?          @relation("Service_owner", fields: [ownerId], references: [id])
-  ownerId          String?        @map("owner")
-  body             String?
-  tags             Tag[]          @relation("Service_tags")
-  userGroups       UserGroup[]    @relation("Service_userGroups")
-  primaryAction    ExternalLink?  @relation("Service_primaryAction", fields: [primaryActionId], references: [id])
-  primaryActionId  String?        @map("primaryAction")
-  secondaryActions ExternalLink[] @relation("Service_secondaryActions")
-  primaryContact   Contact?       @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
-  primaryContactId String?        @map("primaryContact")
-  contacts         Contact[]      @relation("Contact_services")
-  createdAt        DateTime?      @default(now())
-  updatedAt        DateTime?      @default(now()) @updatedAt
-  communities      Community[]    @relation("Community_services")
-  orgUnits         OrgUnit[]      @relation("OrgUnit_services")
-  trails           Trail[]        @relation("Service_trails")
-  parks            Park[]         @relation("Park_services")
-  facilities       Facility[]     @relation("Facility_services")
-  editorNotes      String         @default("")
+  id                         String         @id @default(cuid())
+  heroImage                  String?
+  title                      String         @unique @default("")
+  description                String         @default("")
+  publishAt                  DateTime?
+  unpublishAt                DateTime?
+  reviewDate                 DateTime?
+  slug                       String         @unique @default("")
+  owner                      User?          @relation("Service_owner", fields: [ownerId], references: [id])
+  ownerId                    String?        @map("owner")
+  body                       String?
+  tags                       Tag[]          @relation("Service_tags")
+  userGroups                 UserGroup[]    @relation("Service_userGroups")
+  primaryAction              ExternalLink?  @relation("Service_primaryAction", fields: [primaryActionId], references: [id])
+  primaryActionId            String?        @map("primaryAction")
+  secondaryActions           ExternalLink[] @relation("Service_secondaryActions")
+  primaryContact             Contact?       @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
+  primaryContactId           String?        @map("primaryContact")
+  contacts                   Contact[]      @relation("Contact_services")
+  createdAt                  DateTime?      @default(now())
+  updatedAt                  DateTime?      @default(now()) @updatedAt
+  communities                Community[]    @relation("Community_services")
+  orgUnits                   OrgUnit[]      @relation("OrgUnit_services")
+  trails                     Trail[]        @relation("Service_trails")
+  parks                      Park[]         @relation("Park_services")
+  facilities                 Facility[]     @relation("Facility_services")
+  editorNotes                String         @default("")
+  from_PublicNotice_services PublicNotice[] @relation("PublicNotice_services")
 
   @@index([ownerId])
   @@index([primaryActionId])
@@ -360,47 +411,48 @@ model Tag {
 }
 
 model Trail {
-  id                 String      @id @default(cuid())
-  heroImage          String?
-  title              String      @unique @default("")
-  description        String      @default("")
-  publishAt          DateTime?
-  unpublishAt        DateTime?
-  reviewDate         DateTime?
-  slug               String      @unique @default("")
-  owner              User?       @relation("Trail_owner", fields: [ownerId], references: [id])
-  ownerId            String?     @map("owner")
-  body               String?
-  tags               Tag[]       @relation("Tag_trails")
-  userGroups         UserGroup[] @relation("Trail_userGroups")
-  address            Location?   @relation("Trail_address", fields: [addressId], references: [id])
-  addressId          String?     @map("address")
-  contacts           Contact[]   @relation("Contact_trails")
-  createdAt          DateTime?   @default(now())
-  updatedAt          DateTime?   @default(now()) @updatedAt
-  open               Boolean     @default(false)
-  summer             Boolean     @default(false)
-  fall               Boolean     @default(false)
-  winter             Boolean     @default(false)
-  spring             Boolean     @default(false)
-  hiking             Boolean     @default(false)
-  biking             Boolean     @default(false)
-  horsebackRiding    Boolean     @default(false)
-  crossCountrySkiing Boolean     @default(false)
-  snowshoeing        Boolean     @default(false)
-  frisbeeGolf        Boolean     @default(false)
-  dogWalking         Boolean     @default(false)
-  running            Boolean     @default(false)
-  snowMachining      Boolean     @default(false)
-  atv                Boolean     @default(false)
-  dirtBiking         Boolean     @default(false)
-  mushing            Boolean     @default(false)
-  difficulty         String?
-  length             String      @default("")
-  elevationChange    String      @default("")
-  services           Service[]   @relation("Service_trails")
-  park               Park?       @relation("Trail_park", fields: [parkId], references: [id])
-  parkId             String?     @map("park")
+  id                       String         @id @default(cuid())
+  heroImage                String?
+  title                    String         @unique @default("")
+  description              String         @default("")
+  publishAt                DateTime?
+  unpublishAt              DateTime?
+  reviewDate               DateTime?
+  slug                     String         @unique @default("")
+  owner                    User?          @relation("Trail_owner", fields: [ownerId], references: [id])
+  ownerId                  String?        @map("owner")
+  body                     String?
+  tags                     Tag[]          @relation("Tag_trails")
+  userGroups               UserGroup[]    @relation("Trail_userGroups")
+  address                  Location?      @relation("Trail_address", fields: [addressId], references: [id])
+  addressId                String?        @map("address")
+  contacts                 Contact[]      @relation("Contact_trails")
+  createdAt                DateTime?      @default(now())
+  updatedAt                DateTime?      @default(now()) @updatedAt
+  open                     Boolean        @default(false)
+  summer                   Boolean        @default(false)
+  fall                     Boolean        @default(false)
+  winter                   Boolean        @default(false)
+  spring                   Boolean        @default(false)
+  hiking                   Boolean        @default(false)
+  biking                   Boolean        @default(false)
+  horsebackRiding          Boolean        @default(false)
+  crossCountrySkiing       Boolean        @default(false)
+  snowshoeing              Boolean        @default(false)
+  frisbeeGolf              Boolean        @default(false)
+  dogWalking               Boolean        @default(false)
+  running                  Boolean        @default(false)
+  snowMachining            Boolean        @default(false)
+  atv                      Boolean        @default(false)
+  dirtBiking               Boolean        @default(false)
+  mushing                  Boolean        @default(false)
+  difficulty               String?
+  length                   String         @default("")
+  elevationChange          String         @default("")
+  services                 Service[]      @relation("Service_trails")
+  park                     Park?          @relation("Trail_park", fields: [parkId], references: [id])
+  parkId                   String?        @map("park")
+  from_PublicNotice_trails PublicNotice[] @relation("PublicNotice_trails")
 
   @@index([ownerId])
   @@index([addressId])

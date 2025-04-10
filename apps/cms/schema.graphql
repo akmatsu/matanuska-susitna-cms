@@ -1247,6 +1247,100 @@ input InternalLinkRelateToOneForCreateInput {
   connect: InternalLinkWhereUniqueInput
 }
 
+type HomePage {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  toolbeltOne: Highlight
+  toolbeltTwo: Highlight
+  toolbeltThree: Highlight
+  toolbeltFour: Highlight
+  highlightOne: Highlight
+  highlightTwo: Highlight
+  highlightThree: Highlight
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input HomePageWhereUniqueInput {
+  id: ID
+  title: String
+}
+
+input HomePageWhereInput {
+  AND: [HomePageWhereInput!]
+  OR: [HomePageWhereInput!]
+  NOT: [HomePageWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  toolbeltOne: HighlightWhereInput
+  toolbeltTwo: HighlightWhereInput
+  toolbeltThree: HighlightWhereInput
+  toolbeltFour: HighlightWhereInput
+  highlightOne: HighlightWhereInput
+  highlightTwo: HighlightWhereInput
+  highlightThree: HighlightWhereInput
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input HomePageOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input HomePageUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  toolbeltOne: HighlightRelateToOneForUpdateInput
+  toolbeltTwo: HighlightRelateToOneForUpdateInput
+  toolbeltThree: HighlightRelateToOneForUpdateInput
+  toolbeltFour: HighlightRelateToOneForUpdateInput
+  highlightOne: HighlightRelateToOneForUpdateInput
+  highlightTwo: HighlightRelateToOneForUpdateInput
+  highlightThree: HighlightRelateToOneForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input HighlightRelateToOneForUpdateInput {
+  create: HighlightCreateInput
+  connect: HighlightWhereUniqueInput
+  disconnect: Boolean
+}
+
+input HomePageUpdateArgs {
+  where: HomePageWhereUniqueInput! = {id: 1}
+  data: HomePageUpdateInput!
+}
+
+input HomePageCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  toolbeltOne: HighlightRelateToOneForCreateInput
+  toolbeltTwo: HighlightRelateToOneForCreateInput
+  toolbeltThree: HighlightRelateToOneForCreateInput
+  toolbeltFour: HighlightRelateToOneForCreateInput
+  highlightOne: HighlightRelateToOneForCreateInput
+  highlightTwo: HighlightRelateToOneForCreateInput
+  highlightThree: HighlightRelateToOneForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input HighlightRelateToOneForCreateInput {
+  create: HighlightCreateInput
+  connect: HighlightWhereUniqueInput
+}
+
 type Image {
   id: ID!
   title: String
@@ -1754,6 +1848,20 @@ type PublicNotice {
   updatedAt: DateTime
   effectiveDate: DateTime
   endDate: DateTime
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
 }
 
 input PublicNoticeWhereUniqueInput {
@@ -1784,6 +1892,13 @@ input PublicNoticeWhereInput {
   updatedAt: DateTimeNullableFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
+  parks: ParkManyRelationFilter
+  services: ServiceManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  trails: TrailManyRelationFilter
+  communities: CommunityManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
 }
 
 input PublicNoticeOrderByInput {
@@ -1821,6 +1936,13 @@ input PublicNoticeUpdateInput {
   updatedAt: DateTime
   effectiveDate: DateTime
   endDate: DateTime
+  parks: ParkRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
 }
 
 input PublicNoticeUpdateArgs {
@@ -1847,6 +1969,13 @@ input PublicNoticeCreateInput {
   updatedAt: DateTime
   effectiveDate: DateTime
   endDate: DateTime
+  parks: ParkRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
 }
 
 type Service {
@@ -2682,6 +2811,12 @@ type Mutation {
   updateHighlights(data: [HighlightUpdateArgs!]!): [Highlight]
   deleteHighlight(where: HighlightWhereUniqueInput!): Highlight
   deleteHighlights(where: [HighlightWhereUniqueInput!]!): [Highlight]
+  createHomePage(data: HomePageCreateInput!): HomePage
+  createHomePages(data: [HomePageCreateInput!]!): [HomePage]
+  updateHomePage(where: HomePageWhereUniqueInput! = {id: 1}, data: HomePageUpdateInput!): HomePage
+  updateHomePages(data: [HomePageUpdateArgs!]!): [HomePage]
+  deleteHomePage(where: HomePageWhereUniqueInput! = {id: 1}): HomePage
+  deleteHomePages(where: [HomePageWhereUniqueInput!]!): [HomePage]
   createImage(data: ImageCreateInput!): Image
   createImages(data: [ImageCreateInput!]!): [Image]
   updateImage(where: ImageWhereUniqueInput!, data: ImageUpdateInput!): Image
@@ -2791,6 +2926,9 @@ type Query {
   highlight(where: HighlightWhereUniqueInput!): Highlight
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
   highlightsCount(where: HighlightWhereInput! = {}): Int
+  homePage(where: HomePageWhereUniqueInput! = {id: 1}): HomePage
+  homePages(where: HomePageWhereInput! = {id: {equals: 1}}, orderBy: [HomePageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: HomePageWhereUniqueInput): [HomePage!]
+  homePagesCount(where: HomePageWhereInput! = {id: {equals: 1}}): Int
   image(where: ImageWhereUniqueInput!): Image
   images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ImageWhereUniqueInput): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int

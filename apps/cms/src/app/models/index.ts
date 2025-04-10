@@ -8,6 +8,7 @@ import { DocumentCollection } from './DocumentCollection';
 import { ExternalLink } from './ExternalLink';
 import { Facility } from './Facility';
 import { Highlight } from './Highlight';
+import { HomePage } from './HomePage';
 import { Image } from './Image';
 import { InternalLink } from './InternalLink';
 import { Location } from './Location';
@@ -32,6 +33,7 @@ export const lists = {
   ExternalLink,
   Facility,
   Highlight,
+  HomePage: HomePage,
   Image,
   InternalLink,
   Location,
