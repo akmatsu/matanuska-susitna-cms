@@ -6,6 +6,7 @@ import {
   generalOperationAccess,
 } from '../access';
 import { timestamp } from '@keystone-6/core/fields';
+import { createAndSendBulletin } from '../../utils/emailUtils';
 
 const listPlural = 'publicNotices';
 
@@ -34,5 +35,19 @@ export const PublicNotice: ListConfig<any> = list({
         views: './src/components/customFields/datetime/views.tsx',
       },
     }),
+  },
+
+  hooks: {
+    afterOperation: {
+      async create({ item }) {
+        await createAndSendBulletin(
+          item.title as string,
+          item.description as string,
+          'public-notices',
+          item.slug as string,
+          item.heroImage as string | undefined | null,
+        );
+      },
+    },
   },
 });
