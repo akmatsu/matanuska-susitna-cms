@@ -78,7 +78,6 @@ export const InternalLink: ListConfig<any> = list({
             const itemId = item.selectItem.itemId.value as string;
 
             const capitalizedListKey = capitalizeFirstLetter(listKey);
-            console.log(capitalizedListKey);
             try {
               const linkedItem = await context.query[
                 capitalizedListKey
