@@ -5,7 +5,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../access';
-import { timestamp } from '@keystone-6/core/fields';
+import { relationship, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../utils/emailUtils';
 
 const listPlural = 'publicNotices';
@@ -34,6 +34,34 @@ export const PublicNotice: ListConfig<any> = list({
       ui: {
         views: './src/components/customFields/datetime/views.tsx',
       },
+    }),
+    parks: relationship({
+      ref: 'Park',
+      many: true,
+    }),
+    services: relationship({
+      ref: 'Service',
+      many: true,
+    }),
+    orgUnits: relationship({
+      ref: 'OrgUnit',
+      many: true,
+    }),
+    facilities: relationship({
+      ref: 'Facility',
+      many: true,
+    }),
+    trails: relationship({
+      ref: 'Trail',
+      many: true,
+    }),
+    communities: relationship({
+      ref: 'Community',
+      many: true,
+    }),
+    assemblyDistricts: relationship({
+      ref: 'AssemblyDistrict',
+      many: true,
     }),
   },
 
