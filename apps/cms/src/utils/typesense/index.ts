@@ -17,6 +17,7 @@ export type TypeSensePageDocument = {
   departments?: string[];
   communities?: string[];
   type?: string;
+  related_entities?: string[];
 };
 
 export const TYPESENSE_COLLECTIONS = {
@@ -53,6 +54,12 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
       { name: 'districts', type: 'string[]', optional: true, facet: true },
       { name: 'departments', type: 'string[]', optional: true, facet: true },
       { name: 'communities', type: 'string[]', optional: true, facet: true },
+      {
+        name: 'related_pages',
+        type: 'string[]',
+        optional: true,
+        facet: true,
+      },
       { name: 'type', type: 'string', optional: true, facet: true },
     ],
   },
@@ -165,25 +172,44 @@ export function toSearchableObj(
     ...(item.tags && {
       tags: item.tags.map((tag: { name: string }) => tag.name || ''),
     }),
+
     ...(item.orgUnits && {
       departments: item.orgUnits.map(
         (department: { title: string }) => department.title || '',
       ),
     }),
-    ...(item.services && {
-      services: item.services.map(
-        (service: { title: string }) => service.title || '',
-      ),
-    }),
+
     ...(item.districts && {
       districts: item.districts.map(
         (district: { title: string }) => district.title || '',
       ),
     }),
+
     ...(item.communities && {
       communities: item.communities.map(
         (community: { title: string }) => community.title || '',
       ),
     }),
+
+    related_pages: [
+      ...mapRelatedEntities(item.orgUnits, 'department'),
+      ...mapRelatedEntities(item.services, 'service'),
+      ...mapRelatedEntities(item.assemblyDistricts, 'district'),
+      ...mapRelatedEntities(item.communities, 'community'),
+      ...mapRelatedEntities(item.parks, 'park'),
+      ...mapRelatedEntities(item.trails, 'trail'),
+      ...mapRelatedEntities(item.facilities, 'facility'),
+    ],
   };
+}
+
+function mapRelatedEntities(
+  item: { title: string }[] | undefined | null,
+  type: string,
+) {
+  if (!item) return [];
+
+  return item.map((entity) => {
+    return type + ':' + entity.title;
+  });
 }
