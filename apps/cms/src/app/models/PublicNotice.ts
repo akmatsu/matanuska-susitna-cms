@@ -66,7 +66,7 @@ export const PublicNotice: ListConfig<any> = list({
     },
     async afterOperation(args) {
       await typesenseUpsert(
-        'publicNotice',
+        'public-notice',
         'id title slug description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title}',
         args,
       );
