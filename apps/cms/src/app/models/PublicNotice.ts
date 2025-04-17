@@ -1,10 +1,6 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { basePage } from '../fieldUtils';
-import {
-  filterByPubDates,
-  generalItemAccess,
-  generalOperationAccess,
-} from '../access';
+import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
+import { generalItemAccess, generalOperationAccess } from '../access';
 import { relationship, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../utils/emailUtils';
 
@@ -14,7 +10,6 @@ export const PublicNotice: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
     item: generalItemAccess('PublicNotice'),
-    filter: filterByPubDates,
   },
 
   fields: {
@@ -66,16 +61,25 @@ export const PublicNotice: ListConfig<any> = list({
   },
 
   hooks: {
-    afterOperation: {
-      async create({ item }) {
+    async beforeOperation(args) {
+      await typesenseDelete(args);
+    },
+    async afterOperation(args) {
+      await typesenseUpsert(
+        'publicNotice',
+        'id title slug description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title}',
+        args,
+      );
+
+      if (args.operation === 'create') {
         await createAndSendBulletin(
-          item.title as string,
-          item.description as string,
+          args.item.title as string,
+          args.item.description as string,
           'public-notices',
-          item.slug as string,
-          item.heroImage as string | undefined | null,
+          args.item.slug as string,
+          args.item.heroImage as string | undefined | null,
         );
-      },
+      }
     },
   },
 });
