@@ -27,7 +27,7 @@ import {
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
 } from '../utils/typesense';
-import { capitalizeFirstLetter } from '../utils';
+import { capitalizeFirstLetter, toPascalCase } from '../utils';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -500,12 +500,14 @@ export async function typesenseUpsert(
 ) {
   if ((operation === 'update' || operation === 'create') && item) {
     try {
-      const doc = await context.query[
-        capitalizeFirstLetter(listNameSingular)
-      ]?.findOne({
+      const thing = toPascalCase(listNameSingular);
+      console.log(thing);
+      const doc = await context.query[thing]?.findOne({
         where: { id: item.id.toString() },
         query,
       });
+
+      console.log(doc);
 
       const document = toSearchableObj(doc, listNameSingular);
 
