@@ -1846,6 +1846,7 @@ type PublicNotice {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
@@ -1890,6 +1891,7 @@ input PublicNoticeWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  urgency: IntFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
   parks: ParkManyRelationFilter
@@ -1913,6 +1915,7 @@ input PublicNoticeOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  urgency: OrderDirection
   effectiveDate: OrderDirection
   endDate: OrderDirection
 }
@@ -1934,6 +1937,7 @@ input PublicNoticeUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
   parks: ParkRelateToManyForUpdateInput
@@ -1967,6 +1971,7 @@ input PublicNoticeCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
   parks: ParkRelateToManyForCreateInput

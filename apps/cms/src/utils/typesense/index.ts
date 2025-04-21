@@ -54,6 +54,7 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
       { name: 'districts', type: 'string[]', optional: true, facet: true },
       { name: 'departments', type: 'string[]', optional: true, facet: true },
       { name: 'communities', type: 'string[]', optional: true, facet: true },
+      { name: 'urgency', type: 'int32', optional: true, facet: true },
       {
         name: 'related_pages',
         type: 'string[]',
@@ -189,6 +190,10 @@ export function toSearchableObj(
       communities: item.communities.map(
         (community: { title: string }) => community.title || '',
       ),
+    }),
+
+    ...(item.urgency && {
+      urgency: item.urgency,
     }),
 
     related_pages: [

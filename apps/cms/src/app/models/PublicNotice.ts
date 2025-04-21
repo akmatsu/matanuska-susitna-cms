@@ -1,7 +1,7 @@
 import { list, ListConfig } from '@keystone-6/core';
 import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
 import { generalItemAccess, generalOperationAccess } from '../access';
-import { relationship, timestamp } from '@keystone-6/core/fields';
+import { relationship, select, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../utils/emailUtils';
 
 const listPlural = 'publicNotices';
@@ -14,6 +14,27 @@ export const PublicNotice: ListConfig<any> = list({
 
   fields: {
     ...basePage(listPlural, { actions: true, documents: true }),
+    urgency: select({
+      type: 'integer',
+      options: [
+        { label: 'Low', value: 1 },
+        { label: 'Normal', value: 2 },
+        { label: 'High', value: 3 },
+        { label: 'Urgent', value: 4 },
+        { label: 'Emergency', value: 5 },
+      ],
+      defaultValue: 2,
+      isOrderable: true,
+      validation: {
+        isRequired: true,
+      },
+      ui: {
+        displayMode: 'segmented-control',
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+      },
+    }),
     effectiveDate: timestamp({
       db: {
         isNullable: true,
@@ -67,7 +88,7 @@ export const PublicNotice: ListConfig<any> = list({
     async afterOperation(args) {
       await typesenseUpsert(
         'public-notice',
-        'id title slug description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title}',
+        'id title slug description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title} urgency',
         args,
       );
 
