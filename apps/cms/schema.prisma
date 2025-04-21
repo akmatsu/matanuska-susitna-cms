@@ -345,6 +345,7 @@ model PublicNotice {
   contacts          Contact[]          @relation("Contact_publicNotices")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
+  urgency           Int                @default(2)
   effectiveDate     DateTime?
   endDate           DateTime?
   parks             Park[]             @relation("PublicNotice_parks")
