@@ -1,6 +1,10 @@
 import { list, ListConfig } from '@keystone-6/core';
 import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
-import { generalItemAccess, generalOperationAccess } from '../access';
+import {
+  filterByPubDates,
+  generalItemAccess,
+  generalOperationAccess,
+} from '../access';
 import { relationship, select, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../utils/emailUtils';
 
@@ -10,6 +14,7 @@ export const PublicNotice: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
     item: generalItemAccess('PublicNotice'),
+    filter: filterByPubDates,
   },
 
   fields: {
