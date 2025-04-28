@@ -14,7 +14,7 @@ export const Document: ListConfig<any> = list({
     title: text({ validation: { isRequired: true }, isIndexed: true }),
     description: text({ validation: { isRequired: false } }),
     tags: relationship({
-      ref: 'Tag.documents',
+      ref: 'Tag',
       many: true,
       ui: {
         displayMode: 'select',

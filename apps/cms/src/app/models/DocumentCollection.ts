@@ -36,7 +36,7 @@ export const DocumentCollection: ListConfig<any> = list({
     embed: embed('document-collection', 'id', appConfig.widgetsUrl),
 
     tags: relationship({
-      ref: 'Tag.documentCollections',
+      ref: 'Tag',
       many: true,
       ui: {
         displayMode: 'select',

@@ -67,59 +67,59 @@ export const Contact: ListConfig<any> = list({
         isNullable: true,
       },
     }),
-    primaryServices: relationship({
-      ref: 'Service.primaryContact',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    services: relationship({
-      ref: 'Service.contacts',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    communities: relationship({
-      ref: 'Community.contacts',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    orgUnits: relationship({
-      ref: 'OrgUnit.contacts',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    facilities: relationship({
-      ref: 'Facility.contacts',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    parks: relationship({
-      ref: 'Park.contacts',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    assemblyDistricts: relationship({
-      ref: 'AssemblyDistrict.contacts',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    trails: relationship({
-      ref: 'Trail.contacts',
-      many: true,
-      ui: { hideCreate: true },
-    }),
-    user: relationship({ ref: 'User.contact', ui: { hideCreate: true } }),
-    editorNotes: text({
-      ui: {
-        displayMode: 'textarea',
-      },
-    }),
-    publicNotices: relationship({
-      ref: 'PublicNotice.contacts',
-      many: true,
-    }),
-    testModels: relationship({
-      ref: 'TestModel.contacts',
-      many: true,
-    }),
+    // primaryServices: relationship({
+    //   ref: 'Service.primaryContact',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // services: relationship({
+    //   ref: 'Service.contacts',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // communities: relationship({
+    //   ref: 'Community.contacts',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // orgUnits: relationship({
+    //   ref: 'OrgUnit.contacts',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // facilities: relationship({
+    //   ref: 'Facility.contacts',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // parks: relationship({
+    //   ref: 'Park.contacts',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // assemblyDistricts: relationship({
+    //   ref: 'AssemblyDistrict.contacts',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // trails: relationship({
+    //   ref: 'Trail.contacts',
+    //   many: true,
+    //   ui: { hideCreate: true },
+    // }),
+    // user: relationship({ ref: 'User.contact', ui: { hideCreate: true } }),
+    // editorNotes: text({
+    //   ui: {
+    //     displayMode: 'textarea',
+    //   },
+    // }),
+    // publicNotices: relationship({
+    //   ref: 'PublicNotice.contacts',
+    //   many: true,
+    // }),
+    // testModels: relationship({
+    //   ref: 'TestModel.contacts',
+    //   many: true,
+    // }),
   },
 });

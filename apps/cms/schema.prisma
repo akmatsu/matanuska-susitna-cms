@@ -82,24 +82,22 @@ model Community {
 }
 
 model Contact {
-  id                String             @id @default(cuid())
-  name              String             @default("")
-  title             String?
-  phone             String?
-  email             String?
-  primaryServices   Service[]          @relation("Service_primaryContact")
-  services          Service[]          @relation("Contact_services")
-  communities       Community[]        @relation("Community_contacts")
-  orgUnits          OrgUnit[]          @relation("Contact_orgUnits")
-  facilities        Facility[]         @relation("Contact_facilities")
-  parks             Park[]             @relation("Contact_parks")
-  assemblyDistricts AssemblyDistrict[] @relation("AssemblyDistrict_contacts")
-  trails            Trail[]            @relation("Contact_trails")
-  user              User?              @relation("Contact_user", fields: [userId], references: [id])
-  userId            String?            @unique @map("user")
-  editorNotes       String             @default("")
-  publicNotices     PublicNotice[]     @relation("Contact_publicNotices")
-  testModels        TestModel[]        @relation("Contact_testModels")
+  id                             String             @id @default(cuid())
+  name                           String             @default("")
+  title                          String?
+  phone                          String?
+  email                          String?
+  from_AssemblyDistrict_contacts AssemblyDistrict[] @relation("AssemblyDistrict_contacts")
+  from_Community_contacts        Community[]        @relation("Community_contacts")
+  from_Facility_contacts         Facility[]         @relation("Facility_contacts")
+  from_OrgUnit_contacts          OrgUnit[]          @relation("OrgUnit_contacts")
+  from_Park_contacts             Park[]             @relation("Park_contacts")
+  from_PublicNotice_contacts     PublicNotice[]     @relation("PublicNotice_contacts")
+  from_Service_primaryContact    Service[]          @relation("Service_primaryContact")
+  from_Service_contacts          Service[]          @relation("Service_contacts")
+  from_Trail_contacts            Trail[]            @relation("Trail_contacts")
+  from_TestModel_contacts        TestModel[]        @relation("TestModel_contacts")
+  from_TestModelDraft_contacts   TestModelDraft[]   @relation("TestModelDraft_contacts")
 }
 
 model Document {
@@ -157,7 +155,7 @@ model Facility {
   userGroups                   UserGroup[]     @relation("Facility_userGroups")
   address                      Location?       @relation("Facility_address", fields: [addressId], references: [id])
   addressId                    String?         @map("address")
-  contacts                     Contact[]       @relation("Contact_facilities")
+  contacts                     Contact[]       @relation("Facility_contacts")
   hours                        OperatingHour[] @relation("Facility_hours")
   createdAt                    DateTime?       @default(now())
   updatedAt                    DateTime?       @default(now()) @updatedAt
@@ -275,15 +273,15 @@ model OrgUnit {
   body                       String?
   tags                       Tag[]          @relation("OrgUnit_tags")
   userGroups                 UserGroup[]    @relation("OrgUnit_userGroups")
-  contacts                   Contact[]      @relation("Contact_orgUnits")
+  contacts                   Contact[]      @relation("OrgUnit_contacts")
   createdAt                  DateTime?      @default(now())
   updatedAt                  DateTime?      @default(now()) @updatedAt
   showPage                   Boolean        @default(true)
-  services                   Service[]      @relation("OrgUnit_services")
   children                   OrgUnit[]      @relation("OrgUnit_parent")
   parent                     OrgUnit?       @relation("OrgUnit_parent", fields: [parentId], references: [id])
   parentId                   String?        @map("parent")
   from_PublicNotice_orgUnits PublicNotice[] @relation("PublicNotice_orgUnits")
+  from_Service_orgUnits      Service[]      @relation("Service_orgUnits")
 
   @@index([ownerId])
   @@index([parentId])
@@ -314,7 +312,7 @@ model Park {
   userGroups              UserGroup[]     @relation("Park_userGroups")
   address                 Location?       @relation("Park_address", fields: [addressId], references: [id])
   addressId               String?         @map("address")
-  contacts                Contact[]       @relation("Contact_parks")
+  contacts                Contact[]       @relation("Park_contacts")
   hours                   OperatingHour[] @relation("Park_hours")
   createdAt               DateTime?       @default(now())
   updatedAt               DateTime?       @default(now()) @updatedAt
@@ -344,7 +342,7 @@ model PublicNotice {
   actions           InternalLink?      @relation("PublicNotice_actions", fields: [actionsId], references: [id])
   actionsId         String?            @map("actions")
   documents         Document[]         @relation("PublicNotice_documents")
-  contacts          Contact[]          @relation("Contact_publicNotices")
+  contacts          Contact[]          @relation("PublicNotice_contacts")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   urgency           Int                @default(2)
@@ -381,11 +379,11 @@ model Service {
   secondaryActions           ExternalLink[] @relation("Service_secondaryActions")
   primaryContact             Contact?       @relation("Service_primaryContact", fields: [primaryContactId], references: [id])
   primaryContactId           String?        @map("primaryContact")
-  contacts                   Contact[]      @relation("Contact_services")
+  contacts                   Contact[]      @relation("Service_contacts")
   createdAt                  DateTime?      @default(now())
   updatedAt                  DateTime?      @default(now()) @updatedAt
   communities                Community[]    @relation("Community_services")
-  orgUnits                   OrgUnit[]      @relation("OrgUnit_services")
+  orgUnits                   OrgUnit[]      @relation("Service_orgUnits")
   trails                     Trail[]        @relation("Service_trails")
   parks                      Park[]         @relation("Park_services")
   facilities                 Facility[]     @relation("Facility_services")
@@ -398,20 +396,21 @@ model Service {
 }
 
 model Tag {
-  id                  String               @id @default(cuid())
-  name                String               @default("")
-  services            Service[]            @relation("Service_tags")
-  communities         Community[]          @relation("Community_tags")
-  documents           Document[]           @relation("Document_tags")
-  images              Image[]              @relation("Image_tags")
-  documentCollections DocumentCollection[] @relation("DocumentCollection_tags")
-  orgUnits            OrgUnit[]            @relation("OrgUnit_tags")
-  facilities          Facility[]           @relation("Facility_tags")
-  parks               Park[]               @relation("Park_tags")
-  trails              Trail[]              @relation("Tag_trails")
-  assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_tags")
-  publicNotices       PublicNotice[]       @relation("PublicNotice_tags")
-  testModels          TestModel[]          @relation("Tag_testModels")
+  id                           String               @id @default(cuid())
+  name                         String               @default("")
+  from_AssemblyDistrict_tags   AssemblyDistrict[]   @relation("AssemblyDistrict_tags")
+  from_Community_tags          Community[]          @relation("Community_tags")
+  from_Document_tags           Document[]           @relation("Document_tags")
+  from_DocumentCollection_tags DocumentCollection[] @relation("DocumentCollection_tags")
+  from_Facility_tags           Facility[]           @relation("Facility_tags")
+  from_Image_tags              Image[]              @relation("Image_tags")
+  from_OrgUnit_tags            OrgUnit[]            @relation("OrgUnit_tags")
+  from_Park_tags               Park[]               @relation("Park_tags")
+  from_PublicNotice_tags       PublicNotice[]       @relation("PublicNotice_tags")
+  from_Service_tags            Service[]            @relation("Service_tags")
+  from_Trail_tags              Trail[]              @relation("Trail_tags")
+  from_TestModel_tags          TestModel[]          @relation("TestModel_tags")
+  from_TestModelDraft_tags     TestModelDraft[]     @relation("TestModelDraft_tags")
 }
 
 model Trail {
@@ -426,11 +425,11 @@ model Trail {
   owner                    User?          @relation("Trail_owner", fields: [ownerId], references: [id])
   ownerId                  String?        @map("owner")
   body                     String?
-  tags                     Tag[]          @relation("Tag_trails")
+  tags                     Tag[]          @relation("Trail_tags")
   userGroups               UserGroup[]    @relation("Trail_userGroups")
   address                  Location?      @relation("Trail_address", fields: [addressId], references: [id])
   addressId                String?        @map("address")
-  contacts                 Contact[]      @relation("Contact_trails")
+  contacts                 Contact[]      @relation("Trail_contacts")
   createdAt                DateTime?      @default(now())
   updatedAt                DateTime?      @default(now()) @updatedAt
   open                     Boolean        @default(false)
@@ -483,7 +482,6 @@ model User {
   name                          String               @default("")
   email                         String               @unique @default("")
   password                      String?
-  contact                       Contact?             @relation("Contact_user")
   role                          Int?                 @default(4)
   groups                        UserGroup[]          @relation("User_groups")
   createdAt                     DateTime?            @default(now())
@@ -500,31 +498,58 @@ model User {
   from_Url_owner                Url[]                @relation("Url_owner")
   from_UserGroup_owner          UserGroup[]          @relation("UserGroup_owner")
   from_TestModel_owner          TestModel[]          @relation("TestModel_owner")
+  from_TestModelDraft_owner     TestModelDraft[]     @relation("TestModelDraft_owner")
 }
 
 model UserGroup {
-  id                  String               @id @default(cuid())
-  name                String               @default("")
-  owner               User?                @relation("UserGroup_owner", fields: [ownerId], references: [id])
-  ownerId             String?              @map("owner")
-  description         String               @default("")
-  users               User[]               @relation("User_groups")
-  services            Service[]            @relation("Service_userGroups")
-  parks               Park[]               @relation("Park_userGroups")
-  trails              Trail[]              @relation("Trail_userGroups")
-  facilities          Facility[]           @relation("Facility_userGroups")
-  communities         Community[]          @relation("Community_userGroups")
-  orgUnits            OrgUnit[]            @relation("OrgUnit_userGroups")
-  documentCollections DocumentCollection[] @relation("DocumentCollection_userGroups")
-  assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_userGroups")
-  publicNotices       PublicNotice[]       @relation("PublicNotice_userGroups")
-  testModels          TestModel[]          @relation("TestModel_userGroups")
+  id                                 String               @id @default(cuid())
+  name                               String               @default("")
+  owner                              User?                @relation("UserGroup_owner", fields: [ownerId], references: [id])
+  ownerId                            String?              @map("owner")
+  description                        String               @default("")
+  users                              User[]               @relation("User_groups")
+  from_AssemblyDistrict_userGroups   AssemblyDistrict[]   @relation("AssemblyDistrict_userGroups")
+  from_Community_userGroups          Community[]          @relation("Community_userGroups")
+  from_DocumentCollection_userGroups DocumentCollection[] @relation("DocumentCollection_userGroups")
+  from_Facility_userGroups           Facility[]           @relation("Facility_userGroups")
+  from_OrgUnit_userGroups            OrgUnit[]            @relation("OrgUnit_userGroups")
+  from_Park_userGroups               Park[]               @relation("Park_userGroups")
+  from_PublicNotice_userGroups       PublicNotice[]       @relation("PublicNotice_userGroups")
+  from_Service_userGroups            Service[]            @relation("Service_userGroups")
+  from_Trail_userGroups              Trail[]              @relation("Trail_userGroups")
+  from_TestModel_userGroups          TestModel[]          @relation("TestModel_userGroups")
+  from_TestModelDraft_userGroups     TestModelDraft[]     @relation("TestModelDraft_userGroups")
 
   @@index([ownerId])
 }
 
 model TestModel {
+  id          String           @id @default(cuid())
+  heroImage   String?
+  title       String           @unique @default("")
+  description String           @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  slug        String           @unique @default("")
+  owner       User?            @relation("TestModel_owner", fields: [ownerId], references: [id])
+  ownerId     String?          @map("owner")
+  body        String?
+  tags        Tag[]            @relation("TestModel_tags")
+  userGroups  UserGroup[]      @relation("TestModel_userGroups")
+  contacts    Contact[]        @relation("TestModel_contacts")
+  createdAt   DateTime?        @default(now())
+  updatedAt   DateTime?        @default(now()) @updatedAt
+  status      String?          @default("draft")
+  drafts      TestModelDraft[] @relation("TestModelDraft_original")
+
+  @@index([ownerId])
+}
+
+model TestModelDraft {
   id          String      @id @default(cuid())
+  original    TestModel?  @relation("TestModelDraft_original", fields: [originalId], references: [id])
+  originalId  String?     @map("original")
   heroImage   String?
   title       String      @unique @default("")
   description String      @default("")
@@ -532,15 +557,16 @@ model TestModel {
   unpublishAt DateTime?
   reviewDate  DateTime?
   slug        String      @unique @default("")
-  owner       User?       @relation("TestModel_owner", fields: [ownerId], references: [id])
+  owner       User?       @relation("TestModelDraft_owner", fields: [ownerId], references: [id])
   ownerId     String?     @map("owner")
   body        String?
-  tags        Tag[]       @relation("Tag_testModels")
-  userGroups  UserGroup[] @relation("TestModel_userGroups")
-  contacts    Contact[]   @relation("Contact_testModels")
+  tags        Tag[]       @relation("TestModelDraft_tags")
+  userGroups  UserGroup[] @relation("TestModelDraft_userGroups")
+  contacts    Contact[]   @relation("TestModelDraft_contacts")
   createdAt   DateTime?   @default(now())
   updatedAt   DateTime?   @default(now()) @updatedAt
   status      String?     @default("draft")
 
+  @@index([originalId])
   @@index([ownerId])
 }
