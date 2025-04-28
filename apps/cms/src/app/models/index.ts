@@ -22,6 +22,7 @@ import { Trail } from './Trail';
 import { Url } from './Url';
 import { User } from './User';
 import { UserGroup } from './UserGroup';
+import { TestModel } from './TestModel';
 
 export const lists = {
   Alert,
@@ -47,4 +48,5 @@ export const lists = {
   Url,
   User,
   UserGroup,
+  TestModel,
 } satisfies Lists;

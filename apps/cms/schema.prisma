@@ -99,6 +99,7 @@ model Contact {
   userId            String?            @unique @map("user")
   editorNotes       String             @default("")
   publicNotices     PublicNotice[]     @relation("Contact_publicNotices")
+  testModels        TestModel[]        @relation("Contact_testModels")
 }
 
 model Document {
@@ -117,7 +118,8 @@ model Document {
 
 model DocumentCollection {
   id          String      @id @default(cuid())
-  title       String      @default("")
+  title       String      @unique @default("")
+  description String      @default("")
   owner       User?       @relation("DocumentCollection_owner", fields: [ownerId], references: [id])
   ownerId     String?     @map("owner")
   documents   Document[]  @relation("Document_collections")
@@ -409,6 +411,7 @@ model Tag {
   trails              Trail[]              @relation("Tag_trails")
   assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_tags")
   publicNotices       PublicNotice[]       @relation("PublicNotice_tags")
+  testModels          TestModel[]          @relation("Tag_testModels")
 }
 
 model Trail {
@@ -496,6 +499,7 @@ model User {
   from_Trail_owner              Trail[]              @relation("Trail_owner")
   from_Url_owner                Url[]                @relation("Url_owner")
   from_UserGroup_owner          UserGroup[]          @relation("UserGroup_owner")
+  from_TestModel_owner          TestModel[]          @relation("TestModel_owner")
 }
 
 model UserGroup {
@@ -514,6 +518,29 @@ model UserGroup {
   documentCollections DocumentCollection[] @relation("DocumentCollection_userGroups")
   assemblyDistricts   AssemblyDistrict[]   @relation("AssemblyDistrict_userGroups")
   publicNotices       PublicNotice[]       @relation("PublicNotice_userGroups")
+  testModels          TestModel[]          @relation("TestModel_userGroups")
+
+  @@index([ownerId])
+}
+
+model TestModel {
+  id          String      @id @default(cuid())
+  heroImage   String?
+  title       String      @unique @default("")
+  description String      @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  slug        String      @unique @default("")
+  owner       User?       @relation("TestModel_owner", fields: [ownerId], references: [id])
+  ownerId     String?     @map("owner")
+  body        String?
+  tags        Tag[]       @relation("Tag_testModels")
+  userGroups  UserGroup[] @relation("TestModel_userGroups")
+  contacts    Contact[]   @relation("Contact_testModels")
+  createdAt   DateTime?   @default(now())
+  updatedAt   DateTime?   @default(now()) @updatedAt
+  status      String?     @default("draft")
 
   @@index([ownerId])
 }

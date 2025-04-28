@@ -117,5 +117,9 @@ export const Contact: ListConfig<any> = list({
       ref: 'PublicNotice.contacts',
       many: true,
     }),
+    testModels: relationship({
+      ref: 'TestModel.contacts',
+      many: true,
+    }),
   },
 });

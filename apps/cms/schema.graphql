@@ -593,6 +593,8 @@ type Contact {
   editorNotes: String
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
+  testModelsCount(where: TestModelWhereInput! = {}): Int
 }
 
 input ContactWhereUniqueInput {
@@ -619,6 +621,7 @@ input ContactWhereInput {
   user: UserWhereInput
   editorNotes: StringFilter
   publicNotices: PublicNoticeManyRelationFilter
+  testModels: TestModelManyRelationFilter
 }
 
 input CommunityManyRelationFilter {
@@ -657,6 +660,12 @@ input PublicNoticeManyRelationFilter {
   none: PublicNoticeWhereInput
 }
 
+input TestModelManyRelationFilter {
+  every: TestModelWhereInput
+  some: TestModelWhereInput
+  none: TestModelWhereInput
+}
+
 input ContactOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -682,6 +691,7 @@ input ContactUpdateInput {
   user: UserRelateToOneForUpdateInput
   editorNotes: String
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  testModels: TestModelRelateToManyForUpdateInput
 }
 
 input CommunityRelateToManyForUpdateInput {
@@ -726,6 +736,13 @@ input PublicNoticeRelateToManyForUpdateInput {
   connect: [PublicNoticeWhereUniqueInput!]
 }
 
+input TestModelRelateToManyForUpdateInput {
+  disconnect: [TestModelWhereUniqueInput!]
+  set: [TestModelWhereUniqueInput!]
+  create: [TestModelCreateInput!]
+  connect: [TestModelWhereUniqueInput!]
+}
+
 input ContactUpdateArgs {
   where: ContactWhereUniqueInput!
   data: ContactUpdateInput!
@@ -747,6 +764,7 @@ input ContactCreateInput {
   user: UserRelateToOneForCreateInput
   editorNotes: String
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  testModels: TestModelRelateToManyForCreateInput
 }
 
 input CommunityRelateToManyForCreateInput {
@@ -777,6 +795,11 @@ input TrailRelateToManyForCreateInput {
 input PublicNoticeRelateToManyForCreateInput {
   create: [PublicNoticeCreateInput!]
   connect: [PublicNoticeWhereUniqueInput!]
+}
+
+input TestModelRelateToManyForCreateInput {
+  create: [TestModelCreateInput!]
+  connect: [TestModelWhereUniqueInput!]
 }
 
 type Document {
@@ -871,6 +894,7 @@ input DocumentCollectionRelateToManyForCreateInput {
 type DocumentCollection {
   id: ID!
   title: String
+  description: String
   owner: User
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
@@ -886,6 +910,7 @@ type DocumentCollection {
 
 input DocumentCollectionWhereUniqueInput {
   id: ID
+  title: String
 }
 
 input DocumentCollectionWhereInput {
@@ -894,6 +919,7 @@ input DocumentCollectionWhereInput {
   NOT: [DocumentCollectionWhereInput!]
   id: IDFilter
   title: StringFilter
+  description: StringFilter
   owner: UserWhereInput
   documents: DocumentManyRelationFilter
   tags: TagManyRelationFilter
@@ -910,11 +936,13 @@ input DocumentManyRelationFilter {
 input DocumentCollectionOrderByInput {
   id: OrderDirection
   title: OrderDirection
+  description: OrderDirection
   editorNotes: OrderDirection
 }
 
 input DocumentCollectionUpdateInput {
   title: String
+  description: String
   owner: UserRelateToOneForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
@@ -936,6 +964,7 @@ input DocumentCollectionUpdateArgs {
 
 input DocumentCollectionCreateInput {
   title: String
+  description: String
   owner: UserRelateToOneForCreateInput
   documents: DocumentRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
@@ -2192,6 +2221,8 @@ type Tag {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
+  testModelsCount(where: TestModelWhereInput! = {}): Int
 }
 
 input TagWhereUniqueInput {
@@ -2215,6 +2246,7 @@ input TagWhereInput {
   trails: TrailManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  testModels: TestModelManyRelationFilter
 }
 
 input ImageManyRelationFilter {
@@ -2241,6 +2273,7 @@ input TagUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  testModels: TestModelRelateToManyForUpdateInput
 }
 
 input ImageRelateToManyForUpdateInput {
@@ -2268,6 +2301,7 @@ input TagCreateInput {
   trails: TrailRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  testModels: TestModelRelateToManyForCreateInput
 }
 
 input ImageRelateToManyForCreateInput {
@@ -2669,6 +2703,8 @@ type UserGroup {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
+  testModelsCount(where: TestModelWhereInput! = {}): Int
 }
 
 input UserGroupWhereUniqueInput {
@@ -2693,6 +2729,7 @@ input UserGroupWhereInput {
   documentCollections: DocumentCollectionManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  testModels: TestModelManyRelationFilter
 }
 
 input UserManyRelationFilter {
@@ -2721,6 +2758,7 @@ input UserGroupUpdateInput {
   documentCollections: DocumentCollectionRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  testModels: TestModelRelateToManyForUpdateInput
 }
 
 input UserRelateToManyForUpdateInput {
@@ -2749,11 +2787,118 @@ input UserGroupCreateInput {
   documentCollections: DocumentCollectionRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  testModels: TestModelRelateToManyForCreateInput
 }
 
 input UserRelateToManyForCreateInput {
   create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+type TestModel {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+}
+
+input TestModelWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+}
+
+input TestModelWhereInput {
+  AND: [TestModelWhereInput!]
+  OR: [TestModelWhereInput!]
+  NOT: [TestModelWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  status: StringNullableFilter
+}
+
+input TestModelOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  status: OrderDirection
+}
+
+input TestModelUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+}
+
+input TestModelUpdateArgs {
+  where: TestModelWhereUniqueInput!
+  data: TestModelUpdateInput!
+}
+
+input TestModelCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
 }
 
 """
@@ -2900,6 +3045,12 @@ type Mutation {
   updateUserGroups(data: [UserGroupUpdateArgs!]!): [UserGroup]
   deleteUserGroup(where: UserGroupWhereUniqueInput!): UserGroup
   deleteUserGroups(where: [UserGroupWhereUniqueInput!]!): [UserGroup]
+  createTestModel(data: TestModelCreateInput!): TestModel
+  createTestModels(data: [TestModelCreateInput!]!): [TestModel]
+  updateTestModel(where: TestModelWhereUniqueInput!, data: TestModelUpdateInput!): TestModel
+  updateTestModels(data: [TestModelUpdateArgs!]!): [TestModel]
+  deleteTestModel(where: TestModelWhereUniqueInput!): TestModel
+  deleteTestModels(where: [TestModelWhereUniqueInput!]!): [TestModel]
   endSession: Boolean!
 }
 
@@ -2973,6 +3124,9 @@ type Query {
   userGroup(where: UserGroupWhereUniqueInput!): UserGroup
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  testModel(where: TestModelWhereUniqueInput!): TestModel
+  testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
+  testModelsCount(where: TestModelWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 

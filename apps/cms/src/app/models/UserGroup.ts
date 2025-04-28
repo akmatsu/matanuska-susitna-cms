@@ -31,5 +31,9 @@ export const UserGroup: ListConfig<any> = list({
       ref: 'PublicNotice.userGroups',
       many: true,
     }),
+    testModels: relationship({
+      ref: 'TestModel.userGroups',
+      many: true,
+    }),
   },
 });
