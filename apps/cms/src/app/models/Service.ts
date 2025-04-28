@@ -35,7 +35,7 @@ export const Service: ListConfig<any> = list({
     }),
 
     orgUnits: relationship({
-      ref: 'OrgUnit.services',
+      ref: 'OrgUnit',
       many: true,
       ui: {
         itemView: {

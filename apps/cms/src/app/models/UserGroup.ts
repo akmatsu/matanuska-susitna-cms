@@ -13,27 +13,27 @@ export const UserGroup: ListConfig<any> = list({
     owner,
     description: text({ ui: { displayMode: 'textarea' } }),
     users: relationship({ ref: 'User.groups', many: true }),
-    services: relationship({ ref: 'Service.userGroups', many: true }),
-    parks: relationship({ ref: 'Park.userGroups', many: true }),
-    trails: relationship({ ref: 'Trail.userGroups', many: true }),
-    facilities: relationship({ ref: 'Facility.userGroups', many: true }),
-    communities: relationship({ ref: 'Community.userGroups', many: true }),
-    orgUnits: relationship({ ref: 'OrgUnit.userGroups', many: true }),
-    documentCollections: relationship({
-      ref: 'DocumentCollection.userGroups',
-      many: true,
-    }),
-    assemblyDistricts: relationship({
-      ref: 'AssemblyDistrict.userGroups',
-      many: true,
-    }),
-    publicNotices: relationship({
-      ref: 'PublicNotice.userGroups',
-      many: true,
-    }),
-    testModels: relationship({
-      ref: 'TestModel.userGroups',
-      many: true,
-    }),
+    // services: relationship({ ref: 'Service.userGroups', many: true }),
+    // parks: relationship({ ref: 'Park.userGroups', many: true }),
+    // trails: relationship({ ref: 'Trail.userGroups', many: true }),
+    // facilities: relationship({ ref: 'Facility.userGroups', many: true }),
+    // communities: relationship({ ref: 'Community.userGroups', many: true }),
+    // orgUnits: relationship({ ref: 'OrgUnit.userGroups', many: true }),
+    // documentCollections: relationship({
+    //   ref: 'DocumentCollection.userGroups',
+    //   many: true,
+    // }),
+    // assemblyDistricts: relationship({
+    //   ref: 'AssemblyDistrict.userGroups',
+    //   many: true,
+    // }),
+    // publicNotices: relationship({
+    //   ref: 'PublicNotice.userGroups',
+    //   many: true,
+    // }),
+    // testModels: relationship({
+    //   ref: 'TestModel.userGroups',
+    //   many: true,
+    // }),
   },
 });

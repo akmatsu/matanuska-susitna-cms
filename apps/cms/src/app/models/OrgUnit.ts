@@ -24,7 +24,7 @@ export const OrgUnit: ListConfig<any> = list({
       defaultValue: true,
       ui: { itemView: { fieldPosition: 'sidebar' } },
     }),
-    services: services('orgUnits'),
+    // services: services('orgUnits'),
     children: relationship({ ref: 'OrgUnit.parent', many: true }),
     parent: relationship({ ref: 'OrgUnit.children', many: false }),
   },

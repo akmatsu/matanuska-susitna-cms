@@ -573,28 +573,6 @@ type Contact {
   title: String
   phone: String
   email: String
-  primaryServices(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
-  primaryServicesCount(where: ServiceWhereInput! = {}): Int
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
-  servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
-  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
-  facilitiesCount(where: FacilityWhereInput! = {}): Int
-  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
-  parksCount(where: ParkWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
-  trailsCount(where: TrailWhereInput! = {}): Int
-  user: User
-  editorNotes: String
-  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
-  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
-  testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
-  testModelsCount(where: TestModelWhereInput! = {}): Int
 }
 
 input ContactWhereUniqueInput {
@@ -610,60 +588,6 @@ input ContactWhereInput {
   title: StringNullableFilter
   phone: StringNullableFilter
   email: StringNullableFilter
-  primaryServices: ServiceManyRelationFilter
-  services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
-  facilities: FacilityManyRelationFilter
-  parks: ParkManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
-  trails: TrailManyRelationFilter
-  user: UserWhereInput
-  editorNotes: StringFilter
-  publicNotices: PublicNoticeManyRelationFilter
-  testModels: TestModelManyRelationFilter
-}
-
-input CommunityManyRelationFilter {
-  every: CommunityWhereInput
-  some: CommunityWhereInput
-  none: CommunityWhereInput
-}
-
-input OrgUnitManyRelationFilter {
-  every: OrgUnitWhereInput
-  some: OrgUnitWhereInput
-  none: OrgUnitWhereInput
-}
-
-input FacilityManyRelationFilter {
-  every: FacilityWhereInput
-  some: FacilityWhereInput
-  none: FacilityWhereInput
-}
-
-input ParkManyRelationFilter {
-  every: ParkWhereInput
-  some: ParkWhereInput
-  none: ParkWhereInput
-}
-
-input TrailManyRelationFilter {
-  every: TrailWhereInput
-  some: TrailWhereInput
-  none: TrailWhereInput
-}
-
-input PublicNoticeManyRelationFilter {
-  every: PublicNoticeWhereInput
-  some: PublicNoticeWhereInput
-  none: PublicNoticeWhereInput
-}
-
-input TestModelManyRelationFilter {
-  every: TestModelWhereInput
-  some: TestModelWhereInput
-  none: TestModelWhereInput
 }
 
 input ContactOrderByInput {
@@ -672,7 +596,6 @@ input ContactOrderByInput {
   title: OrderDirection
   phone: OrderDirection
   email: OrderDirection
-  editorNotes: OrderDirection
 }
 
 input ContactUpdateInput {
@@ -680,67 +603,6 @@ input ContactUpdateInput {
   title: String
   phone: String
   email: String
-  primaryServices: ServiceRelateToManyForUpdateInput
-  services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
-  facilities: FacilityRelateToManyForUpdateInput
-  parks: ParkRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
-  trails: TrailRelateToManyForUpdateInput
-  user: UserRelateToOneForUpdateInput
-  editorNotes: String
-  publicNotices: PublicNoticeRelateToManyForUpdateInput
-  testModels: TestModelRelateToManyForUpdateInput
-}
-
-input CommunityRelateToManyForUpdateInput {
-  disconnect: [CommunityWhereUniqueInput!]
-  set: [CommunityWhereUniqueInput!]
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
-}
-
-input OrgUnitRelateToManyForUpdateInput {
-  disconnect: [OrgUnitWhereUniqueInput!]
-  set: [OrgUnitWhereUniqueInput!]
-  create: [OrgUnitCreateInput!]
-  connect: [OrgUnitWhereUniqueInput!]
-}
-
-input FacilityRelateToManyForUpdateInput {
-  disconnect: [FacilityWhereUniqueInput!]
-  set: [FacilityWhereUniqueInput!]
-  create: [FacilityCreateInput!]
-  connect: [FacilityWhereUniqueInput!]
-}
-
-input ParkRelateToManyForUpdateInput {
-  disconnect: [ParkWhereUniqueInput!]
-  set: [ParkWhereUniqueInput!]
-  create: [ParkCreateInput!]
-  connect: [ParkWhereUniqueInput!]
-}
-
-input TrailRelateToManyForUpdateInput {
-  disconnect: [TrailWhereUniqueInput!]
-  set: [TrailWhereUniqueInput!]
-  create: [TrailCreateInput!]
-  connect: [TrailWhereUniqueInput!]
-}
-
-input PublicNoticeRelateToManyForUpdateInput {
-  disconnect: [PublicNoticeWhereUniqueInput!]
-  set: [PublicNoticeWhereUniqueInput!]
-  create: [PublicNoticeCreateInput!]
-  connect: [PublicNoticeWhereUniqueInput!]
-}
-
-input TestModelRelateToManyForUpdateInput {
-  disconnect: [TestModelWhereUniqueInput!]
-  set: [TestModelWhereUniqueInput!]
-  create: [TestModelCreateInput!]
-  connect: [TestModelWhereUniqueInput!]
 }
 
 input ContactUpdateArgs {
@@ -753,53 +615,6 @@ input ContactCreateInput {
   title: String
   phone: String
   email: String
-  primaryServices: ServiceRelateToManyForCreateInput
-  services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
-  facilities: FacilityRelateToManyForCreateInput
-  parks: ParkRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
-  trails: TrailRelateToManyForCreateInput
-  user: UserRelateToOneForCreateInput
-  editorNotes: String
-  publicNotices: PublicNoticeRelateToManyForCreateInput
-  testModels: TestModelRelateToManyForCreateInput
-}
-
-input CommunityRelateToManyForCreateInput {
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
-}
-
-input OrgUnitRelateToManyForCreateInput {
-  create: [OrgUnitCreateInput!]
-  connect: [OrgUnitWhereUniqueInput!]
-}
-
-input FacilityRelateToManyForCreateInput {
-  create: [FacilityCreateInput!]
-  connect: [FacilityWhereUniqueInput!]
-}
-
-input ParkRelateToManyForCreateInput {
-  create: [ParkCreateInput!]
-  connect: [ParkWhereUniqueInput!]
-}
-
-input TrailRelateToManyForCreateInput {
-  create: [TrailCreateInput!]
-  connect: [TrailWhereUniqueInput!]
-}
-
-input PublicNoticeRelateToManyForCreateInput {
-  create: [PublicNoticeCreateInput!]
-  connect: [PublicNoticeWhereUniqueInput!]
-}
-
-input TestModelRelateToManyForCreateInput {
-  create: [TestModelCreateInput!]
-  connect: [TestModelWhereUniqueInput!]
 }
 
 type Document {
@@ -1567,8 +1382,6 @@ type OrgUnit {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
-  servicesCount(where: ServiceWhereInput! = {}): Int
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
@@ -1599,7 +1412,6 @@ input OrgUnitWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
-  services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
 }
@@ -1607,6 +1419,12 @@ input OrgUnitWhereInput {
 input BooleanFilter {
   equals: Boolean
   not: BooleanFilter
+}
+
+input OrgUnitManyRelationFilter {
+  every: OrgUnitWhereInput
+  some: OrgUnitWhereInput
+  none: OrgUnitWhereInput
 }
 
 input OrgUnitOrderByInput {
@@ -1640,9 +1458,15 @@ input OrgUnitUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
+}
+
+input OrgUnitRelateToManyForUpdateInput {
+  disconnect: [OrgUnitWhereUniqueInput!]
+  set: [OrgUnitWhereUniqueInput!]
+  create: [OrgUnitCreateInput!]
+  connect: [OrgUnitWhereUniqueInput!]
 }
 
 input OrgUnitRelateToOneForUpdateInput {
@@ -1672,9 +1496,13 @@ input OrgUnitCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
+}
+
+input OrgUnitRelateToManyForCreateInput {
+  create: [OrgUnitCreateInput!]
+  connect: [OrgUnitWhereUniqueInput!]
 }
 
 input OrgUnitRelateToOneForCreateInput {
@@ -1789,6 +1617,18 @@ input ParkWhereInput {
   facilities: FacilityManyRelationFilter
 }
 
+input TrailManyRelationFilter {
+  every: TrailWhereInput
+  some: TrailWhereInput
+  none: TrailWhereInput
+}
+
+input FacilityManyRelationFilter {
+  every: FacilityWhereInput
+  some: FacilityWhereInput
+  none: FacilityWhereInput
+}
+
 input ParkOrderByInput {
   id: OrderDirection
   heroImage: BlueHarvestImageOrderDirection
@@ -1825,6 +1665,20 @@ input ParkUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
 }
 
+input TrailRelateToManyForUpdateInput {
+  disconnect: [TrailWhereUniqueInput!]
+  set: [TrailWhereUniqueInput!]
+  create: [TrailCreateInput!]
+  connect: [TrailWhereUniqueInput!]
+}
+
+input FacilityRelateToManyForUpdateInput {
+  disconnect: [FacilityWhereUniqueInput!]
+  set: [FacilityWhereUniqueInput!]
+  create: [FacilityCreateInput!]
+  connect: [FacilityWhereUniqueInput!]
+}
+
 input ParkUpdateArgs {
   where: ParkWhereUniqueInput!
   data: ParkUpdateInput!
@@ -1850,6 +1704,16 @@ input ParkCreateInput {
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+}
+
+input TrailRelateToManyForCreateInput {
+  create: [TrailCreateInput!]
+  connect: [TrailWhereUniqueInput!]
+}
+
+input FacilityRelateToManyForCreateInput {
+  create: [FacilityCreateInput!]
+  connect: [FacilityWhereUniqueInput!]
 }
 
 type PublicNotice {
@@ -1932,6 +1796,18 @@ input PublicNoticeWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
 }
 
+input ParkManyRelationFilter {
+  every: ParkWhereInput
+  some: ParkWhereInput
+  none: ParkWhereInput
+}
+
+input CommunityManyRelationFilter {
+  every: CommunityWhereInput
+  some: CommunityWhereInput
+  none: CommunityWhereInput
+}
+
 input PublicNoticeOrderByInput {
   id: OrderDirection
   heroImage: BlueHarvestImageOrderDirection
@@ -1978,6 +1854,20 @@ input PublicNoticeUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
 }
 
+input ParkRelateToManyForUpdateInput {
+  disconnect: [ParkWhereUniqueInput!]
+  set: [ParkWhereUniqueInput!]
+  create: [ParkCreateInput!]
+  connect: [ParkWhereUniqueInput!]
+}
+
+input CommunityRelateToManyForUpdateInput {
+  disconnect: [CommunityWhereUniqueInput!]
+  set: [CommunityWhereUniqueInput!]
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
+}
+
 input PublicNoticeUpdateArgs {
   where: PublicNoticeWhereUniqueInput!
   data: PublicNoticeUpdateInput!
@@ -2010,6 +1900,16 @@ input PublicNoticeCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+}
+
+input ParkRelateToManyForCreateInput {
+  create: [ParkCreateInput!]
+  connect: [ParkWhereUniqueInput!]
+}
+
+input CommunityRelateToManyForCreateInput {
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
 }
 
 type Service {
@@ -2199,30 +2099,6 @@ input ContactRelateToOneForCreateInput {
 type Tag {
   id: ID!
   name: String
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
-  servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
-  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
-  documentsCount(where: DocumentWhereInput! = {}): Int
-  images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ImageWhereUniqueInput): [Image!]
-  imagesCount(where: ImageWhereInput! = {}): Int
-  documentCollections(where: DocumentCollectionWhereInput! = {}, orderBy: [DocumentCollectionOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentCollectionWhereUniqueInput): [DocumentCollection!]
-  documentCollectionsCount(where: DocumentCollectionWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
-  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
-  facilitiesCount(where: FacilityWhereInput! = {}): Int
-  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
-  parksCount(where: ParkWhereInput! = {}): Int
-  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
-  trailsCount(where: TrailWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
-  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
-  testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
-  testModelsCount(where: TestModelWhereInput! = {}): Int
 }
 
 input TagWhereUniqueInput {
@@ -2235,24 +2111,6 @@ input TagWhereInput {
   NOT: [TagWhereInput!]
   id: IDFilter
   name: StringFilter
-  services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
-  documents: DocumentManyRelationFilter
-  images: ImageManyRelationFilter
-  documentCollections: DocumentCollectionManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
-  facilities: FacilityManyRelationFilter
-  parks: ParkManyRelationFilter
-  trails: TrailManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
-  publicNotices: PublicNoticeManyRelationFilter
-  testModels: TestModelManyRelationFilter
-}
-
-input ImageManyRelationFilter {
-  every: ImageWhereInput
-  some: ImageWhereInput
-  none: ImageWhereInput
 }
 
 input TagOrderByInput {
@@ -2262,25 +2120,6 @@ input TagOrderByInput {
 
 input TagUpdateInput {
   name: String
-  services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
-  documents: DocumentRelateToManyForUpdateInput
-  images: ImageRelateToManyForUpdateInput
-  documentCollections: DocumentCollectionRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
-  facilities: FacilityRelateToManyForUpdateInput
-  parks: ParkRelateToManyForUpdateInput
-  trails: TrailRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
-  publicNotices: PublicNoticeRelateToManyForUpdateInput
-  testModels: TestModelRelateToManyForUpdateInput
-}
-
-input ImageRelateToManyForUpdateInput {
-  disconnect: [ImageWhereUniqueInput!]
-  set: [ImageWhereUniqueInput!]
-  create: [ImageCreateInput!]
-  connect: [ImageWhereUniqueInput!]
 }
 
 input TagUpdateArgs {
@@ -2290,23 +2129,6 @@ input TagUpdateArgs {
 
 input TagCreateInput {
   name: String
-  services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
-  documents: DocumentRelateToManyForCreateInput
-  images: ImageRelateToManyForCreateInput
-  documentCollections: DocumentCollectionRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
-  facilities: FacilityRelateToManyForCreateInput
-  parks: ParkRelateToManyForCreateInput
-  trails: TrailRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
-  publicNotices: PublicNoticeRelateToManyForCreateInput
-  testModels: TestModelRelateToManyForCreateInput
-}
-
-input ImageRelateToManyForCreateInput {
-  create: [ImageCreateInput!]
-  connect: [ImageWhereUniqueInput!]
 }
 
 type Trail {
@@ -2590,7 +2412,6 @@ type User {
   name: String
   email: String
   password: PasswordState
-  contact: Contact
   role: Int
   groups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   groupsCount(where: UserGroupWhereInput! = {}): Int
@@ -2617,7 +2438,6 @@ input UserWhereInput {
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
-  contact: ContactWhereInput
   role: IntNullableFilter
   groups: UserGroupManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -2654,7 +2474,6 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  contact: ContactRelateToOneForUpdateInput
   role: Int
   groups: UserGroupRelateToManyForUpdateInput
   createdAt: DateTime
@@ -2671,7 +2490,6 @@ input UserCreateInput {
   name: String
   email: String
   password: String
-  contact: ContactRelateToOneForCreateInput
   role: Int
   groups: UserGroupRelateToManyForCreateInput
   createdAt: DateTime
@@ -2685,26 +2503,6 @@ type UserGroup {
   description: String
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
-  servicesCount(where: ServiceWhereInput! = {}): Int
-  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
-  parksCount(where: ParkWhereInput! = {}): Int
-  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
-  trailsCount(where: TrailWhereInput! = {}): Int
-  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
-  facilitiesCount(where: FacilityWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
-  documentCollections(where: DocumentCollectionWhereInput! = {}, orderBy: [DocumentCollectionOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentCollectionWhereUniqueInput): [DocumentCollection!]
-  documentCollectionsCount(where: DocumentCollectionWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
-  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
-  testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
-  testModelsCount(where: TestModelWhereInput! = {}): Int
 }
 
 input UserGroupWhereUniqueInput {
@@ -2720,16 +2518,6 @@ input UserGroupWhereInput {
   owner: UserWhereInput
   description: StringFilter
   users: UserManyRelationFilter
-  services: ServiceManyRelationFilter
-  parks: ParkManyRelationFilter
-  trails: TrailManyRelationFilter
-  facilities: FacilityManyRelationFilter
-  communities: CommunityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
-  documentCollections: DocumentCollectionManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
-  publicNotices: PublicNoticeManyRelationFilter
-  testModels: TestModelManyRelationFilter
 }
 
 input UserManyRelationFilter {
@@ -2749,16 +2537,6 @@ input UserGroupUpdateInput {
   owner: UserRelateToOneForUpdateInput
   description: String
   users: UserRelateToManyForUpdateInput
-  services: ServiceRelateToManyForUpdateInput
-  parks: ParkRelateToManyForUpdateInput
-  trails: TrailRelateToManyForUpdateInput
-  facilities: FacilityRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
-  documentCollections: DocumentCollectionRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
-  publicNotices: PublicNoticeRelateToManyForUpdateInput
-  testModels: TestModelRelateToManyForUpdateInput
 }
 
 input UserRelateToManyForUpdateInput {
@@ -2778,16 +2556,6 @@ input UserGroupCreateInput {
   owner: UserRelateToOneForCreateInput
   description: String
   users: UserRelateToManyForCreateInput
-  services: ServiceRelateToManyForCreateInput
-  parks: ParkRelateToManyForCreateInput
-  trails: TrailRelateToManyForCreateInput
-  facilities: FacilityRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
-  documentCollections: DocumentCollectionRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
-  publicNotices: PublicNoticeRelateToManyForCreateInput
-  testModels: TestModelRelateToManyForCreateInput
 }
 
 input UserRelateToManyForCreateInput {
@@ -2816,6 +2584,8 @@ type TestModel {
   createdAt: DateTime
   updatedAt: DateTime
   status: String
+  drafts(where: TestModelDraftWhereInput! = {}, orderBy: [TestModelDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelDraftWhereUniqueInput): [TestModelDraft!]
+  draftsCount(where: TestModelDraftWhereInput! = {}): Int
 }
 
 input TestModelWhereUniqueInput {
@@ -2843,6 +2613,13 @@ input TestModelWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   status: StringNullableFilter
+  drafts: TestModelDraftManyRelationFilter
+}
+
+input TestModelDraftManyRelationFilter {
+  every: TestModelDraftWhereInput
+  some: TestModelDraftWhereInput
+  none: TestModelDraftWhereInput
 }
 
 input TestModelOrderByInput {
@@ -2876,6 +2653,14 @@ input TestModelUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   status: String
+  drafts: TestModelDraftRelateToManyForUpdateInput
+}
+
+input TestModelDraftRelateToManyForUpdateInput {
+  disconnect: [TestModelDraftWhereUniqueInput!]
+  set: [TestModelDraftWhereUniqueInput!]
+  create: [TestModelDraftCreateInput!]
+  connect: [TestModelDraftWhereUniqueInput!]
 }
 
 input TestModelUpdateArgs {
@@ -2899,6 +2684,133 @@ input TestModelCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   status: String
+  drafts: TestModelDraftRelateToManyForCreateInput
+}
+
+input TestModelDraftRelateToManyForCreateInput {
+  create: [TestModelDraftCreateInput!]
+  connect: [TestModelDraftWhereUniqueInput!]
+}
+
+type TestModelDraft {
+  id: ID!
+  original: TestModel
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+}
+
+input TestModelDraftWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+}
+
+input TestModelDraftWhereInput {
+  AND: [TestModelDraftWhereInput!]
+  OR: [TestModelDraftWhereInput!]
+  NOT: [TestModelDraftWhereInput!]
+  id: IDFilter
+  original: TestModelWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  status: StringNullableFilter
+}
+
+input TestModelDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  status: OrderDirection
+}
+
+input TestModelDraftUpdateInput {
+  original: TestModelRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+}
+
+input TestModelRelateToOneForUpdateInput {
+  create: TestModelCreateInput
+  connect: TestModelWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TestModelDraftUpdateArgs {
+  where: TestModelDraftWhereUniqueInput!
+  data: TestModelDraftUpdateInput!
+}
+
+input TestModelDraftCreateInput {
+  original: TestModelRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+}
+
+input TestModelRelateToOneForCreateInput {
+  create: TestModelCreateInput
+  connect: TestModelWhereUniqueInput
 }
 
 """
@@ -3051,6 +2963,12 @@ type Mutation {
   updateTestModels(data: [TestModelUpdateArgs!]!): [TestModel]
   deleteTestModel(where: TestModelWhereUniqueInput!): TestModel
   deleteTestModels(where: [TestModelWhereUniqueInput!]!): [TestModel]
+  createTestModelDraft(data: TestModelDraftCreateInput!): TestModelDraft
+  createTestModelDrafts(data: [TestModelDraftCreateInput!]!): [TestModelDraft]
+  updateTestModelDraft(where: TestModelDraftWhereUniqueInput!, data: TestModelDraftUpdateInput!): TestModelDraft
+  updateTestModelDrafts(data: [TestModelDraftUpdateArgs!]!): [TestModelDraft]
+  deleteTestModelDraft(where: TestModelDraftWhereUniqueInput!): TestModelDraft
+  deleteTestModelDrafts(where: [TestModelDraftWhereUniqueInput!]!): [TestModelDraft]
   endSession: Boolean!
 }
 
@@ -3127,6 +3045,9 @@ type Query {
   testModel(where: TestModelWhereUniqueInput!): TestModel
   testModels(where: TestModelWhereInput! = {}, orderBy: [TestModelOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelWhereUniqueInput): [TestModel!]
   testModelsCount(where: TestModelWhereInput! = {}): Int
+  testModelDraft(where: TestModelDraftWhereUniqueInput!): TestModelDraft
+  testModelDrafts(where: TestModelDraftWhereInput! = {}, orderBy: [TestModelDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelDraftWhereUniqueInput): [TestModelDraft!]
+  testModelDraftsCount(where: TestModelDraftWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 

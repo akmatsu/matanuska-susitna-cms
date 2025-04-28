@@ -290,7 +290,7 @@ export function relateActiveUser({
 
 export function tags(listKey?: string) {
   return relationship({
-    ref: listKey ? `Tag.${listKey}` : 'Tag',
+    ref: listKey ? `Tag` : 'Tag',
     many: true,
     ui: {
       displayMode: 'select',
@@ -304,7 +304,7 @@ export function tags(listKey?: string) {
 
 export function contacts(listKey: string) {
   return relationship({
-    ref: `Contact.${listKey}`,
+    ref: `Contact`,
     many: true,
     ui: {
       itemView: {
@@ -316,7 +316,7 @@ export function contacts(listKey: string) {
 
 export function userGroups(listKey: string) {
   return relationship({
-    ref: `UserGroup.${listKey}`,
+    ref: `UserGroup`,
     many: true,
     ui: {
       itemView: {
@@ -455,7 +455,7 @@ export function basePage(
 
     ...(opts?.primaryContact && {
       primaryContact: relationship({
-        ref: `Contact.primary${capitalizeFirstLetter(listNamePlural)}`,
+        ref: `Contact`,
         ui: {
           itemView: {
             fieldPosition: 'sidebar',
@@ -506,8 +506,6 @@ export async function typesenseUpsert(
         where: { id: item.id.toString() },
         query,
       });
-
-      console.log(doc);
 
       const document = toSearchableObj(doc, listNameSingular);
 

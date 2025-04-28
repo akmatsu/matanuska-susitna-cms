@@ -31,7 +31,7 @@ export const User: ListConfig<any> = list({
       validation: { isRequired: false },
       db: { isNullable: true },
     }),
-    contact: relationship({ ref: 'Contact.user' }),
+
     role: select({
       type: 'integer',
       options: [
