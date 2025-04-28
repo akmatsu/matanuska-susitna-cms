@@ -1,9 +1,4 @@
-import {
-  defaultValueCtx,
-  Editor,
-  editorViewOptionsCtx,
-  rootCtx,
-} from '@milkdown/kit/core';
+import { defaultValueCtx, Editor, rootCtx } from '@milkdown/kit/core';
 import { MdEditorProps } from '../../types';
 import { listener, listenerCtx } from '@milkdown/kit/plugin/listener';
 import { commonmark } from '@milkdown/kit/preset/commonmark';
@@ -28,7 +23,7 @@ export function configureBaseFeatures(
       //   },
       // }));
       ctx.set(rootCtx, root);
-      ctx.set(defaultValueCtx, props.initialValue);
+      ctx.set(defaultValueCtx, props.initialValue?.replace(/<br\s*\/>/gi, ''));
       ctx.get(listenerCtx).markdownUpdated((_, md) => {
         props.onChange?.(md);
       });
