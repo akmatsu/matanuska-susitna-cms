@@ -1,7 +1,13 @@
 import { graphql, list, ListConfig } from '@keystone-6/core';
 import { relationship, text, virtual } from '@keystone-6/core/fields';
 import { generalOperationAccess } from '../access';
-import { embed, liveUrl, owner, userGroups } from '../fieldUtils';
+import {
+  embed,
+  liveUrl,
+  owner,
+  titleAndDescription,
+  userGroups,
+} from '../fieldUtils';
 import { appConfig } from '../../configs/appConfig';
 
 export const DocumentCollection: ListConfig<any> = list({
@@ -12,7 +18,7 @@ export const DocumentCollection: ListConfig<any> = list({
     maxTake: 100,
   },
   fields: {
-    title: text({ validation: { isRequired: true } }),
+    ...titleAndDescription(),
     owner,
     documents: relationship({
       ref: 'Document.collections',
