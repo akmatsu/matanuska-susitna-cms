@@ -16,14 +16,13 @@ export function configureBaseFeatures(
 ) {
   editor
     .config((ctx) => {
-      // ctx.update(editorViewOptionsCtx, (prev) => ({
-      //   ...prev,
-      //   attributes: {
-      //     class: 'milkdown prose',
-      //   },
-      // }));
       ctx.set(rootCtx, root);
-      ctx.set(defaultValueCtx, props.initialValue?.replace(/<br\s*\/>/gi, ''));
+      if (props.initialValue)
+        ctx.set(
+          defaultValueCtx,
+          props.initialValue.replace(/<br\s*\/?>/gi, ''),
+        );
+
       ctx.get(listenerCtx).markdownUpdated((_, md) => {
         props.onChange?.(md);
       });
