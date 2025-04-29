@@ -9,11 +9,12 @@ import {
 } from '@keystone-6/core/types';
 import { Button } from '@keystone-ui/button';
 import { FieldContainer } from '@keystone-ui/fields';
-import { key } from '@milkdown/kit/plugin/listener';
+
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { singular } from 'pluralize';
+import { mapDataFields } from '../../../utils/draftUtils';
 
 export function Field({
   field,
@@ -38,11 +39,9 @@ export function Field({
             id
             name
           }
-          tagsCount
           userGroups {
             id
           }
-          userGroupsCount
           contacts {
             id
           }
@@ -69,45 +68,10 @@ export function Field({
   async function handleCreateDraft() {
     if (loading || creating || error) return;
     const original = data.testModel;
-    const { id, ...rest } = original;
 
-    const draftInput: Record<string, any> = {
-      original: { connect: { id } },
-    };
-
-    Object.entries(rest).forEach(([key, value]) => {
-      if (
-        key.endsWith('Count') ||
-        key === 'createdAt' ||
-        key === 'updatedAt' ||
-        key === '__typename'
-      ) {
-        return;
-      }
-
-      if (value == null) {
-        draftInput[key] = null;
-        return;
-      }
-
-      if (Array.isArray(value)) {
-        draftInput[key] = {
-          connect: (value as Array<any>)
-            .filter((item) => item && typeof item === 'object' && 'id' in item)
-            .map((item: any) => ({ id: item.id })),
-        };
-        return;
-      }
-
-      if (typeof value === 'object' && 'id' in value) {
-        draftInput[key] = { connect: { id: value.id } };
-        return;
-      }
-
-      draftInput[key] = value;
+    const draftInput = mapDataFields(original, {
+      original: { connect: { id: original.id } },
     });
-
-    console.log(draftInput);
 
     const result = await createDraft({
       variables: {
@@ -116,7 +80,7 @@ export function Field({
     });
 
     const draftId = result.data.createTestModelDraft.id;
-    router.push('http://localhost:3333/' + listName + `/${draftId}`);
+    router.push('/' + listName + `/${draftId}`);
   }
 
   return (
@@ -124,9 +88,7 @@ export function Field({
       <div className="flex items-center gap-2">
         <Button onClick={handleCreateDraft}>Create a new Draft</Button>
         {!!value?.length && (
-          <Link
-            href={`http://localhost:3333/${listName}?!original_matches=%22${id}%22`}
-          >
+          <Link href={`/${listName}?!original_matches=%22${id}%22`}>
             View Existing Drafts
           </Link>
         )}
