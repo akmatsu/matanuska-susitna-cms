@@ -1,7 +1,8 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { generalItemAccess, generalOperationAccess } from '../access';
-import { basePage, timestamps, titleAndDescription } from '../fieldUtils';
-import { relationship, select, timestamp } from '@keystone-6/core/fields';
+import { generalOperationAccess } from '../access';
+import { basePage, titleAndDescription } from '../fieldUtils';
+import { relationship, select } from '@keystone-6/core/fields';
+import { mapDataFields } from '../../utils/draftUtils';
 
 const listPlural = 'testModels';
 
@@ -25,14 +26,7 @@ export const TestModel: ListConfig<any> = list({
     drafts: relationship({
       ref: 'TestModelDraft.original',
       many: true,
-      // ui: {
-      //   displayMode: 'cards',
-      //   cardFields: ['title'],
-      //   linkToItem: true,
-      //   inlineCreate: {
-      //     fields: ['title'],
-      //   },
-      // },
+
       ui: {
         views: './src/components/customFields/drafts/views',
       },
@@ -65,6 +59,7 @@ export const TestModelDraft: ListConfig<any> = list({
   },
   ui: {
     isHidden: true,
+    hideCreate: true,
   },
   fields: {
     original: relationship({
@@ -92,5 +87,32 @@ export const TestModelDraft: ListConfig<any> = list({
         displayMode: 'segmented-control',
       },
     }),
+  },
+  hooks: {
+    afterOperation: async ({ operation, item, context }) => {
+      if (operation === 'update') {
+        const currentItem = await context.query.TestModelDraft.findOne({
+          where: {
+            id: item.id.toString(),
+          },
+          query:
+            'id } heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename',
+        });
+
+        if (item.status === 'published') {
+          await context.db.TestModel.updateOne({
+            where: { id: item.originalId as string },
+            data: mapDataFields(currentItem, {
+              status: 'published',
+              publishAt: new Date().toISOString(),
+            }),
+          });
+
+          await context.db.TestModelDraft.deleteOne({
+            where: { id: item.id.toString() },
+          });
+        }
+      }
+    },
   },
 });
