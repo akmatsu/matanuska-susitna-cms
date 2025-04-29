@@ -77,7 +77,6 @@ export const PAGE_TYPES = [
           slug: true,
           description: true,
           body: true,
-          actionLabel: true,
           publishAt: true,
           orgUnits: {
             select: {

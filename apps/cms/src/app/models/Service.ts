@@ -104,7 +104,7 @@ export const Service: ListConfig<any> = list({
     async afterOperation(args) {
       await typesenseUpsert(
         'service',
-        `id title description body slug owner {name} actionLabel publishAt tags {name} districts {title} orgUnits {title} communities {title}`,
+        `id title description body slug owner {name} publishAt tags {name} districts {title} orgUnits {title} communities {title}`,
         args,
       );
     },
