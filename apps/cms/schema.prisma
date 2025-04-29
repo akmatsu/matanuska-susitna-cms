@@ -551,12 +551,11 @@ model TestModelDraft {
   original    TestModel?  @relation("TestModelDraft_original", fields: [originalId], references: [id])
   originalId  String?     @map("original")
   heroImage   String?
-  title       String      @unique @default("")
+  title       String      @default("")
   description String      @default("")
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
-  slug        String      @unique @default("")
   owner       User?       @relation("TestModelDraft_owner", fields: [ownerId], references: [id])
   ownerId     String?     @map("owner")
   body        String?

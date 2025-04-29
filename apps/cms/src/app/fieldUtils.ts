@@ -197,6 +197,7 @@ type titleAndDescriptionOpts = {
   description?: {
     description?: string;
   };
+  isUnique?: boolean;
 };
 
 export function titleAndDescription(
@@ -216,7 +217,12 @@ export function titleAndDescription(
       ui: {
         displayMode: 'input',
       },
-      isIndexed: 'unique',
+      isIndexed:
+        opts?.isUnique === undefined
+          ? 'unique'
+          : opts?.isUnique
+            ? 'unique'
+            : undefined,
     }),
     description: text({
       validation: {
@@ -349,6 +355,8 @@ export function basePage(
     hours?: boolean;
     documents?: boolean;
     actions?: boolean;
+    noSlug?: boolean;
+    noLiveUrl?: boolean;
   },
 ): BaseFields<any> {
   return {
@@ -356,7 +364,7 @@ export function basePage(
     ...titleAndDescription(opts?.titleAndDescriptionOpts),
     ...publishable,
     liveUrl: liveUrl(listNamePlural),
-    slug,
+    ...(!opts?.noSlug && { slug }),
     owner,
     body: customText(opts?.customTextOpts),
     tags: tags(listNamePlural),

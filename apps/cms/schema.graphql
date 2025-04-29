@@ -2702,7 +2702,6 @@ type TestModelDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
-  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -2718,8 +2717,6 @@ type TestModelDraft {
 
 input TestModelDraftWhereUniqueInput {
   id: ID
-  title: String
-  slug: String
 }
 
 input TestModelDraftWhereInput {
@@ -2733,7 +2730,6 @@ input TestModelDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
-  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -2752,7 +2748,6 @@ input TestModelDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
-  slug: OrderDirection
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
@@ -2767,7 +2762,6 @@ input TestModelDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
-  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -2797,7 +2791,6 @@ input TestModelDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
-  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput

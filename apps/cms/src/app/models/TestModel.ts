@@ -76,8 +76,11 @@ export const TestModelDraft: ListConfig<any> = list({
       titleAndDescriptionOpts: {
         title: {
           required: false,
+          lengthMin: 0,
         },
+        isUnique: false,
       },
+      noSlug: true,
     }),
     status: select({
       options: [
@@ -89,34 +92,5 @@ export const TestModelDraft: ListConfig<any> = list({
         displayMode: 'segmented-control',
       },
     }),
-  },
-  hooks: {
-    // afterOperation: async ({ operation, item, context, originalItem }) => {
-    //   if (operation === 'update') {
-    //     if (
-    //       originalItem.status === 'draft' &&
-    //       item.status === 'published' &&
-    //       !item.publishAt
-    //     ) {
-    //       await context.db.TestModel.updateOne({
-    //         where: { id: item.id.toString() },
-    //         data: {
-    //           publishAt: new Date().toISOString(),
-    //         },
-    //       });
-    //     }
-    //   }
-    // },
-    afterOperation: async ({ operation, context, item, originalItem }) => {
-      if (operation === 'update') {
-        console.log(item);
-        // const originalItem = await context.db.TestModel.findOne({
-        //   where: { id: resolvedData.original.id.toString() },
-        // });
-        // if (originalItem) {
-        //   console.log('Original item found:', originalItem);
-        // }
-      }
-    },
   },
 });
