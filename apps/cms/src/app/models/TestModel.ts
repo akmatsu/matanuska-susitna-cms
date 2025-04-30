@@ -79,7 +79,9 @@ export const TestModelDraft: ListConfig<any> = list({
       noSlug: true,
     }),
     publish: publishDraft({
-      query: `id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename`,
+      ui: {
+        query: `id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename`,
+      },
     }),
     status: select({
       options: [

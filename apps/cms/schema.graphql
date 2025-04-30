@@ -2712,7 +2712,7 @@ type TestModelDraft {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  publish: JSON
+  publish: String
   status: String
 }
 
@@ -2752,6 +2752,7 @@ input TestModelDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  publish: OrderDirection
   status: OrderDirection
 }
 
@@ -2770,7 +2771,7 @@ input TestModelDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  publish: JSON
+  publish: String
   status: String
 }
 
@@ -2800,7 +2801,7 @@ input TestModelDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  publish: JSON
+  publish: String
   status: String
 }
 

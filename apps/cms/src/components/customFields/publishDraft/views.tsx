@@ -9,6 +9,8 @@ import {
   FieldDescription,
   FieldLabel,
 } from '@keystone-ui/fields';
+import { PublishDraftFieldMeta } from '.';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 
 export function Field({ field }: FieldProps<typeof controller>) {
   function handlePublishDraft() {
@@ -27,12 +29,19 @@ export function Field({ field }: FieldProps<typeof controller>) {
   );
 }
 
+export function Cell() {
+  return <CellContainer>Muffins</CellContainer>;
+}
+
+export function CardValue() {
+  return <FieldContainer>Card</FieldContainer>;
+}
+
 export const controller = (
-  config: FieldControllerConfig<{ query: string }>,
+  config: FieldControllerConfig<PublishDraftFieldMeta>,
 ): FieldController<string | undefined | null, string> & {
   query: string;
 } => {
-  console.log(config);
   return {
     query: config.fieldMeta.query,
     path: config.path,

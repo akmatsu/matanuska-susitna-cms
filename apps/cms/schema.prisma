@@ -564,7 +564,7 @@ model TestModelDraft {
   contacts    Contact[]   @relation("TestModelDraft_contacts")
   createdAt   DateTime?   @default(now())
   updatedAt   DateTime?   @default(now()) @updatedAt
-  publish     Json?
+  publish     String?
   status      String?     @default("draft")
 
   @@index([originalId])
