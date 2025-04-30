@@ -3,6 +3,7 @@ import { generalOperationAccess } from '../access';
 import { basePage, titleAndDescription } from '../fieldUtils';
 import { relationship, select } from '@keystone-6/core/fields';
 import { mapDataFields } from '../../utils/draftUtils';
+import { publishDraft } from '../../components/customFields/publishDraft';
 
 const listPlural = 'testModels';
 
@@ -77,6 +78,9 @@ export const TestModelDraft: ListConfig<any> = list({
       },
       noSlug: true,
     }),
+    publish: publishDraft({
+      query: `id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename`,
+    }),
     status: select({
       options: [
         { label: 'Draft', value: 'draft' },
@@ -96,7 +100,7 @@ export const TestModelDraft: ListConfig<any> = list({
             id: item.id.toString(),
           },
           query:
-            'id } heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename',
+            'id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename',
         });
 
         if (item.status === 'published') {
