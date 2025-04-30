@@ -7,16 +7,15 @@ import {
   orderDirectionEnum,
 } from '@keystone-6/core/types';
 
-export type PublishDraftFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
-  CommonFieldConfig<ListTypeInfo> & {
-    ui?: {
-      query?: string;
-    };
-  };
-
 export type PublishDraftFieldMeta = {
   query: string;
+  listName: string;
 };
+
+export type PublishDraftFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
+  CommonFieldConfig<ListTypeInfo> & {
+    ui?: PublishDraftFieldMeta;
+  };
 
 export function publishDraft<ListTypeInfo extends BaseListTypeInfo>(
   config: PublishDraftFieldConfig<ListTypeInfo> = {},
@@ -38,6 +37,7 @@ export function publishDraft<ListTypeInfo extends BaseListTypeInfo>(
       getAdminMeta(): PublishDraftFieldMeta {
         return {
           query: config.ui?.query ?? '',
+          listName: config.ui?.listName ?? '',
         };
       },
     });
