@@ -80,7 +80,10 @@ export const TestModelDraft: ListConfig<any> = list({
     }),
     publish: publishDraft({
       ui: {
-        query: `id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename`,
+        query: `
+          id heroImage original {id} title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename
+        `,
+        listName: 'TestModel',
       },
     }),
     status: select({
@@ -102,7 +105,7 @@ export const TestModelDraft: ListConfig<any> = list({
             id: item.id.toString(),
           },
           query:
-            'id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename',
+            'id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename original {id}',
         });
 
         if (item.status === 'published') {
