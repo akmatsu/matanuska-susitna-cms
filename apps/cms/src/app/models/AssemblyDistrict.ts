@@ -115,11 +115,12 @@ export const AssemblyDistrict: ListConfig<any> = list({
     }),
   },
   hooks: {
-    beforeOperation(args) {
-      typesenseDelete(args);
+    async beforeOperation(args) {
+      await typesenseDelete(args);
     },
+
     async afterOperation(args) {
-      typesenseUpsert(
+      await typesenseUpsert(
         'assemblyDistrict',
         'id title description body slug liveUrl publishAt tags {name}',
         args,
