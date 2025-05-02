@@ -501,13 +501,10 @@ export async function typesenseUpsert(
   if ((operation === 'update' || operation === 'create') && item) {
     try {
       const thing = toPascalCase(listNameSingular);
-      console.log(thing);
       const doc = await context.query[thing]?.findOne({
         where: { id: item.id.toString() },
         query,
       });
-
-      console.log(doc);
 
       const document = toSearchableObj(doc, listNameSingular);
 
