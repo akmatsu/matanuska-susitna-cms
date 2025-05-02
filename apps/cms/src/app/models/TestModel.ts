@@ -15,15 +15,19 @@ export const TestModel: ListConfig<any> = list({
     ...basePage(listPlural),
     ...titleAndDescription,
     status: select({
+      validation: {
+        isRequired: true,
+      },
       options: [
-        { label: 'Unpublished', value: 'Unpublished' },
+        { label: 'Unpublished', value: 'unpublished' },
         { label: 'Published', value: 'published' },
       ],
-      defaultValue: 'draft',
+      defaultValue: 'unpublished',
       ui: {
         displayMode: 'segmented-control',
       },
     }),
+
     drafts: relationship({
       ref: 'TestModelDraft.original',
       many: true,
@@ -32,12 +36,101 @@ export const TestModel: ListConfig<any> = list({
         views: './src/components/customFields/drafts/views',
       },
     }),
+
+    versions: relationship({
+      ref: 'TestModelVersion.original',
+      many: true,
+      ui: {
+        // hideCreate: true,
+        views: './src/components/customFields/versions/views',
+      },
+    }),
+
+    currentVersion: relationship({
+      ref: 'TestModelVersion.isLive',
+      ui: {
+        hideCreate: true,
+        itemView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
+        createView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
   },
   hooks: {
     afterOperation: async ({ operation, item, context, originalItem }) => {
       if (operation === 'update') {
+        if (item.status === 'published') {
+          const { title, ...res } = await context.query.TestModel.findOne({
+            where: {
+              id: item.id.toString(),
+            },
+            query: `id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename`,
+          });
+
+          const now = new Date();
+
+          await context.db.TestModelVersion.createOne({
+            data: mapDataFields(res, {
+              title: `${title} --- ${now.toISOString()}`,
+              original: {
+                connect: {
+                  id: item.id.toString(),
+                },
+              },
+              isLive: {
+                connect: {
+                  id: item.id.toString(),
+                },
+              },
+            }),
+          });
+
+          const count = await context.db.TestModelVersion.count({
+            where: {
+              original: {
+                id: {
+                  equals: item.id.toString(),
+                },
+              },
+            },
+          });
+
+          // If more than max, delete all versions older than 1 year
+          if (count > 20) {
+            const versionsToDelete = await context.db.TestModelVersion.findMany(
+              {
+                where: {
+                  original: {
+                    id: {
+                      equals: item.id.toString(),
+                    },
+                  },
+                  createdAt: {
+                    // more than 1 year old
+                    lte: new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000),
+                  },
+                },
+              },
+            );
+
+            const idsToDelete = versionsToDelete.map((version) => ({
+              id: version.id.toString(),
+            }));
+
+            await context.db.TestModelVersion.deleteMany({
+              where: idsToDelete,
+            });
+          }
+        }
+
         if (
-          originalItem.status === 'draft' &&
+          originalItem.status === 'unpublished' &&
           item.status === 'published' &&
           !item.publishAt
         ) {
@@ -50,6 +143,51 @@ export const TestModel: ListConfig<any> = list({
         }
       }
     },
+  },
+});
+
+export const TestModelVersion: ListConfig<any> = list({
+  access: {
+    operation: generalOperationAccess,
+    item: {
+      update: () => false,
+    },
+  },
+  ui: {
+    hideCreate: true,
+    isHidden: true,
+  },
+  fields: {
+    original: relationship({
+      ref: 'TestModel.versions',
+      many: false,
+      ui: { hideCreate: true },
+    }),
+    ...basePage('TestModelVersions', {
+      titleAndDescriptionOpts: {
+        title: {
+          required: false,
+          lengthMin: 0,
+        },
+        isUnique: false,
+      },
+      noSlug: true,
+    }),
+    ...titleAndDescription,
+    isLive: relationship({
+      ref: 'TestModel.currentVersion',
+      many: false,
+      ui: { hideCreate: true },
+    }),
+    republish: publishDraft({
+      ui: {
+        query: `
+          id heroImage original {id} title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename
+        `,
+        listName: 'TestModel',
+        views: './src/components/customFields/republishVersion/views',
+      },
+    }),
   },
 });
 
@@ -84,16 +222,6 @@ export const TestModelDraft: ListConfig<any> = list({
           id heroImage original {id} title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename
         `,
         listName: 'TestModel',
-      },
-    }),
-    status: select({
-      options: [
-        { label: 'Draft', value: 'draft' },
-        { label: 'Published', value: 'published' },
-      ],
-      defaultValue: 'draft',
-      ui: {
-        displayMode: 'segmented-control',
       },
     }),
   },

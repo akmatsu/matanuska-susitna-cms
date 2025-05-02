@@ -33,7 +33,8 @@ export function publishDraft<ListTypeInfo extends BaseListTypeInfo>(
         orderBy: { arg: graphql.arg({ type: orderDirectionEnum }) },
       },
       output: graphql.field({ type: graphql.String }),
-      views: './src/components/customFields/publishDraft/views',
+      views:
+        config.ui?.views || './src/components/customFields/publishDraft/views',
       getAdminMeta(): PublishDraftFieldMeta {
         return {
           query: config.ui?.query ?? '',

@@ -2586,6 +2586,9 @@ type TestModel {
   status: String
   drafts(where: TestModelDraftWhereInput! = {}, orderBy: [TestModelDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelDraftWhereUniqueInput): [TestModelDraft!]
   draftsCount(where: TestModelDraftWhereInput! = {}): Int
+  versions(where: TestModelVersionWhereInput! = {}, orderBy: [TestModelVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelVersionWhereUniqueInput): [TestModelVersion!]
+  versionsCount(where: TestModelVersionWhereInput! = {}): Int
+  currentVersion: TestModelVersion
 }
 
 input TestModelWhereUniqueInput {
@@ -2612,14 +2615,22 @@ input TestModelWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  status: StringNullableFilter
+  status: StringFilter
   drafts: TestModelDraftManyRelationFilter
+  versions: TestModelVersionManyRelationFilter
+  currentVersion: TestModelVersionWhereInput
 }
 
 input TestModelDraftManyRelationFilter {
   every: TestModelDraftWhereInput
   some: TestModelDraftWhereInput
   none: TestModelDraftWhereInput
+}
+
+input TestModelVersionManyRelationFilter {
+  every: TestModelVersionWhereInput
+  some: TestModelVersionWhereInput
+  none: TestModelVersionWhereInput
 }
 
 input TestModelOrderByInput {
@@ -2654,6 +2665,8 @@ input TestModelUpdateInput {
   updatedAt: DateTime
   status: String
   drafts: TestModelDraftRelateToManyForUpdateInput
+  versions: TestModelVersionRelateToManyForUpdateInput
+  currentVersion: TestModelVersionRelateToOneForUpdateInput
 }
 
 input TestModelDraftRelateToManyForUpdateInput {
@@ -2661,6 +2674,19 @@ input TestModelDraftRelateToManyForUpdateInput {
   set: [TestModelDraftWhereUniqueInput!]
   create: [TestModelDraftCreateInput!]
   connect: [TestModelDraftWhereUniqueInput!]
+}
+
+input TestModelVersionRelateToManyForUpdateInput {
+  disconnect: [TestModelVersionWhereUniqueInput!]
+  set: [TestModelVersionWhereUniqueInput!]
+  create: [TestModelVersionCreateInput!]
+  connect: [TestModelVersionWhereUniqueInput!]
+}
+
+input TestModelVersionRelateToOneForUpdateInput {
+  create: TestModelVersionCreateInput
+  connect: TestModelVersionWhereUniqueInput
+  disconnect: Boolean
 }
 
 input TestModelUpdateArgs {
@@ -2685,11 +2711,23 @@ input TestModelCreateInput {
   updatedAt: DateTime
   status: String
   drafts: TestModelDraftRelateToManyForCreateInput
+  versions: TestModelVersionRelateToManyForCreateInput
+  currentVersion: TestModelVersionRelateToOneForCreateInput
 }
 
 input TestModelDraftRelateToManyForCreateInput {
   create: [TestModelDraftCreateInput!]
   connect: [TestModelDraftWhereUniqueInput!]
+}
+
+input TestModelVersionRelateToManyForCreateInput {
+  create: [TestModelVersionCreateInput!]
+  connect: [TestModelVersionWhereUniqueInput!]
+}
+
+input TestModelVersionRelateToOneForCreateInput {
+  create: TestModelVersionCreateInput
+  connect: TestModelVersionWhereUniqueInput
 }
 
 type TestModelDraft {
@@ -2713,7 +2751,6 @@ type TestModelDraft {
   createdAt: DateTime
   updatedAt: DateTime
   publish: String
-  status: String
 }
 
 input TestModelDraftWhereUniqueInput {
@@ -2738,7 +2775,6 @@ input TestModelDraftWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  status: StringNullableFilter
 }
 
 input TestModelDraftOrderByInput {
@@ -2753,7 +2789,6 @@ input TestModelDraftOrderByInput {
   createdAt: OrderDirection
   updatedAt: OrderDirection
   publish: OrderDirection
-  status: OrderDirection
 }
 
 input TestModelDraftUpdateInput {
@@ -2772,7 +2807,6 @@ input TestModelDraftUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   publish: String
-  status: String
 }
 
 input TestModelRelateToOneForUpdateInput {
@@ -2802,12 +2836,117 @@ input TestModelDraftCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   publish: String
-  status: String
 }
 
 input TestModelRelateToOneForCreateInput {
   create: TestModelCreateInput
   connect: TestModelWhereUniqueInput
+}
+
+type TestModelVersion {
+  id: ID!
+  original: TestModel
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  isLive: TestModel
+  republish: String
+}
+
+input TestModelVersionWhereUniqueInput {
+  id: ID
+}
+
+input TestModelVersionWhereInput {
+  AND: [TestModelVersionWhereInput!]
+  OR: [TestModelVersionWhereInput!]
+  NOT: [TestModelVersionWhereInput!]
+  id: IDFilter
+  original: TestModelWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  isLive: TestModelWhereInput
+}
+
+input TestModelVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  republish: OrderDirection
+}
+
+input TestModelVersionUpdateInput {
+  original: TestModelRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  isLive: TestModelRelateToOneForUpdateInput
+  republish: String
+}
+
+input TestModelVersionUpdateArgs {
+  where: TestModelVersionWhereUniqueInput!
+  data: TestModelVersionUpdateInput!
+}
+
+input TestModelVersionCreateInput {
+  original: TestModelRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  isLive: TestModelRelateToOneForCreateInput
+  republish: String
 }
 
 """
@@ -2966,6 +3105,12 @@ type Mutation {
   updateTestModelDrafts(data: [TestModelDraftUpdateArgs!]!): [TestModelDraft]
   deleteTestModelDraft(where: TestModelDraftWhereUniqueInput!): TestModelDraft
   deleteTestModelDrafts(where: [TestModelDraftWhereUniqueInput!]!): [TestModelDraft]
+  createTestModelVersion(data: TestModelVersionCreateInput!): TestModelVersion
+  createTestModelVersions(data: [TestModelVersionCreateInput!]!): [TestModelVersion]
+  updateTestModelVersion(where: TestModelVersionWhereUniqueInput!, data: TestModelVersionUpdateInput!): TestModelVersion
+  updateTestModelVersions(data: [TestModelVersionUpdateArgs!]!): [TestModelVersion]
+  deleteTestModelVersion(where: TestModelVersionWhereUniqueInput!): TestModelVersion
+  deleteTestModelVersions(where: [TestModelVersionWhereUniqueInput!]!): [TestModelVersion]
   endSession: Boolean!
 }
 
@@ -3045,6 +3190,9 @@ type Query {
   testModelDraft(where: TestModelDraftWhereUniqueInput!): TestModelDraft
   testModelDrafts(where: TestModelDraftWhereInput! = {}, orderBy: [TestModelDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelDraftWhereUniqueInput): [TestModelDraft!]
   testModelDraftsCount(where: TestModelDraftWhereInput! = {}): Int
+  testModelVersion(where: TestModelVersionWhereUniqueInput!): TestModelVersion
+  testModelVersions(where: TestModelVersionWhereInput! = {}, orderBy: [TestModelVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelVersionWhereUniqueInput): [TestModelVersion!]
+  testModelVersionsCount(where: TestModelVersionWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 
