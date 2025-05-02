@@ -22,7 +22,7 @@ import { Trail } from './Trail';
 import { Url } from './Url';
 import { User } from './User';
 import { UserGroup } from './UserGroup';
-import { TestModel, TestModelDraft } from './TestModel';
+import { TestModel, TestModelDraft, TestModelVersion } from './TestModel';
 
 export const lists = {
   Alert,
@@ -34,7 +34,7 @@ export const lists = {
   ExternalLink,
   Facility,
   Highlight,
-  HomePage: HomePage,
+  HomePage,
   Image,
   InternalLink,
   Location,
@@ -50,4 +50,5 @@ export const lists = {
   UserGroup,
   TestModel,
   TestModelDraft,
+  TestModelVersion,
 } satisfies Lists;
