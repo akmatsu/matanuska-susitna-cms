@@ -508,8 +508,7 @@ export async function typesenseUpsert(
 ) {
   if ((operation === 'update' || operation === 'create') && item) {
     try {
-      const thing = toPascalCase(listNameSingular);
-      console.log(thing);
+      const thing = capitalizeFirstLetter(listNameSingular);
       const doc = await context.query[thing]?.findOne({
         where: { id: item.id.toString() },
         query,
