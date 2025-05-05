@@ -67,11 +67,16 @@ export function Field({
 
   async function handleCreateDraft() {
     if (loading || creating || error) return;
-    const original = data.testModel;
+    const { title, ...original } = data.testModel;
 
-    const draftInput = mapDataFields(original, {
-      original: { connect: { id: original.id } },
-    });
+    const draftInput = mapDataFields(
+      original,
+      {
+        title: `${title} --- ${new Date().toISOString()}`,
+        original: { connect: { id: original.id } },
+      },
+      'create',
+    );
 
     const result = await createDraft({
       variables: {

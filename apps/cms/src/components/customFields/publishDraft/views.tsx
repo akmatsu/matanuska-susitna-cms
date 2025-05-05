@@ -59,17 +59,22 @@ export function Field({ field }: FieldProps<typeof controller>) {
 
   async function handlePublishDraft() {
     if (loading || error || creating || deleting) return;
-    const { original, ...draft } = data[draftKey];
+    const { original, title, ...draft } = data[draftKey];
 
     const result = await publishDraft({
       variables: {
         where: {
           id: original.id,
         },
-        data: mapDataFields(draft, {
-          status: 'published',
-          publishAt: new Date().toISOString(),
-        }),
+        data: mapDataFields(
+          draft,
+          {
+            title: title.split(' ---')[0],
+            status: 'published',
+            publishAt: new Date().toISOString(),
+          },
+          'update',
+        ),
       },
     });
 

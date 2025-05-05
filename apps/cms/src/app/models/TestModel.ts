@@ -1,5 +1,5 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { generalOperationAccess } from '../access';
+import { generalOperationAccess, isContributor } from '../access';
 import { basePage, titleAndDescription } from '../fieldUtils';
 import { relationship, select } from '@keystone-6/core/fields';
 import { mapDataFields } from '../../utils/draftUtils';
@@ -76,19 +76,23 @@ export const TestModel: ListConfig<any> = list({
           const now = new Date();
 
           await context.db.TestModelVersion.createOne({
-            data: mapDataFields(res, {
-              title: `${title} --- ${now.toISOString()}`,
-              original: {
-                connect: {
-                  id: item.id.toString(),
+            data: mapDataFields(
+              res,
+              {
+                title: `${title} --- ${now.toISOString()}`,
+                original: {
+                  connect: {
+                    id: item.id.toString(),
+                  },
+                },
+                isLive: {
+                  connect: {
+                    id: item.id.toString(),
+                  },
                 },
               },
-              isLive: {
-                connect: {
-                  id: item.id.toString(),
-                },
-              },
-            }),
+              'create',
+            ),
           });
 
           const count = await context.db.TestModelVersion.count({
@@ -239,10 +243,14 @@ export const TestModelDraft: ListConfig<any> = list({
         if (item.status === 'published') {
           await context.db.TestModel.updateOne({
             where: { id: item.originalId as string },
-            data: mapDataFields(currentItem, {
-              status: 'published',
-              publishAt: new Date().toISOString(),
-            }),
+            data: mapDataFields(
+              currentItem,
+              {
+                status: 'published',
+                publishAt: new Date().toISOString(),
+              },
+              'update',
+            ),
           });
 
           await context.db.TestModelDraft.deleteOne({
