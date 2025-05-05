@@ -1,6 +1,9 @@
+export type Mode = 'create' | 'update';
+
 export function mapDataFields(
   input: Record<string, any>,
   output: Record<string, any> = {},
+  mode: Mode = 'create',
 ): Record<string, any> {
   const { id, ...rest } = input;
 
@@ -20,11 +23,11 @@ export function mapDataFields(
     }
 
     if (Array.isArray(v)) {
-      output[k] = {
-        connect: (v as Array<any>)
-          .filter((i) => i && typeof i === 'object' && 'id' in i)
-          .map((i: any) => ({ id: i.id })),
-      };
+      const items = (v as Array<any>)
+        .filter((i) => i && typeof i === 'object' && 'id' in i)
+        .map((i: any) => ({ id: i.id }));
+
+      output[k] = mode === 'update' ? { set: items } : { connect: items };
       return;
     }
 
