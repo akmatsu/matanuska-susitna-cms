@@ -82,3 +82,41 @@ export function toPascalCase(str: string) {
 export function slugify(str: string) {
   return str.toLowerCase().replace(separatorRegex, '-');
 }
+
+type PlainObject = Record<string, any>;
+
+function _isPlainObject(value: unknown): value is PlainObject {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+export function deepMerge<T extends PlainObject>(
+  target: T,
+  source?: Partial<T>,
+): T {
+  const output: PlainObject = { ...target };
+
+  if (!source) return output as T;
+
+  for (const key in source) {
+    const sourceVal = source[key];
+    const targetVal = target[key];
+
+    if (_isPlainObject(sourceVal) && _isPlainObject(targetVal)) {
+      output[key] = deepMerge(targetVal, sourceVal as Partial<PlainObject>);
+    } else if (sourceVal !== undefined) {
+      output[key] = sourceVal;
+    }
+  }
+
+  return output as T;
+}
+
+export function deepMergeAll<T extends PlainObject>(
+  target: T | undefined,
+  ...sources: Partial<T>[]
+): T {
+  return sources.reduce(
+    (acc, source) => deepMerge(acc, source),
+    (target ?? {}) as T,
+  ) as T;
+}

@@ -1,29 +1,47 @@
 import { BaseFields, list, ListConfig } from '@keystone-6/core';
-import pluralize, { plural } from 'pluralize';
 import { generalOperationAccess } from './access';
 import { relationship, select } from '@keystone-6/core/fields';
 import {
   BaseItem,
   BaseListTypeInfo,
   KeystoneContextFromListTypeInfo,
+  ListHooks,
 } from '@keystone-6/core/types';
 import { mapDataFields } from '../utils/draftUtils';
 import { publishDraft } from '../components/customFields/publishDraft';
+import { BasePageOptions } from './fieldUtils';
+import { plural } from 'pluralize';
+import { deepMerge } from '../utils';
 
 interface Options {
   versionLimit?: number;
   versionAgeDays?: number;
   query?: string;
+  mainBasePageOptions?: BasePageOptions;
+  draftBasePageOptions?: BasePageOptions;
+  versionBasePageOptions?: BasePageOptions;
+  mainHooks?: ListHooks<BaseListTypeInfo>;
 }
 
 export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
   listKey: string,
-  coreFields: TFields,
+  coreFields: (listNamePlural: string, opts?: BasePageOptions) => TFields,
   opts: Options = {},
 ): { Main: ListConfig<any>; Version: ListConfig<any>; Draft: ListConfig<any> } {
   const { versionLimit = 10, versionAgeDays = 365, query = '' } = opts;
 
   const publishQuery = `${query} original { id}`;
+
+  const defaultDraftAndVersionOpts: BasePageOptions = {
+    titleAndDescriptionOpts: {
+      title: {
+        required: false,
+        lengthMin: 0,
+      },
+      isUnique: false,
+    },
+    noSlug: true,
+  };
 
   return {
     Main: list({
@@ -31,7 +49,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         operation: generalOperationAccess,
       },
       fields: {
-        ...coreFields,
+        ...coreFields(plural(listKey), opts.mainBasePageOptions),
         status: select({
           validation: {
             isRequired: true,
@@ -81,6 +99,34 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
       },
 
       hooks: {
+        ...(opts.mainHooks && opts.mainHooks),
+        async beforeOperation({ operation, item, context }) {
+          const it: BaseItem | undefined = item as BaseItem | undefined;
+          if (operation === 'delete' && it?.id) {
+            const id = it.id.toString();
+
+            const versions = await context.db[listKey + 'Version'].findMany({
+              where: {
+                original: { id: { equals: id } },
+              },
+            });
+
+            const drafts = await context.db[listKey + 'Draft'].findMany({
+              where: {
+                original: { id: { equals: id } },
+              },
+            });
+
+            // Delete all versions and drafts
+            await context.db[listKey + 'Version'].deleteMany({
+              where: versions.map((v) => ({ id: v.id.toString() })),
+            });
+            await context.db[listKey + 'Draft'].deleteMany({
+              where: drafts.map((v) => ({ id: v.id.toString() })),
+            });
+          }
+        },
+
         async afterOperation(args) {
           await createVersion(
             listKey,
@@ -89,6 +135,13 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
             versionLimit,
             args,
           );
+
+          const userHook = opts.mainHooks?.afterOperation;
+          if (typeof userHook === 'function') {
+            await userHook(args);
+          } else if (typeof userHook === 'object' && userHook[args.operation]) {
+            await userHook[args.operation]!(args as any);
+          }
         },
       },
     }),
@@ -110,7 +163,10 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           many: false,
           ui: { hideCreate: true },
         }),
-        ...coreFields,
+        ...coreFields(
+          `${listKey}Versions`,
+          deepMerge(defaultDraftAndVersionOpts, opts.versionBasePageOptions),
+        ),
         isLive: relationship({
           ref: `${listKey}.currentVersion`,
           many: false,
@@ -119,7 +175,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         republish: publishDraft({
           ui: {
             query: publishQuery,
-            listName: 'TestModel',
+            listName: listKey,
             views: './src/components/customFields/republishVersion/views',
           },
         }),
@@ -140,11 +196,14 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           many: false,
           ui: { hideCreate: true },
         }),
-        ...coreFields,
+        ...coreFields(
+          `${listKey}Drafts`,
+          deepMerge(defaultDraftAndVersionOpts, opts.draftBasePageOptions),
+        ),
         publish: publishDraft({
           ui: {
             query: publishQuery,
-            listName: 'TestModel',
+            listName: listKey,
           },
         }),
       },
@@ -160,16 +219,18 @@ async function createVersion(
   {
     operation,
     item,
-    originalItem,
     context,
   }: {
     operation: 'create' | 'update' | 'delete';
     item?: BaseItem;
-    originalItem?: BaseItem;
     context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
   },
 ) {
-  if (operation === 'update' && item && item?.status === 'published') {
+  if (
+    (operation === 'update' || operation === 'create') &&
+    item &&
+    item?.status === 'published'
+  ) {
     const { title, ...res } = await context.query[listKey].findOne({
       where: { id: item.id.toString() },
       query,
