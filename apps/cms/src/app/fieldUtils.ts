@@ -342,22 +342,24 @@ export function services(listKey: string) {
   });
 }
 
+export type BasePageOptions = {
+  customTextOpts?: CustomTextOpts<BaseListTypeInfo>;
+  heroImageConfig?: BlueHarvestImageConfig<BaseListTypeInfo>;
+  titleAndDescriptionOpts?: titleAndDescriptionOpts;
+  primaryAction?: boolean;
+  secondaryActions?: boolean;
+  primaryContact?: boolean;
+  address?: boolean;
+  hours?: boolean;
+  documents?: boolean;
+  actions?: boolean;
+  noSlug?: boolean;
+  noLiveUrl?: boolean;
+};
+
 export function basePage(
   listNamePlural: string,
-  opts?: {
-    customTextOpts?: CustomTextOpts<BaseListTypeInfo>;
-    heroImageConfig?: BlueHarvestImageConfig<BaseListTypeInfo>;
-    titleAndDescriptionOpts?: titleAndDescriptionOpts;
-    primaryAction?: boolean;
-    secondaryActions?: boolean;
-    primaryContact?: boolean;
-    address?: boolean;
-    hours?: boolean;
-    documents?: boolean;
-    actions?: boolean;
-    noSlug?: boolean;
-    noLiveUrl?: boolean;
-  },
+  opts?: BasePageOptions,
 ): BaseFields<any> {
   return {
     heroImage: blueHarvestImage(opts?.heroImageConfig),
