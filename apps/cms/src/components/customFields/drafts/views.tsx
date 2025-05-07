@@ -72,7 +72,7 @@ export function Field({
     const draftInput = mapDataFields(
       original,
       {
-        title: `${title} --- ${new Date().toISOString()}`,
+        title: `${title} --- ${new Date().toLocaleString()}`,
         original: { connect: { id: original.id } },
       },
       'create',

@@ -120,72 +120,85 @@ export function embed(
   });
 }
 
-export const publishable: BaseFields<any> = {
-  ...group({
-    label: 'Publishing',
+export function publishable(opts?: {
+  isDraft?: boolean;
+  isVersion?: boolean;
+}): BaseFields<any> {
+  return {
+    ...group({
+      label: 'Publishing',
 
-    fields: {
-      publishAt: timestamp({
-        db: {
-          isNullable: true,
-        },
-        ui: {
-          views: './src/components/customFields/datetime/views.tsx',
-        },
-      }),
-      unpublishAt: timestamp({
-        db: {
-          isNullable: true,
-        },
-        ui: {
-          views: './src/components/customFields/datetime/views.tsx',
-        },
-        hooks: {
-          validate: ({ resolvedData, item, addValidationError }) => {
-            const publishAt =
-              resolvedData?.['publishAt'] || item?.['publishAt'];
-            const unpublishAt = resolvedData?.['unpublishAt'];
+      fields: {
+        publishAt: timestamp({
+          db: {
+            isNullable: true,
+          },
+          ui: {
+            ...(opts?.isDraft && {
+              views: './src/components/customFields/datetime/views.tsx',
+            }),
 
-            if (!publishAt && unpublishAt) {
-              addValidationError(
-                'You have set an Unpublish date but no Publish date. Either remove the Unpublish date or add a Publish date.',
-              );
-            }
+            ...(!opts?.isDraft && {
+              itemView: {
+                fieldMode: opts?.isDraft ? 'edit' : 'read',
+              },
+            }),
+          },
+        }),
+        unpublishAt: timestamp({
+          db: {
+            isNullable: true,
+          },
+          ui: {
+            views: './src/components/customFields/datetime/views.tsx',
+          },
+          hooks: {
+            validate: ({ resolvedData, item, addValidationError }) => {
+              const publishAt =
+                resolvedData?.['publishAt'] || item?.['publishAt'];
+              const unpublishAt = resolvedData?.['unpublishAt'];
 
-            if (publishAt && unpublishAt) {
-              const pub = new Date(publishAt);
-              const unPub = new Date(unpublishAt);
-              if (unPub <= pub) {
+              if (!publishAt && unpublishAt) {
                 addValidationError(
-                  'Invalid unpublish date. Please select an unpublish date that is after the publish date.',
+                  'You have set an Unpublish date but no Publish date. Either remove the Unpublish date or add a Publish date.',
                 );
               }
-            }
+
+              if (publishAt && unpublishAt) {
+                const pub = new Date(publishAt);
+                const unPub = new Date(unpublishAt);
+                if (unPub <= pub) {
+                  addValidationError(
+                    'Invalid unpublish date. Please select an unpublish date that is after the publish date.',
+                  );
+                }
+              }
+            },
           },
-        },
-      }),
-      reviewDate: timestamp({
-        db: {
-          isNullable: true,
-        },
-        ui: {
-          createView: { fieldMode: 'hidden' },
-          views: './src/components/customFields/datetime/views.tsx',
-        },
-        hooks: {
-          resolveInput: ({ operation, resolvedData }) => {
-            if (operation === 'create' && !resolvedData?.reviewDate) {
-              const reviewDate = new Date();
-              reviewDate.setMonth(reviewDate.getMonth() + 6);
-              return reviewDate;
-            }
-            return resolvedData.reviewDate;
+        }),
+        reviewDate: timestamp({
+          db: {
+            isNullable: true,
           },
-        },
-      }),
-    },
-  }),
-};
+          ui: {
+            createView: { fieldMode: 'hidden' },
+            views: './src/components/customFields/datetime/views.tsx',
+          },
+          hooks: {
+            resolveInput: ({ operation, resolvedData }) => {
+              if (operation === 'create' && !resolvedData?.reviewDate) {
+                const reviewDate = new Date();
+                reviewDate.setMonth(reviewDate.getMonth() + 6);
+                return reviewDate;
+              }
+              return resolvedData.reviewDate;
+            },
+          },
+        }),
+      },
+    }),
+  };
+}
 
 type titleAndDescriptionOpts = {
   title?: {
@@ -355,6 +368,8 @@ export type BasePageOptions = {
   actions?: boolean;
   noSlug?: boolean;
   noLiveUrl?: boolean;
+  isDraft?: boolean;
+  isVersion?: boolean;
 };
 
 export function basePage(
@@ -364,7 +379,7 @@ export function basePage(
   return {
     heroImage: blueHarvestImage(opts?.heroImageConfig),
     ...titleAndDescription(opts?.titleAndDescriptionOpts),
-    ...publishable,
+    ...publishable({ isDraft: opts?.isDraft, isVersion: opts?.isVersion }),
     liveUrl: liveUrl(listNamePlural),
     ...(!opts?.noSlug && { slug }),
     owner,
