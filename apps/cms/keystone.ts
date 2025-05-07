@@ -1,4 +1,5 @@
-// Keystone config docs: https://keystonejs.com/docs/apis/config
+// Keystone config docs: https://keystonejs.com/docs/apis/config\
+import './src/queues/redis';
 import { config } from '@keystone-6/core';
 import { lists } from './src/app';
 import { TypeInfo } from '.keystone/types';
