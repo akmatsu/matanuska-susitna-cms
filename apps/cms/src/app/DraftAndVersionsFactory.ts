@@ -44,6 +44,15 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
     noSlug: true,
   };
 
+  const defaultDraftOpts: BasePageOptions = {
+    ...defaultDraftAndVersionOpts,
+    isDraft: true,
+  };
+  const defaultVersionOpts: BasePageOptions = {
+    ...defaultDraftAndVersionOpts,
+    isVersion: true,
+  };
+
   return {
     Main: list({
       access: {
@@ -174,7 +183,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         }),
         ...coreFields(
           `${listKey}Versions`,
-          deepMerge(defaultDraftAndVersionOpts, opts.versionBasePageOptions),
+          deepMerge(defaultVersionOpts, opts.versionBasePageOptions),
         ),
         isLive: relationship({
           ref: `${listKey}.currentVersion`,
@@ -207,7 +216,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         }),
         ...coreFields(
           `${listKey}Drafts`,
-          deepMerge(defaultDraftAndVersionOpts, opts.draftBasePageOptions),
+          deepMerge(defaultDraftOpts, opts.draftBasePageOptions),
         ),
         publish: publishDraft({
           ui: {
@@ -218,14 +227,48 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
       },
       hooks: {
         async afterOperation(args) {
-          if (args.operation === 'update' && args.item.publishAt) {
-            await publishQueue.add('publish', {
-              itemId: args.item.id.toString(),
-              listKey: listKey,
-              originalId: args.item.originalId,
-              query: publishQuery,
-              operation: 'publish',
-            });
+          if (args.operation === 'update') {
+            // If a new publishAt date is set, schedule a publish job
+            if (
+              args.item.publishAt &&
+              args.item.publishAt !== args.originalItem.publishAt
+            ) {
+              // Determine the delay until the publishAt date
+              const publishAtDate = new Date(args.item.publishAt);
+              const now = Date.now();
+              let delay = publishAtDate.getTime() - now;
+              if (delay < 0) delay = 0;
+
+              // Find and remove any existing publish jobs
+              const jobId = `publish:${listKey}Draft:${args.item.id.toString()}`;
+              const existingJob = await publishQueue.getJob(jobId);
+              if (existingJob) await existingJob.remove();
+
+              // Schedule a new publish job
+              await publishQueue.add(
+                'publish',
+                {
+                  itemId: args.item.id.toString(),
+                  listKey: listKey,
+                  originalId: args.item.originalId,
+                  query: publishQuery,
+                  operation: 'publish',
+                },
+                {
+                  jobId,
+                  delay,
+                  removeOnComplete: true,
+                  attempts: 3,
+                },
+              );
+            }
+
+            // If publishAt is removed, remove any existing publish job
+            if (!args.item.publishAt && args.originalItem.publishAt) {
+              const jobId = `publish:${listKey}Draft:${args.item.id.toString()}`;
+              const existingJob = await publishQueue.getJob(jobId);
+              if (existingJob) await existingJob.remove();
+            }
           }
         },
       },
@@ -265,7 +308,7 @@ async function createVersion(
 
     const versionData = {
       ...baseData,
-      title: `${title} --- ${now.toISOString()}`,
+      title: `${title} --- ${now.toLocaleString()}`,
       original: { connect: { id: item.id.toString() } },
       isLive: { connect: { id: item.id.toString() } },
     };

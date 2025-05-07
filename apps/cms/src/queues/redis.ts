@@ -14,6 +14,9 @@ export const publishQueue = new Queue('publish', {
 export const publishQueueEvents = new QueueEvents('publish', {
   connection: REDIS_CONNECTION,
 });
+publishQueueEvents.on('added', ({ jobId }) => {
+  console.log(`🔔 Job ${jobId} has been added to the queue`);
+});
 publishQueueEvents.on('completed', ({ jobId }) => {
   console.log(`✅ Job ${jobId} has completed`);
 });

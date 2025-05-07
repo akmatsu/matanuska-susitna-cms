@@ -30,7 +30,7 @@ export const Highlight: ListConfig<any> = list({
       },
       isIndexed: 'unique',
     }),
-    ...publishable,
+    ...publishable(),
 
     image: blueHarvestImage({
       notBanner: true,
