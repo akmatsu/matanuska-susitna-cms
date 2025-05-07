@@ -1,0 +1,73 @@
+import 'dotenv/config';
+import * as PrismaModule from '.prisma/client';
+import config from '../../../keystone';
+import { Worker, Job } from 'bullmq';
+import { getContext } from '@keystone-6/core/context';
+import { REDIS_CONNECTION } from '../redis';
+import { mapDataFields } from '../../utils/draftUtils';
+
+export const publishWorker = async () => {
+  const keystoneContext = getContext(config, PrismaModule);
+
+  return new Worker(
+    'publish',
+    async (job: Job) => {
+      try {
+        const { originalId, itemId, operation, listKey, query } = job.data as {
+          itemId: string;
+          originalId: string;
+          operation: 'publish' | 'unpublish';
+          query: string;
+          listKey: keyof typeof keystoneContext.query;
+        };
+
+        const sudoCtx = keystoneContext.sudo();
+
+        console.log(`🔔 Processing ${operation} for ${itemId}...`);
+
+        const { original, title, ...draft } = await sudoCtx?.query[
+          `${listKey}Draft` as typeof listKey
+        ].findOne({
+          where: {
+            id: itemId,
+          },
+          query,
+        });
+
+        sudoCtx?.query[listKey].updateOne({
+          where: {
+            id: originalId,
+          },
+
+          data: mapDataFields(
+            draft,
+            {
+              title: title.split(' ---')[0],
+              status: 'published',
+              publishAt: new Date().toISOString(),
+            },
+            'update',
+          ),
+        });
+
+        sudoCtx?.query[`${listKey}Draft` as typeof listKey].deleteOne({
+          where: {
+            id: itemId,
+          },
+        });
+      } catch (error) {
+        console.error(`Error processing job ${job.id}:`, error);
+      }
+    },
+    {
+      connection: REDIS_CONNECTION,
+      // you can tune concurrency, lockDuration, etc. here
+      concurrency: 5,
+    },
+  );
+};
+
+if (require.main === module) {
+  publishWorker();
+  console.log('Worker started');
+}

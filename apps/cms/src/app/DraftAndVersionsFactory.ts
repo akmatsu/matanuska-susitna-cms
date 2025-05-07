@@ -11,7 +11,8 @@ import { mapDataFields } from '../utils/draftUtils';
 import { publishDraft } from '../components/customFields/publishDraft';
 import { BasePageOptions } from './fieldUtils';
 import { plural } from 'pluralize';
-import { deepMerge } from '../utils';
+import { deepMerge, lowercaseFirstLetter } from '../utils';
+import { publishQueue } from '../queues/redis';
 
 interface Options {
   versionLimit?: number;
@@ -103,44 +104,52 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         async beforeOperation({ operation, item, context }) {
           const it: BaseItem | undefined = item as BaseItem | undefined;
           if (operation === 'delete' && it?.id) {
+            const sudoCtx = context.sudo();
             const id = it.id.toString();
 
-            const versions = await context.db[listKey + 'Version'].findMany({
+            const versions = await sudoCtx.db[listKey + 'Version'].findMany({
               where: {
                 original: { id: { equals: id } },
               },
             });
 
-            const drafts = await context.db[listKey + 'Draft'].findMany({
+            const drafts = await sudoCtx.db[listKey + 'Draft'].findMany({
               where: {
                 original: { id: { equals: id } },
               },
             });
 
             // Delete all versions and drafts
-            await context.db[listKey + 'Version'].deleteMany({
+            await sudoCtx.db[listKey + 'Version'].deleteMany({
               where: versions.map((v) => ({ id: v.id.toString() })),
             });
-            await context.db[listKey + 'Draft'].deleteMany({
+            await sudoCtx.db[listKey + 'Draft'].deleteMany({
               where: drafts.map((v) => ({ id: v.id.toString() })),
             });
           }
         },
 
         async afterOperation(args) {
-          await createVersion(
-            listKey,
-            query,
-            versionAgeDays,
-            versionLimit,
-            args,
-          );
+          try {
+            await createVersion(
+              listKey,
+              query,
+              versionAgeDays,
+              versionLimit,
+              args,
+            );
 
-          const userHook = opts.mainHooks?.afterOperation;
-          if (typeof userHook === 'function') {
-            await userHook(args);
-          } else if (typeof userHook === 'object' && userHook[args.operation]) {
-            await userHook[args.operation]!(args as any);
+            const userHook = opts.mainHooks?.afterOperation;
+            if (typeof userHook === 'function') {
+              await userHook(args);
+            } else if (
+              typeof userHook === 'object' &&
+              userHook[args.operation]
+            ) {
+              await userHook[args.operation]!(args as any);
+            }
+          } catch (error) {
+            console.error('Error in afterOperation hook:', error);
           }
         },
       },
@@ -207,6 +216,19 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           },
         }),
       },
+      hooks: {
+        async afterOperation(args) {
+          if (args.operation === 'update' && args.item.publishAt) {
+            await publishQueue.add('publish', {
+              itemId: args.item.id.toString(),
+              listKey: listKey,
+              originalId: args.item.originalId,
+              query: publishQuery,
+              operation: 'publish',
+            });
+          }
+        },
+      },
     }),
   };
 }
@@ -231,28 +253,33 @@ async function createVersion(
     item &&
     item?.status === 'published'
   ) {
-    const { title, ...res } = await context.query[listKey].findOne({
+    const sudoCtx = context.sudo();
+    const { title, ...rest } = await sudoCtx.query[listKey].findOne({
       where: { id: item.id.toString() },
       query,
     });
 
     const now = new Date();
 
+    const baseData = mapDataFields(rest, {}, 'create');
+
+    const versionData = {
+      ...baseData,
+      title: `${title} --- ${now.toISOString()}`,
+      original: { connect: { id: item.id.toString() } },
+      isLive: { connect: { id: item.id.toString() } },
+    };
+
     // Create a new version
-    await context.db[listKey + 'Version'].createOne({
-      data: mapDataFields(
-        res,
-        {
-          title: `${title} --- ${now.toISOString()}`,
-          original: { connect: { id: item.id.toString() } },
-          isLive: { connect: { id: item.id.toString() } },
-        },
-        'create',
-      ),
+    const newVersion = await sudoCtx.prisma[
+      lowercaseFirstLetter(listKey) + 'Version'
+    ].create({
+      data: versionData,
     });
+    console.log(`✔ Created new ${listKey}Version with id ${newVersion.id}`);
 
     // Clean up old versions
-    const count = await context.db[listKey + 'Version'].count({
+    const count = await sudoCtx.query[listKey + 'Version'].count({
       where: {
         original: { id: { equals: item.id.toString() } },
       },
@@ -264,14 +291,15 @@ async function createVersion(
         now.getTime() - versionAgeDays * 24 * 60 * 60 * 1000,
       );
 
-      const oldVersions = await context.db[listKey + 'Version'].findMany({
+      const oldVersions = await sudoCtx.query[listKey + 'Version'].findMany({
         where: {
           original: { id: { equals: item.id.toString() } },
           createdAt: { lte: cutoff },
         },
+        query: 'id',
       });
 
-      await context.db[listKey + 'Version'].deleteMany({
+      await sudoCtx.query[listKey + 'Version'].deleteMany({
         where: oldVersions.map((v) => ({ id: v.id.toString() })),
       });
     }
