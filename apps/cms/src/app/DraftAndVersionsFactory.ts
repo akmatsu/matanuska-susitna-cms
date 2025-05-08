@@ -331,7 +331,7 @@ async function createVersion(
     });
 
     const now = new Date();
-
+    console.log(rest);
     const baseData = mapDataFields(rest, {}, 'create');
 
     const versionData = {

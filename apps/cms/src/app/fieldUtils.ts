@@ -381,7 +381,7 @@ export function basePage(
     ...titleAndDescription(opts?.titleAndDescriptionOpts),
     ...publishable({ isDraft: opts?.isDraft, isVersion: opts?.isVersion }),
     liveUrl: liveUrl(listNamePlural),
-    ...(!opts?.noSlug && { slug }),
+    ...(!opts?.noSlug && !opts?.isVersion && !opts?.isDraft && { slug }),
     owner,
     body: customText(opts?.customTextOpts),
     tags: tags(listNamePlural),
