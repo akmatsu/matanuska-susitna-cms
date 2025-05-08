@@ -21,7 +21,7 @@ export const {
   'OrgUnit',
   (listNamePlural, opts) => {
     return {
-      ...basePage(listNamePlural, opts),
+      ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
       showPage: checkbox({
         defaultValue: true,
         ui: { itemView: { fieldPosition: 'sidebar' } },
@@ -42,7 +42,7 @@ export const {
     };
   },
   {
-    query: `${basePage} services {id} parent {id} children {id} showPage`,
+    query: `${basePage} services {id} parent {id} children {id} showPage actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('OrgUnit'),

@@ -16,7 +16,7 @@ export const {
   'Community',
   (listNamePlural, opts) => {
     return {
-      ...basePage(listNamePlural, opts),
+      ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
       services: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion
@@ -37,7 +37,7 @@ export const {
   },
   {
     query:
-      'id title description body tags {id} owner {id} userGroups {id} contacts {id} services {id} ',
+      'id title description body tags {id} owner {id} userGroups {id} contacts {id} services {id} actions {id} documents {id}',
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),
