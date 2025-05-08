@@ -18,7 +18,7 @@ export const {
   'AssemblyDistrict',
   (listNamePlural, opts) => {
     return {
-      ...basePage(listNamePlural, opts),
+      ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
       ...group({
         label: 'Assembly Member Information',
         fields: {
@@ -124,7 +124,7 @@ export const {
       item: generalItemAccess('AssemblyDistrict'),
     },
     query:
-      'id title description body tags {id} owner {id} photo {id} contacts {id} bio memberName address email phone fax termStart termEnd __typename',
+      'id title description body tags {id} owner {id} photo {id} contacts {id} bio memberName address email phone fax termStart termEnd __typename actions {id} documents {id}',
     mainHooks: {
       async beforeOperation(args) {
         await typesenseDelete(args);

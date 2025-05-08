@@ -9,8 +9,6 @@ import {
 import { relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 
-const listPlural = 'parks';
-
 export const {
   Main: Park,
   Version: ParkVersion,
@@ -19,12 +17,15 @@ export const {
   'Park',
   (listNamePlural, opts) => {
     return {
-      ...basePage(listNamePlural, { ...opts, address: true, hours: true }),
+      ...basePage(listNamePlural, {
+        ...opts,
+        address: true,
+        hours: true,
+        actions: true,
+        documents: true,
+      }),
       services: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? `Service.${listNamePlural}`
-            : 'Service',
+        ref: !opts?.isDraft && !opts?.isVersion ? `Service.parks` : 'Service',
         many: true,
       }),
       trails: relationship({
@@ -38,7 +39,7 @@ export const {
     };
   },
   {
-    query: `${basePage} services {id} trails {id} facilities {id} address {id} hours {id}`,
+    query: `${basePage} services {id} trails {id} facilities {id} address {id} hours {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Park'),

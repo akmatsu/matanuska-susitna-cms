@@ -12,13 +12,13 @@ import { HomePage } from './HomePage';
 import { Image } from './Image';
 import { InternalLink } from './InternalLink';
 import { Location } from './Location';
-import { OrgUnit } from './OrgUnit';
+import * as OrgUnitModels from './OrgUnit';
 import { OperatingHour } from './OperatingHour';
-import { Park } from './Park';
+import * as ParkModels from './Park';
 import * as PublicNoticeModels from './PublicNotice';
 import * as ServiceModels from './Service';
 import { Tag } from './Tag';
-import { Trail } from './Trail';
+import * as TrailModels from './Trail';
 import { Url } from './Url';
 import { User } from './User';
 import { UserGroup } from './UserGroup';
@@ -38,13 +38,13 @@ export const lists = {
   Image,
   InternalLink,
   Location,
-  OrgUnit,
+  ...OrgUnitModels,
   OperatingHour,
-  Park,
+  ...ParkModels,
   ...PublicNoticeModels,
   ...ServiceModels,
   Tag,
-  Trail,
+  ...TrailModels,
   Url,
   User,
   UserGroup,

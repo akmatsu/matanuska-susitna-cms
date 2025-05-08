@@ -15,7 +15,13 @@ export const {
   'Service',
   (listNamePlural, opts) => {
     return {
-      ...basePage(listNamePlural, opts),
+      ...basePage(listNamePlural, {
+        ...opts,
+        primaryAction: true,
+        primaryContact: true,
+        secondaryActions: true,
+        documents: true,
+      }),
       communities: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion
@@ -99,7 +105,7 @@ export const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `id heroImage title description body tags {id} owner {id} orgUnits {id} communities {id} contacts {id} userGroups {id} trails {id} parks {id} facilities {id} editorNotes __typename`,
+    query: `id heroImage title description body tags {id} owner {id} orgUnits {id} communities {id} contacts {id} userGroups {id} trails {id} parks {id} facilities {id} editorNotes __typename primaryAction {id} secondaryActions {id} primaryContact {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Service'),

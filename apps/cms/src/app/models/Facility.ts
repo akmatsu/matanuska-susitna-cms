@@ -21,6 +21,8 @@ export const {
         ...opts,
         address: true,
         hours: true,
+        actions: true,
+        documents: true,
       }),
       services: relationship({
         ref:
@@ -30,13 +32,13 @@ export const {
         many: true,
       }),
       park: relationship({
-        ref: 'Park.facilities',
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Park.facilities' : 'Park',
         many: false,
       }),
     };
   },
   {
-    query: `${basePageQuery} services {id} park {id} address {id} hours {id}`,
+    query: `${basePageQuery} services {id} park {id} address {id} hours {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Facility'),

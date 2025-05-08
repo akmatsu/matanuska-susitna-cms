@@ -9,23 +9,6 @@ import {
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 
-const listPlural = 'trails';
-
-// export function trailToSearchableObj(item: any) {
-//   return {
-//     id: item.id,
-//     title: item.title,
-//     description: item.description,
-//     body: item.body,
-//     slug: item.slug,
-//     published_at: item.publishAt
-//       ? Math.floor(new Date(item.publishAt).getTime() / 1000)
-//       : undefined,
-//     tags: item.tags.map((tag: { name: string }) => tag.name || ''),
-//     type: 'trail',
-//   };
-// }
-
 export const {
   Main: Trail,
   Version: TrailVersion,
@@ -37,6 +20,8 @@ export const {
       ...basePage(listNamePlural, {
         ...opts,
         address: true,
+        actions: true,
+        documents: true,
       }),
       open: checkbox({ defaultValue: false }),
       ...group({
@@ -71,10 +56,7 @@ export const {
       length: text(),
       elevationChange: text(),
       services: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? `Service.${listNamePlural}`
-            : 'Service',
+        ref: !opts?.isDraft && !opts?.isVersion ? `Service.trails` : 'Service',
         many: true,
       }),
       park: relationship({
@@ -84,7 +66,7 @@ export const {
     };
   },
   {
-    query: `${basePage} services {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange`,
+    query: `${basePage} services {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Trail'),
