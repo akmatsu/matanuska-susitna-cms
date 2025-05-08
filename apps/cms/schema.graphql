@@ -436,7 +436,7 @@ type Community {
   createdAt: DateTime
   updatedAt: DateTime
   mapId: String
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
@@ -865,7 +865,7 @@ type Facility {
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
 }
@@ -1578,7 +1578,7 @@ type Park {
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
@@ -1744,7 +1744,7 @@ type PublicNotice {
   endDate: DateTime
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
@@ -1928,10 +1928,6 @@ type Service {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  primaryAction: ExternalLink
-  secondaryActions(where: ExternalLinkWhereInput! = {}, orderBy: [ExternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExternalLinkWhereUniqueInput): [ExternalLink!]
-  secondaryActionsCount(where: ExternalLinkWhereInput! = {}): Int
-  primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
@@ -1947,12 +1943,20 @@ type Service {
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   editorNotes: String
+  status: String
+  drafts(where: ServiceDraftWhereInput! = {}, orderBy: [ServiceDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceDraftWhereUniqueInput): [ServiceDraft!]
+  draftsCount(where: ServiceDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: ServiceVersionWhereInput! = {}, orderBy: [ServiceVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceVersionWhereUniqueInput): [ServiceVersion!]
+  versionsCount(where: ServiceVersionWhereInput! = {}): Int
+  currentVersion: ServiceVersion
 }
 
 input ServiceWhereUniqueInput {
   id: ID
   title: String
   slug: String
+  currentVersion: ServiceVersionWhereUniqueInput
 }
 
 input ServiceWhereInput {
@@ -1970,9 +1974,6 @@ input ServiceWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  primaryAction: ExternalLinkWhereInput
-  secondaryActions: ExternalLinkManyRelationFilter
-  primaryContact: ContactWhereInput
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -1982,12 +1983,22 @@ input ServiceWhereInput {
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
   editorNotes: StringFilter
+  status: StringFilter
+  drafts: ServiceDraftManyRelationFilter
+  versions: ServiceVersionManyRelationFilter
+  currentVersion: ServiceVersionWhereInput
 }
 
-input ExternalLinkManyRelationFilter {
-  every: ExternalLinkWhereInput
-  some: ExternalLinkWhereInput
-  none: ExternalLinkWhereInput
+input ServiceDraftManyRelationFilter {
+  every: ServiceDraftWhereInput
+  some: ServiceDraftWhereInput
+  none: ServiceDraftWhereInput
+}
+
+input ServiceVersionManyRelationFilter {
+  every: ServiceVersionWhereInput
+  some: ServiceVersionWhereInput
+  none: ServiceVersionWhereInput
 }
 
 input ServiceOrderByInput {
@@ -2003,6 +2014,8 @@ input ServiceOrderByInput {
   createdAt: OrderDirection
   updatedAt: OrderDirection
   editorNotes: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
 }
 
 input ServiceUpdateInput {
@@ -2017,9 +2030,6 @@ input ServiceUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  primaryAction: ExternalLinkRelateToOneForUpdateInput
-  secondaryActions: ExternalLinkRelateToManyForUpdateInput
-  primaryContact: ContactRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -2029,24 +2039,30 @@ input ServiceUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   editorNotes: String
+  status: String
+  drafts: ServiceDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: ServiceVersionRelateToManyForUpdateInput
+  currentVersion: ServiceVersionRelateToOneForUpdateInput
 }
 
-input ExternalLinkRelateToOneForUpdateInput {
-  create: ExternalLinkCreateInput
-  connect: ExternalLinkWhereUniqueInput
-  disconnect: Boolean
+input ServiceDraftRelateToManyForUpdateInput {
+  disconnect: [ServiceDraftWhereUniqueInput!]
+  set: [ServiceDraftWhereUniqueInput!]
+  create: [ServiceDraftCreateInput!]
+  connect: [ServiceDraftWhereUniqueInput!]
 }
 
-input ExternalLinkRelateToManyForUpdateInput {
-  disconnect: [ExternalLinkWhereUniqueInput!]
-  set: [ExternalLinkWhereUniqueInput!]
-  create: [ExternalLinkCreateInput!]
-  connect: [ExternalLinkWhereUniqueInput!]
+input ServiceVersionRelateToManyForUpdateInput {
+  disconnect: [ServiceVersionWhereUniqueInput!]
+  set: [ServiceVersionWhereUniqueInput!]
+  create: [ServiceVersionCreateInput!]
+  connect: [ServiceVersionWhereUniqueInput!]
 }
 
-input ContactRelateToOneForUpdateInput {
-  create: ContactCreateInput
-  connect: ContactWhereUniqueInput
+input ServiceVersionRelateToOneForUpdateInput {
+  create: ServiceVersionCreateInput
+  connect: ServiceVersionWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -2067,9 +2083,6 @@ input ServiceCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  primaryAction: ExternalLinkRelateToOneForCreateInput
-  secondaryActions: ExternalLinkRelateToManyForCreateInput
-  primaryContact: ContactRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -2079,21 +2092,306 @@ input ServiceCreateInput {
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   editorNotes: String
+  status: String
+  drafts: ServiceDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: ServiceVersionRelateToManyForCreateInput
+  currentVersion: ServiceVersionRelateToOneForCreateInput
 }
 
-input ExternalLinkRelateToOneForCreateInput {
-  create: ExternalLinkCreateInput
-  connect: ExternalLinkWhereUniqueInput
+input ServiceDraftRelateToManyForCreateInput {
+  create: [ServiceDraftCreateInput!]
+  connect: [ServiceDraftWhereUniqueInput!]
 }
 
-input ExternalLinkRelateToManyForCreateInput {
-  create: [ExternalLinkCreateInput!]
-  connect: [ExternalLinkWhereUniqueInput!]
+input ServiceVersionRelateToManyForCreateInput {
+  create: [ServiceVersionCreateInput!]
+  connect: [ServiceVersionWhereUniqueInput!]
 }
 
-input ContactRelateToOneForCreateInput {
-  create: ContactCreateInput
-  connect: ContactWhereUniqueInput
+input ServiceVersionRelateToOneForCreateInput {
+  create: ServiceVersionCreateInput
+  connect: ServiceVersionWhereUniqueInput
+}
+
+type ServiceDraft {
+  id: ID!
+  original: Service
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  editorNotes: String
+  publish: String
+}
+
+input ServiceDraftWhereUniqueInput {
+  id: ID
+}
+
+input ServiceDraftWhereInput {
+  AND: [ServiceDraftWhereInput!]
+  OR: [ServiceDraftWhereInput!]
+  NOT: [ServiceDraftWhereInput!]
+  id: IDFilter
+  original: ServiceWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  trails: TrailManyRelationFilter
+  parks: ParkManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  editorNotes: StringFilter
+}
+
+input ServiceDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  editorNotes: OrderDirection
+  publish: OrderDirection
+}
+
+input ServiceDraftUpdateInput {
+  original: ServiceRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  editorNotes: String
+  publish: String
+}
+
+input ServiceRelateToOneForUpdateInput {
+  create: ServiceCreateInput
+  connect: ServiceWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ServiceDraftUpdateArgs {
+  where: ServiceDraftWhereUniqueInput!
+  data: ServiceDraftUpdateInput!
+}
+
+input ServiceDraftCreateInput {
+  original: ServiceRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  editorNotes: String
+  publish: String
+}
+
+input ServiceRelateToOneForCreateInput {
+  create: ServiceCreateInput
+  connect: ServiceWhereUniqueInput
+}
+
+type ServiceVersion {
+  id: ID!
+  original: Service
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  editorNotes: String
+  isLive: Service
+  republish: String
+}
+
+input ServiceVersionWhereUniqueInput {
+  id: ID
+  isLive: ServiceWhereUniqueInput
+}
+
+input ServiceVersionWhereInput {
+  AND: [ServiceVersionWhereInput!]
+  OR: [ServiceVersionWhereInput!]
+  NOT: [ServiceVersionWhereInput!]
+  id: IDFilter
+  original: ServiceWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  trails: TrailManyRelationFilter
+  parks: ParkManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  editorNotes: StringFilter
+  isLive: ServiceWhereInput
+}
+
+input ServiceVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  editorNotes: OrderDirection
+  republish: OrderDirection
+}
+
+input ServiceVersionUpdateInput {
+  original: ServiceRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  editorNotes: String
+  isLive: ServiceRelateToOneForUpdateInput
+  republish: String
+}
+
+input ServiceVersionUpdateArgs {
+  where: ServiceVersionWhereUniqueInput!
+  data: ServiceVersionUpdateInput!
+}
+
+input ServiceVersionCreateInput {
+  original: ServiceRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  editorNotes: String
+  isLive: ServiceRelateToOneForCreateInput
+  republish: String
 }
 
 type Tag {
@@ -2172,7 +2470,7 @@ type Trail {
   difficulty: String
   length: String
   elevationChange: String
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
 }
@@ -2586,6 +2884,7 @@ type TestModel {
   status: String
   drafts(where: TestModelDraftWhereInput! = {}, orderBy: [TestModelDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelDraftWhereUniqueInput): [TestModelDraft!]
   draftsCount(where: TestModelDraftWhereInput! = {}): Int
+  makeDrafts: String
   versions(where: TestModelVersionWhereInput! = {}, orderBy: [TestModelVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestModelVersionWhereUniqueInput): [TestModelVersion!]
   versionsCount(where: TestModelVersionWhereInput! = {}): Int
   currentVersion: TestModelVersion
@@ -2595,6 +2894,7 @@ input TestModelWhereUniqueInput {
   id: ID
   title: String
   slug: String
+  currentVersion: TestModelVersionWhereUniqueInput
 }
 
 input TestModelWhereInput {
@@ -2646,6 +2946,7 @@ input TestModelOrderByInput {
   createdAt: OrderDirection
   updatedAt: OrderDirection
   status: OrderDirection
+  makeDrafts: OrderDirection
 }
 
 input TestModelUpdateInput {
@@ -2665,6 +2966,7 @@ input TestModelUpdateInput {
   updatedAt: DateTime
   status: String
   drafts: TestModelDraftRelateToManyForUpdateInput
+  makeDrafts: String
   versions: TestModelVersionRelateToManyForUpdateInput
   currentVersion: TestModelVersionRelateToOneForUpdateInput
 }
@@ -2711,6 +3013,7 @@ input TestModelCreateInput {
   updatedAt: DateTime
   status: String
   drafts: TestModelDraftRelateToManyForCreateInput
+  makeDrafts: String
   versions: TestModelVersionRelateToManyForCreateInput
   currentVersion: TestModelVersionRelateToOneForCreateInput
 }
@@ -2869,6 +3172,7 @@ type TestModelVersion {
 
 input TestModelVersionWhereUniqueInput {
   id: ID
+  isLive: TestModelWhereUniqueInput
 }
 
 input TestModelVersionWhereInput {
@@ -3063,6 +3367,18 @@ type Mutation {
   updateServices(data: [ServiceUpdateArgs!]!): [Service]
   deleteService(where: ServiceWhereUniqueInput!): Service
   deleteServices(where: [ServiceWhereUniqueInput!]!): [Service]
+  createServiceDraft(data: ServiceDraftCreateInput!): ServiceDraft
+  createServiceDrafts(data: [ServiceDraftCreateInput!]!): [ServiceDraft]
+  updateServiceDraft(where: ServiceDraftWhereUniqueInput!, data: ServiceDraftUpdateInput!): ServiceDraft
+  updateServiceDrafts(data: [ServiceDraftUpdateArgs!]!): [ServiceDraft]
+  deleteServiceDraft(where: ServiceDraftWhereUniqueInput!): ServiceDraft
+  deleteServiceDrafts(where: [ServiceDraftWhereUniqueInput!]!): [ServiceDraft]
+  createServiceVersion(data: ServiceVersionCreateInput!): ServiceVersion
+  createServiceVersions(data: [ServiceVersionCreateInput!]!): [ServiceVersion]
+  updateServiceVersion(where: ServiceVersionWhereUniqueInput!, data: ServiceVersionUpdateInput!): ServiceVersion
+  updateServiceVersions(data: [ServiceVersionUpdateArgs!]!): [ServiceVersion]
+  deleteServiceVersion(where: ServiceVersionWhereUniqueInput!): ServiceVersion
+  deleteServiceVersions(where: [ServiceVersionWhereUniqueInput!]!): [ServiceVersion]
   createTag(data: TagCreateInput!): Tag
   createTags(data: [TagCreateInput!]!): [Tag]
   updateTag(where: TagWhereUniqueInput!, data: TagUpdateInput!): Tag
@@ -3167,8 +3483,14 @@ type Query {
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
   service(where: ServiceWhereUniqueInput!): Service
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  serviceDraft(where: ServiceDraftWhereUniqueInput!): ServiceDraft
+  serviceDrafts(where: ServiceDraftWhereInput! = {}, orderBy: [ServiceDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceDraftWhereUniqueInput): [ServiceDraft!]
+  serviceDraftsCount(where: ServiceDraftWhereInput! = {}): Int
+  serviceVersion(where: ServiceVersionWhereUniqueInput!): ServiceVersion
+  serviceVersions(where: ServiceVersionWhereInput! = {}, orderBy: [ServiceVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceVersionWhereUniqueInput): [ServiceVersion!]
+  serviceVersionsCount(where: ServiceVersionWhereInput! = {}): Int
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int

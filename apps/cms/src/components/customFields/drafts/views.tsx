@@ -15,36 +15,20 @@ import { useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { singular } from 'pluralize';
 import { mapDataFields } from '../../../utils/draftUtils';
+import { DraftFieldMeta } from '.';
+import { lowercaseFirstLetter } from '../../../utils';
 
-export function Field({
-  field,
-  value,
-  onChange,
-}: FieldProps<typeof controller>) {
+export function Field({ field, value }: FieldProps<typeof controller>) {
   const router = useRouter();
   const { id } = useParams();
-
+  const listKey = lowercaseFirstLetter(field.listName);
   const listName = singular(router.pathname.split('/')[1]) + '-drafts';
 
   const { data, loading, error } = useQuery(
     gql`
-      query TestModel($where: TestModelWhereUniqueInput!) {
-        testModel(where: $where) {
-          id
-          heroImage
-          title
-          description
-          body
-          tags {
-            id
-            name
-          }
-          userGroups {
-            id
-          }
-          contacts {
-            id
-          }
+      query ${field.listName} ($where: ${field.listName}WhereUniqueInput!) {
+        ${listKey}(where: $where) {
+          ${field.query}
         }
       }
     `,
@@ -58,8 +42,8 @@ export function Field({
   );
 
   const [createDraft, { loading: creating }] = useMutation(gql`
-    mutation CreateDraft($data: TestModelDraftCreateInput!) {
-      createTestModelDraft(data: $data) {
+    mutation Create${field.listName}Draft($data: ${field.listName}DraftCreateInput!) {
+      create${field.listName}Draft(data: $data) {
         id
       }
     }
@@ -67,8 +51,15 @@ export function Field({
 
   async function handleCreateDraft() {
     if (loading || creating || error) return;
-    const { title, ...original } = data.testModel;
-
+    const {
+      title,
+      owner,
+      slug,
+      publishAt,
+      unpublishAt,
+      reviewDate,
+      ...original
+    } = data[listKey];
     const draftInput = mapDataFields(
       original,
       {
@@ -77,14 +68,12 @@ export function Field({
       },
       'create',
     );
-
     const result = await createDraft({
       variables: {
         data: draftInput,
       },
     });
-
-    const draftId = result.data.createTestModelDraft.id;
+    const draftId = result.data[`create${field.listName}Draft`].id;
     router.push('/' + listName + `/${draftId}`);
   }
 
@@ -112,14 +101,20 @@ export const Cell: CellComponent = ({ item, field, linkTo }) => {
 };
 Cell.supportsLinkTo = true;
 
+export function CardValue() {
+  return <FieldContainer>Card</FieldContainer>;
+}
+
 export const controller = (
-  config: FieldControllerConfig<{}>,
-): FieldController<string[] | null, string> => {
+  config: FieldControllerConfig<DraftFieldMeta>,
+): FieldController<string[] | null, string> & DraftFieldMeta => {
   return {
+    query: config.fieldMeta.query,
+    listName: config.fieldMeta.listName,
     path: config.path,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path} { id title }`,
+    graphqlSelection: config.path,
     defaultValue: null,
     deserialize: (data) => {
       const drafts = data[config.path];

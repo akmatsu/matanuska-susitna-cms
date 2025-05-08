@@ -5,6 +5,7 @@ import {
   BaseItem,
   BaseListTypeInfo,
   KeystoneContextFromListTypeInfo,
+  ListAccessControl,
   ListHooks,
 } from '@keystone-6/core/types';
 import { mapDataFields } from '../utils/draftUtils';
@@ -13,6 +14,7 @@ import { BasePageOptions } from './fieldUtils';
 import { plural } from 'pluralize';
 import { deepMerge, lowercaseFirstLetter } from '../utils';
 import { publishQueue } from '../queues/redis';
+import { createDrafts } from '../components/customFields/drafts';
 
 interface Options {
   versionLimit?: number;
@@ -21,12 +23,19 @@ interface Options {
   mainBasePageOptions?: BasePageOptions;
   draftBasePageOptions?: BasePageOptions;
   versionBasePageOptions?: BasePageOptions;
+  mainAccess?: ListAccessControl<any>;
   mainHooks?: ListHooks<BaseListTypeInfo>;
+  mainGraphqlOptions?: ListConfig<any>['graphql'];
 }
+
+export type CoreFieldsFunction<TFields extends BaseFields<any>> = (
+  listNamePlural: string,
+  opts?: BasePageOptions,
+) => TFields;
 
 export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
   listKey: string,
-  coreFields: (listNamePlural: string, opts?: BasePageOptions) => TFields,
+  coreFields: CoreFieldsFunction<TFields>,
   opts: Options = {},
 ): { Main: ListConfig<any>; Version: ListConfig<any>; Draft: ListConfig<any> } {
   const { versionLimit = 10, versionAgeDays = 365, query = '' } = opts;
@@ -57,7 +66,9 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
     Main: list({
       access: {
         operation: generalOperationAccess,
+        ...(opts?.mainAccess && opts.mainAccess),
       },
+      graphql: {},
       fields: {
         ...coreFields(plural(listKey), opts.mainBasePageOptions),
         status: select({
@@ -77,9 +88,16 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         drafts: relationship({
           ref: `${listKey}Draft.original`,
           many: true,
-
           ui: {
-            views: './src/components/customFields/drafts/views',
+            hideCreate: true,
+            displayMode: 'count',
+          },
+        }),
+
+        makeDrafts: createDrafts({
+          ui: {
+            query,
+            listName: listKey,
           },
         }),
 
@@ -226,6 +244,16 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         }),
       },
       hooks: {
+        async beforeOperation({ operation, item }) {
+          if (operation === 'delete') {
+            const id = item.id.toString();
+
+            // Find and remove any existing publish jobs
+            const jobId = `publish:${listKey}Draft:${id}`;
+            const existingJob = await publishQueue.getJob(jobId);
+            if (existingJob) await existingJob.remove();
+          }
+        },
         async afterOperation(args) {
           if (args.operation === 'update') {
             // If a new publishAt date is set, schedule a publish job
