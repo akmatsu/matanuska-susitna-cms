@@ -1,7 +1,7 @@
 import { type Lists } from '.keystone/types';
 import { Alert } from './Alert';
-import { AssemblyDistrict } from './AssemblyDistrict';
-import { Community } from './Community';
+import * as AssemblyDistrictModels from './AssemblyDistrict';
+import * as CommunityModels from './Community';
 import { Contact } from './Contact';
 import { Document } from './Document';
 import { DocumentCollection } from './DocumentCollection';
@@ -26,8 +26,8 @@ import { TestModel, TestModelDraft, TestModelVersion } from './TestModel';
 
 export const lists = {
   Alert,
-  AssemblyDistrict,
-  Community,
+  ...AssemblyDistrictModels,
+  ...CommunityModels,
   Contact,
   Document,
   DocumentCollection,

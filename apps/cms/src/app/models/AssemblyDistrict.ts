@@ -1,4 +1,4 @@
-import { group, list, ListConfig } from '@keystone-6/core';
+import { group } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import {
   basePage,
@@ -8,123 +8,134 @@ import {
   typesenseUpsert,
 } from '../fieldUtils';
 import { relationship, text, timestamp } from '@keystone-6/core/fields';
+import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 
-export const AssemblyDistrict: ListConfig<any> = list({
-  access: {
-    operation: generalOperationAccess,
-    item: generalItemAccess('AssemblyDistrict'),
-  },
-  fields: {
-    ...basePage('assemblyDistricts'),
-    ...group({
-      label: 'Assembly Member Information',
-      fields: {
-        photo: relationship({
-          ref: 'Image',
-          ui: {
-            inlineConnect: true,
-            displayMode: 'cards',
-            cardFields: ['title', 'file'],
-            inlineCreate: {
-              fields: ['title', 'description', 'file', 'tags'],
+export const {
+  Main: AssemblyDistrict,
+  Version: AssemblyDistrictVersion,
+  Draft: AssemblyDistrictDraft,
+} = DraftAndVersionsFactory(
+  'AssemblyDistrict',
+  (listNamePlural, opts) => {
+    return {
+      ...basePage(listNamePlural, opts),
+      ...group({
+        label: 'Assembly Member Information',
+        fields: {
+          photo: relationship({
+            ref: 'Image',
+            ui: {
+              inlineConnect: true,
+              displayMode: 'cards',
+              cardFields: ['title', 'file'],
+              inlineCreate: {
+                fields: ['title', 'description', 'file', 'tags'],
+              },
+              inlineEdit: {
+                fields: ['title', 'description', 'file', 'tags'],
+              },
             },
-            inlineEdit: {
-              fields: ['title', 'description', 'file', 'tags'],
+          }),
+          memberName: text(),
+          bio: text({
+            ui: {
+              displayMode: 'textarea',
             },
-          },
-        }),
-        memberName: text(),
-        bio: text({
-          ui: {
-            displayMode: 'textarea',
-          },
-        }),
-        address: text(),
-        email: text({
-          validation: {
-            match: {
-              regex: emailRegex,
-              explanation: 'You must input a valid email address.',
+          }),
+          address: text(),
+          email: text({
+            validation: {
+              match: {
+                regex: emailRegex,
+                explanation: 'You must input a valid email address.',
+              },
+              isRequired: false,
             },
-            isRequired: false,
-          },
-          db: {
-            isNullable: true,
-          },
-        }),
-        phone: text({
-          validation: {
-            match: {
-              regex: phoneNumberRegex,
-              explanation:
-                'You must input a valid phone number. Example: 123-456-7890',
+            db: {
+              isNullable: true,
             },
-            isRequired: false,
-          },
-          db: {
-            isNullable: true,
-          },
-        }),
-        fax: text({
-          validation: {
-            match: {
-              regex: phoneNumberRegex,
-              explanation:
-                'You must input a valid phone number. Example: 123-456-7890',
+          }),
+          phone: text({
+            validation: {
+              match: {
+                regex: phoneNumberRegex,
+                explanation:
+                  'You must input a valid phone number. Example: 123-456-7890',
+              },
+              isRequired: false,
             },
-            isRequired: false,
-          },
-          db: {
-            isNullable: true,
-          },
-        }),
-        termStart: timestamp({
-          db: {
-            isNullable: true,
-          },
-        }),
-        termEnd: timestamp({
-          db: {
-            isNullable: true,
-          },
-          hooks: {
-            validate: ({ resolvedData, item, addValidationError }) => {
-              const termStart =
-                resolvedData?.['termStart'] || item?.['termStart'];
-              const termEnd = resolvedData?.['termEnd'];
+            db: {
+              isNullable: true,
+            },
+          }),
+          fax: text({
+            validation: {
+              match: {
+                regex: phoneNumberRegex,
+                explanation:
+                  'You must input a valid phone number. Example: 123-456-7890',
+              },
+              isRequired: false,
+            },
+            db: {
+              isNullable: true,
+            },
+          }),
+          termStart: timestamp({
+            db: {
+              isNullable: true,
+            },
+          }),
+          termEnd: timestamp({
+            db: {
+              isNullable: true,
+            },
+            hooks: {
+              validate: ({ resolvedData, item, addValidationError }) => {
+                const termStart =
+                  resolvedData?.['termStart'] || item?.['termStart'];
+                const termEnd = resolvedData?.['termEnd'];
 
-              if (!termStart && termEnd) {
-                addValidationError(
-                  'You have set an Unpublish date but no Publish date. Either remove the Unpublish date or add a Publish date.',
-                );
-              }
-
-              if (termStart && termEnd) {
-                const pub = new Date(termStart);
-                const unPub = new Date(termEnd);
-                if (unPub <= pub) {
+                if (!termStart && termEnd) {
                   addValidationError(
-                    'Invalid unpublish date. Please select an unpublish date that is after the publish date.',
+                    'You have set an Unpublish date but no Publish date. Either remove the Unpublish date or add a Publish date.',
                   );
                 }
-              }
-            },
-          },
-        }),
-      },
-    }),
-  },
-  hooks: {
-    async beforeOperation(args) {
-      await typesenseDelete(args);
-    },
 
-    async afterOperation(args) {
-      await typesenseUpsert(
-        'assemblyDistrict',
-        'id title description body slug liveUrl publishAt tags {name}',
-        args,
-      );
+                if (termStart && termEnd) {
+                  const pub = new Date(termStart);
+                  const unPub = new Date(termEnd);
+                  if (unPub <= pub) {
+                    addValidationError(
+                      'Invalid unpublish date. Please select an unpublish date that is after the publish date.',
+                    );
+                  }
+                }
+              },
+            },
+          }),
+        },
+      }),
+    };
+  },
+  {
+    mainAccess: {
+      operation: generalOperationAccess,
+      item: generalItemAccess('AssemblyDistrict'),
+    },
+    query:
+      'id title description body tags {id} owner {id} photo {id} contacts {id} bio memberName address email phone fax termStart termEnd __typename',
+    mainHooks: {
+      async beforeOperation(args) {
+        await typesenseDelete(args);
+      },
+      async afterOperation(args) {
+        await typesenseUpsert(
+          'assemblyDistrict',
+          'id title description body slug liveUrl publishAt tags {name}',
+          args,
+        );
+      },
     },
   },
-});
+);
