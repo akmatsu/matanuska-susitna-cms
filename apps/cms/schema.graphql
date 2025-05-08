@@ -203,12 +203,20 @@ type AssemblyDistrict {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  status: String
+  drafts(where: AssemblyDistrictDraftWhereInput! = {}, orderBy: [AssemblyDistrictDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictDraftWhereUniqueInput): [AssemblyDistrictDraft!]
+  draftsCount(where: AssemblyDistrictDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: AssemblyDistrictVersionWhereInput! = {}, orderBy: [AssemblyDistrictVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictVersionWhereUniqueInput): [AssemblyDistrictVersion!]
+  versionsCount(where: AssemblyDistrictVersionWhereInput! = {}): Int
+  currentVersion: AssemblyDistrictVersion
 }
 
 input AssemblyDistrictWhereUniqueInput {
   id: ID
   title: String
   slug: String
+  currentVersion: AssemblyDistrictVersionWhereUniqueInput
 }
 
 input AssemblyDistrictWhereInput {
@@ -238,6 +246,10 @@ input AssemblyDistrictWhereInput {
   fax: StringNullableFilter
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
+  status: StringFilter
+  drafts: AssemblyDistrictDraftManyRelationFilter
+  versions: AssemblyDistrictVersionManyRelationFilter
+  currentVersion: AssemblyDistrictVersionWhereInput
 }
 
 input TagManyRelationFilter {
@@ -273,6 +285,18 @@ input StringNullableFilter {
   not: StringNullableFilter
 }
 
+input AssemblyDistrictDraftManyRelationFilter {
+  every: AssemblyDistrictDraftWhereInput
+  some: AssemblyDistrictDraftWhereInput
+  none: AssemblyDistrictDraftWhereInput
+}
+
+input AssemblyDistrictVersionManyRelationFilter {
+  every: AssemblyDistrictVersionWhereInput
+  some: AssemblyDistrictVersionWhereInput
+  none: AssemblyDistrictVersionWhereInput
+}
+
 input AssemblyDistrictOrderByInput {
   id: OrderDirection
   heroImage: BlueHarvestImageOrderDirection
@@ -293,6 +317,8 @@ input AssemblyDistrictOrderByInput {
   fax: OrderDirection
   termStart: OrderDirection
   termEnd: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
 }
 
 enum BlueHarvestImageOrderDirection {
@@ -324,6 +350,11 @@ input AssemblyDistrictUpdateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  status: String
+  drafts: AssemblyDistrictDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: AssemblyDistrictVersionRelateToManyForUpdateInput
+  currentVersion: AssemblyDistrictVersionRelateToOneForUpdateInput
 }
 
 input UserRelateToOneForUpdateInput {
@@ -359,6 +390,26 @@ input ImageRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input AssemblyDistrictDraftRelateToManyForUpdateInput {
+  disconnect: [AssemblyDistrictDraftWhereUniqueInput!]
+  set: [AssemblyDistrictDraftWhereUniqueInput!]
+  create: [AssemblyDistrictDraftCreateInput!]
+  connect: [AssemblyDistrictDraftWhereUniqueInput!]
+}
+
+input AssemblyDistrictVersionRelateToManyForUpdateInput {
+  disconnect: [AssemblyDistrictVersionWhereUniqueInput!]
+  set: [AssemblyDistrictVersionWhereUniqueInput!]
+  create: [AssemblyDistrictVersionCreateInput!]
+  connect: [AssemblyDistrictVersionWhereUniqueInput!]
+}
+
+input AssemblyDistrictVersionRelateToOneForUpdateInput {
+  create: AssemblyDistrictVersionCreateInput
+  connect: AssemblyDistrictVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
 input AssemblyDistrictUpdateArgs {
   where: AssemblyDistrictWhereUniqueInput!
   data: AssemblyDistrictUpdateInput!
@@ -388,6 +439,11 @@ input AssemblyDistrictCreateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  status: String
+  drafts: AssemblyDistrictDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: AssemblyDistrictVersionRelateToManyForCreateInput
+  currentVersion: AssemblyDistrictVersionRelateToOneForCreateInput
 }
 
 input UserRelateToOneForCreateInput {
@@ -415,6 +471,329 @@ input ImageRelateToOneForCreateInput {
   connect: ImageWhereUniqueInput
 }
 
+input AssemblyDistrictDraftRelateToManyForCreateInput {
+  create: [AssemblyDistrictDraftCreateInput!]
+  connect: [AssemblyDistrictDraftWhereUniqueInput!]
+}
+
+input AssemblyDistrictVersionRelateToManyForCreateInput {
+  create: [AssemblyDistrictVersionCreateInput!]
+  connect: [AssemblyDistrictVersionWhereUniqueInput!]
+}
+
+input AssemblyDistrictVersionRelateToOneForCreateInput {
+  create: AssemblyDistrictVersionCreateInput
+  connect: AssemblyDistrictVersionWhereUniqueInput
+}
+
+type AssemblyDistrictDraft {
+  id: ID!
+  original: AssemblyDistrict
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  photo: Image
+  memberName: String
+  bio: String
+  address: String
+  email: String
+  phone: String
+  fax: String
+  termStart: DateTime
+  termEnd: DateTime
+  publish: String
+}
+
+input AssemblyDistrictDraftWhereUniqueInput {
+  id: ID
+}
+
+input AssemblyDistrictDraftWhereInput {
+  AND: [AssemblyDistrictDraftWhereInput!]
+  OR: [AssemblyDistrictDraftWhereInput!]
+  NOT: [AssemblyDistrictDraftWhereInput!]
+  id: IDFilter
+  original: AssemblyDistrictWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  photo: ImageWhereInput
+  memberName: StringFilter
+  bio: StringFilter
+  address: StringFilter
+  email: StringNullableFilter
+  phone: StringNullableFilter
+  fax: StringNullableFilter
+  termStart: DateTimeNullableFilter
+  termEnd: DateTimeNullableFilter
+}
+
+input AssemblyDistrictDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  memberName: OrderDirection
+  bio: OrderDirection
+  address: OrderDirection
+  email: OrderDirection
+  phone: OrderDirection
+  fax: OrderDirection
+  termStart: OrderDirection
+  termEnd: OrderDirection
+  publish: OrderDirection
+}
+
+input AssemblyDistrictDraftUpdateInput {
+  original: AssemblyDistrictRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  photo: ImageRelateToOneForUpdateInput
+  memberName: String
+  bio: String
+  address: String
+  email: String
+  phone: String
+  fax: String
+  termStart: DateTime
+  termEnd: DateTime
+  publish: String
+}
+
+input AssemblyDistrictRelateToOneForUpdateInput {
+  create: AssemblyDistrictCreateInput
+  connect: AssemblyDistrictWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AssemblyDistrictDraftUpdateArgs {
+  where: AssemblyDistrictDraftWhereUniqueInput!
+  data: AssemblyDistrictDraftUpdateInput!
+}
+
+input AssemblyDistrictDraftCreateInput {
+  original: AssemblyDistrictRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  photo: ImageRelateToOneForCreateInput
+  memberName: String
+  bio: String
+  address: String
+  email: String
+  phone: String
+  fax: String
+  termStart: DateTime
+  termEnd: DateTime
+  publish: String
+}
+
+input AssemblyDistrictRelateToOneForCreateInput {
+  create: AssemblyDistrictCreateInput
+  connect: AssemblyDistrictWhereUniqueInput
+}
+
+type AssemblyDistrictVersion {
+  id: ID!
+  original: AssemblyDistrict
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  photo: Image
+  memberName: String
+  bio: String
+  address: String
+  email: String
+  phone: String
+  fax: String
+  termStart: DateTime
+  termEnd: DateTime
+  isLive: AssemblyDistrict
+  republish: String
+}
+
+input AssemblyDistrictVersionWhereUniqueInput {
+  id: ID
+  isLive: AssemblyDistrictWhereUniqueInput
+}
+
+input AssemblyDistrictVersionWhereInput {
+  AND: [AssemblyDistrictVersionWhereInput!]
+  OR: [AssemblyDistrictVersionWhereInput!]
+  NOT: [AssemblyDistrictVersionWhereInput!]
+  id: IDFilter
+  original: AssemblyDistrictWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  photo: ImageWhereInput
+  memberName: StringFilter
+  bio: StringFilter
+  address: StringFilter
+  email: StringNullableFilter
+  phone: StringNullableFilter
+  fax: StringNullableFilter
+  termStart: DateTimeNullableFilter
+  termEnd: DateTimeNullableFilter
+  isLive: AssemblyDistrictWhereInput
+}
+
+input AssemblyDistrictVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  memberName: OrderDirection
+  bio: OrderDirection
+  address: OrderDirection
+  email: OrderDirection
+  phone: OrderDirection
+  fax: OrderDirection
+  termStart: OrderDirection
+  termEnd: OrderDirection
+  republish: OrderDirection
+}
+
+input AssemblyDistrictVersionUpdateInput {
+  original: AssemblyDistrictRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  photo: ImageRelateToOneForUpdateInput
+  memberName: String
+  bio: String
+  address: String
+  email: String
+  phone: String
+  fax: String
+  termStart: DateTime
+  termEnd: DateTime
+  isLive: AssemblyDistrictRelateToOneForUpdateInput
+  republish: String
+}
+
+input AssemblyDistrictVersionUpdateArgs {
+  where: AssemblyDistrictVersionWhereUniqueInput!
+  data: AssemblyDistrictVersionUpdateInput!
+}
+
+input AssemblyDistrictVersionCreateInput {
+  original: AssemblyDistrictRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  photo: ImageRelateToOneForCreateInput
+  memberName: String
+  bio: String
+  address: String
+  email: String
+  phone: String
+  fax: String
+  termStart: DateTime
+  termEnd: DateTime
+  isLive: AssemblyDistrictRelateToOneForCreateInput
+  republish: String
+}
+
 type Community {
   id: ID!
   heroImage: String
@@ -435,17 +814,24 @@ type Community {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  mapId: String
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  status: String
+  drafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
+  draftsCount(where: CommunityDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: CommunityVersionWhereInput! = {}, orderBy: [CommunityVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityVersionWhereUniqueInput): [CommunityVersion!]
+  versionsCount(where: CommunityVersionWhereInput! = {}): Int
+  currentVersion: CommunityVersion
 }
 
 input CommunityWhereUniqueInput {
   id: ID
   title: String
   slug: String
+  currentVersion: CommunityVersionWhereUniqueInput
 }
 
 input CommunityWhereInput {
@@ -466,9 +852,12 @@ input CommunityWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  mapId: StringFilter
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
+  status: StringFilter
+  drafts: CommunityDraftManyRelationFilter
+  versions: CommunityVersionManyRelationFilter
+  currentVersion: CommunityVersionWhereInput
 }
 
 input ServiceManyRelationFilter {
@@ -483,6 +872,18 @@ input AssemblyDistrictManyRelationFilter {
   none: AssemblyDistrictWhereInput
 }
 
+input CommunityDraftManyRelationFilter {
+  every: CommunityDraftWhereInput
+  some: CommunityDraftWhereInput
+  none: CommunityDraftWhereInput
+}
+
+input CommunityVersionManyRelationFilter {
+  every: CommunityVersionWhereInput
+  some: CommunityVersionWhereInput
+  none: CommunityVersionWhereInput
+}
+
 input CommunityOrderByInput {
   id: OrderDirection
   heroImage: BlueHarvestImageOrderDirection
@@ -495,7 +896,8 @@ input CommunityOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
-  mapId: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
 }
 
 input CommunityUpdateInput {
@@ -513,9 +915,13 @@ input CommunityUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  mapId: String
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
+  status: String
+  drafts: CommunityDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: CommunityVersionRelateToManyForUpdateInput
+  currentVersion: CommunityVersionRelateToOneForUpdateInput
 }
 
 input ServiceRelateToManyForUpdateInput {
@@ -530,6 +936,26 @@ input AssemblyDistrictRelateToManyForUpdateInput {
   set: [AssemblyDistrictWhereUniqueInput!]
   create: [AssemblyDistrictCreateInput!]
   connect: [AssemblyDistrictWhereUniqueInput!]
+}
+
+input CommunityDraftRelateToManyForUpdateInput {
+  disconnect: [CommunityDraftWhereUniqueInput!]
+  set: [CommunityDraftWhereUniqueInput!]
+  create: [CommunityDraftCreateInput!]
+  connect: [CommunityDraftWhereUniqueInput!]
+}
+
+input CommunityVersionRelateToManyForUpdateInput {
+  disconnect: [CommunityVersionWhereUniqueInput!]
+  set: [CommunityVersionWhereUniqueInput!]
+  create: [CommunityVersionCreateInput!]
+  connect: [CommunityVersionWhereUniqueInput!]
+}
+
+input CommunityVersionRelateToOneForUpdateInput {
+  create: CommunityVersionCreateInput
+  connect: CommunityVersionWhereUniqueInput
+  disconnect: Boolean
 }
 
 input CommunityUpdateArgs {
@@ -552,9 +978,13 @@ input CommunityCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  mapId: String
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
+  status: String
+  drafts: CommunityDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: CommunityVersionRelateToManyForCreateInput
+  currentVersion: CommunityVersionRelateToOneForCreateInput
 }
 
 input ServiceRelateToManyForCreateInput {
@@ -565,6 +995,261 @@ input ServiceRelateToManyForCreateInput {
 input AssemblyDistrictRelateToManyForCreateInput {
   create: [AssemblyDistrictCreateInput!]
   connect: [AssemblyDistrictWhereUniqueInput!]
+}
+
+input CommunityDraftRelateToManyForCreateInput {
+  create: [CommunityDraftCreateInput!]
+  connect: [CommunityDraftWhereUniqueInput!]
+}
+
+input CommunityVersionRelateToManyForCreateInput {
+  create: [CommunityVersionCreateInput!]
+  connect: [CommunityVersionWhereUniqueInput!]
+}
+
+input CommunityVersionRelateToOneForCreateInput {
+  create: CommunityVersionCreateInput
+  connect: CommunityVersionWhereUniqueInput
+}
+
+type CommunityDraft {
+  id: ID!
+  original: Community
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  publish: String
+}
+
+input CommunityDraftWhereUniqueInput {
+  id: ID
+}
+
+input CommunityDraftWhereInput {
+  AND: [CommunityDraftWhereInput!]
+  OR: [CommunityDraftWhereInput!]
+  NOT: [CommunityDraftWhereInput!]
+  id: IDFilter
+  original: CommunityWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  services: ServiceManyRelationFilter
+  districts: AssemblyDistrictManyRelationFilter
+}
+
+input CommunityDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  publish: OrderDirection
+}
+
+input CommunityDraftUpdateInput {
+  original: CommunityRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  services: ServiceRelateToManyForUpdateInput
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  publish: String
+}
+
+input CommunityRelateToOneForUpdateInput {
+  create: CommunityCreateInput
+  connect: CommunityWhereUniqueInput
+  disconnect: Boolean
+}
+
+input CommunityDraftUpdateArgs {
+  where: CommunityDraftWhereUniqueInput!
+  data: CommunityDraftUpdateInput!
+}
+
+input CommunityDraftCreateInput {
+  original: CommunityRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  services: ServiceRelateToManyForCreateInput
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  publish: String
+}
+
+input CommunityRelateToOneForCreateInput {
+  create: CommunityCreateInput
+  connect: CommunityWhereUniqueInput
+}
+
+type CommunityVersion {
+  id: ID!
+  original: Community
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  isLive: Community
+  republish: String
+}
+
+input CommunityVersionWhereUniqueInput {
+  id: ID
+  isLive: CommunityWhereUniqueInput
+}
+
+input CommunityVersionWhereInput {
+  AND: [CommunityVersionWhereInput!]
+  OR: [CommunityVersionWhereInput!]
+  NOT: [CommunityVersionWhereInput!]
+  id: IDFilter
+  original: CommunityWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  services: ServiceManyRelationFilter
+  districts: AssemblyDistrictManyRelationFilter
+  isLive: CommunityWhereInput
+}
+
+input CommunityVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  republish: OrderDirection
+}
+
+input CommunityVersionUpdateInput {
+  original: CommunityRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  services: ServiceRelateToManyForUpdateInput
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  isLive: CommunityRelateToOneForUpdateInput
+  republish: String
+}
+
+input CommunityVersionUpdateArgs {
+  where: CommunityVersionWhereUniqueInput!
+  data: CommunityVersionUpdateInput!
+}
+
+input CommunityVersionCreateInput {
+  original: CommunityRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  services: ServiceRelateToManyForCreateInput
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  isLive: CommunityRelateToOneForCreateInput
+  republish: String
 }
 
 type Contact {
@@ -1752,7 +2437,7 @@ type PublicNotice {
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
@@ -1932,7 +2617,7 @@ type Service {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
@@ -2134,7 +2819,7 @@ type ServiceDraft {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
@@ -2277,7 +2962,7 @@ type ServiceVersion {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
@@ -3271,12 +3956,36 @@ type Mutation {
   updateAssemblyDistricts(data: [AssemblyDistrictUpdateArgs!]!): [AssemblyDistrict]
   deleteAssemblyDistrict(where: AssemblyDistrictWhereUniqueInput!): AssemblyDistrict
   deleteAssemblyDistricts(where: [AssemblyDistrictWhereUniqueInput!]!): [AssemblyDistrict]
+  createAssemblyDistrictDraft(data: AssemblyDistrictDraftCreateInput!): AssemblyDistrictDraft
+  createAssemblyDistrictDrafts(data: [AssemblyDistrictDraftCreateInput!]!): [AssemblyDistrictDraft]
+  updateAssemblyDistrictDraft(where: AssemblyDistrictDraftWhereUniqueInput!, data: AssemblyDistrictDraftUpdateInput!): AssemblyDistrictDraft
+  updateAssemblyDistrictDrafts(data: [AssemblyDistrictDraftUpdateArgs!]!): [AssemblyDistrictDraft]
+  deleteAssemblyDistrictDraft(where: AssemblyDistrictDraftWhereUniqueInput!): AssemblyDistrictDraft
+  deleteAssemblyDistrictDrafts(where: [AssemblyDistrictDraftWhereUniqueInput!]!): [AssemblyDistrictDraft]
+  createAssemblyDistrictVersion(data: AssemblyDistrictVersionCreateInput!): AssemblyDistrictVersion
+  createAssemblyDistrictVersions(data: [AssemblyDistrictVersionCreateInput!]!): [AssemblyDistrictVersion]
+  updateAssemblyDistrictVersion(where: AssemblyDistrictVersionWhereUniqueInput!, data: AssemblyDistrictVersionUpdateInput!): AssemblyDistrictVersion
+  updateAssemblyDistrictVersions(data: [AssemblyDistrictVersionUpdateArgs!]!): [AssemblyDistrictVersion]
+  deleteAssemblyDistrictVersion(where: AssemblyDistrictVersionWhereUniqueInput!): AssemblyDistrictVersion
+  deleteAssemblyDistrictVersions(where: [AssemblyDistrictVersionWhereUniqueInput!]!): [AssemblyDistrictVersion]
   createCommunity(data: CommunityCreateInput!): Community
   createCommunities(data: [CommunityCreateInput!]!): [Community]
   updateCommunity(where: CommunityWhereUniqueInput!, data: CommunityUpdateInput!): Community
   updateCommunities(data: [CommunityUpdateArgs!]!): [Community]
   deleteCommunity(where: CommunityWhereUniqueInput!): Community
   deleteCommunities(where: [CommunityWhereUniqueInput!]!): [Community]
+  createCommunityDraft(data: CommunityDraftCreateInput!): CommunityDraft
+  createCommunityDrafts(data: [CommunityDraftCreateInput!]!): [CommunityDraft]
+  updateCommunityDraft(where: CommunityDraftWhereUniqueInput!, data: CommunityDraftUpdateInput!): CommunityDraft
+  updateCommunityDrafts(data: [CommunityDraftUpdateArgs!]!): [CommunityDraft]
+  deleteCommunityDraft(where: CommunityDraftWhereUniqueInput!): CommunityDraft
+  deleteCommunityDrafts(where: [CommunityDraftWhereUniqueInput!]!): [CommunityDraft]
+  createCommunityVersion(data: CommunityVersionCreateInput!): CommunityVersion
+  createCommunityVersions(data: [CommunityVersionCreateInput!]!): [CommunityVersion]
+  updateCommunityVersion(where: CommunityVersionWhereUniqueInput!, data: CommunityVersionUpdateInput!): CommunityVersion
+  updateCommunityVersions(data: [CommunityVersionUpdateArgs!]!): [CommunityVersion]
+  deleteCommunityVersion(where: CommunityVersionWhereUniqueInput!): CommunityVersion
+  deleteCommunityVersions(where: [CommunityVersionWhereUniqueInput!]!): [CommunityVersion]
   createContact(data: ContactCreateInput!): Contact
   createContacts(data: [ContactCreateInput!]!): [Contact]
   updateContact(where: ContactWhereUniqueInput!, data: ContactUpdateInput!): Contact
@@ -3437,9 +4146,21 @@ type Query {
   assemblyDistrict(where: AssemblyDistrictWhereUniqueInput!): AssemblyDistrict
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  assemblyDistrictDraft(where: AssemblyDistrictDraftWhereUniqueInput!): AssemblyDistrictDraft
+  assemblyDistrictDrafts(where: AssemblyDistrictDraftWhereInput! = {}, orderBy: [AssemblyDistrictDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictDraftWhereUniqueInput): [AssemblyDistrictDraft!]
+  assemblyDistrictDraftsCount(where: AssemblyDistrictDraftWhereInput! = {}): Int
+  assemblyDistrictVersion(where: AssemblyDistrictVersionWhereUniqueInput!): AssemblyDistrictVersion
+  assemblyDistrictVersions(where: AssemblyDistrictVersionWhereInput! = {}, orderBy: [AssemblyDistrictVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictVersionWhereUniqueInput): [AssemblyDistrictVersion!]
+  assemblyDistrictVersionsCount(where: AssemblyDistrictVersionWhereInput! = {}): Int
   community(where: CommunityWhereUniqueInput!): Community
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
+  communityDraft(where: CommunityDraftWhereUniqueInput!): CommunityDraft
+  communityDrafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
+  communityDraftsCount(where: CommunityDraftWhereInput! = {}): Int
+  communityVersion(where: CommunityVersionWhereUniqueInput!): CommunityVersion
+  communityVersions(where: CommunityVersionWhereInput! = {}, orderBy: [CommunityVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityVersionWhereUniqueInput): [CommunityVersion!]
+  communityVersionsCount(where: CommunityVersionWhereInput! = {}): Int
   contact(where: ContactWhereUniqueInput!): Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
