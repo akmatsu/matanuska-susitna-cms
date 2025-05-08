@@ -7,34 +7,53 @@ import {
   typesenseUpsert,
 } from '../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
+import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 
 const listPlural = 'parks';
 
-export const Park: ListConfig<any> = list({
-  access: {
-    operation: generalOperationAccess,
-    item: generalItemAccess('Park'),
+export const {
+  Main: Park,
+  Version: ParkVersion,
+  Draft: ParkDraft,
+} = DraftAndVersionsFactory(
+  'Park',
+  (listNamePlural, opts) => {
+    return {
+      ...basePage(listNamePlural, { ...opts, address: true, hours: true }),
+      services: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? `Service.${listNamePlural}`
+            : 'Service',
+        many: true,
+      }),
+      trails: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Trail.park' : 'Trail',
+        many: true,
+      }),
+      facilities: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Facility.park' : 'Facility',
+        many: true,
+      }),
+    };
   },
-  fields: {
-    ...basePage(listPlural, {
-      address: true,
-      hours: true,
-    }),
-
-    services: services(listPlural),
-    trails: relationship({ ref: 'Trail.park', many: true }),
-    facilities: relationship({ ref: 'Facility.park', many: true }),
-  },
-  hooks: {
-    async beforeOperation(args) {
-      await typesenseDelete(args);
+  {
+    query: `${basePage} services {id} trails {id} facilities {id} address {id} hours {id}`,
+    mainAccess: {
+      operation: generalOperationAccess,
+      item: generalItemAccess('Park'),
     },
-    async afterOperation(args) {
-      await typesenseUpsert(
-        'park',
-        'id title description body slug liveUrl publishAt owner {name} tags {name} services {title} trails {title} facilities {title}',
-        args,
-      );
+    mainHooks: {
+      async beforeOperation(args) {
+        await typesenseDelete(args);
+      },
+      async afterOperation(args) {
+        await typesenseUpsert(
+          'park',
+          'id title description body slug liveUrl publishAt owner {name} tags {name} services {title} trails {title} facilities {title}',
+          args,
+        );
+      },
     },
   },
-});
+);
