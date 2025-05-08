@@ -23,42 +23,44 @@ model Alert {
 }
 
 model AssemblyDistrict {
-  id                                  String                    @id @default(cuid())
-  heroImage                           String?
-  title                               String                    @unique @default("")
-  description                         String                    @default("")
-  publishAt                           DateTime?
-  unpublishAt                         DateTime?
-  reviewDate                          DateTime?
-  slug                                String                    @unique @default("")
-  owner                               User?                     @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
-  ownerId                             String?                   @map("owner")
-  body                                String?
-  tags                                Tag[]                     @relation("AssemblyDistrict_tags")
-  userGroups                          UserGroup[]               @relation("AssemblyDistrict_userGroups")
-  contacts                            Contact[]                 @relation("AssemblyDistrict_contacts")
-  createdAt                           DateTime?                 @default(now())
-  updatedAt                           DateTime?                 @default(now()) @updatedAt
-  photo                               Image?                    @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
-  photoId                             String?                   @map("photo")
-  memberName                          String                    @default("")
-  bio                                 String                    @default("")
-  address                             String                    @default("")
-  email                               String?
-  phone                               String?
-  fax                                 String?
-  termStart                           DateTime?
-  termEnd                             DateTime?
-  status                              String                    @default("unpublished")
-  drafts                              AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_original")
-  makeDrafts                          String?
-  versions                            AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_original")
-  currentVersion                      AssemblyDistrictVersion?  @relation("AssemblyDistrict_currentVersion", fields: [currentVersionId], references: [id])
-  currentVersionId                    String?                   @unique @map("currentVersion")
-  from_Community_districts            Community[]               @relation("Community_districts")
-  from_CommunityDraft_districts       CommunityDraft[]          @relation("CommunityDraft_districts")
-  from_CommunityVersion_districts     CommunityVersion[]        @relation("CommunityVersion_districts")
-  from_PublicNotice_assemblyDistricts PublicNotice[]            @relation("PublicNotice_assemblyDistricts")
+  id                                         String                    @id @default(cuid())
+  heroImage                                  String?
+  title                                      String                    @unique @default("")
+  description                                String                    @default("")
+  publishAt                                  DateTime?
+  unpublishAt                                DateTime?
+  reviewDate                                 DateTime?
+  slug                                       String                    @unique @default("")
+  owner                                      User?                     @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
+  ownerId                                    String?                   @map("owner")
+  body                                       String?
+  tags                                       Tag[]                     @relation("AssemblyDistrict_tags")
+  userGroups                                 UserGroup[]               @relation("AssemblyDistrict_userGroups")
+  contacts                                   Contact[]                 @relation("AssemblyDistrict_contacts")
+  createdAt                                  DateTime?                 @default(now())
+  updatedAt                                  DateTime?                 @default(now()) @updatedAt
+  photo                                      Image?                    @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
+  photoId                                    String?                   @map("photo")
+  memberName                                 String                    @default("")
+  bio                                        String                    @default("")
+  address                                    String                    @default("")
+  email                                      String?
+  phone                                      String?
+  fax                                        String?
+  termStart                                  DateTime?
+  termEnd                                    DateTime?
+  status                                     String                    @default("unpublished")
+  drafts                                     AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_original")
+  makeDrafts                                 String?
+  versions                                   AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_original")
+  currentVersion                             AssemblyDistrictVersion?  @relation("AssemblyDistrict_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId                           String?                   @unique @map("currentVersion")
+  from_Community_districts                   Community[]               @relation("Community_districts")
+  from_CommunityDraft_districts              CommunityDraft[]          @relation("CommunityDraft_districts")
+  from_CommunityVersion_districts            CommunityVersion[]        @relation("CommunityVersion_districts")
+  from_PublicNotice_assemblyDistricts        PublicNotice[]            @relation("PublicNotice_assemblyDistricts")
+  from_PublicNoticeDraft_assemblyDistricts   PublicNoticeDraft[]       @relation("PublicNoticeDraft_assemblyDistricts")
+  from_PublicNoticeVersion_assemblyDistricts PublicNoticeVersion[]     @relation("PublicNoticeVersion_assemblyDistricts")
 
   @@index([ownerId])
   @@index([photoId])
@@ -136,33 +138,35 @@ model AssemblyDistrictVersion {
 }
 
 model Community {
-  id                              String             @id @default(cuid())
-  heroImage                       String?
-  title                           String             @unique @default("")
-  description                     String             @default("")
-  publishAt                       DateTime?
-  unpublishAt                     DateTime?
-  reviewDate                      DateTime?
-  slug                            String             @unique @default("")
-  owner                           User?              @relation("Community_owner", fields: [ownerId], references: [id])
-  ownerId                         String?            @map("owner")
-  body                            String?
-  tags                            Tag[]              @relation("Community_tags")
-  userGroups                      UserGroup[]        @relation("Community_userGroups")
-  contacts                        Contact[]          @relation("Community_contacts")
-  createdAt                       DateTime?          @default(now())
-  updatedAt                       DateTime?          @default(now()) @updatedAt
-  services                        Service[]          @relation("Community_services")
-  districts                       AssemblyDistrict[] @relation("Community_districts")
-  status                          String             @default("unpublished")
-  drafts                          CommunityDraft[]   @relation("CommunityDraft_original")
-  makeDrafts                      String?
-  versions                        CommunityVersion[] @relation("CommunityVersion_original")
-  currentVersion                  CommunityVersion?  @relation("Community_currentVersion", fields: [currentVersionId], references: [id])
-  currentVersionId                String?            @unique @map("currentVersion")
-  from_PublicNotice_communities   PublicNotice[]     @relation("PublicNotice_communities")
-  from_ServiceDraft_communities   ServiceDraft[]     @relation("ServiceDraft_communities")
-  from_ServiceVersion_communities ServiceVersion[]   @relation("ServiceVersion_communities")
+  id                                   String                @id @default(cuid())
+  heroImage                            String?
+  title                                String                @unique @default("")
+  description                          String                @default("")
+  publishAt                            DateTime?
+  unpublishAt                          DateTime?
+  reviewDate                           DateTime?
+  slug                                 String                @unique @default("")
+  owner                                User?                 @relation("Community_owner", fields: [ownerId], references: [id])
+  ownerId                              String?               @map("owner")
+  body                                 String?
+  tags                                 Tag[]                 @relation("Community_tags")
+  userGroups                           UserGroup[]           @relation("Community_userGroups")
+  contacts                             Contact[]             @relation("Community_contacts")
+  createdAt                            DateTime?             @default(now())
+  updatedAt                            DateTime?             @default(now()) @updatedAt
+  services                             Service[]             @relation("Community_services")
+  districts                            AssemblyDistrict[]    @relation("Community_districts")
+  status                               String                @default("unpublished")
+  drafts                               CommunityDraft[]      @relation("CommunityDraft_original")
+  makeDrafts                           String?
+  versions                             CommunityVersion[]    @relation("CommunityVersion_original")
+  currentVersion                       CommunityVersion?     @relation("Community_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId                     String?               @unique @map("currentVersion")
+  from_PublicNotice_communities        PublicNotice[]        @relation("PublicNotice_communities")
+  from_PublicNoticeDraft_communities   PublicNoticeDraft[]   @relation("PublicNoticeDraft_communities")
+  from_PublicNoticeVersion_communities PublicNoticeVersion[] @relation("PublicNoticeVersion_communities")
+  from_ServiceDraft_communities        ServiceDraft[]        @relation("ServiceDraft_communities")
+  from_ServiceVersion_communities      ServiceVersion[]      @relation("ServiceVersion_communities")
 
   @@index([ownerId])
 }
@@ -236,6 +240,8 @@ model Contact {
   from_OrgUnit_contacts                 OrgUnit[]                 @relation("OrgUnit_contacts")
   from_Park_contacts                    Park[]                    @relation("Park_contacts")
   from_PublicNotice_contacts            PublicNotice[]            @relation("PublicNotice_contacts")
+  from_PublicNoticeDraft_contacts       PublicNoticeDraft[]       @relation("PublicNoticeDraft_contacts")
+  from_PublicNoticeVersion_contacts     PublicNoticeVersion[]     @relation("PublicNoticeVersion_contacts")
   from_Service_contacts                 Service[]                 @relation("Service_contacts")
   from_ServiceDraft_contacts            ServiceDraft[]            @relation("ServiceDraft_contacts")
   from_ServiceVersion_contacts          ServiceVersion[]          @relation("ServiceVersion_contacts")
@@ -246,15 +252,17 @@ model Contact {
 }
 
 model Document {
-  id                          String               @id @default(cuid())
-  title                       String               @default("")
-  description                 String               @default("")
-  tags                        Tag[]                @relation("Document_tags")
-  file_filesize               Int?
-  file_filename               String?
-  collections                 DocumentCollection[] @relation("Document_collections")
-  editorNotes                 String               @default("")
-  from_PublicNotice_documents PublicNotice[]       @relation("PublicNotice_documents")
+  id                                 String                @id @default(cuid())
+  title                              String                @default("")
+  description                        String                @default("")
+  tags                               Tag[]                 @relation("Document_tags")
+  file_filesize                      Int?
+  file_filename                      String?
+  collections                        DocumentCollection[]  @relation("Document_collections")
+  editorNotes                        String                @default("")
+  from_PublicNotice_documents        PublicNotice[]        @relation("PublicNotice_documents")
+  from_PublicNoticeDraft_documents   PublicNoticeDraft[]   @relation("PublicNoticeDraft_documents")
+  from_PublicNoticeVersion_documents PublicNoticeVersion[] @relation("PublicNoticeVersion_documents")
 
   @@index([title])
 }
@@ -283,31 +291,33 @@ model ExternalLink {
 }
 
 model Facility {
-  id                             String           @id @default(cuid())
-  heroImage                      String?
-  title                          String           @unique @default("")
-  description                    String           @default("")
-  publishAt                      DateTime?
-  unpublishAt                    DateTime?
-  reviewDate                     DateTime?
-  slug                           String           @unique @default("")
-  owner                          User?            @relation("Facility_owner", fields: [ownerId], references: [id])
-  ownerId                        String?          @map("owner")
-  body                           String?
-  tags                           Tag[]            @relation("Facility_tags")
-  userGroups                     UserGroup[]      @relation("Facility_userGroups")
-  address                        Location?        @relation("Facility_address", fields: [addressId], references: [id])
-  addressId                      String?          @map("address")
-  contacts                       Contact[]        @relation("Facility_contacts")
-  hours                          OperatingHour[]  @relation("Facility_hours")
-  createdAt                      DateTime?        @default(now())
-  updatedAt                      DateTime?        @default(now()) @updatedAt
-  services                       Service[]        @relation("Facility_services")
-  park                           Park?            @relation("Facility_park", fields: [parkId], references: [id])
-  parkId                         String?          @map("park")
-  from_PublicNotice_facilities   PublicNotice[]   @relation("PublicNotice_facilities")
-  from_ServiceDraft_facilities   ServiceDraft[]   @relation("ServiceDraft_facilities")
-  from_ServiceVersion_facilities ServiceVersion[] @relation("ServiceVersion_facilities")
+  id                                  String                @id @default(cuid())
+  heroImage                           String?
+  title                               String                @unique @default("")
+  description                         String                @default("")
+  publishAt                           DateTime?
+  unpublishAt                         DateTime?
+  reviewDate                          DateTime?
+  slug                                String                @unique @default("")
+  owner                               User?                 @relation("Facility_owner", fields: [ownerId], references: [id])
+  ownerId                             String?               @map("owner")
+  body                                String?
+  tags                                Tag[]                 @relation("Facility_tags")
+  userGroups                          UserGroup[]           @relation("Facility_userGroups")
+  address                             Location?             @relation("Facility_address", fields: [addressId], references: [id])
+  addressId                           String?               @map("address")
+  contacts                            Contact[]             @relation("Facility_contacts")
+  hours                               OperatingHour[]       @relation("Facility_hours")
+  createdAt                           DateTime?             @default(now())
+  updatedAt                           DateTime?             @default(now()) @updatedAt
+  services                            Service[]             @relation("Facility_services")
+  park                                Park?                 @relation("Facility_park", fields: [parkId], references: [id])
+  parkId                              String?               @map("park")
+  from_PublicNotice_facilities        PublicNotice[]        @relation("PublicNotice_facilities")
+  from_PublicNoticeDraft_facilities   PublicNoticeDraft[]   @relation("PublicNoticeDraft_facilities")
+  from_PublicNoticeVersion_facilities PublicNoticeVersion[] @relation("PublicNoticeVersion_facilities")
+  from_ServiceDraft_facilities        ServiceDraft[]        @relation("ServiceDraft_facilities")
+  from_ServiceVersion_facilities      ServiceVersion[]      @relation("ServiceVersion_facilities")
 
   @@index([ownerId])
   @@index([addressId])
@@ -385,11 +395,13 @@ model Image {
 }
 
 model InternalLink {
-  id                        String         @id @default(cuid())
-  label                     String         @default("")
-  selectItem                Json?
-  from_Highlight_linkedItem Highlight[]    @relation("Highlight_linkedItem")
-  from_PublicNotice_actions PublicNotice[] @relation("PublicNotice_actions")
+  id                               String                @id @default(cuid())
+  label                            String                @default("")
+  selectItem                       Json?
+  from_Highlight_linkedItem        Highlight[]           @relation("Highlight_linkedItem")
+  from_PublicNotice_actions        PublicNotice[]        @relation("PublicNotice_actions")
+  from_PublicNoticeDraft_actions   PublicNoticeDraft[]   @relation("PublicNoticeDraft_actions")
+  from_PublicNoticeVersion_actions PublicNoticeVersion[] @relation("PublicNoticeVersion_actions")
 }
 
 model Location {
@@ -407,30 +419,32 @@ model Location {
 }
 
 model OrgUnit {
-  id                           String           @id @default(cuid())
-  heroImage                    String?
-  title                        String           @unique @default("")
-  description                  String           @default("")
-  publishAt                    DateTime?
-  unpublishAt                  DateTime?
-  reviewDate                   DateTime?
-  slug                         String           @unique @default("")
-  owner                        User?            @relation("OrgUnit_owner", fields: [ownerId], references: [id])
-  ownerId                      String?          @map("owner")
-  body                         String?
-  tags                         Tag[]            @relation("OrgUnit_tags")
-  userGroups                   UserGroup[]      @relation("OrgUnit_userGroups")
-  contacts                     Contact[]        @relation("OrgUnit_contacts")
-  createdAt                    DateTime?        @default(now())
-  updatedAt                    DateTime?        @default(now()) @updatedAt
-  showPage                     Boolean          @default(true)
-  children                     OrgUnit[]        @relation("OrgUnit_parent")
-  parent                       OrgUnit?         @relation("OrgUnit_parent", fields: [parentId], references: [id])
-  parentId                     String?          @map("parent")
-  from_PublicNotice_orgUnits   PublicNotice[]   @relation("PublicNotice_orgUnits")
-  from_Service_orgUnits        Service[]        @relation("Service_orgUnits")
-  from_ServiceDraft_orgUnits   ServiceDraft[]   @relation("ServiceDraft_orgUnits")
-  from_ServiceVersion_orgUnits ServiceVersion[] @relation("ServiceVersion_orgUnits")
+  id                                String                @id @default(cuid())
+  heroImage                         String?
+  title                             String                @unique @default("")
+  description                       String                @default("")
+  publishAt                         DateTime?
+  unpublishAt                       DateTime?
+  reviewDate                        DateTime?
+  slug                              String                @unique @default("")
+  owner                             User?                 @relation("OrgUnit_owner", fields: [ownerId], references: [id])
+  ownerId                           String?               @map("owner")
+  body                              String?
+  tags                              Tag[]                 @relation("OrgUnit_tags")
+  userGroups                        UserGroup[]           @relation("OrgUnit_userGroups")
+  contacts                          Contact[]             @relation("OrgUnit_contacts")
+  createdAt                         DateTime?             @default(now())
+  updatedAt                         DateTime?             @default(now()) @updatedAt
+  showPage                          Boolean               @default(true)
+  children                          OrgUnit[]             @relation("OrgUnit_parent")
+  parent                            OrgUnit?              @relation("OrgUnit_parent", fields: [parentId], references: [id])
+  parentId                          String?               @map("parent")
+  from_PublicNotice_orgUnits        PublicNotice[]        @relation("PublicNotice_orgUnits")
+  from_PublicNoticeDraft_orgUnits   PublicNoticeDraft[]   @relation("PublicNoticeDraft_orgUnits")
+  from_PublicNoticeVersion_orgUnits PublicNoticeVersion[] @relation("PublicNoticeVersion_orgUnits")
+  from_Service_orgUnits             Service[]             @relation("Service_orgUnits")
+  from_ServiceDraft_orgUnits        ServiceDraft[]        @relation("ServiceDraft_orgUnits")
+  from_ServiceVersion_orgUnits      ServiceVersion[]      @relation("ServiceVersion_orgUnits")
 
   @@index([ownerId])
   @@index([parentId])
@@ -446,103 +460,190 @@ model OperatingHour {
 }
 
 model Park {
-  id                        String           @id @default(cuid())
-  heroImage                 String?
-  title                     String           @unique @default("")
-  description               String           @default("")
-  publishAt                 DateTime?
-  unpublishAt               DateTime?
-  reviewDate                DateTime?
-  slug                      String           @unique @default("")
-  owner                     User?            @relation("Park_owner", fields: [ownerId], references: [id])
-  ownerId                   String?          @map("owner")
-  body                      String?
-  tags                      Tag[]            @relation("Park_tags")
-  userGroups                UserGroup[]      @relation("Park_userGroups")
-  address                   Location?        @relation("Park_address", fields: [addressId], references: [id])
-  addressId                 String?          @map("address")
-  contacts                  Contact[]        @relation("Park_contacts")
-  hours                     OperatingHour[]  @relation("Park_hours")
-  createdAt                 DateTime?        @default(now())
-  updatedAt                 DateTime?        @default(now()) @updatedAt
-  services                  Service[]        @relation("Park_services")
-  trails                    Trail[]          @relation("Trail_park")
-  facilities                Facility[]       @relation("Facility_park")
-  from_PublicNotice_parks   PublicNotice[]   @relation("PublicNotice_parks")
-  from_ServiceDraft_parks   ServiceDraft[]   @relation("ServiceDraft_parks")
-  from_ServiceVersion_parks ServiceVersion[] @relation("ServiceVersion_parks")
+  id                             String                @id @default(cuid())
+  heroImage                      String?
+  title                          String                @unique @default("")
+  description                    String                @default("")
+  publishAt                      DateTime?
+  unpublishAt                    DateTime?
+  reviewDate                     DateTime?
+  slug                           String                @unique @default("")
+  owner                          User?                 @relation("Park_owner", fields: [ownerId], references: [id])
+  ownerId                        String?               @map("owner")
+  body                           String?
+  tags                           Tag[]                 @relation("Park_tags")
+  userGroups                     UserGroup[]           @relation("Park_userGroups")
+  address                        Location?             @relation("Park_address", fields: [addressId], references: [id])
+  addressId                      String?               @map("address")
+  contacts                       Contact[]             @relation("Park_contacts")
+  hours                          OperatingHour[]       @relation("Park_hours")
+  createdAt                      DateTime?             @default(now())
+  updatedAt                      DateTime?             @default(now()) @updatedAt
+  services                       Service[]             @relation("Park_services")
+  trails                         Trail[]               @relation("Trail_park")
+  facilities                     Facility[]            @relation("Facility_park")
+  from_PublicNotice_parks        PublicNotice[]        @relation("PublicNotice_parks")
+  from_PublicNoticeDraft_parks   PublicNoticeDraft[]   @relation("PublicNoticeDraft_parks")
+  from_PublicNoticeVersion_parks PublicNoticeVersion[] @relation("PublicNoticeVersion_parks")
+  from_ServiceDraft_parks        ServiceDraft[]        @relation("ServiceDraft_parks")
+  from_ServiceVersion_parks      ServiceVersion[]      @relation("ServiceVersion_parks")
 
   @@index([ownerId])
   @@index([addressId])
 }
 
 model PublicNotice {
-  id                String             @id @default(cuid())
+  id                String                @id @default(cuid())
   heroImage         String?
-  title             String             @unique @default("")
-  description       String             @default("")
+  title             String                @unique @default("")
+  description       String                @default("")
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
-  slug              String             @unique @default("")
-  owner             User?              @relation("PublicNotice_owner", fields: [ownerId], references: [id])
-  ownerId           String?            @map("owner")
+  slug              String                @unique @default("")
+  owner             User?                 @relation("PublicNotice_owner", fields: [ownerId], references: [id])
+  ownerId           String?               @map("owner")
   body              String?
-  tags              Tag[]              @relation("PublicNotice_tags")
-  userGroups        UserGroup[]        @relation("PublicNotice_userGroups")
-  actions           InternalLink?      @relation("PublicNotice_actions", fields: [actionsId], references: [id])
-  actionsId         String?            @map("actions")
-  documents         Document[]         @relation("PublicNotice_documents")
-  contacts          Contact[]          @relation("PublicNotice_contacts")
-  createdAt         DateTime?          @default(now())
-  updatedAt         DateTime?          @default(now()) @updatedAt
-  urgency           Int                @default(2)
+  tags              Tag[]                 @relation("PublicNotice_tags")
+  userGroups        UserGroup[]           @relation("PublicNotice_userGroups")
+  actions           InternalLink?         @relation("PublicNotice_actions", fields: [actionsId], references: [id])
+  actionsId         String?               @map("actions")
+  documents         Document[]            @relation("PublicNotice_documents")
+  contacts          Contact[]             @relation("PublicNotice_contacts")
+  createdAt         DateTime?             @default(now())
+  updatedAt         DateTime?             @default(now()) @updatedAt
+  urgency           Int                   @default(2)
   effectiveDate     DateTime?
   endDate           DateTime?
-  parks             Park[]             @relation("PublicNotice_parks")
-  services          Service[]          @relation("PublicNotice_services")
-  orgUnits          OrgUnit[]          @relation("PublicNotice_orgUnits")
-  facilities        Facility[]         @relation("PublicNotice_facilities")
-  trails            Trail[]            @relation("PublicNotice_trails")
-  communities       Community[]        @relation("PublicNotice_communities")
-  assemblyDistricts AssemblyDistrict[] @relation("PublicNotice_assemblyDistricts")
+  parks             Park[]                @relation("PublicNotice_parks")
+  services          Service[]             @relation("PublicNotice_services")
+  orgUnits          OrgUnit[]             @relation("PublicNotice_orgUnits")
+  facilities        Facility[]            @relation("PublicNotice_facilities")
+  trails            Trail[]               @relation("PublicNotice_trails")
+  communities       Community[]           @relation("PublicNotice_communities")
+  assemblyDistricts AssemblyDistrict[]    @relation("PublicNotice_assemblyDistricts")
+  status            String                @default("unpublished")
+  drafts            PublicNoticeDraft[]   @relation("PublicNoticeDraft_original")
+  makeDrafts        String?
+  versions          PublicNoticeVersion[] @relation("PublicNoticeVersion_original")
+  currentVersion    PublicNoticeVersion?  @relation("PublicNotice_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId  String?               @unique @map("currentVersion")
 
   @@index([ownerId])
   @@index([actionsId])
 }
 
+model PublicNoticeDraft {
+  id                String             @id @default(cuid())
+  original          PublicNotice?      @relation("PublicNoticeDraft_original", fields: [originalId], references: [id])
+  originalId        String?            @map("original")
+  heroImage         String?
+  title             String             @default("")
+  description       String             @default("")
+  publishAt         DateTime?
+  unpublishAt       DateTime?
+  reviewDate        DateTime?
+  owner             User?              @relation("PublicNoticeDraft_owner", fields: [ownerId], references: [id])
+  ownerId           String?            @map("owner")
+  body              String?
+  tags              Tag[]              @relation("PublicNoticeDraft_tags")
+  userGroups        UserGroup[]        @relation("PublicNoticeDraft_userGroups")
+  actions           InternalLink?      @relation("PublicNoticeDraft_actions", fields: [actionsId], references: [id])
+  actionsId         String?            @map("actions")
+  documents         Document[]         @relation("PublicNoticeDraft_documents")
+  contacts          Contact[]          @relation("PublicNoticeDraft_contacts")
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now()) @updatedAt
+  urgency           Int                @default(2)
+  effectiveDate     DateTime?
+  endDate           DateTime?
+  parks             Park[]             @relation("PublicNoticeDraft_parks")
+  services          Service[]          @relation("PublicNoticeDraft_services")
+  orgUnits          OrgUnit[]          @relation("PublicNoticeDraft_orgUnits")
+  facilities        Facility[]         @relation("PublicNoticeDraft_facilities")
+  trails            Trail[]            @relation("PublicNoticeDraft_trails")
+  communities       Community[]        @relation("PublicNoticeDraft_communities")
+  assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeDraft_assemblyDistricts")
+  publish           String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([actionsId])
+}
+
+model PublicNoticeVersion {
+  id                String             @id @default(cuid())
+  original          PublicNotice?      @relation("PublicNoticeVersion_original", fields: [originalId], references: [id])
+  originalId        String?            @map("original")
+  heroImage         String?
+  title             String             @default("")
+  description       String             @default("")
+  publishAt         DateTime?
+  unpublishAt       DateTime?
+  reviewDate        DateTime?
+  owner             User?              @relation("PublicNoticeVersion_owner", fields: [ownerId], references: [id])
+  ownerId           String?            @map("owner")
+  body              String?
+  tags              Tag[]              @relation("PublicNoticeVersion_tags")
+  userGroups        UserGroup[]        @relation("PublicNoticeVersion_userGroups")
+  actions           InternalLink?      @relation("PublicNoticeVersion_actions", fields: [actionsId], references: [id])
+  actionsId         String?            @map("actions")
+  documents         Document[]         @relation("PublicNoticeVersion_documents")
+  contacts          Contact[]          @relation("PublicNoticeVersion_contacts")
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now()) @updatedAt
+  urgency           Int                @default(2)
+  effectiveDate     DateTime?
+  endDate           DateTime?
+  parks             Park[]             @relation("PublicNoticeVersion_parks")
+  services          Service[]          @relation("PublicNoticeVersion_services")
+  orgUnits          OrgUnit[]          @relation("PublicNoticeVersion_orgUnits")
+  facilities        Facility[]         @relation("PublicNoticeVersion_facilities")
+  trails            Trail[]            @relation("PublicNoticeVersion_trails")
+  communities       Community[]        @relation("PublicNoticeVersion_communities")
+  assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeVersion_assemblyDistricts")
+  isLive            PublicNotice?      @relation("PublicNotice_currentVersion")
+  republish         String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([actionsId])
+}
+
 model Service {
-  id                             String             @id @default(cuid())
-  heroImage                      String?
-  title                          String             @unique @default("")
-  description                    String             @default("")
-  publishAt                      DateTime?
-  unpublishAt                    DateTime?
-  reviewDate                     DateTime?
-  slug                           String             @unique @default("")
-  owner                          User?              @relation("Service_owner", fields: [ownerId], references: [id])
-  ownerId                        String?            @map("owner")
-  body                           String?
-  tags                           Tag[]              @relation("Service_tags")
-  userGroups                     UserGroup[]        @relation("Service_userGroups")
-  contacts                       Contact[]          @relation("Service_contacts")
-  createdAt                      DateTime?          @default(now())
-  updatedAt                      DateTime?          @default(now()) @updatedAt
-  communities                    Community[]        @relation("Community_services")
-  orgUnits                       OrgUnit[]          @relation("Service_orgUnits")
-  trails                         Trail[]            @relation("Service_trails")
-  parks                          Park[]             @relation("Park_services")
-  facilities                     Facility[]         @relation("Facility_services")
-  editorNotes                    String             @default("")
-  status                         String             @default("unpublished")
-  drafts                         ServiceDraft[]     @relation("ServiceDraft_original")
-  makeDrafts                     String?
-  versions                       ServiceVersion[]   @relation("ServiceVersion_original")
-  currentVersion                 ServiceVersion?    @relation("Service_currentVersion", fields: [currentVersionId], references: [id])
-  currentVersionId               String?            @unique @map("currentVersion")
-  from_CommunityDraft_services   CommunityDraft[]   @relation("CommunityDraft_services")
-  from_CommunityVersion_services CommunityVersion[] @relation("CommunityVersion_services")
-  from_PublicNotice_services     PublicNotice[]     @relation("PublicNotice_services")
+  id                                String                @id @default(cuid())
+  heroImage                         String?
+  title                             String                @unique @default("")
+  description                       String                @default("")
+  publishAt                         DateTime?
+  unpublishAt                       DateTime?
+  reviewDate                        DateTime?
+  slug                              String                @unique @default("")
+  owner                             User?                 @relation("Service_owner", fields: [ownerId], references: [id])
+  ownerId                           String?               @map("owner")
+  body                              String?
+  tags                              Tag[]                 @relation("Service_tags")
+  userGroups                        UserGroup[]           @relation("Service_userGroups")
+  contacts                          Contact[]             @relation("Service_contacts")
+  createdAt                         DateTime?             @default(now())
+  updatedAt                         DateTime?             @default(now()) @updatedAt
+  communities                       Community[]           @relation("Community_services")
+  orgUnits                          OrgUnit[]             @relation("Service_orgUnits")
+  trails                            Trail[]               @relation("Service_trails")
+  parks                             Park[]                @relation("Park_services")
+  facilities                        Facility[]            @relation("Facility_services")
+  editorNotes                       String                @default("")
+  status                            String                @default("unpublished")
+  drafts                            ServiceDraft[]        @relation("ServiceDraft_original")
+  makeDrafts                        String?
+  versions                          ServiceVersion[]      @relation("ServiceVersion_original")
+  currentVersion                    ServiceVersion?       @relation("Service_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId                  String?               @unique @map("currentVersion")
+  from_CommunityDraft_services      CommunityDraft[]      @relation("CommunityDraft_services")
+  from_CommunityVersion_services    CommunityVersion[]    @relation("CommunityVersion_services")
+  from_PublicNotice_services        PublicNotice[]        @relation("PublicNotice_services")
+  from_PublicNoticeDraft_services   PublicNoticeDraft[]   @relation("PublicNoticeDraft_services")
+  from_PublicNoticeVersion_services PublicNoticeVersion[] @relation("PublicNoticeVersion_services")
 
   @@index([ownerId])
 }
@@ -624,6 +725,8 @@ model Tag {
   from_OrgUnit_tags                 OrgUnit[]                 @relation("OrgUnit_tags")
   from_Park_tags                    Park[]                    @relation("Park_tags")
   from_PublicNotice_tags            PublicNotice[]            @relation("PublicNotice_tags")
+  from_PublicNoticeDraft_tags       PublicNoticeDraft[]       @relation("PublicNoticeDraft_tags")
+  from_PublicNoticeVersion_tags     PublicNoticeVersion[]     @relation("PublicNoticeVersion_tags")
   from_Service_tags                 Service[]                 @relation("Service_tags")
   from_ServiceDraft_tags            ServiceDraft[]            @relation("ServiceDraft_tags")
   from_ServiceVersion_tags          ServiceVersion[]          @relation("ServiceVersion_tags")
@@ -634,50 +737,52 @@ model Tag {
 }
 
 model Trail {
-  id                         String           @id @default(cuid())
-  heroImage                  String?
-  title                      String           @unique @default("")
-  description                String           @default("")
-  publishAt                  DateTime?
-  unpublishAt                DateTime?
-  reviewDate                 DateTime?
-  slug                       String           @unique @default("")
-  owner                      User?            @relation("Trail_owner", fields: [ownerId], references: [id])
-  ownerId                    String?          @map("owner")
-  body                       String?
-  tags                       Tag[]            @relation("Trail_tags")
-  userGroups                 UserGroup[]      @relation("Trail_userGroups")
-  address                    Location?        @relation("Trail_address", fields: [addressId], references: [id])
-  addressId                  String?          @map("address")
-  contacts                   Contact[]        @relation("Trail_contacts")
-  createdAt                  DateTime?        @default(now())
-  updatedAt                  DateTime?        @default(now()) @updatedAt
-  open                       Boolean          @default(false)
-  summer                     Boolean          @default(false)
-  fall                       Boolean          @default(false)
-  winter                     Boolean          @default(false)
-  spring                     Boolean          @default(false)
-  hiking                     Boolean          @default(false)
-  biking                     Boolean          @default(false)
-  horsebackRiding            Boolean          @default(false)
-  crossCountrySkiing         Boolean          @default(false)
-  snowshoeing                Boolean          @default(false)
-  frisbeeGolf                Boolean          @default(false)
-  dogWalking                 Boolean          @default(false)
-  running                    Boolean          @default(false)
-  snowMachining              Boolean          @default(false)
-  atv                        Boolean          @default(false)
-  dirtBiking                 Boolean          @default(false)
-  mushing                    Boolean          @default(false)
-  difficulty                 String?
-  length                     String           @default("")
-  elevationChange            String           @default("")
-  services                   Service[]        @relation("Service_trails")
-  park                       Park?            @relation("Trail_park", fields: [parkId], references: [id])
-  parkId                     String?          @map("park")
-  from_PublicNotice_trails   PublicNotice[]   @relation("PublicNotice_trails")
-  from_ServiceDraft_trails   ServiceDraft[]   @relation("ServiceDraft_trails")
-  from_ServiceVersion_trails ServiceVersion[] @relation("ServiceVersion_trails")
+  id                              String                @id @default(cuid())
+  heroImage                       String?
+  title                           String                @unique @default("")
+  description                     String                @default("")
+  publishAt                       DateTime?
+  unpublishAt                     DateTime?
+  reviewDate                      DateTime?
+  slug                            String                @unique @default("")
+  owner                           User?                 @relation("Trail_owner", fields: [ownerId], references: [id])
+  ownerId                         String?               @map("owner")
+  body                            String?
+  tags                            Tag[]                 @relation("Trail_tags")
+  userGroups                      UserGroup[]           @relation("Trail_userGroups")
+  address                         Location?             @relation("Trail_address", fields: [addressId], references: [id])
+  addressId                       String?               @map("address")
+  contacts                        Contact[]             @relation("Trail_contacts")
+  createdAt                       DateTime?             @default(now())
+  updatedAt                       DateTime?             @default(now()) @updatedAt
+  open                            Boolean               @default(false)
+  summer                          Boolean               @default(false)
+  fall                            Boolean               @default(false)
+  winter                          Boolean               @default(false)
+  spring                          Boolean               @default(false)
+  hiking                          Boolean               @default(false)
+  biking                          Boolean               @default(false)
+  horsebackRiding                 Boolean               @default(false)
+  crossCountrySkiing              Boolean               @default(false)
+  snowshoeing                     Boolean               @default(false)
+  frisbeeGolf                     Boolean               @default(false)
+  dogWalking                      Boolean               @default(false)
+  running                         Boolean               @default(false)
+  snowMachining                   Boolean               @default(false)
+  atv                             Boolean               @default(false)
+  dirtBiking                      Boolean               @default(false)
+  mushing                         Boolean               @default(false)
+  difficulty                      String?
+  length                          String                @default("")
+  elevationChange                 String                @default("")
+  services                        Service[]             @relation("Service_trails")
+  park                            Park?                 @relation("Trail_park", fields: [parkId], references: [id])
+  parkId                          String?               @map("park")
+  from_PublicNotice_trails        PublicNotice[]        @relation("PublicNotice_trails")
+  from_PublicNoticeDraft_trails   PublicNoticeDraft[]   @relation("PublicNoticeDraft_trails")
+  from_PublicNoticeVersion_trails PublicNoticeVersion[] @relation("PublicNoticeVersion_trails")
+  from_ServiceDraft_trails        ServiceDraft[]        @relation("ServiceDraft_trails")
+  from_ServiceVersion_trails      ServiceVersion[]      @relation("ServiceVersion_trails")
 
   @@index([ownerId])
   @@index([addressId])
@@ -719,6 +824,8 @@ model User {
   from_OrgUnit_owner                 OrgUnit[]                 @relation("OrgUnit_owner")
   from_Park_owner                    Park[]                    @relation("Park_owner")
   from_PublicNotice_owner            PublicNotice[]            @relation("PublicNotice_owner")
+  from_PublicNoticeDraft_owner       PublicNoticeDraft[]       @relation("PublicNoticeDraft_owner")
+  from_PublicNoticeVersion_owner     PublicNoticeVersion[]     @relation("PublicNoticeVersion_owner")
   from_Service_owner                 Service[]                 @relation("Service_owner")
   from_ServiceDraft_owner            ServiceDraft[]            @relation("ServiceDraft_owner")
   from_ServiceVersion_owner          ServiceVersion[]          @relation("ServiceVersion_owner")
@@ -748,6 +855,8 @@ model UserGroup {
   from_OrgUnit_userGroups                 OrgUnit[]                 @relation("OrgUnit_userGroups")
   from_Park_userGroups                    Park[]                    @relation("Park_userGroups")
   from_PublicNotice_userGroups            PublicNotice[]            @relation("PublicNotice_userGroups")
+  from_PublicNoticeDraft_userGroups       PublicNoticeDraft[]       @relation("PublicNoticeDraft_userGroups")
+  from_PublicNoticeVersion_userGroups     PublicNoticeVersion[]     @relation("PublicNoticeVersion_userGroups")
   from_Service_userGroups                 Service[]                 @relation("Service_userGroups")
   from_ServiceDraft_userGroups            ServiceDraft[]            @relation("ServiceDraft_userGroups")
   from_ServiceVersion_userGroups          ServiceVersion[]          @relation("ServiceVersion_userGroups")

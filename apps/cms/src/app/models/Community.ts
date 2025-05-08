@@ -3,12 +3,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../access';
-import {
-  basePage,
-  services,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../fieldUtils';
+import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../utils';
@@ -42,7 +37,7 @@ export const {
   },
   {
     query:
-      'id title description body tags {id} owner {id} contacts {id} services {id} ',
+      'id title description body tags {id} owner {id} userGroups {id} contacts {id} services {id} ',
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),

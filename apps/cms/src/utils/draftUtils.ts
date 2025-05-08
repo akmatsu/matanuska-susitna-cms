@@ -18,7 +18,6 @@ export function mapDataFields(
     }
 
     if (v === null) {
-      output[k] = null;
       return;
     }
 

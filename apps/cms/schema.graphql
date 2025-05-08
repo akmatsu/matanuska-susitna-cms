@@ -2441,12 +2441,20 @@ type PublicNotice {
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  status: String
+  drafts(where: PublicNoticeDraftWhereInput! = {}, orderBy: [PublicNoticeDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeDraftWhereUniqueInput): [PublicNoticeDraft!]
+  draftsCount(where: PublicNoticeDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: PublicNoticeVersionWhereInput! = {}, orderBy: [PublicNoticeVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeVersionWhereUniqueInput): [PublicNoticeVersion!]
+  versionsCount(where: PublicNoticeVersionWhereInput! = {}): Int
+  currentVersion: PublicNoticeVersion
 }
 
 input PublicNoticeWhereUniqueInput {
   id: ID
   title: String
   slug: String
+  currentVersion: PublicNoticeVersionWhereUniqueInput
 }
 
 input PublicNoticeWhereInput {
@@ -2479,6 +2487,10 @@ input PublicNoticeWhereInput {
   trails: TrailManyRelationFilter
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
+  status: StringFilter
+  drafts: PublicNoticeDraftManyRelationFilter
+  versions: PublicNoticeVersionManyRelationFilter
+  currentVersion: PublicNoticeVersionWhereInput
 }
 
 input ParkManyRelationFilter {
@@ -2491,6 +2503,18 @@ input CommunityManyRelationFilter {
   every: CommunityWhereInput
   some: CommunityWhereInput
   none: CommunityWhereInput
+}
+
+input PublicNoticeDraftManyRelationFilter {
+  every: PublicNoticeDraftWhereInput
+  some: PublicNoticeDraftWhereInput
+  none: PublicNoticeDraftWhereInput
+}
+
+input PublicNoticeVersionManyRelationFilter {
+  every: PublicNoticeVersionWhereInput
+  some: PublicNoticeVersionWhereInput
+  none: PublicNoticeVersionWhereInput
 }
 
 input PublicNoticeOrderByInput {
@@ -2508,6 +2532,8 @@ input PublicNoticeOrderByInput {
   urgency: OrderDirection
   effectiveDate: OrderDirection
   endDate: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
 }
 
 input PublicNoticeUpdateInput {
@@ -2537,6 +2563,11 @@ input PublicNoticeUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  status: String
+  drafts: PublicNoticeDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: PublicNoticeVersionRelateToManyForUpdateInput
+  currentVersion: PublicNoticeVersionRelateToOneForUpdateInput
 }
 
 input ParkRelateToManyForUpdateInput {
@@ -2551,6 +2582,26 @@ input CommunityRelateToManyForUpdateInput {
   set: [CommunityWhereUniqueInput!]
   create: [CommunityCreateInput!]
   connect: [CommunityWhereUniqueInput!]
+}
+
+input PublicNoticeDraftRelateToManyForUpdateInput {
+  disconnect: [PublicNoticeDraftWhereUniqueInput!]
+  set: [PublicNoticeDraftWhereUniqueInput!]
+  create: [PublicNoticeDraftCreateInput!]
+  connect: [PublicNoticeDraftWhereUniqueInput!]
+}
+
+input PublicNoticeVersionRelateToManyForUpdateInput {
+  disconnect: [PublicNoticeVersionWhereUniqueInput!]
+  set: [PublicNoticeVersionWhereUniqueInput!]
+  create: [PublicNoticeVersionCreateInput!]
+  connect: [PublicNoticeVersionWhereUniqueInput!]
+}
+
+input PublicNoticeVersionRelateToOneForUpdateInput {
+  create: PublicNoticeVersionCreateInput
+  connect: PublicNoticeVersionWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PublicNoticeUpdateArgs {
@@ -2585,6 +2636,11 @@ input PublicNoticeCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  status: String
+  drafts: PublicNoticeDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: PublicNoticeVersionRelateToManyForCreateInput
+  currentVersion: PublicNoticeVersionRelateToOneForCreateInput
 }
 
 input ParkRelateToManyForCreateInput {
@@ -2595,6 +2651,359 @@ input ParkRelateToManyForCreateInput {
 input CommunityRelateToManyForCreateInput {
   create: [CommunityCreateInput!]
   connect: [CommunityWhereUniqueInput!]
+}
+
+input PublicNoticeDraftRelateToManyForCreateInput {
+  create: [PublicNoticeDraftCreateInput!]
+  connect: [PublicNoticeDraftWhereUniqueInput!]
+}
+
+input PublicNoticeVersionRelateToManyForCreateInput {
+  create: [PublicNoticeVersionCreateInput!]
+  connect: [PublicNoticeVersionWhereUniqueInput!]
+}
+
+input PublicNoticeVersionRelateToOneForCreateInput {
+  create: PublicNoticeVersionCreateInput
+  connect: PublicNoticeVersionWhereUniqueInput
+}
+
+type PublicNoticeDraft {
+  id: ID!
+  original: PublicNotice
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions: InternalLink
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  urgency: Int
+  effectiveDate: DateTime
+  endDate: DateTime
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  publish: String
+}
+
+input PublicNoticeDraftWhereUniqueInput {
+  id: ID
+}
+
+input PublicNoticeDraftWhereInput {
+  AND: [PublicNoticeDraftWhereInput!]
+  OR: [PublicNoticeDraftWhereInput!]
+  NOT: [PublicNoticeDraftWhereInput!]
+  id: IDFilter
+  original: PublicNoticeWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkWhereInput
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  urgency: IntFilter
+  effectiveDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
+  parks: ParkManyRelationFilter
+  services: ServiceManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  trails: TrailManyRelationFilter
+  communities: CommunityManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
+}
+
+input PublicNoticeDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  urgency: OrderDirection
+  effectiveDate: OrderDirection
+  endDate: OrderDirection
+  publish: OrderDirection
+}
+
+input PublicNoticeDraftUpdateInput {
+  original: PublicNoticeRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  urgency: Int
+  effectiveDate: DateTime
+  endDate: DateTime
+  parks: ParkRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  publish: String
+}
+
+input PublicNoticeRelateToOneForUpdateInput {
+  create: PublicNoticeCreateInput
+  connect: PublicNoticeWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PublicNoticeDraftUpdateArgs {
+  where: PublicNoticeDraftWhereUniqueInput!
+  data: PublicNoticeDraftUpdateInput!
+}
+
+input PublicNoticeDraftCreateInput {
+  original: PublicNoticeRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  urgency: Int
+  effectiveDate: DateTime
+  endDate: DateTime
+  parks: ParkRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  publish: String
+}
+
+input PublicNoticeRelateToOneForCreateInput {
+  create: PublicNoticeCreateInput
+  connect: PublicNoticeWhereUniqueInput
+}
+
+type PublicNoticeVersion {
+  id: ID!
+  original: PublicNotice
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions: InternalLink
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  urgency: Int
+  effectiveDate: DateTime
+  endDate: DateTime
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  isLive: PublicNotice
+  republish: String
+}
+
+input PublicNoticeVersionWhereUniqueInput {
+  id: ID
+  isLive: PublicNoticeWhereUniqueInput
+}
+
+input PublicNoticeVersionWhereInput {
+  AND: [PublicNoticeVersionWhereInput!]
+  OR: [PublicNoticeVersionWhereInput!]
+  NOT: [PublicNoticeVersionWhereInput!]
+  id: IDFilter
+  original: PublicNoticeWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkWhereInput
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  urgency: IntFilter
+  effectiveDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
+  parks: ParkManyRelationFilter
+  services: ServiceManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  trails: TrailManyRelationFilter
+  communities: CommunityManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
+  isLive: PublicNoticeWhereInput
+}
+
+input PublicNoticeVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  urgency: OrderDirection
+  effectiveDate: OrderDirection
+  endDate: OrderDirection
+  republish: OrderDirection
+}
+
+input PublicNoticeVersionUpdateInput {
+  original: PublicNoticeRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  urgency: Int
+  effectiveDate: DateTime
+  endDate: DateTime
+  parks: ParkRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  isLive: PublicNoticeRelateToOneForUpdateInput
+  republish: String
+}
+
+input PublicNoticeVersionUpdateArgs {
+  where: PublicNoticeVersionWhereUniqueInput!
+  data: PublicNoticeVersionUpdateInput!
+}
+
+input PublicNoticeVersionCreateInput {
+  original: PublicNoticeRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  urgency: Int
+  effectiveDate: DateTime
+  endDate: DateTime
+  parks: ParkRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  isLive: PublicNoticeRelateToOneForCreateInput
+  republish: String
 }
 
 type Service {
@@ -4070,6 +4479,18 @@ type Mutation {
   updatePublicNotices(data: [PublicNoticeUpdateArgs!]!): [PublicNotice]
   deletePublicNotice(where: PublicNoticeWhereUniqueInput!): PublicNotice
   deletePublicNotices(where: [PublicNoticeWhereUniqueInput!]!): [PublicNotice]
+  createPublicNoticeDraft(data: PublicNoticeDraftCreateInput!): PublicNoticeDraft
+  createPublicNoticeDrafts(data: [PublicNoticeDraftCreateInput!]!): [PublicNoticeDraft]
+  updatePublicNoticeDraft(where: PublicNoticeDraftWhereUniqueInput!, data: PublicNoticeDraftUpdateInput!): PublicNoticeDraft
+  updatePublicNoticeDrafts(data: [PublicNoticeDraftUpdateArgs!]!): [PublicNoticeDraft]
+  deletePublicNoticeDraft(where: PublicNoticeDraftWhereUniqueInput!): PublicNoticeDraft
+  deletePublicNoticeDrafts(where: [PublicNoticeDraftWhereUniqueInput!]!): [PublicNoticeDraft]
+  createPublicNoticeVersion(data: PublicNoticeVersionCreateInput!): PublicNoticeVersion
+  createPublicNoticeVersions(data: [PublicNoticeVersionCreateInput!]!): [PublicNoticeVersion]
+  updatePublicNoticeVersion(where: PublicNoticeVersionWhereUniqueInput!, data: PublicNoticeVersionUpdateInput!): PublicNoticeVersion
+  updatePublicNoticeVersions(data: [PublicNoticeVersionUpdateArgs!]!): [PublicNoticeVersion]
+  deletePublicNoticeVersion(where: PublicNoticeVersionWhereUniqueInput!): PublicNoticeVersion
+  deletePublicNoticeVersions(where: [PublicNoticeVersionWhereUniqueInput!]!): [PublicNoticeVersion]
   createService(data: ServiceCreateInput!): Service
   createServices(data: [ServiceCreateInput!]!): [Service]
   updateService(where: ServiceWhereUniqueInput!, data: ServiceUpdateInput!): Service
@@ -4203,6 +4624,12 @@ type Query {
   publicNotice(where: PublicNoticeWhereUniqueInput!): PublicNotice
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  publicNoticeDraft(where: PublicNoticeDraftWhereUniqueInput!): PublicNoticeDraft
+  publicNoticeDrafts(where: PublicNoticeDraftWhereInput! = {}, orderBy: [PublicNoticeDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeDraftWhereUniqueInput): [PublicNoticeDraft!]
+  publicNoticeDraftsCount(where: PublicNoticeDraftWhereInput! = {}): Int
+  publicNoticeVersion(where: PublicNoticeVersionWhereUniqueInput!): PublicNoticeVersion
+  publicNoticeVersions(where: PublicNoticeVersionWhereInput! = {}, orderBy: [PublicNoticeVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeVersionWhereUniqueInput): [PublicNoticeVersion!]
+  publicNoticeVersionsCount(where: PublicNoticeVersionWhereInput! = {}): Int
   service(where: ServiceWhereUniqueInput!): Service
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
