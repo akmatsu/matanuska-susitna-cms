@@ -372,6 +372,8 @@ export type BasePageOptions = {
   isVersion?: boolean;
 };
 
+export const basePageQuery =
+  'id heroImage title description body tags {id} userGroups {id} contacts {id}';
 export function basePage(
   listNamePlural: string,
   opts?: BasePageOptions,

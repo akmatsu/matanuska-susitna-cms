@@ -6,7 +6,7 @@ import { Contact } from './Contact';
 import { Document } from './Document';
 import { DocumentCollection } from './DocumentCollection';
 import { ExternalLink } from './ExternalLink';
-import { Facility } from './Facility';
+import * as FacilityModels from './Facility';
 import { Highlight } from './Highlight';
 import { HomePage } from './HomePage';
 import { Image } from './Image';
@@ -32,7 +32,7 @@ export const lists = {
   Document,
   DocumentCollection,
   ExternalLink,
-  Facility,
+  ...FacilityModels,
   Highlight,
   HomePage,
   Image,

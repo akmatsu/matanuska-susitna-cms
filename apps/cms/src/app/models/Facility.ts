@@ -1,39 +1,57 @@
-import { list, ListConfig } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import {
   basePage,
-  services,
+  basePageQuery,
   typesenseDelete,
   typesenseUpsert,
 } from '../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
+import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
+import { lowercaseFirstLetter } from '../../utils';
 
-const listPlural = 'facilities';
-
-export const Facility: ListConfig<any> = list({
-  access: {
-    operation: generalOperationAccess,
-    item: generalItemAccess('Facility'),
+export const {
+  Main: Facility,
+  Version: FacilityVersion,
+  Draft: FacilityDraft,
+} = DraftAndVersionsFactory(
+  'Facility',
+  (listNamePlural, opts) => {
+    return {
+      ...basePage(listNamePlural, {
+        ...opts,
+        address: true,
+        hours: true,
+      }),
+      services: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? `Service.${lowercaseFirstLetter(listNamePlural)}`
+            : 'Service',
+        many: true,
+      }),
+      park: relationship({
+        ref: 'Park.facilities',
+        many: false,
+      }),
+    };
   },
-  fields: {
-    ...basePage(listPlural, {
-      address: true,
-      hours: true,
-    }),
-    services: services(listPlural),
-    park: relationship({ ref: 'Park.facilities', many: false }),
-  },
-
-  hooks: {
-    async beforeOperation(args) {
-      await typesenseDelete(args);
+  {
+    query: `${basePageQuery} services {id} park {id} address {id} hours {id}`,
+    mainAccess: {
+      operation: generalOperationAccess,
+      item: generalItemAccess('Facility'),
     },
-    async afterOperation(args) {
-      await typesenseUpsert(
-        'facility',
-        'id title description body slug liveUrl publishAt tags {name} owner {name} services {title}',
-        args,
-      );
+    mainHooks: {
+      async beforeOperation(args) {
+        await typesenseDelete(args);
+      },
+      async afterOperation(args) {
+        await typesenseUpsert(
+          'facility',
+          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title}',
+          args,
+        );
+      },
     },
   },
-});
+);
