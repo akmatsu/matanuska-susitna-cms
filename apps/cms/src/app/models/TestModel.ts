@@ -1,6 +1,8 @@
 import { basePage, BasePageOptions } from '../fieldUtils';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 
+// TODO Drop test models
+
 export function coreFields(listNamePlural: string, opts?: BasePageOptions) {
   return {
     ...basePage(listNamePlural, opts),
