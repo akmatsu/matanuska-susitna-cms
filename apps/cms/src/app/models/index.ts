@@ -16,7 +16,7 @@ import { OrgUnit } from './OrgUnit';
 import { OperatingHour } from './OperatingHour';
 import { Park } from './Park';
 import { PublicNotice } from './PublicNotice';
-import { Service } from './Service';
+import * as ServiceModels from './Service';
 import { Tag } from './Tag';
 import { Trail } from './Trail';
 import { Url } from './Url';
@@ -42,7 +42,7 @@ export const lists = {
   OperatingHour,
   Park,
   PublicNotice,
-  Service,
+  ...ServiceModels,
   Tag,
   Trail,
   Url,
