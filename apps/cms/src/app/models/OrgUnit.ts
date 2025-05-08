@@ -11,33 +11,68 @@ import {
   generalOperationAccess,
 } from '../access';
 import { checkbox, relationship } from '@keystone-6/core/fields';
+import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 
-export const OrgUnit: ListConfig<any> = list({
-  access: {
-    operation: generalOperationAccess,
-    item: generalItemAccess('OrgUnit'),
-    filter: filterByPubDates,
+export const {
+  Main: OrgUnit,
+  Version: OrgUnitVersion,
+  Draft: OrgUnitDraft,
+} = DraftAndVersionsFactory(
+  'OrgUnit',
+  (listNamePlural, opts) => {
+    return {
+      ...basePage(listNamePlural, opts),
+      showPage: checkbox({
+        defaultValue: true,
+        ui: { itemView: { fieldPosition: 'sidebar' } },
+      }),
+      services: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion ? 'Service.orgUnits' : 'Service',
+      }),
+      children: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.parent' : 'OrgUnit',
+        many: true,
+      }),
+      parent: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.children' : 'OrgUnit',
+        many: false,
+      }),
+    };
   },
-  fields: {
-    ...basePage('orgUnits'),
-    showPage: checkbox({
-      defaultValue: true,
-      ui: { itemView: { fieldPosition: 'sidebar' } },
-    }),
-    // services: services('orgUnits'),
-    children: relationship({ ref: 'OrgUnit.parent', many: true }),
-    parent: relationship({ ref: 'OrgUnit.children', many: false }),
-  },
-  hooks: {
-    async beforeOperation(args) {
-      await typesenseDelete(args);
+  {
+    query: `${basePage} services {id} parent {id} children {id} showPage`,
+    mainAccess: {
+      operation: generalOperationAccess,
+      item: generalItemAccess('OrgUnit'),
+      filter: filterByPubDates,
     },
-    async afterOperation(args) {
-      await typesenseUpsert(
-        'orgUnit',
-        'id title slug description body publishAt tags {name}',
-        args,
-      );
+    mainHooks: {
+      async beforeOperation(args) {
+        await typesenseDelete(args);
+      },
+      async afterOperation(args) {
+        await typesenseUpsert(
+          'orgUnit',
+          'id title slug description body publishAt tags {name}',
+          args,
+        );
+      },
     },
   },
-});
+);
+
+// export const OrgUnit: ListConfig<any> = list({
+
+//   fields: {
+//     ...basePage('orgUnits'),
+//     showPage: checkbox({
+//       defaultValue: true,
+//       ui: { itemView: { fieldPosition: 'sidebar' } },
+//     }),
+//     children: relationship({ ref: 'OrgUnit.parent', many: true }),
+//     parent: relationship({ ref: 'OrgUnit.children', many: false }),
+//   },
+
+// });

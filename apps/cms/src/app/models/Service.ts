@@ -31,7 +31,8 @@ export const {
       }),
 
       orgUnits: relationship({
-        ref: 'OrgUnit',
+        ref:
+          !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.services' : 'OrgUnit',
         many: true,
         ui: {
           itemView: {
