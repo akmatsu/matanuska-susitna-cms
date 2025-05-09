@@ -16,5 +16,5 @@ export const {
 } = DraftAndVersionsFactory('TestModel', coreFields, {
   versionLimit: 20,
   versionAgeDays: 365,
-  query: `id heroImage title description reviewDate owner {id} unpublishAt body tags {id} userGroups {id} contacts {id} __typename`,
+  query: `id heroImage title description reviewDate unpublishAt body tags {id} userGroups {id} contacts {id} __typename`,
 });
