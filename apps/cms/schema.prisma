@@ -281,9 +281,6 @@ model Contact {
   from_Trail_contacts                   Trail[]                   @relation("Trail_contacts")
   from_TrailDraft_contacts              TrailDraft[]              @relation("TrailDraft_contacts")
   from_TrailVersion_contacts            TrailVersion[]            @relation("TrailVersion_contacts")
-  from_TestModel_contacts               TestModel[]               @relation("TestModel_contacts")
-  from_TestModelDraft_contacts          TestModelDraft[]          @relation("TestModelDraft_contacts")
-  from_TestModelVersion_contacts        TestModelVersion[]        @relation("TestModelVersion_contacts")
 }
 
 model Document {
@@ -1120,9 +1117,6 @@ model Tag {
   from_Trail_tags                   Trail[]                   @relation("Trail_tags")
   from_TrailDraft_tags              TrailDraft[]              @relation("TrailDraft_tags")
   from_TrailVersion_tags            TrailVersion[]            @relation("TrailVersion_tags")
-  from_TestModel_tags               TestModel[]               @relation("TestModel_tags")
-  from_TestModelDraft_tags          TestModelDraft[]          @relation("TestModelDraft_tags")
-  from_TestModelVersion_tags        TestModelVersion[]        @relation("TestModelVersion_tags")
 }
 
 model Trail {
@@ -1352,9 +1346,6 @@ model User {
   from_TrailVersion_owner            TrailVersion[]            @relation("TrailVersion_owner")
   from_Url_owner                     Url[]                     @relation("Url_owner")
   from_UserGroup_owner               UserGroup[]               @relation("UserGroup_owner")
-  from_TestModel_owner               TestModel[]               @relation("TestModel_owner")
-  from_TestModelDraft_owner          TestModelDraft[]          @relation("TestModelDraft_owner")
-  from_TestModelVersion_owner        TestModelVersion[]        @relation("TestModelVersion_owner")
 }
 
 model UserGroup {
@@ -1389,85 +1380,6 @@ model UserGroup {
   from_Trail_userGroups                   Trail[]                   @relation("Trail_userGroups")
   from_TrailDraft_userGroups              TrailDraft[]              @relation("TrailDraft_userGroups")
   from_TrailVersion_userGroups            TrailVersion[]            @relation("TrailVersion_userGroups")
-  from_TestModel_userGroups               TestModel[]               @relation("TestModel_userGroups")
-  from_TestModelDraft_userGroups          TestModelDraft[]          @relation("TestModelDraft_userGroups")
-  from_TestModelVersion_userGroups        TestModelVersion[]        @relation("TestModelVersion_userGroups")
 
-  @@index([ownerId])
-}
-
-model TestModel {
-  id               String             @id @default(cuid())
-  heroImage        String?
-  title            String             @unique @default("")
-  description      String             @default("")
-  publishAt        DateTime?
-  unpublishAt      DateTime?
-  reviewDate       DateTime?
-  slug             String             @unique @default("")
-  owner            User?              @relation("TestModel_owner", fields: [ownerId], references: [id])
-  ownerId          String?            @map("owner")
-  body             String?
-  tags             Tag[]              @relation("TestModel_tags")
-  userGroups       UserGroup[]        @relation("TestModel_userGroups")
-  contacts         Contact[]          @relation("TestModel_contacts")
-  createdAt        DateTime?          @default(now())
-  updatedAt        DateTime?          @default(now()) @updatedAt
-  status           String             @default("unpublished")
-  drafts           TestModelDraft[]   @relation("TestModelDraft_original")
-  makeDrafts       String?
-  versions         TestModelVersion[] @relation("TestModelVersion_original")
-  currentVersion   TestModelVersion?  @relation("TestModel_currentVersion", fields: [currentVersionId], references: [id])
-  currentVersionId String?            @unique @map("currentVersion")
-
-  @@index([ownerId])
-}
-
-model TestModelDraft {
-  id          String      @id @default(cuid())
-  original    TestModel?  @relation("TestModelDraft_original", fields: [originalId], references: [id])
-  originalId  String?     @map("original")
-  heroImage   String?
-  title       String      @default("")
-  description String      @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  owner       User?       @relation("TestModelDraft_owner", fields: [ownerId], references: [id])
-  ownerId     String?     @map("owner")
-  body        String?
-  tags        Tag[]       @relation("TestModelDraft_tags")
-  userGroups  UserGroup[] @relation("TestModelDraft_userGroups")
-  contacts    Contact[]   @relation("TestModelDraft_contacts")
-  createdAt   DateTime?   @default(now())
-  updatedAt   DateTime?   @default(now()) @updatedAt
-  publish     String?
-
-  @@index([originalId])
-  @@index([ownerId])
-}
-
-model TestModelVersion {
-  id          String      @id @default(cuid())
-  original    TestModel?  @relation("TestModelVersion_original", fields: [originalId], references: [id])
-  originalId  String?     @map("original")
-  heroImage   String?
-  title       String      @default("")
-  description String      @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  owner       User?       @relation("TestModelVersion_owner", fields: [ownerId], references: [id])
-  ownerId     String?     @map("owner")
-  body        String?
-  tags        Tag[]       @relation("TestModelVersion_tags")
-  userGroups  UserGroup[] @relation("TestModelVersion_userGroups")
-  contacts    Contact[]   @relation("TestModelVersion_contacts")
-  createdAt   DateTime?   @default(now())
-  updatedAt   DateTime?   @default(now()) @updatedAt
-  isLive      TestModel?  @relation("TestModel_currentVersion")
-  republish   String?
-
-  @@index([originalId])
   @@index([ownerId])
 }

@@ -52,7 +52,8 @@
     "react-hook-form": "^7.56.3",
     "react-select": "^5.10.1",
     "remark-directive": "^4.0.0",
-    "typesense": "^2.0.3"
+    "typesense": "^2.0.3",
+    "voca": "^1.4.1"
   },
   "devDependencies": {
     "@iconify/json": "^2.2.336",
@@ -66,6 +67,7 @@
     "@types/express": "^4.17.21",
     "@types/passport": "^1.0.17",
     "@types/pluralize": "^0.0.33",
+    "@types/voca": "^1.4.6",
     "postcss": "^8.5.3",
     "prisma": "^5.22.0",
     "tailwindcss": "^4.1.3",

@@ -22,7 +22,6 @@ import * as TrailModels from './Trail';
 import { Url } from './Url';
 import { User } from './User';
 import { UserGroup } from './UserGroup';
-import { TestModel, TestModelDraft, TestModelVersion } from './TestModel';
 
 export const lists = {
   Alert,
@@ -48,7 +47,4 @@ export const lists = {
   Url,
   User,
   UserGroup,
-  TestModel,
-  TestModelDraft,
-  TestModelVersion,
 } satisfies Lists;

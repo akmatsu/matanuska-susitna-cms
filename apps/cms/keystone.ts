@@ -14,6 +14,7 @@ import {
 } from './src/utils/typesense';
 import { json } from 'express';
 import { nextAuthSessionStrategy } from './src/session';
+import { routes } from './src/routes/baseRoutes';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -40,112 +41,7 @@ export default config<TypeInfo<Session>>({
       methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'PATCH'],
     },
     maxFileSize: 500 * 1024 * 124,
-    async extendExpressApp(app, commonContext) {
-      app.post('/typesense/create-collections', json(), async (req, res) => {
-        try {
-          await Promise.all(
-            COLLECTIONS.map(async (collection) => {
-              const exists = await TYPESENSE_CLIENT.collections(
-                collection.name,
-              ).exists();
-              if (!exists) {
-                await TYPESENSE_CLIENT.collections().create(collection);
-                console.log(
-                  `Collection ${collection.name} created successfully`,
-                );
-              } else {
-                console.log(
-                  `Collection ${collection.name} already exists. Skipping...`,
-                );
-              }
-            }),
-          );
-          console.log('Finished creating collections.');
-
-          return res.status(200).json({ message: 'Collections created.' });
-        } catch (error: any) {
-          return res.status(500).json(error);
-        }
-      });
-
-      app.post('/typesense/update-schema', json(), async (req, res) => {
-        commonContext.prisma;
-        try {
-          await Promise.all(
-            COLLECTIONS.map(async (collection) => {
-              const exists = await TYPESENSE_CLIENT.collections(
-                collection.name,
-              ).exists();
-              if (exists) {
-                const existingDocs = await TYPESENSE_CLIENT.collections(
-                  collection.name,
-                )
-                  .documents()
-                  .export();
-                await TYPESENSE_CLIENT.collections(collection.name).delete();
-                await TYPESENSE_CLIENT.collections().create(collection);
-                await TYPESENSE_CLIENT.collections(collection.name)
-                  .documents()
-                  .import(existingDocs, { action: 'upsert' });
-
-                console.log(
-                  `Collection ${collection.name} updated successfully`,
-                );
-              } else {
-                console.log(
-                  `Collection ${collection.name} does not exist. Skipping...`,
-                );
-              }
-            }),
-          );
-        } catch (error: any) {
-          return res.status(500).json(error);
-        }
-      });
-
-      app.post('/typesense/import-pages', json(), async (_, res) => {
-        try {
-          await Promise.all(
-            PAGE_TYPES.map(async (pageType) => {
-              const items = await pageType.getItems(commonContext);
-              console.log(pageType.type, items);
-
-              await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-                .documents()
-                .import(items, { action: 'upsert' });
-            }),
-          );
-        } catch (error: any) {
-          return res.status(500).json(error);
-        }
-      });
-
-      app.post('/typesense/remove-collection', json(), async (req, res) => {
-        try {
-          const collection: string = req.body.collection;
-
-          if (!collection) {
-            return res
-              .status(400)
-              .json({ message: 'Collection name is required' });
-          }
-
-          if (!(await TYPESENSE_CLIENT.collections(collection).exists())) {
-            return res
-              .status(404)
-              .json({ message: `Collection ${collection} does not exist.` });
-          }
-
-          await TYPESENSE_CLIENT.collections(collection).delete();
-
-          return res
-            .status(204)
-            .json({ message: `Collection ${collection} removed successfully` });
-        } catch (error: any) {
-          return res.status(500).json(error);
-        }
-      });
-    },
+    extendExpressApp: routes,
     port: appConfig.server.port,
   },
 
