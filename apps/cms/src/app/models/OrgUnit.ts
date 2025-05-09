@@ -62,17 +62,3 @@ export const {
     },
   },
 );
-
-// export const OrgUnit: ListConfig<any> = list({
-
-//   fields: {
-//     ...basePage('orgUnits'),
-//     showPage: checkbox({
-//       defaultValue: true,
-//       ui: { itemView: { fieldPosition: 'sidebar' } },
-//     }),
-//     children: relationship({ ref: 'OrgUnit.parent', many: true }),
-//     parent: relationship({ ref: 'OrgUnit.children', many: false }),
-//   },
-
-// });

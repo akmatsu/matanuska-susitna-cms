@@ -343,7 +343,10 @@ export function userGroups(listKey: string) {
       },
     },
     access: {
-      update: (args) => isAdmin(args) || isOwner(args),
+      update: (args) => {
+        console.log('args', args.context.req);
+        return isAdmin(args) || isOwner(args);
+      },
     },
   });
 }

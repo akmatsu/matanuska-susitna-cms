@@ -29,7 +29,7 @@ export default function CustomPage() {
   async function createCollections() {
     try {
       setCreateLoading(true);
-      const res = fetch('/typesense/create-collections', {
+      const res = await fetch('/typesense/create-collections', {
         method: 'POST',
       });
       console.log(res);
