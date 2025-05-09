@@ -124,7 +124,7 @@ export const {
       item: generalItemAccess('AssemblyDistrict'),
     },
     query:
-      'id title description body tags {id} owner {id} photo {id} contacts {id} bio memberName address email phone fax termStart termEnd __typename actions {id} documents {id}',
+      'id title description body tags {id} photo {id} contacts {id} bio memberName address email phone fax termStart termEnd __typename actions {id} documents {id}',
     mainHooks: {
       async beforeOperation(args) {
         await typesenseDelete(args);

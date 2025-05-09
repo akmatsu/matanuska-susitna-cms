@@ -37,7 +37,7 @@ export const {
   },
   {
     query:
-      'id title description body tags {id} owner {id} userGroups {id} contacts {id} services {id} actions {id} documents {id}',
+      'id title description body tags {id} userGroups {id} contacts {id} services {id} actions {id} documents {id}',
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),
