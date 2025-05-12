@@ -28,6 +28,7 @@ import {
   TYPESENSE_COLLECTIONS,
 } from '../utils/typesense';
 import { capitalizeFirstLetter, toPascalCase } from '../utils';
+import { logger } from '../configs/logger';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -541,7 +542,7 @@ export async function typesenseUpsert(
         .documents()
         .upsert(document);
     } catch (error: any) {
-      console.error('Error updating Typesense document:', error);
+      logger.error('Error updating Typesense document:', error);
     }
   }
 }
@@ -559,7 +560,7 @@ export async function typesenseDelete({
         .documents(item.id.toString())
         .delete();
     } catch (error: any) {
-      console.error('Error deleting Typesense document', error);
+      logger.error('Error deleting Typesense document', error);
     }
   }
 }

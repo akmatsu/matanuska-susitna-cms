@@ -3,6 +3,7 @@ import { getContext } from '@keystone-6/core/context';
 import { AuthOptions, DefaultSession, getServerSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';
 import AzureADProvider from 'next-auth/providers/azure-ad';
+import { logger } from './configs/logger';
 
 let _keystoneContext: Context = (globalThis as any)._keystoneContext;
 
@@ -100,13 +101,19 @@ export const nextAuthSessionStrategy = {
       nextAuthOptions,
     );
     if (!nextAuthSession) {
-      console.warn('NO NEXT AUTH SESSION');
+      logger.warn(
+        'Warning in nexsAuthSessionStrategy "NO NEXT AUTH SESSION":',
+        nextAuthSession,
+      );
       return;
     }
 
     const { authId } = nextAuthSession.keystone;
     if (!authId) {
-      console.warn('NO AUTH ID');
+      logger.warn(
+        'Warning in nextAuthSessionStrategy "NO AUTH ID":',
+        nextAuthSession,
+      );
       return;
     }
 
@@ -114,7 +121,10 @@ export const nextAuthSessionStrategy = {
       where: { authId },
     });
     if (!user) {
-      console.warn('NO USER');
+      logger.warn(
+        'Warning in nextAuthSessionStrategy "NO USER":',
+        nextAuthSession,
+      );
       return;
     }
 
