@@ -471,9 +471,6 @@ model FacilityVersion {
 model Highlight {
   id                           String        @id @default(cuid())
   title                        String        @unique @default("")
-  publishAt                    DateTime?
-  unpublishAt                  DateTime?
-  reviewDate                   DateTime?
   image                        String?
   message                      String        @default("")
   linkedItem                   InternalLink? @relation("Highlight_linkedItem", fields: [linkedItemId], references: [id])
