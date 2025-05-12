@@ -2,6 +2,7 @@ import { group, list, ListConfig } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import {
   basePage,
+  basePageQuery,
   services,
   typesenseDelete,
   typesenseUpsert,
@@ -66,7 +67,7 @@ export const {
     };
   },
   {
-    query: `${basePage} services {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange actions {id} documents {id}`,
+    query: `${basePageQuery} services {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Trail'),

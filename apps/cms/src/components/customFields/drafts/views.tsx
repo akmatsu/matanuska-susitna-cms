@@ -24,6 +24,8 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   const listKey = lowercaseFirstLetter(field.listName);
   const listName = singular(router.pathname.split('/')[1]) + '-drafts';
 
+  console.log('QUERY: ', field.query);
+
   const { data, loading, error } = useQuery(
     gql`
       query ${field.listName} ($where: ${field.listName}WhereUniqueInput!) {

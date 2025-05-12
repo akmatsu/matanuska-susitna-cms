@@ -2,6 +2,7 @@ import { list, ListConfig } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../access';
 import {
   basePage,
+  basePageQuery,
   services,
   typesenseDelete,
   typesenseUpsert,
@@ -39,7 +40,7 @@ export const {
     };
   },
   {
-    query: `${basePage} services {id} trails {id} facilities {id} address {id} hours {id} actions {id} documents {id}`,
+    query: `${basePageQuery} services {id} trails {id} facilities {id} address {id} hours {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Park'),
