@@ -14,71 +14,47 @@ import { Button } from '@keystone-ui/button';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
-import { lowercaseFirstLetter } from '../../../utils';
-import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
-import pluralize from 'pluralize';
-import { mapDataFields } from '../../../utils/draftUtils';
+import { plural } from 'pluralize';
+import { useState } from 'react';
+import { useToasts } from '@keystone-ui/toast';
+import kebabCase from 'voca/kebab_case';
 
 export function Field({ field }: FieldProps<typeof controller>) {
   const router = useRouter();
   const { id } = useParams();
-  const versionKey = lowercaseFirstLetter(field.listName) + 'Version';
-  const urlListName = pluralize(
-    router.pathname.split('/')[1].replace('-versions', ''),
-  );
+  const [loading, setLoading] = useState(false);
 
-  const getVersionQuery = gql`
-      query ${field.listName}Version ($where: ${field.listName}VersionWhereUniqueInput!) {
-        ${versionKey} (where: $where) {
-          ${field.query}
-        }
-      }`;
-
-  const { data, loading, error } = useQuery(getVersionQuery, {
-    variables: {
-      where: {
-        id,
-      },
-    },
-  });
-
-  const [republishVersion, { loading: creating }] = useMutation(gql`
-    mutation Republish${field.listName} ($data: ${field.listName}UpdateInput!, $where: ${field.listName}WhereUniqueInput!) {
-      update${field.listName} (where: $where, data: $data) {
-        id
-      }
-    }
-  `);
+  const listSlug = plural(kebabCase(field.listName)).toLowerCase();
+  const { addToast } = useToasts();
 
   async function handleRepublishVersion() {
-    if (loading || error || creating) return;
+    if (loading) return;
 
-    const { original, title, ...version } = data[versionKey];
-
-    const result = await republishVersion({
-      variables: {
-        where: {
-          id: original.id,
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `/republish/${plural(kebabCase(field.listName)).toLowerCase()}/${id}?query=${field.query}`,
+        {
+          method: 'PATCH',
         },
-        data: mapDataFields(
-          version,
-          {
-            title: title.split(' ---')[0],
-            status: 'published',
-            publishAt: new Date().toISOString(),
-            currentVersion: {
-              connect: {
-                id,
-              },
-            },
-          },
-          'update',
-        ),
-      },
-    });
+      );
 
-    const publishedId = result.data[`update${field.listName}`].id;
-    router.push('/' + urlListName + '/' + publishedId);
+      if (!res.ok) {
+        throw new Error(`Response Status: ${res.status} ${res.statusText}`);
+      }
+      const result = await res.json();
+
+      router.push(`/${listSlug}/${result.publishedId}`);
+    } catch (error: any) {
+      console.error('Error republishing version:', error);
+      addToast({
+        title: 'Error',
+        message: `Failed to republish version: ${error?.message}`,
+        tone: 'negative',
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

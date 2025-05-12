@@ -344,7 +344,6 @@ export function userGroups(listKey: string) {
     },
     access: {
       update: (args) => {
-        console.log('args', args.context.req);
         return isAdmin(args) || isOwner(args);
       },
     },

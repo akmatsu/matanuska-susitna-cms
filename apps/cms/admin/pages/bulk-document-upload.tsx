@@ -104,12 +104,10 @@ export default function BulkDocumentUpload() {
 
   function validateFiles(files: FileList) {
     if (!files || files.length === 0) {
-      console.log('no files');
       return 'Please upload a file';
     }
     for (let i = 0; i < files.length; i++) {
       if (!allowedMimeTypes.includes(files[i].type)) {
-        console.log('invalid file type');
         return 'Invalid file type';
       }
     }

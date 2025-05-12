@@ -10,9 +10,7 @@ export function FileDropzone({
 }: UseFormRegisterReturn & {
   accept?: Accept;
 }) {
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    console.log(acceptedFiles);
-  }, []);
+  const onDrop = useCallback((acceptedFiles: File[]) => {}, []);
 
   const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
     useDropzone({

@@ -5,6 +5,7 @@ import { Worker, Job } from 'bullmq';
 import { getContext } from '@keystone-6/core/context';
 import { REDIS_CONNECTION } from '../redis';
 import { mapDataFields } from '../../utils/draftUtils';
+import { logger } from '../../configs/logger';
 
 export const publishWorker = async () => {
   const keystoneContext = getContext(config, PrismaModule);
@@ -23,7 +24,7 @@ export const publishWorker = async () => {
 
         const sudoCtx = keystoneContext.sudo();
 
-        console.log(`🔔 Processing ${operation} for ${itemId}...`);
+        logger.info(`🔔 Processing ${operation} for ${itemId}...`);
 
         const { original, title, ...draft } = await sudoCtx?.query[
           `${listKey}Draft` as typeof listKey
@@ -69,5 +70,5 @@ export const publishWorker = async () => {
 
 if (require.main === module) {
   publishWorker();
-  console.log('Worker started');
+  logger.info('Worker started');
 }

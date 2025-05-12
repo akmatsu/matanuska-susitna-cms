@@ -1,5 +1,6 @@
 import { Queue, QueueEvents } from 'bullmq';
 import IORedis from 'ioredis';
+import { logger } from '../configs/logger';
 
 export const REDIS_CONNECTION = new IORedis({
   host: '127.0.0.1',
@@ -15,11 +16,11 @@ export const publishQueueEvents = new QueueEvents('publish', {
   connection: REDIS_CONNECTION,
 });
 publishQueueEvents.on('added', ({ jobId }) => {
-  console.log(`🔔 Job ${jobId} has been added to the queue`);
+  logger.info(`🔔 Job ${jobId} has been added to the queue`);
 });
 publishQueueEvents.on('completed', ({ jobId }) => {
-  console.log(`✅ Job ${jobId} has completed`);
+  logger.info(`✅ Job ${jobId} has completed`);
 });
 publishQueueEvents.on('failed', ({ jobId, failedReason }) => {
-  console.error(`❌ Job ${jobId} failed: ${failedReason}`);
+  logger.error(`❌ Job ${jobId} failed: ${failedReason}`);
 });

@@ -31,6 +31,7 @@ export const InternalLink: ListConfig<any> = list({
           ... on OrgUnit { id title slug description}
           ... on Url { id title description url}
         }`,
+        views: './src/components/customFields/polymorphicRelationship/views',
       },
       field: (lists) =>
         graphql.field({

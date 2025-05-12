@@ -15,6 +15,7 @@ import { plural } from 'pluralize';
 import { deepMerge, lowercaseFirstLetter } from '../utils';
 import { publishQueue } from '../queues/redis';
 import { createDrafts } from '../components/customFields/drafts';
+import { logger } from '../configs/logger';
 
 interface Options {
   versionLimit?: number;
@@ -347,9 +348,8 @@ async function createVersion(
     ].create({
       data: versionData,
     });
-    console.log(`✔ Created new ${listKey}Version with id ${newVersion.id}`);
+    logger.info(`✔ Created new ${listKey}Version with id ${newVersion.id}`);
 
-    // Clean up old versions
     const count = await sudoCtx.query[listKey + 'Version'].count({
       where: {
         original: { id: { equals: item.id.toString() } },
