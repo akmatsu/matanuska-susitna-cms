@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FieldController,
   FieldControllerConfig,
@@ -18,8 +18,15 @@ import {
   Select,
 } from '@keystone-ui/fields';
 import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
+import { DrawerController } from '@keystone-ui/modals';
+
 import pluralize from 'pluralize';
-import { capitalizeFirstLetter, toPascalCase } from '../../../utils';
+import v from 'voca';
+import { useToasts } from '@keystone-ui/toast';
+// import { useCreateItem } from '@keystone-6/core/admin-ui/';
+import Link from 'next/link';
+import { Button } from '@keystone-ui/button';
 
 type AvailableType = {
   value: string;
@@ -31,11 +38,14 @@ export function Field({
   value,
   onChange,
 }: FieldProps<typeof controller>) {
+  const toast = useToasts();
   const plural = pluralize(value?.itemType?.value || 'services');
 
-  const { data } = useQuery(
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const { data, refetch, error } = useQuery(
     gql`
-      query Get${capitalizeFirstLetter(plural)}($where: ${value?.itemType?.label ? toPascalCase(value.itemType.label) : ''}WhereInput!) {
+      query Get${v.capitalize(plural)}($where: ${value?.itemType?.label ? v.capitalize(v.camelCase(value.itemType.label)) : ''}WhereInput!) {
         ${plural}(where: $where) {
           title
           id
@@ -46,14 +56,39 @@ export function Field({
       variables: {
         where: {
           title: {
-            contains: value?.itemId || '',
+            contains: '',
             mode: 'insensitive',
           },
         },
       },
-      skip: !value?.itemType?.value,
+      skip: !value?.itemType,
     },
   );
+
+  if (error) {
+    toast.addToast({
+      title: 'Error',
+      message: error.message,
+      tone: 'negative',
+    });
+  }
+
+  let searchDebounceTimeout: NodeJS.Timeout | null = null;
+  const handleInputChange = (val: string) => {
+    if (searchDebounceTimeout) {
+      clearTimeout(searchDebounceTimeout);
+    }
+    searchDebounceTimeout = setTimeout(() => {
+      refetch({
+        where: {
+          title: {
+            contains: val,
+            mode: 'insensitive',
+          },
+        },
+      });
+    }, 350);
+  };
 
   return (
     <FieldContainer>
@@ -61,7 +96,7 @@ export function Field({
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
       </FieldDescription>
-      <div>
+      <div className="flex flex-col gap-2">
         <Select
           value={value?.itemType || null}
           placeholder="Select a type..."
@@ -73,21 +108,51 @@ export function Field({
             });
           }}
         ></Select>
+
+        {value && value?.itemType && (
+          <div className="flex flex-wrap gap-2" w-full>
+            <Select
+              className="w-full"
+              placeholder={`Select existing ${value?.itemType?.label}...`}
+              value={value?.itemId || null}
+              options={data?.[plural].map(
+                (i: { title: string; id: string }) => ({
+                  label: i.title,
+                  value: i.id,
+                }),
+              )}
+              onInputChange={handleInputChange}
+              onChange={(item) => {
+                onChange?.({
+                  itemType: value?.itemType,
+                  itemId: item,
+                });
+              }}
+            ></Select>
+
+            <Button onClick={() => setIsDrawerOpen(true)}>
+              Create a new {value?.itemType?.label}
+            </Button>
+          </div>
+        )}
       </div>
-      {value && value?.itemType && (
-        <Select
-          value={value?.itemId || null}
-          options={data?.[plural].map((i: { title: string; id: string }) => ({
-            label: i.title,
-            value: i.id,
-          }))}
-          onChange={(item) => {
-            onChange?.({
-              itemType: value?.itemType,
-              itemId: item,
-            });
-          }}
-        ></Select>
+      {value?.itemType && (
+        <DrawerController isOpen={isDrawerOpen}>
+          <CreateItemDrawer
+            listKey={value?.itemType.label.replace(/\s+/g, '')}
+            onClose={() => setIsDrawerOpen(false)}
+            onCreate={(val) => {
+              setIsDrawerOpen(false);
+              onChange?.({
+                itemType: value?.itemType,
+                itemId: {
+                  label: val.label,
+                  value: val.id,
+                },
+              });
+            }}
+          />
+        </DrawerController>
       )}
     </FieldContainer>
   );
