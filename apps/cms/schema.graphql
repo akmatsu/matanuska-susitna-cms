@@ -2108,9 +2108,6 @@ input FacilityVersionCreateInput {
 type Highlight {
   id: ID!
   title: String
-  publishAt: DateTime
-  unpublishAt: DateTime
-  reviewDate: DateTime
   image: String
   message: String
   linkedItem: InternalLink
@@ -2130,9 +2127,6 @@ input HighlightWhereInput {
   NOT: [HighlightWhereInput!]
   id: IDFilter
   title: StringFilter
-  publishAt: DateTimeNullableFilter
-  unpublishAt: DateTimeNullableFilter
-  reviewDate: DateTimeNullableFilter
   message: StringFilter
   linkedItem: InternalLinkWhereInput
   editorNotes: StringFilter
@@ -2143,9 +2137,6 @@ input HighlightWhereInput {
 input HighlightOrderByInput {
   id: OrderDirection
   title: OrderDirection
-  publishAt: OrderDirection
-  unpublishAt: OrderDirection
-  reviewDate: OrderDirection
   image: BlueHarvestImageOrderDirection
   message: OrderDirection
   editorNotes: OrderDirection
@@ -2155,9 +2146,6 @@ input HighlightOrderByInput {
 
 input HighlightUpdateInput {
   title: String
-  publishAt: DateTime
-  unpublishAt: DateTime
-  reviewDate: DateTime
   image: String
   message: String
   linkedItem: InternalLinkRelateToOneForUpdateInput
@@ -2173,9 +2161,6 @@ input HighlightUpdateArgs {
 
 input HighlightCreateInput {
   title: String
-  publishAt: DateTime
-  unpublishAt: DateTime
-  reviewDate: DateTime
   image: String
   message: String
   linkedItem: InternalLinkRelateToOneForCreateInput

@@ -1,9 +1,5 @@
 import { list, ListConfig } from '@keystone-6/core';
-import {
-  generalItemAccess,
-  generalOperationAccess,
-  isContentManager,
-} from '../access';
+import { generalOperationAccess, isContentManager } from '../access';
 import {
   owner,
   timestamps,
@@ -15,7 +11,6 @@ import { text } from '@keystone-6/core/fields';
 export const Url: ListConfig<any> = list({
   access: {
     operation: generalOperationAccess,
-    item: generalItemAccess('Url'),
   },
   ui: {
     isHidden: async (args) => !(await isContentManager(args)),

@@ -1,5 +1,5 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { publishable, timestamps, titleAndDescription } from '../fieldUtils';
+import { timestamps } from '../fieldUtils';
 import { relationship, text } from '@keystone-6/core/fields';
 import { isContentManager } from '../access/roles';
 import { elevatedOperationAccess } from '../access';
@@ -30,7 +30,6 @@ export const Highlight: ListConfig<any> = list({
       },
       isIndexed: 'unique',
     }),
-    ...publishable(),
 
     image: blueHarvestImage({
       notBanner: true,
