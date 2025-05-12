@@ -11,7 +11,7 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Fragment, ReactNode } from 'react';
+import { Fragment } from 'react';
 import Link from 'next/link';
 
 type ItemValue = {
