@@ -57,7 +57,7 @@ export const publishWorker = async () => {
           },
         });
       } catch (error) {
-        console.error(`Error processing job ${job.id}:`, error);
+        logger.error(`Error processing job ${job.id}:`, error);
       }
     },
     {

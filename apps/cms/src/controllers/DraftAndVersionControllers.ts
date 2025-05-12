@@ -2,6 +2,7 @@ import { toPascalCase } from '../utils';
 import type { RequestControllerWithContext } from './types';
 import { mapDataFields } from '../utils/draftUtils';
 import { singular } from 'pluralize';
+import { logger } from '../configs/logger';
 
 export const publishDraft: RequestControllerWithContext =
   (context) => async (req, res) => {
@@ -50,7 +51,7 @@ export const publishDraft: RequestControllerWithContext =
         publishedId: original.id,
       });
     } catch (error: any) {
-      console.error('Error publishing draft:', error);
+      logger.error('Error publishing draft:', error);
       return res.status(500).json({ error: 'Failed to publish draft' });
     }
   };
@@ -103,7 +104,7 @@ export const republishVersion: RequestControllerWithContext =
         publishedId: original.id,
       });
     } catch (error: any) {
-      console.error('Error republishing version:', error);
+      logger.error('Error republishing version:', error);
       return res.status(500).json({ error: 'Failed to republish version' });
     }
   };

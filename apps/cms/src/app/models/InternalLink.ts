@@ -3,6 +3,7 @@ import { generalOperationAccess, isAdmin } from '../access';
 import { polymorphicRelationship } from '../../components/customFields/polymorphicRelationship';
 import { text, virtual } from '@keystone-6/core/fields';
 import { capitalizeFirstLetter } from '../../utils';
+import { logger } from '../../configs/logger';
 
 export const InternalLink: ListConfig<any> = list({
   access: {
@@ -103,7 +104,7 @@ export const InternalLink: ListConfig<any> = list({
                 __typename: linkedItem.__typename,
               };
             } catch (err) {
-              console.error(err);
+              logger.error(err);
               return null;
             }
           },

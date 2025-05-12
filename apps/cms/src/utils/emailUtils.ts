@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { appConfig } from '../configs/appConfig';
+import { logger } from '../configs/logger';
 
 export async function createAndSendBulletin(
   title: string,
@@ -91,14 +92,14 @@ export async function createAndSendBulletin(
     });
   } catch (err: any) {
     if (err.response) {
-      console.error('Error response:', err.response.data);
-      console.error('Status code:', err.response.status);
-      console.error('Headers:', err.response.headers);
+      logger.error('Error response:', err.response.data);
+      logger.error('Status code:', err.response.status);
+      logger.error('Headers:', err.response.headers);
     } else if (err.request) {
-      console.error('Error request:', err.request);
+      logger.error('Error request:', err.request);
     } else {
-      console.error('Error message:', err.message);
+      logger.error('Error message:', err.message);
     }
-    console.error('Error config:', err.config);
+    logger.error('Error config:', err.config);
   }
 }
