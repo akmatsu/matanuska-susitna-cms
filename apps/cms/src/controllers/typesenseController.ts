@@ -5,6 +5,7 @@ import {
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
 } from '../utils/typesense';
+import { logger } from '../configs/logger';
 
 export const createTypesenseCollections: RequestController =
   () => async (req, res) => {
@@ -16,9 +17,9 @@ export const createTypesenseCollections: RequestController =
           ).exists();
           if (!exists) {
             await TYPESENSE_CLIENT.collections().create(collection);
-            console.log(`Collection ${collection.name} created successfully`);
+            logger.info(`Collection ${collection.name} created successfully`);
           } else {
-            console.log(
+            logger.info(
               `Collection ${collection.name} already exists. Skipping...`,
             );
           }
@@ -27,6 +28,7 @@ export const createTypesenseCollections: RequestController =
 
       return res.status(200).json({ message: 'Collections created.' });
     } catch (error: any) {
+      logger.error('Error creating collections:', error);
       return res.status(500).json(error);
     }
   };
@@ -51,9 +53,9 @@ export const updateTypesenseSchema: RequestController =
               .documents()
               .import(existingDocs, { action: 'upsert' });
 
-            console.log(`Collection ${collection.name} updated successfully`);
+            logger.info(`Collection ${collection.name} updated successfully`);
           } else {
-            console.log(
+            logger.info(
               `Collection ${collection.name} does not exist. Skipping...`,
             );
           }
@@ -62,6 +64,7 @@ export const updateTypesenseSchema: RequestController =
 
       return res.status(200).json({ message: 'Schema updated.' });
     } catch (error: any) {
+      logger.error('Error updating schema:', error);
       return res.status(500).json(error);
     }
   };
@@ -72,7 +75,6 @@ export const importPages: RequestControllerWithContext =
       await Promise.all(
         PAGE_TYPES.map(async (pageType) => {
           const items = await pageType.getItems(context);
-          console.log(pageType.type, items);
 
           await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
             .documents()
@@ -81,6 +83,7 @@ export const importPages: RequestControllerWithContext =
       );
       return res.status(200).json({ message: 'Pages imported.' });
     } catch (error: any) {
+      logger.error('Error importing pages:', error);
       return res.status(500).json(error);
     }
   };
@@ -105,6 +108,7 @@ export const removeCollection: RequestController = () => async (req, res) => {
       .status(204)
       .json({ message: `Collection ${collection} removed successfully` });
   } catch (error: any) {
+    logger.error('Error removing collection:', error);
     return res.status(500).json(error);
   }
 };

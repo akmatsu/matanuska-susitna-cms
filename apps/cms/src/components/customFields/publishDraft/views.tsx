@@ -12,61 +12,28 @@ import {
 } from '@keystone-ui/fields';
 import { PublishDraftFieldMeta } from '.';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
-import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
-import { lowercaseFirstLetter } from '../../../utils';
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
-import { mapDataFields } from '../../../utils/draftUtils';
-import pluralize, { plural } from 'pluralize';
-import axios from 'axios';
+import { plural } from 'pluralize';
 import { useState } from 'react';
+import { useToasts } from '@keystone-ui/toast';
 import kebabCase from 'voca/kebab_case';
 
 export function Field({ field }: FieldProps<typeof controller>) {
+  const router = useRouter();
+  const { id } = useParams();
   const [loading, setLoading] = useState(false);
 
-  // const router = useRouter();
-  const { id } = useParams();
-  // const draftKey = lowercaseFirstLetter(field.listName) + 'Draft';
-  // const urlListName = pluralize(
-  //   router.pathname.split('/')[1].replace('-drafts', ''),
-  // );
-  // const getDraftQuery = gql`
-  //     query ${field.listName}Draft ($where: ${field.listName}DraftWhereUniqueInput!) {
-  //       ${draftKey} (where: $where) {
-  //         ${field.query}
-  //       }
-  //     }`;
-
-  // const { data, loading, error } = useQuery(getDraftQuery, {
-  //   variables: {
-  //     where: {
-  //       id,
-  //     },
-  //   },
-  // });
-
-  // const [publishDraft, { loading: creating }] = useMutation(gql`
-  //   mutation Publish${field.listName} ($data: ${field.listName}UpdateInput!, $where: ${field.listName}WhereUniqueInput!) {
-  //     update${field.listName} (where: $where, data: $data) {
-  //       id
-  //     }
-  //   }
-  // `);
-
-  // const [deleteDraft, { loading: deleting }] = useMutation(gql`
-  //   mutation Delete${field.listName}Draft ($where: ${field.listName}DraftWhereUniqueInput!) {
-  //     delete${field.listName}Draft (where: $where) {
-  //       id
-  //     }
-  //   }
-  // `);
+  const listSlug = plural(kebabCase(field.listName)).toLowerCase();
+  const { addToast } = useToasts();
 
   async function handlePublishDraft() {
+    if (loading) return;
+
     try {
       setLoading(true);
       const res = await fetch(
-        `/publish/${plural(kebabCase(field.listName)).toLowerCase()}/${id}`,
+        `/publish/${plural(kebabCase(field.listName)).toLowerCase()}/${id}?query=${field.query}`,
         {
           method: 'PATCH',
         },
@@ -77,40 +44,17 @@ export function Field({ field }: FieldProps<typeof controller>) {
       }
       const result = await res.json();
 
-      console.log(result);
-    } catch (error) {
+      router.push(`/${listSlug}/${result.publishedId}`);
+    } catch (error: any) {
       console.error('Error publishing draft:', error);
+      addToast({
+        title: 'Error',
+        message: `Failed to publish draft: ${error?.message}`,
+        tone: 'negative',
+      });
     } finally {
       setLoading(false);
     }
-    // const { original, title, ...draft } = data[draftKey]; // if (loading || error || creating || deleting) return;
-
-    // const result = await publishDraft({
-    //   variables: {
-    //     where: {
-    //       id: original.id,
-    //     },
-    //     data: mapDataFields(
-    //       draft,
-    //       {
-    //         title: title.split(' ---')[0],
-    //         status: 'published',
-    //         publishAt: new Date().toISOString(),
-    //       },
-    //       'update',
-    //     ),
-    //   },
-    // });
-
-    // await deleteDraft({
-    //   variables: {
-    //     where: {
-    //       id,
-    //     },
-    //   },
-    // });
-
-    // const publishedId = result.data[`update${field.listName}`].id;
   }
 
   return (

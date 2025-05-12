@@ -5,16 +5,9 @@ import { lists } from './src/app';
 import { TypeInfo } from '.keystone/types';
 import { appConfig } from './src/configs/appConfig';
 import { type Session } from './src/session';
-
-import {
-  COLLECTIONS,
-  PAGE_TYPES,
-  TYPESENSE_CLIENT,
-  TYPESENSE_COLLECTIONS,
-} from './src/utils/typesense';
-import { json } from 'express';
 import { nextAuthSessionStrategy } from './src/session';
 import { routes } from './src/routes/baseRoutes';
+import { logger } from './src/configs/logger';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db

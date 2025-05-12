@@ -50,8 +50,6 @@ export const ToolbarView = () => {
 
         const isTooltipChildren = div.contains(activeElement);
 
-        console.log('isTooltipChildren', isTooltipChildren);
-
         const notHasFocus = !view.hasFocus() && !isTooltipChildren;
 
         const isReadonly = !view.editable;
