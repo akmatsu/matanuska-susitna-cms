@@ -1,6 +1,7 @@
 import { list, ListConfig } from '@keystone-6/core';
 import {
   basePage,
+  basePageQuery,
   services,
   typesenseDelete,
   typesenseUpsert,
@@ -42,7 +43,7 @@ export const {
     };
   },
   {
-    query: `${basePage} services {id} parent {id} children {id} showPage actions {id} documents {id}`,
+    query: `${basePageQuery} services {id} parent {id} children {id} showPage actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('OrgUnit'),

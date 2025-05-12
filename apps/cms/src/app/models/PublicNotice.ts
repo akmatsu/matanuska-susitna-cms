@@ -9,8 +9,6 @@ import { relationship, select, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../utils/emailUtils';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 
-const listPlural = 'publicNotices';
-
 export const {
   Main: PublicNotice,
   Version: PublicNoticeVersion,
