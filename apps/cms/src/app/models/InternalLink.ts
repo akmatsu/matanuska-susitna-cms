@@ -23,16 +23,16 @@ export const InternalLink: ListConfig<any> = list({
       ui: {
         query: `{
           __typename
-          ... on Service { id title slug description}
-          ... on Park { id title slug description}
-          ... on Trail { id title slug description}
-          ... on Facility { id title slug description}
-          ... on Community { id title slug description}
-          ... on AssemblyDistrict { id title slug description}
-          ... on OrgUnit { id title slug description}
-          ... on Url { id title description url}
+          ... on Service { id title slug description __typename}
+          ... on Park { id title slug description __typename}
+          ... on Trail { id title slug description __typename}
+          ... on Facility { id title slug description __typename}
+          ... on Community { id title slug description __typename}
+          ... on AssemblyDistrict { id title slug description __typename}
+          ... on OrgUnit { id title slug description __typename}
+          ... on Url { id title description url __typename}
         }`,
-        views: './src/components/customFields/polymorphicRelationship/views',
+        views: './src/components/customFields/polymorphicItem/views',
       },
       field: (lists) =>
         graphql.field({

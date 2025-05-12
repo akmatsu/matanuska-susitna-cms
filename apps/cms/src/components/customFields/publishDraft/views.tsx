@@ -18,7 +18,7 @@ import { plural } from 'pluralize';
 import { useState } from 'react';
 import { useToasts } from '@keystone-ui/toast';
 import kebabCase from 'voca/kebab_case';
-import { logger } from '../../../configs/logger';
+
 
 export function Field({ field }: FieldProps<typeof controller>) {
   const router = useRouter();
@@ -47,7 +47,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
 
       router.push(`/${listSlug}/${result.publishedId}`);
     } catch (error: any) {
-      logger.error('Error publishing draft:', error);
+      console.error('Error publishing draft:', error);
       addToast({
         title: 'Error',
         message: `Failed to publish draft: ${error?.message}`,
