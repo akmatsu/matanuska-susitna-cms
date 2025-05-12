@@ -28,6 +28,7 @@ export function RichEditor(props: MdEditorProps) {
   const [isClient, setIsClient] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
   useEffect(() => {
     setIsClient(true);
   });

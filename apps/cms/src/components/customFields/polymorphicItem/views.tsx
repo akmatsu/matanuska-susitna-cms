@@ -1,52 +1,82 @@
-import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
 import {
+  FieldContainer,
+  FieldDescription,
+  FieldLabel,
+} from '@keystone-ui/fields';
+
+import {
+  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { logger } from '../../../configs/logger';
+import { Fragment, ReactNode } from 'react';
+import Link from 'next/link';
 
-function stringify(value: unknown) {
-  if (typeof value === 'string') return value;
-  if (value === undefined || value === null) return '';
-  if (typeof value !== 'object') return JSON.stringify(value);
+type ItemValue = {
+  id: string;
+  title: string;
+  slug?: string | null;
+  description?: string | null;
+  url?: string | null;
+  __typename: string;
+};
 
-  const omitTypename = (key: string, value: any) =>
-    key === '__typename' ? undefined : value;
-  const dataWithoutTypename = JSON.parse(JSON.stringify(value), omitTypename);
-  return JSON.stringify(dataWithoutTypename, null, 2);
+import slugify from 'voca/slugify';
+import { plural } from 'pluralize';
+
+function PrettyData({ data }: { data?: ItemValue | undefined }) {
+  if (data === undefined || data === null) return null;
+
+  return (
+    <Fragment>
+      <p className="text-sm font-bold text-gray-500">{data.__typename}</p>
+      <Link
+        href={`/${slugify(plural(data.__typename)).toLowerCase()}/${data.id}`}
+      >
+        {data.title}
+      </Link>
+    </Fragment>
+  );
 }
+export const Field = ({ field, value }: FieldProps<typeof controller>) => {
+  return !value ? null : (
+    <FieldContainer>
+      <FieldLabel>{field.path}</FieldLabel>
+      <FieldDescription id={`${field.path}-description`}>
+        {field.description}
+      </FieldDescription>
+      <PrettyData data={value} />
+    </FieldContainer>
+  );
+};
 
-export function Field({
-  value,
-  autoFocus,
-  field,
-}: FieldProps<typeof controller>) {
-  logger.info('Field', { value, autoFocus, field });
+export const Cell: CellComponent = ({ item, field }) => {
+  return <PrettyData data={item[field.path]} />;
+};
+
+export const CardValue: CardValueComponent = ({ item, field }) => {
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
-      <TextInput autoFocus={autoFocus} value={stringify(value)} />;
+      <PrettyData data={item[field.path]} />
     </FieldContainer>
   );
-}
-
-export const Cell: CellComponent<typeof controller> = ({ value }) => {
-  return value != null ? <p>{stringify(value)}</p> : null;
 };
 
 export const controller = (
   config: FieldControllerConfig<{ query: string }>,
-): FieldController<string | undefined | null, string> => {
-  logger.info('Controller', config);
+): FieldController<ItemValue | undefined | null> => {
   return {
     path: config.path,
-    label: config.fieldMeta.query,
+    label: config.label,
     description: config.description,
     graphqlSelection: `${config.path}${config.fieldMeta.query}`,
-    defaultValue: null,
-    deserialize: (data: any): string | null => data[config.path],
+    defaultValue: undefined,
+    deserialize: (data) => {
+      return data[config.path];
+    },
     serialize: () => ({}),
   };
 };
