@@ -1,5 +1,5 @@
 .milkdown {
-  milkdown-code-block {
+  .milkdown-code-block {
     display: block;
     position: relative;
     padding: 8px 20px 20px;

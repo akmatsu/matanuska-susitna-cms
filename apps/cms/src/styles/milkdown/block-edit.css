@@ -1,5 +1,5 @@
 .milkdown {
-  milkdown-block-handle {
+  .milkdown-block-handle {
     &[data-show='false'] {
       opacity: 0;
       pointer-events: none;
@@ -34,7 +34,7 @@
     }
   }
 
-  milkdown-slash-menu {
+  .milkdown-slash-menu {
     &[data-show='false'] {
       display: none;
     }
