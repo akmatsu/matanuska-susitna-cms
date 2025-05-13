@@ -99,6 +99,16 @@ export const generalItemAccess = (listKey: string) =>
       (await belongsToGroup(args, listKey)),
   }) satisfies Item;
 
+export const filterByPubStatus: Filter = {
+  query: async ({ session }: BaseAccessArgs<BaseListTypeInfo>) => {
+    // if the user is logged in, they can see all items
+    if (session) return {};
+    return {
+      status: { equals: 'published' },
+    };
+  },
+};
+
 /**
  * Filters out unpublished items from query results from public requests.
  */

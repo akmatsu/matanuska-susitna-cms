@@ -1,5 +1,9 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { generalItemAccess, generalOperationAccess } from '../access';
+import {
+  filterByPubStatus,
+  generalItemAccess,
+  generalOperationAccess,
+} from '../access';
 import {
   basePage,
   basePageQuery,
@@ -44,6 +48,7 @@ export const {
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Park'),
+      filter: filterByPubStatus,
     },
     mainHooks: {
       async beforeOperation(args) {

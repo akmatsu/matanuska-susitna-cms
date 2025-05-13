@@ -1,5 +1,6 @@
 import {
   filterByPubDates,
+  filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../access';
@@ -41,7 +42,7 @@ export const {
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),
-      filter: filterByPubDates,
+      filter: filterByPubStatus,
     },
 
     mainHooks: {
