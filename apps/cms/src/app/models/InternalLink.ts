@@ -1,5 +1,5 @@
 import { graphql, list, ListConfig } from '@keystone-6/core';
-import { generalOperationAccess, isAdmin } from '../access';
+import { generalOperationAccess, isAdmin, isContentManager } from '../access';
 import { polymorphicRelationship } from '../../components/customFields/polymorphicRelationship';
 import { text, virtual } from '@keystone-6/core/fields';
 import { capitalizeFirstLetter } from '../../utils';
@@ -10,7 +10,8 @@ export const InternalLink: ListConfig<any> = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: (args) => !isAdmin(args),
+    isHidden: async (args) => !(await isContentManager(args)),
+    hideCreate: true,
   },
   fields: {
     label: text({
