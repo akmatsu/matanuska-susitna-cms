@@ -267,7 +267,7 @@ export const slug = text({
       if (operation === 'create') {
         if (resolvedData['title']) {
           const title = resolvedData['title'] as string;
-          return title.toLowerCase().replace(/\s/gi, '-');
+          return v.slugify(title).toLowerCase();
         }
       }
       return resolvedData[fieldKey];
