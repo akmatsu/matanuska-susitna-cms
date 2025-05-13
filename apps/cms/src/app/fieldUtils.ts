@@ -522,10 +522,12 @@ export async function typesenseUpsert(
     operation,
     context,
     item,
+    originalItem,
   }: {
     operation: 'create' | 'update' | 'delete';
     context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
     item?: BaseItem;
+    originalItem?: BaseItem;
   },
 ) {
   if (
@@ -547,6 +549,22 @@ export async function typesenseUpsert(
         .upsert(document);
     } catch (error: any) {
       logger.error('Error updating Typesense document:', error);
+    }
+  }
+
+  if (
+    operation === 'update' &&
+    item &&
+    originalItem &&
+    item.status === 'unpublished' &&
+    originalItem.status === 'published'
+  ) {
+    try {
+      TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+        .documents(item.id.toString())
+        .delete();
+    } catch (error: any) {
+      logger.error('Error deleting Typesense document', error);
     }
   }
 }
