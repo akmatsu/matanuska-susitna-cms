@@ -69,8 +69,6 @@ export function CustomNavigation({
 
   const otherLists = lists.filter((list) => !excludeKeys.has(list.key));
 
-  console.log(specialPages);
-
   return (
     <NavigationContainer authenticatedItem={authenticatedItem}>
       <ListSection title="Home">

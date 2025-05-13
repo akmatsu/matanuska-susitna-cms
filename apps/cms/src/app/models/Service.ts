@@ -107,11 +107,7 @@ export const {
     versionLimit: 20,
     versionAgeDays: 365,
     query: `id heroImage title description body tags {id} orgUnits {id} communities {id} contacts {id} userGroups {id} trails {id} parks {id} facilities {id} editorNotes __typename primaryAction {id} secondaryActions {id} primaryContact {id} documents {id}`,
-    // mainAccess: {
-    //   operation: generalOperationAccess,
-    //   item: generalItemAccess('Service'),
-    //   filter: filterByPubDates,
-    // },
+
     mainAccess: allowAll,
     mainHooks: {
       async beforeOperation(args) {

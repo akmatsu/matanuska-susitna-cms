@@ -11,6 +11,7 @@ export const Highlight: ListConfig<any> = list({
     operation: elevatedOperationAccess,
   },
   ui: {
+    hideCreate: true,
     isHidden: async (args) => !(await isContentManager(args)),
   },
   graphql: {

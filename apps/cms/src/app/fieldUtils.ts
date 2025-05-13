@@ -27,8 +27,8 @@ import {
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
 } from '../utils/typesense';
-import { capitalizeFirstLetter, toPascalCase } from '../utils';
 import { logger } from '../configs/logger';
+import v from 'voca';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -528,9 +528,13 @@ export async function typesenseUpsert(
     item?: BaseItem;
   },
 ) {
-  if ((operation === 'update' || operation === 'create') && item) {
+  if (
+    (operation === 'update' || operation === 'create') &&
+    item &&
+    item.status === 'published'
+  ) {
     try {
-      const thing = capitalizeFirstLetter(listNameSingular);
+      const thing = v.capitalize(listNameSingular);
       const doc = await context.query[thing]?.findOne({
         where: { id: item.id.toString() },
         query,
