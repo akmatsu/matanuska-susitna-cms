@@ -131,7 +131,7 @@ button,
       }
 
       p:not(li.step > p:first-of-type) {
-        @apply my-4 leading-5;
+        @apply mt-1 mb-4 leading-5;
         &.primary-action {
           @apply w-fit! rounded-sm! bg-blue-600! px-2! py-1! text-white!;
         }
