@@ -1,6 +1,6 @@
 /* Disabled automatic source detection. */
 @import 'tailwindcss' important;
-@import './milkdown//style.css';
+@import './milkdown/style.css';
 @plugin '@iconify/tailwind4';
 @plugin '@tailwindcss/typography';
 
