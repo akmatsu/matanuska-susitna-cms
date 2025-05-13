@@ -5,9 +5,10 @@ import {
 } from '@keystone-6/core/admin-ui/components';
 import { ListMeta, NavigationProps } from '@keystone-6/core/types';
 import { PAGES } from '../configs/appConfig';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren } from 'react';
 
 import '../styles/global.css';
+import Link from 'next/link';
 
 function Divider() {
   return <div className="border-b border-gray-100"></div>;
@@ -52,7 +53,7 @@ export function CustomNavigation({
     /Alert|Tag|Highlight|ApiKey/g.test(list.key),
   );
   const pageLists = lists.filter((list) =>
-    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail/gi.test(
+    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|HomePage|PublicNotice/gi.test(
       list.key,
     ),
   );
@@ -80,7 +81,23 @@ export function CustomNavigation({
       <ListSection lists={systemLists} title="System">
         <NavItem href={PAGES.TYPESENSE}>Manage Typesense</NavItem>
       </ListSection>
+
       <ListSection lists={otherLists} title="Other Items" />
+      <p className="mx-6 mt-4 mb-8 text-xs text-gray-500">
+        This system is the official CMS of the{' '}
+        <Link href="https://matsu.gov" target="_blank">
+          Matanuska Susitna Borough Website
+        </Link>{' '}
+        and is developed and maintained by the MSB Web Team. For assistance,
+        please{' '}
+        <Link
+          href="https://support.matsu.gov/TDClient/33/Portal/Requests/ServiceDet?ID=50"
+          target="_blank"
+        >
+          submit a support ticket
+        </Link>
+        .
+      </p>
     </NavigationContainer>
   );
 }
