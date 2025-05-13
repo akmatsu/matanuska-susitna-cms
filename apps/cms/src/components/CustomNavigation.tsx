@@ -27,7 +27,7 @@ function ListSection({
   title: string;
   children?: React.ReactNode;
 }) {
-  if ((lists !== undefined && lists.length > 1) || children) {
+  if ((lists !== undefined && lists.length >= 1) || children) {
     return (
       <>
         <Header>{title}</Header>
@@ -52,14 +52,16 @@ export function CustomNavigation({
   const systemLists = lists.filter((list) =>
     /Alert|Tag|Highlight|ApiKey/g.test(list.key),
   );
+  const specialPages = lists.filter((list) => /HomePage/gi.test(list.key));
   const pageLists = lists.filter((list) =>
-    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|HomePage|PublicNotice/gi.test(
+    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|PublicNotice/gi.test(
       list.key,
     ),
   );
 
   const excludeKeys = new Set([
     ...documentLists.map((list) => list.key),
+    ...specialPages.map((list) => list.key),
     ...userLists.map((list) => list.key),
     ...systemLists.map((list) => list.key),
     ...pageLists.map((list) => list.key),
@@ -67,12 +69,15 @@ export function CustomNavigation({
 
   const otherLists = lists.filter((list) => !excludeKeys.has(list.key));
 
+  console.log(specialPages);
+
   return (
     <NavigationContainer authenticatedItem={authenticatedItem}>
       <ListSection title="Home">
         <NavItem href="/">Dashboard</NavItem>
       </ListSection>
 
+      <ListSection lists={specialPages} title="Special Pages" />
       <ListSection lists={userLists} title="Users" />
       <ListSection lists={documentLists} title="Document Management">
         <NavItem href="/bulk-document-upload">Bulk Document Upload</NavItem>
