@@ -20,15 +20,47 @@ export const HomePage: ListConfig<any> = list({
       fields: {
         toolbeltOne: relationship({
           ref: 'Highlight',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['title', 'image', 'message', 'linkedItem'],
+            inlineConnect: false,
+            inlineCreate: {
+              fields: ['title', 'image', 'message', 'linkedItem'],
+            },
+          },
         }),
         toolbeltTwo: relationship({
           ref: 'Highlight',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['title', 'image', 'message', 'linkedItem'],
+            inlineConnect: false,
+            inlineCreate: {
+              fields: ['title', 'image', 'message', 'linkedItem'],
+            },
+          },
         }),
         toolbeltThree: relationship({
           ref: 'Highlight',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['title', 'image', 'message', 'linkedItem'],
+            inlineConnect: false,
+            inlineCreate: {
+              fields: ['title', 'image', 'message', 'linkedItem'],
+            },
+          },
         }),
         toolbeltFour: relationship({
           ref: 'Highlight',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['title', 'image', 'message', 'linkedItem'],
+            inlineConnect: false,
+            inlineCreate: {
+              fields: ['title', 'image', 'message', 'linkedItem'],
+            },
+          },
         }),
       },
     }),
@@ -37,12 +69,36 @@ export const HomePage: ListConfig<any> = list({
       fields: {
         highlightOne: relationship({
           ref: 'Highlight',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['title', 'image', 'message', 'linkedItem'],
+            inlineConnect: false,
+            inlineCreate: {
+              fields: ['title', 'image', 'message', 'linkedItem'],
+            },
+          },
         }),
         highlightTwo: relationship({
           ref: 'Highlight',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['title', 'image', 'message', 'linkedItem'],
+            inlineConnect: false,
+            inlineCreate: {
+              fields: ['title', 'image', 'message', 'linkedItem'],
+            },
+          },
         }),
         highlightThree: relationship({
           ref: 'Highlight',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['title', 'image', 'message', 'linkedItem'],
+            inlineConnect: false,
+            inlineCreate: {
+              fields: ['title', 'image', 'message', 'linkedItem'],
+            },
+          },
         }),
       },
     }),
