@@ -25,7 +25,7 @@ export const stepSchema = $node('step', (ctx) => ({
     'li',
     {
       class:
-        'step pl-6 border-l-4 min-h-9 ml-2 before:shadow-[0_0_0_0.25rem_#ffffff] before:flex before:items-center before:justify-center before:text-xl before:border-2 before:border-black before:rounded-full before:size-8 before:absolute before:bg-white before:content-[counter(muffins,decimal)] before:[counter-increment:muffins] before:-left-[1.1rem] [&>p:first-child]:mt-0 [&>p:first-child]:text-xl [&>p:first-child]:font-bold [&>p:first-child]:font-serif',
+        'step pl-6 border-l-4 min-h-9 ml-2 before:shadow-[0_0_0_0.25rem_#ffffff] before:flex before:items-center before:justify-center before:text-xl before:border-2 before:border-black before:rounded-full before:size-8 before:absolute before:bg-white before:content-[counter(muffins,decimal)] before:[counter-increment:muffins] before:-left-[1.1rem] [&>p:first-child]:mt-0 [&>p:first-child]:text-xl [&>p:first-child]:font-bold [&>p:first-child]:my-0',
       'data-label': node.attrs.label,
       'data-list-type': node.attrs.listType,
     },
