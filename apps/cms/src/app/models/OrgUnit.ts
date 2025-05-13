@@ -1,13 +1,12 @@
-import { list, ListConfig } from '@keystone-6/core';
 import {
   basePage,
   basePageQuery,
-  services,
   typesenseDelete,
   typesenseUpsert,
 } from '../fieldUtils';
 import {
   filterByPubDates,
+  filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../access';
@@ -47,7 +46,7 @@ export const {
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('OrgUnit'),
-      filter: filterByPubDates,
+      filter: filterByPubStatus,
     },
     mainHooks: {
       async beforeOperation(args) {

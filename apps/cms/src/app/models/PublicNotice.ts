@@ -2,6 +2,7 @@ import { list, ListConfig } from '@keystone-6/core';
 import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
 import {
   filterByPubDates,
+  filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../access';
@@ -91,7 +92,7 @@ export const {
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('PublicNotice'),
-      filter: filterByPubDates,
+      filter: filterByPubStatus,
     },
     mainHooks: {
       async beforeOperation(args) {

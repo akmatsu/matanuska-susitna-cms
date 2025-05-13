@@ -2,6 +2,7 @@ import { relationship, text } from '@keystone-6/core/fields';
 import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
 import {
   filterByPubDates,
+  filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../access/utils';
@@ -108,7 +109,11 @@ export const {
     versionAgeDays: 365,
     query: `id heroImage title description body tags {id} orgUnits {id} communities {id} contacts {id} userGroups {id} trails {id} parks {id} facilities {id} editorNotes __typename primaryAction {id} secondaryActions {id} primaryContact {id} documents {id}`,
 
-    mainAccess: allowAll,
+    mainAccess: {
+      operation: generalOperationAccess,
+      item: generalItemAccess('Service'),
+      filter: filterByPubStatus,
+    },
     mainHooks: {
       async beforeOperation(args) {
         await typesenseDelete(args);

@@ -1,4 +1,8 @@
-import { generalItemAccess, generalOperationAccess } from '../access';
+import {
+  filterByPubStatus,
+  generalItemAccess,
+  generalOperationAccess,
+} from '../access';
 import {
   basePage,
   basePageQuery,
@@ -42,6 +46,7 @@ export const {
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Facility'),
+      filter: filterByPubStatus,
     },
     mainHooks: {
       async beforeOperation(args) {

@@ -1,5 +1,9 @@
 import { group } from '@keystone-6/core';
-import { generalItemAccess, generalOperationAccess } from '../access';
+import {
+  filterByPubStatus,
+  generalItemAccess,
+  generalOperationAccess,
+} from '../access';
 import {
   basePage,
   emailRegex,
@@ -122,6 +126,7 @@ export const {
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('AssemblyDistrict'),
+      filter: filterByPubStatus,
     },
     query:
       'id title description body tags {id} photo {id} contacts {id} bio memberName address email phone fax termStart termEnd __typename actions {id} documents {id}',
