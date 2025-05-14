@@ -12,7 +12,6 @@ export const REDIS_CONNECTION = new IORedis({
   maxRetriesPerRequest: null,
   lazyConnect: true,
 });
-
 export const publishQueue = new Queue('publish', {
   connection: REDIS_CONNECTION,
 });
