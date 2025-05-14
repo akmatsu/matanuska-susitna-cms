@@ -51,6 +51,6 @@ export async function connectRedis(): Promise<void> {
     await REDIS_CONNECTION.connect();
     logger.info('✅ Connected to Redis');
   } catch (error) {
-    logger.error('🚨 Error connecting to Redis:', error);
+    logger.error(error, '🚨 Error connecting to Redis');
   }
 }

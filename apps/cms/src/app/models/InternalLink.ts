@@ -105,7 +105,7 @@ export const InternalLink: ListConfig<any> = list({
                 __typename: linkedItem.__typename,
               };
             } catch (err) {
-              logger.error(err);
+              logger.error(err, 'Error fetching linked item');
               return null;
             }
           },

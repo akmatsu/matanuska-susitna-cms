@@ -24,7 +24,7 @@ export default function CustomPage() {
         setHealth(true);
       }
     } catch (err) {
-      logger.error('Error getting Typesense health:', err);
+      logger.error(err, 'Error getting Typesense health');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to get Typesense health',
@@ -53,7 +53,7 @@ export default function CustomPage() {
         message: 'Collections created successfully',
       });
     } catch (err) {
-      logger.error('Error creating collections:', err);
+      logger.error(err, 'Error creating collections:');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to create collections',
@@ -85,7 +85,7 @@ export default function CustomPage() {
         message: 'Collection removed successfully',
       });
     } catch (err) {
-      logger.error('Error removing collection:', err);
+      logger.error(err, 'Error removing collection:');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to remove collection',
@@ -113,7 +113,7 @@ export default function CustomPage() {
         message: 'Schema updated successfully',
       });
     } catch (err) {
-      logger.error('Error updating schema:', err);
+      logger.error(err, 'Error updating schema');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to update schema',
@@ -141,7 +141,7 @@ export default function CustomPage() {
         message: 'Pages imported successfully',
       });
     } catch (err) {
-      logger.error('Error importing pages:', err);
+      logger.error(err, 'Error importing pages:');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to import pages',

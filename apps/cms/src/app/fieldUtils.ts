@@ -548,7 +548,7 @@ export async function typesenseUpsert(
         .documents()
         .upsert(document);
     } catch (error: any) {
-      logger.error('Error updating Typesense document:', error);
+      logger.error(error, 'Error updating Typesense document');
     }
   }
 
@@ -564,7 +564,7 @@ export async function typesenseUpsert(
         .documents(item.id.toString())
         .delete();
     } catch (error: any) {
-      logger.error('Error deleting Typesense document', error);
+      logger.error(error, 'Error deleting Typesense document');
     }
   }
 }
@@ -582,7 +582,7 @@ export async function typesenseDelete({
         .documents(item.id.toString())
         .delete();
     } catch (error: any) {
-      logger.error('Error deleting Typesense document', error);
+      logger.error(error, 'Error deleting Typesense document');
     }
   }
 }

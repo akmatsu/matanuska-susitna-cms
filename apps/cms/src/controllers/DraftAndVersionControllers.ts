@@ -51,7 +51,7 @@ export const publishDraft: RequestControllerWithContext =
         publishedId: original.id,
       });
     } catch (error: any) {
-      logger.error('Error publishing draft:', error);
+      logger.error(error, 'Error publishing draft');
       return res.status(500).json({ error: 'Failed to publish draft' });
     }
   };
@@ -104,7 +104,7 @@ export const republishVersion: RequestControllerWithContext =
         publishedId: original.id,
       });
     } catch (error: any) {
-      logger.error('Error republishing version:', error);
+      logger.error(error, 'Error republishing version');
       return res.status(500).json({ error: 'Failed to republish version' });
     }
   };

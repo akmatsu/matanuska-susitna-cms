@@ -177,7 +177,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
               await userHook[args.operation]!(args as any);
             }
           } catch (error) {
-            logger.error('Error in afterOperation hook:', error);
+            logger.error(error, 'Error in afterOperation hook');
           }
         },
       },

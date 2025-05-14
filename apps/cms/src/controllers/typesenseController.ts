@@ -28,7 +28,7 @@ export const createTypesenseCollections: RequestController =
 
       return res.status(200).json({ message: 'Collections created.' });
     } catch (error: any) {
-      logger.error('Error creating collections:', error);
+      logger.error(error, 'Error creating typesense collections:');
       return res.status(500).json(error);
     }
   };
@@ -64,7 +64,7 @@ export const updateTypesenseSchema: RequestController =
 
       return res.status(200).json({ message: 'Schema updated.' });
     } catch (error: any) {
-      logger.error('Error updating schema:', error);
+      logger.error(error, 'Error updating typesense schema');
       return res.status(500).json(error);
     }
   };
@@ -83,7 +83,7 @@ export const importPages: RequestControllerWithContext =
       );
       return res.status(200).json({ message: 'Pages imported.' });
     } catch (error: any) {
-      logger.error('Error importing pages:', error);
+      logger.error(error, 'Error importing typesense pages collection');
       return res.status(500).json(error);
     }
   };
@@ -108,7 +108,7 @@ export const removeCollection: RequestController = () => async (req, res) => {
       .status(204)
       .json({ message: `Collection ${collection} removed successfully` });
   } catch (error: any) {
-    logger.error('Error removing collection:', error);
+    logger.error(error, 'Error removing typesense collection');
     return res.status(500).json(error);
   }
 };

@@ -92,14 +92,14 @@ export async function createAndSendBulletin(
     });
   } catch (err: any) {
     if (err.response) {
-      logger.error('Error response:', err.response.data);
-      logger.error('Status code:', err.response.status);
-      logger.error('Headers:', err.response.headers);
+      logger.error(err.response.data, 'Error response');
+      logger.error(err.response.status, 'Status code');
+      logger.error(err.response.headers, 'Headers');
     } else if (err.request) {
-      logger.error('Error request:', err.request);
+      logger.error(err.response.headers, 'Error request:');
     } else {
-      logger.error('Error message:', err.message);
+      logger.error(err.message, 'Error message:');
     }
-    logger.error('Error config:', err.config);
+    logger.error(err.config, 'Error config');
   }
 }
