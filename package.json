@@ -8,7 +8,8 @@
     "cms:build": "pnpm turbo run build --filter=cms",
     "cms:start": "pnpm turbo run start --filter=cms",
     "cms:fix": "pnpm turbo run fix --filter=cms",
-    "cms:migrate": "pnpm turbo run migrate --filter=cms"
+    "cms:migrate": "pnpm turbo run migrate --filter=cms",
+    "cms:publish-worker": "pnpm turbo run start:publish-worker --filter=cms"
   },
   "keywords": [],
   "author": "",

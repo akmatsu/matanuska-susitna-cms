@@ -11,10 +11,15 @@
       "cache": false,
       "persistent": true
     },
+    "start:publish-worker": {
+      "cache": false,
+      "persistent": true
+    },
     "start": {
       "cache": false,
       "persistent": true
     },
+
     "storybook": {
       "cache": false,
       "persistent": true

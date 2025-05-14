@@ -1,10 +1,11 @@
 import { Queue, QueueEvents } from 'bullmq';
 import IORedis from 'ioredis';
 import { logger } from '../configs/logger';
+import 'dotenv/config';
 
 export const REDIS_CONNECTION = new IORedis({
-  host: '127.0.0.1',
-  port: 6379,
+  host: process.env.REDIS_HOST || '127.0.0.1',
+  port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
   maxRetriesPerRequest: null,
 });
 
@@ -15,12 +16,15 @@ export const publishQueue = new Queue('publish', {
 export const publishQueueEvents = new QueueEvents('publish', {
   connection: REDIS_CONNECTION,
 });
+
 publishQueueEvents.on('added', ({ jobId }) => {
   logger.info(`🔔 Job ${jobId} has been added to the queue`);
 });
+
 publishQueueEvents.on('completed', ({ jobId }) => {
   logger.info(`✅ Job ${jobId} has completed`);
 });
+
 publishQueueEvents.on('failed', ({ jobId, failedReason }) => {
   logger.error(`❌ Job ${jobId} failed: ${failedReason}`);
 });
