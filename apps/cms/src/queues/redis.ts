@@ -3,30 +3,15 @@ import IORedis from 'ioredis';
 import { logger } from '../configs/logger';
 import 'dotenv/config';
 
-const isAws = process.env.USE_REDIS_CLUSTER === 'true';
+const { REDIS_HOST, REDIS_PORT, REDIS_PASSWORD } = process.env;
 
-export const REDIS_CONNECTION = isAws
-  ? new IORedis.Cluster(
-      [
-        {
-          host: process.env.REDIS_HOST || '127.0.0.1',
-          port: process.env.REDIS_PORT
-            ? parseInt(process.env.REDIS_PORT)
-            : 6379,
-        },
-      ],
-      {
-        dnsLookup: (address, callback) => callback(null, address),
-        redisOptions: {
-          tls: {},
-        },
-      },
-    )
-  : new IORedis({
-      host: process.env.REDIS_HOST || '127.0.0.1',
-      port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
-      maxRetriesPerRequest: null,
-    });
+export const REDIS_CONNECTION = new IORedis({
+  host: REDIS_HOST || '127.0.0.1',
+  port: REDIS_PORT ? parseInt(REDIS_PORT) : 6379,
+  password: REDIS_PASSWORD,
+  maxRetriesPerRequest: null,
+  lazyConnect: true,
+});
 
 export const publishQueue = new Queue('publish', {
   connection: REDIS_CONNECTION,
