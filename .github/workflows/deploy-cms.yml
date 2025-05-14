@@ -81,6 +81,8 @@ jobs:
           GOV_DELIVERY_SUB_DOMAIN=${{secrets.GOV_DELIVERY_SUB_DOMAIN}}
           GOV_DELIVERY_ACCOUNT_CODE=${{secrets.GOV_DELIVERY_ACCOUNT_CODE}}
           GOV_DELIVERY_FROM_ADDRESS=${{secrets.GOV_DELIVERY_FROM_ADDRESS}}
+          REDIS_HOST=cms-${{secrets.REDIS_HOST}}
+          REDIS_PORT=${{secrets.REDIS_PORT}}
           EOT
 
       - uses: pnpm/action-setup@v4
@@ -134,6 +136,7 @@ jobs:
 
             # Start the production server
             pm2 reload cms || pm2 start pnpm --name cms -- run cms:start
+            pm2 reload cms-publish-worker || pm2 start pnpm --name cms-publish-worker -- run cms:publish-worker
             
             # Remove temporary folders.
             rm -rf ../cms.zip
