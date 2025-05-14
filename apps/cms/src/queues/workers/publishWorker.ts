@@ -69,5 +69,5 @@ export const publishWorker = async () => {
 
 if (require.main === module) {
   publishWorker();
-  logger.info('Worker started');
+  logger.info('Publish Worker Started');
 }

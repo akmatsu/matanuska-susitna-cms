@@ -1,5 +1,4 @@
 // Keystone config docs: https://keystonejs.com/docs/apis/config\
-import './src/queues/redis';
 import { config } from '@keystone-6/core';
 import { lists } from './src/app';
 import { TypeInfo } from '.keystone/types';
@@ -7,6 +6,7 @@ import { appConfig } from './src/configs/appConfig';
 import { type Session } from './src/session';
 import { nextAuthSessionStrategy } from './src/session';
 import { routes } from './src/routes/baseRoutes';
+import { connectRedis, getPublishQueueEvents } from './src/queues/redis';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -19,6 +19,10 @@ export default config<TypeInfo<Session>>({
         `generator client {
             binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]`,
       );
+    },
+    onConnect: async (keystone) => {
+      await connectRedis();
+      getPublishQueueEvents();
     },
   },
 

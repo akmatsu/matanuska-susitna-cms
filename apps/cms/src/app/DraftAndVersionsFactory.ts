@@ -13,7 +13,7 @@ import { publishDraft } from '../components/customFields/publishDraft';
 import { BasePageOptions } from './fieldUtils';
 import { plural } from 'pluralize';
 import { deepMerge, lowercaseFirstLetter } from '../utils';
-import { publishQueue } from '../queues/redis';
+import { getPublishQueue } from '../queues/redis';
 import { createDrafts } from '../components/customFields/drafts';
 import { logger } from '../configs/logger';
 
@@ -247,6 +247,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
       hooks: {
         async beforeOperation({ operation, item }) {
           if (operation === 'delete') {
+            const publishQueue = getPublishQueue();
             const id = item.id.toString();
 
             // Find and remove any existing publish jobs
@@ -262,6 +263,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
               args.item.publishAt &&
               args.item.publishAt !== args.originalItem.publishAt
             ) {
+              const publishQueue = getPublishQueue();
               // Determine the delay until the publishAt date
               const publishAtDate = new Date(args.item.publishAt);
               const now = Date.now();
@@ -294,6 +296,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
             // If publishAt is removed, remove any existing publish job
             if (!args.item.publishAt && args.originalItem.publishAt) {
+              const publishQueue = getPublishQueue();
               const jobId = `publish:${listKey}Draft:${args.item.id.toString()}`;
               const existingJob = await publishQueue.getJob(jobId);
               if (existingJob) await existingJob.remove();

@@ -12,22 +12,45 @@ export const REDIS_CONNECTION = new IORedis({
   maxRetriesPerRequest: null,
   lazyConnect: true,
 });
-export const publishQueue = new Queue('publish', {
-  connection: REDIS_CONNECTION,
-});
 
-export const publishQueueEvents = new QueueEvents('publish', {
-  connection: REDIS_CONNECTION,
-});
+let publishQueue: Queue | null = null;
+let publishEvents: QueueEvents | null = null;
 
-publishQueueEvents.on('added', ({ jobId }) => {
-  logger.info(`🔔 Job ${jobId} has been added to the queue`);
-});
+export const getPublishQueue = () => {
+  if (!publishQueue) {
+    publishQueue = new Queue('publish', {
+      connection: REDIS_CONNECTION,
+    });
+  }
+  return publishQueue;
+};
 
-publishQueueEvents.on('completed', ({ jobId }) => {
-  logger.info(`✅ Job ${jobId} has completed`);
-});
+export const getPublishQueueEvents = (): QueueEvents => {
+  if (!publishEvents) {
+    publishEvents = new QueueEvents('publish', {
+      connection: REDIS_CONNECTION,
+    });
+    publishEvents.on('added', ({ jobId }) =>
+      logger.info(`🔔 Job ${jobId} added`),
+    );
+    publishEvents.on('removed', ({ jobId }) =>
+      logger.info(`🔔 Job ${jobId} removed`),
+    );
+    publishEvents.on('completed', ({ jobId }) =>
+      logger.info(`✅ Job ${jobId} done`),
+    );
+    publishEvents.on('failed', ({ jobId, failedReason }) =>
+      logger.error(`❌ Job ${jobId} failed: ${failedReason}`),
+    );
+  }
+  return publishEvents;
+};
 
-publishQueueEvents.on('failed', ({ jobId, failedReason }) => {
-  logger.error(`❌ Job ${jobId} failed: ${failedReason}`);
-});
+export async function connectRedis(): Promise<void> {
+  try {
+    await REDIS_CONNECTION.connect();
+    logger.info('✅ Connected to Redis');
+  } catch (error) {
+    logger.error('🚨 Error connecting to Redis:', error);
+  }
+}
