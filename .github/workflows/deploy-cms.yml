@@ -81,7 +81,7 @@ jobs:
           GOV_DELIVERY_SUB_DOMAIN=${{secrets.GOV_DELIVERY_SUB_DOMAIN}}
           GOV_DELIVERY_ACCOUNT_CODE=${{secrets.GOV_DELIVERY_ACCOUNT_CODE}}
           GOV_DELIVERY_FROM_ADDRESS=${{secrets.GOV_DELIVERY_FROM_ADDRESS}}
-          REDIS_HOST=cms-${{secrets.REDIS_HOST}}
+          REDIS_HOST=${{secrets.REDIS_HOST}}
           REDIS_PORT=${{secrets.REDIS_PORT}}
           REDIS_PASSWORD=${{secrets.REDIS_PASSWORD}}
           EOT
