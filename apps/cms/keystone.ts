@@ -9,15 +9,15 @@ import { nextAuthSessionStrategy } from './src/session';
 import { routes } from './src/routes/baseRoutes';
 import { logger } from './src/configs/logger';
 
-process.on('uncaughtException', (error) => {
-  logger.error('Uncaught Exception:', error);
-  process.exit(1);
-});
+// process.on('uncaughtException', (error) => {
+//   logger.error('Uncaught Exception:', error);
+//   process.exit(1);
+// });
 
-process.on('unhandledRejection', (reason, promise) => {
-  logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  process.exit(1);
-});
+// process.on('unhandledRejection', (reason, promise) => {
+//   logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
+//   process.exit(1);
+// });
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db

@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import * as PrismaModule from '.prisma/client';
 import config from '../../../keystone';
 import { Worker, Job } from 'bullmq';
