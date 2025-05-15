@@ -44,7 +44,6 @@ export const publishWorker = async () => {
             {
               title: title.split(' ---')[0],
               status: 'published',
-              publishAt: new Date().toISOString(),
             },
             'update',
           ),

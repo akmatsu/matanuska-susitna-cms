@@ -317,12 +317,22 @@ async function createVersion(
     operation,
     item,
     context,
+    originalItem,
   }: {
     operation: 'create' | 'update' | 'delete';
     item?: BaseItem;
     context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
+    originalItem?: BaseItem;
   },
 ) {
+  if (operation === 'update') {
+    const originalVersionId = (originalItem as any).currentVersionId;
+    const newVersionId = (item as any).currentVersionId;
+    console.log(originalVersionId, newVersionId);
+    if (originalVersionId !== newVersionId) {
+      return;
+    }
+  }
   if (
     (operation === 'update' || operation === 'create') &&
     item &&

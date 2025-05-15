@@ -29,6 +29,7 @@ import {
 } from '../utils/typesense';
 import { logger } from '../configs/logger';
 import v from 'voca';
+import { ContentMatch } from '@milkdown/kit/prose/model';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -144,6 +145,27 @@ export function publishable(opts?: {
                 fieldMode: opts?.isDraft ? 'edit' : 'read',
               },
             }),
+          },
+          hooks: {
+            async resolveInput({
+              operation,
+              resolvedData,
+              item,
+              fieldKey,
+              inputData,
+            }) {
+              if (operation === 'create' && inputData.status === 'published') {
+                return new Date().toISOString();
+              }
+              if (
+                operation === 'update' &&
+                inputData.status === 'published' &&
+                item?.status === 'unpublished'
+              ) {
+                return new Date().toISOString();
+              }
+              return resolvedData[fieldKey];
+            },
           },
         }),
         unpublishAt: timestamp({
@@ -302,8 +324,8 @@ export function relateActiveUser({
   context: KeystoneContextFromListTypeInfo<any>;
   fieldKey: any;
 }) {
-  if (operation === 'create') {
-    return context.session?.id ? { connect: { id: context.session.id } } : null;
+  if (operation === 'create' && context.session) {
+    return context.session.id ? { connect: { id: context.session.id } } : null;
   }
   return resolvedData?.[fieldKey];
 }

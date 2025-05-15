@@ -2,14 +2,14 @@ import { list, ListConfig } from '@keystone-6/core';
 import { password, relationship, select, text } from '@keystone-6/core/fields';
 import { timestamps } from '../fieldUtils';
 import { isAdmin, ROLES } from '../access/roles';
-// import { allowAll } from '@keystone-6/core/access';
+import { allowAll } from '@keystone-6/core/access';
 import { internalMaxOperationAccess } from '../access';
 
 export const User: ListConfig<any> = list({
-  access: {
-    operation: internalMaxOperationAccess,
-  },
-  // access: allowAll,
+  // access: {
+  //   operation: internalMaxOperationAccess,
+  // },
+  access: allowAll,
   ui: {
     hideCreate: true,
     isHidden: async (args) => !(await isAdmin(args)),
