@@ -70,7 +70,11 @@ export default function BulkDocumentUpload() {
     setValue,
     watch,
     reset,
-  } = useForm<FormData>();
+    trigger,
+  } = useForm<FormData>({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
 
   const files = watch('files');
   const [selectedCollections, setSelectedCollections] = useState<
@@ -161,7 +165,11 @@ export default function BulkDocumentUpload() {
     const newFiles = Array.from(files).filter((file) => file.name !== name);
     const data = new DataTransfer();
     newFiles.forEach((file) => data.items.add(file));
-    setValue('files', data.files);
+    setValue('files', data.files, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    trigger('files');
   }
 
   return (
@@ -337,7 +345,11 @@ export default function BulkDocumentUpload() {
               f.forEach((file) => data.items.add(file));
               nf.forEach((file) => data.items.add(file));
 
-              setValue('files', data.files);
+              setValue('files', data.files, {
+                shouldValidate: true,
+                shouldDirty: true,
+              });
+              trigger('files');
               setIsDragging(false);
             }}
             onDragOver={(e) => {

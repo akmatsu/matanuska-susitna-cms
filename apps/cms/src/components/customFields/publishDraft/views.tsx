@@ -19,7 +19,6 @@ import { useState } from 'react';
 import { useToasts } from '@keystone-ui/toast';
 import kebabCase from 'voca/kebab_case';
 
-
 export function Field({ field }: FieldProps<typeof controller>) {
   const router = useRouter();
   const { id } = useParams();
@@ -33,6 +32,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
 
     try {
       setLoading(true);
+
       const res = await fetch(
         `/publish/${plural(kebabCase(field.listName)).toLowerCase()}/${id}?query=${field.query}`,
         {

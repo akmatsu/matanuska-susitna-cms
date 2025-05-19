@@ -206,6 +206,8 @@ type AssemblyDistrict {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   status: String
   drafts(where: AssemblyDistrictDraftWhereInput! = {}, orderBy: [AssemblyDistrictDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictDraftWhereUniqueInput): [AssemblyDistrictDraft!]
   draftsCount(where: AssemblyDistrictDraftWhereInput! = {}): Int
@@ -251,6 +253,7 @@ input AssemblyDistrictWhereInput {
   fax: StringNullableFilter
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
+  boards: BoardManyRelationFilter
   status: StringFilter
   drafts: AssemblyDistrictDraftManyRelationFilter
   versions: AssemblyDistrictVersionManyRelationFilter
@@ -294,6 +297,12 @@ input StringNullableFilter {
   endsWith: String
   mode: QueryMode
   not: StringNullableFilter
+}
+
+input BoardManyRelationFilter {
+  every: BoardWhereInput
+  some: BoardWhereInput
+  none: BoardWhereInput
 }
 
 input AssemblyDistrictDraftManyRelationFilter {
@@ -363,6 +372,7 @@ input AssemblyDistrictUpdateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards: BoardRelateToManyForUpdateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -416,6 +426,13 @@ input ImageRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input BoardRelateToManyForUpdateInput {
+  disconnect: [BoardWhereUniqueInput!]
+  set: [BoardWhereUniqueInput!]
+  create: [BoardCreateInput!]
+  connect: [BoardWhereUniqueInput!]
+}
+
 input AssemblyDistrictDraftRelateToManyForUpdateInput {
   disconnect: [AssemblyDistrictDraftWhereUniqueInput!]
   set: [AssemblyDistrictDraftWhereUniqueInput!]
@@ -467,6 +484,7 @@ input AssemblyDistrictCreateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards: BoardRelateToManyForCreateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -507,6 +525,11 @@ input ContactRelateToManyForCreateInput {
 input ImageRelateToOneForCreateInput {
   create: ImageCreateInput
   connect: ImageWhereUniqueInput
+}
+
+input BoardRelateToManyForCreateInput {
+  create: [BoardCreateInput!]
+  connect: [BoardWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForCreateInput {
@@ -556,6 +579,8 @@ type AssemblyDistrictDraft {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   publish: String
 }
 
@@ -592,6 +617,7 @@ input AssemblyDistrictDraftWhereInput {
   fax: StringNullableFilter
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
+  boards: BoardManyRelationFilter
 }
 
 input AssemblyDistrictDraftOrderByInput {
@@ -642,6 +668,7 @@ input AssemblyDistrictDraftUpdateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards: BoardRelateToManyForUpdateInput
   publish: String
 }
 
@@ -682,6 +709,7 @@ input AssemblyDistrictDraftCreateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards: BoardRelateToManyForCreateInput
   publish: String
 }
 
@@ -722,6 +750,8 @@ type AssemblyDistrictVersion {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   isLive: AssemblyDistrict
   republish: String
 }
@@ -760,6 +790,7 @@ input AssemblyDistrictVersionWhereInput {
   fax: StringNullableFilter
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
+  boards: BoardManyRelationFilter
   isLive: AssemblyDistrictWhereInput
 }
 
@@ -811,6 +842,7 @@ input AssemblyDistrictVersionUpdateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards: BoardRelateToManyForUpdateInput
   isLive: AssemblyDistrictRelateToOneForUpdateInput
   republish: String
 }
@@ -846,7 +878,575 @@ input AssemblyDistrictVersionCreateInput {
   fax: String
   termStart: DateTime
   termEnd: DateTime
+  boards: BoardRelateToManyForCreateInput
   isLive: AssemblyDistrictRelateToOneForCreateInput
+  republish: String
+}
+
+type Board {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions: InternalLink
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLink
+  linkToResolutions: ExternalLink
+  linkToPublicOpinionMessage: ExternalLink
+  type: String
+  isActive: Boolean
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  status: String
+  drafts(where: BoardDraftWhereInput! = {}, orderBy: [BoardDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardDraftWhereUniqueInput): [BoardDraft!]
+  draftsCount(where: BoardDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: BoardVersionWhereInput! = {}, orderBy: [BoardVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardVersionWhereUniqueInput): [BoardVersion!]
+  versionsCount(where: BoardVersionWhereInput! = {}): Int
+  currentVersion: BoardVersion
+}
+
+input BoardWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+  currentVersion: BoardVersionWhereUniqueInput
+}
+
+input BoardWhereInput {
+  AND: [BoardWhereInput!]
+  OR: [BoardWhereInput!]
+  NOT: [BoardWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkWhereInput
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  linkToAgendas: ExternalLinkWhereInput
+  linkToResolutions: ExternalLinkWhereInput
+  linkToPublicOpinionMessage: ExternalLinkWhereInput
+  type: StringFilter
+  isActive: BooleanFilter
+  districts: AssemblyDistrictManyRelationFilter
+  communities: CommunityManyRelationFilter
+  status: StringFilter
+  drafts: BoardDraftManyRelationFilter
+  versions: BoardVersionManyRelationFilter
+  currentVersion: BoardVersionWhereInput
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input AssemblyDistrictManyRelationFilter {
+  every: AssemblyDistrictWhereInput
+  some: AssemblyDistrictWhereInput
+  none: AssemblyDistrictWhereInput
+}
+
+input CommunityManyRelationFilter {
+  every: CommunityWhereInput
+  some: CommunityWhereInput
+  none: CommunityWhereInput
+}
+
+input BoardDraftManyRelationFilter {
+  every: BoardDraftWhereInput
+  some: BoardDraftWhereInput
+  none: BoardDraftWhereInput
+}
+
+input BoardVersionManyRelationFilter {
+  every: BoardVersionWhereInput
+  some: BoardVersionWhereInput
+  none: BoardVersionWhereInput
+}
+
+input BoardOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  type: OrderDirection
+  isActive: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
+}
+
+input BoardUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLinkRelateToOneForUpdateInput
+  linkToResolutions: ExternalLinkRelateToOneForUpdateInput
+  linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
+  type: String
+  isActive: Boolean
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  status: String
+  drafts: BoardDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: BoardVersionRelateToManyForUpdateInput
+  currentVersion: BoardVersionRelateToOneForUpdateInput
+}
+
+input ExternalLinkRelateToOneForUpdateInput {
+  create: ExternalLinkCreateInput
+  connect: ExternalLinkWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AssemblyDistrictRelateToManyForUpdateInput {
+  disconnect: [AssemblyDistrictWhereUniqueInput!]
+  set: [AssemblyDistrictWhereUniqueInput!]
+  create: [AssemblyDistrictCreateInput!]
+  connect: [AssemblyDistrictWhereUniqueInput!]
+}
+
+input CommunityRelateToManyForUpdateInput {
+  disconnect: [CommunityWhereUniqueInput!]
+  set: [CommunityWhereUniqueInput!]
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
+}
+
+input BoardDraftRelateToManyForUpdateInput {
+  disconnect: [BoardDraftWhereUniqueInput!]
+  set: [BoardDraftWhereUniqueInput!]
+  create: [BoardDraftCreateInput!]
+  connect: [BoardDraftWhereUniqueInput!]
+}
+
+input BoardVersionRelateToManyForUpdateInput {
+  disconnect: [BoardVersionWhereUniqueInput!]
+  set: [BoardVersionWhereUniqueInput!]
+  create: [BoardVersionCreateInput!]
+  connect: [BoardVersionWhereUniqueInput!]
+}
+
+input BoardVersionRelateToOneForUpdateInput {
+  create: BoardVersionCreateInput
+  connect: BoardVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BoardUpdateArgs {
+  where: BoardWhereUniqueInput!
+  data: BoardUpdateInput!
+}
+
+input BoardCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLinkRelateToOneForCreateInput
+  linkToResolutions: ExternalLinkRelateToOneForCreateInput
+  linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
+  type: String
+  isActive: Boolean
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  status: String
+  drafts: BoardDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: BoardVersionRelateToManyForCreateInput
+  currentVersion: BoardVersionRelateToOneForCreateInput
+}
+
+input ExternalLinkRelateToOneForCreateInput {
+  create: ExternalLinkCreateInput
+  connect: ExternalLinkWhereUniqueInput
+}
+
+input AssemblyDistrictRelateToManyForCreateInput {
+  create: [AssemblyDistrictCreateInput!]
+  connect: [AssemblyDistrictWhereUniqueInput!]
+}
+
+input CommunityRelateToManyForCreateInput {
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
+}
+
+input BoardDraftRelateToManyForCreateInput {
+  create: [BoardDraftCreateInput!]
+  connect: [BoardDraftWhereUniqueInput!]
+}
+
+input BoardVersionRelateToManyForCreateInput {
+  create: [BoardVersionCreateInput!]
+  connect: [BoardVersionWhereUniqueInput!]
+}
+
+input BoardVersionRelateToOneForCreateInput {
+  create: BoardVersionCreateInput
+  connect: BoardVersionWhereUniqueInput
+}
+
+type BoardDraft {
+  id: ID!
+  original: Board
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions: InternalLink
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLink
+  linkToResolutions: ExternalLink
+  linkToPublicOpinionMessage: ExternalLink
+  type: String
+  isActive: Boolean
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  publish: String
+}
+
+input BoardDraftWhereUniqueInput {
+  id: ID
+}
+
+input BoardDraftWhereInput {
+  AND: [BoardDraftWhereInput!]
+  OR: [BoardDraftWhereInput!]
+  NOT: [BoardDraftWhereInput!]
+  id: IDFilter
+  original: BoardWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkWhereInput
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  linkToAgendas: ExternalLinkWhereInput
+  linkToResolutions: ExternalLinkWhereInput
+  linkToPublicOpinionMessage: ExternalLinkWhereInput
+  type: StringFilter
+  isActive: BooleanFilter
+  districts: AssemblyDistrictManyRelationFilter
+  communities: CommunityManyRelationFilter
+}
+
+input BoardDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  type: OrderDirection
+  isActive: OrderDirection
+  publish: OrderDirection
+}
+
+input BoardDraftUpdateInput {
+  original: BoardRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLinkRelateToOneForUpdateInput
+  linkToResolutions: ExternalLinkRelateToOneForUpdateInput
+  linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
+  type: String
+  isActive: Boolean
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  publish: String
+}
+
+input BoardRelateToOneForUpdateInput {
+  create: BoardCreateInput
+  connect: BoardWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BoardDraftUpdateArgs {
+  where: BoardDraftWhereUniqueInput!
+  data: BoardDraftUpdateInput!
+}
+
+input BoardDraftCreateInput {
+  original: BoardRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLinkRelateToOneForCreateInput
+  linkToResolutions: ExternalLinkRelateToOneForCreateInput
+  linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
+  type: String
+  isActive: Boolean
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  publish: String
+}
+
+input BoardRelateToOneForCreateInput {
+  create: BoardCreateInput
+  connect: BoardWhereUniqueInput
+}
+
+type BoardVersion {
+  id: ID!
+  original: Board
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions: InternalLink
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLink
+  linkToResolutions: ExternalLink
+  linkToPublicOpinionMessage: ExternalLink
+  type: String
+  isActive: Boolean
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  isLive: Board
+  republish: String
+}
+
+input BoardVersionWhereUniqueInput {
+  id: ID
+  isLive: BoardWhereUniqueInput
+}
+
+input BoardVersionWhereInput {
+  AND: [BoardVersionWhereInput!]
+  OR: [BoardVersionWhereInput!]
+  NOT: [BoardVersionWhereInput!]
+  id: IDFilter
+  original: BoardWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkWhereInput
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  linkToAgendas: ExternalLinkWhereInput
+  linkToResolutions: ExternalLinkWhereInput
+  linkToPublicOpinionMessage: ExternalLinkWhereInput
+  type: StringFilter
+  isActive: BooleanFilter
+  districts: AssemblyDistrictManyRelationFilter
+  communities: CommunityManyRelationFilter
+  isLive: BoardWhereInput
+}
+
+input BoardVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  type: OrderDirection
+  isActive: OrderDirection
+  republish: OrderDirection
+}
+
+input BoardVersionUpdateInput {
+  original: BoardRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLinkRelateToOneForUpdateInput
+  linkToResolutions: ExternalLinkRelateToOneForUpdateInput
+  linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
+  type: String
+  isActive: Boolean
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  isLive: BoardRelateToOneForUpdateInput
+  republish: String
+}
+
+input BoardVersionUpdateArgs {
+  where: BoardVersionWhereUniqueInput!
+  data: BoardVersionUpdateInput!
+}
+
+input BoardVersionCreateInput {
+  original: BoardRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  linkToAgendas: ExternalLinkRelateToOneForCreateInput
+  linkToResolutions: ExternalLinkRelateToOneForCreateInput
+  linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
+  type: String
+  isActive: Boolean
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  isLive: BoardRelateToOneForCreateInput
   republish: String
 }
 
@@ -877,6 +1477,8 @@ type Community {
   servicesCount(where: ServiceWhereInput! = {}): Int
   districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   status: String
   drafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
   draftsCount(where: CommunityDraftWhereInput! = {}): Int
@@ -915,6 +1517,7 @@ input CommunityWhereInput {
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
+  boards: BoardManyRelationFilter
   status: StringFilter
   drafts: CommunityDraftManyRelationFilter
   versions: CommunityVersionManyRelationFilter
@@ -925,12 +1528,6 @@ input ServiceManyRelationFilter {
   every: ServiceWhereInput
   some: ServiceWhereInput
   none: ServiceWhereInput
-}
-
-input AssemblyDistrictManyRelationFilter {
-  every: AssemblyDistrictWhereInput
-  some: AssemblyDistrictWhereInput
-  none: AssemblyDistrictWhereInput
 }
 
 input CommunityDraftManyRelationFilter {
@@ -980,6 +1577,7 @@ input CommunityUpdateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
   status: String
   drafts: CommunityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -992,13 +1590,6 @@ input ServiceRelateToManyForUpdateInput {
   set: [ServiceWhereUniqueInput!]
   create: [ServiceCreateInput!]
   connect: [ServiceWhereUniqueInput!]
-}
-
-input AssemblyDistrictRelateToManyForUpdateInput {
-  disconnect: [AssemblyDistrictWhereUniqueInput!]
-  set: [AssemblyDistrictWhereUniqueInput!]
-  create: [AssemblyDistrictCreateInput!]
-  connect: [AssemblyDistrictWhereUniqueInput!]
 }
 
 input CommunityDraftRelateToManyForUpdateInput {
@@ -1045,6 +1636,7 @@ input CommunityCreateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
   status: String
   drafts: CommunityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -1055,11 +1647,6 @@ input CommunityCreateInput {
 input ServiceRelateToManyForCreateInput {
   create: [ServiceCreateInput!]
   connect: [ServiceWhereUniqueInput!]
-}
-
-input AssemblyDistrictRelateToManyForCreateInput {
-  create: [AssemblyDistrictCreateInput!]
-  connect: [AssemblyDistrictWhereUniqueInput!]
 }
 
 input CommunityDraftRelateToManyForCreateInput {
@@ -1104,6 +1691,8 @@ type CommunityDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   publish: String
 }
 
@@ -1133,6 +1722,7 @@ input CommunityDraftWhereInput {
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
+  boards: BoardManyRelationFilter
 }
 
 input CommunityDraftOrderByInput {
@@ -1168,6 +1758,7 @@ input CommunityDraftUpdateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
   publish: String
 }
 
@@ -1201,6 +1792,7 @@ input CommunityDraftCreateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
   publish: String
 }
 
@@ -1236,6 +1828,8 @@ type CommunityVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   isLive: Community
   republish: String
 }
@@ -1267,6 +1861,7 @@ input CommunityVersionWhereInput {
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
+  boards: BoardManyRelationFilter
   isLive: CommunityWhereInput
 }
 
@@ -1303,6 +1898,7 @@ input CommunityVersionUpdateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
   isLive: CommunityRelateToOneForUpdateInput
   republish: String
 }
@@ -1331,6 +1927,7 @@ input CommunityVersionCreateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
   isLive: CommunityRelateToOneForCreateInput
   republish: String
 }
@@ -2513,11 +3110,6 @@ input OrgUnitWhereInput {
   currentVersion: OrgUnitVersionWhereInput
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
 input OrgUnitManyRelationFilter {
   every: OrgUnitWhereInput
   some: OrgUnitWhereInput
@@ -3605,12 +4197,6 @@ input ParkManyRelationFilter {
   none: ParkWhereInput
 }
 
-input CommunityManyRelationFilter {
-  every: CommunityWhereInput
-  some: CommunityWhereInput
-  none: CommunityWhereInput
-}
-
 input PublicNoticeDraftManyRelationFilter {
   every: PublicNoticeDraftWhereInput
   some: PublicNoticeDraftWhereInput
@@ -3683,13 +4269,6 @@ input ParkRelateToManyForUpdateInput {
   connect: [ParkWhereUniqueInput!]
 }
 
-input CommunityRelateToManyForUpdateInput {
-  disconnect: [CommunityWhereUniqueInput!]
-  set: [CommunityWhereUniqueInput!]
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
-}
-
 input PublicNoticeDraftRelateToManyForUpdateInput {
   disconnect: [PublicNoticeDraftWhereUniqueInput!]
   set: [PublicNoticeDraftWhereUniqueInput!]
@@ -3752,11 +4331,6 @@ input PublicNoticeCreateInput {
 input ParkRelateToManyForCreateInput {
   create: [ParkCreateInput!]
   connect: [ParkWhereUniqueInput!]
-}
-
-input CommunityRelateToManyForCreateInput {
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
 }
 
 input PublicNoticeDraftRelateToManyForCreateInput {
@@ -4266,12 +4840,6 @@ input ServiceUpdateInput {
   currentVersion: ServiceVersionRelateToOneForUpdateInput
 }
 
-input ExternalLinkRelateToOneForUpdateInput {
-  create: ExternalLinkCreateInput
-  connect: ExternalLinkWhereUniqueInput
-  disconnect: Boolean
-}
-
 input ExternalLinkRelateToManyForUpdateInput {
   disconnect: [ExternalLinkWhereUniqueInput!]
   set: [ExternalLinkWhereUniqueInput!]
@@ -4340,11 +4908,6 @@ input ServiceCreateInput {
   makeDrafts: String
   versions: ServiceVersionRelateToManyForCreateInput
   currentVersion: ServiceVersionRelateToOneForCreateInput
-}
-
-input ExternalLinkRelateToOneForCreateInput {
-  create: ExternalLinkCreateInput
-  connect: ExternalLinkWhereUniqueInput
 }
 
 input ExternalLinkRelateToManyForCreateInput {
@@ -5718,6 +6281,24 @@ type Mutation {
   updateAssemblyDistrictVersions(data: [AssemblyDistrictVersionUpdateArgs!]!): [AssemblyDistrictVersion]
   deleteAssemblyDistrictVersion(where: AssemblyDistrictVersionWhereUniqueInput!): AssemblyDistrictVersion
   deleteAssemblyDistrictVersions(where: [AssemblyDistrictVersionWhereUniqueInput!]!): [AssemblyDistrictVersion]
+  createBoard(data: BoardCreateInput!): Board
+  createBoards(data: [BoardCreateInput!]!): [Board]
+  updateBoard(where: BoardWhereUniqueInput!, data: BoardUpdateInput!): Board
+  updateBoards(data: [BoardUpdateArgs!]!): [Board]
+  deleteBoard(where: BoardWhereUniqueInput!): Board
+  deleteBoards(where: [BoardWhereUniqueInput!]!): [Board]
+  createBoardDraft(data: BoardDraftCreateInput!): BoardDraft
+  createBoardDrafts(data: [BoardDraftCreateInput!]!): [BoardDraft]
+  updateBoardDraft(where: BoardDraftWhereUniqueInput!, data: BoardDraftUpdateInput!): BoardDraft
+  updateBoardDrafts(data: [BoardDraftUpdateArgs!]!): [BoardDraft]
+  deleteBoardDraft(where: BoardDraftWhereUniqueInput!): BoardDraft
+  deleteBoardDrafts(where: [BoardDraftWhereUniqueInput!]!): [BoardDraft]
+  createBoardVersion(data: BoardVersionCreateInput!): BoardVersion
+  createBoardVersions(data: [BoardVersionCreateInput!]!): [BoardVersion]
+  updateBoardVersion(where: BoardVersionWhereUniqueInput!, data: BoardVersionUpdateInput!): BoardVersion
+  updateBoardVersions(data: [BoardVersionUpdateArgs!]!): [BoardVersion]
+  deleteBoardVersion(where: BoardVersionWhereUniqueInput!): BoardVersion
+  deleteBoardVersions(where: [BoardVersionWhereUniqueInput!]!): [BoardVersion]
   createCommunity(data: CommunityCreateInput!): Community
   createCommunities(data: [CommunityCreateInput!]!): [Community]
   updateCommunity(where: CommunityWhereUniqueInput!, data: CommunityUpdateInput!): Community
@@ -5944,6 +6525,15 @@ type Query {
   assemblyDistrictVersion(where: AssemblyDistrictVersionWhereUniqueInput!): AssemblyDistrictVersion
   assemblyDistrictVersions(where: AssemblyDistrictVersionWhereInput! = {}, orderBy: [AssemblyDistrictVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictVersionWhereUniqueInput): [AssemblyDistrictVersion!]
   assemblyDistrictVersionsCount(where: AssemblyDistrictVersionWhereInput! = {}): Int
+  board(where: BoardWhereUniqueInput!): Board
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  boardDraft(where: BoardDraftWhereUniqueInput!): BoardDraft
+  boardDrafts(where: BoardDraftWhereInput! = {}, orderBy: [BoardDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardDraftWhereUniqueInput): [BoardDraft!]
+  boardDraftsCount(where: BoardDraftWhereInput! = {}): Int
+  boardVersion(where: BoardVersionWhereUniqueInput!): BoardVersion
+  boardVersions(where: BoardVersionWhereInput! = {}, orderBy: [BoardVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardVersionWhereUniqueInput): [BoardVersion!]
+  boardVersionsCount(where: BoardVersionWhereInput! = {}): Int
   community(where: CommunityWhereUniqueInput!): Community
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int

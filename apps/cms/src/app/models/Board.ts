@@ -1,0 +1,136 @@
+import { checkbox, relationship, select } from '@keystone-6/core/fields';
+import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
+import {
+  basePage,
+  basePageQuery,
+  typesenseDelete,
+  typesenseUpsert,
+} from '../fieldUtils';
+import {
+  filterByPubStatus,
+  generalItemAccess,
+  generalOperationAccess,
+} from '../access';
+import { gql } from '@keystone-6/core/admin-ui/apollo';
+
+export const {
+  Main: Board,
+  Version: BoardVersion,
+  Draft: BoardDraft,
+} = DraftAndVersionsFactory(
+  'Board',
+  (listNamePlural, opts) => {
+    return {
+      ...basePage(listNamePlural, {
+        ...opts,
+        actions: true,
+        documents: true,
+      }),
+
+      linkToAgendas: relationship({
+        ref: 'ExternalLink',
+        many: false,
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['label', 'url'],
+        },
+      }),
+
+      linkToResolutions: relationship({
+        ref: 'ExternalLink',
+        many: false,
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['label', 'url'],
+        },
+      }),
+
+      linkToPublicOpinionMessage: relationship({
+        ref: 'ExternalLink',
+        many: false,
+        ui: {
+          displayMode: 'cards',
+          cardFields: ['label', 'url'],
+        },
+      }),
+
+      type: select({
+        options: [
+          { label: 'Board', value: 'board' },
+          { label: 'Community Council', value: 'community_council' },
+          { label: 'SSA Board', value: 'ssa_board' },
+          { label: 'FSA Board', value: 'fsa_board' },
+          { label: 'RSA Board', value: 'rsa_board' },
+          { label: 'Other', value: 'other' },
+        ],
+        validation: {
+          isRequired: true,
+        },
+        defaultValue: 'board',
+        ui: {
+          displayMode: 'select',
+        },
+      }),
+
+      isActive: checkbox({
+        defaultValue: true,
+        isFilterable: true,
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+          createView: {
+            fieldMode: 'hidden',
+          },
+        },
+      }),
+
+      districts: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'AssemblyDistrict.boards'
+            : 'AssemblyDistrict',
+        many: true,
+        ui: {
+          hideCreate: true,
+          inlineConnect: true,
+        },
+      }),
+
+      communities: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion ? 'Community.boards' : 'Community',
+        many: true,
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+          hideCreate: true,
+        },
+      }),
+    };
+  },
+  {
+    versionLimit: 20,
+    versionAgeDays: 365,
+    query: `${basePageQuery} type isActive districts {id} communities {id} documents {id} actions {id} linkToAgendas {id} linkToResolutions {id} linkToPublicOpinionMessage {id}`,
+    mainAccess: {
+      operation: generalOperationAccess,
+      item: generalItemAccess('Board'),
+      filter: filterByPubStatus,
+    },
+    mainHooks: {
+      async beforeOperation(args) {
+        await typesenseDelete(args);
+      },
+
+      async afterOperation(args) {
+        await typesenseUpsert(
+          'board',
+          'id title description body slug publishAt tags {name}',
+          args,
+        );
+      },
+    },
+  },
+);

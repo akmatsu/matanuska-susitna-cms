@@ -1,7 +1,6 @@
 import { relationship, text } from '@keystone-6/core/fields';
 import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
 import {
-  filterByPubDates,
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
