@@ -41,7 +41,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 ): { Main: ListConfig<any>; Version: ListConfig<any>; Draft: ListConfig<any> } {
   const { versionLimit = 10, versionAgeDays = 365, query = '' } = opts;
 
-  const publishQuery = `${query} original { id}`;
+  const publishQuery = `${query} original { id }`;
 
   const defaultDraftAndVersionOpts: BasePageOptions = {
     titleAndDescriptionOpts: {
@@ -328,7 +328,7 @@ async function createVersion(
   if (operation === 'update') {
     const originalVersionId = (originalItem as any).currentVersionId;
     const newVersionId = (item as any).currentVersionId;
-    console.log(originalVersionId, newVersionId);
+
     if (originalVersionId !== newVersionId) {
       return;
     }

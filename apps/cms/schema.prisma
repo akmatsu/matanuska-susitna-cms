@@ -52,12 +52,15 @@ model AssemblyDistrict {
   fax                                        String?
   termStart                                  DateTime?
   termEnd                                    DateTime?
+  boards                                     Board[]                   @relation("AssemblyDistrict_boards")
   status                                     String                    @default("unpublished")
   drafts                                     AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_original")
   makeDrafts                                 String?
   versions                                   AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_original")
   currentVersion                             AssemblyDistrictVersion?  @relation("AssemblyDistrict_currentVersion", fields: [currentVersionId], references: [id])
   currentVersionId                           String?                   @unique @map("currentVersion")
+  from_BoardDraft_districts                  BoardDraft[]              @relation("BoardDraft_districts")
+  from_BoardVersion_districts                BoardVersion[]            @relation("BoardVersion_districts")
   from_Community_districts                   Community[]               @relation("Community_districts")
   from_CommunityDraft_districts              CommunityDraft[]          @relation("CommunityDraft_districts")
   from_CommunityVersion_districts            CommunityVersion[]        @relation("CommunityVersion_districts")
@@ -101,6 +104,7 @@ model AssemblyDistrictDraft {
   fax         String?
   termStart   DateTime?
   termEnd     DateTime?
+  boards      Board[]           @relation("AssemblyDistrictDraft_boards")
   publish     String?
 
   @@index([originalId])
@@ -140,6 +144,7 @@ model AssemblyDistrictVersion {
   fax         String?
   termStart   DateTime?
   termEnd     DateTime?
+  boards      Board[]           @relation("AssemblyDistrictVersion_boards")
   isLive      AssemblyDistrict? @relation("AssemblyDistrict_currentVersion")
   republish   String?
 
@@ -147,6 +152,137 @@ model AssemblyDistrictVersion {
   @@index([ownerId])
   @@index([actionsId])
   @@index([photoId])
+}
+
+model Board {
+  id                                  String                    @id @default(cuid())
+  heroImage                           String?
+  title                               String                    @unique @default("")
+  description                         String                    @default("")
+  publishAt                           DateTime?
+  unpublishAt                         DateTime?
+  reviewDate                          DateTime?
+  slug                                String                    @unique @default("")
+  owner                               User?                     @relation("Board_owner", fields: [ownerId], references: [id])
+  ownerId                             String?                   @map("owner")
+  body                                String?
+  tags                                Tag[]                     @relation("Board_tags")
+  userGroups                          UserGroup[]               @relation("Board_userGroups")
+  actions                             InternalLink?             @relation("Board_actions", fields: [actionsId], references: [id])
+  actionsId                           String?                   @map("actions")
+  documents                           Document[]                @relation("Board_documents")
+  contacts                            Contact[]                 @relation("Board_contacts")
+  createdAt                           DateTime?                 @default(now())
+  updatedAt                           DateTime?                 @default(now()) @updatedAt
+  linkToAgendas                       ExternalLink?             @relation("Board_linkToAgendas", fields: [linkToAgendasId], references: [id])
+  linkToAgendasId                     String?                   @map("linkToAgendas")
+  linkToResolutions                   ExternalLink?             @relation("Board_linkToResolutions", fields: [linkToResolutionsId], references: [id])
+  linkToResolutionsId                 String?                   @map("linkToResolutions")
+  linkToPublicOpinionMessage          ExternalLink?             @relation("Board_linkToPublicOpinionMessage", fields: [linkToPublicOpinionMessageId], references: [id])
+  linkToPublicOpinionMessageId        String?                   @map("linkToPublicOpinionMessage")
+  type                                String                    @default("board")
+  isActive                            Boolean                   @default(true)
+  districts                           AssemblyDistrict[]        @relation("AssemblyDistrict_boards")
+  communities                         Community[]               @relation("Board_communities")
+  status                              String                    @default("unpublished")
+  drafts                              BoardDraft[]              @relation("BoardDraft_original")
+  makeDrafts                          String?
+  versions                            BoardVersion[]            @relation("BoardVersion_original")
+  currentVersion                      BoardVersion?             @relation("Board_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId                    String?                   @unique @map("currentVersion")
+  from_AssemblyDistrictDraft_boards   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_boards")
+  from_AssemblyDistrictVersion_boards AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_boards")
+  from_CommunityDraft_boards          CommunityDraft[]          @relation("CommunityDraft_boards")
+  from_CommunityVersion_boards        CommunityVersion[]        @relation("CommunityVersion_boards")
+
+  @@index([ownerId])
+  @@index([actionsId])
+  @@index([linkToAgendasId])
+  @@index([linkToResolutionsId])
+  @@index([linkToPublicOpinionMessageId])
+}
+
+model BoardDraft {
+  id                           String             @id @default(cuid())
+  original                     Board?             @relation("BoardDraft_original", fields: [originalId], references: [id])
+  originalId                   String?            @map("original")
+  heroImage                    String?
+  title                        String             @default("")
+  description                  String             @default("")
+  publishAt                    DateTime?
+  unpublishAt                  DateTime?
+  reviewDate                   DateTime?
+  owner                        User?              @relation("BoardDraft_owner", fields: [ownerId], references: [id])
+  ownerId                      String?            @map("owner")
+  body                         String?
+  tags                         Tag[]              @relation("BoardDraft_tags")
+  userGroups                   UserGroup[]        @relation("BoardDraft_userGroups")
+  actions                      InternalLink?      @relation("BoardDraft_actions", fields: [actionsId], references: [id])
+  actionsId                    String?            @map("actions")
+  documents                    Document[]         @relation("BoardDraft_documents")
+  contacts                     Contact[]          @relation("BoardDraft_contacts")
+  createdAt                    DateTime?          @default(now())
+  updatedAt                    DateTime?          @default(now()) @updatedAt
+  linkToAgendas                ExternalLink?      @relation("BoardDraft_linkToAgendas", fields: [linkToAgendasId], references: [id])
+  linkToAgendasId              String?            @map("linkToAgendas")
+  linkToResolutions            ExternalLink?      @relation("BoardDraft_linkToResolutions", fields: [linkToResolutionsId], references: [id])
+  linkToResolutionsId          String?            @map("linkToResolutions")
+  linkToPublicOpinionMessage   ExternalLink?      @relation("BoardDraft_linkToPublicOpinionMessage", fields: [linkToPublicOpinionMessageId], references: [id])
+  linkToPublicOpinionMessageId String?            @map("linkToPublicOpinionMessage")
+  type                         String             @default("board")
+  isActive                     Boolean            @default(true)
+  districts                    AssemblyDistrict[] @relation("BoardDraft_districts")
+  communities                  Community[]        @relation("BoardDraft_communities")
+  publish                      String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([actionsId])
+  @@index([linkToAgendasId])
+  @@index([linkToResolutionsId])
+  @@index([linkToPublicOpinionMessageId])
+}
+
+model BoardVersion {
+  id                           String             @id @default(cuid())
+  original                     Board?             @relation("BoardVersion_original", fields: [originalId], references: [id])
+  originalId                   String?            @map("original")
+  heroImage                    String?
+  title                        String             @default("")
+  description                  String             @default("")
+  publishAt                    DateTime?
+  unpublishAt                  DateTime?
+  reviewDate                   DateTime?
+  owner                        User?              @relation("BoardVersion_owner", fields: [ownerId], references: [id])
+  ownerId                      String?            @map("owner")
+  body                         String?
+  tags                         Tag[]              @relation("BoardVersion_tags")
+  userGroups                   UserGroup[]        @relation("BoardVersion_userGroups")
+  actions                      InternalLink?      @relation("BoardVersion_actions", fields: [actionsId], references: [id])
+  actionsId                    String?            @map("actions")
+  documents                    Document[]         @relation("BoardVersion_documents")
+  contacts                     Contact[]          @relation("BoardVersion_contacts")
+  createdAt                    DateTime?          @default(now())
+  updatedAt                    DateTime?          @default(now()) @updatedAt
+  linkToAgendas                ExternalLink?      @relation("BoardVersion_linkToAgendas", fields: [linkToAgendasId], references: [id])
+  linkToAgendasId              String?            @map("linkToAgendas")
+  linkToResolutions            ExternalLink?      @relation("BoardVersion_linkToResolutions", fields: [linkToResolutionsId], references: [id])
+  linkToResolutionsId          String?            @map("linkToResolutions")
+  linkToPublicOpinionMessage   ExternalLink?      @relation("BoardVersion_linkToPublicOpinionMessage", fields: [linkToPublicOpinionMessageId], references: [id])
+  linkToPublicOpinionMessageId String?            @map("linkToPublicOpinionMessage")
+  type                         String             @default("board")
+  isActive                     Boolean            @default(true)
+  districts                    AssemblyDistrict[] @relation("BoardVersion_districts")
+  communities                  Community[]        @relation("BoardVersion_communities")
+  isLive                       Board?             @relation("Board_currentVersion")
+  republish                    String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([actionsId])
+  @@index([linkToAgendasId])
+  @@index([linkToResolutionsId])
+  @@index([linkToPublicOpinionMessageId])
 }
 
 model Community {
@@ -171,12 +307,15 @@ model Community {
   updatedAt                            DateTime?             @default(now()) @updatedAt
   services                             Service[]             @relation("Community_services")
   districts                            AssemblyDistrict[]    @relation("Community_districts")
+  boards                               Board[]               @relation("Board_communities")
   status                               String                @default("unpublished")
   drafts                               CommunityDraft[]      @relation("CommunityDraft_original")
   makeDrafts                           String?
   versions                             CommunityVersion[]    @relation("CommunityVersion_original")
   currentVersion                       CommunityVersion?     @relation("Community_currentVersion", fields: [currentVersionId], references: [id])
   currentVersionId                     String?               @unique @map("currentVersion")
+  from_BoardDraft_communities          BoardDraft[]          @relation("BoardDraft_communities")
+  from_BoardVersion_communities        BoardVersion[]        @relation("BoardVersion_communities")
   from_PublicNotice_communities        PublicNotice[]        @relation("PublicNotice_communities")
   from_PublicNoticeDraft_communities   PublicNoticeDraft[]   @relation("PublicNoticeDraft_communities")
   from_PublicNoticeVersion_communities PublicNoticeVersion[] @relation("PublicNoticeVersion_communities")
@@ -210,6 +349,7 @@ model CommunityDraft {
   updatedAt   DateTime?          @default(now()) @updatedAt
   services    Service[]          @relation("CommunityDraft_services")
   districts   AssemblyDistrict[] @relation("CommunityDraft_districts")
+  boards      Board[]            @relation("CommunityDraft_boards")
   publish     String?
 
   @@index([originalId])
@@ -240,6 +380,7 @@ model CommunityVersion {
   updatedAt   DateTime?          @default(now()) @updatedAt
   services    Service[]          @relation("CommunityVersion_services")
   districts   AssemblyDistrict[] @relation("CommunityVersion_districts")
+  boards      Board[]            @relation("CommunityVersion_boards")
   isLive      Community?         @relation("Community_currentVersion")
   republish   String?
 
@@ -257,6 +398,9 @@ model Contact {
   from_AssemblyDistrict_contacts        AssemblyDistrict[]        @relation("AssemblyDistrict_contacts")
   from_AssemblyDistrictDraft_contacts   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_contacts")
   from_AssemblyDistrictVersion_contacts AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_contacts")
+  from_Board_contacts                   Board[]                   @relation("Board_contacts")
+  from_BoardDraft_contacts              BoardDraft[]              @relation("BoardDraft_contacts")
+  from_BoardVersion_contacts            BoardVersion[]            @relation("BoardVersion_contacts")
   from_Community_contacts               Community[]               @relation("Community_contacts")
   from_CommunityDraft_contacts          CommunityDraft[]          @relation("CommunityDraft_contacts")
   from_CommunityVersion_contacts        CommunityVersion[]        @relation("CommunityVersion_contacts")
@@ -295,6 +439,9 @@ model Document {
   from_AssemblyDistrict_documents        AssemblyDistrict[]        @relation("AssemblyDistrict_documents")
   from_AssemblyDistrictDraft_documents   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_documents")
   from_AssemblyDistrictVersion_documents AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_documents")
+  from_Board_documents                   Board[]                   @relation("Board_documents")
+  from_BoardDraft_documents              BoardDraft[]              @relation("BoardDraft_documents")
+  from_BoardVersion_documents            BoardVersion[]            @relation("BoardVersion_documents")
   from_Community_documents               Community[]               @relation("Community_documents")
   from_CommunityDraft_documents          CommunityDraft[]          @relation("CommunityDraft_documents")
   from_CommunityVersion_documents        CommunityVersion[]        @relation("CommunityVersion_documents")
@@ -335,16 +482,25 @@ model DocumentCollection {
 }
 
 model ExternalLink {
-  id                                   String           @id @default(cuid())
-  label                                String           @default("")
-  url                                  Url?             @relation("ExternalLink_url", fields: [urlId], references: [id])
-  urlId                                String?          @map("url")
-  from_Service_primaryAction           Service[]        @relation("Service_primaryAction")
-  from_Service_secondaryActions        Service[]        @relation("Service_secondaryActions")
-  from_ServiceDraft_primaryAction      ServiceDraft[]   @relation("ServiceDraft_primaryAction")
-  from_ServiceDraft_secondaryActions   ServiceDraft[]   @relation("ServiceDraft_secondaryActions")
-  from_ServiceVersion_primaryAction    ServiceVersion[] @relation("ServiceVersion_primaryAction")
-  from_ServiceVersion_secondaryActions ServiceVersion[] @relation("ServiceVersion_secondaryActions")
+  id                                           String           @id @default(cuid())
+  label                                        String           @default("")
+  url                                          Url?             @relation("ExternalLink_url", fields: [urlId], references: [id])
+  urlId                                        String?          @map("url")
+  from_Board_linkToAgendas                     Board[]          @relation("Board_linkToAgendas")
+  from_Board_linkToResolutions                 Board[]          @relation("Board_linkToResolutions")
+  from_Board_linkToPublicOpinionMessage        Board[]          @relation("Board_linkToPublicOpinionMessage")
+  from_BoardDraft_linkToAgendas                BoardDraft[]     @relation("BoardDraft_linkToAgendas")
+  from_BoardDraft_linkToResolutions            BoardDraft[]     @relation("BoardDraft_linkToResolutions")
+  from_BoardDraft_linkToPublicOpinionMessage   BoardDraft[]     @relation("BoardDraft_linkToPublicOpinionMessage")
+  from_BoardVersion_linkToAgendas              BoardVersion[]   @relation("BoardVersion_linkToAgendas")
+  from_BoardVersion_linkToResolutions          BoardVersion[]   @relation("BoardVersion_linkToResolutions")
+  from_BoardVersion_linkToPublicOpinionMessage BoardVersion[]   @relation("BoardVersion_linkToPublicOpinionMessage")
+  from_Service_primaryAction                   Service[]        @relation("Service_primaryAction")
+  from_Service_secondaryActions                Service[]        @relation("Service_secondaryActions")
+  from_ServiceDraft_primaryAction              ServiceDraft[]   @relation("ServiceDraft_primaryAction")
+  from_ServiceDraft_secondaryActions           ServiceDraft[]   @relation("ServiceDraft_secondaryActions")
+  from_ServiceVersion_primaryAction            ServiceVersion[] @relation("ServiceVersion_primaryAction")
+  from_ServiceVersion_secondaryActions         ServiceVersion[] @relation("ServiceVersion_secondaryActions")
 
   @@index([urlId])
 }
@@ -542,6 +698,9 @@ model InternalLink {
   from_AssemblyDistrict_actions        AssemblyDistrict[]        @relation("AssemblyDistrict_actions")
   from_AssemblyDistrictDraft_actions   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_actions")
   from_AssemblyDistrictVersion_actions AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_actions")
+  from_Board_actions                   Board[]                   @relation("Board_actions")
+  from_BoardDraft_actions              BoardDraft[]              @relation("BoardDraft_actions")
+  from_BoardVersion_actions            BoardVersion[]            @relation("BoardVersion_actions")
   from_Community_actions               Community[]               @relation("Community_actions")
   from_CommunityDraft_actions          CommunityDraft[]          @relation("CommunityDraft_actions")
   from_CommunityVersion_actions        CommunityVersion[]        @relation("CommunityVersion_actions")
@@ -1090,6 +1249,9 @@ model Tag {
   from_AssemblyDistrict_tags        AssemblyDistrict[]        @relation("AssemblyDistrict_tags")
   from_AssemblyDistrictDraft_tags   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_tags")
   from_AssemblyDistrictVersion_tags AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_tags")
+  from_Board_tags                   Board[]                   @relation("Board_tags")
+  from_BoardDraft_tags              BoardDraft[]              @relation("BoardDraft_tags")
+  from_BoardVersion_tags            BoardVersion[]            @relation("BoardVersion_tags")
   from_Community_tags               Community[]               @relation("Community_tags")
   from_CommunityDraft_tags          CommunityDraft[]          @relation("CommunityDraft_tags")
   from_CommunityVersion_tags        CommunityVersion[]        @relation("CommunityVersion_tags")
@@ -1319,6 +1481,9 @@ model User {
   from_AssemblyDistrict_owner        AssemblyDistrict[]        @relation("AssemblyDistrict_owner")
   from_AssemblyDistrictDraft_owner   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_owner")
   from_AssemblyDistrictVersion_owner AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_owner")
+  from_Board_owner                   Board[]                   @relation("Board_owner")
+  from_BoardDraft_owner              BoardDraft[]              @relation("BoardDraft_owner")
+  from_BoardVersion_owner            BoardVersion[]            @relation("BoardVersion_owner")
   from_Community_owner               Community[]               @relation("Community_owner")
   from_CommunityDraft_owner          CommunityDraft[]          @relation("CommunityDraft_owner")
   from_CommunityVersion_owner        CommunityVersion[]        @relation("CommunityVersion_owner")
@@ -1355,6 +1520,9 @@ model UserGroup {
   from_AssemblyDistrict_userGroups        AssemblyDistrict[]        @relation("AssemblyDistrict_userGroups")
   from_AssemblyDistrictDraft_userGroups   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_userGroups")
   from_AssemblyDistrictVersion_userGroups AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_userGroups")
+  from_Board_userGroups                   Board[]                   @relation("Board_userGroups")
+  from_BoardDraft_userGroups              BoardDraft[]              @relation("BoardDraft_userGroups")
+  from_BoardVersion_userGroups            BoardVersion[]            @relation("BoardVersion_userGroups")
   from_Community_userGroups               Community[]               @relation("Community_userGroups")
   from_CommunityDraft_userGroups          CommunityDraft[]          @relation("CommunityDraft_userGroups")
   from_CommunityVersion_userGroups        CommunityVersion[]        @relation("CommunityVersion_userGroups")

@@ -1,5 +1,4 @@
 import {
-  filterByPubDates,
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
@@ -33,6 +32,14 @@ export const {
           hideCreate: true,
           inlineConnect: true,
         },
+      }),
+
+      boards: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? `Board.${lowercaseFirstLetter(listNamePlural)}`
+            : 'Board',
+        many: true,
       }),
     };
   },

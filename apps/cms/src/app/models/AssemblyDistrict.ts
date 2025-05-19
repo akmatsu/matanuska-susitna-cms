@@ -120,6 +120,11 @@ export const {
           }),
         },
       }),
+
+      boards: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Board.districts' : 'Board',
+        many: true,
+      }),
     };
   },
   {

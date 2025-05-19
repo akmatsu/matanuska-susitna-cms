@@ -29,7 +29,6 @@ import {
 } from '../utils/typesense';
 import { logger } from '../configs/logger';
 import v from 'voca';
-import { ContentMatch } from '@milkdown/kit/prose/model';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -39,6 +38,8 @@ export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const timestamps: BaseFields<any> = {
   createdAt: timestamp({
     defaultValue: { kind: 'now' },
+    isFilterable: true,
+    isOrderable: true,
     ui: {
       itemView: {
         fieldMode: 'hidden',
@@ -50,6 +51,8 @@ export const timestamps: BaseFields<any> = {
 
   updatedAt: timestamp({
     defaultValue: { kind: 'now' },
+    isFilterable: true,
+    isOrderable: true,
     db: { updatedAt: true },
     ui: {
       itemView: { fieldMode: 'hidden', fieldPosition: 'sidebar' },
@@ -132,6 +135,8 @@ export function publishable(opts?: {
 
       fields: {
         publishAt: timestamp({
+          isFilterable: true,
+          isOrderable: true,
           db: {
             isNullable: true,
           },
@@ -169,6 +174,8 @@ export function publishable(opts?: {
           },
         }),
         unpublishAt: timestamp({
+          isFilterable: true,
+          isOrderable: true,
           db: {
             isNullable: true,
           },
@@ -309,7 +316,7 @@ export const owner = relationship({
     resolveInput: relateActiveUser,
   },
   access: {
-    update: (args) => isAdmin(args) || isOwner(args),
+    update: async (args) => (await isAdmin(args)) || (await isOwner(args)),
   },
 });
 
@@ -366,8 +373,9 @@ export function userGroups(listKey: string) {
       },
     },
     access: {
-      update: (args) => {
-        return isAdmin(args) || isOwner(args);
+      update: async (args) => {
+        const res = (await isAdmin(args)) || (await isOwner(args));
+        return res;
       },
     },
   });
