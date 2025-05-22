@@ -1,4 +1,4 @@
-import { checkbox, relationship, select } from '@keystone-6/core/fields';
+import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 import {
   basePage,
@@ -11,7 +11,6 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../access';
-import { gql } from '@keystone-6/core/admin-ui/apollo';
 
 export const {
   Main: Board,
@@ -27,12 +26,17 @@ export const {
         documents: true,
       }),
 
+      meetingSchedule: text(),
+
       linkToAgendas: relationship({
         ref: 'ExternalLink',
         many: false,
         ui: {
           displayMode: 'cards',
           cardFields: ['label', 'url'],
+          inlineCreate: {
+            fields: ['label', 'url'],
+          },
         },
       }),
 
@@ -42,6 +46,9 @@ export const {
         ui: {
           displayMode: 'cards',
           cardFields: ['label', 'url'],
+          inlineCreate: {
+            fields: ['label', 'url'],
+          },
         },
       }),
 
@@ -51,6 +58,9 @@ export const {
         ui: {
           displayMode: 'cards',
           cardFields: ['label', 'url'],
+          inlineCreate: {
+            fields: ['label', 'url'],
+          },
         },
       }),
 

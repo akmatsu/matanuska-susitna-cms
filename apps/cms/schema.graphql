@@ -906,6 +906,7 @@ type Board {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
   linkToPublicOpinionMessage: ExternalLink
@@ -951,6 +952,7 @@ input BoardWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  meetingSchedule: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
   linkToPublicOpinionMessage: ExternalLinkWhereInput
@@ -1005,6 +1007,7 @@ input BoardOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  meetingSchedule: OrderDirection
   type: OrderDirection
   isActive: OrderDirection
   status: OrderDirection
@@ -1028,6 +1031,7 @@ input BoardUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
@@ -1104,6 +1108,7 @@ input BoardCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
@@ -1171,6 +1176,7 @@ type BoardDraft {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
   linkToPublicOpinionMessage: ExternalLink
@@ -1207,6 +1213,7 @@ input BoardDraftWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  meetingSchedule: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
   linkToPublicOpinionMessage: ExternalLinkWhereInput
@@ -1227,6 +1234,7 @@ input BoardDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  meetingSchedule: OrderDirection
   type: OrderDirection
   isActive: OrderDirection
   publish: OrderDirection
@@ -1249,6 +1257,7 @@ input BoardDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
@@ -1287,6 +1296,7 @@ input BoardDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
@@ -1325,6 +1335,7 @@ type BoardVersion {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
   linkToPublicOpinionMessage: ExternalLink
@@ -1363,6 +1374,7 @@ input BoardVersionWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  meetingSchedule: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
   linkToPublicOpinionMessage: ExternalLinkWhereInput
@@ -1384,6 +1396,7 @@ input BoardVersionOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  meetingSchedule: OrderDirection
   type: OrderDirection
   isActive: OrderDirection
   republish: OrderDirection
@@ -1406,6 +1419,7 @@ input BoardVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
@@ -1439,6 +1453,7 @@ input BoardVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
@@ -1448,6 +1463,122 @@ input BoardVersionCreateInput {
   communities: CommunityRelateToManyForCreateInput
   isLive: BoardRelateToOneForCreateInput
   republish: String
+}
+
+type BoardPage {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  owner: User
+  body: String
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  vacancyReport: Document
+  applicationForm: Document
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input BoardPageWhereUniqueInput {
+  id: ID
+  title: String
+}
+
+input BoardPageWhereInput {
+  AND: [BoardPageWhereInput!]
+  OR: [BoardPageWhereInput!]
+  NOT: [BoardPageWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  vacancyReport: DocumentWhereInput
+  applicationForm: DocumentWhereInput
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input InternalLinkManyRelationFilter {
+  every: InternalLinkWhereInput
+  some: InternalLinkWhereInput
+  none: InternalLinkWhereInput
+}
+
+input BoardPageOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input BoardPageUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  vacancyReport: DocumentRelateToOneForUpdateInput
+  applicationForm: DocumentRelateToOneForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input InternalLinkRelateToManyForUpdateInput {
+  disconnect: [InternalLinkWhereUniqueInput!]
+  set: [InternalLinkWhereUniqueInput!]
+  create: [InternalLinkCreateInput!]
+  connect: [InternalLinkWhereUniqueInput!]
+}
+
+input DocumentRelateToOneForUpdateInput {
+  create: DocumentCreateInput
+  connect: DocumentWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BoardPageUpdateArgs {
+  where: BoardPageWhereUniqueInput! = {id: 1}
+  data: BoardPageUpdateInput!
+}
+
+input BoardPageCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  vacancyReport: DocumentRelateToOneForCreateInput
+  applicationForm: DocumentRelateToOneForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input InternalLinkRelateToManyForCreateInput {
+  create: [InternalLinkCreateInput!]
+  connect: [InternalLinkWhereUniqueInput!]
+}
+
+input DocumentRelateToOneForCreateInput {
+  create: DocumentCreateInput
+  connect: DocumentWhereUniqueInput
 }
 
 type Community {
@@ -6299,6 +6430,12 @@ type Mutation {
   updateBoardVersions(data: [BoardVersionUpdateArgs!]!): [BoardVersion]
   deleteBoardVersion(where: BoardVersionWhereUniqueInput!): BoardVersion
   deleteBoardVersions(where: [BoardVersionWhereUniqueInput!]!): [BoardVersion]
+  createBoardPage(data: BoardPageCreateInput!): BoardPage
+  createBoardPages(data: [BoardPageCreateInput!]!): [BoardPage]
+  updateBoardPage(where: BoardPageWhereUniqueInput! = {id: 1}, data: BoardPageUpdateInput!): BoardPage
+  updateBoardPages(data: [BoardPageUpdateArgs!]!): [BoardPage]
+  deleteBoardPage(where: BoardPageWhereUniqueInput! = {id: 1}): BoardPage
+  deleteBoardPages(where: [BoardPageWhereUniqueInput!]!): [BoardPage]
   createCommunity(data: CommunityCreateInput!): Community
   createCommunities(data: [CommunityCreateInput!]!): [Community]
   updateCommunity(where: CommunityWhereUniqueInput!, data: CommunityUpdateInput!): Community
@@ -6534,6 +6671,9 @@ type Query {
   boardVersion(where: BoardVersionWhereUniqueInput!): BoardVersion
   boardVersions(where: BoardVersionWhereInput! = {}, orderBy: [BoardVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardVersionWhereUniqueInput): [BoardVersion!]
   boardVersionsCount(where: BoardVersionWhereInput! = {}): Int
+  boardPage(where: BoardPageWhereUniqueInput! = {id: 1}): BoardPage
+  boardPages(where: BoardPageWhereInput! = {id: {equals: 1}}, orderBy: [BoardPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardPageWhereUniqueInput): [BoardPage!]
+  boardPagesCount(where: BoardPageWhereInput! = {id: {equals: 1}}): Int
   community(where: CommunityWhereUniqueInput!): Community
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int

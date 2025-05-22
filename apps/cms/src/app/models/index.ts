@@ -23,11 +23,13 @@ import * as TrailModels from './Trail';
 import { Url } from './Url';
 import { User } from './User';
 import { UserGroup } from './UserGroup';
+import { BoardPage } from './BoardPage';
 
 export const lists = {
   Alert,
   ...AssemblyDistrictModels,
   ...BoardModels,
+  BoardPage,
   ...CommunityModels,
   Contact,
   Document,
