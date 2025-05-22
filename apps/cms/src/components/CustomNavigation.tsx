@@ -52,7 +52,9 @@ export function CustomNavigation({
   const systemLists = lists.filter((list) =>
     /Alert|Tag|Highlight|ApiKey/g.test(list.key),
   );
-  const specialPages = lists.filter((list) => /HomePage/gi.test(list.key));
+  const specialPages = lists.filter((list) =>
+    /HomePage|BoardPage/gi.test(list.key),
+  );
   const pageLists = lists.filter((list) =>
     /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|PublicNotice|Board/gi.test(
       list.key,

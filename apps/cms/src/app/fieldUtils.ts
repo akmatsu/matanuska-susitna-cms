@@ -351,7 +351,7 @@ export function tags(listKey?: string) {
   });
 }
 
-export function contacts(listKey: string) {
+export function contacts(listKey?: string) {
   return relationship({
     ref: `Contact`,
     many: true,
@@ -523,6 +523,7 @@ export function basePage(
         },
       }),
     }),
+
     contacts: contacts(listNamePlural),
     ...(opts?.hours && {
       hours: relationship({

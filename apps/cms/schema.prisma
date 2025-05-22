@@ -174,6 +174,7 @@ model Board {
   contacts                            Contact[]                 @relation("Board_contacts")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
+  meetingSchedule                     String                    @default("")
   linkToAgendas                       ExternalLink?             @relation("Board_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId                     String?                   @map("linkToAgendas")
   linkToResolutions                   ExternalLink?             @relation("Board_linkToResolutions", fields: [linkToResolutionsId], references: [id])
@@ -223,6 +224,7 @@ model BoardDraft {
   contacts                     Contact[]          @relation("BoardDraft_contacts")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
+  meetingSchedule              String             @default("")
   linkToAgendas                ExternalLink?      @relation("BoardDraft_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId              String?            @map("linkToAgendas")
   linkToResolutions            ExternalLink?      @relation("BoardDraft_linkToResolutions", fields: [linkToResolutionsId], references: [id])
@@ -264,6 +266,7 @@ model BoardVersion {
   contacts                     Contact[]          @relation("BoardVersion_contacts")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
+  meetingSchedule              String             @default("")
   linkToAgendas                ExternalLink?      @relation("BoardVersion_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId              String?            @map("linkToAgendas")
   linkToResolutions            ExternalLink?      @relation("BoardVersion_linkToResolutions", fields: [linkToResolutionsId], references: [id])
@@ -283,6 +286,29 @@ model BoardVersion {
   @@index([linkToAgendasId])
   @@index([linkToResolutionsId])
   @@index([linkToPublicOpinionMessageId])
+}
+
+model BoardPage {
+  id                Int            @id
+  heroImage         String?
+  title             String         @unique @default("")
+  description       String         @default("")
+  owner             User?          @relation("BoardPage_owner", fields: [ownerId], references: [id])
+  ownerId           String?        @map("owner")
+  body              String?
+  actions           InternalLink[] @relation("BoardPage_actions")
+  documents         Document[]     @relation("BoardPage_documents")
+  vacancyReport     Document?      @relation("BoardPage_vacancyReport", fields: [vacancyReportId], references: [id])
+  vacancyReportId   String?        @map("vacancyReport")
+  applicationForm   Document?      @relation("BoardPage_applicationForm", fields: [applicationFormId], references: [id])
+  applicationFormId String?        @map("applicationForm")
+  contacts          Contact[]      @relation("BoardPage_contacts")
+  createdAt         DateTime?      @default(now())
+  updatedAt         DateTime?      @default(now()) @updatedAt
+
+  @@index([ownerId])
+  @@index([vacancyReportId])
+  @@index([applicationFormId])
 }
 
 model Community {
@@ -401,6 +427,7 @@ model Contact {
   from_Board_contacts                   Board[]                   @relation("Board_contacts")
   from_BoardDraft_contacts              BoardDraft[]              @relation("BoardDraft_contacts")
   from_BoardVersion_contacts            BoardVersion[]            @relation("BoardVersion_contacts")
+  from_BoardPage_contacts               BoardPage[]               @relation("BoardPage_contacts")
   from_Community_contacts               Community[]               @relation("Community_contacts")
   from_CommunityDraft_contacts          CommunityDraft[]          @relation("CommunityDraft_contacts")
   from_CommunityVersion_contacts        CommunityVersion[]        @relation("CommunityVersion_contacts")
@@ -442,6 +469,9 @@ model Document {
   from_Board_documents                   Board[]                   @relation("Board_documents")
   from_BoardDraft_documents              BoardDraft[]              @relation("BoardDraft_documents")
   from_BoardVersion_documents            BoardVersion[]            @relation("BoardVersion_documents")
+  from_BoardPage_documents               BoardPage[]               @relation("BoardPage_documents")
+  from_BoardPage_vacancyReport           BoardPage[]               @relation("BoardPage_vacancyReport")
+  from_BoardPage_applicationForm         BoardPage[]               @relation("BoardPage_applicationForm")
   from_Community_documents               Community[]               @relation("Community_documents")
   from_CommunityDraft_documents          CommunityDraft[]          @relation("CommunityDraft_documents")
   from_CommunityVersion_documents        CommunityVersion[]        @relation("CommunityVersion_documents")
@@ -701,6 +731,7 @@ model InternalLink {
   from_Board_actions                   Board[]                   @relation("Board_actions")
   from_BoardDraft_actions              BoardDraft[]              @relation("BoardDraft_actions")
   from_BoardVersion_actions            BoardVersion[]            @relation("BoardVersion_actions")
+  from_BoardPage_actions               BoardPage[]               @relation("BoardPage_actions")
   from_Community_actions               Community[]               @relation("Community_actions")
   from_CommunityDraft_actions          CommunityDraft[]          @relation("CommunityDraft_actions")
   from_CommunityVersion_actions        CommunityVersion[]        @relation("CommunityVersion_actions")
@@ -1484,6 +1515,7 @@ model User {
   from_Board_owner                   Board[]                   @relation("Board_owner")
   from_BoardDraft_owner              BoardDraft[]              @relation("BoardDraft_owner")
   from_BoardVersion_owner            BoardVersion[]            @relation("BoardVersion_owner")
+  from_BoardPage_owner               BoardPage[]               @relation("BoardPage_owner")
   from_Community_owner               Community[]               @relation("Community_owner")
   from_CommunityDraft_owner          CommunityDraft[]          @relation("CommunityDraft_owner")
   from_CommunityVersion_owner        CommunityVersion[]        @relation("CommunityVersion_owner")
