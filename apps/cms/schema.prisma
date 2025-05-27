@@ -36,8 +36,7 @@ model AssemblyDistrict {
   body                                       String?
   tags                                       Tag[]                     @relation("AssemblyDistrict_tags")
   userGroups                                 UserGroup[]               @relation("AssemblyDistrict_userGroups")
-  actions                                    InternalLink?             @relation("AssemblyDistrict_actions", fields: [actionsId], references: [id])
-  actionsId                                  String?                   @map("actions")
+  actions                                    InternalLink[]            @relation("AssemblyDistrict_actions")
   documents                                  Document[]                @relation("AssemblyDistrict_documents")
   contacts                                   Contact[]                 @relation("AssemblyDistrict_contacts")
   createdAt                                  DateTime?                 @default(now())
@@ -69,7 +68,6 @@ model AssemblyDistrict {
   from_PublicNoticeVersion_assemblyDistricts PublicNoticeVersion[]     @relation("PublicNoticeVersion_assemblyDistricts")
 
   @@index([ownerId])
-  @@index([actionsId])
   @@index([photoId])
 }
 
@@ -88,8 +86,7 @@ model AssemblyDistrictDraft {
   body        String?
   tags        Tag[]             @relation("AssemblyDistrictDraft_tags")
   userGroups  UserGroup[]       @relation("AssemblyDistrictDraft_userGroups")
-  actions     InternalLink?     @relation("AssemblyDistrictDraft_actions", fields: [actionsId], references: [id])
-  actionsId   String?           @map("actions")
+  actions     InternalLink[]    @relation("AssemblyDistrictDraft_actions")
   documents   Document[]        @relation("AssemblyDistrictDraft_documents")
   contacts    Contact[]         @relation("AssemblyDistrictDraft_contacts")
   createdAt   DateTime?         @default(now())
@@ -109,7 +106,6 @@ model AssemblyDistrictDraft {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([photoId])
 }
 
@@ -128,8 +124,7 @@ model AssemblyDistrictVersion {
   body        String?
   tags        Tag[]             @relation("AssemblyDistrictVersion_tags")
   userGroups  UserGroup[]       @relation("AssemblyDistrictVersion_userGroups")
-  actions     InternalLink?     @relation("AssemblyDistrictVersion_actions", fields: [actionsId], references: [id])
-  actionsId   String?           @map("actions")
+  actions     InternalLink[]    @relation("AssemblyDistrictVersion_actions")
   documents   Document[]        @relation("AssemblyDistrictVersion_documents")
   contacts    Contact[]         @relation("AssemblyDistrictVersion_contacts")
   createdAt   DateTime?         @default(now())
@@ -150,7 +145,6 @@ model AssemblyDistrictVersion {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([photoId])
 }
 
@@ -168,8 +162,7 @@ model Board {
   body                                String?
   tags                                Tag[]                     @relation("Board_tags")
   userGroups                          UserGroup[]               @relation("Board_userGroups")
-  actions                             InternalLink?             @relation("Board_actions", fields: [actionsId], references: [id])
-  actionsId                           String?                   @map("actions")
+  actions                             InternalLink[]            @relation("Board_actions")
   documents                           Document[]                @relation("Board_documents")
   contacts                            Contact[]                 @relation("Board_contacts")
   createdAt                           DateTime?                 @default(now())
@@ -197,7 +190,6 @@ model Board {
   from_CommunityVersion_boards        CommunityVersion[]        @relation("CommunityVersion_boards")
 
   @@index([ownerId])
-  @@index([actionsId])
   @@index([linkToAgendasId])
   @@index([linkToResolutionsId])
   @@index([linkToPublicOpinionMessageId])
@@ -218,8 +210,7 @@ model BoardDraft {
   body                         String?
   tags                         Tag[]              @relation("BoardDraft_tags")
   userGroups                   UserGroup[]        @relation("BoardDraft_userGroups")
-  actions                      InternalLink?      @relation("BoardDraft_actions", fields: [actionsId], references: [id])
-  actionsId                    String?            @map("actions")
+  actions                      InternalLink[]     @relation("BoardDraft_actions")
   documents                    Document[]         @relation("BoardDraft_documents")
   contacts                     Contact[]          @relation("BoardDraft_contacts")
   createdAt                    DateTime?          @default(now())
@@ -239,7 +230,6 @@ model BoardDraft {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([linkToAgendasId])
   @@index([linkToResolutionsId])
   @@index([linkToPublicOpinionMessageId])
@@ -260,8 +250,7 @@ model BoardVersion {
   body                         String?
   tags                         Tag[]              @relation("BoardVersion_tags")
   userGroups                   UserGroup[]        @relation("BoardVersion_userGroups")
-  actions                      InternalLink?      @relation("BoardVersion_actions", fields: [actionsId], references: [id])
-  actionsId                    String?            @map("actions")
+  actions                      InternalLink[]     @relation("BoardVersion_actions")
   documents                    Document[]         @relation("BoardVersion_documents")
   contacts                     Contact[]          @relation("BoardVersion_contacts")
   createdAt                    DateTime?          @default(now())
@@ -282,7 +271,6 @@ model BoardVersion {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([linkToAgendasId])
   @@index([linkToResolutionsId])
   @@index([linkToPublicOpinionMessageId])
@@ -325,8 +313,7 @@ model Community {
   body                                 String?
   tags                                 Tag[]                 @relation("Community_tags")
   userGroups                           UserGroup[]           @relation("Community_userGroups")
-  actions                              InternalLink?         @relation("Community_actions", fields: [actionsId], references: [id])
-  actionsId                            String?               @map("actions")
+  actions                              InternalLink[]        @relation("Community_actions")
   documents                            Document[]            @relation("Community_documents")
   contacts                             Contact[]             @relation("Community_contacts")
   createdAt                            DateTime?             @default(now())
@@ -349,7 +336,6 @@ model Community {
   from_ServiceVersion_communities      ServiceVersion[]      @relation("ServiceVersion_communities")
 
   @@index([ownerId])
-  @@index([actionsId])
 }
 
 model CommunityDraft {
@@ -367,8 +353,7 @@ model CommunityDraft {
   body        String?
   tags        Tag[]              @relation("CommunityDraft_tags")
   userGroups  UserGroup[]        @relation("CommunityDraft_userGroups")
-  actions     InternalLink?      @relation("CommunityDraft_actions", fields: [actionsId], references: [id])
-  actionsId   String?            @map("actions")
+  actions     InternalLink[]     @relation("CommunityDraft_actions")
   documents   Document[]         @relation("CommunityDraft_documents")
   contacts    Contact[]          @relation("CommunityDraft_contacts")
   createdAt   DateTime?          @default(now())
@@ -380,7 +365,6 @@ model CommunityDraft {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
 }
 
 model CommunityVersion {
@@ -398,8 +382,7 @@ model CommunityVersion {
   body        String?
   tags        Tag[]              @relation("CommunityVersion_tags")
   userGroups  UserGroup[]        @relation("CommunityVersion_userGroups")
-  actions     InternalLink?      @relation("CommunityVersion_actions", fields: [actionsId], references: [id])
-  actionsId   String?            @map("actions")
+  actions     InternalLink[]     @relation("CommunityVersion_actions")
   documents   Document[]         @relation("CommunityVersion_documents")
   contacts    Contact[]          @relation("CommunityVersion_contacts")
   createdAt   DateTime?          @default(now())
@@ -412,7 +395,6 @@ model CommunityVersion {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
 }
 
 model Contact {
@@ -549,8 +531,7 @@ model Facility {
   body                                String?
   tags                                Tag[]                 @relation("Facility_tags")
   userGroups                          UserGroup[]           @relation("Facility_userGroups")
-  actions                             InternalLink?         @relation("Facility_actions", fields: [actionsId], references: [id])
-  actionsId                           String?               @map("actions")
+  actions                             InternalLink[]        @relation("Facility_actions")
   documents                           Document[]            @relation("Facility_documents")
   address                             Location?             @relation("Facility_address", fields: [addressId], references: [id])
   addressId                           String?               @map("address")
@@ -576,7 +557,6 @@ model Facility {
   from_ServiceVersion_facilities      ServiceVersion[]      @relation("ServiceVersion_facilities")
 
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
   @@index([parkId])
 }
@@ -596,8 +576,7 @@ model FacilityDraft {
   body        String?
   tags        Tag[]           @relation("FacilityDraft_tags")
   userGroups  UserGroup[]     @relation("FacilityDraft_userGroups")
-  actions     InternalLink?   @relation("FacilityDraft_actions", fields: [actionsId], references: [id])
-  actionsId   String?         @map("actions")
+  actions     InternalLink[]  @relation("FacilityDraft_actions")
   documents   Document[]      @relation("FacilityDraft_documents")
   address     Location?       @relation("FacilityDraft_address", fields: [addressId], references: [id])
   addressId   String?         @map("address")
@@ -612,7 +591,6 @@ model FacilityDraft {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
   @@index([parkId])
 }
@@ -632,8 +610,7 @@ model FacilityVersion {
   body        String?
   tags        Tag[]           @relation("FacilityVersion_tags")
   userGroups  UserGroup[]     @relation("FacilityVersion_userGroups")
-  actions     InternalLink?   @relation("FacilityVersion_actions", fields: [actionsId], references: [id])
-  actionsId   String?         @map("actions")
+  actions     InternalLink[]  @relation("FacilityVersion_actions")
   documents   Document[]      @relation("FacilityVersion_documents")
   address     Location?       @relation("FacilityVersion_address", fields: [addressId], references: [id])
   addressId   String?         @map("address")
@@ -649,7 +626,6 @@ model FacilityVersion {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
   @@index([parkId])
 }
@@ -787,8 +763,7 @@ model OrgUnit {
   body                              String?
   tags                              Tag[]                 @relation("OrgUnit_tags")
   userGroups                        UserGroup[]           @relation("OrgUnit_userGroups")
-  actions                           InternalLink?         @relation("OrgUnit_actions", fields: [actionsId], references: [id])
-  actionsId                         String?               @map("actions")
+  actions                           InternalLink[]        @relation("OrgUnit_actions")
   documents                         Document[]            @relation("OrgUnit_documents")
   contacts                          Contact[]             @relation("OrgUnit_contacts")
   createdAt                         DateTime?             @default(now())
@@ -816,80 +791,75 @@ model OrgUnit {
   from_ServiceVersion_orgUnits      ServiceVersion[]      @relation("ServiceVersion_orgUnits")
 
   @@index([ownerId])
-  @@index([actionsId])
   @@index([servicesId])
   @@index([parentId])
 }
 
 model OrgUnitDraft {
-  id          String        @id @default(cuid())
-  original    OrgUnit?      @relation("OrgUnitDraft_original", fields: [originalId], references: [id])
-  originalId  String?       @map("original")
+  id          String         @id @default(cuid())
+  original    OrgUnit?       @relation("OrgUnitDraft_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
   heroImage   String?
-  title       String        @default("")
-  description String        @default("")
+  title       String         @default("")
+  description String         @default("")
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
-  owner       User?         @relation("OrgUnitDraft_owner", fields: [ownerId], references: [id])
-  ownerId     String?       @map("owner")
+  owner       User?          @relation("OrgUnitDraft_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
   body        String?
-  tags        Tag[]         @relation("OrgUnitDraft_tags")
-  userGroups  UserGroup[]   @relation("OrgUnitDraft_userGroups")
-  actions     InternalLink? @relation("OrgUnitDraft_actions", fields: [actionsId], references: [id])
-  actionsId   String?       @map("actions")
-  documents   Document[]    @relation("OrgUnitDraft_documents")
-  contacts    Contact[]     @relation("OrgUnitDraft_contacts")
-  createdAt   DateTime?     @default(now())
-  updatedAt   DateTime?     @default(now()) @updatedAt
-  showPage    Boolean       @default(true)
-  services    Service?      @relation("OrgUnitDraft_services", fields: [servicesId], references: [id])
-  servicesId  String?       @map("services")
-  children    OrgUnit[]     @relation("OrgUnitDraft_children")
-  parent      OrgUnit?      @relation("OrgUnitDraft_parent", fields: [parentId], references: [id])
-  parentId    String?       @map("parent")
+  tags        Tag[]          @relation("OrgUnitDraft_tags")
+  userGroups  UserGroup[]    @relation("OrgUnitDraft_userGroups")
+  actions     InternalLink[] @relation("OrgUnitDraft_actions")
+  documents   Document[]     @relation("OrgUnitDraft_documents")
+  contacts    Contact[]      @relation("OrgUnitDraft_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  showPage    Boolean        @default(true)
+  services    Service?       @relation("OrgUnitDraft_services", fields: [servicesId], references: [id])
+  servicesId  String?        @map("services")
+  children    OrgUnit[]      @relation("OrgUnitDraft_children")
+  parent      OrgUnit?       @relation("OrgUnitDraft_parent", fields: [parentId], references: [id])
+  parentId    String?        @map("parent")
   publish     String?
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([servicesId])
   @@index([parentId])
 }
 
 model OrgUnitVersion {
-  id          String        @id @default(cuid())
-  original    OrgUnit?      @relation("OrgUnitVersion_original", fields: [originalId], references: [id])
-  originalId  String?       @map("original")
+  id          String         @id @default(cuid())
+  original    OrgUnit?       @relation("OrgUnitVersion_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
   heroImage   String?
-  title       String        @default("")
-  description String        @default("")
+  title       String         @default("")
+  description String         @default("")
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
-  owner       User?         @relation("OrgUnitVersion_owner", fields: [ownerId], references: [id])
-  ownerId     String?       @map("owner")
+  owner       User?          @relation("OrgUnitVersion_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
   body        String?
-  tags        Tag[]         @relation("OrgUnitVersion_tags")
-  userGroups  UserGroup[]   @relation("OrgUnitVersion_userGroups")
-  actions     InternalLink? @relation("OrgUnitVersion_actions", fields: [actionsId], references: [id])
-  actionsId   String?       @map("actions")
-  documents   Document[]    @relation("OrgUnitVersion_documents")
-  contacts    Contact[]     @relation("OrgUnitVersion_contacts")
-  createdAt   DateTime?     @default(now())
-  updatedAt   DateTime?     @default(now()) @updatedAt
-  showPage    Boolean       @default(true)
-  services    Service?      @relation("OrgUnitVersion_services", fields: [servicesId], references: [id])
-  servicesId  String?       @map("services")
-  children    OrgUnit[]     @relation("OrgUnitVersion_children")
-  parent      OrgUnit?      @relation("OrgUnitVersion_parent", fields: [parentId], references: [id])
-  parentId    String?       @map("parent")
-  isLive      OrgUnit?      @relation("OrgUnit_currentVersion")
+  tags        Tag[]          @relation("OrgUnitVersion_tags")
+  userGroups  UserGroup[]    @relation("OrgUnitVersion_userGroups")
+  actions     InternalLink[] @relation("OrgUnitVersion_actions")
+  documents   Document[]     @relation("OrgUnitVersion_documents")
+  contacts    Contact[]      @relation("OrgUnitVersion_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  showPage    Boolean        @default(true)
+  services    Service?       @relation("OrgUnitVersion_services", fields: [servicesId], references: [id])
+  servicesId  String?        @map("services")
+  children    OrgUnit[]      @relation("OrgUnitVersion_children")
+  parent      OrgUnit?       @relation("OrgUnitVersion_parent", fields: [parentId], references: [id])
+  parentId    String?        @map("parent")
+  isLive      OrgUnit?       @relation("OrgUnit_currentVersion")
   republish   String?
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([servicesId])
   @@index([parentId])
 }
@@ -921,8 +891,7 @@ model Park {
   body                           String?
   tags                           Tag[]                 @relation("Park_tags")
   userGroups                     UserGroup[]           @relation("Park_userGroups")
-  actions                        InternalLink?         @relation("Park_actions", fields: [actionsId], references: [id])
-  actionsId                      String?               @map("actions")
+  actions                        InternalLink[]        @relation("Park_actions")
   documents                      Document[]            @relation("Park_documents")
   address                        Location?             @relation("Park_address", fields: [addressId], references: [id])
   addressId                      String?               @map("address")
@@ -950,7 +919,6 @@ model Park {
   from_TrailVersion_park         TrailVersion[]        @relation("TrailVersion_park")
 
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
 }
 
@@ -969,8 +937,7 @@ model ParkDraft {
   body        String?
   tags        Tag[]           @relation("ParkDraft_tags")
   userGroups  UserGroup[]     @relation("ParkDraft_userGroups")
-  actions     InternalLink?   @relation("ParkDraft_actions", fields: [actionsId], references: [id])
-  actionsId   String?         @map("actions")
+  actions     InternalLink[]  @relation("ParkDraft_actions")
   documents   Document[]      @relation("ParkDraft_documents")
   address     Location?       @relation("ParkDraft_address", fields: [addressId], references: [id])
   addressId   String?         @map("address")
@@ -985,7 +952,6 @@ model ParkDraft {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
 }
 
@@ -1004,8 +970,7 @@ model ParkVersion {
   body        String?
   tags        Tag[]           @relation("ParkVersion_tags")
   userGroups  UserGroup[]     @relation("ParkVersion_userGroups")
-  actions     InternalLink?   @relation("ParkVersion_actions", fields: [actionsId], references: [id])
-  actionsId   String?         @map("actions")
+  actions     InternalLink[]  @relation("ParkVersion_actions")
   documents   Document[]      @relation("ParkVersion_documents")
   address     Location?       @relation("ParkVersion_address", fields: [addressId], references: [id])
   addressId   String?         @map("address")
@@ -1021,7 +986,6 @@ model ParkVersion {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
 }
 
@@ -1039,8 +1003,7 @@ model PublicNotice {
   body              String?
   tags              Tag[]                 @relation("PublicNotice_tags")
   userGroups        UserGroup[]           @relation("PublicNotice_userGroups")
-  actions           InternalLink?         @relation("PublicNotice_actions", fields: [actionsId], references: [id])
-  actionsId         String?               @map("actions")
+  actions           InternalLink[]        @relation("PublicNotice_actions")
   documents         Document[]            @relation("PublicNotice_documents")
   contacts          Contact[]             @relation("PublicNotice_contacts")
   createdAt         DateTime?             @default(now())
@@ -1063,7 +1026,6 @@ model PublicNotice {
   currentVersionId  String?               @unique @map("currentVersion")
 
   @@index([ownerId])
-  @@index([actionsId])
 }
 
 model PublicNoticeDraft {
@@ -1081,8 +1043,7 @@ model PublicNoticeDraft {
   body              String?
   tags              Tag[]              @relation("PublicNoticeDraft_tags")
   userGroups        UserGroup[]        @relation("PublicNoticeDraft_userGroups")
-  actions           InternalLink?      @relation("PublicNoticeDraft_actions", fields: [actionsId], references: [id])
-  actionsId         String?            @map("actions")
+  actions           InternalLink[]     @relation("PublicNoticeDraft_actions")
   documents         Document[]         @relation("PublicNoticeDraft_documents")
   contacts          Contact[]          @relation("PublicNoticeDraft_contacts")
   createdAt         DateTime?          @default(now())
@@ -1101,7 +1062,6 @@ model PublicNoticeDraft {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
 }
 
 model PublicNoticeVersion {
@@ -1119,8 +1079,7 @@ model PublicNoticeVersion {
   body              String?
   tags              Tag[]              @relation("PublicNoticeVersion_tags")
   userGroups        UserGroup[]        @relation("PublicNoticeVersion_userGroups")
-  actions           InternalLink?      @relation("PublicNoticeVersion_actions", fields: [actionsId], references: [id])
-  actionsId         String?            @map("actions")
+  actions           InternalLink[]     @relation("PublicNoticeVersion_actions")
   documents         Document[]         @relation("PublicNoticeVersion_documents")
   contacts          Contact[]          @relation("PublicNoticeVersion_contacts")
   createdAt         DateTime?          @default(now())
@@ -1140,7 +1099,6 @@ model PublicNoticeVersion {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
 }
 
 model Service {
@@ -1323,8 +1281,7 @@ model Trail {
   body                            String?
   tags                            Tag[]                 @relation("Trail_tags")
   userGroups                      UserGroup[]           @relation("Trail_userGroups")
-  actions                         InternalLink?         @relation("Trail_actions", fields: [actionsId], references: [id])
-  actionsId                       String?               @map("actions")
+  actions                         InternalLink[]        @relation("Trail_actions")
   documents                       Document[]            @relation("Trail_documents")
   address                         Location?             @relation("Trail_address", fields: [addressId], references: [id])
   addressId                       String?               @map("address")
@@ -1369,118 +1326,113 @@ model Trail {
   from_ServiceVersion_trails      ServiceVersion[]      @relation("ServiceVersion_trails")
 
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
   @@index([parkId])
 }
 
 model TrailDraft {
-  id                 String        @id @default(cuid())
-  original           Trail?        @relation("TrailDraft_original", fields: [originalId], references: [id])
-  originalId         String?       @map("original")
+  id                 String         @id @default(cuid())
+  original           Trail?         @relation("TrailDraft_original", fields: [originalId], references: [id])
+  originalId         String?        @map("original")
   heroImage          String?
-  title              String        @default("")
-  description        String        @default("")
+  title              String         @default("")
+  description        String         @default("")
   publishAt          DateTime?
   unpublishAt        DateTime?
   reviewDate         DateTime?
-  owner              User?         @relation("TrailDraft_owner", fields: [ownerId], references: [id])
-  ownerId            String?       @map("owner")
+  owner              User?          @relation("TrailDraft_owner", fields: [ownerId], references: [id])
+  ownerId            String?        @map("owner")
   body               String?
-  tags               Tag[]         @relation("TrailDraft_tags")
-  userGroups         UserGroup[]   @relation("TrailDraft_userGroups")
-  actions            InternalLink? @relation("TrailDraft_actions", fields: [actionsId], references: [id])
-  actionsId          String?       @map("actions")
-  documents          Document[]    @relation("TrailDraft_documents")
-  address            Location?     @relation("TrailDraft_address", fields: [addressId], references: [id])
-  addressId          String?       @map("address")
-  contacts           Contact[]     @relation("TrailDraft_contacts")
-  createdAt          DateTime?     @default(now())
-  updatedAt          DateTime?     @default(now()) @updatedAt
-  open               Boolean       @default(false)
-  summer             Boolean       @default(false)
-  fall               Boolean       @default(false)
-  winter             Boolean       @default(false)
-  spring             Boolean       @default(false)
-  hiking             Boolean       @default(false)
-  biking             Boolean       @default(false)
-  horsebackRiding    Boolean       @default(false)
-  crossCountrySkiing Boolean       @default(false)
-  snowshoeing        Boolean       @default(false)
-  frisbeeGolf        Boolean       @default(false)
-  dogWalking         Boolean       @default(false)
-  running            Boolean       @default(false)
-  snowMachining      Boolean       @default(false)
-  atv                Boolean       @default(false)
-  dirtBiking         Boolean       @default(false)
-  mushing            Boolean       @default(false)
+  tags               Tag[]          @relation("TrailDraft_tags")
+  userGroups         UserGroup[]    @relation("TrailDraft_userGroups")
+  actions            InternalLink[] @relation("TrailDraft_actions")
+  documents          Document[]     @relation("TrailDraft_documents")
+  address            Location?      @relation("TrailDraft_address", fields: [addressId], references: [id])
+  addressId          String?        @map("address")
+  contacts           Contact[]      @relation("TrailDraft_contacts")
+  createdAt          DateTime?      @default(now())
+  updatedAt          DateTime?      @default(now()) @updatedAt
+  open               Boolean        @default(false)
+  summer             Boolean        @default(false)
+  fall               Boolean        @default(false)
+  winter             Boolean        @default(false)
+  spring             Boolean        @default(false)
+  hiking             Boolean        @default(false)
+  biking             Boolean        @default(false)
+  horsebackRiding    Boolean        @default(false)
+  crossCountrySkiing Boolean        @default(false)
+  snowshoeing        Boolean        @default(false)
+  frisbeeGolf        Boolean        @default(false)
+  dogWalking         Boolean        @default(false)
+  running            Boolean        @default(false)
+  snowMachining      Boolean        @default(false)
+  atv                Boolean        @default(false)
+  dirtBiking         Boolean        @default(false)
+  mushing            Boolean        @default(false)
   difficulty         String?
-  length             String        @default("")
-  elevationChange    String        @default("")
-  services           Service[]     @relation("TrailDraft_services")
-  park               Park?         @relation("TrailDraft_park", fields: [parkId], references: [id])
-  parkId             String?       @map("park")
+  length             String         @default("")
+  elevationChange    String         @default("")
+  services           Service[]      @relation("TrailDraft_services")
+  park               Park?          @relation("TrailDraft_park", fields: [parkId], references: [id])
+  parkId             String?        @map("park")
   publish            String?
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
   @@index([parkId])
 }
 
 model TrailVersion {
-  id                 String        @id @default(cuid())
-  original           Trail?        @relation("TrailVersion_original", fields: [originalId], references: [id])
-  originalId         String?       @map("original")
+  id                 String         @id @default(cuid())
+  original           Trail?         @relation("TrailVersion_original", fields: [originalId], references: [id])
+  originalId         String?        @map("original")
   heroImage          String?
-  title              String        @default("")
-  description        String        @default("")
+  title              String         @default("")
+  description        String         @default("")
   publishAt          DateTime?
   unpublishAt        DateTime?
   reviewDate         DateTime?
-  owner              User?         @relation("TrailVersion_owner", fields: [ownerId], references: [id])
-  ownerId            String?       @map("owner")
+  owner              User?          @relation("TrailVersion_owner", fields: [ownerId], references: [id])
+  ownerId            String?        @map("owner")
   body               String?
-  tags               Tag[]         @relation("TrailVersion_tags")
-  userGroups         UserGroup[]   @relation("TrailVersion_userGroups")
-  actions            InternalLink? @relation("TrailVersion_actions", fields: [actionsId], references: [id])
-  actionsId          String?       @map("actions")
-  documents          Document[]    @relation("TrailVersion_documents")
-  address            Location?     @relation("TrailVersion_address", fields: [addressId], references: [id])
-  addressId          String?       @map("address")
-  contacts           Contact[]     @relation("TrailVersion_contacts")
-  createdAt          DateTime?     @default(now())
-  updatedAt          DateTime?     @default(now()) @updatedAt
-  open               Boolean       @default(false)
-  summer             Boolean       @default(false)
-  fall               Boolean       @default(false)
-  winter             Boolean       @default(false)
-  spring             Boolean       @default(false)
-  hiking             Boolean       @default(false)
-  biking             Boolean       @default(false)
-  horsebackRiding    Boolean       @default(false)
-  crossCountrySkiing Boolean       @default(false)
-  snowshoeing        Boolean       @default(false)
-  frisbeeGolf        Boolean       @default(false)
-  dogWalking         Boolean       @default(false)
-  running            Boolean       @default(false)
-  snowMachining      Boolean       @default(false)
-  atv                Boolean       @default(false)
-  dirtBiking         Boolean       @default(false)
-  mushing            Boolean       @default(false)
+  tags               Tag[]          @relation("TrailVersion_tags")
+  userGroups         UserGroup[]    @relation("TrailVersion_userGroups")
+  actions            InternalLink[] @relation("TrailVersion_actions")
+  documents          Document[]     @relation("TrailVersion_documents")
+  address            Location?      @relation("TrailVersion_address", fields: [addressId], references: [id])
+  addressId          String?        @map("address")
+  contacts           Contact[]      @relation("TrailVersion_contacts")
+  createdAt          DateTime?      @default(now())
+  updatedAt          DateTime?      @default(now()) @updatedAt
+  open               Boolean        @default(false)
+  summer             Boolean        @default(false)
+  fall               Boolean        @default(false)
+  winter             Boolean        @default(false)
+  spring             Boolean        @default(false)
+  hiking             Boolean        @default(false)
+  biking             Boolean        @default(false)
+  horsebackRiding    Boolean        @default(false)
+  crossCountrySkiing Boolean        @default(false)
+  snowshoeing        Boolean        @default(false)
+  frisbeeGolf        Boolean        @default(false)
+  dogWalking         Boolean        @default(false)
+  running            Boolean        @default(false)
+  snowMachining      Boolean        @default(false)
+  atv                Boolean        @default(false)
+  dirtBiking         Boolean        @default(false)
+  mushing            Boolean        @default(false)
   difficulty         String?
-  length             String        @default("")
-  elevationChange    String        @default("")
-  services           Service[]     @relation("TrailVersion_services")
-  park               Park?         @relation("TrailVersion_park", fields: [parkId], references: [id])
-  parkId             String?       @map("park")
-  isLive             Trail?        @relation("Trail_currentVersion")
+  length             String         @default("")
+  elevationChange    String         @default("")
+  services           Service[]      @relation("TrailVersion_services")
+  park               Park?          @relation("TrailVersion_park", fields: [parkId], references: [id])
+  parkId             String?        @map("park")
+  isLive             Trail?         @relation("Trail_currentVersion")
   republish          String?
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([actionsId])
   @@index([addressId])
   @@index([parkId])
 }

@@ -475,6 +475,7 @@ export function basePage(
           inlineCreate: { fields: ['label', 'selectItem'] },
           inlineEdit: { fields: ['label', 'selectItem'] },
         },
+        many: true,
       }),
     }),
 
