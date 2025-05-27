@@ -2,6 +2,7 @@ import Typesense from 'typesense';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
 import { KeystoneContext } from '@keystone-6/core/types';
+import v from 'voca';
 
 export type TypeSensePageDocument = {
   id: string;
@@ -159,7 +160,7 @@ export function toSearchableObj(
   type: string,
 ): TypeSensePageDocument {
   return {
-    type,
+    type: item.type.replace(/_/gi, ' ') || type,
     id: item.id,
     slug: item.slug,
     title: item.title,
