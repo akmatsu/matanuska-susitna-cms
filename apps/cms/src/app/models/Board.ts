@@ -137,7 +137,7 @@ export const {
       async afterOperation(args) {
         await typesenseUpsert(
           'board',
-          'id title description body slug publishAt tags {name}',
+          'id title description body slug publishAt tags {name} type',
           args,
         );
       },
