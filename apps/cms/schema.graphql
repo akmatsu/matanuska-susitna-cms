@@ -190,7 +190,8 @@ type AssemblyDistrict {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -239,7 +240,7 @@ input AssemblyDistrictWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -270,6 +271,12 @@ input UserGroupManyRelationFilter {
   every: UserGroupWhereInput
   some: UserGroupWhereInput
   none: UserGroupWhereInput
+}
+
+input InternalLinkManyRelationFilter {
+  every: InternalLinkWhereInput
+  some: InternalLinkWhereInput
+  none: InternalLinkWhereInput
 }
 
 input DocumentManyRelationFilter {
@@ -358,7 +365,7 @@ input AssemblyDistrictUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -400,10 +407,11 @@ input UserGroupRelateToManyForUpdateInput {
   connect: [UserGroupWhereUniqueInput!]
 }
 
-input InternalLinkRelateToOneForUpdateInput {
-  create: InternalLinkCreateInput
-  connect: InternalLinkWhereUniqueInput
-  disconnect: Boolean
+input InternalLinkRelateToManyForUpdateInput {
+  disconnect: [InternalLinkWhereUniqueInput!]
+  set: [InternalLinkWhereUniqueInput!]
+  create: [InternalLinkCreateInput!]
+  connect: [InternalLinkWhereUniqueInput!]
 }
 
 input DocumentRelateToManyForUpdateInput {
@@ -470,7 +478,7 @@ input AssemblyDistrictCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -507,9 +515,9 @@ input UserGroupRelateToManyForCreateInput {
   connect: [UserGroupWhereUniqueInput!]
 }
 
-input InternalLinkRelateToOneForCreateInput {
-  create: InternalLinkCreateInput
-  connect: InternalLinkWhereUniqueInput
+input InternalLinkRelateToManyForCreateInput {
+  create: [InternalLinkCreateInput!]
+  connect: [InternalLinkWhereUniqueInput!]
 }
 
 input DocumentRelateToManyForCreateInput {
@@ -563,7 +571,8 @@ type AssemblyDistrictDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -603,7 +612,7 @@ input AssemblyDistrictDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -654,7 +663,7 @@ input AssemblyDistrictDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -695,7 +704,7 @@ input AssemblyDistrictDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -734,7 +743,8 @@ type AssemblyDistrictVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -776,7 +786,7 @@ input AssemblyDistrictVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -828,7 +838,7 @@ input AssemblyDistrictVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -864,7 +874,7 @@ input AssemblyDistrictVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -899,7 +909,8 @@ type Board {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -947,7 +958,7 @@ input BoardWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -1026,7 +1037,7 @@ input BoardUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1103,7 +1114,7 @@ input BoardCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -1169,7 +1180,8 @@ type BoardDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -1208,7 +1220,7 @@ input BoardDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -1252,7 +1264,7 @@ input BoardDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1291,7 +1303,7 @@ input BoardDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -1328,7 +1340,8 @@ type BoardVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -1369,7 +1382,7 @@ input BoardVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -1414,7 +1427,7 @@ input BoardVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1448,7 +1461,7 @@ input BoardVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -1507,12 +1520,6 @@ input BoardPageWhereInput {
   updatedAt: DateTimeNullableFilter
 }
 
-input InternalLinkManyRelationFilter {
-  every: InternalLinkWhereInput
-  some: InternalLinkWhereInput
-  none: InternalLinkWhereInput
-}
-
 input BoardPageOrderByInput {
   id: OrderDirection
   heroImage: BlueHarvestImageOrderDirection
@@ -1536,13 +1543,6 @@ input BoardPageUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input InternalLinkRelateToManyForUpdateInput {
-  disconnect: [InternalLinkWhereUniqueInput!]
-  set: [InternalLinkWhereUniqueInput!]
-  create: [InternalLinkCreateInput!]
-  connect: [InternalLinkWhereUniqueInput!]
 }
 
 input DocumentRelateToOneForUpdateInput {
@@ -1571,11 +1571,6 @@ input BoardPageCreateInput {
   updatedAt: DateTime
 }
 
-input InternalLinkRelateToManyForCreateInput {
-  create: [InternalLinkCreateInput!]
-  connect: [InternalLinkWhereUniqueInput!]
-}
-
 input DocumentRelateToOneForCreateInput {
   create: DocumentCreateInput
   connect: DocumentWhereUniqueInput
@@ -1597,7 +1592,8 @@ type Community {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -1641,7 +1637,7 @@ input CommunityWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -1701,7 +1697,7 @@ input CommunityUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1760,7 +1756,7 @@ input CommunityCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -1811,7 +1807,8 @@ type CommunityDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -1846,7 +1843,7 @@ input CommunityDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -1882,7 +1879,7 @@ input CommunityDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1916,7 +1913,7 @@ input CommunityDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -1948,7 +1945,8 @@ type CommunityVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -1985,7 +1983,7 @@ input CommunityVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -2022,7 +2020,7 @@ input CommunityVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -2051,7 +2049,7 @@ input CommunityVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -2336,7 +2334,8 @@ type Facility {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -2380,7 +2379,7 @@ input FacilityWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -2441,7 +2440,7 @@ input FacilityUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -2513,7 +2512,7 @@ input FacilityCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -2575,7 +2574,8 @@ type FacilityDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -2610,7 +2610,7 @@ input FacilityDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -2647,7 +2647,7 @@ input FacilityDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -2682,7 +2682,7 @@ input FacilityDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -2715,7 +2715,8 @@ type FacilityVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -2752,7 +2753,7 @@ input FacilityVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -2790,7 +2791,7 @@ input FacilityVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -2820,7 +2821,7 @@ input FacilityVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -2882,6 +2883,12 @@ input HighlightUpdateInput {
   updatedAt: DateTime
 }
 
+input InternalLinkRelateToOneForUpdateInput {
+  create: InternalLinkCreateInput
+  connect: InternalLinkWhereUniqueInput
+  disconnect: Boolean
+}
+
 input HighlightUpdateArgs {
   where: HighlightWhereUniqueInput!
   data: HighlightUpdateInput!
@@ -2895,6 +2902,11 @@ input HighlightCreateInput {
   editorNotes: String
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input InternalLinkRelateToOneForCreateInput {
+  create: InternalLinkCreateInput
+  connect: InternalLinkWhereUniqueInput
 }
 
 type HomePage {
@@ -3183,7 +3195,8 @@ type OrgUnit {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -3226,7 +3239,7 @@ input OrgUnitWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -3288,7 +3301,7 @@ input OrgUnitUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -3360,7 +3373,7 @@ input OrgUnitCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -3422,7 +3435,8 @@ type OrgUnitDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -3456,7 +3470,7 @@ input OrgUnitDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -3494,7 +3508,7 @@ input OrgUnitDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -3523,7 +3537,7 @@ input OrgUnitDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -3551,7 +3565,8 @@ type OrgUnitVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -3587,7 +3602,7 @@ input OrgUnitVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -3626,7 +3641,7 @@ input OrgUnitVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -3656,7 +3671,7 @@ input OrgUnitVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -3730,7 +3745,8 @@ type Park {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -3777,7 +3793,7 @@ input ParkWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -3845,7 +3861,7 @@ input ParkUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -3913,7 +3929,7 @@ input ParkCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -3971,7 +3987,8 @@ type ParkDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -4009,7 +4026,7 @@ input ParkDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -4047,7 +4064,7 @@ input ParkDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -4077,7 +4094,7 @@ input ParkDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -4106,7 +4123,8 @@ type ParkVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -4146,7 +4164,7 @@ input ParkVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -4185,7 +4203,7 @@ input ParkVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -4216,7 +4234,7 @@ input ParkVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -4246,7 +4264,8 @@ type PublicNotice {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -4301,7 +4320,7 @@ input PublicNoticeWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -4371,7 +4390,7 @@ input PublicNoticeUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -4437,7 +4456,7 @@ input PublicNoticeCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -4495,7 +4514,8 @@ type PublicNoticeDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -4541,7 +4561,7 @@ input PublicNoticeDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -4587,7 +4607,7 @@ input PublicNoticeDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -4628,7 +4648,7 @@ input PublicNoticeDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -4667,7 +4687,8 @@ type PublicNoticeVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
@@ -4715,7 +4736,7 @@ input PublicNoticeVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
@@ -4762,7 +4783,7 @@ input PublicNoticeVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
@@ -4798,7 +4819,7 @@ input PublicNoticeVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
@@ -5422,7 +5443,8 @@ type Trail {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -5484,7 +5506,7 @@ input TrailWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -5578,7 +5600,7 @@ input TrailUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -5650,7 +5672,7 @@ input TrailCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -5716,7 +5738,8 @@ type TrailDraft {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -5769,7 +5792,7 @@ input TrailDraftWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -5845,7 +5868,7 @@ input TrailDraftUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -5899,7 +5922,7 @@ input TrailDraftCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
@@ -5951,7 +5974,8 @@ type TrailVersion {
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
-  actions: InternalLink
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   address: Location
@@ -6006,7 +6030,7 @@ input TrailVersionWhereInput {
   body: MyStringFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
-  actions: InternalLinkWhereInput
+  actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
@@ -6083,7 +6107,7 @@ input TrailVersionUpdateInput {
   body: String
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
-  actions: InternalLinkRelateToOneForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
@@ -6132,7 +6156,7 @@ input TrailVersionCreateInput {
   body: String
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
-  actions: InternalLinkRelateToOneForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
