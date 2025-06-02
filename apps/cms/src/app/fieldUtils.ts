@@ -29,6 +29,7 @@ import {
 } from '../utils/typesense';
 import { logger } from '../configs/logger';
 import v from 'voca';
+import { plural } from 'pluralize';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -67,12 +68,18 @@ export function liveUrl(
   baseUrl = appConfig.siteUrl,
   ignorePubDates = false,
 ) {
+  const correctedListKey = correctListKey(v.slugify(plural(listKey)));
+
+  function correctListKey(key: string) {
+    if (key === 'org-units') return 'departments';
+    return key;
+  }
   return virtual({
     field: graphql.field({
       type: graphql.String,
       resolve(baseItem: any) {
         baseItem as { [key: string]: string };
-        return `${baseUrl}/${listKey}/${baseItem[identifierKey]}`;
+        return `${baseUrl}/${correctedListKey}/${baseItem[identifierKey]}`;
       },
     }),
     ui: {
