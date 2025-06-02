@@ -73,7 +73,7 @@ export function InternalLinkTooltip() {
             <>
               {!!listType && !!linkInfo.mark?.attrs?.itemId && (
                 <Link
-                  href={`/${plural(v.slugify(linkInfo.mark?.attrs?.list))}/${linkInfo.mark?.attrs?.itemId}`}
+                  href={`/${listType === 'homePage' ? 'home-page' : listType === 'boardPage' ? 'board-page' : plural(v.slugify(listType))}/${linkInfo.mark?.attrs?.itemId}`}
                   target="_blank"
                 >
                   {linkData?.[listType]?.title || ''}{' '}
@@ -82,10 +82,20 @@ export function InternalLinkTooltip() {
               )}
             </>
           )}
-          <Button size="small" onClick={() => setEditing(true)}>
+          <Button
+            size="small"
+            onClick={() => setEditing(true)}
+            name="Edit Link"
+            aria-label="Edit Link"
+          >
             <span className="icon-[mdi--pencil]"></span>
           </Button>
-          <Button size="small" onClick={removeLink}>
+          <Button
+            size="small"
+            onClick={removeLink}
+            name="Remove Link"
+            aria-label="Remove Link"
+          >
             <span className="icon-[mdi--delete]"></span>
           </Button>
         </div>
