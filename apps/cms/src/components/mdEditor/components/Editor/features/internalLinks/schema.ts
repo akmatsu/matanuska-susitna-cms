@@ -2,7 +2,7 @@ import { tooltipFactory } from '@milkdown/kit/plugin/tooltip';
 import directive from 'remark-directive';
 import { $command, $inputRule, $mark, $remark } from '@milkdown/kit/utils';
 import { InputRule } from '@milkdown/kit/prose/inputrules';
-import { toggleMark, wrapIn } from '@milkdown/kit/prose/commands';
+import { toggleMark } from '@milkdown/kit/prose/commands';
 
 export const internalLinkTooltip = tooltipFactory('internalLinkTooltip');
 export const internalLinkDirective = $remark(
