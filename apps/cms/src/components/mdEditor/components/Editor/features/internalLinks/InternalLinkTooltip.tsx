@@ -8,25 +8,46 @@ import { DrawerController } from '@keystone-ui/modals';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { plural } from 'pluralize';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
 import { Button } from '@keystone-ui/button';
 import { useInternalSearchQuery } from './hooks/useInternalSearchQuery';
 import { useInternalTooltipProvider } from './hooks/useInternalTooltipProvider';
 import { useSelectionHandler } from './hooks/useSelectedItem';
+import { callCommand } from '@milkdown/kit/utils';
+import { toggleInternalLinkCommand } from './schema';
+import { Ctx } from '@milkdown/kit/ctx';
 
 export function InternalLinkTooltip() {
-  const { contentRef, view } = useInternalTooltipProvider();
+  const { contentRef, view, linkInfo, instanceLoading, get } =
+    useInternalTooltipProvider();
   const { data, setQuery } = useInternalSearchQuery();
-  const { selectedPage, handlePageSelection, linkInfo } =
-    useSelectionHandler(view);
+  const { selectedPage, handlePageSelection } = useSelectionHandler(
+    view,
+    linkInfo,
+  );
+
+  const action = useCallback(
+    (fn: (ctx: Ctx) => void) => {
+      if (instanceLoading) return;
+      get()?.action(fn);
+    },
+    [instanceLoading],
+  );
+
+  function removeLink() {
+    const { tr } = view.state;
+    if (!linkInfo) return;
+    tr.removeMark(linkInfo.from, linkInfo.to, linkInfo.mark);
+    view.dispatch(tr);
+  }
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
     <div
       ref={contentRef}
-      className="absolute -mt-2 rounded-sm border border-gray-300 bg-white p-2 shadow-md data-[show=false]:hidden"
+      className="absolute z-20 -mt-2 rounded-sm border border-gray-300 bg-white p-2 shadow-md data-[show=false]:hidden"
     >
       <Combobox
         immediate
@@ -64,6 +85,9 @@ export function InternalLinkTooltip() {
             )}
             <Button size="small" onClick={() => setIsDrawerOpen(true)}>
               Add new URL
+            </Button>
+            <Button size="small" onClick={removeLink}>
+              <span className="icon-[mdi--delete]"></span>
             </Button>
           </div>
         </div>

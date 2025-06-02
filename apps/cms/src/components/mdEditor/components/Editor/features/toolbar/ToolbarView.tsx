@@ -1,11 +1,9 @@
 import React from 'react';
 import { Ctx } from '@milkdown/kit/ctx';
 import { TooltipProvider } from '@milkdown/kit/plugin/tooltip';
-import { linkSchema } from '@milkdown/kit/preset/commonmark';
 import { useInstance } from '@milkdown/react';
 import { usePluginViewContext } from '@prosemirror-adapter/react';
 import { useCallback, useEffect, useRef } from 'react';
-import { linkTooltipAPI } from '@milkdown/kit/component/link-tooltip';
 import { MarkType } from '@milkdown/kit/prose/model';
 import { TextSelection } from '@milkdown/kit/prose/state';
 import { TOOLBAR_COMMANDS } from './commands';
@@ -13,7 +11,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 
 export const ToolbarView = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const tooltipProvider = useRef<TooltipProvider>(null);
+  const tooltipProvider = useRef<TooltipProvider | null>(null);
 
   const { view, prevState } = usePluginViewContext();
   const [loading, get] = useInstance();
@@ -85,7 +83,7 @@ export const ToolbarView = () => {
 
   return (
     <div
-      className="card absolute z-10 flex gap-2 data-[show=false]:hidden"
+      className="card -mt- absolute z-10 flex gap-2 data-[show=false]:hidden"
       ref={ref}
     >
       {TOOLBAR_COMMANDS.map((cmd) =>
@@ -127,25 +125,6 @@ export const ToolbarView = () => {
           </button>
         ),
       )}
-      <button
-        className="btn btn--default rounded-full"
-        onMouseDown={(e) => {
-          e.preventDefault();
-          const { selection } = view.state;
-          action((ctx) => {
-            if (isActive(linkSchema.type(ctx))) {
-              ctx
-                .get(linkTooltipAPI.key)
-                .removeLink(selection.from, selection.to);
-              return;
-            }
-
-            ctx.get(linkTooltipAPI.key).addLink(selection.from, selection.to);
-          });
-        }}
-      >
-        <span className={`icon-[bi--link] size-6`}></span>
-      </button>
     </div>
   );
 };

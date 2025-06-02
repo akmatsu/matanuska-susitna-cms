@@ -5,13 +5,13 @@ import {
   InternalLinkInputRule,
   InternalLinkMark,
   internalLinkTooltip,
+  toggleInternalLinkCommand,
 } from './schema';
 import { InternalLinkTooltip } from './InternalLinkTooltip';
 
 export function configureInternalLinksFeature(
   editor: Editor,
   pluginViewFactory: PluginViewFactoryFn,
-  nodeViewFactory: NodeViewFactoryFn,
 ) {
   editor
     .config((ctx) => {
@@ -24,5 +24,6 @@ export function configureInternalLinksFeature(
     .use([...internalLinkDirective])
     .use(InternalLinkMark)
     .use(InternalLinkInputRule)
-    .use(internalLinkTooltip);
+    .use(internalLinkTooltip)
+    .use(toggleInternalLinkCommand);
 }

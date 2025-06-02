@@ -1,14 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TooltipProvider } from '@milkdown/kit/plugin/tooltip';
 import { TextSelection } from '@milkdown/kit/prose/state';
 import { usePluginViewContext } from '@prosemirror-adapter/react';
 import { useInstance } from '@milkdown/react';
+import { Mark } from '@milkdown/kit/prose/model';
 
 export function useInternalTooltipProvider() {
   const { view, prevState } = usePluginViewContext();
-  const [instanceLoading] = useInstance();
+  const [instanceLoading, get] = useInstance();
   const tooltipProvider = useRef<TooltipProvider | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [linkInfo, setLinkInfo] = useState<{
+    mark: Mark;
+    to: number;
+    from: number;
+  } | null>(null);
 
   useEffect(() => {
     const div = contentRef.current;
@@ -19,11 +25,27 @@ export function useInternalTooltipProvider() {
         const { selection, schema } = view.state;
         if (!(selection instanceof TextSelection)) return false;
 
-        const markType = schema.marks['internal-link'];
-        const marksInSelection = selection.$cursor?.marks();
-        if (!marksInSelection) return false;
+        const { from, to } = selection;
 
-        return !!markType.isInSet(marksInSelection);
+        const markType = schema.marks['internal-link'];
+
+        let found = false;
+        view.state.doc.nodesBetween(from, to, (node, pos) => {
+          const mark = markType.isInSet(node.marks);
+          if (mark) {
+            if (from >= pos && to <= pos + node.nodeSize) {
+              found = true;
+            }
+            setLinkInfo({
+              mark,
+              from: pos,
+              to: pos + node.nodeSize,
+            });
+            return false;
+          }
+        });
+
+        return found;
       },
     });
 
@@ -45,7 +67,9 @@ export function useInternalTooltipProvider() {
     tooltipProvider,
     contentRef,
     instanceLoading,
+    get,
     view,
     prevState,
+    linkInfo,
   };
 }

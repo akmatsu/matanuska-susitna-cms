@@ -1,8 +1,6 @@
 import { Mark } from '@milkdown/kit/prose/model';
-import { TextSelection } from '@milkdown/kit/prose/state';
 import { PluginViewContext } from '@prosemirror-adapter/react';
-import { useEffect, useState } from 'react';
-import { getMarkRange } from '../utils/markHelpers';
+import { useState } from 'react';
 
 export type Page = {
   __typename: string;
@@ -10,30 +8,15 @@ export type Page = {
   title: string;
 };
 
-export function useSelectionHandler(view: PluginViewContext['view']) {
-  const [selectedPage, setPage] = useState<Page | null>(null);
-  const { selection } = view.state;
-  const [linkInfo, setLinkInfo] = useState<{
+export function useSelectionHandler(
+  view: PluginViewContext['view'],
+  linkInfo: {
     mark: Mark;
     to: number;
     from: number;
-  } | null>(null);
-
-  useEffect(() => {
-    if (!(selection instanceof TextSelection && selection.$cursor)) return;
-    const { $cursor } = selection;
-    const { schema } = view.state;
-    const markType = schema.marks['internal-link'];
-    const mark = markType.isInSet($cursor.marks());
-    if (!mark || mark.type.name !== 'internal-link') return;
-
-    setLinkInfo({
-      mark,
-      ...getMarkRange($cursor, markType),
-    });
-
-    setPage(null);
-  }, [selection]);
+  } | null,
+) {
+  const [selectedPage, setPage] = useState<Page | null>(null);
 
   function handlePageSelection(page: Page | null) {
     setPage(page);
@@ -56,9 +39,7 @@ export function useSelectionHandler(view: PluginViewContext['view']) {
 
   return {
     selectedPage,
-    linkInfo,
     handlePageSelection,
     setPage,
-    setLinkInfo,
   };
 }

@@ -67,7 +67,7 @@ export function useEditorConfig({
       configureListsFeature(editor);
     }
     if (internalLinks) {
-      configureInternalLinksFeature(editor, pluginViewFactory, nodeViewFactory);
+      configureInternalLinksFeature(editor, pluginViewFactory);
     }
     return editor;
   });

@@ -10,6 +10,7 @@ import { Attrs, NodeType } from '@milkdown/kit/prose/model';
 import { Command } from '@milkdown/kit/prose/state';
 import { $command, callCommand } from '@milkdown/kit/utils';
 import { PluginViewContext } from '@prosemirror-adapter/react';
+import { toggleInternalLinkCommand } from '../internalLinks/schema';
 
 export const toggleHeaderCommand = $command(
   'ToggleHeaderCmd',
@@ -91,13 +92,6 @@ export const TOOLBAR_COMMANDS: {
         icon: 'icon-[bi--type-h6]',
         action: () => callCommand(toggleHeaderCommand.key, { level: 6 }),
       },
-      // {
-      //   label: 'Body Text',
-      //   icon: 'icon-[bi--type]',
-      //   action: (view) => (ctx) => {
-      //     setBlockType(view, paragraphSchema.type(ctx));
-      //   },
-      // },
     ],
   },
   {
@@ -117,5 +111,11 @@ export const TOOLBAR_COMMANDS: {
     icon: 'icon-[bi--type-strikethrough]',
     action: (view: PluginViewContext['view']) =>
       callCommand(toggleStrikethroughCommand.key),
+  },
+  {
+    label: 'Internal Link',
+    icon: 'icon-[bi--link]',
+    action: (view: PluginViewContext['view']) =>
+      callCommand(toggleInternalLinkCommand.key),
   },
 ];

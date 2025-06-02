@@ -1,7 +1,8 @@
 import { tooltipFactory } from '@milkdown/kit/plugin/tooltip';
 import directive from 'remark-directive';
-import { $inputRule, $mark, $remark } from '@milkdown/kit/utils';
+import { $command, $inputRule, $mark, $remark } from '@milkdown/kit/utils';
 import { InputRule } from '@milkdown/kit/prose/inputrules';
+import { toggleMark, wrapIn } from '@milkdown/kit/prose/commands';
 
 export const internalLinkTooltip = tooltipFactory('internalLinkTooltip');
 export const internalLinkDirective = $remark(
@@ -96,4 +97,9 @@ export const InternalLinkInputRule = $inputRule(
       const textWithMark = state.schema.text(label, [mark]);
       return tr.replaceWith(start, end, textWithMark);
     }),
+);
+
+export const toggleInternalLinkCommand = $command(
+  'toggleInternalLinkCmd',
+  (ctx) => () => toggleMark(InternalLinkMark.type(ctx)),
 );
