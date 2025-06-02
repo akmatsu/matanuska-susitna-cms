@@ -7,32 +7,42 @@ import {
 import { DrawerController } from '@keystone-ui/modals';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { plural } from 'pluralize';
-import { useCallback, useState } from 'react';
+import { plural, singular } from 'pluralize';
+import { useEffect, useState } from 'react';
 import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
 import { Button } from '@keystone-ui/button';
 import { useInternalSearchQuery } from './hooks/useInternalSearchQuery';
 import { useInternalTooltipProvider } from './hooks/useInternalTooltipProvider';
-import { useSelectionHandler } from './hooks/useSelectedItem';
-import { callCommand } from '@milkdown/kit/utils';
-import { toggleInternalLinkCommand } from './schema';
-import { Ctx } from '@milkdown/kit/ctx';
+import { Page, useSelectionHandler } from './hooks/useSelectedItem';
+import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import v from 'voca';
+import { Mark } from '@milkdown/kit/prose/model';
+import { PluginViewContext } from '@prosemirror-adapter/react';
 
 export function InternalLinkTooltip() {
-  const { contentRef, view, linkInfo, instanceLoading, get } =
+  const { contentRef, view, linkInfo, isShowing } =
     useInternalTooltipProvider();
-  const { data, setQuery } = useInternalSearchQuery();
-  const { selectedPage, handlePageSelection } = useSelectionHandler(
-    view,
-    linkInfo,
-  );
+  const [isEditing, setEditing] = useState(false);
 
-  const action = useCallback(
-    (fn: (ctx: Ctx) => void) => {
-      if (instanceLoading) return;
-      get()?.action(fn);
+  const listType = linkInfo?.mark?.attrs?.list
+    ? v.camelCase(singular(linkInfo.mark.attrs.list))
+    : undefined;
+
+  const { data: linkData } = useQuery(
+    gql`
+      query GetInternSearchLink($id: ID) {
+        ${listType || 'service'}(where: { id: $id }) {
+          id
+          title
+        }
+      }
+    `,
+    {
+      variables: {
+        id: linkInfo?.mark?.attrs?.itemId,
+      },
+      skip: !listType,
     },
-    [instanceLoading],
   );
 
   function removeLink() {
@@ -42,17 +52,76 @@ export function InternalLinkTooltip() {
     view.dispatch(tr);
   }
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  useEffect(() => {
+    !listType ? setEditing(true) : setEditing(false);
+  }, [listType, isShowing]);
 
   return (
     <div
       ref={contentRef}
       className="absolute z-20 -mt-2 rounded-sm border border-gray-300 bg-white p-2 shadow-md data-[show=false]:hidden"
     >
+      {isEditing ? (
+        <SearchInput
+          view={view}
+          linkInfo={linkInfo}
+          onSelection={() => setEditing(false)}
+        />
+      ) : (
+        <div className="flex items-center justify-between gap-2">
+          {!!linkInfo && (
+            <>
+              {!!listType && !!linkInfo.mark?.attrs?.itemId && (
+                <Link
+                  href={`/${plural(v.slugify(linkInfo.mark?.attrs?.list))}/${linkInfo.mark?.attrs?.itemId}`}
+                  target="_blank"
+                >
+                  {linkData?.[listType]?.title || ''}{' '}
+                  <span className="icon-[mdi--external-link] -mb-0.5 size-4"></span>
+                </Link>
+              )}
+            </>
+          )}
+          <Button size="small" onClick={() => setEditing(true)}>
+            <span className="icon-[mdi--pencil]"></span>
+          </Button>
+          <Button size="small" onClick={removeLink}>
+            <span className="icon-[mdi--delete]"></span>
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SearchInput({
+  view,
+  linkInfo,
+  onSelection,
+}: {
+  view: PluginViewContext['view'];
+  linkInfo: { to: number; from: number; mark: Mark } | null;
+  onSelection?: () => void;
+}) {
+  const { data, setQuery } = useInternalSearchQuery();
+  const { selectedPage, handlePageSelection } = useSelectionHandler(
+    view,
+    linkInfo,
+  );
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  function handleSelection(page: Page | null) {
+    if (page) {
+      handlePageSelection(page);
+      onSelection?.();
+    }
+  }
+  return (
+    <>
       <Combobox
         immediate
         value={selectedPage}
-        onChange={handlePageSelection}
+        onChange={handleSelection}
         onClose={() => setQuery('')}
       >
         <div className="flex">
@@ -69,25 +138,15 @@ export function InternalLinkTooltip() {
             )}
           />
           <div className="flex items-center gap-1">
-            {!!linkInfo && (
-              <>
-                {!!linkInfo.mark?.attrs?.list &&
-                  !!linkInfo.mark?.attrs?.itemId && (
-                    <Link
-                      href={`/${plural(linkInfo.mark?.attrs?.list)?.toLowerCase()}/${linkInfo.mark?.attrs?.itemId}`}
-                      target="_blank"
-                      className="cursor-pointer"
-                    >
-                      View
-                    </Link>
-                  )}
-              </>
-            )}
             <Button size="small" onClick={() => setIsDrawerOpen(true)}>
-              Add new URL
+              Create new URL
             </Button>
-            <Button size="small" onClick={removeLink}>
-              <span className="icon-[mdi--delete]"></span>
+            <Button
+              size="small"
+              onClick={onSelection}
+              className="flex items-center justify-center"
+            >
+              <span className="icon-[mdi--cancel]"></span>
             </Button>
           </div>
         </div>
@@ -108,7 +167,7 @@ export function InternalLinkTooltip() {
           onClose={() => setIsDrawerOpen(false)}
           onCreate={(val) => {
             setIsDrawerOpen(false);
-            handlePageSelection({
+            handleSelection({
               __typename: 'Url',
               id: val.id,
               title: val.label,
@@ -116,7 +175,7 @@ export function InternalLinkTooltip() {
           }}
         />
       </DrawerController>
-    </div>
+    </>
   );
 }
 

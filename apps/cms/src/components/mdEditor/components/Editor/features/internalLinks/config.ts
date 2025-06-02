@@ -3,6 +3,7 @@ import { NodeViewFactoryFn, PluginViewFactoryFn } from '../../types';
 import {
   internalLinkDirective,
   InternalLinkInputRule,
+  internalLinkKeymap,
   InternalLinkMark,
   internalLinkTooltip,
   toggleInternalLinkCommand,
@@ -25,5 +26,6 @@ export function configureInternalLinksFeature(
     .use(InternalLinkMark)
     .use(InternalLinkInputRule)
     .use(internalLinkTooltip)
-    .use(toggleInternalLinkCommand);
+    .use(toggleInternalLinkCommand)
+    .use(internalLinkKeymap);
 }

@@ -4,7 +4,6 @@ import { TooltipProvider } from '@milkdown/kit/plugin/tooltip';
 import { useInstance } from '@milkdown/react';
 import { usePluginViewContext } from '@prosemirror-adapter/react';
 import { useCallback, useEffect, useRef } from 'react';
-import { MarkType } from '@milkdown/kit/prose/model';
 import { TextSelection } from '@milkdown/kit/prose/state';
 import { TOOLBAR_COMMANDS } from './commands';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
@@ -74,16 +73,9 @@ export const ToolbarView = () => {
     tooltipProvider.current?.update(view, prevState);
   });
 
-  const isActive = (mark: MarkType) => {
-    const {
-      state: { doc, selection },
-    } = view;
-    return doc.rangeHasMark(selection.from, selection.to, mark);
-  };
-
   return (
     <div
-      className="card -mt- absolute z-10 flex gap-2 data-[show=false]:hidden"
+      className="card absolute z-10 -mt-2 flex gap-2 data-[show=false]:hidden"
       ref={ref}
     >
       {TOOLBAR_COMMANDS.map((cmd) =>
@@ -118,7 +110,7 @@ export const ToolbarView = () => {
             className="btn btn--default rounded-full"
             onMouseDown={(e) => {
               e.preventDefault();
-              action(cmd.action(view));
+              if (cmd.action) action(cmd.action(view));
             }}
           >
             <span className={`${cmd.icon} size-6`}></span>

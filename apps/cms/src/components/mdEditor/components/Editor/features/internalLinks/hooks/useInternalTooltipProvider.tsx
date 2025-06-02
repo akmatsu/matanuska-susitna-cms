@@ -15,6 +15,7 @@ export function useInternalTooltipProvider() {
     to: number;
     from: number;
   } | null>(null);
+  const [isShowing, setShowing] = useState(false);
 
   useEffect(() => {
     const div = contentRef.current;
@@ -45,6 +46,8 @@ export function useInternalTooltipProvider() {
           }
         });
 
+        console.log('ran');
+        setShowing(found);
         return found;
       },
     });
@@ -71,5 +74,6 @@ export function useInternalTooltipProvider() {
     view,
     prevState,
     linkInfo,
+    isShowing,
   };
 }

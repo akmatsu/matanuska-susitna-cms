@@ -1,8 +1,15 @@
 import { tooltipFactory } from '@milkdown/kit/plugin/tooltip';
 import directive from 'remark-directive';
-import { $command, $inputRule, $mark, $remark } from '@milkdown/kit/utils';
+import {
+  $command,
+  $inputRule,
+  $mark,
+  $remark,
+  $useKeymap,
+} from '@milkdown/kit/utils';
 import { InputRule } from '@milkdown/kit/prose/inputrules';
 import { toggleMark } from '@milkdown/kit/prose/commands';
+import { commandsCtx } from '@milkdown/kit/core';
 
 export const internalLinkTooltip = tooltipFactory('internalLinkTooltip');
 export const internalLinkDirective = $remark(
@@ -103,3 +110,13 @@ export const toggleInternalLinkCommand = $command(
   'toggleInternalLinkCmd',
   (ctx) => () => toggleMark(InternalLinkMark.type(ctx)),
 );
+
+export const internalLinkKeymap = $useKeymap('internalLinkKeymap', {
+  InternalLinkCommand: {
+    shortcuts: 'Mod-k',
+    command: (ctx) => {
+      const commands = ctx.get(commandsCtx);
+      return () => commands.call(toggleInternalLinkCommand.key);
+    },
+  },
+});
