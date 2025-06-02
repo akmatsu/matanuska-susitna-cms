@@ -56,7 +56,7 @@ export const SlashView = () => {
     <div
       ref={ref}
       aria-expanded="false"
-      className="absolute data-[show='false']:hidden z-10 menu max-h-72 overflow-auto transition-all scroll-smooth"
+      className="menu absolute z-10 max-h-72 overflow-auto scroll-smooth transition-all data-[show='false']:hidden"
       tabIndex={0}
       onClick={(e) => e.preventDefault()}
     >

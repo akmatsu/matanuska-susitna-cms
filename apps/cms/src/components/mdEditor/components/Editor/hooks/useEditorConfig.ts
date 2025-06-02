@@ -17,6 +17,7 @@ import {
   configureTableFeature,
   configureToolbarFeature,
 } from '../features';
+import { configureInternalLinksFeature } from '../features/internalLinks/config';
 
 export function useEditorConfig({
   block = true,
@@ -28,6 +29,7 @@ export function useEditorConfig({
   toolbar = true,
   table = true,
   list = true,
+  internalLinks = true,
   ...props
 }: MdEditorProps) {
   const nodeViewFactory = useNodeViewFactory();
@@ -63,6 +65,9 @@ export function useEditorConfig({
     }
     if (list) {
       configureListsFeature(editor);
+    }
+    if (internalLinks) {
+      configureInternalLinksFeature(editor, pluginViewFactory, nodeViewFactory);
     }
     return editor;
   });

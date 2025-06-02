@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { tooltipFactory, TooltipProvider } from '@milkdown/kit/plugin/tooltip';
+import { TooltipProvider } from '@milkdown/kit/plugin/tooltip';
 import { usePluginViewContext } from '@prosemirror-adapter/react';
 import { useInstance } from '@milkdown/react';
 import { NodeSelection } from '@milkdown/kit/prose/state';
@@ -14,7 +14,7 @@ import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
 
 export function DocCollectionSearchView() {
   const content = useRef<HTMLDivElement>(null);
-  const tooltipProvider = useRef<TooltipProvider>(null);
+  const tooltipProvider = useRef<TooltipProvider | null>(null);
   const { view, prevState } = usePluginViewContext();
   const [loading] = useInstance();
   const input = useRef<HTMLInputElement>(null);
@@ -139,7 +139,7 @@ export function DocCollectionSearchView() {
   });
 
   return (
-    <div className="absolute card data-[show=false]:hidden" ref={content}>
+    <div className="card absolute data-[show=false]:hidden" ref={content}>
       <Combobox
         immediate
         value={selectedCollection}
@@ -149,11 +149,11 @@ export function DocCollectionSearchView() {
         <div className="relative">
           <ComboboxInput
             className={clsx(
-              'w-full rounded-lg border-none  py-1.5 pr-8 pl-3 text-sm/6',
+              'w-full rounded-lg border-none py-1.5 pr-8 pl-3 text-sm/6',
               'focus:outline-hidden data-focus:outline-2 data-focus:-outline-offset-2 data-focus:outline-white/25',
             )}
             displayValue={(collection?: { title: string; id: string }) =>
-              collection?.title
+              collection?.title || ''
             }
             placeholder="Search Collections..."
             onChange={handleSearch}
@@ -165,7 +165,7 @@ export function DocCollectionSearchView() {
           anchor="bottom"
           transition
           className={clsx(
-            'w-[var(--input-width)] rounded-xl border border-white/5 bg-white p-1 [--anchor-gap:var(--spacing-1)] empty:invisible card',
+            'card w-[var(--input-width)] rounded-xl border border-white/5 bg-white p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
             'transition duration-100 ease-in',
           )}
         >
@@ -173,7 +173,7 @@ export function DocCollectionSearchView() {
             <ComboboxOption
               key={collection.id}
               value={collection}
-              className="group flex cursor-default items-center gap-2 rounded-lg py-1.5 px-3 select-none data-focus:bg-blue-300"
+              className="group flex cursor-default items-center gap-2 rounded-lg px-3 py-1.5 select-none data-focus:bg-blue-300"
             >
               <div className="text-sm/6">{collection.title}</div>
             </ComboboxOption>

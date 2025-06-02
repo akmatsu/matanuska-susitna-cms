@@ -13,11 +13,11 @@ export function useSlashProvider(
   onShow?: () => void,
   onHide?: () => void,
 ) {
-  const slashProvider = useRef<SlashProvider>(null);
+  const slashProvider = useRef<SlashProvider | null>(null);
   const { view, prevState } = usePluginViewContext();
   const [loading, get] = useInstance();
   const [filter, setFilter] = useState<string>('');
-  const [programmaticPos, setPos] = useState<number>(null);
+  const [programmaticPos, setPos] = useState<number | null>(null);
 
   useEffect(() => {
     const content = contentRef.current;
@@ -49,10 +49,19 @@ export function useSlashProvider(
     };
 
     const ctx = get().ctx;
-    ctx.set(slash.key, {
-      show,
-      hide,
-    });
+    let hasSlash = true;
+    try {
+      ctx.get(slash.key);
+    } catch {
+      hasSlash = false;
+    }
+
+    if (hasSlash) {
+      ctx.set(slash.key, {
+        show,
+        hide,
+      });
+    }
   }, [loading, programmaticPos]);
 
   useEffect(() => {
@@ -62,12 +71,12 @@ export function useSlashProvider(
   function show(p: number) {
     setPos(p);
     setFilter('');
-    slashProvider.current.show();
+    slashProvider.current?.show();
   }
 
   function hide() {
     setPos(null);
-    slashProvider.current.hide();
+    slashProvider.current?.hide();
   }
 
   return {
@@ -101,8 +110,8 @@ function checkIfPosValid(
       onFail();
       return false;
     }
-  } catch (err) {
-    if (/^Position\s\d+\sout\sof\srange$/.test(err.message)) {
+  } catch (err: any) {
+    if (/^Position\s\d+\sout\sof\srange$/.test(err?.message)) {
       onFail();
       return false;
     } else {

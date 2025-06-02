@@ -62,6 +62,12 @@ export type MdEditorProps = {
    * Enables lists in markdown
    */
   list?: boolean;
+
+  /**
+   * Enables internal links in markdown
+   * @default true
+   */
+  internalLinks?: boolean;
 };
 
 export type PluginViewFactoryFn = (
