@@ -22,6 +22,7 @@
     "db:seed": "tsx ./seed-data.ts"
   },
   "dependencies": {
+    "@graphql-tools/schema": "^10.0.23",
     "@headlessui/react": "^2.2.4",
     "@keystone-6/auth": "^8.1.0",
     "@keystone-6/core": "^6.5.1",
