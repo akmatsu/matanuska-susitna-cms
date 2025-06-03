@@ -6804,6 +6804,8 @@ type Query {
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
   keystone: KeystoneMeta!
+  internalSearch(query: String): [InternalLinkSearch!]!
+  getInternalLink(id: ID!, type: String!): InternalLinkSearch!
 }
 
 type KeystoneMeta {
@@ -6936,3 +6938,5 @@ enum KeystoneAdminUISortDirection {
   ASC
   DESC
 }
+
+union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Url

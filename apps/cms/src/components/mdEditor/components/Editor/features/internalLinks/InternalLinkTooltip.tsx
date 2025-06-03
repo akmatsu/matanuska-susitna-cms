@@ -30,16 +30,52 @@ export function InternalLinkTooltip() {
 
   const { data: linkData } = useQuery(
     gql`
-      query GetInternSearchLink($id: ID) {
-        ${listType || 'service'}(where: { id: $id }) {
-          id
-          title
+      query GetInternalLink($id: ID!, $type: String!) {
+        getInternalLink(id: $id, type: $type) {
+          __typename
+          ... on AssemblyDistrict {
+            title
+          }
+          ... on Board {
+            title
+          }
+          ... on BoardPage {
+            title
+          }
+          ... on Community {
+            title
+          }
+          ... on Facility {
+            title
+          }
+          ... on HomePage {
+            title
+          }
+          ... on OrgUnit {
+            title
+          }
+          ... on Park {
+            title
+          }
+          ... on PublicNotice {
+            title
+          }
+          ... on Service {
+            title
+          }
+          ... on Trail {
+            title
+          }
+          ... on Url {
+            title
+          }
         }
       }
     `,
     {
       variables: {
         id: linkInfo?.mark?.attrs?.itemId,
+        type: v.capitalize(listType),
       },
       skip: !listType,
     },
@@ -55,6 +91,8 @@ export function InternalLinkTooltip() {
   useEffect(() => {
     !listType ? setEditing(true) : setEditing(false);
   }, [listType, isShowing]);
+
+  console.log(linkData);
 
   return (
     <div
@@ -76,7 +114,7 @@ export function InternalLinkTooltip() {
                   href={`/${listType === 'homePage' ? 'home-page' : listType === 'boardPage' ? 'board-page' : plural(v.slugify(listType))}/${linkInfo.mark?.attrs?.itemId}`}
                   target="_blank"
                 >
-                  {linkData?.[listType]?.title || ''}{' '}
+                  {linkData?.getInternalLink?.title || ''}{' '}
                   <span className="icon-[mdi--external-link] -mb-0.5 size-4"></span>
                 </Link>
               )}
@@ -192,35 +230,26 @@ function SearchInput({
 function Options({
   data,
 }: {
-  data: { [key: string]: { __typename: string; title: string; id: string }[] };
+  data: { internalSearch: { __typename: string; title: string; id: string }[] };
 }) {
-  const opts = {
-    landingPages: [...data.homePages, ...data.boardPages],
-    departments: data.orgUnits,
-    ...data,
-    orgUnits: [],
-    homePages: [],
-    boardPages: [],
-  };
-
-  return Object.keys(opts).map((key) =>
-    opts[key as keyof typeof opts].length ? (
-      <div key={key} className="border-gray-200 not-last:border-b">
-        <h5 className="not-fist:mt-2 ml-1 text-xl font-bold not-last:mb-2">
-          {key}
-        </h5>
-        {opts[key as keyof typeof opts].map(
-          (item: { __typename: string; title: string; id: string }) => (
-            <ComboboxOption
-              key={item.id + item.__typename}
-              value={item}
-              className="group flex cursor-default items-center gap-2 rounded-lg px-3 py-1.5 select-none data-focus:bg-blue-300"
-            >
-              {item.title}
-            </ComboboxOption>
-          ),
-        )}
-      </div>
-    ) : null,
+  return (
+    <>
+      {data.internalSearch.map((item) => (
+        <ComboboxOption
+          key={item.id + item.__typename}
+          value={item}
+          className="my-1 cursor-pointer rounded-md bg-gray-100 px-3 py-1.5 transition-all select-none data-focus:bg-blue-200"
+        >
+          <div>
+            <span className="text-xs font-bold text-gray-500">
+              {item.__typename}
+            </span>
+          </div>
+          <div>
+            <span>{item.title}</span>
+          </div>
+        </ComboboxOption>
+      ))}
+    </>
   );
 }
