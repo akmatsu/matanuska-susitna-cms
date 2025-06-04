@@ -92,8 +92,6 @@ export function InternalLinkTooltip() {
     !listType ? setEditing(true) : setEditing(false);
   }, [listType, isShowing]);
 
-  console.log(linkData);
-
   return (
     <div
       ref={contentRef}

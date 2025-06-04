@@ -97,7 +97,6 @@ export default config<TypeInfo<Session>>({
               if ('parentId' in value) return 'OrgUnit';
               if ('memberName' in value) return 'OrgUnit';
               if ('url' in value) return 'Url';
-              console.log(value);
             },
           },
           Query: {
@@ -106,6 +105,9 @@ export default config<TypeInfo<Session>>({
               { id, type }: { id: string; type: string },
               context: KeystoneContext<TypeInfo<Session>>,
             ) => {
+              console.log(
+                `Fetching internal link of type ${type} with ID ${id}`,
+              );
               switch (type) {
                 case 'Service':
                   return context.db.Service.findOne({ where: { id } });

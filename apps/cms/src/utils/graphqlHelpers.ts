@@ -20,6 +20,6 @@ export const graphqlExtendTypeDefs = gql`
   }
 
   type Query {
-    getInternalLink(id: ID!, type: String!): InternalLinkSearch!
+    getInternalLink(id: ID!, type: String!): InternalLinkSearch
   }
 `;

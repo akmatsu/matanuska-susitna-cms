@@ -34,7 +34,6 @@ export const InternalLinkMark = $mark('internal-link', () => ({
     {
       tag: 'a[data-internal-link]',
       getAttrs: (dom: HTMLElement) => {
-        console.log('parseDOM: ', dom);
         return {
           label: dom.textContent,
           itemId: dom.getAttribute('data-item-id'),
@@ -90,9 +89,8 @@ export const InternalLinkMark = $mark('internal-link', () => ({
 export const InternalLinkInputRule = $inputRule(
   (ctx) =>
     new InputRule(/\[([^\]]+)\]/, (state, match, start, end) => {
-      console.log(match);
       const [_, label = ''] = match;
-      console.log(label);
+
       if (!label) return null;
       const { tr } = state;
       const mark = InternalLinkMark.type(ctx).create({
