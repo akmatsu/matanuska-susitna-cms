@@ -46,7 +46,6 @@ export function useInternalTooltipProvider() {
           }
         });
 
-        console.log('ran');
         setShowing(found);
         return found;
       },
