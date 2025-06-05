@@ -10,7 +10,6 @@ import { connectRedis, getPublishQueueEvents } from './src/queues/redis';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { KeystoneContext } from '@keystone-6/core/types';
 import { graphqlExtendTypeDefs } from './src/utils/graphqlHelpers';
-import { logger } from './src/configs/logger';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -105,9 +104,6 @@ export default config<TypeInfo<Session>>({
               { id, type }: { id: string; type: string },
               context: KeystoneContext<TypeInfo<Session>>,
             ) => {
-              console.log(
-                `Fetching internal link of type ${type} with ID ${id}`,
-              );
               switch (type) {
                 case 'Service':
                   return context.db.Service.findOne({ where: { id } });
