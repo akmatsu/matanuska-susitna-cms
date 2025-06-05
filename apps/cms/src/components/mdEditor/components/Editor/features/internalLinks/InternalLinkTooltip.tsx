@@ -28,7 +28,7 @@ export function InternalLinkTooltip() {
     ? v.camelCase(singular(linkInfo.mark.attrs.list))
     : undefined;
 
-  const { data: linkData } = useQuery(
+  const { data: linkData, loading } = useQuery(
     gql`
       query GetInternalLink($id: ID!, $type: String!) {
         getInternalLink(id: $id, type: $type) {
@@ -105,19 +105,20 @@ export function InternalLinkTooltip() {
         />
       ) : (
         <div className="flex items-center justify-between gap-2">
-          {!!linkInfo && (
-            <>
-              {!!listType && !!linkInfo.mark?.attrs?.itemId && (
-                <Link
-                  href={`/${listType === 'homePage' ? 'home-page' : listType === 'boardPage' ? 'board-page' : plural(v.slugify(listType))}/${linkInfo.mark?.attrs?.itemId}`}
-                  target="_blank"
-                >
-                  {linkData?.getInternalLink?.title || ''}{' '}
-                  <span className="icon-[mdi--external-link] -mb-0.5 size-4"></span>
-                </Link>
-              )}
-            </>
-          )}
+          {!!linkInfo &&
+            !!listType &&
+            !!linkInfo.mark?.attrs?.itemId &&
+            (loading ? (
+              <span className="icon-[mdi--loading] animate-spin" />
+            ) : (
+              <Link
+                href={`/${listType === 'homePage' ? 'home-page' : listType === 'boardPage' ? 'board-page' : plural(v.slugify(listType))}/${linkInfo.mark?.attrs?.itemId}`}
+                target="_blank"
+              >
+                {linkData?.getInternalLink?.title || ''}{' '}
+                <span className="icon-[mdi--external-link] -mb-0.5 size-4"></span>
+              </Link>
+            ))}
           <Button
             size="small"
             onClick={() => setEditing(true)}
@@ -149,7 +150,7 @@ function SearchInput({
   linkInfo: { to: number; from: number; mark: Mark } | null;
   onSelection?: () => void;
 }) {
-  const { data, setQuery } = useInternalSearchQuery();
+  const { data, setQuery, loading } = useInternalSearchQuery();
   const { selectedPage, handlePageSelection } = useSelectionHandler(
     view,
     linkInfo,
@@ -200,11 +201,20 @@ function SearchInput({
           anchor="bottom"
           transition
           className={clsx(
-            'card w-[var(--input-width)] rounded-sm border bg-white p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
+            'card w-[var(--input-width)] rounded-sm border bg-white p-1 [--anchor-gap:var(--spacing-1)]',
             'transition duration-100 ease-in',
           )}
         >
-          {data && <Options data={data} />}
+          {loading ? (
+            <>
+              <span className="icon-[mdi--loading] animate-spin" />{' '}
+              <span>Loading...</span>
+            </>
+          ) : !!data?.internalSearch?.length ? (
+            <Options data={data} />
+          ) : (
+            'No results found'
+          )}
         </ComboboxOptions>
       </Combobox>
       <DrawerController isOpen={isDrawerOpen}>

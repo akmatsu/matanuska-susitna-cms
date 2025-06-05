@@ -16,7 +16,7 @@ export const graphqlExtendTypeDefs = gql`
     | Url
 
   type Query {
-    internalSearch(query: String): [InternalLinkSearch!]!
+    internalSearch(query: String): [InternalLinkSearch]
   }
 
   type Query {

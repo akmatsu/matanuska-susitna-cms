@@ -6804,7 +6804,7 @@ type Query {
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
   keystone: KeystoneMeta!
-  internalSearch(query: String): [InternalLinkSearch!]!
+  internalSearch(query: String): [InternalLinkSearch]
   getInternalLink(id: ID!, type: String!): InternalLinkSearch
 }
 
