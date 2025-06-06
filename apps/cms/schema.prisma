@@ -769,8 +769,7 @@ model OrgUnit {
   createdAt                         DateTime?             @default(now())
   updatedAt                         DateTime?             @default(now()) @updatedAt
   showPage                          Boolean               @default(true)
-  services                          Service?              @relation("OrgUnit_services", fields: [servicesId], references: [id])
-  servicesId                        String?               @map("services")
+  services                          Service[]             @relation("OrgUnit_services")
   children                          OrgUnit[]             @relation("OrgUnit_parent")
   parent                            OrgUnit?              @relation("OrgUnit_parent", fields: [parentId], references: [id])
   parentId                          String?               @map("parent")
@@ -791,7 +790,6 @@ model OrgUnit {
   from_ServiceVersion_orgUnits      ServiceVersion[]      @relation("ServiceVersion_orgUnits")
 
   @@index([ownerId])
-  @@index([servicesId])
   @@index([parentId])
 }
 
@@ -816,8 +814,7 @@ model OrgUnitDraft {
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   showPage    Boolean        @default(true)
-  services    Service?       @relation("OrgUnitDraft_services", fields: [servicesId], references: [id])
-  servicesId  String?        @map("services")
+  services    Service[]      @relation("OrgUnitDraft_services")
   children    OrgUnit[]      @relation("OrgUnitDraft_children")
   parent      OrgUnit?       @relation("OrgUnitDraft_parent", fields: [parentId], references: [id])
   parentId    String?        @map("parent")
@@ -825,7 +822,6 @@ model OrgUnitDraft {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([servicesId])
   @@index([parentId])
 }
 
@@ -850,8 +846,7 @@ model OrgUnitVersion {
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   showPage    Boolean        @default(true)
-  services    Service?       @relation("OrgUnitVersion_services", fields: [servicesId], references: [id])
-  servicesId  String?        @map("services")
+  services    Service[]      @relation("OrgUnitVersion_services")
   children    OrgUnit[]      @relation("OrgUnitVersion_children")
   parent      OrgUnit?       @relation("OrgUnitVersion_parent", fields: [parentId], references: [id])
   parentId    String?        @map("parent")
@@ -860,7 +855,6 @@ model OrgUnitVersion {
 
   @@index([originalId])
   @@index([ownerId])
-  @@index([servicesId])
   @@index([parentId])
 }
 

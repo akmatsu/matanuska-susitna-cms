@@ -3204,7 +3204,8 @@ type OrgUnit {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: Service
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
@@ -3245,7 +3246,7 @@ input OrgUnitWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
-  services: ServiceWhereInput
+  services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
   status: StringFilter
@@ -3307,7 +3308,7 @@ input OrgUnitUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToOneForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
   status: String
@@ -3315,12 +3316,6 @@ input OrgUnitUpdateInput {
   makeDrafts: String
   versions: OrgUnitVersionRelateToManyForUpdateInput
   currentVersion: OrgUnitVersionRelateToOneForUpdateInput
-}
-
-input ServiceRelateToOneForUpdateInput {
-  create: ServiceCreateInput
-  connect: ServiceWhereUniqueInput
-  disconnect: Boolean
 }
 
 input OrgUnitRelateToManyForUpdateInput {
@@ -3379,7 +3374,7 @@ input OrgUnitCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToOneForCreateInput
+  services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
   status: String
@@ -3387,11 +3382,6 @@ input OrgUnitCreateInput {
   makeDrafts: String
   versions: OrgUnitVersionRelateToManyForCreateInput
   currentVersion: OrgUnitVersionRelateToOneForCreateInput
-}
-
-input ServiceRelateToOneForCreateInput {
-  create: ServiceCreateInput
-  connect: ServiceWhereUniqueInput
 }
 
 input OrgUnitRelateToManyForCreateInput {
@@ -3444,7 +3434,8 @@ type OrgUnitDraft {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: Service
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
@@ -3476,7 +3467,7 @@ input OrgUnitDraftWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
-  services: ServiceWhereInput
+  services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
 }
@@ -3514,7 +3505,7 @@ input OrgUnitDraftUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToOneForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
   publish: String
@@ -3543,7 +3534,7 @@ input OrgUnitDraftCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToOneForCreateInput
+  services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
   publish: String
@@ -3574,7 +3565,8 @@ type OrgUnitVersion {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: Service
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
@@ -3608,7 +3600,7 @@ input OrgUnitVersionWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
-  services: ServiceWhereInput
+  services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
   isLive: OrgUnitWhereInput
@@ -3647,7 +3639,7 @@ input OrgUnitVersionUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToOneForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
   isLive: OrgUnitRelateToOneForUpdateInput
@@ -3677,7 +3669,7 @@ input OrgUnitVersionCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
-  services: ServiceRelateToOneForCreateInput
+  services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
   isLive: OrgUnitRelateToOneForCreateInput
@@ -5204,6 +5196,12 @@ input ServiceDraftUpdateInput {
   publish: String
 }
 
+input ServiceRelateToOneForUpdateInput {
+  create: ServiceCreateInput
+  connect: ServiceWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ServiceDraftUpdateArgs {
   where: ServiceDraftWhereUniqueInput!
   data: ServiceDraftUpdateInput!
@@ -5235,6 +5233,11 @@ input ServiceDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   editorNotes: String
   publish: String
+}
+
+input ServiceRelateToOneForCreateInput {
+  create: ServiceCreateInput
+  connect: ServiceWhereUniqueInput
 }
 
 type ServiceVersion {
