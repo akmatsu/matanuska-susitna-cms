@@ -96,6 +96,11 @@ export default config<TypeInfo<Session>>({
               if ('parentId' in value) return 'OrgUnit';
               if ('memberName' in value) return 'OrgUnit';
               if ('url' in value) return 'Url';
+              if ('elevationChange' in value) return 'Trail';
+              if ('memberName' in value) return 'AssemblyDistrict';
+              if ('parkId' in value) return 'Facility';
+              if ('addressId' in value) return 'Park';
+              return 'Community';
             },
           },
           Query: {
