@@ -13,7 +13,6 @@ import {
 import { isAdmin } from './access/roles';
 import { isOwner } from './access/group';
 import { appConfig } from '../configs/appConfig';
-import { getDatetimeISOString } from './access';
 import {
   blueHarvestImage,
   BlueHarvestImageConfig,
@@ -92,14 +91,8 @@ export function liveUrl(
         fieldMode(args) {
           if (ignorePubDates) return 'read';
 
-          const now = getDatetimeISOString();
-          const pubAt = args.item.publishAt
-            ? getDatetimeISOString(args.item.publishAt as Date)
-            : false;
-          const unpubAt = args.item.unpublishAt
-            ? getDatetimeISOString(args.item.unpublishAt as Date)
-            : false;
-          if (pubAt <= now && (!unpubAt || unpubAt >= now)) return 'read';
+          const { item } = args;
+          if (item?.status === 'published') return 'read';
           else return 'hidden';
         },
       },

@@ -6,7 +6,6 @@ import {
   generalOperationAccess,
 } from '../access/utils';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
-import { allowAll } from '@keystone-6/core/access';
 
 export const {
   Main: Service,
