@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.7.0...v0.8.0) (2025-06-10)
+
+
+### Features
+
+* created the topics CT ([f858abc](https://github.com/akmatsu/matanuska-susitna-cms/commit/f858abc429d975c42b193affe6a6a2df55f371ed))
+
 # [0.7.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.6.0...v0.7.0) (2025-06-10)
 
 
