@@ -1,3 +1,15 @@
+# [0.9.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.8.0...v0.9.0) (2025-06-10)
+
+
+### Bug Fixes
+
+* fixed eslint and type errors ([564f832](https://github.com/akmatsu/matanuska-susitna-cms/commit/564f832a46e67faa716f864145612ed08b9a1ece))
+
+
+### Features
+
+* deleted public files ([2af47b2](https://github.com/akmatsu/matanuska-susitna-cms/commit/2af47b2a4bb8587f4418ea53c5deeac539257685))
+
 # [0.8.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.7.0...v0.8.0) (2025-06-10)
 
 
