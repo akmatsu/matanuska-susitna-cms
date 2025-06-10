@@ -25,6 +25,7 @@ export const routes: (
     json(),
     createTypesenseCollections(),
   );
+
   app.post('/typesense/update-schema', json(), updateTypesenseSchema());
   app.post('/typesense/import-pages', json(), importPages(commonContext));
   app.post('/typesense/remove-collection', json(), removeCollection());
