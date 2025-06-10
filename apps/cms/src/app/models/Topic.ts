@@ -20,53 +20,60 @@ export const {
 
       ui: {
         displayMode: 'cards',
-        cardFields: ['title', 'description', 'image', 'message', 'linkedItem'],
+        cardFields: ['title', 'image', 'message', 'linkedItem'],
         inlineConnect: false,
       },
     }),
 
     boards: relationship({
-      ref: 'Board.topics',
+      ref: !opts?.isDraft && !opts?.isVersion ? 'Board.topics' : 'Board',
       many: true,
     }),
 
     services: relationship({
-      ref: 'Service.topics',
+      ref: !opts?.isDraft && !opts?.isVersion ? 'Service.topics' : 'Service',
       many: true,
     }),
 
     communities: relationship({
-      ref: 'Community.topics',
+      ref:
+        !opts?.isDraft && !opts?.isVersion ? 'Community.topics' : 'Community',
       many: true,
     }),
 
     districts: relationship({
-      ref: 'District.topics',
+      ref:
+        !opts?.isDraft && !opts?.isVersion
+          ? 'AssemblyDistrict.topics'
+          : 'AssemblyDistrict',
       many: true,
     }),
 
     parks: relationship({
-      ref: 'Park.topics',
+      ref: !opts?.isDraft && !opts?.isVersion ? 'Park.topics' : 'Park',
       many: true,
     }),
 
     trails: relationship({
-      ref: 'Trail.topics',
+      ref: !opts?.isDraft && !opts?.isVersion ? 'Trail.topics' : 'Trail',
       many: true,
     }),
 
     facilities: relationship({
-      ref: 'Facility.topics',
+      ref: !opts?.isDraft && !opts?.isVersion ? 'Facility.topics' : 'Facility',
       many: true,
     }),
 
-    departments: relationship({
-      ref: 'OrgUnit.topics',
+    orgUnits: relationship({
+      ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.topics' : 'OrgUnit',
       many: true,
     }),
 
     publicNotices: relationship({
-      ref: 'PublicNotice.topics',
+      ref:
+        !opts?.isDraft && !opts?.isVersion
+          ? 'PublicNotice.topics'
+          : 'PublicNotice',
       many: true,
     }),
   };

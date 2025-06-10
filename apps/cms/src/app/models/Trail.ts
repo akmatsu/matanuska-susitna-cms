@@ -68,6 +68,10 @@ export const {
         ref: opts?.isDraft || opts?.isVersion ? 'Park' : 'Park.trails',
         many: false,
       }),
+      topics: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.trails' : 'Topic',
+        many: true,
+      }),
     };
   },
   {

@@ -17,7 +17,7 @@ import * as OrgUnitModels from './OrgUnit';
 import { OperatingHour } from './OperatingHour';
 import * as ParkModels from './Park';
 import * as PublicNoticeModels from './PublicNotice';
-// import * as Topic from './Topic';
+import * as Topic from './Topic';
 import * as ServiceModels from './Service';
 import { Tag } from './Tag';
 import * as TrailModels from './Trail';
@@ -37,7 +37,7 @@ export const lists = {
   DocumentCollection,
   ExternalLink,
   ...FacilityModels,
-  // ...Topic,
+  ...Topic,
   Highlight,
   HomePage,
   Image,
