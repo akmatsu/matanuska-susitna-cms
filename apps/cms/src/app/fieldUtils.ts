@@ -77,7 +77,7 @@ export function liveUrl(
     field: graphql.field({
       type: graphql.String,
       resolve(baseItem: any) {
-        baseItem as { [key: string]: string };
+        baseItem = baseItem as { [key: string]: string };
         return `${baseUrl}/${correctedListKey}/${baseItem[identifierKey]}`;
       },
     }),
@@ -109,7 +109,7 @@ export function embed(
     field: graphql.field({
       type: graphql.String,
       resolve(baseItem: any) {
-        baseItem as { [key: string]: string };
+        baseItem = baseItem as { [key: string]: string };
         return `${baseUrl}/${listKey}/${baseItem[identifierKey]}`;
       },
     }),
@@ -351,7 +351,7 @@ export function tags(listKey?: string) {
   });
 }
 
-export function contacts(listKey?: string) {
+export function contacts() {
   return relationship({
     ref: `Contact`,
     many: true,
@@ -363,7 +363,7 @@ export function contacts(listKey?: string) {
   });
 }
 
-export function userGroups(listKey: string) {
+export function userGroups() {
   return relationship({
     ref: `UserGroup`,
     many: true,
@@ -525,7 +525,7 @@ export function basePage(
       }),
     }),
 
-    contacts: contacts(listNamePlural),
+    contacts: contacts(),
     ...(opts?.hours && {
       hours: relationship({
         ref: 'OperatingHour',

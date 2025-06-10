@@ -11,7 +11,7 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Fragment } from 'react';
+import { ComponentProps, Fragment } from 'react';
 import Link from 'next/link';
 
 type ItemValue = {
@@ -52,11 +52,17 @@ export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   );
 };
 
-export const Cell: CellComponent = ({ item, field }) => {
+export const Cell: CellComponent = ({
+  item,
+  field,
+}: ComponentProps<CellComponent>) => {
   return <PrettyData data={item[field.path]} />;
 };
 
-export const CardValue: CardValueComponent = ({ item, field }) => {
+export const CardValue: CardValueComponent = ({
+  item,
+  field,
+}: ComponentProps<CardValueComponent>) => {
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>

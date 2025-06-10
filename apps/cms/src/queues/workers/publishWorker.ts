@@ -25,7 +25,7 @@ export const publishWorker = async () => {
 
         logger.info(`🔔 Processing ${operation} for ${itemId}...`);
 
-        const { original, title, ...draft } = await sudoCtx?.query[
+        const { title, ...draft } = await sudoCtx.query[
           `${listKey}Draft` as typeof listKey
         ].findOne({
           where: {
@@ -34,7 +34,7 @@ export const publishWorker = async () => {
           query,
         });
 
-        sudoCtx?.query[listKey].updateOne({
+        sudoCtx.query[listKey].updateOne({
           where: {
             id: originalId,
           },
@@ -49,7 +49,7 @@ export const publishWorker = async () => {
           ),
         });
 
-        sudoCtx?.query[`${listKey}Draft` as typeof listKey].deleteOne({
+        sudoCtx.query[`${listKey}Draft` as typeof listKey].deleteOne({
           where: {
             id: itemId,
           },

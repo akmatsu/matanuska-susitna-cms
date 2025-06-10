@@ -5,7 +5,6 @@ import {
   typesenseUpsert,
 } from '../fieldUtils';
 import {
-  filterByPubDates,
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,

@@ -5,7 +5,7 @@ export function mapDataFields(
   output: Record<string, any> = {},
   mode: Mode = 'create',
 ): Record<string, any> {
-  const { id, ...rest } = input;
+  const { ...rest } = input;
 
   Object.entries(rest).forEach(([k, v]) => {
     if (

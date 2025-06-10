@@ -20,7 +20,7 @@ export function linkField<ListTypeInfo extends BaseListTypeInfo>({
   isIndex,
   ...config
 }: LinkFieldConfig<ListTypeInfo> = {}): FieldTypeFunc<ListTypeInfo> {
-  return (meta) =>
+  return () =>
     fieldType({
       kind: 'scalar',
       mode: 'optional',
@@ -31,7 +31,7 @@ export function linkField<ListTypeInfo extends BaseListTypeInfo>({
       input: {
         create: {
           arg: graphql.arg({ type: graphql.String }),
-          resolve(value, context) {
+          resolve(value) {
             return value;
           },
         },

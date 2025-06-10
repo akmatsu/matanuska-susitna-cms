@@ -20,7 +20,7 @@ export type PublishDraftFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
 export function publishDraft<ListTypeInfo extends BaseListTypeInfo>(
   config: PublishDraftFieldConfig<ListTypeInfo> = {},
 ): FieldTypeFunc<ListTypeInfo> {
-  return (meta) => {
+  return () => {
     return fieldType({
       kind: 'scalar',
       mode: 'optional',

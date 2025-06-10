@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import AsyncSelect from 'react-select/async';
 
 import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
@@ -65,8 +65,10 @@ export function Field({
     });
   }
 
-  const styles: StylesConfig = {
-    menu(base, props) {
+  type Option = { label: string | null; value: string | null };
+
+  const styles: StylesConfig<Option | undefined, false> = {
+    menu(base) {
       return {
         ...base,
         zIndex: 100,
@@ -80,11 +82,11 @@ export function Field({
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
       </FieldDescription>
-      <AsyncSelect
+      <AsyncSelect<Option | undefined>
         loadOptions={handleChange}
         defaultOptions
         defaultValue={{ label: value, value }}
-        onChange={(newValue: { label: string; value: string }) => {
+        onChange={(newValue) => {
           onChange?.(newValue?.value || null);
         }}
         isClearable
@@ -94,7 +96,11 @@ export function Field({
   );
 }
 
-export const Cell: CellComponent = ({ item, field, linkTo }) => {
+export const Cell: CellComponent = ({
+  item,
+  field,
+  linkTo,
+}: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
   return linkTo ? (
     <CellLink {...linkTo}>{value}</CellLink>
@@ -104,7 +110,10 @@ export const Cell: CellComponent = ({ item, field, linkTo }) => {
 };
 Cell.supportsLinkTo = true;
 
-export const CardValue: CardValueComponent = ({ item, field }) => {
+export const CardValue: CardValueComponent = ({
+  item,
+  field,
+}: ComponentProps<CardValueComponent>) => {
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
@@ -114,7 +123,7 @@ export const CardValue: CardValueComponent = ({ item, field }) => {
 };
 
 export const controller = (
-  config: FieldControllerConfig<{}>,
+  config: FieldControllerConfig<any>,
 ): FieldController<string | null, string> => {
   return {
     path: config.path,

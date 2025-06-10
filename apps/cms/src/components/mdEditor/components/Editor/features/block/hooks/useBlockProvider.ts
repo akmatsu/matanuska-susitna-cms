@@ -1,13 +1,14 @@
 import { BlockProvider } from '@milkdown/kit/plugin/block';
 import { useInstance } from '@milkdown/react';
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-export function useBlockProvider(contentRef: MutableRefObject<HTMLDivElement>) {
+export function useBlockProvider() {
+  const ref = useRef<HTMLDivElement>(null);
   const [loading, get] = useInstance();
-  const provider = useRef<BlockProvider>(null);
+  const provider = useRef<BlockProvider>();
 
   useEffect(() => {
-    const div = contentRef.current;
+    const div = ref.current;
     if (loading || !div) return;
 
     const editor = get();
@@ -44,7 +45,7 @@ export function useBlockProvider(contentRef: MutableRefObject<HTMLDivElement>) {
     provider.current?.update();
   });
 
-  return { provider };
+  return { provider, ref };
 }
 
 function getHandleHeight(dom: HTMLElement, blockDom: HTMLElement) {

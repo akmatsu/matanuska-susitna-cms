@@ -2,7 +2,6 @@ import Typesense from 'typesense';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
 import { KeystoneContext } from '@keystone-6/core/types';
-import v from 'voca';
 
 export type TypeSensePageDocument = {
   id: string;

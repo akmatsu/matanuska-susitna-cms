@@ -1,19 +1,19 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
-  "extends": [
-    "@tsconfig/recommended/tsconfig.json",
-    "@tsconfig/node22/tsconfig.json",
-    "@tsconfig/next/tsconfig.json"
-  ],
+  "extends": "@tsconfig/next/tsconfig.json",
   "compilerOptions": {
+    "target": "esnext",
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": [
-    "./**/*.ts",
-    "./**/*.tsx",
-    "src/components/customFields/publishDraft"
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./admin/**/*.ts",
+    "./seed-data.ts",
+    "./keystone.ts",
+    "./src/components/customFields/publishDraft"
   ]
 }

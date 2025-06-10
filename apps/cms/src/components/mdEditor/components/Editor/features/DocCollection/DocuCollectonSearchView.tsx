@@ -23,12 +23,8 @@ export function DocCollectionSearchView() {
   const [selectedCollection, setSelectedCollection] = useState<{
     title: string;
     id: string;
-  }>();
-  const {
-    data,
-    loading: searchLoading,
-    refetch,
-  } = useQuery(
+  } | null>();
+  const { data, refetch } = useQuery(
     gql`
       query DocumentCollections($where: DocumentCollectionWhereInput!) {
         documentCollections(where: $where) {
@@ -169,7 +165,7 @@ export function DocCollectionSearchView() {
             'transition duration-100 ease-in',
           )}
         >
-          {data?.documentCollections?.map((collection) => (
+          {data?.documentCollections?.map((collection: any) => (
             <ComboboxOption
               key={collection.id}
               value={collection}

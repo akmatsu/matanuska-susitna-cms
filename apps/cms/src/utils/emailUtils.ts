@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { appConfig } from '../configs/appConfig';
 import { logger } from '../configs/logger';
 
@@ -25,7 +25,7 @@ export async function createAndSendBulletin(
    <header>
       <![CDATA[
         <img 
-          src="${!!imageUrl ? imageUrl : 'https://content.govdelivery.com/attachments/fancy_images/AKMATSUGOV/2024/11/10609030/5868415/msb-banner_crop.png'}"
+          src="${imageUrl ? imageUrl : 'https://content.govdelivery.com/attachments/fancy_images/AKMATSUGOV/2024/11/10609030/5868415/msb-banner_crop.png'}"
           alt="Matsu Borough"
           style="max-width: 700px; width: 100%; max-height: 300px; display: block; object-fit: cover;" 
         />

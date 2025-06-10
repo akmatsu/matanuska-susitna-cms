@@ -1,4 +1,4 @@
-import { group, list, ListConfig } from '@keystone-6/core';
+import { group } from '@keystone-6/core';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -7,7 +7,6 @@ import {
 import {
   basePage,
   basePageQuery,
-  services,
   typesenseDelete,
   typesenseUpsert,
 } from '../fieldUtils';

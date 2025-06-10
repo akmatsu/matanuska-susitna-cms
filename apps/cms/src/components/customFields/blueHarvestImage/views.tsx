@@ -2,7 +2,13 @@
 
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
-import { ChangeEvent, useEffect, useState, type MouseEvent } from 'react';
+import {
+  ChangeEvent,
+  ComponentProps,
+  useEffect,
+  useState,
+  type MouseEvent,
+} from 'react';
 import {
   CardValueComponent,
   CellComponent,
@@ -11,12 +17,7 @@ import {
   FieldProps,
 } from '@keystone-6/core/types';
 
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-  TextInput,
-} from '@keystone-ui/fields';
+import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
 
 export function Field({
   field,
@@ -31,13 +32,13 @@ export function Field({
   const [image, setImage] = useState(getBaseUrl(value || ''));
 
   function getBaseUrl(value: string) {
-    const [baseUrl, _] = value.split('?');
+    const [baseUrl] = value.split('?');
 
     return baseUrl;
   }
 
   function getPosition(value: string) {
-    const [_, search] = value.split('?');
+    const [, search] = value.split('?');
     const params = new URLSearchParams(search);
     const position = params.get('position');
 
@@ -72,14 +73,16 @@ export function Field({
   return (
     <FieldContainer as="fieldset">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
-        {field.description}
-        Search for an image in{' '}
+
+      <p>
+        {field.description || ''}
+        Search for an image in
         <Link href="https://images.matsu.gov" target="_blank">
           Blue Harvest
         </Link>{' '}
         and paste the URL in the input below.
-      </FieldDescription>
+      </p>
+
       <TextInput value={value || ''} onChange={handleImageChange} />
       {value &&
         (field.notBanner ? (
@@ -104,7 +107,9 @@ export function Field({
   );
 }
 
-export const Cell: CellComponent = ({ item }) => {
+export const Cell: CellComponent = ({
+  item,
+}: ComponentProps<CellComponent>) => {
   return (
     <CellContainer>
       <p>{item.heroImage}</p>
@@ -112,7 +117,9 @@ export const Cell: CellComponent = ({ item }) => {
   );
 };
 
-export const CardValue: CardValueComponent = ({ field, item }) => {
+export const CardValue: CardValueComponent = ({
+  field,
+}: ComponentProps<CardValueComponent>) => {
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>

@@ -1,6 +1,6 @@
 import { $node } from '@milkdown/kit/utils';
 
-export const stepSchema = $node('step', (ctx) => ({
+export const stepSchema = $node('step', () => ({
   content: 'block+',
   group: 'step',
   defining: true,

@@ -89,7 +89,11 @@ export function InternalLinkTooltip() {
   }
 
   useEffect(() => {
-    !listType ? setEditing(true) : setEditing(false);
+    if (listType) {
+      setEditing(false);
+    } else {
+      setEditing(true);
+    }
   }, [listType, isShowing]);
 
   return (
@@ -210,7 +214,7 @@ function SearchInput({
               <span className="icon-[mdi--loading] animate-spin" />{' '}
               <span>Loading...</span>
             </>
-          ) : !!data?.internalSearch?.length ? (
+          ) : data?.internalSearch?.length ? (
             <Options data={data} />
           ) : (
             'No results found'

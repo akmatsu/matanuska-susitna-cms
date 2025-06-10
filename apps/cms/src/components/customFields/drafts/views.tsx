@@ -17,6 +17,7 @@ import { singular } from 'pluralize';
 import { mapDataFields } from '../../../utils/draftUtils';
 import { DraftFieldMeta } from '.';
 import { lowercaseFirstLetter } from '../../../utils';
+import { ComponentProps } from 'react';
 
 export function Field({ field, value }: FieldProps<typeof controller>) {
   const router = useRouter();
@@ -51,15 +52,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
 
   async function handleCreateDraft() {
     if (loading || creating || error) return;
-    const {
-      title,
-      owner,
-      slug,
-      publishAt,
-      unpublishAt,
-      reviewDate,
-      ...original
-    } = data[listKey];
+    const { title, ...original } = data[listKey];
     const draftInput = mapDataFields(
       original,
       {
@@ -91,7 +84,11 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   );
 }
 
-export const Cell: CellComponent = ({ item, field, linkTo }) => {
+export const Cell: CellComponent = ({
+  item,
+  field,
+  linkTo,
+}: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
   return linkTo ? (
     <CellLink {...linkTo}>{value}</CellLink>

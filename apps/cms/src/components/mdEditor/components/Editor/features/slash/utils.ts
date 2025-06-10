@@ -3,7 +3,6 @@ import { Ctx } from '@milkdown/kit/ctx';
 import { NodeType, Attrs, Slice } from '@milkdown/kit/prose/model';
 import { Command, Selection, Transaction } from '@milkdown/kit/prose/state';
 import { findWrapping } from '@milkdown/kit/prose/transform';
-import { insert } from '@milkdown/kit/utils';
 
 export function isInCodeBlock(selection: Selection) {
   const type = selection.$from.node(selection.$from.depth - 1)?.type;

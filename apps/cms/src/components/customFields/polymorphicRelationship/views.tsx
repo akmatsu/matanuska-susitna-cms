@@ -108,7 +108,7 @@ export function Field({
         ></Select>
 
         {value && value?.itemType && (
-          <div className="flex flex-wrap gap-2" w-full>
+          <div className="flex flex-wrap gap-2">
             <Select
               className="w-full"
               placeholder={`Select existing ${value?.itemType?.label}...`}
@@ -157,7 +157,7 @@ export function Field({
 }
 
 export const controller = (
-  config: FieldControllerConfig<{}>,
+  config: FieldControllerConfig<any>,
 ): FieldController<PolymorphicValue | null, string> & {
   availableTypes: AvailableType[];
 } => {

@@ -23,7 +23,7 @@ export default config<TypeInfo<Session>>({
             binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]`,
       );
     },
-    onConnect: async (keystone) => {
+    onConnect: async () => {
       await connectRedis();
       getPublishQueueEvents();
     },
@@ -68,7 +68,7 @@ export default config<TypeInfo<Session>>({
       '/api/auth/signin/azure-ad',
       '/api/auth/callback/azure-ad',
     ],
-    async pageMiddleware({ wasAccessAllowed, context }) {
+    async pageMiddleware({ wasAccessAllowed }) {
       if (wasAccessAllowed) {
         return;
       } else {

@@ -1,5 +1,4 @@
-'use client';
-import React, { useEffect } from 'react';
+import React, { ComponentProps } from 'react';
 import {
   CardValueComponent,
   CellComponent,
@@ -31,7 +30,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
       </FieldDescription>
       <ul>
         {val?.map?.((ref) => (
-          <li>
+          <li key={ref.id}>
             <Link href={`/services/${ref.id}`}>{ref.title}</Link>
           </li>
         ))}
@@ -40,7 +39,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   );
 }
 
-export const Cell: CellComponent = ({ item, field }) => {
+export const Cell: CellComponent = () => {
   return (
     <CellContainer>
       <p>I AM A CELL</p>
@@ -48,7 +47,9 @@ export const Cell: CellComponent = ({ item, field }) => {
   );
 };
 
-export const CardValue: CardValueComponent = ({ field, item }) => {
+export const CardValue: CardValueComponent = ({
+  field,
+}: ComponentProps<CardValueComponent>) => {
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>

@@ -8,7 +8,7 @@ import {
   runCommand,
 } from './utils';
 
-import { Cmd, editorViewCtx } from '@milkdown/kit/core';
+import { editorViewCtx } from '@milkdown/kit/core';
 import { createTable } from '@milkdown/kit/preset/gfm';
 import { MD_PAYMENTS_ALL_STEPS, MD_STEP_TEMPLATE } from './mdTemplates';
 import {
