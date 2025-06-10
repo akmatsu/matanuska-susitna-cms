@@ -125,6 +125,11 @@ export const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Board.districts' : 'Board',
         many: true,
       }),
+
+      topics: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.districts' : 'Topic',
+        many: true,
+      }),
     };
   },
   {

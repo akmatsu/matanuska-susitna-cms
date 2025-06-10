@@ -41,6 +41,11 @@ export const {
             : 'Board',
         many: true,
       }),
+
+      topics: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.communities' : 'Topic',
+        many: true,
+      }),
     };
   },
   {

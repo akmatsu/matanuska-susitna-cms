@@ -84,6 +84,11 @@ export const {
         ref: 'AssemblyDistrict',
         many: true,
       }),
+      topics: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion ? 'Topic.publicNotices' : 'Topic',
+        many: true,
+      }),
     };
   },
   {

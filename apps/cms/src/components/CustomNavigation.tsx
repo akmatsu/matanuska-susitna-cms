@@ -56,7 +56,7 @@ export function CustomNavigation({
     /HomePage|BoardPage/gi.test(list.key),
   );
   const pageLists = lists.filter((list) =>
-    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|PublicNotice|Board/gi.test(
+    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|PublicNotice|Board|Topic/gi.test(
       list.key,
     ),
   );

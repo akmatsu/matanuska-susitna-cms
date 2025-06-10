@@ -41,6 +41,10 @@ export const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Facility.park' : 'Facility',
         many: true,
       }),
+      topics: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.parks' : 'Topic',
+        many: true,
+      }),
     };
   },
   {

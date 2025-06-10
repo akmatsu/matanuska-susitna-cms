@@ -209,6 +209,8 @@ type AssemblyDistrict {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: AssemblyDistrictDraftWhereInput! = {}, orderBy: [AssemblyDistrictDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictDraftWhereUniqueInput): [AssemblyDistrictDraft!]
   draftsCount(where: AssemblyDistrictDraftWhereInput! = {}): Int
@@ -255,6 +257,7 @@ input AssemblyDistrictWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: AssemblyDistrictDraftManyRelationFilter
   versions: AssemblyDistrictVersionManyRelationFilter
@@ -310,6 +313,12 @@ input BoardManyRelationFilter {
   every: BoardWhereInput
   some: BoardWhereInput
   none: BoardWhereInput
+}
+
+input TopicManyRelationFilter {
+  every: TopicWhereInput
+  some: TopicWhereInput
+  none: TopicWhereInput
 }
 
 input AssemblyDistrictDraftManyRelationFilter {
@@ -380,6 +389,7 @@ input AssemblyDistrictUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -441,6 +451,13 @@ input BoardRelateToManyForUpdateInput {
   connect: [BoardWhereUniqueInput!]
 }
 
+input TopicRelateToManyForUpdateInput {
+  disconnect: [TopicWhereUniqueInput!]
+  set: [TopicWhereUniqueInput!]
+  create: [TopicCreateInput!]
+  connect: [TopicWhereUniqueInput!]
+}
+
 input AssemblyDistrictDraftRelateToManyForUpdateInput {
   disconnect: [AssemblyDistrictDraftWhereUniqueInput!]
   set: [AssemblyDistrictDraftWhereUniqueInput!]
@@ -493,6 +510,7 @@ input AssemblyDistrictCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -538,6 +556,11 @@ input ImageRelateToOneForCreateInput {
 input BoardRelateToManyForCreateInput {
   create: [BoardCreateInput!]
   connect: [BoardWhereUniqueInput!]
+}
+
+input TopicRelateToManyForCreateInput {
+  create: [TopicCreateInput!]
+  connect: [TopicWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForCreateInput {
@@ -590,6 +613,8 @@ type AssemblyDistrictDraft {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -627,6 +652,7 @@ input AssemblyDistrictDraftWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
+  topics: TopicManyRelationFilter
 }
 
 input AssemblyDistrictDraftOrderByInput {
@@ -678,6 +704,7 @@ input AssemblyDistrictDraftUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -719,6 +746,7 @@ input AssemblyDistrictDraftCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -762,6 +790,8 @@ type AssemblyDistrictVersion {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: AssemblyDistrict
   republish: String
 }
@@ -801,6 +831,7 @@ input AssemblyDistrictVersionWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
+  topics: TopicManyRelationFilter
   isLive: AssemblyDistrictWhereInput
 }
 
@@ -853,6 +884,7 @@ input AssemblyDistrictVersionUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: AssemblyDistrictRelateToOneForUpdateInput
   republish: String
 }
@@ -889,6 +921,7 @@ input AssemblyDistrictVersionCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: AssemblyDistrictRelateToOneForCreateInput
   republish: String
 }
@@ -927,6 +960,8 @@ type Board {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: BoardDraftWhereInput! = {}, orderBy: [BoardDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardDraftWhereUniqueInput): [BoardDraft!]
   draftsCount(where: BoardDraftWhereInput! = {}): Int
@@ -971,6 +1006,7 @@ input BoardWhereInput {
   isActive: BooleanFilter
   districts: AssemblyDistrictManyRelationFilter
   communities: CommunityManyRelationFilter
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: BoardDraftManyRelationFilter
   versions: BoardVersionManyRelationFilter
@@ -1050,6 +1086,7 @@ input BoardUpdateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: BoardDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -1127,6 +1164,7 @@ input BoardCreateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: BoardDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -1198,6 +1236,8 @@ type BoardDraft {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -1233,6 +1273,7 @@ input BoardDraftWhereInput {
   isActive: BooleanFilter
   districts: AssemblyDistrictManyRelationFilter
   communities: CommunityManyRelationFilter
+  topics: TopicManyRelationFilter
 }
 
 input BoardDraftOrderByInput {
@@ -1277,6 +1318,7 @@ input BoardDraftUpdateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -1316,6 +1358,7 @@ input BoardDraftCreateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -1358,6 +1401,8 @@ type BoardVersion {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Board
   republish: String
 }
@@ -1395,6 +1440,7 @@ input BoardVersionWhereInput {
   isActive: BooleanFilter
   districts: AssemblyDistrictManyRelationFilter
   communities: CommunityManyRelationFilter
+  topics: TopicManyRelationFilter
   isLive: BoardWhereInput
 }
 
@@ -1440,6 +1486,7 @@ input BoardVersionUpdateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: BoardRelateToOneForUpdateInput
   republish: String
 }
@@ -1474,6 +1521,7 @@ input BoardVersionCreateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: BoardRelateToOneForCreateInput
   republish: String
 }
@@ -1606,6 +1654,8 @@ type Community {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
   draftsCount(where: CommunityDraftWhereInput! = {}): Int
@@ -1645,6 +1695,7 @@ input CommunityWhereInput {
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: CommunityDraftManyRelationFilter
   versions: CommunityVersionManyRelationFilter
@@ -1705,6 +1756,7 @@ input CommunityUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: CommunityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -1764,6 +1816,7 @@ input CommunityCreateInput {
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: CommunityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -1821,6 +1874,8 @@ type CommunityDraft {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -1851,6 +1906,7 @@ input CommunityDraftWhereInput {
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
+  topics: TopicManyRelationFilter
 }
 
 input CommunityDraftOrderByInput {
@@ -1887,6 +1943,7 @@ input CommunityDraftUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -1921,6 +1978,7 @@ input CommunityDraftCreateInput {
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -1959,6 +2017,8 @@ type CommunityVersion {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Community
   republish: String
 }
@@ -1991,6 +2051,7 @@ input CommunityVersionWhereInput {
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
+  topics: TopicManyRelationFilter
   isLive: CommunityWhereInput
 }
 
@@ -2028,6 +2089,7 @@ input CommunityVersionUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: CommunityRelateToOneForUpdateInput
   republish: String
 }
@@ -2057,6 +2119,7 @@ input CommunityVersionCreateInput {
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: CommunityRelateToOneForCreateInput
   republish: String
 }
@@ -2348,6 +2411,8 @@ type Facility {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: FacilityDraftWhereInput! = {}, orderBy: [FacilityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityDraftWhereUniqueInput): [FacilityDraft!]
   draftsCount(where: FacilityDraftWhereInput! = {}): Int
@@ -2388,6 +2453,7 @@ input FacilityWhereInput {
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: FacilityDraftManyRelationFilter
   versions: FacilityVersionManyRelationFilter
@@ -2449,6 +2515,7 @@ input FacilityUpdateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: FacilityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -2521,6 +2588,7 @@ input FacilityCreateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: FacilityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -2588,6 +2656,8 @@ type FacilityDraft {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -2619,6 +2689,7 @@ input FacilityDraftWhereInput {
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
+  topics: TopicManyRelationFilter
 }
 
 input FacilityDraftOrderByInput {
@@ -2656,6 +2727,7 @@ input FacilityDraftUpdateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -2691,6 +2763,7 @@ input FacilityDraftCreateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -2729,6 +2802,8 @@ type FacilityVersion {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Facility
   republish: String
 }
@@ -2762,6 +2837,7 @@ input FacilityVersionWhereInput {
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
+  topics: TopicManyRelationFilter
   isLive: FacilityWhereInput
 }
 
@@ -2800,6 +2876,7 @@ input FacilityVersionUpdateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: FacilityRelateToOneForUpdateInput
   republish: String
 }
@@ -2830,7 +2907,688 @@ input FacilityVersionCreateInput {
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: FacilityRelateToOneForCreateInput
+  republish: String
+}
+
+type Topic {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
+  highlightsCount(where: HighlightWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  status: String
+  drafts(where: TopicDraftWhereInput! = {}, orderBy: [TopicDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicDraftWhereUniqueInput): [TopicDraft!]
+  draftsCount(where: TopicDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: TopicVersionWhereInput! = {}, orderBy: [TopicVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicVersionWhereUniqueInput): [TopicVersion!]
+  versionsCount(where: TopicVersionWhereInput! = {}): Int
+  currentVersion: TopicVersion
+}
+
+input TopicWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+  currentVersion: TopicVersionWhereUniqueInput
+}
+
+input TopicWhereInput {
+  AND: [TopicWhereInput!]
+  OR: [TopicWhereInput!]
+  NOT: [TopicWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  highlights: HighlightManyRelationFilter
+  boards: BoardManyRelationFilter
+  services: ServiceManyRelationFilter
+  communities: CommunityManyRelationFilter
+  districts: AssemblyDistrictManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
+  status: StringFilter
+  drafts: TopicDraftManyRelationFilter
+  versions: TopicVersionManyRelationFilter
+  currentVersion: TopicVersionWhereInput
+}
+
+input HighlightManyRelationFilter {
+  every: HighlightWhereInput
+  some: HighlightWhereInput
+  none: HighlightWhereInput
+}
+
+input ParkManyRelationFilter {
+  every: ParkWhereInput
+  some: ParkWhereInput
+  none: ParkWhereInput
+}
+
+input TrailManyRelationFilter {
+  every: TrailWhereInput
+  some: TrailWhereInput
+  none: TrailWhereInput
+}
+
+input FacilityManyRelationFilter {
+  every: FacilityWhereInput
+  some: FacilityWhereInput
+  none: FacilityWhereInput
+}
+
+input OrgUnitManyRelationFilter {
+  every: OrgUnitWhereInput
+  some: OrgUnitWhereInput
+  none: OrgUnitWhereInput
+}
+
+input PublicNoticeManyRelationFilter {
+  every: PublicNoticeWhereInput
+  some: PublicNoticeWhereInput
+  none: PublicNoticeWhereInput
+}
+
+input TopicDraftManyRelationFilter {
+  every: TopicDraftWhereInput
+  some: TopicDraftWhereInput
+  none: TopicDraftWhereInput
+}
+
+input TopicVersionManyRelationFilter {
+  every: TopicVersionWhereInput
+  some: TopicVersionWhereInput
+  none: TopicVersionWhereInput
+}
+
+input TopicOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
+}
+
+input TopicUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights: HighlightRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
+  status: String
+  drafts: TopicDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: TopicVersionRelateToManyForUpdateInput
+  currentVersion: TopicVersionRelateToOneForUpdateInput
+}
+
+input HighlightRelateToManyForUpdateInput {
+  disconnect: [HighlightWhereUniqueInput!]
+  set: [HighlightWhereUniqueInput!]
+  create: [HighlightCreateInput!]
+  connect: [HighlightWhereUniqueInput!]
+}
+
+input ParkRelateToManyForUpdateInput {
+  disconnect: [ParkWhereUniqueInput!]
+  set: [ParkWhereUniqueInput!]
+  create: [ParkCreateInput!]
+  connect: [ParkWhereUniqueInput!]
+}
+
+input TrailRelateToManyForUpdateInput {
+  disconnect: [TrailWhereUniqueInput!]
+  set: [TrailWhereUniqueInput!]
+  create: [TrailCreateInput!]
+  connect: [TrailWhereUniqueInput!]
+}
+
+input FacilityRelateToManyForUpdateInput {
+  disconnect: [FacilityWhereUniqueInput!]
+  set: [FacilityWhereUniqueInput!]
+  create: [FacilityCreateInput!]
+  connect: [FacilityWhereUniqueInput!]
+}
+
+input OrgUnitRelateToManyForUpdateInput {
+  disconnect: [OrgUnitWhereUniqueInput!]
+  set: [OrgUnitWhereUniqueInput!]
+  create: [OrgUnitCreateInput!]
+  connect: [OrgUnitWhereUniqueInput!]
+}
+
+input PublicNoticeRelateToManyForUpdateInput {
+  disconnect: [PublicNoticeWhereUniqueInput!]
+  set: [PublicNoticeWhereUniqueInput!]
+  create: [PublicNoticeCreateInput!]
+  connect: [PublicNoticeWhereUniqueInput!]
+}
+
+input TopicDraftRelateToManyForUpdateInput {
+  disconnect: [TopicDraftWhereUniqueInput!]
+  set: [TopicDraftWhereUniqueInput!]
+  create: [TopicDraftCreateInput!]
+  connect: [TopicDraftWhereUniqueInput!]
+}
+
+input TopicVersionRelateToManyForUpdateInput {
+  disconnect: [TopicVersionWhereUniqueInput!]
+  set: [TopicVersionWhereUniqueInput!]
+  create: [TopicVersionCreateInput!]
+  connect: [TopicVersionWhereUniqueInput!]
+}
+
+input TopicVersionRelateToOneForUpdateInput {
+  create: TopicVersionCreateInput
+  connect: TopicVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TopicUpdateArgs {
+  where: TopicWhereUniqueInput!
+  data: TopicUpdateInput!
+}
+
+input TopicCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights: HighlightRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
+  status: String
+  drafts: TopicDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: TopicVersionRelateToManyForCreateInput
+  currentVersion: TopicVersionRelateToOneForCreateInput
+}
+
+input HighlightRelateToManyForCreateInput {
+  create: [HighlightCreateInput!]
+  connect: [HighlightWhereUniqueInput!]
+}
+
+input ParkRelateToManyForCreateInput {
+  create: [ParkCreateInput!]
+  connect: [ParkWhereUniqueInput!]
+}
+
+input TrailRelateToManyForCreateInput {
+  create: [TrailCreateInput!]
+  connect: [TrailWhereUniqueInput!]
+}
+
+input FacilityRelateToManyForCreateInput {
+  create: [FacilityCreateInput!]
+  connect: [FacilityWhereUniqueInput!]
+}
+
+input OrgUnitRelateToManyForCreateInput {
+  create: [OrgUnitCreateInput!]
+  connect: [OrgUnitWhereUniqueInput!]
+}
+
+input PublicNoticeRelateToManyForCreateInput {
+  create: [PublicNoticeCreateInput!]
+  connect: [PublicNoticeWhereUniqueInput!]
+}
+
+input TopicDraftRelateToManyForCreateInput {
+  create: [TopicDraftCreateInput!]
+  connect: [TopicDraftWhereUniqueInput!]
+}
+
+input TopicVersionRelateToManyForCreateInput {
+  create: [TopicVersionCreateInput!]
+  connect: [TopicVersionWhereUniqueInput!]
+}
+
+input TopicVersionRelateToOneForCreateInput {
+  create: TopicVersionCreateInput
+  connect: TopicVersionWhereUniqueInput
+}
+
+type TopicDraft {
+  id: ID!
+  original: Topic
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
+  highlightsCount(where: HighlightWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  publish: String
+}
+
+input TopicDraftWhereUniqueInput {
+  id: ID
+}
+
+input TopicDraftWhereInput {
+  AND: [TopicDraftWhereInput!]
+  OR: [TopicDraftWhereInput!]
+  NOT: [TopicDraftWhereInput!]
+  id: IDFilter
+  original: TopicWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  highlights: HighlightManyRelationFilter
+  boards: BoardManyRelationFilter
+  services: ServiceManyRelationFilter
+  communities: CommunityManyRelationFilter
+  districts: AssemblyDistrictManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
+}
+
+input TopicDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  publish: OrderDirection
+}
+
+input TopicDraftUpdateInput {
+  original: TopicRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights: HighlightRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
+  publish: String
+}
+
+input TopicRelateToOneForUpdateInput {
+  create: TopicCreateInput
+  connect: TopicWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TopicDraftUpdateArgs {
+  where: TopicDraftWhereUniqueInput!
+  data: TopicDraftUpdateInput!
+}
+
+input TopicDraftCreateInput {
+  original: TopicRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights: HighlightRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
+  publish: String
+}
+
+input TopicRelateToOneForCreateInput {
+  create: TopicCreateInput
+  connect: TopicWhereUniqueInput
+}
+
+type TopicVersion {
+  id: ID!
+  original: Topic
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
+  highlightsCount(where: HighlightWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  isLive: Topic
+  republish: String
+}
+
+input TopicVersionWhereUniqueInput {
+  id: ID
+  isLive: TopicWhereUniqueInput
+}
+
+input TopicVersionWhereInput {
+  AND: [TopicVersionWhereInput!]
+  OR: [TopicVersionWhereInput!]
+  NOT: [TopicVersionWhereInput!]
+  id: IDFilter
+  original: TopicWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  highlights: HighlightManyRelationFilter
+  boards: BoardManyRelationFilter
+  services: ServiceManyRelationFilter
+  communities: CommunityManyRelationFilter
+  districts: AssemblyDistrictManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
+  isLive: TopicWhereInput
+}
+
+input TopicVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  republish: OrderDirection
+}
+
+input TopicVersionUpdateInput {
+  original: TopicRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights: HighlightRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  districts: AssemblyDistrictRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
+  isLive: TopicRelateToOneForUpdateInput
+  republish: String
+}
+
+input TopicVersionUpdateArgs {
+  where: TopicVersionWhereUniqueInput!
+  data: TopicVersionUpdateInput!
+}
+
+input TopicVersionCreateInput {
+  original: TopicRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  highlights: HighlightRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  districts: AssemblyDistrictRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
+  isLive: TopicRelateToOneForCreateInput
   republish: String
 }
 
@@ -3209,6 +3967,8 @@ type OrgUnit {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: OrgUnitDraftWhereInput! = {}, orderBy: [OrgUnitDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitDraftWhereUniqueInput): [OrgUnitDraft!]
   draftsCount(where: OrgUnitDraftWhereInput! = {}): Int
@@ -3249,16 +4009,11 @@ input OrgUnitWhereInput {
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: OrgUnitDraftManyRelationFilter
   versions: OrgUnitVersionManyRelationFilter
   currentVersion: OrgUnitVersionWhereInput
-}
-
-input OrgUnitManyRelationFilter {
-  every: OrgUnitWhereInput
-  some: OrgUnitWhereInput
-  none: OrgUnitWhereInput
 }
 
 input OrgUnitDraftManyRelationFilter {
@@ -3311,18 +4066,12 @@ input OrgUnitUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForUpdateInput
   makeDrafts: String
   versions: OrgUnitVersionRelateToManyForUpdateInput
   currentVersion: OrgUnitVersionRelateToOneForUpdateInput
-}
-
-input OrgUnitRelateToManyForUpdateInput {
-  disconnect: [OrgUnitWhereUniqueInput!]
-  set: [OrgUnitWhereUniqueInput!]
-  create: [OrgUnitCreateInput!]
-  connect: [OrgUnitWhereUniqueInput!]
 }
 
 input OrgUnitRelateToOneForUpdateInput {
@@ -3377,16 +4126,12 @@ input OrgUnitCreateInput {
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForCreateInput
   makeDrafts: String
   versions: OrgUnitVersionRelateToManyForCreateInput
   currentVersion: OrgUnitVersionRelateToOneForCreateInput
-}
-
-input OrgUnitRelateToManyForCreateInput {
-  create: [OrgUnitCreateInput!]
-  connect: [OrgUnitWhereUniqueInput!]
 }
 
 input OrgUnitRelateToOneForCreateInput {
@@ -3439,6 +4184,8 @@ type OrgUnitDraft {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -3470,6 +4217,7 @@ input OrgUnitDraftWhereInput {
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
+  topics: TopicManyRelationFilter
 }
 
 input OrgUnitDraftOrderByInput {
@@ -3508,6 +4256,7 @@ input OrgUnitDraftUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -3537,6 +4286,7 @@ input OrgUnitDraftCreateInput {
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -3570,6 +4320,8 @@ type OrgUnitVersion {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: OrgUnit
   republish: String
 }
@@ -3603,6 +4355,7 @@ input OrgUnitVersionWhereInput {
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
+  topics: TopicManyRelationFilter
   isLive: OrgUnitWhereInput
 }
 
@@ -3642,6 +4395,7 @@ input OrgUnitVersionUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: OrgUnitRelateToOneForUpdateInput
   republish: String
 }
@@ -3672,6 +4426,7 @@ input OrgUnitVersionCreateInput {
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: OrgUnitRelateToOneForCreateInput
   republish: String
 }
@@ -3754,6 +4509,8 @@ type Park {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: ParkDraftWhereInput! = {}, orderBy: [ParkDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkDraftWhereUniqueInput): [ParkDraft!]
   draftsCount(where: ParkDraftWhereInput! = {}): Int
@@ -3795,22 +4552,11 @@ input ParkWhereInput {
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: ParkDraftManyRelationFilter
   versions: ParkVersionManyRelationFilter
   currentVersion: ParkVersionWhereInput
-}
-
-input TrailManyRelationFilter {
-  every: TrailWhereInput
-  some: TrailWhereInput
-  none: TrailWhereInput
-}
-
-input FacilityManyRelationFilter {
-  every: FacilityWhereInput
-  some: FacilityWhereInput
-  none: FacilityWhereInput
 }
 
 input ParkDraftManyRelationFilter {
@@ -3863,25 +4609,12 @@ input ParkUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: ParkDraftRelateToManyForUpdateInput
   makeDrafts: String
   versions: ParkVersionRelateToManyForUpdateInput
   currentVersion: ParkVersionRelateToOneForUpdateInput
-}
-
-input TrailRelateToManyForUpdateInput {
-  disconnect: [TrailWhereUniqueInput!]
-  set: [TrailWhereUniqueInput!]
-  create: [TrailCreateInput!]
-  connect: [TrailWhereUniqueInput!]
-}
-
-input FacilityRelateToManyForUpdateInput {
-  disconnect: [FacilityWhereUniqueInput!]
-  set: [FacilityWhereUniqueInput!]
-  create: [FacilityCreateInput!]
-  connect: [FacilityWhereUniqueInput!]
 }
 
 input ParkDraftRelateToManyForUpdateInput {
@@ -3931,21 +4664,12 @@ input ParkCreateInput {
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: ParkDraftRelateToManyForCreateInput
   makeDrafts: String
   versions: ParkVersionRelateToManyForCreateInput
   currentVersion: ParkVersionRelateToOneForCreateInput
-}
-
-input TrailRelateToManyForCreateInput {
-  create: [TrailCreateInput!]
-  connect: [TrailWhereUniqueInput!]
-}
-
-input FacilityRelateToManyForCreateInput {
-  create: [FacilityCreateInput!]
-  connect: [FacilityWhereUniqueInput!]
 }
 
 input ParkDraftRelateToManyForCreateInput {
@@ -3996,6 +4720,8 @@ type ParkDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -4028,6 +4754,7 @@ input ParkDraftWhereInput {
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  topics: TopicManyRelationFilter
 }
 
 input ParkDraftOrderByInput {
@@ -4066,6 +4793,7 @@ input ParkDraftUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -4096,6 +4824,7 @@ input ParkDraftCreateInput {
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -4132,6 +4861,8 @@ type ParkVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Park
   republish: String
 }
@@ -4166,6 +4897,7 @@ input ParkVersionWhereInput {
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  topics: TopicManyRelationFilter
   isLive: ParkWhereInput
 }
 
@@ -4205,6 +4937,7 @@ input ParkVersionUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: ParkRelateToOneForUpdateInput
   republish: String
 }
@@ -4236,6 +4969,7 @@ input ParkVersionCreateInput {
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: ParkRelateToOneForCreateInput
   republish: String
 }
@@ -4281,6 +5015,8 @@ type PublicNotice {
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: PublicNoticeDraftWhereInput! = {}, orderBy: [PublicNoticeDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeDraftWhereUniqueInput): [PublicNoticeDraft!]
   draftsCount(where: PublicNoticeDraftWhereInput! = {}): Int
@@ -4327,16 +5063,11 @@ input PublicNoticeWhereInput {
   trails: TrailManyRelationFilter
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: PublicNoticeDraftManyRelationFilter
   versions: PublicNoticeVersionManyRelationFilter
   currentVersion: PublicNoticeVersionWhereInput
-}
-
-input ParkManyRelationFilter {
-  every: ParkWhereInput
-  some: ParkWhereInput
-  none: ParkWhereInput
 }
 
 input PublicNoticeDraftManyRelationFilter {
@@ -4397,18 +5128,12 @@ input PublicNoticeUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForUpdateInput
   makeDrafts: String
   versions: PublicNoticeVersionRelateToManyForUpdateInput
   currentVersion: PublicNoticeVersionRelateToOneForUpdateInput
-}
-
-input ParkRelateToManyForUpdateInput {
-  disconnect: [ParkWhereUniqueInput!]
-  set: [ParkWhereUniqueInput!]
-  create: [ParkCreateInput!]
-  connect: [ParkWhereUniqueInput!]
 }
 
 input PublicNoticeDraftRelateToManyForUpdateInput {
@@ -4463,16 +5188,12 @@ input PublicNoticeCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForCreateInput
   makeDrafts: String
   versions: PublicNoticeVersionRelateToManyForCreateInput
   currentVersion: PublicNoticeVersionRelateToOneForCreateInput
-}
-
-input ParkRelateToManyForCreateInput {
-  create: [ParkCreateInput!]
-  connect: [ParkWhereUniqueInput!]
 }
 
 input PublicNoticeDraftRelateToManyForCreateInput {
@@ -4531,6 +5252,8 @@ type PublicNoticeDraft {
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -4568,6 +5291,7 @@ input PublicNoticeDraftWhereInput {
   trails: TrailManyRelationFilter
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
+  topics: TopicManyRelationFilter
 }
 
 input PublicNoticeDraftOrderByInput {
@@ -4614,6 +5338,7 @@ input PublicNoticeDraftUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -4655,6 +5380,7 @@ input PublicNoticeDraftCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -4704,6 +5430,8 @@ type PublicNoticeVersion {
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: PublicNotice
   republish: String
 }
@@ -4743,6 +5471,7 @@ input PublicNoticeVersionWhereInput {
   trails: TrailManyRelationFilter
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
+  topics: TopicManyRelationFilter
   isLive: PublicNoticeWhereInput
 }
 
@@ -4790,6 +5519,7 @@ input PublicNoticeVersionUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: PublicNoticeRelateToOneForUpdateInput
   republish: String
 }
@@ -4826,6 +5556,7 @@ input PublicNoticeVersionCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: PublicNoticeRelateToOneForCreateInput
   republish: String
 }
@@ -4866,6 +5597,8 @@ type Service {
   parksCount(where: ParkWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   editorNotes: String
   status: String
   drafts(where: ServiceDraftWhereInput! = {}, orderBy: [ServiceDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceDraftWhereUniqueInput): [ServiceDraft!]
@@ -4910,6 +5643,7 @@ input ServiceWhereInput {
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
+  topics: TopicManyRelationFilter
   editorNotes: StringFilter
   status: StringFilter
   drafts: ServiceDraftManyRelationFilter
@@ -4976,6 +5710,7 @@ input ServiceUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   editorNotes: String
   status: String
   drafts: ServiceDraftRelateToManyForUpdateInput
@@ -5046,6 +5781,7 @@ input ServiceCreateInput {
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   editorNotes: String
   status: String
   drafts: ServiceDraftRelateToManyForCreateInput
@@ -5115,6 +5851,8 @@ type ServiceDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   editorNotes: String
   publish: String
 }
@@ -5150,6 +5888,7 @@ input ServiceDraftWhereInput {
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
+  topics: TopicManyRelationFilter
   editorNotes: StringFilter
 }
 
@@ -5192,6 +5931,7 @@ input ServiceDraftUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   editorNotes: String
   publish: String
 }
@@ -5231,6 +5971,7 @@ input ServiceDraftCreateInput {
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   editorNotes: String
   publish: String
 }
@@ -5276,6 +6017,8 @@ type ServiceVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   editorNotes: String
   isLive: Service
   republish: String
@@ -5313,6 +6056,7 @@ input ServiceVersionWhereInput {
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
+  topics: TopicManyRelationFilter
   editorNotes: StringFilter
   isLive: ServiceWhereInput
 }
@@ -5356,6 +6100,7 @@ input ServiceVersionUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   editorNotes: String
   isLive: ServiceRelateToOneForUpdateInput
   republish: String
@@ -5390,6 +6135,7 @@ input ServiceVersionCreateInput {
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   editorNotes: String
   isLive: ServiceRelateToOneForCreateInput
   republish: String
@@ -5478,6 +6224,8 @@ type Trail {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: TrailDraftWhereInput! = {}, orderBy: [TrailDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailDraftWhereUniqueInput): [TrailDraft!]
   draftsCount(where: TrailDraftWhereInput! = {}): Int
@@ -5537,6 +6285,7 @@ input TrailWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: TrailDraftManyRelationFilter
   versions: TrailVersionManyRelationFilter
@@ -5631,6 +6380,7 @@ input TrailUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: TrailDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -5703,6 +6453,7 @@ input TrailCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: TrailDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -5773,6 +6524,8 @@ type TrailDraft {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -5823,6 +6576,7 @@ input TrailDraftWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
+  topics: TopicManyRelationFilter
 }
 
 input TrailDraftOrderByInput {
@@ -5899,6 +6653,7 @@ input TrailDraftUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -5953,6 +6708,7 @@ input TrailDraftCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -6009,6 +6765,8 @@ type TrailVersion {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Trail
   republish: String
 }
@@ -6061,6 +6819,7 @@ input TrailVersionWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
+  topics: TopicManyRelationFilter
   isLive: TrailWhereInput
 }
 
@@ -6138,6 +6897,7 @@ input TrailVersionUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: TrailRelateToOneForUpdateInput
   republish: String
 }
@@ -6187,6 +6947,7 @@ input TrailVersionCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: TrailRelateToOneForCreateInput
   republish: String
 }
@@ -6523,6 +7284,24 @@ type Mutation {
   updateFacilityVersions(data: [FacilityVersionUpdateArgs!]!): [FacilityVersion]
   deleteFacilityVersion(where: FacilityVersionWhereUniqueInput!): FacilityVersion
   deleteFacilityVersions(where: [FacilityVersionWhereUniqueInput!]!): [FacilityVersion]
+  createTopic(data: TopicCreateInput!): Topic
+  createTopics(data: [TopicCreateInput!]!): [Topic]
+  updateTopic(where: TopicWhereUniqueInput!, data: TopicUpdateInput!): Topic
+  updateTopics(data: [TopicUpdateArgs!]!): [Topic]
+  deleteTopic(where: TopicWhereUniqueInput!): Topic
+  deleteTopics(where: [TopicWhereUniqueInput!]!): [Topic]
+  createTopicDraft(data: TopicDraftCreateInput!): TopicDraft
+  createTopicDrafts(data: [TopicDraftCreateInput!]!): [TopicDraft]
+  updateTopicDraft(where: TopicDraftWhereUniqueInput!, data: TopicDraftUpdateInput!): TopicDraft
+  updateTopicDrafts(data: [TopicDraftUpdateArgs!]!): [TopicDraft]
+  deleteTopicDraft(where: TopicDraftWhereUniqueInput!): TopicDraft
+  deleteTopicDrafts(where: [TopicDraftWhereUniqueInput!]!): [TopicDraft]
+  createTopicVersion(data: TopicVersionCreateInput!): TopicVersion
+  createTopicVersions(data: [TopicVersionCreateInput!]!): [TopicVersion]
+  updateTopicVersion(where: TopicVersionWhereUniqueInput!, data: TopicVersionUpdateInput!): TopicVersion
+  updateTopicVersions(data: [TopicVersionUpdateArgs!]!): [TopicVersion]
+  deleteTopicVersion(where: TopicVersionWhereUniqueInput!): TopicVersion
+  deleteTopicVersions(where: [TopicVersionWhereUniqueInput!]!): [TopicVersion]
   createHighlight(data: HighlightCreateInput!): Highlight
   createHighlights(data: [HighlightCreateInput!]!): [Highlight]
   updateHighlight(where: HighlightWhereUniqueInput!, data: HighlightUpdateInput!): Highlight
@@ -6731,6 +7510,15 @@ type Query {
   facilityVersion(where: FacilityVersionWhereUniqueInput!): FacilityVersion
   facilityVersions(where: FacilityVersionWhereInput! = {}, orderBy: [FacilityVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityVersionWhereUniqueInput): [FacilityVersion!]
   facilityVersionsCount(where: FacilityVersionWhereInput! = {}): Int
+  topic(where: TopicWhereUniqueInput!): Topic
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
+  topicDraft(where: TopicDraftWhereUniqueInput!): TopicDraft
+  topicDrafts(where: TopicDraftWhereInput! = {}, orderBy: [TopicDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicDraftWhereUniqueInput): [TopicDraft!]
+  topicDraftsCount(where: TopicDraftWhereInput! = {}): Int
+  topicVersion(where: TopicVersionWhereUniqueInput!): TopicVersion
+  topicVersions(where: TopicVersionWhereInput! = {}, orderBy: [TopicVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicVersionWhereUniqueInput): [TopicVersion!]
+  topicVersionsCount(where: TopicVersionWhereInput! = {}): Int
   highlight(where: HighlightWhereUniqueInput!): Highlight
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
   highlightsCount(where: HighlightWhereInput! = {}): Int

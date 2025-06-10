@@ -118,6 +118,11 @@ export const {
           hideCreate: true,
         },
       }),
+
+      topics: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.boards' : 'Topic',
+        many: true,
+      }),
     };
   },
   {
