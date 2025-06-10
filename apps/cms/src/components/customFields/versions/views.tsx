@@ -1,5 +1,4 @@
 'use client';
-import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
@@ -7,20 +6,16 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Button } from '@keystone-ui/button';
+
 import { FieldContainer } from '@keystone-ui/fields';
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { singular } from 'pluralize';
-import { mapDataFields } from '../../../utils/draftUtils';
+import { ComponentProps } from 'react';
 
-export function Field({
-  field,
-  value,
-  onChange,
-}: FieldProps<typeof controller>) {
+export function Field({ value }: FieldProps<typeof controller>) {
   const router = useRouter();
   const { id } = useParams();
 
@@ -39,7 +34,11 @@ export function Field({
   );
 }
 
-export const Cell: CellComponent = ({ item, field, linkTo }) => {
+export const Cell: CellComponent = ({
+  item,
+  field,
+  linkTo,
+}: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
   return linkTo ? (
     <CellLink {...linkTo}>{value}</CellLink>
@@ -50,7 +49,7 @@ export const Cell: CellComponent = ({ item, field, linkTo }) => {
 Cell.supportsLinkTo = true;
 
 export const controller = (
-  config: FieldControllerConfig<{}>,
+  config: FieldControllerConfig<any>,
 ): FieldController<string[] | null, string> => {
   return {
     path: config.path,

@@ -1,5 +1,5 @@
 import { graphql, list, ListConfig } from '@keystone-6/core';
-import { generalOperationAccess, isAdmin, isContentManager } from '../access';
+import { generalOperationAccess, isContentManager } from '../access';
 import { polymorphicRelationship } from '../../components/customFields/polymorphicRelationship';
 import { text, virtual } from '@keystone-6/core/fields';
 import { capitalizeFirstLetter } from '../../utils';

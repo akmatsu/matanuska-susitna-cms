@@ -19,7 +19,7 @@ export const PrimaryActionButtonNode = $node('primary-action-button', () => ({
       tag: 'p.primary-action',
     },
   ],
-  toDOM: (node) => ['p', { class: 'primary-action bg-blue-500' }, 0],
+  toDOM: () => ['p', { class: 'primary-action bg-blue-500' }, 0],
   parseMarkdown: {
     match: ({ type, name }) =>
       type === 'leafDirective' && name === 'primary-action-button',

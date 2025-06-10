@@ -1,5 +1,5 @@
 import { Editor } from '@milkdown/kit/core';
-import { NodeViewFactoryFn, PluginViewFactoryFn } from '../../types';
+import { PluginViewFactoryFn } from '../../types';
 import {
   internalLinkDirective,
   InternalLinkInputRule,

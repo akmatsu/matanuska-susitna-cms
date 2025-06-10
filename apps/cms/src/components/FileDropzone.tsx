@@ -10,6 +10,7 @@ export function FileDropzone({
 }: UseFormRegisterReturn & {
   accept?: Accept;
 }) {
+  // eslint-disable-next-line
   const onDrop = useCallback((acceptedFiles: File[]) => {}, []);
 
   const { getRootProps, getInputProps, acceptedFiles, isDragActive } =
@@ -50,7 +51,7 @@ export function FileDropzone({
           }}
         />{' '}
         <p className="text-gray-400">
-          Drag 'n' drop some files here, or click to select files
+          Drag &apos;n&apos; drop some files here, or click to select files
         </p>
       </div>
       <aside>

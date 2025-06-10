@@ -20,7 +20,7 @@ export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
   notBanner,
   ...config
 }: BlueHarvestImageConfig<ListTypeInfo> = {}): FieldTypeFunc<ListTypeInfo> {
-  return (meta) =>
+  return () =>
     fieldType({
       kind: 'scalar',
       mode: 'optional',
@@ -36,7 +36,7 @@ export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
       input: {
         create: {
           arg: graphql.arg({ type: graphql.String }),
-          resolve(value, context) {
+          resolve(value) {
             return value;
           },
         },

@@ -97,9 +97,6 @@ dist
 # Comment in the public line in if your project uses Gatsby and not Next.js
 # https://nextjs.org/blog/next-9-1#public-directory-support
 # public
-**/*/public/uswds/
-**/*/public/document-files/
-**/*/public/image-files/
 
 # vuepress build output
 .vuepress/dist
@@ -139,3 +136,8 @@ dist
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+.keystone/
+keystone.db
+*.log
+

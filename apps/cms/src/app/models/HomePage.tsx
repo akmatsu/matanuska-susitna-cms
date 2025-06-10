@@ -1,5 +1,5 @@
 import { group, list, ListConfig } from '@keystone-6/core';
-import { timestamps, titleAndDescription, userGroups } from '../fieldUtils';
+import { timestamps, titleAndDescription } from '../fieldUtils';
 import { elevatedOperationAccess, isContentManager } from '../access';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import { relationship } from '@keystone-6/core/fields';

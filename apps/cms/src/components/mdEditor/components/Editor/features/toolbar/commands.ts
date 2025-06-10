@@ -97,25 +97,21 @@ export const TOOLBAR_COMMANDS: {
   {
     label: 'Bold',
     icon: 'icon-[bi--type-bold]',
-    action: (view: PluginViewContext['view']) =>
-      callCommand(toggleStrongCommand.key),
+    action: () => callCommand(toggleStrongCommand.key),
   },
   {
     label: 'Italic',
     icon: 'icon-[bi--type-italic]',
-    action: (view: PluginViewContext['view']) =>
-      callCommand(toggleEmphasisCommand.key),
+    action: () => callCommand(toggleEmphasisCommand.key),
   },
   {
     label: 'Strikethrough',
     icon: 'icon-[bi--type-strikethrough]',
-    action: (view: PluginViewContext['view']) =>
-      callCommand(toggleStrikethroughCommand.key),
+    action: () => callCommand(toggleStrikethroughCommand.key),
   },
   {
     label: 'Internal Link',
     icon: 'icon-[bi--link]',
-    action: (view: PluginViewContext['view']) =>
-      callCommand(toggleInternalLinkCommand.key),
+    action: () => callCommand(toggleInternalLinkCommand.key),
   },
 ];

@@ -4,7 +4,6 @@ import { select, text } from '@keystone-6/core/fields';
 import { customText } from '../../components/customFields/Markdown';
 import { isContentManager } from '../access/roles';
 import { elevatedOperationAccess } from '../access';
-import axios from 'axios';
 import { createAndSendBulletin } from '../../utils/emailUtils';
 
 export const Alert: ListConfig<any> = list({

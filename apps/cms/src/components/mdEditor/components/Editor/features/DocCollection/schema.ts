@@ -48,7 +48,7 @@ export const DocCollectionNode = $node('doc-collection', () => ({
 export const DocCollectionInputRule = $inputRule(
   (ctx) =>
     new InputRule(
-      /::doc-collection\{id\="(?<id>[^"]+)?"?\}/,
+      /::doc-collection\{id="(?<id>[^"]+)?"?\}/,
       (state, match, start, end) => {
         const [okay, id = ''] = match;
         const { tr } = state;

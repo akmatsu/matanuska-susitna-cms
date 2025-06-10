@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import { Suspense } from 'react';
 import {
   FieldContainer,
@@ -21,8 +21,6 @@ export function Field({
   value,
   onChange,
 }: FieldProps<typeof controller>) {
-  const disabled = onChange === undefined;
-
   return (
     <FieldContainer as="fieldset">
       <FieldLabel>{field.label}</FieldLabel>
@@ -38,7 +36,11 @@ export function Field({
   );
 }
 
-export const Cell: CellComponent = ({ item, field, linkTo }) => {
+export const Cell: CellComponent = ({
+  item,
+  field,
+  linkTo,
+}: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
   return linkTo ? (
     <CellLink {...linkTo}>{value}</CellLink>
@@ -48,7 +50,10 @@ export const Cell: CellComponent = ({ item, field, linkTo }) => {
 };
 Cell.supportsLinkTo = true;
 
-export const CardValue: CardValueComponent = ({ item, field }) => {
+export const CardValue: CardValueComponent = ({
+  item,
+  field,
+}: ComponentProps<CardValueComponent>) => {
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
@@ -58,7 +63,7 @@ export const CardValue: CardValueComponent = ({ item, field }) => {
 };
 
 export const controller = (
-  config: FieldControllerConfig<{}>,
+  config: FieldControllerConfig<any>,
 ): FieldController<string | null, string> => {
   return {
     path: config.path,

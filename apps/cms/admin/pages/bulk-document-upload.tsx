@@ -200,7 +200,10 @@ export default function BulkDocumentUpload() {
             >
               <div className="flex gap-1 overflow-auto py-2">
                 {selectedCollections.map((c) => (
-                  <span className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap">
+                  <span
+                    className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap"
+                    key={c.id}
+                  >
                     {c.title}
                   </span>
                 ))}
@@ -254,7 +257,10 @@ export default function BulkDocumentUpload() {
             >
               <div className="flex gap-1 overflow-auto py-2">
                 {selectedTags.map((t) => (
-                  <span className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap">
+                  <span
+                    className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap"
+                    key={t.id}
+                  >
                     {t.name}
                   </span>
                 ))}

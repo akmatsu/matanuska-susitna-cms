@@ -11,6 +11,7 @@ import {
   FieldLabel,
 } from '@keystone-ui/fields';
 import { DateTimePicker } from '../../DateTimePicker';
+import { ComponentProps } from 'react';
 
 export function Field({
   field,
@@ -29,8 +30,12 @@ export function Field({
   );
 }
 
-export const Cell: CellComponent = ({ item, field, linkTo }) => {
-  let value = item[field.path] + '';
+export const Cell: CellComponent = ({
+  item,
+  field,
+  linkTo,
+}: ComponentProps<CellComponent>) => {
+  const value = item[field.path] + '';
   return linkTo ? (
     <CellLink {...linkTo}>{value}</CellLink>
   ) : (
@@ -40,7 +45,7 @@ export const Cell: CellComponent = ({ item, field, linkTo }) => {
 Cell.supportsLinkTo = true;
 
 export const controller = (
-  config: FieldControllerConfig<{}>,
+  config: FieldControllerConfig<any>,
 ): FieldController<string | null, string> => {
   return {
     path: config.path,

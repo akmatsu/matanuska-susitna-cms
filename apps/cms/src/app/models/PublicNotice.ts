@@ -1,7 +1,5 @@
-import { list, ListConfig } from '@keystone-6/core';
 import { basePage, typesenseDelete, typesenseUpsert } from '../fieldUtils';
 import {
-  filterByPubDates,
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,

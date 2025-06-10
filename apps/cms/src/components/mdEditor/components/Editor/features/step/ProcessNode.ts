@@ -2,7 +2,7 @@ import { wrappingInputRule } from '@milkdown/kit/prose/inputrules';
 import { $command, $inputRule, $node } from '@milkdown/kit/utils';
 import { wrapIn } from '@milkdown/kit/prose/commands';
 
-export const processSchema = $node('process', (ctx) => ({
+export const processSchema = $node('process', () => ({
   content: 'step+',
   group: 'block',
   attrs: {},

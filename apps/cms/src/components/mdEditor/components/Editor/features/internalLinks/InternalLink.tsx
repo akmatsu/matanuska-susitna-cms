@@ -3,7 +3,7 @@ import {
   useNodeViewContext,
 } from '@prosemirror-adapter/react';
 
-export const InternalLink: ReactNodeViewComponent = (props) => {
+export const InternalLink: ReactNodeViewComponent = () => {
   const { contentRef, node } = useNodeViewContext();
 
   const stamp = `${node.attrs.list}-${node.attrs.itemId}`;

@@ -56,7 +56,7 @@ export const InternalLinkMark = $mark('internal-link', () => ({
   },
   toMarkdown: {
     match: (mark) => mark.type.name === 'internal-link',
-    runner: (state, mark, node) => {
+    runner: (state, mark) => {
       state.withMark(mark, 'textDirective', undefined, {
         name: 'internal-link',
         attributes: {
@@ -89,7 +89,7 @@ export const InternalLinkMark = $mark('internal-link', () => ({
 export const InternalLinkInputRule = $inputRule(
   (ctx) =>
     new InputRule(/\[([^\]]+)\]/, (state, match, start, end) => {
-      const [_, label = ''] = match;
+      const [, label = ''] = match;
 
       if (!label) return null;
       const { tr } = state;
