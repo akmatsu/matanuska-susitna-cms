@@ -19,7 +19,9 @@
     "migration:resolve": "keystone prisma migrate resolve --rolled-back \"20250320194427_create_internal_links_and_updated_external_links\"",
     "migration:status": "keystone prisma migrate status",
     "start:publish-worker": "tsx ./src/queues/workers/publishWorker.ts",
-    "db:seed": "tsx ./seed-data.ts"
+    "db:seed": "tsx ./seed-data.ts",
+    "codegen": "pnpm exec graphql-codegen --config ./codegen.ts",
+    "codegen:watch": "pnpm exec graphql-codegen --config ./codegen.ts --watch"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.23",
@@ -61,6 +63,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^9.8.0",
+    "@graphql-codegen/cli": "^5.0.7",
     "@iconify/json": "^2.2.345",
     "@iconify/tailwind4": "^1.0.6",
     "@tailwindcss/postcss": "^4.1.8",

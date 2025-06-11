@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["bullmq", "commonmark", "Keymap", "milkdown", "prosemirror"]
+  "cSpell.words": [
+    "bullmq",
+    "Codegen",
+    "commonmark",
+    "Keymap",
+    "milkdown",
+    "prosemirror"
+  ]
 }
