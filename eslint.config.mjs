@@ -11,6 +11,7 @@ export default tseslint.config(
   }),
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    ignores: ['apps/cms/src/graphql/**'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {
       ...pluginJs.configs.recommended.rules,
