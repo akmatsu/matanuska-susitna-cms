@@ -8,11 +8,8 @@ import {
 } from '@prosemirror-adapter/react';
 import { slash } from '../config';
 
-export function useSlashProvider(
-  contentRef: React.MutableRefObject<HTMLDivElement>,
-  onShow?: () => void,
-  onHide?: () => void,
-) {
+export function useSlashProvider(onShow?: () => void, onHide?: () => void) {
+  const ref = useRef<HTMLDivElement>(null);
   const slashProvider = useRef<SlashProvider | null>(null);
   const { view, prevState } = usePluginViewContext();
   const [loading, get] = useInstance();
@@ -20,23 +17,29 @@ export function useSlashProvider(
   const [programmaticPos, setPos] = useState<number | null>(null);
 
   useEffect(() => {
-    const content = contentRef.current;
-    if (loading || !content) return;
+    const content = ref.current;
+    if (!content) return;
 
     slashProvider.current = new SlashProvider({
       content,
       shouldShow(this: SlashProvider) {
-        if (checkIfSelectionValid(view)) return false;
+        if (checkIfSelectionInvalid(view)) {
+          return false;
+        }
 
         const text = getContent(this, view);
-        if (text == null) return false;
+        if (text == null) {
+          console.log('DO NOT SHOW 2');
+          return false;
+        }
 
         setFilter(text.startsWith('/') ? text.slice(1) : text);
 
-        if (typeof programmaticPos === 'number') {
+        if (programmaticPos !== null) {
           return checkIfPosValid(programmaticPos, view, () => setPos(null));
-        } else if (!text.startsWith('/')) return false;
-
+        } else if (!text.startsWith('/')) {
+          return false;
+        }
         return true;
       },
       offset: 10,
@@ -48,25 +51,34 @@ export function useSlashProvider(
       onHide?.();
     };
 
-    const ctx = get().ctx;
+    const ctx = get()?.ctx;
     let hasSlash = true;
     try {
-      ctx.get(slash.key);
+      ctx?.get(slash.key);
     } catch {
       hasSlash = false;
     }
 
     if (hasSlash) {
-      ctx.set(slash.key, {
+      ctx?.set(slash.key, {
         show,
         hide,
       });
     }
+
+    return () => {
+      slashProvider.current?.destroy();
+      slashProvider.current = null;
+    };
   }, [loading, programmaticPos]);
 
   useEffect(() => {
-    slashProvider.current?.update(view, prevState);
-  });
+    if (!slashProvider.current) return;
+    const id = window.setTimeout(() => {
+      slashProvider.current?.update(view, prevState);
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, [view, prevState]);
 
   function show(p: number) {
     setPos(p);
@@ -84,11 +96,12 @@ export function useSlashProvider(
     slashProvider,
     hide,
     show,
+    ref,
   };
 }
 
-function checkIfSelectionValid(view: PluginViewContext['view']) {
-  return isInCodeBlock(view.state.selection) || isInList(view.state.selection);
+function checkIfSelectionInvalid(view: PluginViewContext['view']) {
+  return isInCodeBlock(view.state.selection) && isInList(view.state.selection);
 }
 
 function getContent(provider: SlashProvider, view: PluginViewContext['view']) {

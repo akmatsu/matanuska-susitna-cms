@@ -3,11 +3,9 @@ import { SLASH_COMMANDS } from './commands';
 import { useSlashProvider, useMenuNavControls } from './hooks';
 
 export const SlashView = () => {
-  const ref = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const [isVisible, setIsVisible] = useState(false);
-  const { filter, hide } = useSlashProvider(
-    ref,
+  const { filter, hide, ref } = useSlashProvider(
     () => setIsVisible(true),
     () => {
       setIsVisible(false);
@@ -56,7 +54,7 @@ export const SlashView = () => {
     <div
       ref={ref}
       aria-expanded="false"
-      className="menu absolute z-10 max-h-72 overflow-auto scroll-smooth transition-all data-[show='false']:hidden"
+      className="menu absolute z-10 max-h-72 overflow-auto scroll-smooth transition-all data-[show=false]:hidden"
       tabIndex={0}
       onClick={(e) => e.preventDefault()}
     >
