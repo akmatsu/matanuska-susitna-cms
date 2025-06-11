@@ -99,6 +99,9 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           ui: {
             query,
             listName: listKey,
+            createView: {
+              fieldMode: 'hidden',
+            },
           },
         }),
 

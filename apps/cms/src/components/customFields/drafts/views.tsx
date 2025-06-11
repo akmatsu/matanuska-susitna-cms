@@ -30,24 +30,25 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   const listKey = lowercaseFirstLetter(field.listName);
   const listName = singular(router.pathname.split('/')[1]) + '-drafts';
 
-  const { data, loading, error } = useQuery(
-    ignoreGql`
+  if (value?.length && typeof id === 'string' && typeof listName === 'string') {
+    const { data, loading, error } = useQuery(
+      ignoreGql`
       query ${field.listName} ($where: ${field.listName}WhereUniqueInput!) {
         ${listKey}(where: $where) {
           ${field.query}
         }
       }
     `,
-    {
-      variables: {
-        where: {
-          id,
+      {
+        variables: {
+          where: {
+            id,
+          },
         },
       },
-    },
-  );
+    );
 
-  const [createDraft, { loading: creating }] = useMutation(ignoreGql`
+    const [createDraft, { loading: creating }] = useMutation(ignoreGql`
     mutation Create${field.listName}Draft($data: ${field.listName}DraftCreateInput!) {
       create${field.listName}Draft(data: $data) {
         id
@@ -55,38 +56,41 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
     }
   `);
 
-  async function handleCreateDraft() {
-    if (loading || creating || error) return;
-    const { title, ...original } = data[listKey];
-    const draftInput = mapDataFields(
-      original,
-      {
-        title: `${title} --- ${new Date().toLocaleString()}`,
-        original: { connect: { id: original.id } },
-      },
-      'create',
-    );
-    const result = await createDraft({
-      variables: {
-        data: draftInput,
-      },
-    });
-    const draftId = result.data[`create${field.listName}Draft`].id;
-    router.push('/' + listName + `/${draftId}`);
-  }
+    async function handleCreateDraft() {
+      if (loading || creating || error) return;
+      const { title, ...original } = data[listKey];
+      const draftInput = mapDataFields(
+        original,
+        {
+          title: `${title} --- ${new Date().toLocaleString()}`,
+          original: { connect: { id: original.id } },
+        },
+        'create',
+      );
+      const result = await createDraft({
+        variables: {
+          data: draftInput,
+        },
+      });
+      const draftId = result.data[`create${field.listName}Draft`].id;
+      router.push('/' + listName + `/${draftId}`);
+    }
 
-  return (
-    <FieldContainer>
-      <div className="flex items-center gap-2">
-        <Button onClick={handleCreateDraft}>Create a new Draft</Button>
-        {!!value?.length && (
-          <Link href={`/${listName}?!original_matches=%22${id}%22`}>
-            View Existing Drafts
-          </Link>
-        )}
-      </div>
-    </FieldContainer>
-  );
+    return (
+      <FieldContainer>
+        <div className="flex items-center gap-2">
+          <Button onClick={handleCreateDraft}>Create a new Draft</Button>
+          {!!value?.length &&
+            typeof id === 'string' &&
+            typeof listName === 'string' && (
+              <Link href={`/${listName}?!original_matches=%22${id}%22`}>
+                View Existing Drafts
+              </Link>
+            )}
+        </div>
+      </FieldContainer>
+    );
+  }
 }
 
 export const Cell: CellComponent = ({
