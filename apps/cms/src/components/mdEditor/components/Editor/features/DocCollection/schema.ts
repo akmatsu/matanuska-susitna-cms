@@ -1,11 +1,8 @@
-import { $inputRule, $node, $remark } from '@milkdown/kit/utils';
+import { $inputRule, $node } from '@milkdown/kit/utils';
 import { InputRule } from '@milkdown/kit/prose/inputrules';
-import directive from 'remark-directive';
 import { tooltipFactory } from '@milkdown/kit/plugin/tooltip';
 
 export const docSearch = tooltipFactory('docSearch');
-const remarkPluginId = 'doc-collection-plugin';
-export const remarkDirective = $remark(remarkPluginId, () => directive);
 
 export const DocCollectionNode = $node('doc-collection', () => ({
   group: 'block',
