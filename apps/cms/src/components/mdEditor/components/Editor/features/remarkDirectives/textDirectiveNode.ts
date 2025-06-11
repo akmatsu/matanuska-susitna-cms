@@ -1,6 +1,14 @@
 import { $node } from '@milkdown/kit/utils';
 import { attributesToString } from './utils';
 
+const acceptedNames = [
+  'internal-link',
+  'primary-action-button',
+  'step',
+  'process',
+  'doc-collection',
+];
+
 export const directiveTextNode = $node('textDirectiveFallback', () => ({
   group: 'inline',
   inline: true,
@@ -16,10 +24,14 @@ export const directiveTextNode = $node('textDirectiveFallback', () => ({
     },
   },
   parseMarkdown: {
-    match: (node) => node.type === 'textDirective',
+    match: (node) =>
+      node.type === 'textDirective' &&
+      typeof node['name'] === 'string' &&
+      !acceptedNames.includes(node['name']),
     runner: (state, node) => {
+      console.log(node);
       state.addText(
-        `:${node['name']}${attributesToString(
+        `:${node['name']} ${node.children?.[0]?.value} ${attributesToString(
           node['attributes'] as Record<string, string>,
           node.children,
         )}`,

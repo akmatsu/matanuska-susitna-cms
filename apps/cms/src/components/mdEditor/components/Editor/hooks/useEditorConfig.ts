@@ -18,8 +18,6 @@ import {
   configureToolbarFeature,
 } from '../features';
 import { configureInternalLinksFeature } from '../features/internalLinks/config';
-import { $remark } from '@milkdown/kit/utils';
-import remarkDirective from 'remark-directive';
 import { configureRemarkDirectivesFeature } from '../features/remarkDirectives/config';
 
 export function useEditorConfig({
@@ -62,7 +60,9 @@ export function useEditorConfig({
     if (list) {
       configureListsFeature(editor);
     }
-
+    if (documentCollections || primaryActionButton || internalLinks || steps) {
+      configureRemarkDirectivesFeature(editor);
+    }
     if (documentCollections) {
       configureDocCollectionFeature(editor, pluginViewFactory, nodeViewFactory);
     }
@@ -75,9 +75,7 @@ export function useEditorConfig({
     if (primaryActionButton) {
       configurePrimaryActionButtonFeature(editor, nodeViewFactory);
     }
-    if (documentCollections || primaryActionButton || internalLinks || steps) {
-      configureRemarkDirectivesFeature(editor);
-    }
+
     return editor;
   });
 }
