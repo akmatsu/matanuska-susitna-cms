@@ -21,7 +21,6 @@ export const directiveTextNode = $node('textDirectiveFallback', () => ({
       typeof node['name'] === 'string' &&
       !acceptedNames.includes(node['name']),
     runner: (state, node) => {
-      console.log(node);
       state.addText(
         `:${node['name']} ${node.children?.[0]?.value} ${attributesToString(
           node['attributes'] as Record<string, string>,
