@@ -1,12 +1,7 @@
 import { type PluginViewFactoryFn, type NodeViewFactoryFn } from '../../types';
 import { Editor } from '@milkdown/kit/core';
 import { DocCollectionSearchView } from './DocuCollectonSearchView';
-import {
-  DocCollectionInputRule,
-  DocCollectionNode,
-  docSearch,
-  remarkDirective,
-} from './schema';
+import { DocCollectionInputRule, DocCollectionNode, docSearch } from './schema';
 import { $view } from '@milkdown/kit/utils';
 import { DocCollectionView } from './DocCollectionView';
 
@@ -23,7 +18,7 @@ export function configureDocCollectionFeature(
         }),
       });
     })
-    .use([...remarkDirective])
+
     .use(docSearch)
     .use(DocCollectionNode)
     .use(DocCollectionInputRule)
