@@ -1,7 +1,6 @@
 import { Editor } from '@milkdown/kit/core';
 import { PluginViewFactoryFn } from '../../types';
 import {
-  internalLinkDirective,
   InternalLinkInputRule,
   internalLinkKeymap,
   InternalLinkMark,
@@ -22,7 +21,6 @@ export function configureInternalLinksFeature(
         }),
       });
     })
-    .use([...internalLinkDirective])
     .use(InternalLinkMark)
     .use(InternalLinkInputRule)
     .use(internalLinkTooltip)
