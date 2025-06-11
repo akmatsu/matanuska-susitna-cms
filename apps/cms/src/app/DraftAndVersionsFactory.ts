@@ -342,7 +342,8 @@ async function createVersion(
     item?.status === 'published'
   ) {
     const sudoCtx = context.sudo();
-    const { title, ...rest } = await sudoCtx.query[listKey].findOne({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { title, id, ...rest } = await sudoCtx.query[listKey].findOne({
       where: { id: item.id.toString() },
       query,
     });
