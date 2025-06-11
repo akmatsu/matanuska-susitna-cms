@@ -10,7 +10,16 @@ import {
   ComboboxOptions,
 } from '@headlessui/react';
 import clsx from 'clsx';
-import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import {
+  gql,
+  TypedDocumentNode,
+  useQuery,
+} from '@keystone-6/core/admin-ui/apollo';
+import {
+  DocumentCollectionsQuery,
+  DocumentCollectionsQueryVariables,
+  QueryMode,
+} from '../../../../../../graphql/graphql';
 
 export function DocCollectionSearchView() {
   const content = useRef<HTMLDivElement>(null);
@@ -24,40 +33,42 @@ export function DocCollectionSearchView() {
     title: string;
     id: string;
   } | null>();
-  const { data, refetch } = useQuery(
-    gql`
-      query DocumentCollections($where: DocumentCollectionWhereInput!) {
-        documentCollections(where: $where) {
-          id
-          title
-        }
+
+  const query: TypedDocumentNode<
+    DocumentCollectionsQuery,
+    DocumentCollectionsQueryVariables
+  > = gql`
+    query DocumentCollections($where: DocumentCollectionWhereInput!) {
+      documentCollections(where: $where) {
+        id
+        title
       }
-    `,
-    {
-      variables: {
-        where: {
-          OR: [
-            {
-              title: {
-                contains: search,
-                mode: 'insensitive',
-              },
+    }
+  `;
+  const { data, refetch } = useQuery(query, {
+    variables: {
+      where: {
+        OR: [
+          {
+            title: {
+              contains: search,
+              mode: QueryMode.Insensitive,
             },
-            {
-              tags: {
-                some: {
-                  name: {
-                    contains: search,
-                    mode: 'insensitive',
-                  },
+          },
+          {
+            tags: {
+              some: {
+                name: {
+                  contains: search,
+                  mode: QueryMode.Insensitive,
                 },
               },
             },
-          ],
-        },
+          },
+        ],
       },
     },
-  );
+  });
 
   let timeout: NodeJS.Timeout;
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
