@@ -16,9 +16,13 @@ export const publishDraft: RequestControllerWithContext =
       ) as keyof typeof sudoCtx.query;
       const listKeyDraft = `${listKey}Draft` as keyof typeof sudoCtx.query;
 
-      const { title, original, ...draft } = await sudoCtx.query[
-        listKeyDraft
-      ].findOne({
+      const {
+        title,
+        original,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        id: draftId,
+        ...draft
+      } = await sudoCtx.query[listKeyDraft].findOne({
         where: { id },
         query: query as string,
       });
@@ -68,9 +72,13 @@ export const republishVersion: RequestControllerWithContext =
       ) as keyof typeof sudoCtx.query;
       const listKeyVersion = `${listKey}Version` as keyof typeof sudoCtx.query;
 
-      const { title, original, ...version } = await sudoCtx.query[
-        listKeyVersion
-      ].findOne({
+      const {
+        title,
+        original,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        id: versionId,
+        ...version
+      } = await sudoCtx.query[listKeyVersion].findOne({
         where: { id },
         query: query as string,
       });

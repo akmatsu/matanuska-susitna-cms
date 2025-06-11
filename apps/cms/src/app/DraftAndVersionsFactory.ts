@@ -91,7 +91,15 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           many: true,
           ui: {
             hideCreate: true,
-            displayMode: 'count',
+            displayMode: 'select',
+
+            itemView: {
+              fieldMode: 'read',
+            },
+
+            createView: {
+              fieldMode: 'hidden',
+            },
           },
         }),
 
