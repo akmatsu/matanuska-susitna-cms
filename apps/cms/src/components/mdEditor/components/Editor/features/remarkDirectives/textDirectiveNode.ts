@@ -1,13 +1,5 @@
 import { $node } from '@milkdown/kit/utils';
-import { attributesToString } from './utils';
-
-const acceptedNames = [
-  'internal-link',
-  'primary-action-button',
-  'step',
-  'process',
-  'doc-collection',
-];
+import { acceptedNames, attributesToString } from './utils';
 
 export const directiveTextNode = $node('textDirectiveFallback', () => ({
   group: 'inline',
