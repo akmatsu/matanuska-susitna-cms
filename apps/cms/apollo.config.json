@@ -2,6 +2,13 @@
   "client": {
     "service": {
       "localSchemaFile": "./schema.graphql"
-    }
+    },
+    "excludes": [
+      "**/node_modules",
+      "**/dist",
+      "**/build",
+      "**/graphql/**/*.ts",
+      "**/__tests__"
+    ]
   }
 }
