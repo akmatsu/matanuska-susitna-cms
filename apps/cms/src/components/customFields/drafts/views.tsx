@@ -1,5 +1,10 @@
 'use client';
-import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import {
+  // Telling apollo and codegen to ignore the gql tag so it won't try to parse it since we're using a dynamic query
+  gql as ignoreGql,
+  useMutation,
+  useQuery,
+} from '@keystone-6/core/admin-ui/apollo';
 import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
@@ -26,7 +31,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   const listName = singular(router.pathname.split('/')[1]) + '-drafts';
 
   const { data, loading, error } = useQuery(
-    gql`
+    ignoreGql`
       query ${field.listName} ($where: ${field.listName}WhereUniqueInput!) {
         ${listKey}(where: $where) {
           ${field.query}
@@ -42,7 +47,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
     },
   );
 
-  const [createDraft, { loading: creating }] = useMutation(gql`
+  const [createDraft, { loading: creating }] = useMutation(ignoreGql`
     mutation Create${field.listName}Draft($data: ${field.listName}DraftCreateInput!) {
       create${field.listName}Draft(data: $data) {
         id

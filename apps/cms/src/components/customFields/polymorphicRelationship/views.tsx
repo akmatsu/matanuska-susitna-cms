@@ -17,7 +17,8 @@ import {
   FieldDescription,
   Select,
 } from '@keystone-ui/fields';
-import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+// Telling apollo and codegen to ignore the gql tag so it won't try to parse it since we're using a dynamic query
+import { gql as ignoreGql, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
 import { DrawerController } from '@keystone-ui/modals';
 
@@ -42,7 +43,7 @@ export function Field({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const { data, refetch, error } = useQuery(
-    gql`
+    ignoreGql`
       query Get${v.capitalize(plural)}($where: ${value?.itemType?.label ? v.capitalize(v.camelCase(value.itemType.label)) : ''}WhereInput!) {
         ${plural}(where: $where) {
           title
