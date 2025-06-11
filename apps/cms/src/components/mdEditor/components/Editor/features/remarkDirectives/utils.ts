@@ -1,5 +1,13 @@
 import { type MarkdownNode } from '@milkdown/transformer';
 
+export const acceptedNames = [
+  'internal-link',
+  'primary-action-button',
+  'step',
+  'process',
+  'doc-collection',
+];
+
 export const attributesToString = (
   attrs: Record<string, string>,
   children?: MarkdownNode[],

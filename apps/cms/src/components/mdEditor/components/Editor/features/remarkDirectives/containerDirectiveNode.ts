@@ -1,5 +1,5 @@
 import { $node } from '@milkdown/kit/utils';
-import { attributesToString } from './utils';
+import { acceptedNames, attributesToString } from './utils';
 import { NodeType } from '@milkdown/kit/prose/model';
 
 export const directiveContainerNode = $node(
@@ -16,7 +16,10 @@ export const directiveContainerNode = $node(
       },
     },
     parseMarkdown: {
-      match: (node) => node.type === 'containerDirective',
+      match: (node) =>
+        node.type === 'containerDirective' &&
+        typeof node['name'] === 'string' &&
+        !acceptedNames.includes(node['name']),
       runner: (state, node) => {
         state.openNode(state.schema.nodes.paragraph as NodeType);
         state.addText(
