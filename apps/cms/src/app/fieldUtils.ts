@@ -420,7 +420,7 @@ export function basePage(
     owner,
     body: customText(opts?.customTextOpts),
     tags: tags(listNamePlural),
-    userGroups: userGroups(listNamePlural),
+    userGroups: userGroups(),
 
     ...(opts?.primaryAction && {
       primaryAction: relationship({

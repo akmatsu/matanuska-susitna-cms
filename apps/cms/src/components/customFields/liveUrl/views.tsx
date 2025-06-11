@@ -17,17 +17,18 @@ import { ComponentProps } from 'react';
 type LiveUrlValue = string;
 
 export function Field({ field, value }: FieldProps<typeof controller>) {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
-        {field.description}
-      </FieldDescription>
-      <Link href={value} target="_blank">
-        {value}
-      </Link>
-    </FieldContainer>
-  );
+  if (value?.length && typeof value === 'string')
+    return (
+      <FieldContainer>
+        <FieldLabel>{field.label}</FieldLabel>
+        <FieldDescription id={`${field.path}-description`}>
+          {field.description}
+        </FieldDescription>
+        <Link href={value} target="_blank">
+          {value}
+        </Link>
+      </FieldContainer>
+    );
 }
 
 export const Cell: CellComponent = ({
