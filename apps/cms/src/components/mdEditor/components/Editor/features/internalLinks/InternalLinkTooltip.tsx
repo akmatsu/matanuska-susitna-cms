@@ -14,10 +14,19 @@ import { Button } from '@keystone-ui/button';
 import { useInternalSearchQuery } from './hooks/useInternalSearchQuery';
 import { useInternalTooltipProvider } from './hooks/useInternalTooltipProvider';
 import { Page, useSelectionHandler } from './hooks/useSelectedItem';
-import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import {
+  gql,
+  TypedDocumentNode,
+  useQuery,
+} from '@keystone-6/core/admin-ui/apollo';
 import v from 'voca';
 import { Mark } from '@milkdown/kit/prose/model';
 import { PluginViewContext } from '@prosemirror-adapter/react';
+import {
+  GetInternalLinkQuery,
+  GetInternalLinkQueryVariables,
+  LinkSearchQuery,
+} from '../../../../../../graphql/graphql';
 
 export function InternalLinkTooltip() {
   const { contentRef, view, linkInfo, isShowing } =
@@ -28,58 +37,60 @@ export function InternalLinkTooltip() {
     ? v.camelCase(singular(linkInfo.mark.attrs.list))
     : undefined;
 
-  const { data: linkData, loading } = useQuery(
-    gql`
-      query GetInternalLink($id: ID!, $type: String!) {
-        getInternalLink(id: $id, type: $type) {
-          __typename
-          ... on AssemblyDistrict {
-            title
-          }
-          ... on Board {
-            title
-          }
-          ... on BoardPage {
-            title
-          }
-          ... on Community {
-            title
-          }
-          ... on Facility {
-            title
-          }
-          ... on HomePage {
-            title
-          }
-          ... on OrgUnit {
-            title
-          }
-          ... on Park {
-            title
-          }
-          ... on PublicNotice {
-            title
-          }
-          ... on Service {
-            title
-          }
-          ... on Trail {
-            title
-          }
-          ... on Url {
-            title
-          }
+  const query: TypedDocumentNode<
+    GetInternalLinkQuery,
+    GetInternalLinkQueryVariables
+  > = gql`
+    query GetInternalLink($id: ID!, $type: String!) {
+      getInternalLink(id: $id, type: $type) {
+        __typename
+        ... on AssemblyDistrict {
+          title
+        }
+        ... on Board {
+          title
+        }
+        ... on BoardPage {
+          title
+        }
+        ... on Community {
+          title
+        }
+        ... on Facility {
+          title
+        }
+        ... on HomePage {
+          title
+        }
+        ... on OrgUnit {
+          title
+        }
+        ... on Park {
+          title
+        }
+        ... on PublicNotice {
+          title
+        }
+        ... on Service {
+          title
+        }
+        ... on Trail {
+          title
+        }
+        ... on Url {
+          title
         }
       }
-    `,
-    {
-      variables: {
-        id: linkInfo?.mark?.attrs?.itemId,
-        type: v.capitalize(listType),
-      },
-      skip: !listType,
+    }
+  `;
+
+  const { data: linkData, loading } = useQuery(query, {
+    variables: {
+      id: linkInfo?.mark?.attrs?.itemId,
+      type: v.capitalize(listType),
     },
-  );
+    skip: !listType,
+  });
 
   function removeLink() {
     const { tr } = view.state;
@@ -239,29 +250,28 @@ function SearchInput({
   );
 }
 
-function Options({
-  data,
-}: {
-  data: { internalSearch: { __typename: string; title: string; id: string }[] };
-}) {
+function Options({ data }: { data: LinkSearchQuery }) {
   return (
     <>
-      {data.internalSearch.map((item) => (
-        <ComboboxOption
-          key={item.id + item.__typename}
-          value={item}
-          className="my-1 cursor-pointer rounded-md bg-gray-100 px-3 py-1.5 transition-all select-none data-focus:bg-blue-200"
-        >
-          <div>
-            <span className="text-xs font-bold text-gray-500">
-              {item.__typename}
-            </span>
-          </div>
-          <div>
-            <span>{item.title}</span>
-          </div>
-        </ComboboxOption>
-      ))}
+      {data.internalSearch?.map(
+        (item) =>
+          item && (
+            <ComboboxOption
+              key={item.id + item.__typename}
+              value={item}
+              className="my-1 cursor-pointer rounded-md bg-gray-100 px-3 py-1.5 transition-all select-none data-focus:bg-blue-200"
+            >
+              <div>
+                <span className="text-xs font-bold text-gray-500">
+                  {item.__typename}
+                </span>
+              </div>
+              <div>
+                <span>{item.title}</span>
+              </div>
+            </ComboboxOption>
+          ),
+      )}
     </>
   );
 }

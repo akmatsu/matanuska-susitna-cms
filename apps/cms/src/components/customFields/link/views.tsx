@@ -17,15 +17,24 @@ import {
   type FieldProps,
 } from '@keystone-6/core/types';
 
-import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import {
+  gql,
+  TypedDocumentNode,
+  useQuery,
+} from '@keystone-6/core/admin-ui/apollo';
 import { StylesConfig } from 'react-select';
+import {
+  QueryMode,
+  type GetServicesQuery,
+  type GetServicesQueryVariables,
+} from '../../../graphql/graphql';
 
 export function Field({
   field,
   value,
   onChange,
 }: FieldProps<typeof controller>) {
-  const { data, refetch } = useQuery(
+  const query: TypedDocumentNode<GetServicesQuery, GetServicesQueryVariables> =
     gql`
       query GetServices($where: ServiceWhereInput!) {
         services(where: $where) {
@@ -34,35 +43,37 @@ export function Field({
           id
         }
       }
-    `,
-    {
-      variables: {
-        where: {
-          title: {
-            contains: value || '',
-            mode: 'insensitive',
-          },
+    `;
+
+  const { data, refetch } = useQuery(query, {
+    variables: {
+      where: {
+        title: {
+          contains: value || '',
+          mode: QueryMode.Insensitive,
         },
       },
     },
-  );
+  });
 
   async function handleChange(newValue: string) {
     await refetch({
       where: {
         title: {
           contains: newValue || '',
-          mode: 'insensitive',
+          mode: QueryMode.Insensitive,
         },
       },
     });
 
-    return data?.services?.map((service: any) => {
-      return {
-        label: service.title,
-        value: `/service/${service.slug}`,
-      };
-    });
+    return (
+      data?.services?.map((service: any) => {
+        return {
+          label: service.title,
+          value: `/service/${service.slug}`,
+        };
+      }) ?? []
+    );
   }
 
   type Option = { label: string | null; value: string | null };
