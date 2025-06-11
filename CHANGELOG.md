@@ -1,3 +1,17 @@
+## [0.9.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.9.1...v0.9.2) (2025-06-11)
+
+
+### Bug Fixes
+
+* fixed issue that prevented create topic pages from loading ([d000b44](https://github.com/akmatsu/matanuska-susitna-cms/commit/d000b4444488b8a41e0fa35c4601079795c1349e))
+
+## [0.9.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.9.0...v0.9.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* fixed graphql types and updated code to ensure type safety ([79eaeac](https://github.com/akmatsu/matanuska-susitna-cms/commit/79eaeacae37b88b4c6d80bab69b9fae9a2630d2b))
+
 # [0.9.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.8.0...v0.9.0) (2025-06-10)
 
 
