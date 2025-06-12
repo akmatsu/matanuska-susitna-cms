@@ -28,6 +28,7 @@ export function configureBaseFeatures(
       });
     })
     .use(commonmark)
+
     .use(gfm)
     .use(history)
     .use(listener)
