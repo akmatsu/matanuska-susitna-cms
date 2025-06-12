@@ -22,10 +22,12 @@ export const directiveTextNode = $node('textDirectiveFallback', () => ({
       !acceptedNames.includes(node['name']),
     runner: (state, node) => {
       state.addText(
-        `:${node['name']} ${node.children?.[0]?.value} ${attributesToString(
-          node['attributes'] as Record<string, string>,
-          node.children,
-        )}`,
+        `:${node['name']}${node.children?.[0]?.value || ''}${
+          attributesToString(
+            node['attributes'] as Record<string, string>,
+            node.children,
+          ) || ''
+        }`,
       );
     },
   },
