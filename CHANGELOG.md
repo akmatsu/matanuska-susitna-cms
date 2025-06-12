@@ -1,3 +1,15 @@
+## [0.9.3](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.9.2...v0.9.3) (2025-06-12)
+
+
+### Bug Fixes
+
+* fixed issue where directive fallbacks were grabbing known directives by mistake ([5cdb401](https://github.com/akmatsu/matanuska-susitna-cms/commit/5cdb40126b0949a9c83e719f7149ce84677f87f3))
+* fixed leaf and container direct fallbacks catching accepted directives ([e6c01cf](https://github.com/akmatsu/matanuska-susitna-cms/commit/e6c01cfb7d5e67cce6000a4b6f3d935b90bcfb76))
+* fixed version and draft publishing ([ab334e0](https://github.com/akmatsu/matanuska-susitna-cms/commit/ab334e093c2f70a9df12c64389cc67c45c9d75e5))
+* fixed versions not being created correctly ([2f68a6a](https://github.com/akmatsu/matanuska-susitna-cms/commit/2f68a6acd284d3717578530d49aede5ff2437383))
+* no longer throwing server error when parsing unknown directives ([e8674cf](https://github.com/akmatsu/matanuska-susitna-cms/commit/e8674cff0e2b6ed3b40b5062db88ec94a219dea8))
+* textDirectiveNode no longer adding undefined or empty spaces ([507c532](https://github.com/akmatsu/matanuska-susitna-cms/commit/507c532d0270ce94d29785d96c1620efb0e9765b))
+
 ## [0.9.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.9.1...v0.9.2) (2025-06-11)
 
 
