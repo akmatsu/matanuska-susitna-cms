@@ -11,6 +11,8 @@ async function insertSeedData() {
 
   const { User: user, Service: service, Board: board } = sudoContextDB;
 
+  console.log(user);
+
   let adminUser = await user.findOne({
     where: {
       authId: process.env.ADMIN_USER_AUTH_ID,
@@ -33,7 +35,7 @@ async function insertSeedData() {
 
   const serviceCount = await service.count();
 
-  if (serviceCount <= 1) {
+  if (serviceCount <= 1 && adminUser) {
     const fakeServices = faker.helpers.multiple(
       () => {
         return {
@@ -91,7 +93,7 @@ async function insertSeedData() {
   }
 
   const boardCount = await board.count();
-  if (boardCount <= 1) {
+  if (boardCount <= 1 && adminUser) {
     const fakeBoards = faker.helpers.multiple(
       () => {
         return {
@@ -148,13 +150,13 @@ async function insertSeedData() {
             },
           },
 
-          documents: {
-            connect: [
-              {
-                id: 'cmar41hu700024ar09nltol8x',
-              },
-            ],
-          },
+          // documents: {
+          //   connect: [
+          //     {
+          //       id: 'cmar41hu700024ar09nltol8x',
+          //     },
+          //   ],
+          // },
 
           contacts: {
             create: [

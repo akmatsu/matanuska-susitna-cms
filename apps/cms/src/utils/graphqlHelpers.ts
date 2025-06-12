@@ -13,7 +13,24 @@ export const graphqlExtendTypeDefs = gql`
     | Community
     | Park
     | Trail
+    | Topic
     | Url
+
+  union Page =
+    | Service
+    | Facility
+    | Board
+    | PublicNotice
+    | OrgUnit
+    | AssemblyDistrict
+    | Community
+    | Park
+    | Trail
+    | Topic
+
+  type Query {
+    getPage(slug: String!, type: String!): Page
+  }
 
   type Query {
     internalSearch(query: String): [InternalLinkSearch]

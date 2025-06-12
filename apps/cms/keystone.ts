@@ -10,6 +10,7 @@ import { connectRedis, getPublishQueueEvents } from './src/queues/redis';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { KeystoneContext } from '@keystone-6/core/types';
 import { graphqlExtendTypeDefs } from './src/utils/graphqlHelpers';
+import { stringify } from 'node:querystring';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -100,10 +101,58 @@ export default config<TypeInfo<Session>>({
               if ('memberName' in value) return 'AssemblyDistrict';
               if ('parkId' in value) return 'Facility';
               if ('addressId' in value) return 'Park';
+              if ('communities' in value) return 'Topic';
+              return 'Community';
+            },
+          },
+          Page: {
+            __resolveType(value: any) {
+              if ('primaryActionId' in value) return 'Service';
+              if ('linkToAgendasId' in value) return 'Board';
+              if ('effectiveDate' in value) return 'PublicNotice';
+              if ('parentId' in value) return 'OrgUnit';
+              if ('memberName' in value) return 'OrgUnit';
+              if ('elevationChange' in value) return 'Trail';
+              if ('memberName' in value) return 'AssemblyDistrict';
+              if ('parkId' in value) return 'Facility';
+              if ('addressId' in value) return 'Park';
+              if ('communities' in value) return 'Topic';
               return 'Community';
             },
           },
           Query: {
+            getPage: async (
+              _,
+              { slug, type }: { slug: string; type: string },
+              context: KeystoneContext<TypeInfo<Session>>,
+            ) => {
+              switch (type) {
+                case 'Service':
+                  return context.db.Service.findOne({ where: { slug } });
+                case 'Facility':
+                  return context.db.Facility.findOne({ where: { slug } });
+                case 'Board':
+                  return context.db.Board.findOne({ where: { slug } });
+                case 'PublicNotice':
+                  return context.db.PublicNotice.findOne({ where: { slug } });
+                case 'OrgUnit':
+                  return context.db.OrgUnit.findOne({ where: { slug } });
+                case 'AssemblyDistrict':
+                  return context.db.AssemblyDistrict.findOne({
+                    where: { slug },
+                  });
+                case 'Community':
+                  return context.db.Community.findOne({ where: { slug } });
+                case 'Park':
+                  return context.db.Park.findOne({ where: { slug } });
+                case 'Trail':
+                  return context.db.Trail.findOne({ where: { slug } });
+                case 'Topic':
+                  return context.db.Topic.findOne({ where: { slug } });
+                default:
+                  throw new Error(`Unknown type: ${type}`);
+              }
+            },
             getInternalLink: async (
               _,
               { id, type }: { id: string; type: string },

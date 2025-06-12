@@ -16,7 +16,7 @@
     "collections:remove": "npx ts-node ./scripts/removeCollection.ts",
     "typesense:import:services": "npx ts-node ./scripts/importServices.ts",
     "typesense:import:communities": "npx ts-node ./scripts/importCommunities.ts",
-    "migration:resolve": "keystone prisma migrate resolve --rolled-back \"20250320194427_create_internal_links_and_updated_external_links\"",
+    "migration:resolve": "keystone prisma migrate resolve --rolled-back \"20250612224434_feat_change_address_type_on_assembly_districts\"",
     "migration:status": "keystone prisma migrate status",
     "start:publish-worker": "tsx ./src/queues/workers/publishWorker.ts",
     "db:seed": "tsx ./seed-data.ts",
