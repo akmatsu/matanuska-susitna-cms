@@ -194,6 +194,7 @@ type AssemblyDistrict {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
@@ -201,7 +202,6 @@ type AssemblyDistrict {
   photo: Image
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -244,13 +244,13 @@ input AssemblyDistrictWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  address: LocationWhereInput
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
   memberName: StringFilter
   bio: StringFilter
-  address: StringFilter
   email: StringNullableFilter
   phone: StringNullableFilter
   fax: StringNullableFilter
@@ -347,7 +347,6 @@ input AssemblyDistrictOrderByInput {
   updatedAt: OrderDirection
   memberName: OrderDirection
   bio: OrderDirection
-  address: OrderDirection
   email: OrderDirection
   phone: OrderDirection
   fax: OrderDirection
@@ -376,13 +375,13 @@ input AssemblyDistrictUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -429,6 +428,12 @@ input DocumentRelateToManyForUpdateInput {
   set: [DocumentWhereUniqueInput!]
   create: [DocumentCreateInput!]
   connect: [DocumentWhereUniqueInput!]
+}
+
+input LocationRelateToOneForUpdateInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ContactRelateToManyForUpdateInput {
@@ -497,13 +502,13 @@ input AssemblyDistrictCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -541,6 +546,11 @@ input InternalLinkRelateToManyForCreateInput {
 input DocumentRelateToManyForCreateInput {
   create: [DocumentCreateInput!]
   connect: [DocumentWhereUniqueInput!]
+}
+
+input LocationRelateToOneForCreateInput {
+  create: LocationCreateInput
+  connect: LocationWhereUniqueInput
 }
 
 input ContactRelateToManyForCreateInput {
@@ -598,6 +608,7 @@ type AssemblyDistrictDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
@@ -605,7 +616,6 @@ type AssemblyDistrictDraft {
   photo: Image
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -639,13 +649,13 @@ input AssemblyDistrictDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  address: LocationWhereInput
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
   memberName: StringFilter
   bio: StringFilter
-  address: StringFilter
   email: StringNullableFilter
   phone: StringNullableFilter
   fax: StringNullableFilter
@@ -668,7 +678,6 @@ input AssemblyDistrictDraftOrderByInput {
   updatedAt: OrderDirection
   memberName: OrderDirection
   bio: OrderDirection
-  address: OrderDirection
   email: OrderDirection
   phone: OrderDirection
   fax: OrderDirection
@@ -691,13 +700,13 @@ input AssemblyDistrictDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -733,13 +742,13 @@ input AssemblyDistrictDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -775,6 +784,7 @@ type AssemblyDistrictVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
@@ -782,7 +792,6 @@ type AssemblyDistrictVersion {
   photo: Image
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -818,13 +827,13 @@ input AssemblyDistrictVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  address: LocationWhereInput
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
   memberName: StringFilter
   bio: StringFilter
-  address: StringFilter
   email: StringNullableFilter
   phone: StringNullableFilter
   fax: StringNullableFilter
@@ -848,7 +857,6 @@ input AssemblyDistrictVersionOrderByInput {
   updatedAt: OrderDirection
   memberName: OrderDirection
   bio: OrderDirection
-  address: OrderDirection
   email: OrderDirection
   phone: OrderDirection
   fax: OrderDirection
@@ -871,13 +879,13 @@ input AssemblyDistrictVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -908,13 +916,13 @@ input AssemblyDistrictVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
   memberName: String
   bio: String
-  address: String
   email: String
   phone: String
   fax: String
@@ -2523,12 +2531,6 @@ input FacilityUpdateInput {
   currentVersion: FacilityVersionRelateToOneForUpdateInput
 }
 
-input LocationRelateToOneForUpdateInput {
-  create: LocationCreateInput
-  connect: LocationWhereUniqueInput
-  disconnect: Boolean
-}
-
 input OperatingHourRelateToManyForUpdateInput {
   disconnect: [OperatingHourWhereUniqueInput!]
   set: [OperatingHourWhereUniqueInput!]
@@ -2594,11 +2596,6 @@ input FacilityCreateInput {
   makeDrafts: String
   versions: FacilityVersionRelateToManyForCreateInput
   currentVersion: FacilityVersionRelateToOneForCreateInput
-}
-
-input LocationRelateToOneForCreateInput {
-  create: LocationCreateInput
-  connect: LocationWhereUniqueInput
 }
 
 input OperatingHourRelateToManyForCreateInput {
@@ -7595,6 +7592,7 @@ type Query {
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
   keystone: KeystoneMeta!
+  getPage(slug: String!, type: String!): Page
   internalSearch(query: String): [InternalLinkSearch]
   getInternalLink(id: ID!, type: String!): InternalLinkSearch
 }
@@ -7730,4 +7728,6 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
-union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Url
+union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url
+
+union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic

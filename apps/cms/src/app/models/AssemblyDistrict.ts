@@ -22,7 +22,12 @@ export const {
   'AssemblyDistrict',
   (listNamePlural, opts) => {
     return {
-      ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
+      ...basePage(listNamePlural, {
+        ...opts,
+        actions: true,
+        documents: true,
+        address: true,
+      }),
       ...group({
         label: 'Assembly Member Information',
         fields: {
@@ -46,7 +51,6 @@ export const {
               displayMode: 'textarea',
             },
           }),
-          address: text(),
           email: text({
             validation: {
               match: {

@@ -38,6 +38,8 @@ model AssemblyDistrict {
   userGroups                                 UserGroup[]               @relation("AssemblyDistrict_userGroups")
   actions                                    InternalLink[]            @relation("AssemblyDistrict_actions")
   documents                                  Document[]                @relation("AssemblyDistrict_documents")
+  address                                    Location?                 @relation("AssemblyDistrict_address", fields: [addressId], references: [id])
+  addressId                                  String?                   @map("address")
   contacts                                   Contact[]                 @relation("AssemblyDistrict_contacts")
   createdAt                                  DateTime?                 @default(now())
   updatedAt                                  DateTime?                 @default(now()) @updatedAt
@@ -45,7 +47,6 @@ model AssemblyDistrict {
   photoId                                    String?                   @map("photo")
   memberName                                 String                    @default("")
   bio                                        String                    @default("")
-  address                                    String                    @default("")
   email                                      String?
   phone                                      String?
   fax                                        String?
@@ -71,6 +72,7 @@ model AssemblyDistrict {
   from_PublicNoticeVersion_assemblyDistricts PublicNoticeVersion[]     @relation("PublicNoticeVersion_assemblyDistricts")
 
   @@index([ownerId])
+  @@index([addressId])
   @@index([photoId])
 }
 
@@ -91,6 +93,8 @@ model AssemblyDistrictDraft {
   userGroups  UserGroup[]       @relation("AssemblyDistrictDraft_userGroups")
   actions     InternalLink[]    @relation("AssemblyDistrictDraft_actions")
   documents   Document[]        @relation("AssemblyDistrictDraft_documents")
+  address     Location?         @relation("AssemblyDistrictDraft_address", fields: [addressId], references: [id])
+  addressId   String?           @map("address")
   contacts    Contact[]         @relation("AssemblyDistrictDraft_contacts")
   createdAt   DateTime?         @default(now())
   updatedAt   DateTime?         @default(now()) @updatedAt
@@ -98,7 +102,6 @@ model AssemblyDistrictDraft {
   photoId     String?           @map("photo")
   memberName  String            @default("")
   bio         String            @default("")
-  address     String            @default("")
   email       String?
   phone       String?
   fax         String?
@@ -110,6 +113,7 @@ model AssemblyDistrictDraft {
 
   @@index([originalId])
   @@index([ownerId])
+  @@index([addressId])
   @@index([photoId])
 }
 
@@ -130,6 +134,8 @@ model AssemblyDistrictVersion {
   userGroups  UserGroup[]       @relation("AssemblyDistrictVersion_userGroups")
   actions     InternalLink[]    @relation("AssemblyDistrictVersion_actions")
   documents   Document[]        @relation("AssemblyDistrictVersion_documents")
+  address     Location?         @relation("AssemblyDistrictVersion_address", fields: [addressId], references: [id])
+  addressId   String?           @map("address")
   contacts    Contact[]         @relation("AssemblyDistrictVersion_contacts")
   createdAt   DateTime?         @default(now())
   updatedAt   DateTime?         @default(now()) @updatedAt
@@ -137,7 +143,6 @@ model AssemblyDistrictVersion {
   photoId     String?           @map("photo")
   memberName  String            @default("")
   bio         String            @default("")
-  address     String            @default("")
   email       String?
   phone       String?
   fax         String?
@@ -150,6 +155,7 @@ model AssemblyDistrictVersion {
 
   @@index([originalId])
   @@index([ownerId])
+  @@index([addressId])
   @@index([photoId])
 }
 
@@ -892,23 +898,26 @@ model InternalLink {
 }
 
 model Location {
-  id                           String            @id @default(cuid())
-  title                        String            @unique @default("")
-  description                  String            @default("")
-  lineOne                      String            @default("")
-  lineTwo                      String            @default("")
-  city                         String            @default("")
-  state                        String            @default("AK")
-  zip                          String
-  from_Facility_address        Facility[]        @relation("Facility_address")
-  from_FacilityDraft_address   FacilityDraft[]   @relation("FacilityDraft_address")
-  from_FacilityVersion_address FacilityVersion[] @relation("FacilityVersion_address")
-  from_Park_address            Park[]            @relation("Park_address")
-  from_ParkDraft_address       ParkDraft[]       @relation("ParkDraft_address")
-  from_ParkVersion_address     ParkVersion[]     @relation("ParkVersion_address")
-  from_Trail_address           Trail[]           @relation("Trail_address")
-  from_TrailDraft_address      TrailDraft[]      @relation("TrailDraft_address")
-  from_TrailVersion_address    TrailVersion[]    @relation("TrailVersion_address")
+  id                                   String                    @id @default(cuid())
+  title                                String                    @unique @default("")
+  description                          String                    @default("")
+  lineOne                              String                    @default("")
+  lineTwo                              String                    @default("")
+  city                                 String                    @default("")
+  state                                String                    @default("AK")
+  zip                                  String
+  from_AssemblyDistrict_address        AssemblyDistrict[]        @relation("AssemblyDistrict_address")
+  from_AssemblyDistrictDraft_address   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_address")
+  from_AssemblyDistrictVersion_address AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_address")
+  from_Facility_address                Facility[]                @relation("Facility_address")
+  from_FacilityDraft_address           FacilityDraft[]           @relation("FacilityDraft_address")
+  from_FacilityVersion_address         FacilityVersion[]         @relation("FacilityVersion_address")
+  from_Park_address                    Park[]                    @relation("Park_address")
+  from_ParkDraft_address               ParkDraft[]               @relation("ParkDraft_address")
+  from_ParkVersion_address             ParkVersion[]             @relation("ParkVersion_address")
+  from_Trail_address                   Trail[]                   @relation("Trail_address")
+  from_TrailDraft_address              TrailDraft[]              @relation("TrailDraft_address")
+  from_TrailVersion_address            TrailVersion[]            @relation("TrailVersion_address")
 }
 
 model OrgUnit {
