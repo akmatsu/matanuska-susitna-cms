@@ -94,7 +94,7 @@ export const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} highlights {id} boards {id} services {id} communities {id} districts {id} parks {id} trails {id} facilities {id} orgUnits {id} publicNotices {id}`,
+    query: `${basePageQuery} highlights { id } boards { id } services { id } communities { id } districts { id } parks { id } trails { id } facilities { id } orgUnits { id } publicNotices { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Topic'),
@@ -108,7 +108,7 @@ export const {
       async afterOperation(args) {
         await typesenseUpsert(
           'topic',
-          'id title description body slug owner {name} publishAt tags{name} orgUnits {title} communities {title} ',
+          'id title description body slug owner { name } publishAt tags { name } orgUnits { title } communities { title }',
           args,
         );
       },
