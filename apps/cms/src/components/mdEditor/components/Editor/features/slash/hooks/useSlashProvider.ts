@@ -1,6 +1,6 @@
 import { SlashProvider } from '@milkdown/kit/plugin/slash';
 import { useInstance } from '@milkdown/react';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { isInCodeBlock, isInList } from '../utils';
 import {
   PluginViewContext,
