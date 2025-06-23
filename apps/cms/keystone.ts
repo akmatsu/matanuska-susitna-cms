@@ -110,7 +110,6 @@ export default config<TypeInfo<Session>>({
               if ('linkToAgendasId' in value) return 'Board';
               if ('effectiveDate' in value) return 'PublicNotice';
               if ('parentId' in value) return 'OrgUnit';
-              if ('memberName' in value) return 'OrgUnit';
               if ('elevationChange' in value) return 'Trail';
               if ('memberName' in value) return 'AssemblyDistrict';
               if ('parkId' in value) return 'Facility';
