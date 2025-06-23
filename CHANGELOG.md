@@ -1,3 +1,15 @@
+# [0.10.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.9.3...v0.10.0) (2025-06-23)
+
+
+### Bug Fixes
+
+* removed duplicate memberName checki n page __resolveType ([684853d](https://github.com/akmatsu/matanuska-susitna-cms/commit/684853dc52bd4050c776b4190e5d749b41dbaea1))
+
+
+### Features
+
+* now indexing topics in the search engine ([1610e17](https://github.com/akmatsu/matanuska-susitna-cms/commit/1610e17a8779d973134c6f84917254ee2e141f7e))
+
 ## [0.9.3](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.9.2...v0.9.3) (2025-06-12)
 
 
