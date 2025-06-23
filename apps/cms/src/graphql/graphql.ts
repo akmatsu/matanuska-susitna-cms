@@ -82,11 +82,11 @@ export type AlertWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type AssemblyDistrict = {
+export type AssemblyDistrict = BasePage & {
   __typename?: 'AssemblyDistrict';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
-  address?: Maybe<Scalars['String']['output']>;
+  address?: Maybe<Location>;
   bio?: Maybe<Scalars['String']['output']>;
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
@@ -257,7 +257,7 @@ export type AssemblyDistrictVersionsCountArgs = {
 
 export type AssemblyDistrictCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
-  address?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<LocationRelateToOneForCreateInput>;
   bio?: InputMaybe<Scalars['String']['input']>;
   boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -294,7 +294,7 @@ export type AssemblyDistrictDraft = {
   __typename?: 'AssemblyDistrictDraft';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
-  address?: Maybe<Scalars['String']['output']>;
+  address?: Maybe<Location>;
   bio?: Maybe<Scalars['String']['output']>;
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
@@ -431,7 +431,7 @@ export type AssemblyDistrictDraftUserGroupsCountArgs = {
 
 export type AssemblyDistrictDraftCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
-  address?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<LocationRelateToOneForCreateInput>;
   bio?: InputMaybe<Scalars['String']['input']>;
   boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -467,7 +467,6 @@ export type AssemblyDistrictDraftManyRelationFilter = {
 };
 
 export type AssemblyDistrictDraftOrderByInput = {
-  address?: InputMaybe<OrderDirection>;
   bio?: InputMaybe<OrderDirection>;
   body?: InputMaybe<MyOrderDirection>;
   createdAt?: InputMaybe<OrderDirection>;
@@ -507,7 +506,7 @@ export type AssemblyDistrictDraftUpdateArgs = {
 
 export type AssemblyDistrictDraftUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
-  address?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   bio?: InputMaybe<Scalars['String']['input']>;
   boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -541,7 +540,7 @@ export type AssemblyDistrictDraftWhereInput = {
   NOT?: InputMaybe<Array<AssemblyDistrictDraftWhereInput>>;
   OR?: InputMaybe<Array<AssemblyDistrictDraftWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
-  address?: InputMaybe<StringFilter>;
+  address?: InputMaybe<LocationWhereInput>;
   bio?: InputMaybe<StringFilter>;
   boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
@@ -580,7 +579,6 @@ export type AssemblyDistrictManyRelationFilter = {
 };
 
 export type AssemblyDistrictOrderByInput = {
-  address?: InputMaybe<OrderDirection>;
   bio?: InputMaybe<OrderDirection>;
   body?: InputMaybe<MyOrderDirection>;
   createdAt?: InputMaybe<OrderDirection>;
@@ -633,7 +631,7 @@ export type AssemblyDistrictUpdateArgs = {
 
 export type AssemblyDistrictUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
-  address?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   bio?: InputMaybe<Scalars['String']['input']>;
   boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -670,7 +668,7 @@ export type AssemblyDistrictVersion = {
   __typename?: 'AssemblyDistrictVersion';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
-  address?: Maybe<Scalars['String']['output']>;
+  address?: Maybe<Location>;
   bio?: Maybe<Scalars['String']['output']>;
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
@@ -808,7 +806,7 @@ export type AssemblyDistrictVersionUserGroupsCountArgs = {
 
 export type AssemblyDistrictVersionCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
-  address?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<LocationRelateToOneForCreateInput>;
   bio?: InputMaybe<Scalars['String']['input']>;
   boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -845,7 +843,6 @@ export type AssemblyDistrictVersionManyRelationFilter = {
 };
 
 export type AssemblyDistrictVersionOrderByInput = {
-  address?: InputMaybe<OrderDirection>;
   bio?: InputMaybe<OrderDirection>;
   body?: InputMaybe<MyOrderDirection>;
   createdAt?: InputMaybe<OrderDirection>;
@@ -896,7 +893,7 @@ export type AssemblyDistrictVersionUpdateArgs = {
 
 export type AssemblyDistrictVersionUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
-  address?: InputMaybe<Scalars['String']['input']>;
+  address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   bio?: InputMaybe<Scalars['String']['input']>;
   boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
@@ -931,7 +928,7 @@ export type AssemblyDistrictVersionWhereInput = {
   NOT?: InputMaybe<Array<AssemblyDistrictVersionWhereInput>>;
   OR?: InputMaybe<Array<AssemblyDistrictVersionWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
-  address?: InputMaybe<StringFilter>;
+  address?: InputMaybe<LocationWhereInput>;
   bio?: InputMaybe<StringFilter>;
   boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
@@ -970,7 +967,7 @@ export type AssemblyDistrictWhereInput = {
   NOT?: InputMaybe<Array<AssemblyDistrictWhereInput>>;
   OR?: InputMaybe<Array<AssemblyDistrictWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
-  address?: InputMaybe<StringFilter>;
+  address?: InputMaybe<LocationWhereInput>;
   bio?: InputMaybe<StringFilter>;
   boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
@@ -1009,12 +1006,21 @@ export type AssemblyDistrictWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type BasePage = {
+  body?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  slug?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+};
+
 export enum BlueHarvestImageOrderDirection {
   Asc = 'asc',
   Desc = 'desc'
 }
 
-export type Board = {
+export type Board = BasePage & {
   __typename?: 'Board';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -2082,7 +2088,7 @@ export type BooleanFilter = {
   not?: InputMaybe<BooleanFilter>;
 };
 
-export type Community = {
+export type Community = BasePage & {
   __typename?: 'Community';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -3396,7 +3402,7 @@ export type ExternalLinkWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Facility = {
+export type Facility = BasePage & {
   __typename?: 'Facility';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -4637,7 +4643,7 @@ export type InternalLinkRelateToOneForUpdateInput = {
   disconnect?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type InternalLinkSearch = AssemblyDistrict | Board | BoardPage | Community | Facility | HomePage | OrgUnit | Park | PublicNotice | Service | Trail | Url;
+export type InternalLinkSearch = AssemblyDistrict | Board | BoardPage | Community | Facility | HomePage | OrgUnit | Park | PublicNotice | Service | Topic | Trail | Url;
 
 export type InternalLinkUpdateArgs = {
   data: InternalLinkUpdateInput;
@@ -7601,7 +7607,9 @@ export type OrgUnitWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Park = {
+export type Page = AssemblyDistrict | Board | Community | Facility | OrgUnit | Park | PublicNotice | Service | Topic | Trail;
+
+export type Park = BasePage & {
   __typename?: 'Park';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -8588,12 +8596,14 @@ export type PasswordState = {
   isSet: Scalars['Boolean']['output'];
 };
 
-export type PublicNotice = {
+export type PublicNotice = BasePage & {
   __typename?: 'PublicNotice';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
   assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+  boards?: Maybe<Array<Board>>;
+  boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
@@ -8667,6 +8677,20 @@ export type PublicNoticeAssemblyDistrictsArgs = {
 
 export type PublicNoticeAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
+};
+
+
+export type PublicNoticeBoardsArgs = {
+  cursor?: InputMaybe<BoardWhereUniqueInput>;
+  orderBy?: Array<BoardOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: BoardWhereInput;
+};
+
+
+export type PublicNoticeBoardsCountArgs = {
+  where?: BoardWhereInput;
 };
 
 
@@ -8854,6 +8878,7 @@ export type PublicNoticeVersionsCountArgs = {
 export type PublicNoticeCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
+  boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
@@ -8892,6 +8917,8 @@ export type PublicNoticeDraft = {
   actionsCount?: Maybe<Scalars['Int']['output']>;
   assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
   assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+  boards?: Maybe<Array<Board>>;
+  boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
@@ -8959,6 +8986,20 @@ export type PublicNoticeDraftAssemblyDistrictsArgs = {
 
 export type PublicNoticeDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
+};
+
+
+export type PublicNoticeDraftBoardsArgs = {
+  cursor?: InputMaybe<BoardWhereUniqueInput>;
+  orderBy?: Array<BoardOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: BoardWhereInput;
+};
+
+
+export type PublicNoticeDraftBoardsCountArgs = {
+  where?: BoardWhereInput;
 };
 
 
@@ -9118,6 +9159,7 @@ export type PublicNoticeDraftUserGroupsCountArgs = {
 export type PublicNoticeDraftCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
+  boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
@@ -9189,6 +9231,7 @@ export type PublicNoticeDraftUpdateArgs = {
 export type PublicNoticeDraftUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
+  boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
@@ -9223,6 +9266,7 @@ export type PublicNoticeDraftWhereInput = {
   OR?: InputMaybe<Array<PublicNoticeDraftWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
+  boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
   communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
@@ -9310,6 +9354,7 @@ export type PublicNoticeUpdateArgs = {
 export type PublicNoticeUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
+  boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
@@ -9348,6 +9393,8 @@ export type PublicNoticeVersion = {
   actionsCount?: Maybe<Scalars['Int']['output']>;
   assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
   assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+  boards?: Maybe<Array<Board>>;
+  boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
@@ -9416,6 +9463,20 @@ export type PublicNoticeVersionAssemblyDistrictsArgs = {
 
 export type PublicNoticeVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
+};
+
+
+export type PublicNoticeVersionBoardsArgs = {
+  cursor?: InputMaybe<BoardWhereUniqueInput>;
+  orderBy?: Array<BoardOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: BoardWhereInput;
+};
+
+
+export type PublicNoticeVersionBoardsCountArgs = {
+  where?: BoardWhereInput;
 };
 
 
@@ -9575,6 +9636,7 @@ export type PublicNoticeVersionUserGroupsCountArgs = {
 export type PublicNoticeVersionCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
+  boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
@@ -9658,6 +9720,7 @@ export type PublicNoticeVersionUpdateArgs = {
 export type PublicNoticeVersionUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
+  boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
@@ -9693,6 +9756,7 @@ export type PublicNoticeVersionWhereInput = {
   OR?: InputMaybe<Array<PublicNoticeVersionWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
+  boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
   communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
@@ -9732,6 +9796,7 @@ export type PublicNoticeWhereInput = {
   OR?: InputMaybe<Array<PublicNoticeWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
+  boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
   communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
@@ -9827,6 +9892,7 @@ export type Query = {
   facilityVersions?: Maybe<Array<FacilityVersion>>;
   facilityVersionsCount?: Maybe<Scalars['Int']['output']>;
   getInternalLink?: Maybe<InternalLinkSearch>;
+  getPage?: Maybe<Page>;
   highlight?: Maybe<Highlight>;
   highlights?: Maybe<Array<Highlight>>;
   highlightsCount?: Maybe<Scalars['Int']['output']>;
@@ -10260,6 +10326,12 @@ export type QueryFacilityVersionsCountArgs = {
 
 export type QueryGetInternalLinkArgs = {
   id: Scalars['ID']['input'];
+  type: Scalars['String']['input'];
+};
+
+
+export type QueryGetPageArgs = {
+  slug: Scalars['String']['input'];
   type: Scalars['String']['input'];
 };
 
@@ -10805,7 +10877,7 @@ export enum QueryMode {
   Insensitive = 'insensitive'
 }
 
-export type Service = {
+export type Service = BasePage & {
   __typename?: 'Service';
   body?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
@@ -11951,7 +12023,7 @@ export type TagWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Topic = {
+export type Topic = BasePage & {
   __typename?: 'Topic';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -13202,7 +13274,7 @@ export type TopicWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Trail = {
+export type Trail = BasePage & {
   __typename?: 'Trail';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -14635,14 +14707,14 @@ export type GetInternalLinkQueryVariables = Exact<{
 }>;
 
 
-export type GetInternalLinkQuery = { __typename?: 'Query', getInternalLink?: { __typename: 'AssemblyDistrict', title?: string | null } | { __typename: 'Board', title?: string | null } | { __typename: 'BoardPage', title?: string | null } | { __typename: 'Community', title?: string | null } | { __typename: 'Facility', title?: string | null } | { __typename: 'HomePage', title?: string | null } | { __typename: 'OrgUnit', title?: string | null } | { __typename: 'Park', title?: string | null } | { __typename: 'PublicNotice', title?: string | null } | { __typename: 'Service', title?: string | null } | { __typename: 'Trail', title?: string | null } | { __typename: 'Url', title?: string | null } | null };
+export type GetInternalLinkQuery = { __typename?: 'Query', getInternalLink?: { __typename: 'AssemblyDistrict', title?: string | null } | { __typename: 'Board', title?: string | null } | { __typename: 'BoardPage', title?: string | null } | { __typename: 'Community', title?: string | null } | { __typename: 'Facility', title?: string | null } | { __typename: 'HomePage', title?: string | null } | { __typename: 'OrgUnit', title?: string | null } | { __typename: 'Park', title?: string | null } | { __typename: 'PublicNotice', title?: string | null } | { __typename: 'Service', title?: string | null } | { __typename: 'Topic' } | { __typename: 'Trail', title?: string | null } | { __typename: 'Url', title?: string | null } | null };
 
 export type LinkSearchQueryVariables = Exact<{
   query?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type LinkSearchQuery = { __typename?: 'Query', internalSearch?: Array<{ __typename: 'AssemblyDistrict', id: string, title?: string | null } | { __typename: 'Board', id: string, title?: string | null } | { __typename: 'BoardPage', id: string, title?: string | null } | { __typename: 'Community', id: string, title?: string | null } | { __typename: 'Facility', id: string, title?: string | null } | { __typename: 'HomePage', id: string, title?: string | null } | { __typename: 'OrgUnit', id: string, title?: string | null } | { __typename: 'Park', id: string, title?: string | null } | { __typename: 'PublicNotice', id: string, title?: string | null } | { __typename: 'Service', id: string, title?: string | null } | { __typename: 'Trail', id: string, title?: string | null } | { __typename: 'Url', id: string, title?: string | null } | null> | null };
+export type LinkSearchQuery = { __typename?: 'Query', internalSearch?: Array<{ __typename: 'AssemblyDistrict', id: string, title?: string | null } | { __typename: 'Board', id: string, title?: string | null } | { __typename: 'BoardPage', id: string, title?: string | null } | { __typename: 'Community', id: string, title?: string | null } | { __typename: 'Facility', id: string, title?: string | null } | { __typename: 'HomePage', id: string, title?: string | null } | { __typename: 'OrgUnit', id: string, title?: string | null } | { __typename: 'Park', id: string, title?: string | null } | { __typename: 'PublicNotice', id: string, title?: string | null } | { __typename: 'Service', id: string, title?: string | null } | { __typename: 'Topic' } | { __typename: 'Trail', id: string, title?: string | null } | { __typename: 'Url', id: string, title?: string | null } | null> | null };
 
 
 export const CreateDocumentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDocuments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocumentCreateInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDocuments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"filesize"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<CreateDocumentsMutation, CreateDocumentsMutationVariables>;

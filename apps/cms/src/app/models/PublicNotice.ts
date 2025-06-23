@@ -87,6 +87,10 @@ export const {
           !opts?.isDraft && !opts?.isVersion ? 'Topic.publicNotices' : 'Topic',
         many: true,
       }),
+      boards: relationship({
+        ref: 'Board',
+        many: true,
+      }),
     };
   },
   {
