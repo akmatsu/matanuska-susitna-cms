@@ -61,7 +61,6 @@ export const graphqlExtendTypeDefs = gql`
   extend type AssemblyDistrict implements BasePage
   extend type Community implements BasePage
   extend type Board implements BasePage
-  extend type Facility implements BasePage
   extend type PublicNotice implements BasePage
   extend type Park implements BasePage
   extend type Trail implements BasePage
@@ -74,7 +73,6 @@ export const graphqlExtendTypeDefs = gql`
   extend type AssemblyDistrict implements BasePageWithSlug
   extend type Community implements BasePageWithSlug
   extend type Board implements BasePageWithSlug
-  extend type Facility implements BasePageWithSlug
   extend type PublicNotice implements BasePageWithSlug
   extend type Park implements BasePageWithSlug
   extend type Trail implements BasePageWithSlug
