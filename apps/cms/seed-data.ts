@@ -11,8 +11,6 @@ async function insertSeedData() {
 
   const { User: user, Service: service, Board: board } = sudoContextDB;
 
-  console.log(user);
-
   let adminUser = await user.findOne({
     where: {
       authId: process.env.ADMIN_USER_AUTH_ID,
