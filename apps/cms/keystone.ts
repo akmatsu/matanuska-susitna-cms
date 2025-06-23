@@ -10,7 +10,6 @@ import { connectRedis, getPublishQueueEvents } from './src/queues/redis';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { KeystoneContext } from '@keystone-6/core/types';
 import { graphqlExtendTypeDefs } from './src/utils/graphqlHelpers';
-import { stringify } from 'node:querystring';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db

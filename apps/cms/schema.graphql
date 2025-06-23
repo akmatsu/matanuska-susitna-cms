@@ -174,7 +174,7 @@ input AlertCreateInput {
   editorNotes: String
 }
 
-type AssemblyDistrict {
+type AssemblyDistrict implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -934,7 +934,7 @@ input AssemblyDistrictVersionCreateInput {
   republish: String
 }
 
-type Board {
+type Board implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -1534,7 +1534,7 @@ input BoardVersionCreateInput {
   republish: String
 }
 
-type BoardPage {
+type BoardPage implements BasePage {
   id: ID!
   heroImage: String
   title: String
@@ -1632,7 +1632,7 @@ input DocumentRelateToOneForCreateInput {
   connect: DocumentWhereUniqueInput
 }
 
-type Community {
+type Community implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -2389,7 +2389,7 @@ input UrlRelateToOneForCreateInput {
   connect: UrlWhereUniqueInput
 }
 
-type Facility {
+type Facility implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -2909,7 +2909,7 @@ input FacilityVersionCreateInput {
   republish: String
 }
 
-type Topic {
+type Topic implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -3934,7 +3934,7 @@ input LocationCreateInput {
   zip: String
 }
 
-type OrgUnit {
+type OrgUnit implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -4473,7 +4473,7 @@ input OperatingHourCreateInput {
   close: String
 }
 
-type Park {
+type Park implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -4971,7 +4971,7 @@ input ParkVersionCreateInput {
   republish: String
 }
 
-type PublicNotice {
+type PublicNotice implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -5014,6 +5014,8 @@ type PublicNotice {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
   topicsCount(where: TopicWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   status: String
   drafts(where: PublicNoticeDraftWhereInput! = {}, orderBy: [PublicNoticeDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeDraftWhereUniqueInput): [PublicNoticeDraft!]
   draftsCount(where: PublicNoticeDraftWhereInput! = {}): Int
@@ -5061,6 +5063,7 @@ input PublicNoticeWhereInput {
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   topics: TopicManyRelationFilter
+  boards: BoardManyRelationFilter
   status: StringFilter
   drafts: PublicNoticeDraftManyRelationFilter
   versions: PublicNoticeVersionManyRelationFilter
@@ -5126,6 +5129,7 @@ input PublicNoticeUpdateInput {
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -5186,6 +5190,7 @@ input PublicNoticeCreateInput {
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -5251,6 +5256,8 @@ type PublicNoticeDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
   topicsCount(where: TopicWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   publish: String
 }
 
@@ -5289,6 +5296,7 @@ input PublicNoticeDraftWhereInput {
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   topics: TopicManyRelationFilter
+  boards: BoardManyRelationFilter
 }
 
 input PublicNoticeDraftOrderByInput {
@@ -5336,6 +5344,7 @@ input PublicNoticeDraftUpdateInput {
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
   publish: String
 }
 
@@ -5378,6 +5387,7 @@ input PublicNoticeDraftCreateInput {
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
   publish: String
 }
 
@@ -5429,6 +5439,8 @@ type PublicNoticeVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
   topicsCount(where: TopicWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
   isLive: PublicNotice
   republish: String
 }
@@ -5469,6 +5481,7 @@ input PublicNoticeVersionWhereInput {
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   topics: TopicManyRelationFilter
+  boards: BoardManyRelationFilter
   isLive: PublicNoticeWhereInput
 }
 
@@ -5517,6 +5530,7 @@ input PublicNoticeVersionUpdateInput {
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
   isLive: PublicNoticeRelateToOneForUpdateInput
   republish: String
 }
@@ -5554,11 +5568,12 @@ input PublicNoticeVersionCreateInput {
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
   isLive: PublicNoticeRelateToOneForCreateInput
   republish: String
 }
 
-type Service {
+type Service implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -6173,7 +6188,7 @@ input TagCreateInput {
   name: String
 }
 
-type Trail {
+type Trail implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -7731,3 +7746,20 @@ enum KeystoneAdminUISortDirection {
 union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url
 
 union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic
+
+interface BasePage {
+  id: ID!
+  title: String
+  description: String
+  body: String
+  heroImage: String
+}
+
+interface BasePageWithSlug {
+  slug: String
+  id: ID!
+  title: String
+  description: String
+  body: String
+  heroImage: String
+}

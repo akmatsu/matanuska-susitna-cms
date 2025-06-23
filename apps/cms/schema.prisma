@@ -202,6 +202,9 @@ model Board {
   from_CommunityVersion_boards        CommunityVersion[]        @relation("CommunityVersion_boards")
   from_TopicDraft_boards              TopicDraft[]              @relation("TopicDraft_boards")
   from_TopicVersion_boards            TopicVersion[]            @relation("TopicVersion_boards")
+  from_PublicNotice_boards            PublicNotice[]            @relation("PublicNotice_boards")
+  from_PublicNoticeDraft_boards       PublicNoticeDraft[]       @relation("PublicNoticeDraft_boards")
+  from_PublicNoticeVersion_boards     PublicNoticeVersion[]     @relation("PublicNoticeVersion_boards")
 
   @@index([ownerId])
   @@index([linkToAgendasId])
@@ -1194,6 +1197,7 @@ model PublicNotice {
   communities                     Community[]           @relation("PublicNotice_communities")
   assemblyDistricts               AssemblyDistrict[]    @relation("PublicNotice_assemblyDistricts")
   topics                          Topic[]               @relation("PublicNotice_topics")
+  boards                          Board[]               @relation("PublicNotice_boards")
   status                          String                @default("unpublished")
   drafts                          PublicNoticeDraft[]   @relation("PublicNoticeDraft_original")
   makeDrafts                      String?
@@ -1237,6 +1241,7 @@ model PublicNoticeDraft {
   communities       Community[]        @relation("PublicNoticeDraft_communities")
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeDraft_assemblyDistricts")
   topics            Topic[]            @relation("PublicNoticeDraft_topics")
+  boards            Board[]            @relation("PublicNoticeDraft_boards")
   publish           String?
 
   @@index([originalId])
@@ -1274,6 +1279,7 @@ model PublicNoticeVersion {
   communities       Community[]        @relation("PublicNoticeVersion_communities")
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeVersion_assemblyDistricts")
   topics            Topic[]            @relation("PublicNoticeVersion_topics")
+  boards            Board[]            @relation("PublicNoticeVersion_boards")
   isLive            PublicNotice?      @relation("PublicNotice_currentVersion")
   republish         String?
 
