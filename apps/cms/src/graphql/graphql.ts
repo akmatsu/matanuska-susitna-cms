@@ -82,7 +82,7 @@ export type AlertWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type AssemblyDistrict = BasePage & {
+export type AssemblyDistrict = BasePage & BasePageWithSlug & {
   __typename?: 'AssemblyDistrict';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -1011,6 +1011,14 @@ export type BasePage = {
   description?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+export type BasePageWithSlug = {
+  body?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
   slug?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
 };
@@ -1020,7 +1028,7 @@ export enum BlueHarvestImageOrderDirection {
   Desc = 'desc'
 }
 
-export type Board = BasePage & {
+export type Board = BasePage & BasePageWithSlug & {
   __typename?: 'Board';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -1549,7 +1557,7 @@ export type BoardOrderByInput = {
   updatedAt?: InputMaybe<OrderDirection>;
 };
 
-export type BoardPage = {
+export type BoardPage = BasePage & {
   __typename?: 'BoardPage';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -2088,7 +2096,7 @@ export type BooleanFilter = {
   not?: InputMaybe<BooleanFilter>;
 };
 
-export type Community = BasePage & {
+export type Community = BasePage & BasePageWithSlug & {
   __typename?: 'Community';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -3402,7 +3410,7 @@ export type ExternalLinkWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Facility = BasePage & {
+export type Facility = BasePage & BasePageWithSlug & {
   __typename?: 'Facility';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -6728,7 +6736,7 @@ export enum OrderDirection {
   Desc = 'desc'
 }
 
-export type OrgUnit = {
+export type OrgUnit = BasePage & BasePageWithSlug & {
   __typename?: 'OrgUnit';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -7609,7 +7617,7 @@ export type OrgUnitWhereUniqueInput = {
 
 export type Page = AssemblyDistrict | Board | Community | Facility | OrgUnit | Park | PublicNotice | Service | Topic | Trail;
 
-export type Park = BasePage & {
+export type Park = BasePage & BasePageWithSlug & {
   __typename?: 'Park';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -8596,7 +8604,7 @@ export type PasswordState = {
   isSet: Scalars['Boolean']['output'];
 };
 
-export type PublicNotice = BasePage & {
+export type PublicNotice = BasePage & BasePageWithSlug & {
   __typename?: 'PublicNotice';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -10877,7 +10885,7 @@ export enum QueryMode {
   Insensitive = 'insensitive'
 }
 
-export type Service = BasePage & {
+export type Service = BasePage & BasePageWithSlug & {
   __typename?: 'Service';
   body?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
@@ -12023,7 +12031,7 @@ export type TagWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Topic = BasePage & {
+export type Topic = BasePage & BasePageWithSlug & {
   __typename?: 'Topic';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -13274,7 +13282,7 @@ export type TopicWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Trail = BasePage & {
+export type Trail = BasePage & BasePageWithSlug & {
   __typename?: 'Trail';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
