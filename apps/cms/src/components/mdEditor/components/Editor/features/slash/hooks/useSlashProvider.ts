@@ -29,7 +29,6 @@ export function useSlashProvider(onShow?: () => void, onHide?: () => void) {
 
         const text = getContent(this, view);
         if (text == null) {
-          console.log('DO NOT SHOW 2');
           return false;
         }
 
