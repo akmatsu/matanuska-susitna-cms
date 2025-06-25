@@ -1,9 +1,11 @@
 import {
-  ListNavItems,
-  NavigationContainer,
+  NavContainer,
   NavItem,
+  DeveloperResourcesMenu,
+  NavFooter,
+  getHrefFromList,
 } from '@keystone-6/core/admin-ui/components';
-import { ListMeta, NavigationProps } from '@keystone-6/core/types';
+import { NavigationProps } from '@keystone-6/core/types';
 import { PAGES } from '../configs/appConfig';
 import { PropsWithChildren } from 'react';
 
@@ -31,7 +33,12 @@ function ListSection({
     return (
       <>
         <Header>{title}</Header>
-        <ListNavItems lists={lists as ListMeta[]} />
+
+        {lists?.map((list) => (
+          <NavItem key={list.key} href={getHrefFromList(list)}>
+            {list.label}
+          </NavItem>
+        ))}
         {children}
         <Divider />
       </>
@@ -39,10 +46,7 @@ function ListSection({
   }
 }
 
-export function CustomNavigation({
-  lists,
-  authenticatedItem,
-}: NavigationProps) {
+export function CustomNavigation({ lists }: NavigationProps) {
   const documentLists = lists.filter(
     (list) => list.key.includes('Document') || list.key.includes('Image'),
   );
@@ -72,7 +76,7 @@ export function CustomNavigation({
   const otherLists = lists.filter((list) => !excludeKeys.has(list.key));
 
   return (
-    <NavigationContainer authenticatedItem={authenticatedItem}>
+    <NavContainer>
       <ListSection title="Home">
         <NavItem href="/">Dashboard</NavItem>
       </ListSection>
@@ -103,6 +107,9 @@ export function CustomNavigation({
         </Link>
         .
       </p>
-    </NavigationContainer>
+      <NavFooter>
+        <DeveloperResourcesMenu />
+      </NavFooter>
+    </NavContainer>
   );
 }

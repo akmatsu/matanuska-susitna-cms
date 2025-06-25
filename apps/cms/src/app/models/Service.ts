@@ -84,13 +84,19 @@ export const {
           !opts?.isDraft && !opts?.isVersion ? 'Facility.services' : 'Facility',
         many: true,
         ui: {
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-          createView: {
-            fieldMode: 'hidden',
-          },
-          hideCreate: true,
+          ...(!(!opts?.isDraft && !opts?.isVersion) && {
+            itemView: {
+              fieldPosition: 'sidebar',
+            },
+            createView: {
+              fieldMode: 'hidden',
+            },
+          }),
+          ...(!opts?.isDraft &&
+            !opts?.isVersion && {
+              displayMode: 'table',
+              itemView: { fieldMode: 'read' },
+            }),
         },
       }),
 

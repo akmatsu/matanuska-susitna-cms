@@ -1,13 +1,11 @@
 'use client';
-import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-
-import { FieldContainer } from '@keystone-ui/fields';
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -22,31 +20,24 @@ export function Field({ value }: FieldProps<typeof controller>) {
   const listName = singular(router.pathname.split('/')[1]) + '-versions';
 
   return (
-    <FieldContainer>
-      <div className="flex items-center gap-2">
-        {!!value?.length && (
-          <Link href={`/${listName}?!original_matches=%22${id}%22`}>
-            View Versions
-          </Link>
-        )}
-      </div>
-    </FieldContainer>
+    <div className="flex items-center gap-2">
+      {!!value?.length && (
+        <Link href={`/${listName}?!original_matches=%22${id}%22`}>
+          View Versions
+        </Link>
+      )}
+    </div>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export const controller = (
   config: FieldControllerConfig<any>,

@@ -1,17 +1,11 @@
 import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
-
-import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
 import { ComponentProps, Fragment } from 'react';
+import { Field as KeystarField } from '@keystar/ui/field';
 import Link from 'next/link';
 
 type ItemValue = {
@@ -42,13 +36,9 @@ function PrettyData({ data }: { data?: ItemValue | undefined }) {
 }
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   return !value ? null : (
-    <FieldContainer>
-      <FieldLabel>{field.path}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
-        {field.description}
-      </FieldDescription>
-      <PrettyData data={value} />
-    </FieldContainer>
+    <KeystarField label={field.label} description={field.description}>
+      {() => <PrettyData data={value} />}
+    </KeystarField>
   );
 };
 
@@ -56,19 +46,7 @@ export const Cell: CellComponent = ({
   item,
   field,
 }: ComponentProps<CellComponent>) => {
-  return <PrettyData data={item[field.path]} />;
-};
-
-export const CardValue: CardValueComponent = ({
-  item,
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <PrettyData data={item[field.path]} />
-    </FieldContainer>
-  );
+  return <PrettyData data={item[field.path] as ItemValue | undefined} />;
 };
 
 export const controller = (

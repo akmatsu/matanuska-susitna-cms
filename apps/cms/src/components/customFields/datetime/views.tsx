@@ -2,7 +2,7 @@ import {
   CellContainer,
   // CellLink
 } from '@keystone-6/core/admin-ui/components';
-import {Field``}
+import { Field as KeystarField } from '@keystar/ui/field';
 import {
   CellComponent,
   FieldController,
@@ -23,30 +23,20 @@ export function Field({
   onChange,
 }: FieldProps<typeof controller>) {
   return (
-    // <FieldContainer>
-    //   <FieldLabel>{field.label}</FieldLabel>
-    //   <FieldDescription id={`${field.path}-description`}>
-    //     {field.description}
-    //   </FieldDescription>
-
-      <DateTimePicker onChange={onChange} value={value} />
-    {/* </FieldContainer> */}
+    <KeystarField label={field.label} description={field.description}>
+      {() => <DateTimePicker onChange={onChange} value={value} />}
+    </KeystarField>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export const controller = (
   config: FieldControllerConfig<any>,

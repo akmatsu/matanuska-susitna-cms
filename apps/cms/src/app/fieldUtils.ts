@@ -426,18 +426,7 @@ export function basePage(
       primaryAction: relationship({
         ref: 'ExternalLink',
         ui: {
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-          displayMode: 'cards',
-          cardFields: ['label', 'url'],
-          inlineCreate: {
-            fields: ['label', 'url'],
-          },
-          inlineConnect: true,
-          inlineEdit: {
-            fields: ['label', 'url'],
-          },
+          displayMode: 'select',
         },
         many: false,
       }),
@@ -448,15 +437,6 @@ export function basePage(
         ui: {
           itemView: {
             fieldPosition: 'sidebar',
-          },
-          displayMode: 'cards',
-          cardFields: ['label', 'url'],
-          inlineCreate: {
-            fields: ['label', 'url'],
-          },
-          inlineConnect: true,
-          inlineEdit: {
-            fields: ['label', 'url'],
           },
         },
         many: true,
@@ -470,10 +450,6 @@ export function basePage(
           itemView: {
             fieldPosition: 'sidebar',
           },
-          displayMode: 'cards',
-          cardFields: ['label', 'item'],
-          inlineCreate: { fields: ['label', 'selectItem'] },
-          inlineEdit: { fields: ['label', 'selectItem'] },
         },
         many: true,
       }),
@@ -483,13 +459,7 @@ export function basePage(
       documents: relationship({
         ref: 'Document',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
+        ui: {},
       }),
     }),
 
@@ -497,20 +467,7 @@ export function basePage(
       address: relationship({
         ref: 'Location',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
-          inlineCreate: {
-            fields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
-          },
-          inlineEdit: {
-            fields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
-          },
-          inlineConnect: true,
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-        },
+        ui: {},
       }),
     }),
 
@@ -530,16 +487,7 @@ export function basePage(
       hours: relationship({
         ref: 'OperatingHour',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['day', 'open', 'close'],
-          inlineCreate: {
-            fields: ['day', 'open', 'close'],
-          },
-          inlineEdit: {
-            fields: ['day', 'open', 'close'],
-          },
-        },
+        ui: {},
       }),
     }),
 
