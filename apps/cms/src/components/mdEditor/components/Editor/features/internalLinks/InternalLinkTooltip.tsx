@@ -4,13 +4,13 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/react';
-import { DrawerController } from '@keystone-ui/modals';
+// import { DrawerController } from '@keystone-ui/modals';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { plural, singular } from 'pluralize';
 import { useEffect, useState } from 'react';
-import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
-import { Button } from '@keystone-ui/button';
+// import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
+// import { Button } from '@keystone-ui/button';
 import { useInternalSearchQuery } from './hooks/useInternalSearchQuery';
 import { useInternalTooltipProvider } from './hooks/useInternalTooltipProvider';
 import { Page, useSelectionHandler } from './hooks/useSelectedItem';
@@ -112,7 +112,7 @@ export function InternalLinkTooltip() {
       ref={contentRef}
       className="absolute z-20 -mt-2 rounded-sm border border-gray-300 bg-white p-2 shadow-md data-[show=false]:hidden"
     >
-      {isEditing ? (
+      {/* {isEditing ? (
         <SearchInput
           view={view}
           linkInfo={linkInfo}
@@ -151,7 +151,7 @@ export function InternalLinkTooltip() {
             <span className="icon-[mdi--delete]"></span>
           </Button>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
@@ -180,7 +180,8 @@ function SearchInput({
   }
   return (
     <>
-      <Combobox
+      Muffins
+      {/* <Combobox
         immediate
         value={selectedPage}
         onChange={handleSelection}
@@ -245,33 +246,33 @@ function SearchInput({
             });
           }}
         />
-      </DrawerController>
+      </DrawerController> */}
     </>
   );
 }
 
-function Options({ data }: { data: LinkSearchQuery }) {
-  return (
-    <>
-      {data.internalSearch?.map(
-        (item) =>
-          item && (
-            <ComboboxOption
-              key={item.id + item.__typename}
-              value={item}
-              className="my-1 cursor-pointer rounded-md bg-gray-100 px-3 py-1.5 transition-all select-none data-focus:bg-blue-200"
-            >
-              <div>
-                <span className="text-xs font-bold text-gray-500">
-                  {item.__typename}
-                </span>
-              </div>
-              <div>
-                <span>{item.title}</span>
-              </div>
-            </ComboboxOption>
-          ),
-      )}
-    </>
-  );
-}
+// function Options({ data }: { data: LinkSearchQuery }) {
+//   return (
+//     <>
+//       {data.internalSearch?.map(
+//         (item) =>
+//           item && (
+//             <ComboboxOption
+//               key={item.id + item.__typename}
+//               value={item}
+//               className="my-1 cursor-pointer rounded-md bg-gray-100 px-3 py-1.5 transition-all select-none data-focus:bg-blue-200"
+//             >
+//               <div>
+//                 <span className="text-xs font-bold text-gray-500">
+//                   {item.__typename}
+//                 </span>
+//               </div>
+//               <div>
+//                 <span>{item.title}</span>
+//               </div>
+//             </ComboboxOption>
+//           ),
+//       )}
+//     </>
+//   );
+// }

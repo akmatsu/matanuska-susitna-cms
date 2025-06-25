@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import { TYPESENSE_CLIENT } from '../../src/utils/typesense';
-import { Button } from '@keystone-ui/button';
+import { Button } from '@keystar/ui/button';
 import { useToasts } from '@keystone-ui/toast';
 import { logger } from '../../src/configs/logger';
 
@@ -176,19 +176,19 @@ export default function CustomPage() {
       </p>
 
       <div className="flex gap-2">
-        <Button onClick={createCollections} isLoading={createLoading}>
+        <Button onClick={createCollections} isPending={createLoading}>
           Create Collections
         </Button>
 
-        <Button onClick={removePagesCollection} isLoading={createLoading}>
+        <Button onClick={removePagesCollection} isPending={createLoading}>
           Remove Pages Collection
         </Button>
 
-        <Button onClick={updateCollectionSchema} isLoading={createLoading}>
+        <Button onClick={updateCollectionSchema} isPending={createLoading}>
           Update Collection Schema
         </Button>
 
-        <Button onClick={importPages} isLoading={createLoading}>
+        <Button onClick={importPages} isPending={createLoading}>
           Import Pages
         </Button>
       </div>

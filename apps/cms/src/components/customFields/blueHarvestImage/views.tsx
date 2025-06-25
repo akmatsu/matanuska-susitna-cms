@@ -10,14 +10,14 @@ import {
   type MouseEvent,
 } from 'react';
 import {
-  CardValueComponent,
+  // CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
 
-import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
+// import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
 
 export function Field({
   field,
@@ -71,39 +71,40 @@ export function Field({
   }
 
   return (
-    <FieldContainer as="fieldset">
-      <FieldLabel>{field.label}</FieldLabel>
+    <div>muffins</div>
+    // <FieldContainer as="fieldset">
+    //   <FieldLabel>{field.label}</FieldLabel>
 
-      <p>
-        {field.description || ''}
-        Search for an image in
-        <Link href="https://images.matsu.gov" target="_blank">
-          Blue Harvest
-        </Link>{' '}
-        and paste the URL in the input below.
-      </p>
+    //   <p>
+    //     {field.description || ''}
+    //     Search for an image in
+    //     <Link href="https://images.matsu.gov" target="_blank">
+    //       Blue Harvest
+    //     </Link>{' '}
+    //     and paste the URL in the input below.
+    //   </p>
 
-      <TextInput value={value || ''} onChange={handleImageChange} />
-      {value &&
-        (field.notBanner ? (
-          <img src={image}></img>
-        ) : (
-          <div
-            onMouseDown={() => setIsDragging(true)}
-            onMouseUp={() => setIsDragging(false)}
-            onMouseLeave={() => setIsDragging(false)}
-            onMouseMove={drag}
-            style={{
-              backgroundImage: `url(${image})`,
-              width: '100%',
-              backgroundPosition,
-              backgroundSize: 'cover',
-              cursor: 'move',
-              aspectRatio: '6.4/1',
-            }}
-          />
-        ))}
-    </FieldContainer>
+    //   <TextInput value={value || ''} onChange={handleImageChange} />
+    //   {value &&
+    //     (field.notBanner ? (
+    //       <img src={image}></img>
+    //     ) : (
+    //       <div
+    //         onMouseDown={() => setIsDragging(true)}
+    //         onMouseUp={() => setIsDragging(false)}
+    //         onMouseLeave={() => setIsDragging(false)}
+    //         onMouseMove={drag}
+    //         style={{
+    //           backgroundImage: `url(${image})`,
+    //           width: '100%',
+    //           backgroundPosition,
+    //           backgroundSize: 'cover',
+    //           cursor: 'move',
+    //           aspectRatio: '6.4/1',
+    //         }}
+    //       />
+    //     ))}
+    // </FieldContainer>
   );
 }
 
@@ -112,21 +113,22 @@ export const Cell: CellComponent = ({
 }: ComponentProps<CellComponent>) => {
   return (
     <CellContainer>
-      <p>{item.heroImage}</p>
+      {/* <p>{item.heroImage}</p> */}
+      <p>Muffins</p>
     </CellContainer>
   );
 };
 
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <p>I AM THE CARD YAYAYAY</p>
-    </FieldContainer>
-  );
-};
+// export const CardValue: CardValueComponent = ({
+//   field,
+// }: ComponentProps<CardValueComponent>) => {
+//   return (
+//     <FieldContainer>
+//       <FieldLabel>{field.label}</FieldLabel>
+//       <p>I AM THE CARD YAYAYAY</p>
+//     </FieldContainer>
+//   );
+// };
 
 export const controller = (
   config: FieldControllerConfig<{ notBanner?: boolean }>,

@@ -3,12 +3,7 @@
     "service": {
       "localSchemaFile": "./schema.graphql"
     },
-    "excludes": [
-      "**/node_modules",
-      "**/dist",
-      "**/build",
-      "**/graphql/**/*.ts",
-      "**/__tests__"
-    ]
+    "includes": ["src/**/*.{ts,tsx,graphql}", "admin/**/*.{ts,tsx,graphql}"],
+    "excludes": ["**/node_modules", "**/dist", "**/build", "**/__tests__"]
   }
 }

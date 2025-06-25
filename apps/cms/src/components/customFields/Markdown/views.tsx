@@ -1,14 +1,15 @@
 import React, { ComponentProps } from 'react';
 import { Suspense } from 'react';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
-import { CellLink, CellContainer } from '@keystone-6/core/admin-ui/components';
+// import {
+//   FieldContainer,
+//   FieldDescription,
+//   FieldLabel,
+// } from '@keystone-ui/fields';
+import { Field as KeystarField } from '@keystar/ui/field';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 
 import {
-  type CardValueComponent,
+  // type CardValueComponent,
   type CellComponent,
   type FieldController,
   type FieldControllerConfig,
@@ -22,45 +23,44 @@ export function Field({
   onChange,
 }: FieldProps<typeof controller>) {
   return (
-    <FieldContainer as="fieldset">
-      <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
-        {field.description}
-      </FieldDescription>
-      <div>
-        <Suspense fallback={<div>Loading editor...</div>}>
-          <RichEditor initialValue={value || ''} onChange={onChange} />
-        </Suspense>
-      </div>
-    </FieldContainer>
+    <KeystarField label={field.label} description={field.description}>
+      {() => (
+        <div>
+          <Suspense fallback={<div>Loading editor...</div>}>
+            <RichEditor initialValue={value || ''} onChange={onChange} />
+          </Suspense>
+        </div>
+      )}
+    </KeystarField>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
+  // linkTo,
 }: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  return <CellContainer>{value}</CellContainer>;
+  // return linkTo ? (
+  //   <CellLink {...linkTo}>{value}</CellLink>
+  // ) : (
+  //   <CellContainer>{value}</CellContainer>
+  // );
 };
-Cell.supportsLinkTo = true;
+// Cell.supportsLinkTo = true;
 
-export const CardValue: CardValueComponent = ({
-  item,
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      {item[field.path]}
-    </FieldContainer>
-  );
-};
+// export const CardValue: CardValueComponent = ({
+//   item,
+//   field,
+// }: ComponentProps<CardValueComponent>) => {
+//   return (
+//     <FieldContainer>
+//       <FieldLabel>{field.label}</FieldLabel>
+//       {item[field.path]}
+//     </FieldContainer>
+//   );
+// };
 
 export const controller = (
   config: FieldControllerConfig<any>,

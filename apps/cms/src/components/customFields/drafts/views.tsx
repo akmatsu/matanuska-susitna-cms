@@ -5,15 +5,16 @@ import {
   useMutation,
   useQuery,
 } from '@keystone-6/core/admin-ui/apollo';
-import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
+import { Text } from '@keystar/ui/typography';
+import { Field as KeystarField } from '@keystar/ui/field';
 import {
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Button } from '@keystone-ui/button';
-import { FieldContainer } from '@keystone-ui/fields';
+import { Button } from '@keystar/ui/button';
+// import { FieldContainer } from '@keystone-ui/fields';
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -78,16 +79,20 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
     }
 
     return (
-      <FieldContainer>
-        <div className="flex items-center gap-2">
-          <Button onClick={handleCreateDraft}>Create a new Draft</Button>
-          {value && typeof id === 'string' && typeof listName === 'string' && (
-            <Link href={`/${listName}?!original_matches=%22${id}%22`}>
-              View Existing Drafts
-            </Link>
-          )}
-        </div>
-      </FieldContainer>
+      <KeystarField label={field.label} description={field.description}>
+        {(inputProps) => (
+          <div className="flex items-center gap-2">
+            <Button onClick={handleCreateDraft}>Create a new Draft</Button>
+            {value &&
+              typeof id === 'string' &&
+              typeof listName === 'string' && (
+                <Link href={`/${listName}?!original_matches=%22${id}%22`}>
+                  View Existing Drafts
+                </Link>
+              )}
+          </div>
+        )}
+      </KeystarField>
     );
   }
 }
@@ -95,16 +100,10 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  return <Text>{value}</Text>;
 };
-Cell.supportsLinkTo = true;
 
 export function CardValue() {
   return <FieldContainer>Card</FieldContainer>;

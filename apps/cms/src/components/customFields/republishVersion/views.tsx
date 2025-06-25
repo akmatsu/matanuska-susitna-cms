@@ -5,18 +5,18 @@ import {
   FieldProps,
 } from '@keystone-6/core/types';
 import { PublishDraftFieldMeta } from '../publishDraft';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
-import { Button } from '@keystone-ui/button';
+// import {
+//   FieldContainer,
+//   FieldDescription,
+//   FieldLabel,
+// } from '@keystone-ui/fields';
+// import { Button } from '@keystone-ui/button';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
 import { plural } from 'pluralize';
 import { useState } from 'react';
-import { useToasts } from '@keystone-ui/toast';
+// import { useToasts } from '@keystone-ui/toast';
 import kebabCase from 'voca/kebab_case';
 
 export function Field({ field }: FieldProps<typeof controller>) {
@@ -25,7 +25,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
   const [loading, setLoading] = useState(false);
 
   const listSlug = plural(kebabCase(field.listName)).toLowerCase();
-  const { addToast } = useToasts();
+  // const { addToast } = useToasts();
 
   async function handleRepublishVersion() {
     if (loading) return;
@@ -47,24 +47,25 @@ export function Field({ field }: FieldProps<typeof controller>) {
       router.push(`/${listSlug}/${result.publishedId}`);
     } catch (error: any) {
       console.error('Error republishing version:', error);
-      addToast({
-        title: 'Error',
-        message: `Failed to republish version: ${error?.message}`,
-        tone: 'negative',
-      });
+      // addToast({
+      //   title: 'Error',
+      //   message: `Failed to republish version: ${error?.message}`,
+      //   tone: 'negative',
+      // });
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
-        {field.description}
-      </FieldDescription>
-      <Button onClick={handleRepublishVersion}>Republish Version</Button>
-    </FieldContainer>
+    <div>muffins</div>
+    // <FieldContainer>
+    //   <FieldLabel>{field.label}</FieldLabel>
+    //   <FieldDescription id={`${field.path}-description`}>
+    //     {field.description}
+    //   </FieldDescription>
+    //   <Button onClick={handleRepublishVersion}>Republish Version</Button>
+    // </FieldContainer>
   );
 }
 

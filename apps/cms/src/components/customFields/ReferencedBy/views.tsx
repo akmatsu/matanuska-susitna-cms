@@ -1,16 +1,17 @@
 import React, { ComponentProps } from 'react';
 import {
-  CardValueComponent,
+  // CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-} from '@keystone-ui/fields';
+import { Field as KeystarField } from '@keystar/ui/field';
+// import {
+//   FieldContainer,
+//   FieldLabel,
+//   FieldDescription,
+// } from '@keystone-ui/fields';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
 
@@ -23,19 +24,23 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   const val = value as ReferenceByValue;
 
   return (
-    <FieldContainer as="fieldset">
-      <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
-        {field.description}
-      </FieldDescription>
-      <ul>
-        {val?.map?.((ref) => (
-          <li key={ref.id}>
-            <Link href={`/services/${ref.id}`}>{ref.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </FieldContainer>
+    // <FieldContainer as="fieldset">
+    //   <FieldLabel>{field.label}</FieldLabel>
+    //   <FieldDescription id={`${field.path}-description`}>
+    //     {field.description}
+    //   </FieldDescription>
+    <KeystarField label={field.label} description={field.description}>
+      {() => (
+        <ul>
+          {val?.map?.((ref) => (
+            <li key={ref.id}>
+              <Link href={`/services/${ref.id}`}>{ref.title}</Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </KeystarField>
+    // </FieldContainer>
   );
 }
 
@@ -47,16 +52,16 @@ export const Cell: CellComponent = () => {
   );
 };
 
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <p>I AM THE CARD YAYAYAY</p>
-    </FieldContainer>
-  );
-};
+// export const CardValue: CardValueComponent = ({
+//   field,
+// }: ComponentProps<CardValueComponent>) => {
+//   return (
+//     <FieldContainer>
+//       <FieldLabel>{field.label}</FieldLabel>
+//       <p>I AM THE CARD YAYAYAY</p>
+//     </FieldContainer>
+//   );
+// };
 
 const createViewValue = Symbol('create view virtual field value');
 

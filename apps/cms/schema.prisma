@@ -856,10 +856,10 @@ model Image {
   description                        String                    @default("")
   tags                               Tag[]                     @relation("Image_tags")
   file_id                            String?
+  file_extension                     String?
   file_filesize                      Int?
   file_width                         Int?
   file_height                        Int?
-  file_extension                     String?
   from_AssemblyDistrict_photo        AssemblyDistrict[]        @relation("AssemblyDistrict_photo")
   from_AssemblyDistrictDraft_photo   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_photo")
   from_AssemblyDistrictVersion_photo AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_photo")

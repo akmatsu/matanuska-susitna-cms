@@ -17,6 +17,7 @@ type Documents = {
     "\n  mutation CreateDocuments($data: [DocumentCreateInput!]!) {\n    createDocuments(data: $data) {\n      id\n      title\n      file {\n        filename\n        filesize\n        url\n      }\n      tags {\n        id\n        name\n      }\n    }\n  }\n": typeof types.CreateDocumentsDocument,
     "\n  query Tags {\n    tags {\n      id\n      name\n    }\n  }\n": typeof types.TagsDocument,
     "\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n": typeof types.QueryDocument,
+    "\n  query getServicesForBulkEdit($take: Int = 100, $skip: Int = 0, $query: String) {\n    services(take: $take, skip: $skip, where: {\n      OR: [ {\n         title: { contains: $query }\n      }, {\n        description: { contains: $query }\n      }, {\n        body: { contains: $query }        \n      }]\n    }) {\n      id\n      title\n    }\n  }\n": typeof types.GetServicesForBulkEditDocument,
     "\n      query GetServices($where: ServiceWhereInput!) {\n        services(where: $where) {\n          title\n          slug\n          id\n        }\n      }\n    ": typeof types.GetServicesDocument,
     "\n    query DocumentCollection($where: DocumentCollectionWhereUniqueInput!) {\n      documentCollection(where: $where) {\n        id\n        title\n        documents {\n          id\n          title\n          file {\n            filename\n            filesize\n            url\n          }\n        }\n      }\n    }\n  ": typeof types.DocumentCollectionDocument,
     "\n    query DocumentCollections($where: DocumentCollectionWhereInput!) {\n      documentCollections(where: $where) {\n        id\n        title\n      }\n    }\n  ": typeof types.DocumentCollectionsDocument,
@@ -27,6 +28,7 @@ const documents: Documents = {
     "\n  mutation CreateDocuments($data: [DocumentCreateInput!]!) {\n    createDocuments(data: $data) {\n      id\n      title\n      file {\n        filename\n        filesize\n        url\n      }\n      tags {\n        id\n        name\n      }\n    }\n  }\n": types.CreateDocumentsDocument,
     "\n  query Tags {\n    tags {\n      id\n      name\n    }\n  }\n": types.TagsDocument,
     "\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n": types.QueryDocument,
+    "\n  query getServicesForBulkEdit($take: Int = 100, $skip: Int = 0, $query: String) {\n    services(take: $take, skip: $skip, where: {\n      OR: [ {\n         title: { contains: $query }\n      }, {\n        description: { contains: $query }\n      }, {\n        body: { contains: $query }        \n      }]\n    }) {\n      id\n      title\n    }\n  }\n": types.GetServicesForBulkEditDocument,
     "\n      query GetServices($where: ServiceWhereInput!) {\n        services(where: $where) {\n          title\n          slug\n          id\n        }\n      }\n    ": types.GetServicesDocument,
     "\n    query DocumentCollection($where: DocumentCollectionWhereUniqueInput!) {\n      documentCollection(where: $where) {\n        id\n        title\n        documents {\n          id\n          title\n          file {\n            filename\n            filesize\n            url\n          }\n        }\n      }\n    }\n  ": types.DocumentCollectionDocument,
     "\n    query DocumentCollections($where: DocumentCollectionWhereInput!) {\n      documentCollections(where: $where) {\n        id\n        title\n      }\n    }\n  ": types.DocumentCollectionsDocument,
@@ -60,6 +62,10 @@ export function gql(source: "\n  query Tags {\n    tags {\n      id\n      name\
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n"): (typeof documents)["\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query getServicesForBulkEdit($take: Int = 100, $skip: Int = 0, $query: String) {\n    services(take: $take, skip: $skip, where: {\n      OR: [ {\n         title: { contains: $query }\n      }, {\n        description: { contains: $query }\n      }, {\n        body: { contains: $query }        \n      }]\n    }) {\n      id\n      title\n    }\n  }\n"): (typeof documents)["\n  query getServicesForBulkEdit($take: Int = 100, $skip: Int = 0, $query: String) {\n    services(take: $take, skip: $skip, where: {\n      OR: [ {\n         title: { contains: $query }\n      }, {\n        description: { contains: $query }\n      }, {\n        body: { contains: $query }        \n      }]\n    }) {\n      id\n      title\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

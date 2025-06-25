@@ -11,21 +11,21 @@ type PolymorphicValue = {
   itemId?: { label: string; value: string } | null;
 };
 
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-  Select,
-} from '@keystone-ui/fields';
+// import {
+//   FieldContainer,
+//   FieldLabel,
+//   FieldDescription,
+//   Select,
+// } from '@keystone-ui/fields';
 // Telling apollo and codegen to ignore the gql tag so it won't try to parse it since we're using a dynamic query
 import { gql as ignoreGql, useQuery } from '@keystone-6/core/admin-ui/apollo';
-import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
-import { DrawerController } from '@keystone-ui/modals';
+// import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
+// import { DrawerController } from '@keystone-ui/modals';
 
 import pluralize from 'pluralize';
 import v from 'voca';
-import { useToasts } from '@keystone-ui/toast';
-import { Button } from '@keystone-ui/button';
+// import { useToasts } from '@keystone-ui/toast';
+// import { Button } from '@keystone-ui/button';
 
 type AvailableType = {
   value: string;
@@ -37,7 +37,7 @@ export function Field({
   value,
   onChange,
 }: FieldProps<typeof controller>) {
-  const toast = useToasts();
+  // const toast = useToasts();
   const plural = pluralize(value?.itemType?.value || 'services');
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -65,11 +65,11 @@ export function Field({
   );
 
   if (error) {
-    toast.addToast({
-      title: 'Error',
-      message: error.message,
-      tone: 'negative',
-    });
+    // toast.addToast({
+    //   title: 'Error',
+    //   message: error.message,
+    //   tone: 'negative',
+    // });
   }
 
   let searchDebounceTimeout: NodeJS.Timeout | null = null;
@@ -90,70 +90,71 @@ export function Field({
   };
 
   return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
-        {field.description}
-      </FieldDescription>
-      <div className="flex flex-col gap-2">
-        <Select
-          value={value?.itemType || null}
-          placeholder="Select a type..."
-          options={field.availableTypes}
-          onChange={(item) => {
-            onChange?.({
-              itemType: item,
-              itemId: null,
-            });
-          }}
-        ></Select>
+    <div>muffins</div>
+    // <FieldContainer>
+    //   <FieldLabel>{field.label}</FieldLabel>
+    //   <FieldDescription id={`${field.path}-description`}>
+    //     {field.description}
+    //   </FieldDescription>
+    //   <div className="flex flex-col gap-2">
+    //     <Select
+    //       value={value?.itemType || null}
+    //       placeholder="Select a type..."
+    //       options={field.availableTypes}
+    //       onChange={(item) => {
+    //         onChange?.({
+    //           itemType: item,
+    //           itemId: null,
+    //         });
+    //       }}
+    //     ></Select>
 
-        {value && value?.itemType && (
-          <div className="flex flex-wrap gap-2">
-            <Select
-              className="w-full"
-              placeholder={`Select existing ${value?.itemType?.label}...`}
-              value={value?.itemId || null}
-              options={data?.[plural].map(
-                (i: { title: string; id: string }) => ({
-                  label: i.title,
-                  value: i.id,
-                }),
-              )}
-              onInputChange={handleInputChange}
-              onChange={(item) => {
-                onChange?.({
-                  itemType: value?.itemType,
-                  itemId: item,
-                });
-              }}
-            ></Select>
+    //     {value && value?.itemType && (
+    //       <div className="flex flex-wrap gap-2">
+    //         <Select
+    //           className="w-full"
+    //           placeholder={`Select existing ${value?.itemType?.label}...`}
+    //           value={value?.itemId || null}
+    //           options={data?.[plural].map(
+    //             (i: { title: string; id: string }) => ({
+    //               label: i.title,
+    //               value: i.id,
+    //             }),
+    //           )}
+    //           onInputChange={handleInputChange}
+    //           onChange={(item) => {
+    //             onChange?.({
+    //               itemType: value?.itemType,
+    //               itemId: item,
+    //             });
+    //           }}
+    //         ></Select>
 
-            <Button onClick={() => setIsDrawerOpen(true)}>
-              Create a new {value?.itemType?.label}
-            </Button>
-          </div>
-        )}
-      </div>
-      {value?.itemType && (
-        <DrawerController isOpen={isDrawerOpen}>
-          <CreateItemDrawer
-            listKey={value?.itemType.label.replace(/\s+/g, '')}
-            onClose={() => setIsDrawerOpen(false)}
-            onCreate={(val) => {
-              setIsDrawerOpen(false);
-              onChange?.({
-                itemType: value?.itemType,
-                itemId: {
-                  label: val.label,
-                  value: val.id,
-                },
-              });
-            }}
-          />
-        </DrawerController>
-      )}
-    </FieldContainer>
+    //         <Button onClick={() => setIsDrawerOpen(true)}>
+    //           Create a new {value?.itemType?.label}
+    //         </Button>
+    //       </div>
+    //     )}
+    //   </div>
+    //   {value?.itemType && (
+    //     <DrawerController isOpen={isDrawerOpen}>
+    //       <CreateItemDrawer
+    //         listKey={value?.itemType.label.replace(/\s+/g, '')}
+    //         onClose={() => setIsDrawerOpen(false)}
+    //         onCreate={(val) => {
+    //           setIsDrawerOpen(false);
+    //           onChange?.({
+    //             itemType: value?.itemType,
+    //             itemId: {
+    //               label: val.label,
+    //               value: val.id,
+    //             },
+    //           });
+    //         }}
+    //       />
+    //     </DrawerController>
+    //   )}
+    // </FieldContainer>
   );
 }
 
