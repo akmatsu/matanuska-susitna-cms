@@ -12,7 +12,7 @@ export const Highlight: ListConfig<any> = list({
   },
   ui: {
     hideCreate: true,
-    isHidden: async (args) => !(await isContentManager(args)),
+    hideNavigation: async (args) => !(await isContentManager(args)),
   },
   graphql: {
     maxTake: 100,

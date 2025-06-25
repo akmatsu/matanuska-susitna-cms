@@ -203,7 +203,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
       },
       ui: {
         hideCreate: true,
-        isHidden: true,
+        hideNavigation: true,
       },
       fields: {
         original: relationship({
@@ -235,7 +235,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         operation: generalOperationAccess,
       },
       ui: {
-        isHidden: true,
+        hideNavigation: true,
         hideCreate: true,
       },
       fields: {

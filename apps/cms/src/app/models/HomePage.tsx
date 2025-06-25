@@ -10,7 +10,7 @@ export const HomePage: ListConfig<any> = list({
     operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isContentManager(args)),
+    hideNavigation: async (args) => !(await isContentManager(args)),
   },
   fields: {
     heroImage: blueHarvestImage(),

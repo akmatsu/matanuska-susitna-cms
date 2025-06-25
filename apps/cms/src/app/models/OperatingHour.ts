@@ -8,7 +8,7 @@ export const OperatingHour: ListConfig<any> = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     day: select({

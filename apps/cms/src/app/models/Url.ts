@@ -13,7 +13,7 @@ export const Url: ListConfig<any> = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isContentManager(args)),
+    hideNavigation: async (args) => !(await isContentManager(args)),
   },
   fields: {
     ...titleAndDescription(),

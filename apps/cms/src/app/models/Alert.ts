@@ -11,7 +11,7 @@ export const Alert: ListConfig<any> = list({
     operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: ({ session }) => !isContentManager(session),
+    hideNavigation: ({ session }) => !isContentManager(session),
   },
   fields: {
     title: text({
