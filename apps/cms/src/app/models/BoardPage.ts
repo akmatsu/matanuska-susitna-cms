@@ -74,7 +74,16 @@ export const BoardPage: ListConfig<any> = list({
         inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
       },
     }),
-
+    ParliTrainingLink: relationship({
+      ref: 'ExternalLink',
+      ui: {
+        displayMode: 'cards',
+        inlineConnect: true,
+        cardFields: ['label', 'url'],
+        inlineCreate: { fields: ['label', 'url'] },
+        inlineEdit: { fields: ['label', 'url'] },
+      },
+    }),
     contacts: contacts(),
     ...timestamps,
   },
