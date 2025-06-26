@@ -296,26 +296,29 @@ model BoardVersion {
 }
 
 model BoardPage {
-  id                Int            @id
-  heroImage         String?
-  title             String         @unique @default("")
-  description       String         @default("")
-  owner             User?          @relation("BoardPage_owner", fields: [ownerId], references: [id])
-  ownerId           String?        @map("owner")
-  body              String?
-  actions           InternalLink[] @relation("BoardPage_actions")
-  documents         Document[]     @relation("BoardPage_documents")
-  vacancyReport     Document?      @relation("BoardPage_vacancyReport", fields: [vacancyReportId], references: [id])
-  vacancyReportId   String?        @map("vacancyReport")
-  applicationForm   Document?      @relation("BoardPage_applicationForm", fields: [applicationFormId], references: [id])
-  applicationFormId String?        @map("applicationForm")
-  contacts          Contact[]      @relation("BoardPage_contacts")
-  createdAt         DateTime?      @default(now())
-  updatedAt         DateTime?      @default(now()) @updatedAt
+  id                  Int            @id
+  heroImage           String?
+  title               String         @unique @default("")
+  description         String         @default("")
+  owner               User?          @relation("BoardPage_owner", fields: [ownerId], references: [id])
+  ownerId             String?        @map("owner")
+  body                String?
+  actions             InternalLink[] @relation("BoardPage_actions")
+  documents           Document[]     @relation("BoardPage_documents")
+  vacancyReport       Document?      @relation("BoardPage_vacancyReport", fields: [vacancyReportId], references: [id])
+  vacancyReportId     String?        @map("vacancyReport")
+  applicationForm     Document?      @relation("BoardPage_applicationForm", fields: [applicationFormId], references: [id])
+  applicationFormId   String?        @map("applicationForm")
+  ParliTrainingLink   ExternalLink?  @relation("BoardPage_ParliTrainingLink", fields: [ParliTrainingLinkId], references: [id])
+  ParliTrainingLinkId String?        @map("ParliTrainingLink")
+  contacts            Contact[]      @relation("BoardPage_contacts")
+  createdAt           DateTime?      @default(now())
+  updatedAt           DateTime?      @default(now()) @updatedAt
 
   @@index([ownerId])
   @@index([vacancyReportId])
   @@index([applicationFormId])
+  @@index([ParliTrainingLinkId])
 }
 
 model Community {
@@ -537,6 +540,7 @@ model ExternalLink {
   from_BoardVersion_linkToAgendas              BoardVersion[]   @relation("BoardVersion_linkToAgendas")
   from_BoardVersion_linkToResolutions          BoardVersion[]   @relation("BoardVersion_linkToResolutions")
   from_BoardVersion_linkToPublicOpinionMessage BoardVersion[]   @relation("BoardVersion_linkToPublicOpinionMessage")
+  from_BoardPage_ParliTrainingLink             BoardPage[]      @relation("BoardPage_ParliTrainingLink")
   from_Service_primaryAction                   Service[]        @relation("Service_primaryAction")
   from_Service_secondaryActions                Service[]        @relation("Service_secondaryActions")
   from_ServiceDraft_primaryAction              ServiceDraft[]   @relation("ServiceDraft_primaryAction")

@@ -1547,6 +1547,7 @@ type BoardPage implements BasePage {
   documentsCount(where: DocumentWhereInput! = {}): Int
   vacancyReport: Document
   applicationForm: Document
+  ParliTrainingLink: ExternalLink
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
@@ -1571,6 +1572,7 @@ input BoardPageWhereInput {
   documents: DocumentManyRelationFilter
   vacancyReport: DocumentWhereInput
   applicationForm: DocumentWhereInput
+  ParliTrainingLink: ExternalLinkWhereInput
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -1596,6 +1598,7 @@ input BoardPageUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   vacancyReport: DocumentRelateToOneForUpdateInput
   applicationForm: DocumentRelateToOneForUpdateInput
+  ParliTrainingLink: ExternalLinkRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -1622,6 +1625,7 @@ input BoardPageCreateInput {
   documents: DocumentRelateToManyForCreateInput
   vacancyReport: DocumentRelateToOneForCreateInput
   applicationForm: DocumentRelateToOneForCreateInput
+  ParliTrainingLink: ExternalLinkRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
