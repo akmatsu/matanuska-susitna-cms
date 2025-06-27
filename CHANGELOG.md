@@ -1,3 +1,11 @@
+# [0.11.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.10.0...v0.11.0) (2025-06-27)
+
+
+### Features
+
+* added directory field to boards ([6e7ac0f](https://github.com/akmatsu/matanuska-susitna-cms/commit/6e7ac0fccf4dda70e650819739c5554acf2ffeeb))
+* added parli training link to boards page ([c215cd3](https://github.com/akmatsu/matanuska-susitna-cms/commit/c215cd3e56757e6d780e28b24731a5d5e00b4bef))
+
 # [0.10.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.9.3...v0.10.0) (2025-06-23)
 
 
