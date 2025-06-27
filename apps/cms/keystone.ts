@@ -35,7 +35,20 @@ export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#server
   server: {
     cors: {
-      origin: ['*'],
+      origin:
+        appConfig.nodeEnv === 'production'
+          ? [
+              'https://matsu.gov',
+              'https://www.matsu.gov',
+              'https://widgets.matsu.gov',
+              'https://cms.matsu.gov',
+              'https://cms-internal.matsu.gov',
+            ]
+          : [
+              'http://localhost:3000',
+              'http://localhost:3001',
+              'https://localhost:3333',
+            ],,
       credentials: true,
       methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'PATCH'],
     },
