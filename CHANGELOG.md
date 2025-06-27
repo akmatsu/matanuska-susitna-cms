@@ -1,3 +1,11 @@
+## [0.11.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.11.0...v0.11.1) (2025-06-27)
+
+
+### Bug Fixes
+
+* fixed cors errors ([4fa5be2](https://github.com/akmatsu/matanuska-susitna-cms/commit/4fa5be2a0a3ba56cc773427d333cea031c185eb7))
+* removed extra comma from cors config ([02a50fa](https://github.com/akmatsu/matanuska-susitna-cms/commit/02a50fa4726ca2dab07e061d1e0cbe5b03183a84))
+
 # [0.11.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.10.0...v0.11.0) (2025-06-27)
 
 
