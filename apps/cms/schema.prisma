@@ -178,6 +178,8 @@ model Board {
   contacts                            Contact[]                 @relation("Board_contacts")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
+  directory                           Document?                 @relation("Board_directory", fields: [directoryId], references: [id])
+  directoryId                         String?                   @map("directory")
   meetingSchedule                     String                    @default("")
   linkToAgendas                       ExternalLink?             @relation("Board_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId                     String?                   @map("linkToAgendas")
@@ -207,6 +209,7 @@ model Board {
   from_PublicNoticeVersion_boards     PublicNoticeVersion[]     @relation("PublicNoticeVersion_boards")
 
   @@index([ownerId])
+  @@index([directoryId])
   @@index([linkToAgendasId])
   @@index([linkToResolutionsId])
   @@index([linkToPublicOpinionMessageId])
@@ -232,6 +235,8 @@ model BoardDraft {
   contacts                     Contact[]          @relation("BoardDraft_contacts")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
+  directory                    Document?          @relation("BoardDraft_directory", fields: [directoryId], references: [id])
+  directoryId                  String?            @map("directory")
   meetingSchedule              String             @default("")
   linkToAgendas                ExternalLink?      @relation("BoardDraft_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId              String?            @map("linkToAgendas")
@@ -248,6 +253,7 @@ model BoardDraft {
 
   @@index([originalId])
   @@index([ownerId])
+  @@index([directoryId])
   @@index([linkToAgendasId])
   @@index([linkToResolutionsId])
   @@index([linkToPublicOpinionMessageId])
@@ -273,6 +279,8 @@ model BoardVersion {
   contacts                     Contact[]          @relation("BoardVersion_contacts")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
+  directory                    Document?          @relation("BoardVersion_directory", fields: [directoryId], references: [id])
+  directoryId                  String?            @map("directory")
   meetingSchedule              String             @default("")
   linkToAgendas                ExternalLink?      @relation("BoardVersion_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId              String?            @map("linkToAgendas")
@@ -290,6 +298,7 @@ model BoardVersion {
 
   @@index([originalId])
   @@index([ownerId])
+  @@index([directoryId])
   @@index([linkToAgendasId])
   @@index([linkToResolutionsId])
   @@index([linkToPublicOpinionMessageId])
@@ -479,8 +488,11 @@ model Document {
   from_AssemblyDistrictDraft_documents   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_documents")
   from_AssemblyDistrictVersion_documents AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_documents")
   from_Board_documents                   Board[]                   @relation("Board_documents")
+  from_Board_directory                   Board[]                   @relation("Board_directory")
   from_BoardDraft_documents              BoardDraft[]              @relation("BoardDraft_documents")
+  from_BoardDraft_directory              BoardDraft[]              @relation("BoardDraft_directory")
   from_BoardVersion_documents            BoardVersion[]            @relation("BoardVersion_documents")
+  from_BoardVersion_directory            BoardVersion[]            @relation("BoardVersion_directory")
   from_BoardPage_documents               BoardPage[]               @relation("BoardPage_documents")
   from_BoardPage_vacancyReport           BoardPage[]               @relation("BoardPage_vacancyReport")
   from_BoardPage_applicationForm         BoardPage[]               @relation("BoardPage_applicationForm")

@@ -958,6 +958,7 @@ type Board implements BasePage & BasePageWithSlug {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  directory: Document
   meetingSchedule: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
@@ -1006,6 +1007,7 @@ input BoardWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  directory: DocumentWhereInput
   meetingSchedule: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
@@ -1086,6 +1088,7 @@ input BoardUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  directory: DocumentRelateToOneForUpdateInput
   meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
@@ -1100,6 +1103,12 @@ input BoardUpdateInput {
   makeDrafts: String
   versions: BoardVersionRelateToManyForUpdateInput
   currentVersion: BoardVersionRelateToOneForUpdateInput
+}
+
+input DocumentRelateToOneForUpdateInput {
+  create: DocumentCreateInput
+  connect: DocumentWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ExternalLinkRelateToOneForUpdateInput {
@@ -1164,6 +1173,7 @@ input BoardCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  directory: DocumentRelateToOneForCreateInput
   meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
@@ -1178,6 +1188,11 @@ input BoardCreateInput {
   makeDrafts: String
   versions: BoardVersionRelateToManyForCreateInput
   currentVersion: BoardVersionRelateToOneForCreateInput
+}
+
+input DocumentRelateToOneForCreateInput {
+  create: DocumentCreateInput
+  connect: DocumentWhereUniqueInput
 }
 
 input ExternalLinkRelateToOneForCreateInput {
@@ -1234,6 +1249,7 @@ type BoardDraft {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  directory: Document
   meetingSchedule: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
@@ -1273,6 +1289,7 @@ input BoardDraftWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  directory: DocumentWhereInput
   meetingSchedule: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
@@ -1318,6 +1335,7 @@ input BoardDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  directory: DocumentRelateToOneForUpdateInput
   meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
@@ -1358,6 +1376,7 @@ input BoardDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  directory: DocumentRelateToOneForCreateInput
   meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
@@ -1399,6 +1418,7 @@ type BoardVersion {
   contactsCount(where: ContactWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  directory: Document
   meetingSchedule: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
@@ -1440,6 +1460,7 @@ input BoardVersionWhereInput {
   contacts: ContactManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  directory: DocumentWhereInput
   meetingSchedule: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
@@ -1486,6 +1507,7 @@ input BoardVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  directory: DocumentRelateToOneForUpdateInput
   meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
@@ -1521,6 +1543,7 @@ input BoardVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  directory: DocumentRelateToOneForCreateInput
   meetingSchedule: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
@@ -1604,12 +1627,6 @@ input BoardPageUpdateInput {
   updatedAt: DateTime
 }
 
-input DocumentRelateToOneForUpdateInput {
-  create: DocumentCreateInput
-  connect: DocumentWhereUniqueInput
-  disconnect: Boolean
-}
-
 input BoardPageUpdateArgs {
   where: BoardPageWhereUniqueInput! = {id: 1}
   data: BoardPageUpdateInput!
@@ -1629,11 +1646,6 @@ input BoardPageCreateInput {
   contacts: ContactRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input DocumentRelateToOneForCreateInput {
-  create: DocumentCreateInput
-  connect: DocumentWhereUniqueInput
 }
 
 type Community implements BasePage & BasePageWithSlug {
