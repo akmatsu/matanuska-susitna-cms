@@ -48,7 +48,7 @@ export default config<TypeInfo<Session>>({
               'http://localhost:3000',
               'http://localhost:3001',
               'https://localhost:3333',
-            ],,
+            ],
       credentials: true,
       methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'PATCH'],
     },
