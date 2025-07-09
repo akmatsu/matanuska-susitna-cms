@@ -476,50 +476,72 @@ model Contact {
 }
 
 model Document {
-  id                                     String                    @id @default(cuid())
-  title                                  String                    @default("")
-  description                            String                    @default("")
-  tags                                   Tag[]                     @relation("Document_tags")
-  file_filesize                          Int?
-  file_filename                          String?
-  collections                            DocumentCollection[]      @relation("Document_collections")
-  editorNotes                            String                    @default("")
-  from_AssemblyDistrict_documents        AssemblyDistrict[]        @relation("AssemblyDistrict_documents")
-  from_AssemblyDistrictDraft_documents   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_documents")
-  from_AssemblyDistrictVersion_documents AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_documents")
-  from_Board_documents                   Board[]                   @relation("Board_documents")
-  from_Board_directory                   Board[]                   @relation("Board_directory")
-  from_BoardDraft_documents              BoardDraft[]              @relation("BoardDraft_documents")
-  from_BoardDraft_directory              BoardDraft[]              @relation("BoardDraft_directory")
-  from_BoardVersion_documents            BoardVersion[]            @relation("BoardVersion_documents")
-  from_BoardVersion_directory            BoardVersion[]            @relation("BoardVersion_directory")
-  from_BoardPage_documents               BoardPage[]               @relation("BoardPage_documents")
-  from_BoardPage_vacancyReport           BoardPage[]               @relation("BoardPage_vacancyReport")
-  from_BoardPage_applicationForm         BoardPage[]               @relation("BoardPage_applicationForm")
-  from_Community_documents               Community[]               @relation("Community_documents")
-  from_CommunityDraft_documents          CommunityDraft[]          @relation("CommunityDraft_documents")
-  from_CommunityVersion_documents        CommunityVersion[]        @relation("CommunityVersion_documents")
-  from_Facility_documents                Facility[]                @relation("Facility_documents")
-  from_FacilityDraft_documents           FacilityDraft[]           @relation("FacilityDraft_documents")
-  from_FacilityVersion_documents         FacilityVersion[]         @relation("FacilityVersion_documents")
-  from_Topic_documents                   Topic[]                   @relation("Topic_documents")
-  from_TopicDraft_documents              TopicDraft[]              @relation("TopicDraft_documents")
-  from_TopicVersion_documents            TopicVersion[]            @relation("TopicVersion_documents")
-  from_OrgUnit_documents                 OrgUnit[]                 @relation("OrgUnit_documents")
-  from_OrgUnitDraft_documents            OrgUnitDraft[]            @relation("OrgUnitDraft_documents")
-  from_OrgUnitVersion_documents          OrgUnitVersion[]          @relation("OrgUnitVersion_documents")
-  from_Park_documents                    Park[]                    @relation("Park_documents")
-  from_ParkDraft_documents               ParkDraft[]               @relation("ParkDraft_documents")
-  from_ParkVersion_documents             ParkVersion[]             @relation("ParkVersion_documents")
-  from_PublicNotice_documents            PublicNotice[]            @relation("PublicNotice_documents")
-  from_PublicNoticeDraft_documents       PublicNoticeDraft[]       @relation("PublicNoticeDraft_documents")
-  from_PublicNoticeVersion_documents     PublicNoticeVersion[]     @relation("PublicNoticeVersion_documents")
-  from_Service_documents                 Service[]                 @relation("Service_documents")
-  from_ServiceDraft_documents            ServiceDraft[]            @relation("ServiceDraft_documents")
-  from_ServiceVersion_documents          ServiceVersion[]          @relation("ServiceVersion_documents")
-  from_Trail_documents                   Trail[]                   @relation("Trail_documents")
-  from_TrailDraft_documents              TrailDraft[]              @relation("TrailDraft_documents")
-  from_TrailVersion_documents            TrailVersion[]            @relation("TrailVersion_documents")
+  id                                               String                    @id @default(cuid())
+  title                                            String                    @default("")
+  description                                      String                    @default("")
+  tags                                             Tag[]                     @relation("Document_tags")
+  file_filesize                                    Int?
+  file_filename                                    String?
+  collections                                      DocumentCollection[]      @relation("Document_collections")
+  editorNotes                                      String                    @default("")
+  from_AssemblyDistrict_documents                  AssemblyDistrict[]        @relation("AssemblyDistrict_documents")
+  from_AssemblyDistrictDraft_documents             AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_documents")
+  from_AssemblyDistrictVersion_documents           AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_documents")
+  from_Board_documents                             Board[]                   @relation("Board_documents")
+  from_Board_directory                             Board[]                   @relation("Board_directory")
+  from_BoardDraft_documents                        BoardDraft[]              @relation("BoardDraft_documents")
+  from_BoardDraft_directory                        BoardDraft[]              @relation("BoardDraft_directory")
+  from_BoardVersion_documents                      BoardVersion[]            @relation("BoardVersion_documents")
+  from_BoardVersion_directory                      BoardVersion[]            @relation("BoardVersion_directory")
+  from_BoardPage_documents                         BoardPage[]               @relation("BoardPage_documents")
+  from_BoardPage_vacancyReport                     BoardPage[]               @relation("BoardPage_vacancyReport")
+  from_BoardPage_applicationForm                   BoardPage[]               @relation("BoardPage_applicationForm")
+  from_Community_documents                         Community[]               @relation("Community_documents")
+  from_CommunityDraft_documents                    CommunityDraft[]          @relation("CommunityDraft_documents")
+  from_CommunityVersion_documents                  CommunityVersion[]        @relation("CommunityVersion_documents")
+  from_Election_candidateFilingDocuments           Election[]                @relation("Election_candidateFilingDocuments")
+  from_Election_absenteeVotingApplication          Election[]                @relation("Election_absenteeVotingApplication")
+  from_Election_electionOfficialApplication        Election[]                @relation("Election_electionOfficialApplication")
+  from_Election_candidates                         Election[]                @relation("Election_candidates")
+  from_Election_propositions                       Election[]                @relation("Election_propositions")
+  from_Election_electionBrochure                   Election[]                @relation("Election_electionBrochure")
+  from_Election_electionBallots                    Election[]                @relation("Election_electionBallots")
+  from_ElectionDraft_candidateFilingDocuments      ElectionDraft[]           @relation("ElectionDraft_candidateFilingDocuments")
+  from_ElectionDraft_absenteeVotingApplication     ElectionDraft[]           @relation("ElectionDraft_absenteeVotingApplication")
+  from_ElectionDraft_electionOfficialApplication   ElectionDraft[]           @relation("ElectionDraft_electionOfficialApplication")
+  from_ElectionDraft_candidates                    ElectionDraft[]           @relation("ElectionDraft_candidates")
+  from_ElectionDraft_propositions                  ElectionDraft[]           @relation("ElectionDraft_propositions")
+  from_ElectionDraft_electionBrochure              ElectionDraft[]           @relation("ElectionDraft_electionBrochure")
+  from_ElectionDraft_electionBallots               ElectionDraft[]           @relation("ElectionDraft_electionBallots")
+  from_ElectionVersion_candidateFilingDocuments    ElectionVersion[]         @relation("ElectionVersion_candidateFilingDocuments")
+  from_ElectionVersion_absenteeVotingApplication   ElectionVersion[]         @relation("ElectionVersion_absenteeVotingApplication")
+  from_ElectionVersion_electionOfficialApplication ElectionVersion[]         @relation("ElectionVersion_electionOfficialApplication")
+  from_ElectionVersion_candidates                  ElectionVersion[]         @relation("ElectionVersion_candidates")
+  from_ElectionVersion_propositions                ElectionVersion[]         @relation("ElectionVersion_propositions")
+  from_ElectionVersion_electionBrochure            ElectionVersion[]         @relation("ElectionVersion_electionBrochure")
+  from_ElectionVersion_electionBallots             ElectionVersion[]         @relation("ElectionVersion_electionBallots")
+  from_ElectionResult_document                     ElectionResult[]          @relation("ElectionResult_document")
+  from_Facility_documents                          Facility[]                @relation("Facility_documents")
+  from_FacilityDraft_documents                     FacilityDraft[]           @relation("FacilityDraft_documents")
+  from_FacilityVersion_documents                   FacilityVersion[]         @relation("FacilityVersion_documents")
+  from_Topic_documents                             Topic[]                   @relation("Topic_documents")
+  from_TopicDraft_documents                        TopicDraft[]              @relation("TopicDraft_documents")
+  from_TopicVersion_documents                      TopicVersion[]            @relation("TopicVersion_documents")
+  from_OrgUnit_documents                           OrgUnit[]                 @relation("OrgUnit_documents")
+  from_OrgUnitDraft_documents                      OrgUnitDraft[]            @relation("OrgUnitDraft_documents")
+  from_OrgUnitVersion_documents                    OrgUnitVersion[]          @relation("OrgUnitVersion_documents")
+  from_Park_documents                              Park[]                    @relation("Park_documents")
+  from_ParkDraft_documents                         ParkDraft[]               @relation("ParkDraft_documents")
+  from_ParkVersion_documents                       ParkVersion[]             @relation("ParkVersion_documents")
+  from_PublicNotice_documents                      PublicNotice[]            @relation("PublicNotice_documents")
+  from_PublicNoticeDraft_documents                 PublicNoticeDraft[]       @relation("PublicNoticeDraft_documents")
+  from_PublicNoticeVersion_documents               PublicNoticeVersion[]     @relation("PublicNoticeVersion_documents")
+  from_Service_documents                           Service[]                 @relation("Service_documents")
+  from_ServiceDraft_documents                      ServiceDraft[]            @relation("ServiceDraft_documents")
+  from_ServiceVersion_documents                    ServiceVersion[]          @relation("ServiceVersion_documents")
+  from_Trail_documents                             Trail[]                   @relation("Trail_documents")
+  from_TrailDraft_documents                        TrailDraft[]              @relation("TrailDraft_documents")
+  from_TrailVersion_documents                      TrailVersion[]            @relation("TrailVersion_documents")
 
   @@index([title])
 }
@@ -561,6 +583,172 @@ model ExternalLink {
   from_ServiceVersion_secondaryActions         ServiceVersion[] @relation("ServiceVersion_secondaryActions")
 
   @@index([urlId])
+}
+
+model Election {
+  id                                  String            @id @default(cuid())
+  heroImage                           String?
+  title                               String            @unique @default("")
+  description                         String            @default("")
+  slug                                String            @unique @default("")
+  publishAt                           DateTime?
+  unpublishAt                         DateTime?
+  reviewDate                          DateTime?
+  owner                               User?             @relation("Election_owner", fields: [ownerId], references: [id])
+  ownerId                             String?           @map("owner")
+  electionDate                        DateTime?
+  earlyVotingStartDate                DateTime?
+  voterRegistrationDeadline           DateTime?
+  candidateFilingDocuments            Document[]        @relation("Election_candidateFilingDocuments")
+  candidateFilingStartDate            DateTime?
+  candidateFilingDeadline             DateTime?
+  absenteeVotingApplication           Document?         @relation("Election_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
+  absenteeVotingApplicationId         String?           @map("absenteeVotingApplication")
+  absenteeApplicationDeadline         DateTime?
+  electionOfficialApplication         Document?         @relation("Election_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
+  electionOfficialApplicationId       String?           @map("electionOfficialApplication")
+  electionOfficialApplicationDeadline DateTime?
+  candidates                          Document?         @relation("Election_candidates", fields: [candidatesId], references: [id])
+  candidatesId                        String?           @map("candidates")
+  propositions                        Document[]        @relation("Election_propositions")
+  electionBrochure                    Document?         @relation("Election_electionBrochure", fields: [electionBrochureId], references: [id])
+  electionBrochureId                  String?           @map("electionBrochure")
+  electionBallots                     Document[]        @relation("Election_electionBallots")
+  result                              ElectionResult?   @relation("Election_result", fields: [resultId], references: [id])
+  resultId                            String?           @unique @map("result")
+  tags                                Tag[]             @relation("Election_tags")
+  userGroups                          UserGroup[]       @relation("Election_userGroups")
+  createdAt                           DateTime?         @default(now())
+  updatedAt                           DateTime?         @default(now()) @updatedAt
+  status                              String            @default("unpublished")
+  drafts                              ElectionDraft[]   @relation("ElectionDraft_original")
+  makeDrafts                          String?
+  versions                            ElectionVersion[] @relation("ElectionVersion_original")
+  currentVersion                      ElectionVersion?  @relation("Election_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId                    String?           @unique @map("currentVersion")
+
+  @@index([ownerId])
+  @@index([absenteeVotingApplicationId])
+  @@index([electionOfficialApplicationId])
+  @@index([candidatesId])
+  @@index([electionBrochureId])
+}
+
+model ElectionDraft {
+  id                                  String          @id @default(cuid())
+  original                            Election?       @relation("ElectionDraft_original", fields: [originalId], references: [id])
+  originalId                          String?         @map("original")
+  heroImage                           String?
+  title                               String          @unique @default("")
+  description                         String          @default("")
+  publishAt                           DateTime?
+  unpublishAt                         DateTime?
+  reviewDate                          DateTime?
+  owner                               User?           @relation("ElectionDraft_owner", fields: [ownerId], references: [id])
+  ownerId                             String?         @map("owner")
+  electionDate                        DateTime?
+  earlyVotingStartDate                DateTime?
+  voterRegistrationDeadline           DateTime?
+  candidateFilingDocuments            Document[]      @relation("ElectionDraft_candidateFilingDocuments")
+  candidateFilingStartDate            DateTime?
+  candidateFilingDeadline             DateTime?
+  absenteeVotingApplication           Document?       @relation("ElectionDraft_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
+  absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
+  absenteeApplicationDeadline         DateTime?
+  electionOfficialApplication         Document?       @relation("ElectionDraft_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
+  electionOfficialApplicationId       String?         @map("electionOfficialApplication")
+  electionOfficialApplicationDeadline DateTime?
+  candidates                          Document?       @relation("ElectionDraft_candidates", fields: [candidatesId], references: [id])
+  candidatesId                        String?         @map("candidates")
+  propositions                        Document[]      @relation("ElectionDraft_propositions")
+  electionBrochure                    Document?       @relation("ElectionDraft_electionBrochure", fields: [electionBrochureId], references: [id])
+  electionBrochureId                  String?         @map("electionBrochure")
+  electionBallots                     Document[]      @relation("ElectionDraft_electionBallots")
+  result                              ElectionResult? @relation("ElectionDraft_result", fields: [resultId], references: [id])
+  resultId                            String?         @map("result")
+  tags                                Tag[]           @relation("ElectionDraft_tags")
+  userGroups                          UserGroup[]     @relation("ElectionDraft_userGroups")
+  createdAt                           DateTime?       @default(now())
+  updatedAt                           DateTime?       @default(now()) @updatedAt
+  publish                             String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([absenteeVotingApplicationId])
+  @@index([electionOfficialApplicationId])
+  @@index([candidatesId])
+  @@index([electionBrochureId])
+  @@index([resultId])
+}
+
+model ElectionVersion {
+  id                                  String          @id @default(cuid())
+  original                            Election?       @relation("ElectionVersion_original", fields: [originalId], references: [id])
+  originalId                          String?         @map("original")
+  heroImage                           String?
+  title                               String          @unique @default("")
+  description                         String          @default("")
+  publishAt                           DateTime?
+  unpublishAt                         DateTime?
+  reviewDate                          DateTime?
+  owner                               User?           @relation("ElectionVersion_owner", fields: [ownerId], references: [id])
+  ownerId                             String?         @map("owner")
+  electionDate                        DateTime?
+  earlyVotingStartDate                DateTime?
+  voterRegistrationDeadline           DateTime?
+  candidateFilingDocuments            Document[]      @relation("ElectionVersion_candidateFilingDocuments")
+  candidateFilingStartDate            DateTime?
+  candidateFilingDeadline             DateTime?
+  absenteeVotingApplication           Document?       @relation("ElectionVersion_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
+  absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
+  absenteeApplicationDeadline         DateTime?
+  electionOfficialApplication         Document?       @relation("ElectionVersion_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
+  electionOfficialApplicationId       String?         @map("electionOfficialApplication")
+  electionOfficialApplicationDeadline DateTime?
+  candidates                          Document?       @relation("ElectionVersion_candidates", fields: [candidatesId], references: [id])
+  candidatesId                        String?         @map("candidates")
+  propositions                        Document[]      @relation("ElectionVersion_propositions")
+  electionBrochure                    Document?       @relation("ElectionVersion_electionBrochure", fields: [electionBrochureId], references: [id])
+  electionBrochureId                  String?         @map("electionBrochure")
+  electionBallots                     Document[]      @relation("ElectionVersion_electionBallots")
+  result                              ElectionResult? @relation("ElectionVersion_result", fields: [resultId], references: [id])
+  resultId                            String?         @map("result")
+  tags                                Tag[]           @relation("ElectionVersion_tags")
+  userGroups                          UserGroup[]     @relation("ElectionVersion_userGroups")
+  createdAt                           DateTime?       @default(now())
+  updatedAt                           DateTime?       @default(now()) @updatedAt
+  isLive                              Election?       @relation("Election_currentVersion")
+  republish                           String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([absenteeVotingApplicationId])
+  @@index([electionOfficialApplicationId])
+  @@index([candidatesId])
+  @@index([electionBrochureId])
+  @@index([resultId])
+}
+
+model ElectionsPage {
+  id               Int       @id
+  heroImage        String?
+  title            String    @unique @default("")
+  description      String    @default("")
+  howElectionsWork String?
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @default(now()) @updatedAt
+}
+
+model ElectionResult {
+  id                          String            @id @default(cuid())
+  election                    Election?         @relation("Election_result")
+  document                    Document?         @relation("ElectionResult_document", fields: [documentId], references: [id])
+  documentId                  String?           @map("document")
+  isOfficial                  Boolean           @default(false)
+  from_ElectionDraft_result   ElectionDraft[]   @relation("ElectionDraft_result")
+  from_ElectionVersion_result ElectionVersion[] @relation("ElectionVersion_result")
+
+  @@index([documentId])
 }
 
 model Facility {
@@ -1453,6 +1641,9 @@ model Tag {
   from_CommunityVersion_tags        CommunityVersion[]        @relation("CommunityVersion_tags")
   from_Document_tags                Document[]                @relation("Document_tags")
   from_DocumentCollection_tags      DocumentCollection[]      @relation("DocumentCollection_tags")
+  from_Election_tags                Election[]                @relation("Election_tags")
+  from_ElectionDraft_tags           ElectionDraft[]           @relation("ElectionDraft_tags")
+  from_ElectionVersion_tags         ElectionVersion[]         @relation("ElectionVersion_tags")
   from_Facility_tags                Facility[]                @relation("Facility_tags")
   from_FacilityDraft_tags           FacilityDraft[]           @relation("FacilityDraft_tags")
   from_FacilityVersion_tags         FacilityVersion[]         @relation("FacilityVersion_tags")
@@ -1687,6 +1878,9 @@ model User {
   from_CommunityDraft_owner          CommunityDraft[]          @relation("CommunityDraft_owner")
   from_CommunityVersion_owner        CommunityVersion[]        @relation("CommunityVersion_owner")
   from_DocumentCollection_owner      DocumentCollection[]      @relation("DocumentCollection_owner")
+  from_Election_owner                Election[]                @relation("Election_owner")
+  from_ElectionDraft_owner           ElectionDraft[]           @relation("ElectionDraft_owner")
+  from_ElectionVersion_owner         ElectionVersion[]         @relation("ElectionVersion_owner")
   from_Facility_owner                Facility[]                @relation("Facility_owner")
   from_FacilityDraft_owner           FacilityDraft[]           @relation("FacilityDraft_owner")
   from_FacilityVersion_owner         FacilityVersion[]         @relation("FacilityVersion_owner")
@@ -1729,6 +1923,9 @@ model UserGroup {
   from_CommunityDraft_userGroups          CommunityDraft[]          @relation("CommunityDraft_userGroups")
   from_CommunityVersion_userGroups        CommunityVersion[]        @relation("CommunityVersion_userGroups")
   from_DocumentCollection_userGroups      DocumentCollection[]      @relation("DocumentCollection_userGroups")
+  from_Election_userGroups                Election[]                @relation("Election_userGroups")
+  from_ElectionDraft_userGroups           ElectionDraft[]           @relation("ElectionDraft_userGroups")
+  from_ElectionVersion_userGroups         ElectionVersion[]         @relation("ElectionVersion_userGroups")
   from_Facility_userGroups                Facility[]                @relation("Facility_userGroups")
   from_FacilityDraft_userGroups           FacilityDraft[]           @relation("FacilityDraft_userGroups")
   from_FacilityVersion_userGroups         FacilityVersion[]         @relation("FacilityVersion_userGroups")
