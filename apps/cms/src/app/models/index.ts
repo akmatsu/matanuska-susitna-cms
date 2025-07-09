@@ -8,6 +8,9 @@ import { Document } from './Document';
 import { DocumentCollection } from './DocumentCollection';
 import { ExternalLink } from './ExternalLink';
 import * as FacilityModels from './Facility';
+import * as ElectionModels from './Election';
+import { ElectionsPage } from './ElectionsPage';
+import { ElectionResult } from './ElectionResult';
 import { Highlight } from './Highlight';
 import { HomePage } from './HomePage';
 import { Image } from './Image';
@@ -36,6 +39,9 @@ export const lists = {
   Document,
   DocumentCollection,
   ExternalLink,
+  ...ElectionModels,
+  ElectionsPage,
+  ElectionResult,
   ...FacilityModels,
   ...Topic,
   Highlight,

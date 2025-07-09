@@ -2405,6 +2405,693 @@ input UrlRelateToOneForCreateInput {
   connect: UrlWhereUniqueInput
 }
 
+type Election {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  slug: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: User
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  candidateFilingDocumentsCount(where: DocumentWhereInput! = {}): Int
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: Document
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: Document
+  electionOfficialApplicationDeadline: DateTime
+  candidates: Document
+  propositions(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  propositionsCount(where: DocumentWhereInput! = {}): Int
+  electionBrochure: Document
+  electionBallots(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  electionBallotsCount(where: DocumentWhereInput! = {}): Int
+  result: ElectionResult
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+  drafts(where: ElectionDraftWhereInput! = {}, orderBy: [ElectionDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionDraftWhereUniqueInput): [ElectionDraft!]
+  draftsCount(where: ElectionDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: ElectionVersionWhereInput! = {}, orderBy: [ElectionVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionVersionWhereUniqueInput): [ElectionVersion!]
+  versionsCount(where: ElectionVersionWhereInput! = {}): Int
+  currentVersion: ElectionVersion
+}
+
+input ElectionWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+  result: ElectionResultWhereUniqueInput
+  currentVersion: ElectionVersionWhereUniqueInput
+}
+
+input ElectionWhereInput {
+  AND: [ElectionWhereInput!]
+  OR: [ElectionWhereInput!]
+  NOT: [ElectionWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  slug: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  electionDate: DateTimeNullableFilter
+  earlyVotingStartDate: DateTimeNullableFilter
+  voterRegistrationDeadline: DateTimeNullableFilter
+  candidateFilingDocuments: DocumentManyRelationFilter
+  candidateFilingStartDate: DateTimeNullableFilter
+  candidateFilingDeadline: DateTimeNullableFilter
+  absenteeVotingApplication: DocumentWhereInput
+  absenteeApplicationDeadline: DateTimeNullableFilter
+  electionOfficialApplication: DocumentWhereInput
+  electionOfficialApplicationDeadline: DateTimeNullableFilter
+  candidates: DocumentWhereInput
+  propositions: DocumentManyRelationFilter
+  electionBrochure: DocumentWhereInput
+  electionBallots: DocumentManyRelationFilter
+  result: ElectionResultWhereInput
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  status: StringFilter
+  drafts: ElectionDraftManyRelationFilter
+  versions: ElectionVersionManyRelationFilter
+  currentVersion: ElectionVersionWhereInput
+}
+
+input ElectionDraftManyRelationFilter {
+  every: ElectionDraftWhereInput
+  some: ElectionDraftWhereInput
+  none: ElectionDraftWhereInput
+}
+
+input ElectionVersionManyRelationFilter {
+  every: ElectionVersionWhereInput
+  some: ElectionVersionWhereInput
+  none: ElectionVersionWhereInput
+}
+
+input ElectionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  slug: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  electionDate: OrderDirection
+  earlyVotingStartDate: OrderDirection
+  voterRegistrationDeadline: OrderDirection
+  candidateFilingStartDate: OrderDirection
+  candidateFilingDeadline: OrderDirection
+  absenteeApplicationDeadline: OrderDirection
+  electionOfficialApplicationDeadline: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
+}
+
+input ElectionUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  slug: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments: DocumentRelateToManyForUpdateInput
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: DocumentRelateToOneForUpdateInput
+  electionOfficialApplicationDeadline: DateTime
+  candidates: DocumentRelateToOneForUpdateInput
+  propositions: DocumentRelateToManyForUpdateInput
+  electionBrochure: DocumentRelateToOneForUpdateInput
+  electionBallots: DocumentRelateToManyForUpdateInput
+  result: ElectionResultRelateToOneForUpdateInput
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+  drafts: ElectionDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: ElectionVersionRelateToManyForUpdateInput
+  currentVersion: ElectionVersionRelateToOneForUpdateInput
+}
+
+input ElectionResultRelateToOneForUpdateInput {
+  create: ElectionResultCreateInput
+  connect: ElectionResultWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ElectionDraftRelateToManyForUpdateInput {
+  disconnect: [ElectionDraftWhereUniqueInput!]
+  set: [ElectionDraftWhereUniqueInput!]
+  create: [ElectionDraftCreateInput!]
+  connect: [ElectionDraftWhereUniqueInput!]
+}
+
+input ElectionVersionRelateToManyForUpdateInput {
+  disconnect: [ElectionVersionWhereUniqueInput!]
+  set: [ElectionVersionWhereUniqueInput!]
+  create: [ElectionVersionCreateInput!]
+  connect: [ElectionVersionWhereUniqueInput!]
+}
+
+input ElectionVersionRelateToOneForUpdateInput {
+  create: ElectionVersionCreateInput
+  connect: ElectionVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ElectionUpdateArgs {
+  where: ElectionWhereUniqueInput!
+  data: ElectionUpdateInput!
+}
+
+input ElectionCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  slug: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments: DocumentRelateToManyForCreateInput
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: DocumentRelateToOneForCreateInput
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: DocumentRelateToOneForCreateInput
+  electionOfficialApplicationDeadline: DateTime
+  candidates: DocumentRelateToOneForCreateInput
+  propositions: DocumentRelateToManyForCreateInput
+  electionBrochure: DocumentRelateToOneForCreateInput
+  electionBallots: DocumentRelateToManyForCreateInput
+  result: ElectionResultRelateToOneForCreateInput
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  status: String
+  drafts: ElectionDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: ElectionVersionRelateToManyForCreateInput
+  currentVersion: ElectionVersionRelateToOneForCreateInput
+}
+
+input ElectionResultRelateToOneForCreateInput {
+  create: ElectionResultCreateInput
+  connect: ElectionResultWhereUniqueInput
+}
+
+input ElectionDraftRelateToManyForCreateInput {
+  create: [ElectionDraftCreateInput!]
+  connect: [ElectionDraftWhereUniqueInput!]
+}
+
+input ElectionVersionRelateToManyForCreateInput {
+  create: [ElectionVersionCreateInput!]
+  connect: [ElectionVersionWhereUniqueInput!]
+}
+
+input ElectionVersionRelateToOneForCreateInput {
+  create: ElectionVersionCreateInput
+  connect: ElectionVersionWhereUniqueInput
+}
+
+type ElectionDraft {
+  id: ID!
+  original: Election
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: User
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  candidateFilingDocumentsCount(where: DocumentWhereInput! = {}): Int
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: Document
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: Document
+  electionOfficialApplicationDeadline: DateTime
+  candidates: Document
+  propositions(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  propositionsCount(where: DocumentWhereInput! = {}): Int
+  electionBrochure: Document
+  electionBallots(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  electionBallotsCount(where: DocumentWhereInput! = {}): Int
+  result: ElectionResult
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  publish: String
+}
+
+input ElectionDraftWhereUniqueInput {
+  id: ID
+  title: String
+}
+
+input ElectionDraftWhereInput {
+  AND: [ElectionDraftWhereInput!]
+  OR: [ElectionDraftWhereInput!]
+  NOT: [ElectionDraftWhereInput!]
+  id: IDFilter
+  original: ElectionWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  electionDate: DateTimeNullableFilter
+  earlyVotingStartDate: DateTimeNullableFilter
+  voterRegistrationDeadline: DateTimeNullableFilter
+  candidateFilingDocuments: DocumentManyRelationFilter
+  candidateFilingStartDate: DateTimeNullableFilter
+  candidateFilingDeadline: DateTimeNullableFilter
+  absenteeVotingApplication: DocumentWhereInput
+  absenteeApplicationDeadline: DateTimeNullableFilter
+  electionOfficialApplication: DocumentWhereInput
+  electionOfficialApplicationDeadline: DateTimeNullableFilter
+  candidates: DocumentWhereInput
+  propositions: DocumentManyRelationFilter
+  electionBrochure: DocumentWhereInput
+  electionBallots: DocumentManyRelationFilter
+  result: ElectionResultWhereInput
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input ElectionDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  electionDate: OrderDirection
+  earlyVotingStartDate: OrderDirection
+  voterRegistrationDeadline: OrderDirection
+  candidateFilingStartDate: OrderDirection
+  candidateFilingDeadline: OrderDirection
+  absenteeApplicationDeadline: OrderDirection
+  electionOfficialApplicationDeadline: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  publish: OrderDirection
+}
+
+input ElectionDraftUpdateInput {
+  original: ElectionRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments: DocumentRelateToManyForUpdateInput
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: DocumentRelateToOneForUpdateInput
+  electionOfficialApplicationDeadline: DateTime
+  candidates: DocumentRelateToOneForUpdateInput
+  propositions: DocumentRelateToManyForUpdateInput
+  electionBrochure: DocumentRelateToOneForUpdateInput
+  electionBallots: DocumentRelateToManyForUpdateInput
+  result: ElectionResultRelateToOneForUpdateInput
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  publish: String
+}
+
+input ElectionRelateToOneForUpdateInput {
+  create: ElectionCreateInput
+  connect: ElectionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ElectionDraftUpdateArgs {
+  where: ElectionDraftWhereUniqueInput!
+  data: ElectionDraftUpdateInput!
+}
+
+input ElectionDraftCreateInput {
+  original: ElectionRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments: DocumentRelateToManyForCreateInput
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: DocumentRelateToOneForCreateInput
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: DocumentRelateToOneForCreateInput
+  electionOfficialApplicationDeadline: DateTime
+  candidates: DocumentRelateToOneForCreateInput
+  propositions: DocumentRelateToManyForCreateInput
+  electionBrochure: DocumentRelateToOneForCreateInput
+  electionBallots: DocumentRelateToManyForCreateInput
+  result: ElectionResultRelateToOneForCreateInput
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  publish: String
+}
+
+input ElectionRelateToOneForCreateInput {
+  create: ElectionCreateInput
+  connect: ElectionWhereUniqueInput
+}
+
+type ElectionVersion {
+  id: ID!
+  original: Election
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: User
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  candidateFilingDocumentsCount(where: DocumentWhereInput! = {}): Int
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: Document
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: Document
+  electionOfficialApplicationDeadline: DateTime
+  candidates: Document
+  propositions(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  propositionsCount(where: DocumentWhereInput! = {}): Int
+  electionBrochure: Document
+  electionBallots(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  electionBallotsCount(where: DocumentWhereInput! = {}): Int
+  result: ElectionResult
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  isLive: Election
+  republish: String
+}
+
+input ElectionVersionWhereUniqueInput {
+  id: ID
+  title: String
+  isLive: ElectionWhereUniqueInput
+}
+
+input ElectionVersionWhereInput {
+  AND: [ElectionVersionWhereInput!]
+  OR: [ElectionVersionWhereInput!]
+  NOT: [ElectionVersionWhereInput!]
+  id: IDFilter
+  original: ElectionWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  electionDate: DateTimeNullableFilter
+  earlyVotingStartDate: DateTimeNullableFilter
+  voterRegistrationDeadline: DateTimeNullableFilter
+  candidateFilingDocuments: DocumentManyRelationFilter
+  candidateFilingStartDate: DateTimeNullableFilter
+  candidateFilingDeadline: DateTimeNullableFilter
+  absenteeVotingApplication: DocumentWhereInput
+  absenteeApplicationDeadline: DateTimeNullableFilter
+  electionOfficialApplication: DocumentWhereInput
+  electionOfficialApplicationDeadline: DateTimeNullableFilter
+  candidates: DocumentWhereInput
+  propositions: DocumentManyRelationFilter
+  electionBrochure: DocumentWhereInput
+  electionBallots: DocumentManyRelationFilter
+  result: ElectionResultWhereInput
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  isLive: ElectionWhereInput
+}
+
+input ElectionVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  electionDate: OrderDirection
+  earlyVotingStartDate: OrderDirection
+  voterRegistrationDeadline: OrderDirection
+  candidateFilingStartDate: OrderDirection
+  candidateFilingDeadline: OrderDirection
+  absenteeApplicationDeadline: OrderDirection
+  electionOfficialApplicationDeadline: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  republish: OrderDirection
+}
+
+input ElectionVersionUpdateInput {
+  original: ElectionRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments: DocumentRelateToManyForUpdateInput
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: DocumentRelateToOneForUpdateInput
+  electionOfficialApplicationDeadline: DateTime
+  candidates: DocumentRelateToOneForUpdateInput
+  propositions: DocumentRelateToManyForUpdateInput
+  electionBrochure: DocumentRelateToOneForUpdateInput
+  electionBallots: DocumentRelateToManyForUpdateInput
+  result: ElectionResultRelateToOneForUpdateInput
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  isLive: ElectionRelateToOneForUpdateInput
+  republish: String
+}
+
+input ElectionVersionUpdateArgs {
+  where: ElectionVersionWhereUniqueInput!
+  data: ElectionVersionUpdateInput!
+}
+
+input ElectionVersionCreateInput {
+  original: ElectionRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  electionDate: DateTime
+  earlyVotingStartDate: DateTime
+  voterRegistrationDeadline: DateTime
+  candidateFilingDocuments: DocumentRelateToManyForCreateInput
+  candidateFilingStartDate: DateTime
+  candidateFilingDeadline: DateTime
+  absenteeVotingApplication: DocumentRelateToOneForCreateInput
+  absenteeApplicationDeadline: DateTime
+  electionOfficialApplication: DocumentRelateToOneForCreateInput
+  electionOfficialApplicationDeadline: DateTime
+  candidates: DocumentRelateToOneForCreateInput
+  propositions: DocumentRelateToManyForCreateInput
+  electionBrochure: DocumentRelateToOneForCreateInput
+  electionBallots: DocumentRelateToManyForCreateInput
+  result: ElectionResultRelateToOneForCreateInput
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  isLive: ElectionRelateToOneForCreateInput
+  republish: String
+}
+
+type ElectionsPage {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  howElectionsWork: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input ElectionsPageWhereUniqueInput {
+  id: ID
+  title: String
+}
+
+input ElectionsPageWhereInput {
+  AND: [ElectionsPageWhereInput!]
+  OR: [ElectionsPageWhereInput!]
+  NOT: [ElectionsPageWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  howElectionsWork: MyStringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input ElectionsPageOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  howElectionsWork: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input ElectionsPageUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  howElectionsWork: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input ElectionsPageUpdateArgs {
+  where: ElectionsPageWhereUniqueInput! = {id: 1}
+  data: ElectionsPageUpdateInput!
+}
+
+input ElectionsPageCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  howElectionsWork: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type ElectionResult {
+  id: ID!
+  election: Election
+  document: Document
+  isOfficial: Boolean
+}
+
+input ElectionResultWhereUniqueInput {
+  id: ID
+  election: ElectionWhereUniqueInput
+}
+
+input ElectionResultWhereInput {
+  AND: [ElectionResultWhereInput!]
+  OR: [ElectionResultWhereInput!]
+  NOT: [ElectionResultWhereInput!]
+  id: IDFilter
+  election: ElectionWhereInput
+  document: DocumentWhereInput
+  isOfficial: BooleanFilter
+}
+
+input ElectionResultOrderByInput {
+  id: OrderDirection
+  isOfficial: OrderDirection
+}
+
+input ElectionResultUpdateInput {
+  election: ElectionRelateToOneForUpdateInput
+  document: DocumentRelateToOneForUpdateInput
+  isOfficial: Boolean
+}
+
+input ElectionResultUpdateArgs {
+  where: ElectionResultWhereUniqueInput!
+  data: ElectionResultUpdateInput!
+}
+
+input ElectionResultCreateInput {
+  election: ElectionRelateToOneForCreateInput
+  document: DocumentRelateToOneForCreateInput
+  isOfficial: Boolean
+}
+
 type Facility implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
@@ -7294,6 +7981,36 @@ type Mutation {
   updateExternalLinks(data: [ExternalLinkUpdateArgs!]!): [ExternalLink]
   deleteExternalLink(where: ExternalLinkWhereUniqueInput!): ExternalLink
   deleteExternalLinks(where: [ExternalLinkWhereUniqueInput!]!): [ExternalLink]
+  createElection(data: ElectionCreateInput!): Election
+  createElections(data: [ElectionCreateInput!]!): [Election]
+  updateElection(where: ElectionWhereUniqueInput!, data: ElectionUpdateInput!): Election
+  updateElections(data: [ElectionUpdateArgs!]!): [Election]
+  deleteElection(where: ElectionWhereUniqueInput!): Election
+  deleteElections(where: [ElectionWhereUniqueInput!]!): [Election]
+  createElectionDraft(data: ElectionDraftCreateInput!): ElectionDraft
+  createElectionDrafts(data: [ElectionDraftCreateInput!]!): [ElectionDraft]
+  updateElectionDraft(where: ElectionDraftWhereUniqueInput!, data: ElectionDraftUpdateInput!): ElectionDraft
+  updateElectionDrafts(data: [ElectionDraftUpdateArgs!]!): [ElectionDraft]
+  deleteElectionDraft(where: ElectionDraftWhereUniqueInput!): ElectionDraft
+  deleteElectionDrafts(where: [ElectionDraftWhereUniqueInput!]!): [ElectionDraft]
+  createElectionVersion(data: ElectionVersionCreateInput!): ElectionVersion
+  createElectionVersions(data: [ElectionVersionCreateInput!]!): [ElectionVersion]
+  updateElectionVersion(where: ElectionVersionWhereUniqueInput!, data: ElectionVersionUpdateInput!): ElectionVersion
+  updateElectionVersions(data: [ElectionVersionUpdateArgs!]!): [ElectionVersion]
+  deleteElectionVersion(where: ElectionVersionWhereUniqueInput!): ElectionVersion
+  deleteElectionVersions(where: [ElectionVersionWhereUniqueInput!]!): [ElectionVersion]
+  createElectionsPage(data: ElectionsPageCreateInput!): ElectionsPage
+  createElectionsPages(data: [ElectionsPageCreateInput!]!): [ElectionsPage]
+  updateElectionsPage(where: ElectionsPageWhereUniqueInput! = {id: 1}, data: ElectionsPageUpdateInput!): ElectionsPage
+  updateElectionsPages(data: [ElectionsPageUpdateArgs!]!): [ElectionsPage]
+  deleteElectionsPage(where: ElectionsPageWhereUniqueInput! = {id: 1}): ElectionsPage
+  deleteElectionsPages(where: [ElectionsPageWhereUniqueInput!]!): [ElectionsPage]
+  createElectionResult(data: ElectionResultCreateInput!): ElectionResult
+  createElectionResults(data: [ElectionResultCreateInput!]!): [ElectionResult]
+  updateElectionResult(where: ElectionResultWhereUniqueInput!, data: ElectionResultUpdateInput!): ElectionResult
+  updateElectionResults(data: [ElectionResultUpdateArgs!]!): [ElectionResult]
+  deleteElectionResult(where: ElectionResultWhereUniqueInput!): ElectionResult
+  deleteElectionResults(where: [ElectionResultWhereUniqueInput!]!): [ElectionResult]
   createFacility(data: FacilityCreateInput!): Facility
   createFacilities(data: [FacilityCreateInput!]!): [Facility]
   updateFacility(where: FacilityWhereUniqueInput!, data: FacilityUpdateInput!): Facility
@@ -7529,6 +8246,21 @@ type Query {
   externalLink(where: ExternalLinkWhereUniqueInput!): ExternalLink
   externalLinks(where: ExternalLinkWhereInput! = {}, orderBy: [ExternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExternalLinkWhereUniqueInput): [ExternalLink!]
   externalLinksCount(where: ExternalLinkWhereInput! = {}): Int
+  election(where: ElectionWhereUniqueInput!): Election
+  elections(where: ElectionWhereInput! = {}, orderBy: [ElectionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionWhereUniqueInput): [Election!]
+  electionsCount(where: ElectionWhereInput! = {}): Int
+  electionDraft(where: ElectionDraftWhereUniqueInput!): ElectionDraft
+  electionDrafts(where: ElectionDraftWhereInput! = {}, orderBy: [ElectionDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionDraftWhereUniqueInput): [ElectionDraft!]
+  electionDraftsCount(where: ElectionDraftWhereInput! = {}): Int
+  electionVersion(where: ElectionVersionWhereUniqueInput!): ElectionVersion
+  electionVersions(where: ElectionVersionWhereInput! = {}, orderBy: [ElectionVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionVersionWhereUniqueInput): [ElectionVersion!]
+  electionVersionsCount(where: ElectionVersionWhereInput! = {}): Int
+  electionsPage(where: ElectionsPageWhereUniqueInput! = {id: 1}): ElectionsPage
+  electionsPages(where: ElectionsPageWhereInput! = {id: {equals: 1}}, orderBy: [ElectionsPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionsPageWhereUniqueInput): [ElectionsPage!]
+  electionsPagesCount(where: ElectionsPageWhereInput! = {id: {equals: 1}}): Int
+  electionResult(where: ElectionResultWhereUniqueInput!): ElectionResult
+  electionResults(where: ElectionResultWhereInput! = {}, orderBy: [ElectionResultOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionResultWhereUniqueInput): [ElectionResult!]
+  electionResultsCount(where: ElectionResultWhereInput! = {}): Int
   facility(where: FacilityWhereUniqueInput!): Facility
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int

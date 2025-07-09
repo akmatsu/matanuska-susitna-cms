@@ -1,6 +1,10 @@
 import { BaseFields, list, ListConfig } from '@keystone-6/core';
 import { generalOperationAccess } from './access';
-import { relationship, select } from '@keystone-6/core/fields';
+import {
+  relationship,
+  RelationshipFieldConfig,
+  select,
+} from '@keystone-6/core/fields';
 import {
   BaseItem,
   BaseListTypeInfo,
@@ -16,6 +20,7 @@ import { deepMerge, lowercaseFirstLetter } from '../utils';
 import { getPublishQueue } from '../queues/redis';
 import { createDrafts } from '../components/customFields/drafts';
 import { logger } from '../configs/logger';
+import v from 'voca';
 
 interface Options {
   versionLimit?: number;
@@ -400,4 +405,21 @@ async function createVersion(
       });
     }
   }
+}
+
+export function mapRelationShip<
+  T extends { isDraft?: boolean; isVersion?: boolean },
+>(
+  modelRef: string,
+  currentModelName: string,
+  config: Omit<RelationshipFieldConfig<BaseListTypeInfo>, 'ref'>,
+  opts?: T,
+) {
+  return relationship({
+    ref:
+      !opts?.isDraft && !opts?.isVersion
+        ? `${modelRef}.${v.camelCase(currentModelName)}`
+        : modelRef,
+    ...config,
+  } as RelationshipFieldConfig<BaseListTypeInfo>);
 }
