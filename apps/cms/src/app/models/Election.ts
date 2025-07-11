@@ -15,6 +15,7 @@ import {
 } from '../fieldUtils';
 import { group } from '@keystone-6/core';
 import { filterByPubStatus, generalOperationAccess } from '../access';
+import { customText } from '../../components/customFields/Markdown';
 
 const listKey = 'Election';
 
@@ -73,6 +74,13 @@ export const {
               inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
             },
           }),
+          candidatePacketAvailability: timestamp({
+            isFilterable: true,
+            isOrderable: true,
+            ui: {
+              views: './src/components/customFields/datetime/views.tsx',
+            },
+          }),
           candidateFilingStartDate: timestamp({
             isFilterable: true,
             isOrderable: true,
@@ -87,6 +95,7 @@ export const {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
+          officesToBeFilled: customText(),
         },
       }),
 
