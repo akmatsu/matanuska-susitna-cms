@@ -434,45 +434,47 @@ model CommunityVersion {
 }
 
 model Contact {
-  id                                    String                    @id @default(cuid())
-  name                                  String                    @default("")
-  title                                 String?
-  phone                                 String?
-  email                                 String?
-  from_AssemblyDistrict_contacts        AssemblyDistrict[]        @relation("AssemblyDistrict_contacts")
-  from_AssemblyDistrictDraft_contacts   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_contacts")
-  from_AssemblyDistrictVersion_contacts AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_contacts")
-  from_Board_contacts                   Board[]                   @relation("Board_contacts")
-  from_BoardDraft_contacts              BoardDraft[]              @relation("BoardDraft_contacts")
-  from_BoardVersion_contacts            BoardVersion[]            @relation("BoardVersion_contacts")
-  from_BoardPage_contacts               BoardPage[]               @relation("BoardPage_contacts")
-  from_Community_contacts               Community[]               @relation("Community_contacts")
-  from_CommunityDraft_contacts          CommunityDraft[]          @relation("CommunityDraft_contacts")
-  from_CommunityVersion_contacts        CommunityVersion[]        @relation("CommunityVersion_contacts")
-  from_Facility_contacts                Facility[]                @relation("Facility_contacts")
-  from_FacilityDraft_contacts           FacilityDraft[]           @relation("FacilityDraft_contacts")
-  from_FacilityVersion_contacts         FacilityVersion[]         @relation("FacilityVersion_contacts")
-  from_Topic_contacts                   Topic[]                   @relation("Topic_contacts")
-  from_TopicDraft_contacts              TopicDraft[]              @relation("TopicDraft_contacts")
-  from_TopicVersion_contacts            TopicVersion[]            @relation("TopicVersion_contacts")
-  from_OrgUnit_contacts                 OrgUnit[]                 @relation("OrgUnit_contacts")
-  from_OrgUnitDraft_contacts            OrgUnitDraft[]            @relation("OrgUnitDraft_contacts")
-  from_OrgUnitVersion_contacts          OrgUnitVersion[]          @relation("OrgUnitVersion_contacts")
-  from_Park_contacts                    Park[]                    @relation("Park_contacts")
-  from_ParkDraft_contacts               ParkDraft[]               @relation("ParkDraft_contacts")
-  from_ParkVersion_contacts             ParkVersion[]             @relation("ParkVersion_contacts")
-  from_PublicNotice_contacts            PublicNotice[]            @relation("PublicNotice_contacts")
-  from_PublicNoticeDraft_contacts       PublicNoticeDraft[]       @relation("PublicNoticeDraft_contacts")
-  from_PublicNoticeVersion_contacts     PublicNoticeVersion[]     @relation("PublicNoticeVersion_contacts")
-  from_Service_primaryContact           Service[]                 @relation("Service_primaryContact")
-  from_Service_contacts                 Service[]                 @relation("Service_contacts")
-  from_ServiceDraft_primaryContact      ServiceDraft[]            @relation("ServiceDraft_primaryContact")
-  from_ServiceDraft_contacts            ServiceDraft[]            @relation("ServiceDraft_contacts")
-  from_ServiceVersion_primaryContact    ServiceVersion[]          @relation("ServiceVersion_primaryContact")
-  from_ServiceVersion_contacts          ServiceVersion[]          @relation("ServiceVersion_contacts")
-  from_Trail_contacts                   Trail[]                   @relation("Trail_contacts")
-  from_TrailDraft_contacts              TrailDraft[]              @relation("TrailDraft_contacts")
-  from_TrailVersion_contacts            TrailVersion[]            @relation("TrailVersion_contacts")
+  id                                        String                    @id @default(cuid())
+  name                                      String                    @default("")
+  title                                     String?
+  phone                                     String?
+  email                                     String?
+  from_AssemblyDistrict_contacts            AssemblyDistrict[]        @relation("AssemblyDistrict_contacts")
+  from_AssemblyDistrictDraft_contacts       AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_contacts")
+  from_AssemblyDistrictVersion_contacts     AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_contacts")
+  from_Board_contacts                       Board[]                   @relation("Board_contacts")
+  from_BoardDraft_contacts                  BoardDraft[]              @relation("BoardDraft_contacts")
+  from_BoardVersion_contacts                BoardVersion[]            @relation("BoardVersion_contacts")
+  from_BoardPage_contacts                   BoardPage[]               @relation("BoardPage_contacts")
+  from_Community_contacts                   Community[]               @relation("Community_contacts")
+  from_CommunityDraft_contacts              CommunityDraft[]          @relation("CommunityDraft_contacts")
+  from_CommunityVersion_contacts            CommunityVersion[]        @relation("CommunityVersion_contacts")
+  from_ElectionsPage_stateElectionContact   ElectionsPage[]           @relation("ElectionsPage_stateElectionContact")
+  from_ElectionsPage_boroughElectionContact ElectionsPage[]           @relation("ElectionsPage_boroughElectionContact")
+  from_Facility_contacts                    Facility[]                @relation("Facility_contacts")
+  from_FacilityDraft_contacts               FacilityDraft[]           @relation("FacilityDraft_contacts")
+  from_FacilityVersion_contacts             FacilityVersion[]         @relation("FacilityVersion_contacts")
+  from_Topic_contacts                       Topic[]                   @relation("Topic_contacts")
+  from_TopicDraft_contacts                  TopicDraft[]              @relation("TopicDraft_contacts")
+  from_TopicVersion_contacts                TopicVersion[]            @relation("TopicVersion_contacts")
+  from_OrgUnit_contacts                     OrgUnit[]                 @relation("OrgUnit_contacts")
+  from_OrgUnitDraft_contacts                OrgUnitDraft[]            @relation("OrgUnitDraft_contacts")
+  from_OrgUnitVersion_contacts              OrgUnitVersion[]          @relation("OrgUnitVersion_contacts")
+  from_Park_contacts                        Park[]                    @relation("Park_contacts")
+  from_ParkDraft_contacts                   ParkDraft[]               @relation("ParkDraft_contacts")
+  from_ParkVersion_contacts                 ParkVersion[]             @relation("ParkVersion_contacts")
+  from_PublicNotice_contacts                PublicNotice[]            @relation("PublicNotice_contacts")
+  from_PublicNoticeDraft_contacts           PublicNoticeDraft[]       @relation("PublicNoticeDraft_contacts")
+  from_PublicNoticeVersion_contacts         PublicNoticeVersion[]     @relation("PublicNoticeVersion_contacts")
+  from_Service_primaryContact               Service[]                 @relation("Service_primaryContact")
+  from_Service_contacts                     Service[]                 @relation("Service_contacts")
+  from_ServiceDraft_primaryContact          ServiceDraft[]            @relation("ServiceDraft_primaryContact")
+  from_ServiceDraft_contacts                ServiceDraft[]            @relation("ServiceDraft_contacts")
+  from_ServiceVersion_primaryContact        ServiceVersion[]          @relation("ServiceVersion_primaryContact")
+  from_ServiceVersion_contacts              ServiceVersion[]          @relation("ServiceVersion_contacts")
+  from_Trail_contacts                       Trail[]                   @relation("Trail_contacts")
+  from_TrailDraft_contacts                  TrailDraft[]              @relation("TrailDraft_contacts")
+  from_TrailVersion_contacts                TrailVersion[]            @relation("TrailVersion_contacts")
 }
 
 model Document {
@@ -520,6 +522,7 @@ model Document {
   from_ElectionVersion_propositions                ElectionVersion[]         @relation("ElectionVersion_propositions")
   from_ElectionVersion_electionBrochure            ElectionVersion[]         @relation("ElectionVersion_electionBrochure")
   from_ElectionVersion_electionBallots             ElectionVersion[]         @relation("ElectionVersion_electionBallots")
+  from_ElectionsPage_referendumProcessDocument     ElectionsPage[]           @relation("ElectionsPage_referendumProcessDocument")
   from_ElectionResult_document                     ElectionResult[]          @relation("ElectionResult_document")
   from_Facility_documents                          Facility[]                @relation("Facility_documents")
   from_FacilityDraft_documents                     FacilityDraft[]           @relation("FacilityDraft_documents")
@@ -600,8 +603,10 @@ model Election {
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
   candidateFilingDocuments            Document[]        @relation("Election_candidateFilingDocuments")
+  candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
+  officesToBeFilled                   String?
   absenteeVotingApplication           Document?         @relation("Election_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
   absenteeVotingApplicationId         String?           @map("absenteeVotingApplication")
   absenteeApplicationDeadline         DateTime?
@@ -650,8 +655,10 @@ model ElectionDraft {
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
   candidateFilingDocuments            Document[]      @relation("ElectionDraft_candidateFilingDocuments")
+  candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
+  officesToBeFilled                   String?
   absenteeVotingApplication           Document?       @relation("ElectionDraft_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
   absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
   absenteeApplicationDeadline         DateTime?
@@ -697,8 +704,10 @@ model ElectionVersion {
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
   candidateFilingDocuments            Document[]      @relation("ElectionVersion_candidateFilingDocuments")
+  candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
+  officesToBeFilled                   String?
   absenteeVotingApplication           Document?       @relation("ElectionVersion_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
   absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
   absenteeApplicationDeadline         DateTime?
@@ -730,13 +739,23 @@ model ElectionVersion {
 }
 
 model ElectionsPage {
-  id               Int       @id
-  heroImage        String?
-  title            String    @unique @default("")
-  description      String    @default("")
-  howElectionsWork String?
-  createdAt        DateTime? @default(now())
-  updatedAt        DateTime? @default(now()) @updatedAt
+  id                          Int       @id
+  heroImage                   String?
+  title                       String    @unique @default("")
+  description                 String    @default("")
+  howElectionsWork            String?
+  stateElectionContact        Contact?  @relation("ElectionsPage_stateElectionContact", fields: [stateElectionContactId], references: [id])
+  stateElectionContactId      String?   @map("stateElectionContact")
+  boroughElectionContact      Contact?  @relation("ElectionsPage_boroughElectionContact", fields: [boroughElectionContactId], references: [id])
+  boroughElectionContactId    String?   @map("boroughElectionContact")
+  referendumProcessDocument   Document? @relation("ElectionsPage_referendumProcessDocument", fields: [referendumProcessDocumentId], references: [id])
+  referendumProcessDocumentId String?   @map("referendumProcessDocument")
+  createdAt                   DateTime? @default(now())
+  updatedAt                   DateTime? @default(now()) @updatedAt
+
+  @@index([stateElectionContactId])
+  @@index([boroughElectionContactId])
+  @@index([referendumProcessDocumentId])
 }
 
 model ElectionResult {
