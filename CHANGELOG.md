@@ -1,3 +1,11 @@
+## [0.12.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.12.1...v0.12.2) (2025-07-18)
+
+
+### Bug Fixes
+
+* only users who are assigned to electionsUser group can edit or create elections ([f2959df](https://github.com/akmatsu/matanuska-susitna-cms/commit/f2959dfd0b541300cf3f4ab4c43ba8a9f326ac54))
+* only users who can edit elections can now see the elections pages ([a4c08a9](https://github.com/akmatsu/matanuska-susitna-cms/commit/a4c08a9f8ffc999ea62aa6ba93f7e13bfa6ab070))
+
 ## [0.12.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.12.0...v0.12.1) (2025-07-18)
 
 
