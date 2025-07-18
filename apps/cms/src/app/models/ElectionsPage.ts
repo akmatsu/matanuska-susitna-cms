@@ -2,7 +2,6 @@ import { list } from '@keystone-6/core';
 import {
   generalItemAccess,
   generalOperationAccess,
-  isAdmin,
   isNotElectionUser,
 } from '../access';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';

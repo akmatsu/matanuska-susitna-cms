@@ -18,7 +18,6 @@ import {
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
-  isAdmin,
   isNotElectionUser,
 } from '../access';
 import { customText } from '../../components/customFields/Markdown';
