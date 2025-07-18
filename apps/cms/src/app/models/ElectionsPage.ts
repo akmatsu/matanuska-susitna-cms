@@ -1,5 +1,10 @@
 import { list } from '@keystone-6/core';
-import { generalItemAccess, generalOperationAccess, isAdmin } from '../access';
+import {
+  generalItemAccess,
+  generalOperationAccess,
+  isAdmin,
+  isNotElectionUser,
+} from '../access';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import {
   owner,
@@ -17,29 +22,8 @@ export const ElectionsPage = list({
   },
   isSingleton: true,
   ui: {
-    isHidden: async (args) => {
-      const isadmin = await isAdmin(args);
-      if (isadmin) {
-        return false;
-      }
-
-      if (args.session?.id) {
-        const hasAccess = await args.context.query.User.count({
-          where: {
-            AND: [
-              { id: { equals: args.session.id } },
-              {
-                groups: {
-                  some: { id: { equals: 'electionsUser' } },
-                },
-              },
-            ],
-          },
-        });
-        return !hasAccess;
-      }
-      return true;
-    },
+    isHidden: isNotElectionUser,
+    hideCreate: isNotElectionUser,
   },
   fields: {
     heroImage: blueHarvestImage(),
