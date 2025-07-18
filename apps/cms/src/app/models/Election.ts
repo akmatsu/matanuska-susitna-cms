@@ -14,7 +14,12 @@ import {
   userGroups,
 } from '../fieldUtils';
 import { group } from '@keystone-6/core';
-import { filterByPubStatus, generalOperationAccess } from '../access';
+import {
+  filterByPubStatus,
+  generalItemAccess,
+  generalOperationAccess,
+  isAdmin,
+} from '../access';
 import { customText } from '../../components/customFields/Markdown';
 
 const listKey = 'Election';
@@ -37,6 +42,9 @@ export const {
       electionDate: timestamp({
         isFilterable: true,
         isOrderable: true,
+        validation: {
+          isRequired: true,
+        },
         ui: {
           views: './src/components/customFields/datetime/views.tsx',
         },
@@ -224,6 +232,55 @@ export const {
     mainAccess: {
       operation: generalOperationAccess,
       filter: filterByPubStatus,
+      item: generalItemAccess(listKey),
+    },
+    mainUI: {
+      hideCreate: async (args) => {
+        const isadmin = await isAdmin(args);
+        if (isadmin) {
+          return false;
+        }
+
+        if (args.session?.id) {
+          const hasAccess = await args.context.query.User.count({
+            where: {
+              AND: [
+                { id: { equals: args.session.id } },
+                {
+                  groups: {
+                    some: { id: { equals: 'electionsUser' } },
+                  },
+                },
+              ],
+            },
+          });
+          return !hasAccess;
+        }
+        return true;
+      },
+      isHidden: async (args) => {
+        const isadmin = await isAdmin(args);
+        if (isadmin) {
+          return false;
+        }
+
+        if (args.session?.id) {
+          const hasAccess = await args.context.query.User.count({
+            where: {
+              AND: [
+                { id: { equals: args.session.id } },
+                {
+                  groups: {
+                    some: { id: { equals: 'electionsUser' } },
+                  },
+                },
+              ],
+            },
+          });
+          return !hasAccess;
+        }
+        return true;
+      },
     },
     versionLimit: 20,
     versionAgeDays: 365,
