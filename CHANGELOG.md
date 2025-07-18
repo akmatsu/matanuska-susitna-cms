@@ -1,3 +1,10 @@
+## [0.12.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.12.0...v0.12.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* elections date is now required ([#26](https://github.com/akmatsu/matanuska-susitna-cms/issues/26)) ([e2c4af2](https://github.com/akmatsu/matanuska-susitna-cms/commit/e2c4af281ad0f7592cd14a4bbc80788233eb3b6f))
+
 # [0.12.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.11.1...v0.12.0) (2025-07-16)
 
 
