@@ -19,6 +19,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
   isAdmin,
+  isNotElectionUser,
 } from '../access';
 import { customText } from '../../components/customFields/Markdown';
 
@@ -235,52 +236,8 @@ export const {
       item: generalItemAccess(listKey),
     },
     mainUI: {
-      hideCreate: async (args) => {
-        const isadmin = await isAdmin(args);
-        if (isadmin) {
-          return false;
-        }
-
-        if (args.session?.id) {
-          const hasAccess = await args.context.query.User.count({
-            where: {
-              AND: [
-                { id: { equals: args.session.id } },
-                {
-                  groups: {
-                    some: { id: { equals: 'electionsUser' } },
-                  },
-                },
-              ],
-            },
-          });
-          return !hasAccess;
-        }
-        return true;
-      },
-      isHidden: async (args) => {
-        const isadmin = await isAdmin(args);
-        if (isadmin) {
-          return false;
-        }
-
-        if (args.session?.id) {
-          const hasAccess = await args.context.query.User.count({
-            where: {
-              AND: [
-                { id: { equals: args.session.id } },
-                {
-                  groups: {
-                    some: { id: { equals: 'electionsUser' } },
-                  },
-                },
-              ],
-            },
-          });
-          return !hasAccess;
-        }
-        return true;
-      },
+      hideCreate: isNotElectionUser,
+      isHidden: isNotElectionUser,
     },
     versionLimit: 20,
     versionAgeDays: 365,

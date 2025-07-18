@@ -1,5 +1,5 @@
 import { BaseListTypeInfo, KeystoneContext } from '@keystone-6/core/types';
-import { BaseAccessArgs, findUser } from './roles';
+import { BaseAccessArgs, findUser, isAdmin } from './roles';
 
 /**
  * Checks if the user is the owner of the item.
@@ -31,6 +31,49 @@ export async function belongsToGroup(
 
   const combinedGroups = [...userGroups, ...ownedGroups];
   return checkIfUserHasItemGroup(combinedGroups, itemGroups);
+}
+
+export async function isElectionUser(args: BaseAccessArgs<BaseListTypeInfo>) {
+  const isadmin = await isAdmin(args);
+  if (isadmin) return true;
+
+  const isInElectionsUserGroup = await isInGroupWithName('electionsUser', args);
+  return isInElectionsUserGroup;
+}
+
+export async function isNotElectionUser(
+  args: BaseAccessArgs<BaseListTypeInfo>,
+) {
+  const isInElectionUserGroup = await isElectionUser(args);
+  return !isInElectionUserGroup;
+}
+
+export async function isInGroupWithName(
+  groupName: string,
+  args: {
+    context: KeystoneContext;
+    session?: { id: string };
+  },
+) {
+  if (args.session?.id) {
+    const sudo = args.context.sudo();
+    const userCount = await sudo.query.User.count({
+      where: {
+        AND: [
+          { id: { equals: args.session.id } },
+          {
+            groups: {
+              some: { name: { equals: groupName } },
+            },
+          },
+        ],
+      },
+    });
+
+    // Intentionally checking for count === 1 to ensure we correctly identified the user. If more than 1 somehow the ID is incorrect. If less than 1 then no user was found.
+    return userCount === 1;
+  }
+  return false;
 }
 
 async function getActiveUserGroups(id: string, ctx: KeystoneContext) {

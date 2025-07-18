@@ -1,5 +1,10 @@
 import { list } from '@keystone-6/core';
-import { generalItemAccess, generalOperationAccess, isAdmin } from '../access';
+import {
+  generalItemAccess,
+  generalOperationAccess,
+  isAdmin,
+  isNotElectionUser,
+} from '../access';
 import { checkbox, relationship } from '@keystone-6/core/fields';
 
 export const ElectionResult = list({
@@ -8,29 +13,8 @@ export const ElectionResult = list({
     item: generalItemAccess('ElectionResult'),
   },
   ui: {
-    isHidden: async (args) => {
-      const isadmin = await isAdmin(args);
-      if (isadmin) {
-        return false;
-      }
-
-      if (args.session?.id) {
-        const hasAccess = await args.context.query.User.count({
-          where: {
-            AND: [
-              { id: { equals: args.session.id } },
-              {
-                groups: {
-                  some: { id: { equals: 'electionsUser' } },
-                },
-              },
-            ],
-          },
-        });
-        return !hasAccess;
-      }
-      return true;
-    },
+    isHidden: isNotElectionUser,
+    hideCreate: isNotElectionUser,
   },
   fields: {
     election: relationship({
