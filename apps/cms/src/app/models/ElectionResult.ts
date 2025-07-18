@@ -1,15 +1,20 @@
 import { list } from '@keystone-6/core';
-import {
-  generalItemAccess,
-  generalOperationAccess,
-  isNotElectionUser,
-} from '../access';
+import { isElectionUser, isNotElectionUser } from '../access';
 import { checkbox, relationship } from '@keystone-6/core/fields';
 
 export const ElectionResult = list({
   access: {
-    operation: generalOperationAccess,
-    item: generalItemAccess('ElectionResult'),
+    operation: {
+      query: () => true,
+      create: isElectionUser,
+      update: isElectionUser,
+      delete: isElectionUser,
+    },
+    item: {
+      create: isElectionUser,
+      update: isElectionUser,
+      delete: isElectionUser,
+    },
   },
   ui: {
     isHidden: isNotElectionUser,

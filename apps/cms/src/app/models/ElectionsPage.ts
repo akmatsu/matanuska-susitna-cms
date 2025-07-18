@@ -1,9 +1,5 @@
 import { list } from '@keystone-6/core';
-import {
-  generalItemAccess,
-  generalOperationAccess,
-  isNotElectionUser,
-} from '../access';
+import { isElectionUser, isNotElectionUser } from '../access';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import {
   owner,
@@ -16,8 +12,17 @@ import { relationship } from '@keystone-6/core/fields';
 
 export const ElectionsPage = list({
   access: {
-    operation: generalOperationAccess,
-    item: generalItemAccess('ElectionsPage'),
+    operation: {
+      query: () => true,
+      create: isElectionUser,
+      update: isElectionUser,
+      delete: isElectionUser,
+    },
+    item: {
+      update: isElectionUser,
+      delete: isElectionUser,
+      create: isElectionUser,
+    },
   },
   isSingleton: true,
   ui: {

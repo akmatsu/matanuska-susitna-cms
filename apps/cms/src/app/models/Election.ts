@@ -18,6 +18,7 @@ import {
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
+  isElectionUser,
   isNotElectionUser,
 } from '../access';
 import { customText } from '../../components/customFields/Markdown';
@@ -230,9 +231,18 @@ export const {
   },
   {
     mainAccess: {
-      operation: generalOperationAccess,
+      operation: {
+        query: () => true,
+        create: isElectionUser,
+        update: isElectionUser,
+        delete: isElectionUser,
+      },
       filter: filterByPubStatus,
-      item: generalItemAccess(listKey),
+      item: {
+        update: isElectionUser,
+        delete: isElectionUser,
+        create: isElectionUser,
+      },
     },
     mainUI: {
       hideCreate: isNotElectionUser,
