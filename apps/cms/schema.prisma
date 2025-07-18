@@ -599,7 +599,7 @@ model Election {
   reviewDate                          DateTime?
   owner                               User?             @relation("Election_owner", fields: [ownerId], references: [id])
   ownerId                             String?           @map("owner")
-  electionDate                        DateTime?
+  electionDate                        DateTime
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
   candidateFilingDocuments            Document[]        @relation("Election_candidateFilingDocuments")
@@ -651,7 +651,7 @@ model ElectionDraft {
   reviewDate                          DateTime?
   owner                               User?           @relation("ElectionDraft_owner", fields: [ownerId], references: [id])
   ownerId                             String?         @map("owner")
-  electionDate                        DateTime?
+  electionDate                        DateTime
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
   candidateFilingDocuments            Document[]      @relation("ElectionDraft_candidateFilingDocuments")
@@ -700,7 +700,7 @@ model ElectionVersion {
   reviewDate                          DateTime?
   owner                               User?           @relation("ElectionVersion_owner", fields: [ownerId], references: [id])
   ownerId                             String?         @map("owner")
-  electionDate                        DateTime?
+  electionDate                        DateTime
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
   candidateFilingDocuments            Document[]      @relation("ElectionVersion_candidateFilingDocuments")
@@ -739,20 +739,24 @@ model ElectionVersion {
 }
 
 model ElectionsPage {
-  id                          Int       @id
+  id                          Int         @id
   heroImage                   String?
-  title                       String    @unique @default("")
-  description                 String    @default("")
+  title                       String      @unique @default("")
+  description                 String      @default("")
   howElectionsWork            String?
-  stateElectionContact        Contact?  @relation("ElectionsPage_stateElectionContact", fields: [stateElectionContactId], references: [id])
-  stateElectionContactId      String?   @map("stateElectionContact")
-  boroughElectionContact      Contact?  @relation("ElectionsPage_boroughElectionContact", fields: [boroughElectionContactId], references: [id])
-  boroughElectionContactId    String?   @map("boroughElectionContact")
-  referendumProcessDocument   Document? @relation("ElectionsPage_referendumProcessDocument", fields: [referendumProcessDocumentId], references: [id])
-  referendumProcessDocumentId String?   @map("referendumProcessDocument")
-  createdAt                   DateTime? @default(now())
-  updatedAt                   DateTime? @default(now()) @updatedAt
+  owner                       User?       @relation("ElectionsPage_owner", fields: [ownerId], references: [id])
+  ownerId                     String?     @map("owner")
+  userGroups                  UserGroup[] @relation("ElectionsPage_userGroups")
+  stateElectionContact        Contact?    @relation("ElectionsPage_stateElectionContact", fields: [stateElectionContactId], references: [id])
+  stateElectionContactId      String?     @map("stateElectionContact")
+  boroughElectionContact      Contact?    @relation("ElectionsPage_boroughElectionContact", fields: [boroughElectionContactId], references: [id])
+  boroughElectionContactId    String?     @map("boroughElectionContact")
+  referendumProcessDocument   Document?   @relation("ElectionsPage_referendumProcessDocument", fields: [referendumProcessDocumentId], references: [id])
+  referendumProcessDocumentId String?     @map("referendumProcessDocument")
+  createdAt                   DateTime?   @default(now())
+  updatedAt                   DateTime?   @default(now()) @updatedAt
 
+  @@index([ownerId])
   @@index([stateElectionContactId])
   @@index([boroughElectionContactId])
   @@index([referendumProcessDocumentId])
@@ -1900,6 +1904,7 @@ model User {
   from_Election_owner                Election[]                @relation("Election_owner")
   from_ElectionDraft_owner           ElectionDraft[]           @relation("ElectionDraft_owner")
   from_ElectionVersion_owner         ElectionVersion[]         @relation("ElectionVersion_owner")
+  from_ElectionsPage_owner           ElectionsPage[]           @relation("ElectionsPage_owner")
   from_Facility_owner                Facility[]                @relation("Facility_owner")
   from_FacilityDraft_owner           FacilityDraft[]           @relation("FacilityDraft_owner")
   from_FacilityVersion_owner         FacilityVersion[]         @relation("FacilityVersion_owner")
@@ -1945,6 +1950,7 @@ model UserGroup {
   from_Election_userGroups                Election[]                @relation("Election_userGroups")
   from_ElectionDraft_userGroups           ElectionDraft[]           @relation("ElectionDraft_userGroups")
   from_ElectionVersion_userGroups         ElectionVersion[]         @relation("ElectionVersion_userGroups")
+  from_ElectionsPage_userGroups           ElectionsPage[]           @relation("ElectionsPage_userGroups")
   from_Facility_userGroups                Facility[]                @relation("Facility_userGroups")
   from_FacilityDraft_userGroups           FacilityDraft[]           @relation("FacilityDraft_userGroups")
   from_FacilityVersion_userGroups         FacilityVersion[]         @relation("FacilityVersion_userGroups")

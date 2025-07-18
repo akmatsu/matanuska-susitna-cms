@@ -32,6 +32,7 @@ interface Options {
   mainAccess?: ListAccessControl<any>;
   mainHooks?: ListHooks<BaseListTypeInfo>;
   mainGraphqlOptions?: ListConfig<any>['graphql'];
+  mainUI?: ListConfig<any>['ui'];
 }
 
 export type CoreFieldsFunction<TFields extends BaseFields<any>> = (
@@ -74,6 +75,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         operation: generalOperationAccess,
         ...(opts?.mainAccess && opts.mainAccess),
       },
+      ui: opts.mainUI,
       graphql: {},
       fields: {
         ...coreFields(plural(listKey), opts.mainBasePageOptions),

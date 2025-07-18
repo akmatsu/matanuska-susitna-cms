@@ -2470,7 +2470,7 @@ input ElectionWhereInput {
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
   owner: UserWhereInput
-  electionDate: DateTimeNullableFilter
+  electionDate: DateTimeFilter
   earlyVotingStartDate: DateTimeNullableFilter
   voterRegistrationDeadline: DateTimeNullableFilter
   candidateFilingDocuments: DocumentManyRelationFilter
@@ -2495,6 +2495,17 @@ input ElectionWhereInput {
   drafts: ElectionDraftManyRelationFilter
   versions: ElectionVersionManyRelationFilter
   currentVersion: ElectionVersionWhereInput
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
 }
 
 input ElectionDraftManyRelationFilter {
@@ -2714,7 +2725,7 @@ input ElectionDraftWhereInput {
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
   owner: UserWhereInput
-  electionDate: DateTimeNullableFilter
+  electionDate: DateTimeFilter
   earlyVotingStartDate: DateTimeNullableFilter
   voterRegistrationDeadline: DateTimeNullableFilter
   candidateFilingDocuments: DocumentManyRelationFilter
@@ -2899,7 +2910,7 @@ input ElectionVersionWhereInput {
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
   owner: UserWhereInput
-  electionDate: DateTimeNullableFilter
+  electionDate: DateTimeFilter
   earlyVotingStartDate: DateTimeNullableFilter
   voterRegistrationDeadline: DateTimeNullableFilter
   candidateFilingDocuments: DocumentManyRelationFilter
@@ -3024,6 +3035,9 @@ type ElectionsPage {
   title: String
   description: String
   howElectionsWork: String
+  owner: User
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
   stateElectionContact: Contact
   boroughElectionContact: Contact
   referendumProcessDocument: Document
@@ -3044,6 +3058,8 @@ input ElectionsPageWhereInput {
   title: StringFilter
   description: StringFilter
   howElectionsWork: MyStringFilter
+  owner: UserWhereInput
+  userGroups: UserGroupManyRelationFilter
   stateElectionContact: ContactWhereInput
   boroughElectionContact: ContactWhereInput
   referendumProcessDocument: DocumentWhereInput
@@ -3066,6 +3082,8 @@ input ElectionsPageUpdateInput {
   title: String
   description: String
   howElectionsWork: String
+  owner: UserRelateToOneForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
   stateElectionContact: ContactRelateToOneForUpdateInput
   boroughElectionContact: ContactRelateToOneForUpdateInput
   referendumProcessDocument: DocumentRelateToOneForUpdateInput
@@ -3089,6 +3107,8 @@ input ElectionsPageCreateInput {
   title: String
   description: String
   howElectionsWork: String
+  owner: UserRelateToOneForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
   stateElectionContact: ContactRelateToOneForCreateInput
   boroughElectionContact: ContactRelateToOneForCreateInput
   referendumProcessDocument: DocumentRelateToOneForCreateInput
