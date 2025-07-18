@@ -1,3 +1,11 @@
+# [0.12.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.11.1...v0.12.0) (2025-07-16)
+
+
+### Features
+
+* created elections CT ([0acecee](https://github.com/akmatsu/matanuska-susitna-cms/commit/0aceceea9386ca360d538fc74cf2bb1258440730))
+* updated models ([b8e2207](https://github.com/akmatsu/matanuska-susitna-cms/commit/b8e2207c8b5e4183fba8977fa435ffada634539a))
+
 ## [0.11.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.11.0...v0.11.1) (2025-06-27)
 
 
