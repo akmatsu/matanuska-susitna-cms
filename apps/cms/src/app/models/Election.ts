@@ -16,8 +16,6 @@ import {
 import { group } from '@keystone-6/core';
 import {
   filterByPubStatus,
-  generalItemAccess,
-  generalOperationAccess,
   isElectionUser,
   isNotElectionUser,
 } from '../access';
