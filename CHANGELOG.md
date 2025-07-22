@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.12.2...v0.13.0) (2025-07-22)
+
+
+### Features
+
+* added voting locations ([eed805d](https://github.com/akmatsu/matanuska-susitna-cms/commit/eed805d3b97589d75227637b8972cb910e9745a6))
+
 ## [0.12.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.12.1...v0.12.2) (2025-07-18)
 
 
