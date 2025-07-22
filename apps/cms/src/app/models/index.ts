@@ -9,7 +9,7 @@ import { DocumentCollection } from './DocumentCollection';
 import { ExternalLink } from './ExternalLink';
 import * as FacilityModels from './Facility';
 import * as ElectionModels from './Election';
-import { ElectionsPage } from './ElectionsPage';
+import { EarlyVotingLocation, ElectionsPage } from './ElectionsPage';
 import { ElectionResult } from './ElectionResult';
 import { Highlight } from './Highlight';
 import { HomePage } from './HomePage';
@@ -40,6 +40,7 @@ export const lists = {
   DocumentCollection,
   ExternalLink,
   ...ElectionModels,
+  EarlyVotingLocation: EarlyVotingLocation,
   ElectionsPage,
   ElectionResult,
   ...FacilityModels,

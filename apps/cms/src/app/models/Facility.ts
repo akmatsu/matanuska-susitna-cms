@@ -9,9 +9,45 @@ import {
   typesenseDelete,
   typesenseUpsert,
 } from '../fieldUtils';
-import { relationship } from '@keystone-6/core/fields';
+import { integer, relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../utils';
+import { list } from '@keystone-6/core';
+
+export const FacilityListItem = list({
+  access: {
+    operation: generalOperationAccess,
+  },
+  ui: {
+    isHidden: true,
+  },
+  fields: {
+    order: integer({
+      defaultValue: 0,
+      validation: { isRequired: true },
+      isOrderable: true,
+      isFilterable: true,
+      ui: {
+        description: 'Order of the early voting locations',
+      },
+    }),
+    facility: relationship({
+      ref: 'Facility',
+
+      ui: {
+        displayMode: 'cards',
+        inlineConnect: true,
+        inlineEdit: {
+          fields: ['title', 'address', 'hours'],
+        },
+        inlineCreate: {
+          fields: ['title', 'address', 'hours'],
+        },
+        cardFields: ['title', 'address', 'hours'],
+      },
+    }),
+  },
+});
 
 export const {
   Main: Facility,

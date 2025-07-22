@@ -738,23 +738,36 @@ model ElectionVersion {
   @@index([resultId])
 }
 
+model EarlyVotingLocation {
+  id                                      String          @id @default(cuid())
+  order                                   Int             @default(0)
+  title                                   String          @default("")
+  address                                 Location?       @relation("EarlyVotingLocation_address", fields: [addressId], references: [id])
+  addressId                               String?         @map("address")
+  hours                                   OperatingHour[] @relation("EarlyVotingLocation_hours")
+  from_ElectionsPage_earlyVotingLocations ElectionsPage[] @relation("ElectionsPage_earlyVotingLocations")
+
+  @@index([addressId])
+}
+
 model ElectionsPage {
-  id                          Int         @id
+  id                          Int                   @id
   heroImage                   String?
-  title                       String      @unique @default("")
-  description                 String      @default("")
+  title                       String                @unique @default("")
+  description                 String                @default("")
   howElectionsWork            String?
-  owner                       User?       @relation("ElectionsPage_owner", fields: [ownerId], references: [id])
-  ownerId                     String?     @map("owner")
-  userGroups                  UserGroup[] @relation("ElectionsPage_userGroups")
-  stateElectionContact        Contact?    @relation("ElectionsPage_stateElectionContact", fields: [stateElectionContactId], references: [id])
-  stateElectionContactId      String?     @map("stateElectionContact")
-  boroughElectionContact      Contact?    @relation("ElectionsPage_boroughElectionContact", fields: [boroughElectionContactId], references: [id])
-  boroughElectionContactId    String?     @map("boroughElectionContact")
-  referendumProcessDocument   Document?   @relation("ElectionsPage_referendumProcessDocument", fields: [referendumProcessDocumentId], references: [id])
-  referendumProcessDocumentId String?     @map("referendumProcessDocument")
-  createdAt                   DateTime?   @default(now())
-  updatedAt                   DateTime?   @default(now()) @updatedAt
+  owner                       User?                 @relation("ElectionsPage_owner", fields: [ownerId], references: [id])
+  ownerId                     String?               @map("owner")
+  userGroups                  UserGroup[]           @relation("ElectionsPage_userGroups")
+  stateElectionContact        Contact?              @relation("ElectionsPage_stateElectionContact", fields: [stateElectionContactId], references: [id])
+  stateElectionContactId      String?               @map("stateElectionContact")
+  boroughElectionContact      Contact?              @relation("ElectionsPage_boroughElectionContact", fields: [boroughElectionContactId], references: [id])
+  boroughElectionContactId    String?               @map("boroughElectionContact")
+  referendumProcessDocument   Document?             @relation("ElectionsPage_referendumProcessDocument", fields: [referendumProcessDocumentId], references: [id])
+  referendumProcessDocumentId String?               @map("referendumProcessDocument")
+  earlyVotingLocations        EarlyVotingLocation[] @relation("ElectionsPage_earlyVotingLocations")
+  createdAt                   DateTime?             @default(now())
+  updatedAt                   DateTime?             @default(now()) @updatedAt
 
   @@index([ownerId])
   @@index([stateElectionContactId])
@@ -806,6 +819,7 @@ model Facility {
   versions                            FacilityVersion[]     @relation("FacilityVersion_original")
   currentVersion                      FacilityVersion?      @relation("Facility_currentVersion", fields: [currentVersionId], references: [id])
   currentVersionId                    String?               @unique @map("currentVersion")
+  from_FacilityListItem_facility      FacilityListItem[]    @relation("FacilityListItem_facility")
   from_TopicDraft_facilities          TopicDraft[]          @relation("TopicDraft_facilities")
   from_TopicVersion_facilities        TopicVersion[]        @relation("TopicVersion_facilities")
   from_ParkDraft_facilities           ParkDraft[]           @relation("ParkDraft_facilities")
@@ -854,6 +868,15 @@ model FacilityDraft {
   @@index([ownerId])
   @@index([addressId])
   @@index([parkId])
+}
+
+model FacilityListItem {
+  id         String    @id @default(cuid())
+  order      Int       @default(0)
+  facility   Facility? @relation("FacilityListItem_facility", fields: [facilityId], references: [id])
+  facilityId String?   @map("facility")
+
+  @@index([facilityId])
 }
 
 model FacilityVersion {
@@ -1139,6 +1162,7 @@ model Location {
   from_AssemblyDistrict_address        AssemblyDistrict[]        @relation("AssemblyDistrict_address")
   from_AssemblyDistrictDraft_address   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_address")
   from_AssemblyDistrictVersion_address AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_address")
+  from_EarlyVotingLocation_address     EarlyVotingLocation[]     @relation("EarlyVotingLocation_address")
   from_Facility_address                Facility[]                @relation("Facility_address")
   from_FacilityDraft_address           FacilityDraft[]           @relation("FacilityDraft_address")
   from_FacilityVersion_address         FacilityVersion[]         @relation("FacilityVersion_address")
@@ -1265,16 +1289,17 @@ model OrgUnitVersion {
 }
 
 model OperatingHour {
-  id                         String            @id @default(cuid())
-  day                        String
-  open                       String            @default("")
-  close                      String            @default("")
-  from_Facility_hours        Facility[]        @relation("Facility_hours")
-  from_FacilityDraft_hours   FacilityDraft[]   @relation("FacilityDraft_hours")
-  from_FacilityVersion_hours FacilityVersion[] @relation("FacilityVersion_hours")
-  from_Park_hours            Park[]            @relation("Park_hours")
-  from_ParkDraft_hours       ParkDraft[]       @relation("ParkDraft_hours")
-  from_ParkVersion_hours     ParkVersion[]     @relation("ParkVersion_hours")
+  id                             String                @id @default(cuid())
+  day                            String
+  open                           String                @default("")
+  close                          String                @default("")
+  from_EarlyVotingLocation_hours EarlyVotingLocation[] @relation("EarlyVotingLocation_hours")
+  from_Facility_hours            Facility[]            @relation("Facility_hours")
+  from_FacilityDraft_hours       FacilityDraft[]       @relation("FacilityDraft_hours")
+  from_FacilityVersion_hours     FacilityVersion[]     @relation("FacilityVersion_hours")
+  from_Park_hours                Park[]                @relation("Park_hours")
+  from_ParkDraft_hours           ParkDraft[]           @relation("ParkDraft_hours")
+  from_ParkVersion_hours         ParkVersion[]         @relation("ParkVersion_hours")
 }
 
 model Park {

@@ -3029,6 +3029,73 @@ input ElectionVersionCreateInput {
   republish: String
 }
 
+type EarlyVotingLocation {
+  id: ID!
+  order: Int
+  title: String
+  address: Location
+  hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
+  hoursCount(where: OperatingHourWhereInput! = {}): Int
+}
+
+input EarlyVotingLocationWhereUniqueInput {
+  id: ID
+}
+
+input EarlyVotingLocationWhereInput {
+  AND: [EarlyVotingLocationWhereInput!]
+  OR: [EarlyVotingLocationWhereInput!]
+  NOT: [EarlyVotingLocationWhereInput!]
+  id: IDFilter
+  order: IntFilter
+  title: StringFilter
+  address: LocationWhereInput
+  hours: OperatingHourManyRelationFilter
+}
+
+input OperatingHourManyRelationFilter {
+  every: OperatingHourWhereInput
+  some: OperatingHourWhereInput
+  none: OperatingHourWhereInput
+}
+
+input EarlyVotingLocationOrderByInput {
+  id: OrderDirection
+  order: OrderDirection
+  title: OrderDirection
+}
+
+input EarlyVotingLocationUpdateInput {
+  order: Int
+  title: String
+  address: LocationRelateToOneForUpdateInput
+  hours: OperatingHourRelateToManyForUpdateInput
+}
+
+input OperatingHourRelateToManyForUpdateInput {
+  disconnect: [OperatingHourWhereUniqueInput!]
+  set: [OperatingHourWhereUniqueInput!]
+  create: [OperatingHourCreateInput!]
+  connect: [OperatingHourWhereUniqueInput!]
+}
+
+input EarlyVotingLocationUpdateArgs {
+  where: EarlyVotingLocationWhereUniqueInput!
+  data: EarlyVotingLocationUpdateInput!
+}
+
+input EarlyVotingLocationCreateInput {
+  order: Int
+  title: String
+  address: LocationRelateToOneForCreateInput
+  hours: OperatingHourRelateToManyForCreateInput
+}
+
+input OperatingHourRelateToManyForCreateInput {
+  create: [OperatingHourCreateInput!]
+  connect: [OperatingHourWhereUniqueInput!]
+}
+
 type ElectionsPage {
   id: ID!
   heroImage: String
@@ -3041,6 +3108,8 @@ type ElectionsPage {
   stateElectionContact: Contact
   boroughElectionContact: Contact
   referendumProcessDocument: Document
+  earlyVotingLocations(where: EarlyVotingLocationWhereInput! = {}, orderBy: [EarlyVotingLocationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EarlyVotingLocationWhereUniqueInput): [EarlyVotingLocation!]
+  earlyVotingLocationsCount(where: EarlyVotingLocationWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -3063,8 +3132,15 @@ input ElectionsPageWhereInput {
   stateElectionContact: ContactWhereInput
   boroughElectionContact: ContactWhereInput
   referendumProcessDocument: DocumentWhereInput
+  earlyVotingLocations: EarlyVotingLocationManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+}
+
+input EarlyVotingLocationManyRelationFilter {
+  every: EarlyVotingLocationWhereInput
+  some: EarlyVotingLocationWhereInput
+  none: EarlyVotingLocationWhereInput
 }
 
 input ElectionsPageOrderByInput {
@@ -3087,6 +3163,7 @@ input ElectionsPageUpdateInput {
   stateElectionContact: ContactRelateToOneForUpdateInput
   boroughElectionContact: ContactRelateToOneForUpdateInput
   referendumProcessDocument: DocumentRelateToOneForUpdateInput
+  earlyVotingLocations: EarlyVotingLocationRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -3095,6 +3172,13 @@ input ContactRelateToOneForUpdateInput {
   create: ContactCreateInput
   connect: ContactWhereUniqueInput
   disconnect: Boolean
+}
+
+input EarlyVotingLocationRelateToManyForUpdateInput {
+  disconnect: [EarlyVotingLocationWhereUniqueInput!]
+  set: [EarlyVotingLocationWhereUniqueInput!]
+  create: [EarlyVotingLocationCreateInput!]
+  connect: [EarlyVotingLocationWhereUniqueInput!]
 }
 
 input ElectionsPageUpdateArgs {
@@ -3112,6 +3196,7 @@ input ElectionsPageCreateInput {
   stateElectionContact: ContactRelateToOneForCreateInput
   boroughElectionContact: ContactRelateToOneForCreateInput
   referendumProcessDocument: DocumentRelateToOneForCreateInput
+  earlyVotingLocations: EarlyVotingLocationRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -3119,6 +3204,11 @@ input ElectionsPageCreateInput {
 input ContactRelateToOneForCreateInput {
   create: ContactCreateInput
   connect: ContactWhereUniqueInput
+}
+
+input EarlyVotingLocationRelateToManyForCreateInput {
+  create: [EarlyVotingLocationCreateInput!]
+  connect: [EarlyVotingLocationWhereUniqueInput!]
 }
 
 type ElectionResult {
@@ -3244,12 +3334,6 @@ input FacilityWhereInput {
   currentVersion: FacilityVersionWhereInput
 }
 
-input OperatingHourManyRelationFilter {
-  every: OperatingHourWhereInput
-  some: OperatingHourWhereInput
-  none: OperatingHourWhereInput
-}
-
 input FacilityDraftManyRelationFilter {
   every: FacilityDraftWhereInput
   some: FacilityDraftWhereInput
@@ -3305,13 +3389,6 @@ input FacilityUpdateInput {
   makeDrafts: String
   versions: FacilityVersionRelateToManyForUpdateInput
   currentVersion: FacilityVersionRelateToOneForUpdateInput
-}
-
-input OperatingHourRelateToManyForUpdateInput {
-  disconnect: [OperatingHourWhereUniqueInput!]
-  set: [OperatingHourWhereUniqueInput!]
-  create: [OperatingHourCreateInput!]
-  connect: [OperatingHourWhereUniqueInput!]
 }
 
 input ParkRelateToOneForUpdateInput {
@@ -3372,11 +3449,6 @@ input FacilityCreateInput {
   makeDrafts: String
   versions: FacilityVersionRelateToManyForCreateInput
   currentVersion: FacilityVersionRelateToOneForCreateInput
-}
-
-input OperatingHourRelateToManyForCreateInput {
-  create: [OperatingHourCreateInput!]
-  connect: [OperatingHourWhereUniqueInput!]
 }
 
 input ParkRelateToOneForCreateInput {
@@ -3543,6 +3615,45 @@ input FacilityDraftCreateInput {
 input FacilityRelateToOneForCreateInput {
   create: FacilityCreateInput
   connect: FacilityWhereUniqueInput
+}
+
+type FacilityListItem {
+  id: ID!
+  order: Int
+  facility: Facility
+}
+
+input FacilityListItemWhereUniqueInput {
+  id: ID
+}
+
+input FacilityListItemWhereInput {
+  AND: [FacilityListItemWhereInput!]
+  OR: [FacilityListItemWhereInput!]
+  NOT: [FacilityListItemWhereInput!]
+  id: IDFilter
+  order: IntFilter
+  facility: FacilityWhereInput
+}
+
+input FacilityListItemOrderByInput {
+  id: OrderDirection
+  order: OrderDirection
+}
+
+input FacilityListItemUpdateInput {
+  order: Int
+  facility: FacilityRelateToOneForUpdateInput
+}
+
+input FacilityListItemUpdateArgs {
+  where: FacilityListItemWhereUniqueInput!
+  data: FacilityListItemUpdateInput!
+}
+
+input FacilityListItemCreateInput {
+  order: Int
+  facility: FacilityRelateToOneForCreateInput
 }
 
 type FacilityVersion {
@@ -8061,6 +8172,12 @@ type Mutation {
   updateElectionVersions(data: [ElectionVersionUpdateArgs!]!): [ElectionVersion]
   deleteElectionVersion(where: ElectionVersionWhereUniqueInput!): ElectionVersion
   deleteElectionVersions(where: [ElectionVersionWhereUniqueInput!]!): [ElectionVersion]
+  createEarlyVotingLocation(data: EarlyVotingLocationCreateInput!): EarlyVotingLocation
+  createEarlyVotingLocations(data: [EarlyVotingLocationCreateInput!]!): [EarlyVotingLocation]
+  updateEarlyVotingLocation(where: EarlyVotingLocationWhereUniqueInput!, data: EarlyVotingLocationUpdateInput!): EarlyVotingLocation
+  updateEarlyVotingLocations(data: [EarlyVotingLocationUpdateArgs!]!): [EarlyVotingLocation]
+  deleteEarlyVotingLocation(where: EarlyVotingLocationWhereUniqueInput!): EarlyVotingLocation
+  deleteEarlyVotingLocations(where: [EarlyVotingLocationWhereUniqueInput!]!): [EarlyVotingLocation]
   createElectionsPage(data: ElectionsPageCreateInput!): ElectionsPage
   createElectionsPages(data: [ElectionsPageCreateInput!]!): [ElectionsPage]
   updateElectionsPage(where: ElectionsPageWhereUniqueInput! = {id: 1}, data: ElectionsPageUpdateInput!): ElectionsPage
@@ -8085,6 +8202,12 @@ type Mutation {
   updateFacilityDrafts(data: [FacilityDraftUpdateArgs!]!): [FacilityDraft]
   deleteFacilityDraft(where: FacilityDraftWhereUniqueInput!): FacilityDraft
   deleteFacilityDrafts(where: [FacilityDraftWhereUniqueInput!]!): [FacilityDraft]
+  createFacilityListItem(data: FacilityListItemCreateInput!): FacilityListItem
+  createFacilityListItems(data: [FacilityListItemCreateInput!]!): [FacilityListItem]
+  updateFacilityListItem(where: FacilityListItemWhereUniqueInput!, data: FacilityListItemUpdateInput!): FacilityListItem
+  updateFacilityListItems(data: [FacilityListItemUpdateArgs!]!): [FacilityListItem]
+  deleteFacilityListItem(where: FacilityListItemWhereUniqueInput!): FacilityListItem
+  deleteFacilityListItems(where: [FacilityListItemWhereUniqueInput!]!): [FacilityListItem]
   createFacilityVersion(data: FacilityVersionCreateInput!): FacilityVersion
   createFacilityVersions(data: [FacilityVersionCreateInput!]!): [FacilityVersion]
   updateFacilityVersion(where: FacilityVersionWhereUniqueInput!, data: FacilityVersionUpdateInput!): FacilityVersion
@@ -8317,6 +8440,9 @@ type Query {
   electionVersion(where: ElectionVersionWhereUniqueInput!): ElectionVersion
   electionVersions(where: ElectionVersionWhereInput! = {}, orderBy: [ElectionVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionVersionWhereUniqueInput): [ElectionVersion!]
   electionVersionsCount(where: ElectionVersionWhereInput! = {}): Int
+  earlyVotingLocation(where: EarlyVotingLocationWhereUniqueInput!): EarlyVotingLocation
+  earlyVotingLocations(where: EarlyVotingLocationWhereInput! = {}, orderBy: [EarlyVotingLocationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EarlyVotingLocationWhereUniqueInput): [EarlyVotingLocation!]
+  earlyVotingLocationsCount(where: EarlyVotingLocationWhereInput! = {}): Int
   electionsPage(where: ElectionsPageWhereUniqueInput! = {id: 1}): ElectionsPage
   electionsPages(where: ElectionsPageWhereInput! = {id: {equals: 1}}, orderBy: [ElectionsPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionsPageWhereUniqueInput): [ElectionsPage!]
   electionsPagesCount(where: ElectionsPageWhereInput! = {id: {equals: 1}}): Int
@@ -8329,6 +8455,9 @@ type Query {
   facilityDraft(where: FacilityDraftWhereUniqueInput!): FacilityDraft
   facilityDrafts(where: FacilityDraftWhereInput! = {}, orderBy: [FacilityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityDraftWhereUniqueInput): [FacilityDraft!]
   facilityDraftsCount(where: FacilityDraftWhereInput! = {}): Int
+  facilityListItem(where: FacilityListItemWhereUniqueInput!): FacilityListItem
+  facilityListItems(where: FacilityListItemWhereInput! = {}, orderBy: [FacilityListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityListItemWhereUniqueInput): [FacilityListItem!]
+  facilityListItemsCount(where: FacilityListItemWhereInput! = {}): Int
   facilityVersion(where: FacilityVersionWhereUniqueInput!): FacilityVersion
   facilityVersions(where: FacilityVersionWhereInput! = {}, orderBy: [FacilityVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityVersionWhereUniqueInput): [FacilityVersion!]
   facilityVersionsCount(where: FacilityVersionWhereInput! = {}): Int
