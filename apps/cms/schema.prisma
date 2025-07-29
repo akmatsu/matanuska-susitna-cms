@@ -180,7 +180,8 @@ model Board {
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   directory                           Document?                 @relation("Board_directory", fields: [directoryId], references: [id])
   directoryId                         String?                   @map("directory")
-  meetingSchedule                     String                    @default("")
+  calendarId                          String                    @default("")
+  calendarQueryString                 String                    @default("")
   linkToAgendas                       ExternalLink?             @relation("Board_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId                     String?                   @map("linkToAgendas")
   linkToResolutions                   ExternalLink?             @relation("Board_linkToResolutions", fields: [linkToResolutionsId], references: [id])
@@ -237,7 +238,8 @@ model BoardDraft {
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardDraft_directory", fields: [directoryId], references: [id])
   directoryId                  String?            @map("directory")
-  meetingSchedule              String             @default("")
+  calendarId                   String             @default("")
+  calendarQueryString          String             @default("")
   linkToAgendas                ExternalLink?      @relation("BoardDraft_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId              String?            @map("linkToAgendas")
   linkToResolutions            ExternalLink?      @relation("BoardDraft_linkToResolutions", fields: [linkToResolutionsId], references: [id])
@@ -281,7 +283,8 @@ model BoardVersion {
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardVersion_directory", fields: [directoryId], references: [id])
   directoryId                  String?            @map("directory")
-  meetingSchedule              String             @default("")
+  calendarId                   String             @default("")
+  calendarQueryString          String             @default("")
   linkToAgendas                ExternalLink?      @relation("BoardVersion_linkToAgendas", fields: [linkToAgendasId], references: [id])
   linkToAgendasId              String?            @map("linkToAgendas")
   linkToResolutions            ExternalLink?      @relation("BoardVersion_linkToResolutions", fields: [linkToResolutionsId], references: [id])
