@@ -959,7 +959,8 @@ type Board implements BasePage & BasePageWithSlug {
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
   linkToPublicOpinionMessage: ExternalLink
@@ -1008,7 +1009,8 @@ input BoardWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
-  meetingSchedule: StringFilter
+  calendarId: StringFilter
+  calendarQueryString: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
   linkToPublicOpinionMessage: ExternalLinkWhereInput
@@ -1064,7 +1066,8 @@ input BoardOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
-  meetingSchedule: OrderDirection
+  calendarId: OrderDirection
+  calendarQueryString: OrderDirection
   type: OrderDirection
   isActive: OrderDirection
   status: OrderDirection
@@ -1089,7 +1092,8 @@ input BoardUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
@@ -1174,7 +1178,8 @@ input BoardCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
@@ -1250,7 +1255,8 @@ type BoardDraft {
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
   linkToPublicOpinionMessage: ExternalLink
@@ -1290,7 +1296,8 @@ input BoardDraftWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
-  meetingSchedule: StringFilter
+  calendarId: StringFilter
+  calendarQueryString: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
   linkToPublicOpinionMessage: ExternalLinkWhereInput
@@ -1312,7 +1319,8 @@ input BoardDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
-  meetingSchedule: OrderDirection
+  calendarId: OrderDirection
+  calendarQueryString: OrderDirection
   type: OrderDirection
   isActive: OrderDirection
   publish: OrderDirection
@@ -1336,7 +1344,8 @@ input BoardDraftUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
@@ -1377,7 +1386,8 @@ input BoardDraftCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
@@ -1419,7 +1429,8 @@ type BoardVersion {
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLink
   linkToResolutions: ExternalLink
   linkToPublicOpinionMessage: ExternalLink
@@ -1461,7 +1472,8 @@ input BoardVersionWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
-  meetingSchedule: StringFilter
+  calendarId: StringFilter
+  calendarQueryString: StringFilter
   linkToAgendas: ExternalLinkWhereInput
   linkToResolutions: ExternalLinkWhereInput
   linkToPublicOpinionMessage: ExternalLinkWhereInput
@@ -1484,7 +1496,8 @@ input BoardVersionOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
-  meetingSchedule: OrderDirection
+  calendarId: OrderDirection
+  calendarQueryString: OrderDirection
   type: OrderDirection
   isActive: OrderDirection
   republish: OrderDirection
@@ -1508,7 +1521,8 @@ input BoardVersionUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
   linkToResolutions: ExternalLinkRelateToOneForUpdateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
@@ -1544,7 +1558,8 @@ input BoardVersionCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
-  meetingSchedule: String
+  calendarId: String
+  calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
   linkToResolutions: ExternalLinkRelateToOneForCreateInput
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput

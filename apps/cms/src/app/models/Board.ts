@@ -41,7 +41,8 @@ export const {
         },
       }),
 
-      meetingSchedule: text(),
+      calendarId: text(),
+      calendarQueryString: text(),
 
       linkToAgendas: relationship({
         ref: 'ExternalLink',
