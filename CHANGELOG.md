@@ -1,3 +1,10 @@
+## [0.14.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.14.0...v0.14.1) (2025-07-30)
+
+
+### Bug Fixes
+
+* can now connect existing election results ([a9b87ca](https://github.com/akmatsu/matanuska-susitna-cms/commit/a9b87caf6058213b96d5d648a2ff87616d46ffb2))
+
 # [0.14.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.13.0...v0.14.0) (2025-07-30)
 
 
