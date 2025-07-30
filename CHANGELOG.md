@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.13.0...v0.14.0) (2025-07-30)
+
+
+### Features
+
+* added calendar id and calendar query to board ct ([d596738](https://github.com/akmatsu/matanuska-susitna-cms/commit/d59673874a2a3353aab924111b966226c3abf88f))
+
 # [0.13.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.12.2...v0.13.0) (2025-07-22)
 
 
