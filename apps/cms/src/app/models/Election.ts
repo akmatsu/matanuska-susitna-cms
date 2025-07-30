@@ -216,6 +216,7 @@ export const {
             displayMode: 'cards',
             cardFields: ['document', 'isOfficial'],
             inlineCreate: { fields: ['document', 'isOfficial'] },
+            inlineConnect: true,
           },
         },
         opts,
