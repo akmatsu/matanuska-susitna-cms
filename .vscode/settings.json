@@ -3,6 +3,7 @@
     "bullmq",
     "Codegen",
     "commonmark",
+    "discriptors",
     "Keymap",
     "milkdown",
     "prosemirror"
