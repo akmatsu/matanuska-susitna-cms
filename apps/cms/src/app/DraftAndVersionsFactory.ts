@@ -1,3 +1,4 @@
+import { type Lists } from '.keystone/types';
 import { BaseFields, list, ListConfig } from '@keystone-6/core';
 import { generalOperationAccess } from './access';
 import {
@@ -323,7 +324,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         },
       },
     }),
-  };
+  } satisfies Lists;
 }
 
 async function createVersion(
