@@ -1,7 +1,37 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { file, relationship, text } from '@keystone-6/core/fields';
+import { file, integer, relationship, text } from '@keystone-6/core/fields';
 import { appConfig } from '../../../configs/appConfig';
 import { generalOperationAccess } from '../../access';
+import { documentRelationship } from '../../fieldUtils';
+
+export const DocumentListItem: ListConfig<any> = list({
+  access: {
+    operation: generalOperationAccess,
+  },
+  ui: {
+    isHidden: true,
+    hideCreate: false,
+  },
+  fields: {
+    label: text({
+      ui: {
+        description:
+          'Optional. This label will be displayed in the UI. E.G. primary document',
+      },
+    }),
+    order: integer({
+      ui: {
+        description:
+          'Value is ascending. Lower Numbers appear first. E.G. 0, 1, 2',
+      },
+      validation: {
+        isRequired: true,
+      },
+      defaultValue: 0,
+    }),
+    document: documentRelationship(),
+  },
+});
 
 export const Document: ListConfig<any> = list({
   access: {

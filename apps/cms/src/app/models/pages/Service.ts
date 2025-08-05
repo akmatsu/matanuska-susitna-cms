@@ -7,6 +7,19 @@ import {
 } from '../../access/utils';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 
+/**
+ * Creates a relationship with the {@link Service} model.
+ */
+export function serviceRelationship(opts?: {
+  refField?: string;
+  many?: boolean;
+}) {
+  return relationship({
+    ref: opts?.refField ? `Service.${opts.refField}` : 'Service',
+    many: opts?.many,
+  });
+}
+
 const {
   Main: Service,
   Version: ServiceVersion,

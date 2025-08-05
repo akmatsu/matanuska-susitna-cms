@@ -1,10 +1,40 @@
 import { list, ListConfig } from '@keystone-6/core';
-import { text } from '@keystone-6/core/fields';
+import { integer, relationship, text } from '@keystone-6/core/fields';
 import { generalOperationAccess } from '../../access';
+import { contactRelationship } from '../../fieldUtils';
 
 const phoneNumberRegex =
   /^(\(\d{3}\)\s\d{3}-\d{4}|\d{3}-\d{3}-\d{4}|\d{3}\.\d{3}\.\d{4})$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export const ContactListItem: ListConfig<any> = list({
+  access: {
+    operation: generalOperationAccess,
+  },
+  ui: {
+    isHidden: true,
+    hideCreate: false,
+  },
+  fields: {
+    label: text({
+      ui: {
+        description:
+          'Optional. This label will be displayed in the UI. E.G. primary contact',
+      },
+    }),
+    order: integer({
+      ui: {
+        description:
+          'Value is ascending. Lower Numbers appear first. E.G. 0, 1, 2',
+      },
+      validation: {
+        isRequired: true,
+      },
+      defaultValue: 0,
+    }),
+    contact: contactRelationship(),
+  },
+});
 
 export const Contact: ListConfig<any> = list({
   access: {
@@ -67,59 +97,8 @@ export const Contact: ListConfig<any> = list({
         isNullable: true,
       },
     }),
-    // primaryServices: relationship({
-    //   ref: 'Service.primaryContact',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // services: relationship({
-    //   ref: 'Service.contacts',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // communities: relationship({
-    //   ref: 'Community.contacts',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // orgUnits: relationship({
-    //   ref: 'OrgUnit.contacts',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // facilities: relationship({
-    //   ref: 'Facility.contacts',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // parks: relationship({
-    //   ref: 'Park.contacts',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // assemblyDistricts: relationship({
-    //   ref: 'AssemblyDistrict.contacts',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // trails: relationship({
-    //   ref: 'Trail.contacts',
-    //   many: true,
-    //   ui: { hideCreate: true },
-    // }),
-    // user: relationship({ ref: 'User.contact', ui: { hideCreate: true } }),
-    // editorNotes: text({
-    //   ui: {
-    //     displayMode: 'textarea',
-    //   },
-    // }),
-    // publicNotices: relationship({
-    //   ref: 'PublicNotice.contacts',
-    //   many: true,
-    // }),
-    // testModels: relationship({
-    //   ref: 'TestModel.contacts',
-    //   many: true,
-    // }),
+    address: relationship({
+      ref: 'Location',
+    }),
   },
 });

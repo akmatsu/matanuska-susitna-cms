@@ -12,11 +12,15 @@ type BoardPage implements BasePage {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   vacancyReport: Document
   applicationForm: Document
   ParliTrainingLink: ExternalLink
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -39,10 +43,12 @@ input BoardPageWhereInput {
   body: MyStringFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   vacancyReport: DocumentWhereInput
   applicationForm: DocumentWhereInput
   ParliTrainingLink: ExternalLinkWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -138,10 +144,22 @@ input DocumentManyRelationFilter {
   none: DocumentWhereInput
 }
 
+input DocumentListItemManyRelationFilter {
+  every: DocumentListItemWhereInput
+  some: DocumentListItemWhereInput
+  none: DocumentListItemWhereInput
+}
+
 input ContactManyRelationFilter {
   every: ContactWhereInput
   some: ContactWhereInput
   none: ContactWhereInput
+}
+
+input ContactListItemManyRelationFilter {
+  every: ContactListItemWhereInput
+  some: ContactListItemWhereInput
+  none: ContactListItemWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -188,10 +206,12 @@ input BoardPageUpdateInput {
   body: String
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   vacancyReport: DocumentRelateToOneForUpdateInput
   applicationForm: DocumentRelateToOneForUpdateInput
   ParliTrainingLink: ExternalLinkRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -216,6 +236,13 @@ input DocumentRelateToManyForUpdateInput {
   connect: [DocumentWhereUniqueInput!]
 }
 
+input DocumentListItemRelateToManyForUpdateInput {
+  disconnect: [DocumentListItemWhereUniqueInput!]
+  set: [DocumentListItemWhereUniqueInput!]
+  create: [DocumentListItemCreateInput!]
+  connect: [DocumentListItemWhereUniqueInput!]
+}
+
 input DocumentRelateToOneForUpdateInput {
   create: DocumentCreateInput
   connect: DocumentWhereUniqueInput
@@ -235,6 +262,13 @@ input ContactRelateToManyForUpdateInput {
   connect: [ContactWhereUniqueInput!]
 }
 
+input ContactListItemRelateToManyForUpdateInput {
+  disconnect: [ContactListItemWhereUniqueInput!]
+  set: [ContactListItemWhereUniqueInput!]
+  create: [ContactListItemCreateInput!]
+  connect: [ContactListItemWhereUniqueInput!]
+}
+
 input BoardPageUpdateArgs {
   where: BoardPageWhereUniqueInput! = {id: 1}
   data: BoardPageUpdateInput!
@@ -248,10 +282,12 @@ input BoardPageCreateInput {
   body: String
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   vacancyReport: DocumentRelateToOneForCreateInput
   applicationForm: DocumentRelateToOneForCreateInput
   ParliTrainingLink: ExternalLinkRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -271,6 +307,11 @@ input DocumentRelateToManyForCreateInput {
   connect: [DocumentWhereUniqueInput!]
 }
 
+input DocumentListItemRelateToManyForCreateInput {
+  create: [DocumentListItemCreateInput!]
+  connect: [DocumentListItemWhereUniqueInput!]
+}
+
 input DocumentRelateToOneForCreateInput {
   create: DocumentCreateInput
   connect: DocumentWhereUniqueInput
@@ -284,6 +325,11 @@ input ExternalLinkRelateToOneForCreateInput {
 input ContactRelateToManyForCreateInput {
   create: [ContactCreateInput!]
   connect: [ContactWhereUniqueInput!]
+}
+
+input ContactListItemRelateToManyForCreateInput {
+  create: [ContactListItemCreateInput!]
+  connect: [ContactListItemWhereUniqueInput!]
 }
 
 type HomePage {
@@ -1313,9 +1359,13 @@ type AssemblyDistrict implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1363,8 +1413,10 @@ input AssemblyDistrictWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1459,8 +1511,10 @@ input AssemblyDistrictUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1539,8 +1593,10 @@ input AssemblyDistrictCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1610,9 +1666,13 @@ type AssemblyDistrictVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1653,8 +1713,10 @@ input AssemblyDistrictVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1705,8 +1767,10 @@ input AssemblyDistrictVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1748,8 +1812,10 @@ input AssemblyDistrictVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1791,9 +1857,13 @@ type AssemblyDistrictDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1832,8 +1902,10 @@ input AssemblyDistrictDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1883,8 +1955,10 @@ input AssemblyDistrictDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1919,8 +1993,10 @@ input AssemblyDistrictDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1956,8 +2032,12 @@ type Board implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2007,7 +2087,9 @@ input BoardWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2085,7 +2167,9 @@ input BoardUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2159,7 +2243,9 @@ input BoardCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2225,8 +2311,12 @@ type BoardVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2269,7 +2359,9 @@ input BoardVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2318,7 +2410,9 @@ input BoardVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2361,7 +2455,9 @@ input BoardVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2404,8 +2500,12 @@ type BoardDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2446,7 +2546,9 @@ input BoardDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2494,7 +2596,9 @@ input BoardDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2530,7 +2634,9 @@ input BoardDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2567,8 +2673,12 @@ type Community implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2612,7 +2722,9 @@ input CommunityWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -2673,7 +2785,9 @@ input CommunityUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -2733,7 +2847,9 @@ input CommunityCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -2787,8 +2903,12 @@ type CommunityVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2825,7 +2945,9 @@ input CommunityVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -2863,7 +2985,9 @@ input CommunityVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -2899,7 +3023,9 @@ input CommunityVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -2935,8 +3061,12 @@ type CommunityDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2971,7 +3101,9 @@ input CommunityDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -3008,7 +3140,9 @@ input CommunityDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -3037,7 +3171,9 @@ input CommunityDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -3067,9 +3203,13 @@ type Facility implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
@@ -3112,8 +3252,10 @@ input FacilityWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -3168,8 +3310,10 @@ input FacilityUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -3228,8 +3372,10 @@ input FacilityCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -3283,9 +3429,13 @@ type FacilityVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
@@ -3321,8 +3471,10 @@ input FacilityVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -3360,8 +3512,10 @@ input FacilityVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -3397,8 +3551,10 @@ input FacilityVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -3434,9 +3590,13 @@ type FacilityDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
@@ -3470,8 +3630,10 @@ input FacilityDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -3508,8 +3670,10 @@ input FacilityDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -3538,8 +3702,10 @@ input FacilityDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -3569,8 +3735,12 @@ type OrgUnit implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3614,7 +3784,9 @@ input OrgUnitWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
@@ -3677,7 +3849,9 @@ input OrgUnitUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3744,7 +3918,9 @@ input OrgUnitCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3804,8 +3980,12 @@ type OrgUnitVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3842,7 +4022,9 @@ input OrgUnitVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
@@ -3882,7 +4064,9 @@ input OrgUnitVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3913,7 +4097,9 @@ input OrgUnitVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3945,8 +4131,12 @@ type OrgUnitDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3981,7 +4171,9 @@ input OrgUnitDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
@@ -4020,7 +4212,9 @@ input OrgUnitDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -4050,7 +4244,9 @@ input OrgUnitDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -4081,9 +4277,13 @@ type Park implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
@@ -4129,8 +4329,10 @@ input ParkWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -4198,8 +4400,10 @@ input ParkUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -4267,8 +4471,10 @@ input ParkCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -4328,9 +4534,13 @@ type ParkVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
@@ -4369,8 +4579,10 @@ input ParkVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -4409,8 +4621,10 @@ input ParkVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -4441,8 +4655,10 @@ input ParkVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -4474,9 +4690,13 @@ type ParkDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
   createdAt: DateTime
@@ -4513,8 +4733,10 @@ input ParkDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   hours: OperatingHourManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -4552,8 +4774,10 @@ input ParkDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -4583,8 +4807,10 @@ input ParkDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -4615,8 +4841,12 @@ type PublicNotice implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4673,7 +4903,9 @@ input PublicNoticeWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -4745,7 +4977,9 @@ input PublicNoticeUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4813,7 +5047,9 @@ input PublicNoticeCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4875,8 +5111,12 @@ type PublicNoticeVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4926,7 +5166,9 @@ input PublicNoticeVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -4975,7 +5217,9 @@ input PublicNoticeVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5019,7 +5263,9 @@ input PublicNoticeVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5063,8 +5309,12 @@ type PublicNoticeDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5112,7 +5362,9 @@ input PublicNoticeDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5160,7 +5412,9 @@ input PublicNoticeDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5197,7 +5451,9 @@ input PublicNoticeDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5236,9 +5492,13 @@ type Service implements BasePage & BasePageWithSlug {
   secondaryActionsCount(where: ExternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5288,8 +5548,10 @@ input ServiceWhereInput {
   primaryAction: ExternalLinkWhereInput
   secondaryActions: ExternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   primaryContact: ContactWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5355,8 +5617,10 @@ input ServiceUpdateInput {
   primaryAction: ExternalLinkRelateToOneForUpdateInput
   secondaryActions: ExternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   primaryContact: ContactRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5420,8 +5684,10 @@ input ServiceCreateInput {
   primaryAction: ExternalLinkRelateToOneForCreateInput
   secondaryActions: ExternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   primaryContact: ContactRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5479,9 +5745,13 @@ type ServiceVersion {
   secondaryActionsCount(where: ExternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5524,8 +5794,10 @@ input ServiceVersionWhereInput {
   primaryAction: ExternalLinkWhereInput
   secondaryActions: ExternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   primaryContact: ContactWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5568,8 +5840,10 @@ input ServiceVersionUpdateInput {
   primaryAction: ExternalLinkRelateToOneForUpdateInput
   secondaryActions: ExternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   primaryContact: ContactRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5609,8 +5883,10 @@ input ServiceVersionCreateInput {
   primaryAction: ExternalLinkRelateToOneForCreateInput
   secondaryActions: ExternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   primaryContact: ContactRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5650,9 +5926,13 @@ type ServiceDraft {
   secondaryActionsCount(where: ExternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5693,8 +5973,10 @@ input ServiceDraftWhereInput {
   primaryAction: ExternalLinkWhereInput
   secondaryActions: ExternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   primaryContact: ContactWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5736,8 +6018,10 @@ input ServiceDraftUpdateInput {
   primaryAction: ExternalLinkRelateToOneForUpdateInput
   secondaryActions: ExternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   primaryContact: ContactRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5770,8 +6054,10 @@ input ServiceDraftCreateInput {
   primaryAction: ExternalLinkRelateToOneForCreateInput
   secondaryActions: ExternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   primaryContact: ContactRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5804,8 +6090,12 @@ type Topic implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -5861,7 +6151,9 @@ input TopicWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -5934,7 +6226,9 @@ input TopicUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -6007,7 +6301,9 @@ input TopicCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -6072,8 +6368,12 @@ type TopicVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6122,7 +6422,9 @@ input TopicVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -6166,7 +6468,9 @@ input TopicVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -6208,7 +6512,9 @@ input TopicVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -6250,8 +6556,12 @@ type TopicDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6298,7 +6608,9 @@ input TopicDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -6341,7 +6653,9 @@ input TopicDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -6376,7 +6690,9 @@ input TopicDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -6412,9 +6728,13 @@ type Trail implements BasePage & BasePageWithSlug {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6475,8 +6795,10 @@ input TrailWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -6570,8 +6892,10 @@ input TrailUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6643,8 +6967,10 @@ input TrailCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6712,9 +7038,13 @@ type TrailVersion {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6768,8 +7098,10 @@ input TrailVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -6846,8 +7178,10 @@ input TrailVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6902,8 +7236,10 @@ input TrailVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6958,9 +7294,13 @@ type TrailDraft {
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  newContacts(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  newContactsCount(where: ContactListItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7012,8 +7352,10 @@ input TrailDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  newContacts: ContactListItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7089,8 +7431,10 @@ input TrailDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  newContacts: ContactListItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7138,8 +7482,10 @@ input TrailDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  newContacts: ContactListItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7303,6 +7649,8 @@ type DocumentCollection {
   owner: User
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  newDocuments(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  newDocumentsCount(where: DocumentListItemWhereInput! = {}): Int
   liveUrl: String
   embed: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -7327,6 +7675,7 @@ input DocumentCollectionWhereInput {
   description: StringFilter
   owner: UserWhereInput
   documents: DocumentManyRelationFilter
+  newDocuments: DocumentListItemManyRelationFilter
   tags: TagManyRelationFilter
   userGroups: UserGroupManyRelationFilter
   editorNotes: StringFilter
@@ -7344,6 +7693,7 @@ input DocumentCollectionUpdateInput {
   description: String
   owner: UserRelateToOneForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
+  newDocuments: DocumentListItemRelateToManyForUpdateInput
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   editorNotes: String
@@ -7359,9 +7709,55 @@ input DocumentCollectionCreateInput {
   description: String
   owner: UserRelateToOneForCreateInput
   documents: DocumentRelateToManyForCreateInput
+  newDocuments: DocumentListItemRelateToManyForCreateInput
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   editorNotes: String
+}
+
+type DocumentListItem {
+  id: ID!
+  label: String
+  order: Int
+  document(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentCount(where: DocumentWhereInput! = {}): Int
+}
+
+input DocumentListItemWhereUniqueInput {
+  id: ID
+}
+
+input DocumentListItemWhereInput {
+  AND: [DocumentListItemWhereInput!]
+  OR: [DocumentListItemWhereInput!]
+  NOT: [DocumentListItemWhereInput!]
+  id: IDFilter
+  label: StringFilter
+  order: IntFilter
+  document: DocumentManyRelationFilter
+}
+
+input DocumentListItemOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  order: OrderDirection
+}
+
+input DocumentListItemUpdateInput {
+  label: String
+  order: Int
+  document: DocumentRelateToManyForUpdateInput
+}
+
+input DocumentListItemUpdateArgs {
+  where: DocumentListItemWhereUniqueInput!
+  data: DocumentListItemUpdateInput!
+}
+
+input DocumentListItemCreateInput {
+  label: String
+  order: Int
+  document: DocumentRelateToManyForCreateInput
 }
 
 type Image {
@@ -7666,6 +8062,7 @@ type Contact {
   title: String
   phone: String
   email: String
+  address: Location
 }
 
 input ContactWhereUniqueInput {
@@ -7681,6 +8078,7 @@ input ContactWhereInput {
   title: StringNullableFilter
   phone: StringNullableFilter
   email: StringNullableFilter
+  address: LocationWhereInput
 }
 
 input ContactOrderByInput {
@@ -7696,6 +8094,7 @@ input ContactUpdateInput {
   title: String
   phone: String
   email: String
+  address: LocationRelateToOneForUpdateInput
 }
 
 input ContactUpdateArgs {
@@ -7708,6 +8107,51 @@ input ContactCreateInput {
   title: String
   phone: String
   email: String
+  address: LocationRelateToOneForCreateInput
+}
+
+type ContactListItem {
+  id: ID!
+  label: String
+  order: Int
+  contact: Contact
+}
+
+input ContactListItemWhereUniqueInput {
+  id: ID
+}
+
+input ContactListItemWhereInput {
+  AND: [ContactListItemWhereInput!]
+  OR: [ContactListItemWhereInput!]
+  NOT: [ContactListItemWhereInput!]
+  id: IDFilter
+  label: StringFilter
+  order: IntFilter
+  contact: ContactWhereInput
+}
+
+input ContactListItemOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  order: OrderDirection
+}
+
+input ContactListItemUpdateInput {
+  label: String
+  order: Int
+  contact: ContactRelateToOneForUpdateInput
+}
+
+input ContactListItemUpdateArgs {
+  where: ContactListItemWhereUniqueInput!
+  data: ContactListItemUpdateInput!
+}
+
+input ContactListItemCreateInput {
+  label: String
+  order: Int
+  contact: ContactRelateToOneForCreateInput
 }
 
 type Location {
@@ -8325,6 +8769,12 @@ type Mutation {
   updateDocumentCollections(data: [DocumentCollectionUpdateArgs!]!): [DocumentCollection]
   deleteDocumentCollection(where: DocumentCollectionWhereUniqueInput!): DocumentCollection
   deleteDocumentCollections(where: [DocumentCollectionWhereUniqueInput!]!): [DocumentCollection]
+  createDocumentListItem(data: DocumentListItemCreateInput!): DocumentListItem
+  createDocumentListItems(data: [DocumentListItemCreateInput!]!): [DocumentListItem]
+  updateDocumentListItem(where: DocumentListItemWhereUniqueInput!, data: DocumentListItemUpdateInput!): DocumentListItem
+  updateDocumentListItems(data: [DocumentListItemUpdateArgs!]!): [DocumentListItem]
+  deleteDocumentListItem(where: DocumentListItemWhereUniqueInput!): DocumentListItem
+  deleteDocumentListItems(where: [DocumentListItemWhereUniqueInput!]!): [DocumentListItem]
   createImage(data: ImageCreateInput!): Image
   createImages(data: [ImageCreateInput!]!): [Image]
   updateImage(where: ImageWhereUniqueInput!, data: ImageUpdateInput!): Image
@@ -8361,6 +8811,12 @@ type Mutation {
   updateContacts(data: [ContactUpdateArgs!]!): [Contact]
   deleteContact(where: ContactWhereUniqueInput!): Contact
   deleteContacts(where: [ContactWhereUniqueInput!]!): [Contact]
+  createContactListItem(data: ContactListItemCreateInput!): ContactListItem
+  createContactListItems(data: [ContactListItemCreateInput!]!): [ContactListItem]
+  updateContactListItem(where: ContactListItemWhereUniqueInput!, data: ContactListItemUpdateInput!): ContactListItem
+  updateContactListItems(data: [ContactListItemUpdateArgs!]!): [ContactListItem]
+  deleteContactListItem(where: ContactListItemWhereUniqueInput!): ContactListItem
+  deleteContactListItems(where: [ContactListItemWhereUniqueInput!]!): [ContactListItem]
   createLocation(data: LocationCreateInput!): Location
   createLocations(data: [LocationCreateInput!]!): [Location]
   updateLocation(where: LocationWhereUniqueInput!, data: LocationUpdateInput!): Location
@@ -8524,6 +8980,9 @@ type Query {
   documentCollection(where: DocumentCollectionWhereUniqueInput!): DocumentCollection
   documentCollections(where: DocumentCollectionWhereInput! = {}, orderBy: [DocumentCollectionOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentCollectionWhereUniqueInput): [DocumentCollection!]
   documentCollectionsCount(where: DocumentCollectionWhereInput! = {}): Int
+  documentListItem(where: DocumentListItemWhereUniqueInput!): DocumentListItem
+  documentListItems(where: DocumentListItemWhereInput! = {}, orderBy: [DocumentListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DocumentListItemWhereUniqueInput): [DocumentListItem!]
+  documentListItemsCount(where: DocumentListItemWhereInput! = {}): Int
   image(where: ImageWhereUniqueInput!): Image
   images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ImageWhereUniqueInput): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int
@@ -8542,6 +9001,9 @@ type Query {
   contact(where: ContactWhereUniqueInput!): Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  contactListItem(where: ContactListItemWhereUniqueInput!): ContactListItem
+  contactListItems(where: ContactListItemWhereInput! = {}, orderBy: [ContactListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ContactListItemWhereUniqueInput): [ContactListItem!]
+  contactListItemsCount(where: ContactListItemWhereInput! = {}): Int
   location(where: LocationWhereUniqueInput!): Location
   locations(where: LocationWhereInput! = {}, orderBy: [LocationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LocationWhereUniqueInput): [Location!]
   locationsCount(where: LocationWhereInput! = {}): Int

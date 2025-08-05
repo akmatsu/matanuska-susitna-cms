@@ -2,7 +2,9 @@ import { list, ListConfig } from '@keystone-6/core';
 import { elevatedOperationAccess, isContentManager } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import {
+  contactRelationshipMany,
   contacts,
+  documentRelationshipMany,
   owner,
   timestamps,
   titleAndDescription,
@@ -51,6 +53,8 @@ const BoardPage: ListConfig<any> = list({
       },
     }),
 
+    newDocuments: documentRelationshipMany(),
+
     vacancyReport: relationship({
       ref: 'Document',
       many: false,
@@ -85,6 +89,7 @@ const BoardPage: ListConfig<any> = list({
       },
     }),
     contacts: contacts(),
+    newContacts: contactRelationshipMany(),
     ...timestamps,
   },
 });

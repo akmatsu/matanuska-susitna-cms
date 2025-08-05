@@ -8,6 +8,7 @@ import {
 import {
   BaseItem,
   BaseListTypeInfo,
+  FieldHooks,
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
 import { isAdmin } from './access/roles';
@@ -125,6 +126,44 @@ export function embed(
   });
 }
 
+export function timestampField(opts?: {
+  isFilterable?: boolean;
+  isOrderable?: boolean;
+  isNullable?: boolean;
+  isRequired?: boolean;
+  hideView?: boolean;
+  hooks?: FieldHooks<any>;
+  hideCreateView?: boolean;
+}) {
+  return timestamp({
+    isFilterable: opts?.isFilterable ?? true,
+    isOrderable: opts?.isOrderable ?? true,
+    db: {
+      isNullable: opts?.isNullable ?? true,
+    },
+    validation: {
+      isRequired: opts?.isRequired ?? false,
+    },
+
+    ui: {
+      ...(!opts?.hideView && {
+        views: './src/components/customFields/datetime/views.tsx',
+      }),
+      ...(opts?.hideView && {
+        itemView: {
+          fieldMode: 'read',
+        },
+      }),
+      ...(opts?.hideCreateView && {
+        createView: {
+          fieldMode: 'hidden',
+        },
+      }),
+    },
+    hooks: opts?.hooks,
+  });
+}
+
 export function publishable(opts?: {
   isDraft?: boolean;
   isVersion?: boolean;
@@ -134,23 +173,8 @@ export function publishable(opts?: {
       label: 'Publishing',
 
       fields: {
-        publishAt: timestamp({
-          isFilterable: true,
-          isOrderable: true,
-          db: {
-            isNullable: true,
-          },
-          ui: {
-            ...(opts?.isDraft && {
-              views: './src/components/customFields/datetime/views.tsx',
-            }),
-
-            ...(!opts?.isDraft && {
-              itemView: {
-                fieldMode: opts?.isDraft ? 'edit' : 'read',
-              },
-            }),
-          },
+        publishAt: timestampField({
+          hideView: opts?.isDraft,
           hooks: {
             async resolveInput({
               operation,
@@ -173,15 +197,8 @@ export function publishable(opts?: {
             },
           },
         }),
-        unpublishAt: timestamp({
-          isFilterable: true,
-          isOrderable: true,
-          db: {
-            isNullable: true,
-          },
-          ui: {
-            views: './src/components/customFields/datetime/views.tsx',
-          },
+
+        unpublishAt: timestampField({
           hooks: {
             validate: ({ resolvedData, item, addValidationError }) => {
               const publishAt =
@@ -206,14 +223,9 @@ export function publishable(opts?: {
             },
           },
         }),
-        reviewDate: timestamp({
-          db: {
-            isNullable: true,
-          },
-          ui: {
-            createView: { fieldMode: 'hidden' },
-            views: './src/components/customFields/datetime/views.tsx',
-          },
+
+        reviewDate: timestampField({
+          hideCreateView: true,
           hooks: {
             resolveInput: ({ operation, resolvedData }) => {
               if (operation === 'create' && !resolvedData?.reviewDate) {
@@ -363,6 +375,58 @@ export function contacts() {
   });
 }
 
+export function contactRelationshipMany() {
+  return relationship({
+    ref: 'ContactListItem',
+    many: true,
+    ui: {
+      displayMode: 'cards',
+      cardFields: ['order', 'label', 'contact'],
+      inlineCreate: { fields: ['order', 'label', 'contact'] },
+      itemView: {
+        fieldPosition: 'sidebar',
+      },
+    },
+  });
+}
+
+export function contactRelationship() {
+  return relationship({
+    ref: 'Contact',
+    ui: {
+      itemView: {
+        fieldPosition: 'sidebar',
+      },
+    },
+  });
+}
+
+export function documentRelationshipMany() {
+  return relationship({
+    ref: 'DocumentListItem',
+    many: true,
+    ui: {
+      displayMode: 'cards',
+      cardFields: ['order', 'label', 'document'],
+      inlineCreate: { fields: ['order', 'label', 'document'] },
+    },
+  });
+}
+
+export function documentRelationship() {
+  return relationship({
+    ref: 'Document',
+    many: true,
+    ui: {
+      displayMode: 'cards',
+      inlineConnect: true,
+      cardFields: ['title', 'description', 'file', 'tags'],
+      inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
+      inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+    },
+  });
+}
+
 export function userGroups() {
   return relationship({
     ref: `UserGroup`,
@@ -442,6 +506,7 @@ export function basePage(
         many: false,
       }),
     }),
+
     ...(opts?.secondaryActions && {
       secondaryActions: relationship({
         ref: 'ExternalLink',
@@ -491,6 +556,7 @@ export function basePage(
           inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
         },
       }),
+      newDocuments: documentRelationshipMany(),
     }),
 
     ...(opts?.address && {
@@ -515,17 +581,11 @@ export function basePage(
     }),
 
     ...(opts?.primaryContact && {
-      primaryContact: relationship({
-        ref: `Contact`,
-        ui: {
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-        },
-      }),
+      primaryContact: contactRelationship(),
     }),
 
     contacts: contacts(),
+    newContacts: contactRelationshipMany(),
     ...(opts?.hours && {
       hours: relationship({
         ref: 'OperatingHour',

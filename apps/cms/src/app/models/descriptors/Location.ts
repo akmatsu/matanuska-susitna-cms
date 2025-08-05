@@ -37,6 +37,8 @@ export const Location: ListConfig<any> = list({
         isRequired: true,
       },
       options: [
+        '99586',
+        '99588',
         '99623',
         '99629',
         '99645',
@@ -49,6 +51,7 @@ export const Location: ListConfig<any> = list({
         '99687',
         '99688',
         '99694',
+        '99729',
       ],
     }),
   },

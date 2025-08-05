@@ -10,7 +10,7 @@
     "fix": "keystone postinstall --fix",
     "generate": "keystone prisma generate",
     "migrations": "keystone prisma migrate dev",
-    "migrations:squash": "keystone prisma migrate dev --create-only",
+    "migrations:create": "keystone prisma migrate dev --create-only",
     "reset": "keystone prisma migrate reset",
     "collections:create": "npx ts-node ./scripts/createCollections.ts",
     "collections:remove": "npx ts-node ./scripts/removeCollection.ts",
