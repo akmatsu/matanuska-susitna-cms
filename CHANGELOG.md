@@ -1,3 +1,10 @@
+# [0.15.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.14.1...v0.15.0) (2025-08-05)
+
+
+### Features
+
+* added newContacts and newDocuments ([48c8693](https://github.com/akmatsu/matanuska-susitna-cms/commit/48c8693843a93dc04a9f8a2d7bb69c4a6aebe7f9))
+
 ## [0.14.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.14.0...v0.14.1) (2025-07-30)
 
 
