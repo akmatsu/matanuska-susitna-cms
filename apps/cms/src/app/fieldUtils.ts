@@ -375,20 +375,20 @@ export function contacts() {
   });
 }
 
-export function contactRelationshipMany() {
-  return relationship({
-    ref: 'ContactListItem',
-    many: true,
-    ui: {
-      displayMode: 'cards',
-      cardFields: ['order', 'label', 'contact'],
-      inlineCreate: { fields: ['order', 'label', 'contact'] },
-      itemView: {
-        fieldPosition: 'sidebar',
-      },
-    },
-  });
-}
+// export function contactRelationshipMany() {
+//   return relationship({
+//     ref: 'ContactListItem',
+//     many: true,
+//     ui: {
+//       displayMode: 'cards',
+//       cardFields: ['order', 'label', 'contact'],
+//       inlineCreate: { fields: ['order', 'label', 'contact'] },
+//       itemView: {
+//         fieldPosition: 'sidebar',
+//       },
+//     },
+//   });
+// }
 
 export function contactRelationship() {
   return relationship({
@@ -401,17 +401,17 @@ export function contactRelationship() {
   });
 }
 
-export function documentRelationshipMany() {
-  return relationship({
-    ref: 'DocumentListItem',
-    many: true,
-    ui: {
-      displayMode: 'cards',
-      cardFields: ['order', 'label', 'document'],
-      inlineCreate: { fields: ['order', 'label', 'document'] },
-    },
-  });
-}
+// export function documentRelationshipMany() {
+//   return relationship({
+//     ref: 'DocumentListItem',
+//     many: true,
+//     ui: {
+//       displayMode: 'cards',
+//       cardFields: ['order', 'label', 'document'],
+//       inlineCreate: { fields: ['order', 'label', 'document'] },
+//     },
+//   });
+// }
 
 export function documentRelationship() {
   return relationship({
@@ -556,7 +556,7 @@ export function basePage(
           inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
         },
       }),
-      newDocuments: documentRelationshipMany(),
+      // newDocuments: documentRelationshipMany(),
     }),
 
     ...(opts?.address && {
@@ -585,7 +585,7 @@ export function basePage(
     }),
 
     contacts: contacts(),
-    newContacts: contactRelationshipMany(),
+    // newContacts: contactRelationshipMany(),
     ...(opts?.hours && {
       hours: relationship({
         ref: 'OperatingHour',

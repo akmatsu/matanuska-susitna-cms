@@ -2,7 +2,6 @@ import { graphql, list, ListConfig } from '@keystone-6/core';
 import { relationship, text, virtual } from '@keystone-6/core/fields';
 import { generalOperationAccess } from '../../access';
 import {
-  documentRelationshipMany,
   embed,
   liveUrl,
   owner,
@@ -33,7 +32,7 @@ export const DocumentCollection: ListConfig<any> = list({
       },
     }),
 
-    newDocuments: documentRelationshipMany(),
+    // newDocuments: documentRelationshipMany(),
 
     liveUrl: liveUrl('document-collection', 'id', appConfig.widgetsUrl, true),
     embed: embed('document-collection', 'id', appConfig.widgetsUrl),
