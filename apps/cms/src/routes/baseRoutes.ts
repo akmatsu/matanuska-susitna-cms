@@ -31,6 +31,8 @@ export const routes: (
   app.post('/typesense/remove-collection', json(), removeCollection());
   app.patch('/publish/:list/:id', json(), publishDraft(commonContext));
   app.patch('/republish/:list/:id', json(), republishVersion(commonContext));
+
+  // Ignore everything below this line for now.
   // app.patch('/api/documents', json(), async (req, res) => {
   //   try {
   //     const sudoCtx = commonContext.sudo();
