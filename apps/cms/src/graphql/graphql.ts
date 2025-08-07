@@ -1774,6 +1774,8 @@ export type BoardPage = BasePage & {
   id: Scalars['ID']['output'];
   newContacts?: Maybe<Array<ContactListItem>>;
   newContactsCount?: Maybe<Scalars['Int']['output']>;
+  newDocuments?: Maybe<Array<DocumentListItem>>;
+  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1836,6 +1838,20 @@ export type BoardPageNewContactsCountArgs = {
   where?: ContactListItemWhereInput;
 };
 
+
+export type BoardPageNewDocumentsArgs = {
+  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
+  orderBy?: Array<DocumentListItemOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: DocumentListItemWhereInput;
+};
+
+
+export type BoardPageNewDocumentsCountArgs = {
+  where?: DocumentListItemWhereInput;
+};
+
 export type BoardPageCreateInput = {
   ParliTrainingLink?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
@@ -1847,6 +1863,7 @@ export type BoardPageCreateInput = {
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
+  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1879,6 +1896,7 @@ export type BoardPageUpdateInput = {
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
+  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1899,6 +1917,7 @@ export type BoardPageWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
+  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   title?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
@@ -3616,6 +3635,8 @@ export type DocumentCollection = {
   embed?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
+  newDocuments?: Maybe<Array<DocumentListItem>>;
+  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   referencedBy?: Maybe<Array<Maybe<Service>>>;
   tags?: Maybe<Array<Tag>>;
@@ -3637,6 +3658,20 @@ export type DocumentCollectionDocumentsArgs = {
 
 export type DocumentCollectionDocumentsCountArgs = {
   where?: DocumentWhereInput;
+};
+
+
+export type DocumentCollectionNewDocumentsArgs = {
+  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
+  orderBy?: Array<DocumentListItemOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: DocumentListItemWhereInput;
+};
+
+
+export type DocumentCollectionNewDocumentsCountArgs = {
+  where?: DocumentListItemWhereInput;
 };
 
 
@@ -3671,6 +3706,7 @@ export type DocumentCollectionCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -3711,6 +3747,7 @@ export type DocumentCollectionUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -3725,6 +3762,7 @@ export type DocumentCollectionWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   editorNotes?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
+  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
