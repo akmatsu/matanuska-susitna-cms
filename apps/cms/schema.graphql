@@ -7168,6 +7168,1202 @@ input TrailDraftCreateInput {
   publish: String
 }
 
+type Plan {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLink
+  autoRedirectToExternalWebsite: Int
+  parent: Plan
+  components(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  componentsCount(where: PlanWhereInput! = {}): Int
+  type: String
+  code(where: PlanCodeWhereInput! = {}, orderBy: [PlanCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanCodeWhereUniqueInput): [PlanCode!]
+  codeCount(where: PlanCodeWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
+  currentDocument: PlanDocument
+  draftDocument: PlanDocument
+  pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
+  pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  status: String
+  drafts(where: PlanDraftWhereInput! = {}, orderBy: [PlanDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDraftWhereUniqueInput): [PlanDraft!]
+  draftsCount(where: PlanDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: PlanVersionWhereInput! = {}, orderBy: [PlanVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanVersionWhereUniqueInput): [PlanVersion!]
+  versionsCount(where: PlanVersionWhereInput! = {}): Int
+  currentVersion: PlanVersion
+}
+
+input PlanWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+  currentVersion: PlanVersionWhereUniqueInput
+}
+
+input PlanWhereInput {
+  AND: [PlanWhereInput!]
+  OR: [PlanWhereInput!]
+  NOT: [PlanWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  effort: ExternalLinkWhereInput
+  autoRedirectToExternalWebsite: IntFilter
+  parent: PlanWhereInput
+  components: PlanManyRelationFilter
+  type: StringFilter
+  code: PlanCodeManyRelationFilter
+  events: EventManyRelationFilter
+  currentDocument: PlanDocumentWhereInput
+  draftDocument: PlanDocumentWhereInput
+  pastDocuments: PlanDocumentManyRelationFilter
+  status: StringFilter
+  drafts: PlanDraftManyRelationFilter
+  versions: PlanVersionManyRelationFilter
+  currentVersion: PlanVersionWhereInput
+}
+
+input PlanManyRelationFilter {
+  every: PlanWhereInput
+  some: PlanWhereInput
+  none: PlanWhereInput
+}
+
+input PlanCodeManyRelationFilter {
+  every: PlanCodeWhereInput
+  some: PlanCodeWhereInput
+  none: PlanCodeWhereInput
+}
+
+input EventManyRelationFilter {
+  every: EventWhereInput
+  some: EventWhereInput
+  none: EventWhereInput
+}
+
+input PlanDocumentManyRelationFilter {
+  every: PlanDocumentWhereInput
+  some: PlanDocumentWhereInput
+  none: PlanDocumentWhereInput
+}
+
+input PlanDraftManyRelationFilter {
+  every: PlanDraftWhereInput
+  some: PlanDraftWhereInput
+  none: PlanDraftWhereInput
+}
+
+input PlanVersionManyRelationFilter {
+  every: PlanVersionWhereInput
+  some: PlanVersionWhereInput
+  none: PlanVersionWhereInput
+}
+
+input PlanOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  autoRedirectToExternalWebsite: OrderDirection
+  type: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
+}
+
+input PlanUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLinkRelateToOneForUpdateInput
+  autoRedirectToExternalWebsite: Int
+  parent: PlanRelateToOneForUpdateInput
+  components: PlanRelateToManyForUpdateInput
+  type: String
+  code: PlanCodeRelateToManyForUpdateInput
+  events: EventRelateToManyForUpdateInput
+  currentDocument: PlanDocumentRelateToOneForUpdateInput
+  draftDocument: PlanDocumentRelateToOneForUpdateInput
+  pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  status: String
+  drafts: PlanDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: PlanVersionRelateToManyForUpdateInput
+  currentVersion: PlanVersionRelateToOneForUpdateInput
+}
+
+input PlanRelateToOneForUpdateInput {
+  create: PlanCreateInput
+  connect: PlanWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PlanRelateToManyForUpdateInput {
+  disconnect: [PlanWhereUniqueInput!]
+  set: [PlanWhereUniqueInput!]
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
+}
+
+input PlanCodeRelateToManyForUpdateInput {
+  disconnect: [PlanCodeWhereUniqueInput!]
+  set: [PlanCodeWhereUniqueInput!]
+  create: [PlanCodeCreateInput!]
+  connect: [PlanCodeWhereUniqueInput!]
+}
+
+input EventRelateToManyForUpdateInput {
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+input PlanDocumentRelateToOneForUpdateInput {
+  create: PlanDocumentCreateInput
+  connect: PlanDocumentWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PlanDocumentRelateToManyForUpdateInput {
+  disconnect: [PlanDocumentWhereUniqueInput!]
+  set: [PlanDocumentWhereUniqueInput!]
+  create: [PlanDocumentCreateInput!]
+  connect: [PlanDocumentWhereUniqueInput!]
+}
+
+input PlanDraftRelateToManyForUpdateInput {
+  disconnect: [PlanDraftWhereUniqueInput!]
+  set: [PlanDraftWhereUniqueInput!]
+  create: [PlanDraftCreateInput!]
+  connect: [PlanDraftWhereUniqueInput!]
+}
+
+input PlanVersionRelateToManyForUpdateInput {
+  disconnect: [PlanVersionWhereUniqueInput!]
+  set: [PlanVersionWhereUniqueInput!]
+  create: [PlanVersionCreateInput!]
+  connect: [PlanVersionWhereUniqueInput!]
+}
+
+input PlanVersionRelateToOneForUpdateInput {
+  create: PlanVersionCreateInput
+  connect: PlanVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PlanUpdateArgs {
+  where: PlanWhereUniqueInput!
+  data: PlanUpdateInput!
+}
+
+input PlanCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLinkRelateToOneForCreateInput
+  autoRedirectToExternalWebsite: Int
+  parent: PlanRelateToOneForCreateInput
+  components: PlanRelateToManyForCreateInput
+  type: String
+  code: PlanCodeRelateToManyForCreateInput
+  events: EventRelateToManyForCreateInput
+  currentDocument: PlanDocumentRelateToOneForCreateInput
+  draftDocument: PlanDocumentRelateToOneForCreateInput
+  pastDocuments: PlanDocumentRelateToManyForCreateInput
+  status: String
+  drafts: PlanDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: PlanVersionRelateToManyForCreateInput
+  currentVersion: PlanVersionRelateToOneForCreateInput
+}
+
+input PlanRelateToOneForCreateInput {
+  create: PlanCreateInput
+  connect: PlanWhereUniqueInput
+}
+
+input PlanRelateToManyForCreateInput {
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
+}
+
+input PlanCodeRelateToManyForCreateInput {
+  create: [PlanCodeCreateInput!]
+  connect: [PlanCodeWhereUniqueInput!]
+}
+
+input EventRelateToManyForCreateInput {
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+input PlanDocumentRelateToOneForCreateInput {
+  create: PlanDocumentCreateInput
+  connect: PlanDocumentWhereUniqueInput
+}
+
+input PlanDocumentRelateToManyForCreateInput {
+  create: [PlanDocumentCreateInput!]
+  connect: [PlanDocumentWhereUniqueInput!]
+}
+
+input PlanDraftRelateToManyForCreateInput {
+  create: [PlanDraftCreateInput!]
+  connect: [PlanDraftWhereUniqueInput!]
+}
+
+input PlanVersionRelateToManyForCreateInput {
+  create: [PlanVersionCreateInput!]
+  connect: [PlanVersionWhereUniqueInput!]
+}
+
+input PlanVersionRelateToOneForCreateInput {
+  create: PlanVersionCreateInput
+  connect: PlanVersionWhereUniqueInput
+}
+
+type PlanVersion {
+  id: ID!
+  original: Plan
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLink
+  autoRedirectToExternalWebsite: Int
+  parent: Plan
+  components(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  componentsCount(where: PlanWhereInput! = {}): Int
+  type: String
+  code(where: PlanCodeWhereInput! = {}, orderBy: [PlanCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanCodeWhereUniqueInput): [PlanCode!]
+  codeCount(where: PlanCodeWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
+  currentDocument: PlanDocument
+  draftDocument: PlanDocument
+  pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
+  pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  isLive: Plan
+  republish: String
+}
+
+input PlanVersionWhereUniqueInput {
+  id: ID
+  isLive: PlanWhereUniqueInput
+}
+
+input PlanVersionWhereInput {
+  AND: [PlanVersionWhereInput!]
+  OR: [PlanVersionWhereInput!]
+  NOT: [PlanVersionWhereInput!]
+  id: IDFilter
+  original: PlanWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  effort: ExternalLinkWhereInput
+  autoRedirectToExternalWebsite: IntFilter
+  parent: PlanWhereInput
+  components: PlanManyRelationFilter
+  type: StringFilter
+  code: PlanCodeManyRelationFilter
+  events: EventManyRelationFilter
+  currentDocument: PlanDocumentWhereInput
+  draftDocument: PlanDocumentWhereInput
+  pastDocuments: PlanDocumentManyRelationFilter
+  isLive: PlanWhereInput
+}
+
+input PlanVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  autoRedirectToExternalWebsite: OrderDirection
+  type: OrderDirection
+  republish: OrderDirection
+}
+
+input PlanVersionUpdateInput {
+  original: PlanRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLinkRelateToOneForUpdateInput
+  autoRedirectToExternalWebsite: Int
+  parent: PlanRelateToOneForUpdateInput
+  components: PlanRelateToManyForUpdateInput
+  type: String
+  code: PlanCodeRelateToManyForUpdateInput
+  events: EventRelateToManyForUpdateInput
+  currentDocument: PlanDocumentRelateToOneForUpdateInput
+  draftDocument: PlanDocumentRelateToOneForUpdateInput
+  pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  isLive: PlanRelateToOneForUpdateInput
+  republish: String
+}
+
+input PlanVersionUpdateArgs {
+  where: PlanVersionWhereUniqueInput!
+  data: PlanVersionUpdateInput!
+}
+
+input PlanVersionCreateInput {
+  original: PlanRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLinkRelateToOneForCreateInput
+  autoRedirectToExternalWebsite: Int
+  parent: PlanRelateToOneForCreateInput
+  components: PlanRelateToManyForCreateInput
+  type: String
+  code: PlanCodeRelateToManyForCreateInput
+  events: EventRelateToManyForCreateInput
+  currentDocument: PlanDocumentRelateToOneForCreateInput
+  draftDocument: PlanDocumentRelateToOneForCreateInput
+  pastDocuments: PlanDocumentRelateToManyForCreateInput
+  isLive: PlanRelateToOneForCreateInput
+  republish: String
+}
+
+type PlanDraft {
+  id: ID!
+  original: Plan
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLink
+  autoRedirectToExternalWebsite: Int
+  parent: Plan
+  components(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  componentsCount(where: PlanWhereInput! = {}): Int
+  type: String
+  code(where: PlanCodeWhereInput! = {}, orderBy: [PlanCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanCodeWhereUniqueInput): [PlanCode!]
+  codeCount(where: PlanCodeWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
+  currentDocument: PlanDocument
+  draftDocument: PlanDocument
+  pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
+  pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  publish: String
+}
+
+input PlanDraftWhereUniqueInput {
+  id: ID
+}
+
+input PlanDraftWhereInput {
+  AND: [PlanDraftWhereInput!]
+  OR: [PlanDraftWhereInput!]
+  NOT: [PlanDraftWhereInput!]
+  id: IDFilter
+  original: PlanWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  effort: ExternalLinkWhereInput
+  autoRedirectToExternalWebsite: IntFilter
+  parent: PlanWhereInput
+  components: PlanManyRelationFilter
+  type: StringFilter
+  code: PlanCodeManyRelationFilter
+  events: EventManyRelationFilter
+  currentDocument: PlanDocumentWhereInput
+  draftDocument: PlanDocumentWhereInput
+  pastDocuments: PlanDocumentManyRelationFilter
+}
+
+input PlanDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  autoRedirectToExternalWebsite: OrderDirection
+  type: OrderDirection
+  publish: OrderDirection
+}
+
+input PlanDraftUpdateInput {
+  original: PlanRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLinkRelateToOneForUpdateInput
+  autoRedirectToExternalWebsite: Int
+  parent: PlanRelateToOneForUpdateInput
+  components: PlanRelateToManyForUpdateInput
+  type: String
+  code: PlanCodeRelateToManyForUpdateInput
+  events: EventRelateToManyForUpdateInput
+  currentDocument: PlanDocumentRelateToOneForUpdateInput
+  draftDocument: PlanDocumentRelateToOneForUpdateInput
+  pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  publish: String
+}
+
+input PlanDraftUpdateArgs {
+  where: PlanDraftWhereUniqueInput!
+  data: PlanDraftUpdateInput!
+}
+
+input PlanDraftCreateInput {
+  original: PlanRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  effort: ExternalLinkRelateToOneForCreateInput
+  autoRedirectToExternalWebsite: Int
+  parent: PlanRelateToOneForCreateInput
+  components: PlanRelateToManyForCreateInput
+  type: String
+  code: PlanCodeRelateToManyForCreateInput
+  events: EventRelateToManyForCreateInput
+  currentDocument: PlanDocumentRelateToOneForCreateInput
+  draftDocument: PlanDocumentRelateToOneForCreateInput
+  pastDocuments: PlanDocumentRelateToManyForCreateInput
+  publish: String
+}
+
+type PlanCode {
+  id: ID!
+  code: String
+}
+
+input PlanCodeWhereUniqueInput {
+  id: ID
+}
+
+input PlanCodeWhereInput {
+  AND: [PlanCodeWhereInput!]
+  OR: [PlanCodeWhereInput!]
+  NOT: [PlanCodeWhereInput!]
+  id: IDFilter
+  code: StringFilter
+}
+
+input PlanCodeOrderByInput {
+  id: OrderDirection
+  code: OrderDirection
+}
+
+input PlanCodeUpdateInput {
+  code: String
+}
+
+input PlanCodeUpdateArgs {
+  where: PlanCodeWhereUniqueInput!
+  data: PlanCodeUpdateInput!
+}
+
+input PlanCodeCreateInput {
+  code: String
+}
+
+type PlanDocument {
+  id: ID!
+  label: String
+  supersededBy: PlanDocument
+  precededBy: PlanDocument
+  adoptedYear: Int
+  document(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentCount(where: DocumentWhereInput! = {}): Int
+}
+
+input PlanDocumentWhereUniqueInput {
+  id: ID
+  supersededBy: PlanDocumentWhereUniqueInput
+  precededBy: PlanDocumentWhereUniqueInput
+}
+
+input PlanDocumentWhereInput {
+  AND: [PlanDocumentWhereInput!]
+  OR: [PlanDocumentWhereInput!]
+  NOT: [PlanDocumentWhereInput!]
+  id: IDFilter
+  label: StringFilter
+  supersededBy: PlanDocumentWhereInput
+  precededBy: PlanDocumentWhereInput
+  adoptedYear: IntNullableFilter
+  document: DocumentManyRelationFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input PlanDocumentOrderByInput {
+  id: OrderDirection
+  label: OrderDirection
+  adoptedYear: OrderDirection
+}
+
+input PlanDocumentUpdateInput {
+  label: String
+  supersededBy: PlanDocumentRelateToOneForUpdateInput
+  precededBy: PlanDocumentRelateToOneForUpdateInput
+  adoptedYear: Int
+  document: DocumentRelateToManyForUpdateInput
+}
+
+input PlanDocumentUpdateArgs {
+  where: PlanDocumentWhereUniqueInput!
+  data: PlanDocumentUpdateInput!
+}
+
+input PlanDocumentCreateInput {
+  label: String
+  supersededBy: PlanDocumentRelateToOneForCreateInput
+  precededBy: PlanDocumentRelateToOneForCreateInput
+  adoptedYear: Int
+  document: DocumentRelateToManyForCreateInput
+}
+
+type Event {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  status: String
+  drafts(where: EventDraftWhereInput! = {}, orderBy: [EventDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventDraftWhereUniqueInput): [EventDraft!]
+  draftsCount(where: EventDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: EventVersionWhereInput! = {}, orderBy: [EventVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventVersionWhereUniqueInput): [EventVersion!]
+  versionsCount(where: EventVersionWhereInput! = {}): Int
+  currentVersion: EventVersion
+}
+
+input EventWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+  currentVersion: EventVersionWhereUniqueInput
+}
+
+input EventWhereInput {
+  AND: [EventWhereInput!]
+  OR: [EventWhereInput!]
+  NOT: [EventWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  startDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
+  status: StringFilter
+  drafts: EventDraftManyRelationFilter
+  versions: EventVersionManyRelationFilter
+  currentVersion: EventVersionWhereInput
+}
+
+input EventDraftManyRelationFilter {
+  every: EventDraftWhereInput
+  some: EventDraftWhereInput
+  none: EventDraftWhereInput
+}
+
+input EventVersionManyRelationFilter {
+  every: EventVersionWhereInput
+  some: EventVersionWhereInput
+  none: EventVersionWhereInput
+}
+
+input EventOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  startDate: OrderDirection
+  endDate: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
+}
+
+input EventUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  status: String
+  drafts: EventDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: EventVersionRelateToManyForUpdateInput
+  currentVersion: EventVersionRelateToOneForUpdateInput
+}
+
+input EventDraftRelateToManyForUpdateInput {
+  disconnect: [EventDraftWhereUniqueInput!]
+  set: [EventDraftWhereUniqueInput!]
+  create: [EventDraftCreateInput!]
+  connect: [EventDraftWhereUniqueInput!]
+}
+
+input EventVersionRelateToManyForUpdateInput {
+  disconnect: [EventVersionWhereUniqueInput!]
+  set: [EventVersionWhereUniqueInput!]
+  create: [EventVersionCreateInput!]
+  connect: [EventVersionWhereUniqueInput!]
+}
+
+input EventVersionRelateToOneForUpdateInput {
+  create: EventVersionCreateInput
+  connect: EventVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input EventUpdateArgs {
+  where: EventWhereUniqueInput!
+  data: EventUpdateInput!
+}
+
+input EventCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  status: String
+  drafts: EventDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: EventVersionRelateToManyForCreateInput
+  currentVersion: EventVersionRelateToOneForCreateInput
+}
+
+input EventDraftRelateToManyForCreateInput {
+  create: [EventDraftCreateInput!]
+  connect: [EventDraftWhereUniqueInput!]
+}
+
+input EventVersionRelateToManyForCreateInput {
+  create: [EventVersionCreateInput!]
+  connect: [EventVersionWhereUniqueInput!]
+}
+
+input EventVersionRelateToOneForCreateInput {
+  create: EventVersionCreateInput
+  connect: EventVersionWhereUniqueInput
+}
+
+type EventDraft {
+  id: ID!
+  original: Event
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  publish: String
+}
+
+input EventDraftWhereUniqueInput {
+  id: ID
+}
+
+input EventDraftWhereInput {
+  AND: [EventDraftWhereInput!]
+  OR: [EventDraftWhereInput!]
+  NOT: [EventDraftWhereInput!]
+  id: IDFilter
+  original: EventWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  startDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
+}
+
+input EventDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  startDate: OrderDirection
+  endDate: OrderDirection
+  publish: OrderDirection
+}
+
+input EventDraftUpdateInput {
+  original: EventRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  publish: String
+}
+
+input EventRelateToOneForUpdateInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+  disconnect: Boolean
+}
+
+input EventDraftUpdateArgs {
+  where: EventDraftWhereUniqueInput!
+  data: EventDraftUpdateInput!
+}
+
+input EventDraftCreateInput {
+  original: EventRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  publish: String
+}
+
+input EventRelateToOneForCreateInput {
+  create: EventCreateInput
+  connect: EventWhereUniqueInput
+}
+
+type EventVersion {
+  id: ID!
+  original: Event
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  isLive: Event
+  republish: String
+}
+
+input EventVersionWhereUniqueInput {
+  id: ID
+  isLive: EventWhereUniqueInput
+}
+
+input EventVersionWhereInput {
+  AND: [EventVersionWhereInput!]
+  OR: [EventVersionWhereInput!]
+  NOT: [EventVersionWhereInput!]
+  id: IDFilter
+  original: EventWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  startDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
+  isLive: EventWhereInput
+}
+
+input EventVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  startDate: OrderDirection
+  endDate: OrderDirection
+  republish: OrderDirection
+}
+
+input EventVersionUpdateInput {
+  original: EventRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  isLive: EventRelateToOneForUpdateInput
+  republish: String
+}
+
+input EventVersionUpdateArgs {
+  where: EventVersionWhereUniqueInput!
+  data: EventVersionUpdateInput!
+}
+
+input EventVersionCreateInput {
+  original: EventRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  startDate: DateTime
+  endDate: DateTime
+  isLive: EventRelateToOneForCreateInput
+  republish: String
+}
+
 type FacilityListItem {
   id: ID!
   order: Int
@@ -7956,17 +9152,6 @@ input PasswordFilter {
   isSet: Boolean!
 }
 
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
-}
-
 input UserOrderByInput {
   id: OrderDirection
   authId: OrderDirection
@@ -8400,6 +9585,54 @@ type Mutation {
   updateTrailDrafts(data: [TrailDraftUpdateArgs!]!): [TrailDraft]
   deleteTrailDraft(where: TrailDraftWhereUniqueInput!): TrailDraft
   deleteTrailDrafts(where: [TrailDraftWhereUniqueInput!]!): [TrailDraft]
+  createPlan(data: PlanCreateInput!): Plan
+  createPlans(data: [PlanCreateInput!]!): [Plan]
+  updatePlan(where: PlanWhereUniqueInput!, data: PlanUpdateInput!): Plan
+  updatePlans(data: [PlanUpdateArgs!]!): [Plan]
+  deletePlan(where: PlanWhereUniqueInput!): Plan
+  deletePlans(where: [PlanWhereUniqueInput!]!): [Plan]
+  createPlanVersion(data: PlanVersionCreateInput!): PlanVersion
+  createPlanVersions(data: [PlanVersionCreateInput!]!): [PlanVersion]
+  updatePlanVersion(where: PlanVersionWhereUniqueInput!, data: PlanVersionUpdateInput!): PlanVersion
+  updatePlanVersions(data: [PlanVersionUpdateArgs!]!): [PlanVersion]
+  deletePlanVersion(where: PlanVersionWhereUniqueInput!): PlanVersion
+  deletePlanVersions(where: [PlanVersionWhereUniqueInput!]!): [PlanVersion]
+  createPlanDraft(data: PlanDraftCreateInput!): PlanDraft
+  createPlanDrafts(data: [PlanDraftCreateInput!]!): [PlanDraft]
+  updatePlanDraft(where: PlanDraftWhereUniqueInput!, data: PlanDraftUpdateInput!): PlanDraft
+  updatePlanDrafts(data: [PlanDraftUpdateArgs!]!): [PlanDraft]
+  deletePlanDraft(where: PlanDraftWhereUniqueInput!): PlanDraft
+  deletePlanDrafts(where: [PlanDraftWhereUniqueInput!]!): [PlanDraft]
+  createPlanCode(data: PlanCodeCreateInput!): PlanCode
+  createPlanCodes(data: [PlanCodeCreateInput!]!): [PlanCode]
+  updatePlanCode(where: PlanCodeWhereUniqueInput!, data: PlanCodeUpdateInput!): PlanCode
+  updatePlanCodes(data: [PlanCodeUpdateArgs!]!): [PlanCode]
+  deletePlanCode(where: PlanCodeWhereUniqueInput!): PlanCode
+  deletePlanCodes(where: [PlanCodeWhereUniqueInput!]!): [PlanCode]
+  createPlanDocument(data: PlanDocumentCreateInput!): PlanDocument
+  createPlanDocuments(data: [PlanDocumentCreateInput!]!): [PlanDocument]
+  updatePlanDocument(where: PlanDocumentWhereUniqueInput!, data: PlanDocumentUpdateInput!): PlanDocument
+  updatePlanDocuments(data: [PlanDocumentUpdateArgs!]!): [PlanDocument]
+  deletePlanDocument(where: PlanDocumentWhereUniqueInput!): PlanDocument
+  deletePlanDocuments(where: [PlanDocumentWhereUniqueInput!]!): [PlanDocument]
+  createEvent(data: EventCreateInput!): Event
+  createEvents(data: [EventCreateInput!]!): [Event]
+  updateEvent(where: EventWhereUniqueInput!, data: EventUpdateInput!): Event
+  updateEvents(data: [EventUpdateArgs!]!): [Event]
+  deleteEvent(where: EventWhereUniqueInput!): Event
+  deleteEvents(where: [EventWhereUniqueInput!]!): [Event]
+  createEventDraft(data: EventDraftCreateInput!): EventDraft
+  createEventDrafts(data: [EventDraftCreateInput!]!): [EventDraft]
+  updateEventDraft(where: EventDraftWhereUniqueInput!, data: EventDraftUpdateInput!): EventDraft
+  updateEventDrafts(data: [EventDraftUpdateArgs!]!): [EventDraft]
+  deleteEventDraft(where: EventDraftWhereUniqueInput!): EventDraft
+  deleteEventDrafts(where: [EventDraftWhereUniqueInput!]!): [EventDraft]
+  createEventVersion(data: EventVersionCreateInput!): EventVersion
+  createEventVersions(data: [EventVersionCreateInput!]!): [EventVersion]
+  updateEventVersion(where: EventVersionWhereUniqueInput!, data: EventVersionUpdateInput!): EventVersion
+  updateEventVersions(data: [EventVersionUpdateArgs!]!): [EventVersion]
+  deleteEventVersion(where: EventVersionWhereUniqueInput!): EventVersion
+  deleteEventVersions(where: [EventVersionWhereUniqueInput!]!): [EventVersion]
   createFacilityListItem(data: FacilityListItemCreateInput!): FacilityListItem
   createFacilityListItems(data: [FacilityListItemCreateInput!]!): [FacilityListItem]
   updateFacilityListItem(where: FacilityListItemWhereUniqueInput!, data: FacilityListItemUpdateInput!): FacilityListItem
@@ -8620,6 +9853,30 @@ type Query {
   trailDraft(where: TrailDraftWhereUniqueInput!): TrailDraft
   trailDrafts(where: TrailDraftWhereInput! = {}, orderBy: [TrailDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailDraftWhereUniqueInput): [TrailDraft!]
   trailDraftsCount(where: TrailDraftWhereInput! = {}): Int
+  plan(where: PlanWhereUniqueInput!): Plan
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
+  planVersion(where: PlanVersionWhereUniqueInput!): PlanVersion
+  planVersions(where: PlanVersionWhereInput! = {}, orderBy: [PlanVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanVersionWhereUniqueInput): [PlanVersion!]
+  planVersionsCount(where: PlanVersionWhereInput! = {}): Int
+  planDraft(where: PlanDraftWhereUniqueInput!): PlanDraft
+  planDrafts(where: PlanDraftWhereInput! = {}, orderBy: [PlanDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDraftWhereUniqueInput): [PlanDraft!]
+  planDraftsCount(where: PlanDraftWhereInput! = {}): Int
+  planCode(where: PlanCodeWhereUniqueInput!): PlanCode
+  planCodes(where: PlanCodeWhereInput! = {}, orderBy: [PlanCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanCodeWhereUniqueInput): [PlanCode!]
+  planCodesCount(where: PlanCodeWhereInput! = {}): Int
+  planDocument(where: PlanDocumentWhereUniqueInput!): PlanDocument
+  planDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
+  planDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  event(where: EventWhereUniqueInput!): Event
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
+  eventDraft(where: EventDraftWhereUniqueInput!): EventDraft
+  eventDrafts(where: EventDraftWhereInput! = {}, orderBy: [EventDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventDraftWhereUniqueInput): [EventDraft!]
+  eventDraftsCount(where: EventDraftWhereInput! = {}): Int
+  eventVersion(where: EventVersionWhereUniqueInput!): EventVersion
+  eventVersions(where: EventVersionWhereInput! = {}, orderBy: [EventVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventVersionWhereUniqueInput): [EventVersion!]
+  eventVersionsCount(where: EventVersionWhereInput! = {}): Int
   facilityListItem(where: FacilityListItemWhereUniqueInput!): FacilityListItem
   facilityListItems(where: FacilityListItemWhereInput! = {}, orderBy: [FacilityListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityListItemWhereUniqueInput): [FacilityListItem!]
   facilityListItemsCount(where: FacilityListItemWhereInput! = {}): Int

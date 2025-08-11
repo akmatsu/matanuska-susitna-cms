@@ -9,6 +9,8 @@ import PublicNotice from './PublicNotice';
 import Service from './Service';
 import Topic from './Topic';
 import Trail from './Trail';
+import Plan from './Plan';
+import Event from './Event';
 
 const lists = {
   ...AssemblyDistrict,
@@ -21,7 +23,9 @@ const lists = {
   ...Service,
   ...Topic,
   ...Trail,
-  FacilityListItem: FacilityListItem,
+  ...Plan,
+  ...Event,
+  FacilityListItem,
 } satisfies Lists;
 
 export default lists;

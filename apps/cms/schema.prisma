@@ -1567,6 +1567,264 @@ model TrailDraft {
   @@index([parkId])
 }
 
+model Plan {
+  id                            String         @id @default(cuid())
+  heroImage                     String?
+  title                         String         @unique @default("")
+  description                   String         @default("")
+  publishAt                     DateTime?
+  unpublishAt                   DateTime?
+  reviewDate                    DateTime?
+  slug                          String         @unique @default("")
+  owner                         User?          @relation("Plan_owner", fields: [ownerId], references: [id])
+  ownerId                       String?        @map("owner")
+  body                          String?
+  tags                          Tag[]          @relation("Plan_tags")
+  userGroups                    UserGroup[]    @relation("Plan_userGroups")
+  actions                       InternalLink[] @relation("Plan_actions")
+  documents                     Document[]     @relation("Plan_documents")
+  contacts                      Contact[]      @relation("Plan_contacts")
+  createdAt                     DateTime?      @default(now())
+  updatedAt                     DateTime?      @default(now()) @updatedAt
+  effort                        ExternalLink?  @relation("Plan_effort", fields: [effortId], references: [id])
+  effortId                      String?        @map("effort")
+  autoRedirectToExternalWebsite Int            @default(0)
+  parent                        Plan?          @relation("Plan_parent", fields: [parentId], references: [id])
+  parentId                      String?        @map("parent")
+  components                    Plan[]         @relation("Plan_parent")
+  type                          String         @default("legislative")
+  code                          PlanCode[]     @relation("Plan_code")
+  events                        Event[]        @relation("Plan_events")
+  currentDocument               PlanDocument?  @relation("Plan_currentDocument", fields: [currentDocumentId], references: [id])
+  currentDocumentId             String?        @map("currentDocument")
+  draftDocument                 PlanDocument?  @relation("Plan_draftDocument", fields: [draftDocumentId], references: [id])
+  draftDocumentId               String?        @map("draftDocument")
+  pastDocuments                 PlanDocument[] @relation("Plan_pastDocuments")
+  status                        String         @default("unpublished")
+  drafts                        PlanDraft[]    @relation("PlanDraft_original")
+  makeDrafts                    String?
+  versions                      PlanVersion[]  @relation("PlanVersion_original")
+  currentVersion                PlanVersion?   @relation("Plan_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId              String?        @unique @map("currentVersion")
+  from_PlanVersion_parent       PlanVersion[]  @relation("PlanVersion_parent")
+  from_PlanVersion_components   PlanVersion[]  @relation("PlanVersion_components")
+  from_PlanDraft_parent         PlanDraft[]    @relation("PlanDraft_parent")
+  from_PlanDraft_components     PlanDraft[]    @relation("PlanDraft_components")
+
+  @@index([ownerId])
+  @@index([effortId])
+  @@index([parentId])
+  @@index([currentDocumentId])
+  @@index([draftDocumentId])
+}
+
+model PlanVersion {
+  id                            String         @id @default(cuid())
+  original                      Plan?          @relation("PlanVersion_original", fields: [originalId], references: [id])
+  originalId                    String?        @map("original")
+  heroImage                     String?
+  title                         String         @default("")
+  description                   String         @default("")
+  publishAt                     DateTime?
+  unpublishAt                   DateTime?
+  reviewDate                    DateTime?
+  owner                         User?          @relation("PlanVersion_owner", fields: [ownerId], references: [id])
+  ownerId                       String?        @map("owner")
+  body                          String?
+  tags                          Tag[]          @relation("PlanVersion_tags")
+  userGroups                    UserGroup[]    @relation("PlanVersion_userGroups")
+  actions                       InternalLink[] @relation("PlanVersion_actions")
+  documents                     Document[]     @relation("PlanVersion_documents")
+  contacts                      Contact[]      @relation("PlanVersion_contacts")
+  createdAt                     DateTime?      @default(now())
+  updatedAt                     DateTime?      @default(now()) @updatedAt
+  effort                        ExternalLink?  @relation("PlanVersion_effort", fields: [effortId], references: [id])
+  effortId                      String?        @map("effort")
+  autoRedirectToExternalWebsite Int            @default(0)
+  parent                        Plan?          @relation("PlanVersion_parent", fields: [parentId], references: [id])
+  parentId                      String?        @map("parent")
+  components                    Plan[]         @relation("PlanVersion_components")
+  type                          String         @default("legislative")
+  code                          PlanCode[]     @relation("PlanVersion_code")
+  events                        Event[]        @relation("PlanVersion_events")
+  currentDocument               PlanDocument?  @relation("PlanVersion_currentDocument", fields: [currentDocumentId], references: [id])
+  currentDocumentId             String?        @map("currentDocument")
+  draftDocument                 PlanDocument?  @relation("PlanVersion_draftDocument", fields: [draftDocumentId], references: [id])
+  draftDocumentId               String?        @map("draftDocument")
+  pastDocuments                 PlanDocument[] @relation("PlanVersion_pastDocuments")
+  isLive                        Plan?          @relation("Plan_currentVersion")
+  republish                     String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([effortId])
+  @@index([parentId])
+  @@index([currentDocumentId])
+  @@index([draftDocumentId])
+}
+
+model PlanDraft {
+  id                            String         @id @default(cuid())
+  original                      Plan?          @relation("PlanDraft_original", fields: [originalId], references: [id])
+  originalId                    String?        @map("original")
+  heroImage                     String?
+  title                         String         @default("")
+  description                   String         @default("")
+  publishAt                     DateTime?
+  unpublishAt                   DateTime?
+  reviewDate                    DateTime?
+  owner                         User?          @relation("PlanDraft_owner", fields: [ownerId], references: [id])
+  ownerId                       String?        @map("owner")
+  body                          String?
+  tags                          Tag[]          @relation("PlanDraft_tags")
+  userGroups                    UserGroup[]    @relation("PlanDraft_userGroups")
+  actions                       InternalLink[] @relation("PlanDraft_actions")
+  documents                     Document[]     @relation("PlanDraft_documents")
+  contacts                      Contact[]      @relation("PlanDraft_contacts")
+  createdAt                     DateTime?      @default(now())
+  updatedAt                     DateTime?      @default(now()) @updatedAt
+  effort                        ExternalLink?  @relation("PlanDraft_effort", fields: [effortId], references: [id])
+  effortId                      String?        @map("effort")
+  autoRedirectToExternalWebsite Int            @default(0)
+  parent                        Plan?          @relation("PlanDraft_parent", fields: [parentId], references: [id])
+  parentId                      String?        @map("parent")
+  components                    Plan[]         @relation("PlanDraft_components")
+  type                          String         @default("legislative")
+  code                          PlanCode[]     @relation("PlanDraft_code")
+  events                        Event[]        @relation("PlanDraft_events")
+  currentDocument               PlanDocument?  @relation("PlanDraft_currentDocument", fields: [currentDocumentId], references: [id])
+  currentDocumentId             String?        @map("currentDocument")
+  draftDocument                 PlanDocument?  @relation("PlanDraft_draftDocument", fields: [draftDocumentId], references: [id])
+  draftDocumentId               String?        @map("draftDocument")
+  pastDocuments                 PlanDocument[] @relation("PlanDraft_pastDocuments")
+  publish                       String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([effortId])
+  @@index([parentId])
+  @@index([currentDocumentId])
+  @@index([draftDocumentId])
+}
+
+model PlanCode {
+  id                    String        @id @default(cuid())
+  code                  String        @default("")
+  from_Plan_code        Plan[]        @relation("Plan_code")
+  from_PlanVersion_code PlanVersion[] @relation("PlanVersion_code")
+  from_PlanDraft_code   PlanDraft[]   @relation("PlanDraft_code")
+}
+
+model PlanDocument {
+  id                               String        @id @default(cuid())
+  label                            String        @default("")
+  supersededBy                     PlanDocument? @relation("PlanDocument_precededBy")
+  precededBy                       PlanDocument? @relation("PlanDocument_precededBy", fields: [precededById], references: [id])
+  precededById                     String?       @unique @map("precededBy")
+  adoptedYear                      Int?
+  document                         Document[]    @relation("PlanDocument_document")
+  from_Plan_currentDocument        Plan[]        @relation("Plan_currentDocument")
+  from_Plan_draftDocument          Plan[]        @relation("Plan_draftDocument")
+  from_Plan_pastDocuments          Plan[]        @relation("Plan_pastDocuments")
+  from_PlanVersion_currentDocument PlanVersion[] @relation("PlanVersion_currentDocument")
+  from_PlanVersion_draftDocument   PlanVersion[] @relation("PlanVersion_draftDocument")
+  from_PlanVersion_pastDocuments   PlanVersion[] @relation("PlanVersion_pastDocuments")
+  from_PlanDraft_currentDocument   PlanDraft[]   @relation("PlanDraft_currentDocument")
+  from_PlanDraft_draftDocument     PlanDraft[]   @relation("PlanDraft_draftDocument")
+  from_PlanDraft_pastDocuments     PlanDraft[]   @relation("PlanDraft_pastDocuments")
+}
+
+model Event {
+  id                      String         @id @default(cuid())
+  heroImage               String?
+  title                   String         @unique @default("")
+  description             String         @default("")
+  publishAt               DateTime?
+  unpublishAt             DateTime?
+  reviewDate              DateTime?
+  slug                    String         @unique @default("")
+  owner                   User?          @relation("Event_owner", fields: [ownerId], references: [id])
+  ownerId                 String?        @map("owner")
+  body                    String?
+  tags                    Tag[]          @relation("Event_tags")
+  userGroups              UserGroup[]    @relation("Event_userGroups")
+  actions                 InternalLink[] @relation("Event_actions")
+  documents               Document[]     @relation("Event_documents")
+  contacts                Contact[]      @relation("Event_contacts")
+  createdAt               DateTime?      @default(now())
+  updatedAt               DateTime?      @default(now()) @updatedAt
+  startDate               DateTime?
+  endDate                 DateTime?
+  status                  String         @default("unpublished")
+  drafts                  EventDraft[]   @relation("EventDraft_original")
+  makeDrafts              String?
+  versions                EventVersion[] @relation("EventVersion_original")
+  currentVersion          EventVersion?  @relation("Event_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId        String?        @unique @map("currentVersion")
+  from_Plan_events        Plan[]         @relation("Plan_events")
+  from_PlanVersion_events PlanVersion[]  @relation("PlanVersion_events")
+  from_PlanDraft_events   PlanDraft[]    @relation("PlanDraft_events")
+
+  @@index([ownerId])
+}
+
+model EventDraft {
+  id          String         @id @default(cuid())
+  original    Event?         @relation("EventDraft_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
+  heroImage   String?
+  title       String         @default("")
+  description String         @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  owner       User?          @relation("EventDraft_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
+  body        String?
+  tags        Tag[]          @relation("EventDraft_tags")
+  userGroups  UserGroup[]    @relation("EventDraft_userGroups")
+  actions     InternalLink[] @relation("EventDraft_actions")
+  documents   Document[]     @relation("EventDraft_documents")
+  contacts    Contact[]      @relation("EventDraft_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  startDate   DateTime?
+  endDate     DateTime?
+  publish     String?
+
+  @@index([originalId])
+  @@index([ownerId])
+}
+
+model EventVersion {
+  id          String         @id @default(cuid())
+  original    Event?         @relation("EventVersion_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
+  heroImage   String?
+  title       String         @default("")
+  description String         @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  owner       User?          @relation("EventVersion_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
+  body        String?
+  tags        Tag[]          @relation("EventVersion_tags")
+  userGroups  UserGroup[]    @relation("EventVersion_userGroups")
+  actions     InternalLink[] @relation("EventVersion_actions")
+  documents   Document[]     @relation("EventVersion_documents")
+  contacts    Contact[]      @relation("EventVersion_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  startDate   DateTime?
+  endDate     DateTime?
+  isLive      Event?         @relation("Event_currentVersion")
+  republish   String?
+
+  @@index([originalId])
+  @@index([ownerId])
+}
+
 model FacilityListItem {
   id         String    @id @default(cuid())
   order      Int       @default(0)
@@ -1644,6 +1902,13 @@ model Document {
   from_Trail_documents                             Trail[]                   @relation("Trail_documents")
   from_TrailVersion_documents                      TrailVersion[]            @relation("TrailVersion_documents")
   from_TrailDraft_documents                        TrailDraft[]              @relation("TrailDraft_documents")
+  from_Plan_documents                              Plan[]                    @relation("Plan_documents")
+  from_PlanVersion_documents                       PlanVersion[]             @relation("PlanVersion_documents")
+  from_PlanDraft_documents                         PlanDraft[]               @relation("PlanDraft_documents")
+  from_PlanDocument_document                       PlanDocument[]            @relation("PlanDocument_document")
+  from_Event_documents                             Event[]                   @relation("Event_documents")
+  from_EventDraft_documents                        EventDraft[]              @relation("EventDraft_documents")
+  from_EventVersion_documents                      EventVersion[]            @relation("EventVersion_documents")
   from_DocumentListItem_document                   DocumentListItem[]        @relation("DocumentListItem_document")
 
   @@index([title])
@@ -1706,6 +1971,9 @@ model ExternalLink {
   from_ServiceVersion_secondaryActions         ServiceVersion[] @relation("ServiceVersion_secondaryActions")
   from_ServiceDraft_primaryAction              ServiceDraft[]   @relation("ServiceDraft_primaryAction")
   from_ServiceDraft_secondaryActions           ServiceDraft[]   @relation("ServiceDraft_secondaryActions")
+  from_Plan_effort                             Plan[]           @relation("Plan_effort")
+  from_PlanVersion_effort                      PlanVersion[]    @relation("PlanVersion_effort")
+  from_PlanDraft_effort                        PlanDraft[]      @relation("PlanDraft_effort")
 
   @@index([urlId])
 }
@@ -1742,6 +2010,12 @@ model InternalLink {
   from_Trail_actions                   Trail[]                   @relation("Trail_actions")
   from_TrailVersion_actions            TrailVersion[]            @relation("TrailVersion_actions")
   from_TrailDraft_actions              TrailDraft[]              @relation("TrailDraft_actions")
+  from_Plan_actions                    Plan[]                    @relation("Plan_actions")
+  from_PlanVersion_actions             PlanVersion[]             @relation("PlanVersion_actions")
+  from_PlanDraft_actions               PlanDraft[]               @relation("PlanDraft_actions")
+  from_Event_actions                   Event[]                   @relation("Event_actions")
+  from_EventDraft_actions              EventDraft[]              @relation("EventDraft_actions")
+  from_EventVersion_actions            EventVersion[]            @relation("EventVersion_actions")
   from_Highlight_linkedItem            Highlight[]               @relation("Highlight_linkedItem")
 }
 
@@ -1827,6 +2101,12 @@ model Contact {
   from_Trail_contacts                       Trail[]                   @relation("Trail_contacts")
   from_TrailVersion_contacts                TrailVersion[]            @relation("TrailVersion_contacts")
   from_TrailDraft_contacts                  TrailDraft[]              @relation("TrailDraft_contacts")
+  from_Plan_contacts                        Plan[]                    @relation("Plan_contacts")
+  from_PlanVersion_contacts                 PlanVersion[]             @relation("PlanVersion_contacts")
+  from_PlanDraft_contacts                   PlanDraft[]               @relation("PlanDraft_contacts")
+  from_Event_contacts                       Event[]                   @relation("Event_contacts")
+  from_EventDraft_contacts                  EventDraft[]              @relation("EventDraft_contacts")
+  from_EventVersion_contacts                EventVersion[]            @relation("EventVersion_contacts")
   from_ContactListItem_contact              ContactListItem[]         @relation("ContactListItem_contact")
 
   @@index([addressId])
@@ -1926,6 +2206,12 @@ model User {
   from_Trail_owner                   Trail[]                   @relation("Trail_owner")
   from_TrailVersion_owner            TrailVersion[]            @relation("TrailVersion_owner")
   from_TrailDraft_owner              TrailDraft[]              @relation("TrailDraft_owner")
+  from_Plan_owner                    Plan[]                    @relation("Plan_owner")
+  from_PlanVersion_owner             PlanVersion[]             @relation("PlanVersion_owner")
+  from_PlanDraft_owner               PlanDraft[]               @relation("PlanDraft_owner")
+  from_Event_owner                   Event[]                   @relation("Event_owner")
+  from_EventDraft_owner              EventDraft[]              @relation("EventDraft_owner")
+  from_EventVersion_owner            EventVersion[]            @relation("EventVersion_owner")
   from_DocumentCollection_owner      DocumentCollection[]      @relation("DocumentCollection_owner")
   from_Url_owner                     Url[]                     @relation("Url_owner")
   from_UserGroup_owner               UserGroup[]               @relation("UserGroup_owner")
@@ -1972,6 +2258,12 @@ model UserGroup {
   from_Trail_userGroups                   Trail[]                   @relation("Trail_userGroups")
   from_TrailVersion_userGroups            TrailVersion[]            @relation("TrailVersion_userGroups")
   from_TrailDraft_userGroups              TrailDraft[]              @relation("TrailDraft_userGroups")
+  from_Plan_userGroups                    Plan[]                    @relation("Plan_userGroups")
+  from_PlanVersion_userGroups             PlanVersion[]             @relation("PlanVersion_userGroups")
+  from_PlanDraft_userGroups               PlanDraft[]               @relation("PlanDraft_userGroups")
+  from_Event_userGroups                   Event[]                   @relation("Event_userGroups")
+  from_EventDraft_userGroups              EventDraft[]              @relation("EventDraft_userGroups")
+  from_EventVersion_userGroups            EventVersion[]            @relation("EventVersion_userGroups")
   from_DocumentCollection_userGroups      DocumentCollection[]      @relation("DocumentCollection_userGroups")
 
   @@index([ownerId])
@@ -2023,6 +2315,12 @@ model Tag {
   from_Trail_tags                   Trail[]                   @relation("Trail_tags")
   from_TrailVersion_tags            TrailVersion[]            @relation("TrailVersion_tags")
   from_TrailDraft_tags              TrailDraft[]              @relation("TrailDraft_tags")
+  from_Plan_tags                    Plan[]                    @relation("Plan_tags")
+  from_PlanVersion_tags             PlanVersion[]             @relation("PlanVersion_tags")
+  from_PlanDraft_tags               PlanDraft[]               @relation("PlanDraft_tags")
+  from_Event_tags                   Event[]                   @relation("Event_tags")
+  from_EventDraft_tags              EventDraft[]              @relation("EventDraft_tags")
+  from_EventVersion_tags            EventVersion[]            @relation("EventVersion_tags")
   from_Document_tags                Document[]                @relation("Document_tags")
   from_DocumentCollection_tags      DocumentCollection[]      @relation("DocumentCollection_tags")
   from_Image_tags                   Image[]                   @relation("Image_tags")
