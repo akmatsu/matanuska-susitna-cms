@@ -31,7 +31,10 @@ interface Options {
   draftBasePageOptions?: BasePageOptions;
   versionBasePageOptions?: BasePageOptions;
   mainAccess?: ListAccessControl<any>;
+  /** Hooks that only run on main model, not draft or versions */
   mainHooks?: ListHooks<BaseListTypeInfo>;
+  /** Hooks that run on all models, including draft and versions*/
+  hooks?: ListHooks<BaseListTypeInfo>;
   mainGraphqlOptions?: ListConfig<any>['graphql'];
   mainUI?: ListConfig<any>['ui'];
 }
@@ -147,6 +150,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
       },
 
       hooks: {
+        ...(opts.hooks && opts.hooks),
         ...(opts.mainHooks && opts.mainHooks),
         async beforeOperation({ operation, item, context }) {
           const it: BaseItem | undefined = item as BaseItem | undefined;
@@ -236,6 +240,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           },
         }),
       },
+      hooks: opts.hooks,
     }),
 
     Draft: list({
@@ -264,6 +269,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         }),
       },
       hooks: {
+        ...(opts.hooks && opts.hooks),
         async beforeOperation({ operation, item }) {
           if (operation === 'delete') {
             const publishQueue = getPublishQueue();

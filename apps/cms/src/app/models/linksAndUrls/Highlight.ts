@@ -3,7 +3,6 @@ import { timestamps } from '../../fieldUtils';
 import { relationship, text } from '@keystone-6/core/fields';
 import { isContentManager } from '../../access/roles';
 import { elevatedOperationAccess } from '../../access';
-
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 
 export const Highlight: ListConfig<any> = list({
