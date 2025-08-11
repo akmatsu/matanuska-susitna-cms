@@ -120,6 +120,9 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
         defaultValue: 'legislative',
         ui: {
           displayMode: 'segmented-control',
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
         },
       }),
       code: relationship({
@@ -134,12 +137,12 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
           inlineEdit: {
             fields: ['code'],
           },
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
         },
       }),
-      events: relationship({
-        ref: 'Event',
-        many: true,
-      }),
+
       ...group({
         label: 'Legislative Documents',
         fields: {
@@ -251,6 +254,10 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
             },
           }),
         },
+      }),
+      events: relationship({
+        ref: 'Event',
+        many: true,
       }),
     };
   },

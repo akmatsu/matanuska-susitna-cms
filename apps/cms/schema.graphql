@@ -7200,12 +7200,12 @@ type Plan {
   type: String
   code(where: PlanCodeWhereInput! = {}, orderBy: [PlanCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanCodeWhereUniqueInput): [PlanCode!]
   codeCount(where: PlanCodeWhereInput! = {}): Int
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   currentDocument: PlanDocument
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   status: String
   drafts(where: PlanDraftWhereInput! = {}, orderBy: [PlanDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDraftWhereUniqueInput): [PlanDraft!]
   draftsCount(where: PlanDraftWhereInput! = {}): Int
@@ -7248,10 +7248,10 @@ input PlanWhereInput {
   components: PlanManyRelationFilter
   type: StringFilter
   code: PlanCodeManyRelationFilter
-  events: EventManyRelationFilter
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  events: EventManyRelationFilter
   status: StringFilter
   drafts: PlanDraftManyRelationFilter
   versions: PlanVersionManyRelationFilter
@@ -7270,16 +7270,16 @@ input PlanCodeManyRelationFilter {
   none: PlanCodeWhereInput
 }
 
-input EventManyRelationFilter {
-  every: EventWhereInput
-  some: EventWhereInput
-  none: EventWhereInput
-}
-
 input PlanDocumentManyRelationFilter {
   every: PlanDocumentWhereInput
   some: PlanDocumentWhereInput
   none: PlanDocumentWhereInput
+}
+
+input EventManyRelationFilter {
+  every: EventWhereInput
+  some: EventWhereInput
+  none: EventWhereInput
 }
 
 input PlanDraftManyRelationFilter {
@@ -7335,10 +7335,10 @@ input PlanUpdateInput {
   components: PlanRelateToManyForUpdateInput
   type: String
   code: PlanCodeRelateToManyForUpdateInput
-  events: EventRelateToManyForUpdateInput
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  events: EventRelateToManyForUpdateInput
   status: String
   drafts: PlanDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -7366,13 +7366,6 @@ input PlanCodeRelateToManyForUpdateInput {
   connect: [PlanCodeWhereUniqueInput!]
 }
 
-input EventRelateToManyForUpdateInput {
-  disconnect: [EventWhereUniqueInput!]
-  set: [EventWhereUniqueInput!]
-  create: [EventCreateInput!]
-  connect: [EventWhereUniqueInput!]
-}
-
 input PlanDocumentRelateToOneForUpdateInput {
   create: PlanDocumentCreateInput
   connect: PlanDocumentWhereUniqueInput
@@ -7384,6 +7377,13 @@ input PlanDocumentRelateToManyForUpdateInput {
   set: [PlanDocumentWhereUniqueInput!]
   create: [PlanDocumentCreateInput!]
   connect: [PlanDocumentWhereUniqueInput!]
+}
+
+input EventRelateToManyForUpdateInput {
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
 }
 
 input PlanDraftRelateToManyForUpdateInput {
@@ -7434,10 +7434,10 @@ input PlanCreateInput {
   components: PlanRelateToManyForCreateInput
   type: String
   code: PlanCodeRelateToManyForCreateInput
-  events: EventRelateToManyForCreateInput
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  events: EventRelateToManyForCreateInput
   status: String
   drafts: PlanDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7460,11 +7460,6 @@ input PlanCodeRelateToManyForCreateInput {
   connect: [PlanCodeWhereUniqueInput!]
 }
 
-input EventRelateToManyForCreateInput {
-  create: [EventCreateInput!]
-  connect: [EventWhereUniqueInput!]
-}
-
 input PlanDocumentRelateToOneForCreateInput {
   create: PlanDocumentCreateInput
   connect: PlanDocumentWhereUniqueInput
@@ -7473,6 +7468,11 @@ input PlanDocumentRelateToOneForCreateInput {
 input PlanDocumentRelateToManyForCreateInput {
   create: [PlanDocumentCreateInput!]
   connect: [PlanDocumentWhereUniqueInput!]
+}
+
+input EventRelateToManyForCreateInput {
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
 }
 
 input PlanDraftRelateToManyForCreateInput {
@@ -7522,12 +7522,12 @@ type PlanVersion {
   type: String
   code(where: PlanCodeWhereInput! = {}, orderBy: [PlanCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanCodeWhereUniqueInput): [PlanCode!]
   codeCount(where: PlanCodeWhereInput! = {}): Int
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   currentDocument: PlanDocument
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   isLive: Plan
   republish: String
 }
@@ -7563,10 +7563,10 @@ input PlanVersionWhereInput {
   components: PlanManyRelationFilter
   type: StringFilter
   code: PlanCodeManyRelationFilter
-  events: EventManyRelationFilter
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  events: EventManyRelationFilter
   isLive: PlanWhereInput
 }
 
@@ -7609,10 +7609,10 @@ input PlanVersionUpdateInput {
   components: PlanRelateToManyForUpdateInput
   type: String
   code: PlanCodeRelateToManyForUpdateInput
-  events: EventRelateToManyForUpdateInput
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  events: EventRelateToManyForUpdateInput
   isLive: PlanRelateToOneForUpdateInput
   republish: String
 }
@@ -7645,10 +7645,10 @@ input PlanVersionCreateInput {
   components: PlanRelateToManyForCreateInput
   type: String
   code: PlanCodeRelateToManyForCreateInput
-  events: EventRelateToManyForCreateInput
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  events: EventRelateToManyForCreateInput
   isLive: PlanRelateToOneForCreateInput
   republish: String
 }
@@ -7685,12 +7685,12 @@ type PlanDraft {
   type: String
   code(where: PlanCodeWhereInput! = {}, orderBy: [PlanCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanCodeWhereUniqueInput): [PlanCode!]
   codeCount(where: PlanCodeWhereInput! = {}): Int
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   currentDocument: PlanDocument
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   publish: String
 }
 
@@ -7724,10 +7724,10 @@ input PlanDraftWhereInput {
   components: PlanManyRelationFilter
   type: StringFilter
   code: PlanCodeManyRelationFilter
-  events: EventManyRelationFilter
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  events: EventManyRelationFilter
 }
 
 input PlanDraftOrderByInput {
@@ -7769,10 +7769,10 @@ input PlanDraftUpdateInput {
   components: PlanRelateToManyForUpdateInput
   type: String
   code: PlanCodeRelateToManyForUpdateInput
-  events: EventRelateToManyForUpdateInput
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  events: EventRelateToManyForUpdateInput
   publish: String
 }
 
@@ -7804,10 +7804,10 @@ input PlanDraftCreateInput {
   components: PlanRelateToManyForCreateInput
   type: String
   code: PlanCodeRelateToManyForCreateInput
-  events: EventRelateToManyForCreateInput
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  events: EventRelateToManyForCreateInput
   publish: String
 }
 
