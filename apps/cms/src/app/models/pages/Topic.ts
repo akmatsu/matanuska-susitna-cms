@@ -89,6 +89,11 @@ const {
             : 'PublicNotice',
         many: true,
       }),
+
+      plans: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.topics' : 'Plan',
+        many: true,
+      }),
     };
   },
   {

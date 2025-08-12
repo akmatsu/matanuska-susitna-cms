@@ -101,6 +101,8 @@ export default config<TypeInfo<Session>>({
         resolvers: {
           InternalLinkSearch: {
             __resolveType(value: any) {
+              if ('effort' in value) return 'Plan';
+              if ('startDate' in value) return 'Event';
               if ('primaryActionId' in value) return 'Service';
               if ('highlightThreeId' in value) return 'HomePage';
               if ('linkToAgendasId' in value) return 'Board';
@@ -119,6 +121,8 @@ export default config<TypeInfo<Session>>({
           },
           Page: {
             __resolveType(value: any) {
+              if ('effort' in value) return 'Plan';
+              if ('startDate' in value) return 'Event';
               if ('primaryActionId' in value) return 'Service';
               if ('linkToAgendasId' in value) return 'Board';
               if ('effectiveDate' in value) return 'PublicNotice';
@@ -160,6 +164,10 @@ export default config<TypeInfo<Session>>({
                   return context.db.Trail.findOne({ where: { slug } });
                 case 'Topic':
                   return context.db.Topic.findOne({ where: { slug } });
+                case 'Plan':
+                  return context.db.Plan.findOne({ where: { slug } });
+                case 'Event':
+                  return context.db.Event.findOne({ where: { slug } });
                 default:
                   throw new Error(`Unknown type: ${type}`);
               }
@@ -194,6 +202,10 @@ export default config<TypeInfo<Session>>({
                   return context.db.Trail.findOne({ where: { id } });
                 case 'Url':
                   return context.db.Url.findOne({ where: { id } });
+                case 'Plan':
+                  return context.db.Plan.findOne({ where: { id } });
+                case 'Event':
+                  return context.db.Event.findOne({ where: { id } });
                 default:
                   throw new Error(`Unknown type: ${type}`);
               }
@@ -215,6 +227,8 @@ export default config<TypeInfo<Session>>({
                 communities,
                 parks,
                 trails,
+                plans,
+                events,
                 urls,
               ] = await Promise.all([
                 context.db.Service.findMany({
@@ -315,6 +329,24 @@ export default config<TypeInfo<Session>>({
                     ],
                   },
                 }),
+                context.db.Plan.findMany({
+                  where: {
+                    OR: [
+                      { title: { contains: query, mode: 'insensitive' } },
+                      { description: { contains: query, mode: 'insensitive' } },
+                      { body: { contains: query, mode: 'insensitive' } },
+                    ],
+                  },
+                }),
+                context.db.Event.findMany({
+                  where: {
+                    OR: [
+                      { title: { contains: query, mode: 'insensitive' } },
+                      { description: { contains: query, mode: 'insensitive' } },
+                      { body: { contains: query, mode: 'insensitive' } },
+                    ],
+                  },
+                }),
                 context.db.Url.findMany({
                   where: {
                     OR: [
@@ -339,6 +371,8 @@ export default config<TypeInfo<Session>>({
                 ...communities,
                 ...parks,
                 ...trails,
+                ...plans,
+                ...events,
                 ...urls,
               ];
             },
