@@ -71,15 +71,16 @@ export function liveUrl(
   const correctedListKey = correctListKey(v.slugify(plural(listKey)));
 
   function correctListKey(key: string) {
-    if (key === 'org-units') return 'departments';
-    return key;
+    if (key === 'org-units') return '/departments';
+    if (key === 'topics') return '';
+    return `/${key}`;
   }
   return virtual({
     field: graphql.field({
       type: graphql.String,
       resolve(baseItem: any) {
         baseItem = baseItem as { [key: string]: string };
-        return `${baseUrl}/${correctedListKey}/${baseItem[identifierKey]}`;
+        return `${baseUrl}${correctedListKey}/${baseItem[identifierKey]}`;
       },
     }),
     ui: {
