@@ -68,6 +68,8 @@ export const graphqlExtendTypeDefs = gql`
   extend type Facility implements BasePage
   extend type OrgUnit implements BasePage
   extend type BoardPage implements BasePage
+  extend type Plan implements BasePage
+  extend type Event implements BasePage
 
   extend type Topic implements BasePageWithSlug
   extend type AssemblyDistrict implements BasePageWithSlug
@@ -79,4 +81,6 @@ export const graphqlExtendTypeDefs = gql`
   extend type Service implements BasePageWithSlug
   extend type Facility implements BasePageWithSlug
   extend type OrgUnit implements BasePageWithSlug
+  extend type Plan implements BasePageWithSlug
+  extend type Event implements BasePageWithSlug
 `;

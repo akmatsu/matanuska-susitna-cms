@@ -1390,6 +1390,7 @@ model Topic {
   facilities                          Facility[]                @relation("Facility_topics")
   orgUnits                            OrgUnit[]                 @relation("OrgUnit_topics")
   publicNotices                       PublicNotice[]            @relation("PublicNotice_topics")
+  plans                               Plan[]                    @relation("Plan_topics")
   status                              String                    @default("unpublished")
   drafts                              TopicDraft[]              @relation("TopicDraft_original")
   makeDrafts                          String?
@@ -1414,6 +1415,8 @@ model Topic {
   from_ServiceDraft_topics            ServiceDraft[]            @relation("ServiceDraft_topics")
   from_TrailVersion_topics            TrailVersion[]            @relation("TrailVersion_topics")
   from_TrailDraft_topics              TrailDraft[]              @relation("TrailDraft_topics")
+  from_PlanVersion_topics             PlanVersion[]             @relation("PlanVersion_topics")
+  from_PlanDraft_topics               PlanDraft[]               @relation("PlanDraft_topics")
 
   @@index([ownerId])
   @@index([redirectId])
@@ -1452,6 +1455,7 @@ model TopicVersion {
   facilities    Facility[]         @relation("TopicVersion_facilities")
   orgUnits      OrgUnit[]          @relation("TopicVersion_orgUnits")
   publicNotices PublicNotice[]     @relation("TopicVersion_publicNotices")
+  plans         Plan[]             @relation("TopicVersion_plans")
   isLive        Topic?             @relation("Topic_currentVersion")
   republish     String?
 
@@ -1493,6 +1497,7 @@ model TopicDraft {
   facilities    Facility[]         @relation("TopicDraft_facilities")
   orgUnits      OrgUnit[]          @relation("TopicDraft_orgUnits")
   publicNotices PublicNotice[]     @relation("TopicDraft_publicNotices")
+  plans         Plan[]             @relation("TopicDraft_plans")
   publish       String?
 
   @@index([originalId])
@@ -1722,12 +1727,15 @@ model Plan {
   draftDocument                 PlanDocument?  @relation("Plan_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?        @map("draftDocument")
   pastDocuments                 PlanDocument[] @relation("Plan_pastDocuments")
+  topics                        Topic[]        @relation("Plan_topics")
   status                        String         @default("unpublished")
   drafts                        PlanDraft[]    @relation("PlanDraft_original")
   makeDrafts                    String?
   versions                      PlanVersion[]  @relation("PlanVersion_original")
   currentVersion                PlanVersion?   @relation("Plan_currentVersion", fields: [currentVersionId], references: [id])
   currentVersionId              String?        @unique @map("currentVersion")
+  from_TopicVersion_plans       TopicVersion[] @relation("TopicVersion_plans")
+  from_TopicDraft_plans         TopicDraft[]   @relation("TopicDraft_plans")
   from_PlanVersion_parent       PlanVersion[]  @relation("PlanVersion_parent")
   from_PlanVersion_components   PlanVersion[]  @relation("PlanVersion_components")
   from_PlanDraft_parent         PlanDraft[]    @relation("PlanDraft_parent")
@@ -1777,6 +1785,7 @@ model PlanVersion {
   draftDocument                 PlanDocument?  @relation("PlanVersion_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?        @map("draftDocument")
   pastDocuments                 PlanDocument[] @relation("PlanVersion_pastDocuments")
+  topics                        Topic[]        @relation("PlanVersion_topics")
   isLive                        Plan?          @relation("Plan_currentVersion")
   republish                     String?
 
@@ -1825,6 +1834,7 @@ model PlanDraft {
   draftDocument                 PlanDocument?  @relation("PlanDraft_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?        @map("draftDocument")
   pastDocuments                 PlanDocument[] @relation("PlanDraft_pastDocuments")
+  topics                        Topic[]        @relation("PlanDraft_topics")
   publish                       String?
 
   @@index([originalId])
@@ -2504,7 +2514,7 @@ model Tag {
 
 model Redirect {
   id                                    String                    @id @default(cuid())
-  from                                  String                    @default("")
+  from                                  String                    @unique @default("")
   to                                    InternalLink?             @relation("Redirect_to", fields: [toId], references: [id])
   toId                                  String?                   @map("to")
   redirectMessage                       String                    @default("")

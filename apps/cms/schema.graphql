@@ -6076,6 +6076,8 @@ type Topic implements BasePage & BasePageWithSlug {
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: TopicDraftWhereInput! = {}, orderBy: [TopicDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicDraftWhereUniqueInput): [TopicDraft!]
   draftsCount(where: TopicDraftWhereInput! = {}): Int
@@ -6124,6 +6126,7 @@ input TopicWhereInput {
   facilities: FacilityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: TopicDraftManyRelationFilter
   versions: TopicVersionManyRelationFilter
@@ -6140,6 +6143,12 @@ input PublicNoticeManyRelationFilter {
   every: PublicNoticeWhereInput
   some: PublicNoticeWhereInput
   none: PublicNoticeWhereInput
+}
+
+input PlanManyRelationFilter {
+  every: PlanWhereInput
+  some: PlanWhereInput
+  none: PlanWhereInput
 }
 
 input TopicDraftManyRelationFilter {
@@ -6199,6 +6208,7 @@ input TopicUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: TopicDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -6218,6 +6228,13 @@ input PublicNoticeRelateToManyForUpdateInput {
   set: [PublicNoticeWhereUniqueInput!]
   create: [PublicNoticeCreateInput!]
   connect: [PublicNoticeWhereUniqueInput!]
+}
+
+input PlanRelateToManyForUpdateInput {
+  disconnect: [PlanWhereUniqueInput!]
+  set: [PlanWhereUniqueInput!]
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
 }
 
 input TopicDraftRelateToManyForUpdateInput {
@@ -6274,6 +6291,7 @@ input TopicCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: TopicDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -6289,6 +6307,11 @@ input HighlightRelateToManyForCreateInput {
 input PublicNoticeRelateToManyForCreateInput {
   create: [PublicNoticeCreateInput!]
   connect: [PublicNoticeWhereUniqueInput!]
+}
+
+input PlanRelateToManyForCreateInput {
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
 }
 
 input TopicDraftRelateToManyForCreateInput {
@@ -6353,6 +6376,8 @@ type TopicVersion {
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   isLive: Topic
   republish: String
 }
@@ -6394,6 +6419,7 @@ input TopicVersionWhereInput {
   facilities: FacilityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  plans: PlanManyRelationFilter
   isLive: TopicWhereInput
 }
 
@@ -6440,6 +6466,7 @@ input TopicVersionUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   isLive: TopicRelateToOneForUpdateInput
   republish: String
 }
@@ -6484,6 +6511,7 @@ input TopicVersionCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   isLive: TopicRelateToOneForCreateInput
   republish: String
 }
@@ -6540,6 +6568,8 @@ type TopicDraft {
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -6579,6 +6609,7 @@ input TopicDraftWhereInput {
   facilities: FacilityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  plans: PlanManyRelationFilter
 }
 
 input TopicDraftOrderByInput {
@@ -6624,6 +6655,7 @@ input TopicDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -6661,6 +6693,7 @@ input TopicDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -7467,7 +7500,7 @@ input TrailDraftCreateInput {
   publish: String
 }
 
-type Plan {
+type Plan implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -7506,6 +7539,8 @@ type Plan {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: PlanDraftWhereInput! = {}, orderBy: [PlanDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDraftWhereUniqueInput): [PlanDraft!]
   draftsCount(where: PlanDraftWhereInput! = {}): Int
@@ -7553,16 +7588,11 @@ input PlanWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: PlanDraftManyRelationFilter
   versions: PlanVersionManyRelationFilter
   currentVersion: PlanVersionWhereInput
-}
-
-input PlanManyRelationFilter {
-  every: PlanWhereInput
-  some: PlanWhereInput
-  none: PlanWhereInput
 }
 
 input PlanCodeManyRelationFilter {
@@ -7635,6 +7665,7 @@ input PlanUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: PlanDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -7646,13 +7677,6 @@ input PlanRelateToOneForUpdateInput {
   create: PlanCreateInput
   connect: PlanWhereUniqueInput
   disconnect: Boolean
-}
-
-input PlanRelateToManyForUpdateInput {
-  disconnect: [PlanWhereUniqueInput!]
-  set: [PlanWhereUniqueInput!]
-  create: [PlanCreateInput!]
-  connect: [PlanWhereUniqueInput!]
 }
 
 input PlanCodeRelateToManyForUpdateInput {
@@ -7728,6 +7752,7 @@ input PlanCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: PlanDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7738,11 +7763,6 @@ input PlanCreateInput {
 input PlanRelateToOneForCreateInput {
   create: PlanCreateInput
   connect: PlanWhereUniqueInput
-}
-
-input PlanRelateToManyForCreateInput {
-  create: [PlanCreateInput!]
-  connect: [PlanWhereUniqueInput!]
 }
 
 input PlanCodeRelateToManyForCreateInput {
@@ -7814,6 +7834,8 @@ type PlanVersion {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Plan
   republish: String
 }
@@ -7854,6 +7876,7 @@ input PlanVersionWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  topics: TopicManyRelationFilter
   isLive: PlanWhereInput
 }
 
@@ -7901,6 +7924,7 @@ input PlanVersionUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   isLive: PlanRelateToOneForUpdateInput
   republish: String
 }
@@ -7938,6 +7962,7 @@ input PlanVersionCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   isLive: PlanRelateToOneForCreateInput
   republish: String
 }
@@ -7981,6 +8006,8 @@ type PlanDraft {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -8019,6 +8046,7 @@ input PlanDraftWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  topics: TopicManyRelationFilter
 }
 
 input PlanDraftOrderByInput {
@@ -8065,6 +8093,7 @@ input PlanDraftUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -8101,6 +8130,7 @@ input PlanDraftCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -8205,7 +8235,7 @@ input PlanDocumentCreateInput {
   document: DocumentRelateToManyForCreateInput
 }
 
-type Event {
+type Event implements BasePage & BasePageWithSlug {
   id: ID!
   heroImage: String
   title: String
@@ -9685,6 +9715,7 @@ type Redirect {
 
 input RedirectWhereUniqueInput {
   id: ID
+  from: String
 }
 
 input RedirectWhereInput {
