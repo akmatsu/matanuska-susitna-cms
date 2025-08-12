@@ -1,3 +1,22 @@
+# [0.16.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.15.0...v0.16.0) (2025-08-12)
+
+
+### Bug Fixes
+
+* plans and events now implement basePage, plan and topics now have many to many relationship ([6544144](https://github.com/akmatsu/matanuska-susitna-cms/commit/65441442b04613f2332f50ae245263d1df740c01))
+* redirects are now unique ([2a92c3b](https://github.com/akmatsu/matanuska-susitna-cms/commit/2a92c3ba301aa1dea60ead58baa482e3f7ffc7b5))
+* removed endpoints for updating documents and contacts ([7f1fb37](https://github.com/akmatsu/matanuska-susitna-cms/commit/7f1fb37ccff015e30160666e34ddd582e6cf6605))
+* update plan page layout ([60297a4](https://github.com/akmatsu/matanuska-susitna-cms/commit/60297a4e3b9232c3cd6962b66ff37cd5c20d38b5))
+
+
+### Features
+
+* created events and plans CT ([488f966](https://github.com/akmatsu/matanuska-susitna-cms/commit/488f9664ecf8af08219ec46da3e72dbd5fd61a94))
+* created redirect CT, and added redirects and events to all page CTs ([98c9f81](https://github.com/akmatsu/matanuska-susitna-cms/commit/98c9f814a94b2f9f11b5aea1473fab33354db50f))
+* dropping newDocuments and newContacts fields for now ([4ac96e5](https://github.com/akmatsu/matanuska-susitna-cms/commit/4ac96e5a611ec418eaaec3d4ec3e886f4f21e14e))
+* fixed live URLs on topic pages ([d378116](https://github.com/akmatsu/matanuska-susitna-cms/commit/d3781166401b570770464d6242e46cfca281c7dd))
+* updated graphql codegen ([6b8383e](https://github.com/akmatsu/matanuska-susitna-cms/commit/6b8383e0550cc7ba7dc84035a4356b4af443f181))
+
 # [0.15.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.14.1...v0.15.0) (2025-08-05)
 
 
