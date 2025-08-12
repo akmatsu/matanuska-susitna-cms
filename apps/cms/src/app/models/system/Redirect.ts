@@ -1,15 +1,14 @@
-import { list } from '@keystone-6/core';
-import { filterByPubStatus, generalOperationAccess } from '../../access';
+import { list, ListConfig } from '@keystone-6/core';
+import { elevatedOperationAccess } from '../../access';
 import { relationship, text } from '@keystone-6/core/fields';
 
-export const Redirect = list({
+export const Redirect: ListConfig<any> = list({
   access: {
-    operation: generalOperationAccess,
-    filter: filterByPubStatus,
+    operation: elevatedOperationAccess,
   },
   fields: {
     from: text({
-      label: 'Redirect From Path',
+      label: 'Redirect From Path. E.G. /example/path',
       validation: {
         isRequired: true,
       },
@@ -21,6 +20,15 @@ export const Redirect = list({
         cardFields: ['label', 'item'],
         inlineCreate: { fields: ['label', 'selectItem'] },
         inlineEdit: { fields: ['label', 'selectItem'] },
+      },
+      isFilterable: true,
+      isOrderable: true,
+    }),
+    redirectMessage: text({
+      ui: {
+        displayMode: 'textarea',
+        description:
+          'Optional message that will be displayed when redirecting to external resources. Note: The redirect screen is not shown on internal redirects.',
       },
     }),
   },

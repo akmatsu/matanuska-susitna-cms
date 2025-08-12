@@ -255,10 +255,6 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
           }),
         },
       }),
-      events: relationship({
-        ref: 'Event',
-        many: true,
-      }),
     };
   },
   {

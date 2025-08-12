@@ -1316,6 +1316,9 @@ type AssemblyDistrict implements BasePage & BasePageWithSlug {
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1365,6 +1368,8 @@ input AssemblyDistrictWhereInput {
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1381,6 +1386,12 @@ input AssemblyDistrictWhereInput {
   drafts: AssemblyDistrictDraftManyRelationFilter
   versions: AssemblyDistrictVersionManyRelationFilter
   currentVersion: AssemblyDistrictVersionWhereInput
+}
+
+input EventManyRelationFilter {
+  every: EventWhereInput
+  some: EventWhereInput
+  none: EventWhereInput
 }
 
 input StringNullableFilter {
@@ -1461,6 +1472,8 @@ input AssemblyDistrictUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1478,6 +1491,19 @@ input AssemblyDistrictUpdateInput {
   makeDrafts: String
   versions: AssemblyDistrictVersionRelateToManyForUpdateInput
   currentVersion: AssemblyDistrictVersionRelateToOneForUpdateInput
+}
+
+input RedirectRelateToOneForUpdateInput {
+  create: RedirectCreateInput
+  connect: RedirectWhereUniqueInput
+  disconnect: Boolean
+}
+
+input EventRelateToManyForUpdateInput {
+  disconnect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
 }
 
 input ImageRelateToOneForUpdateInput {
@@ -1541,6 +1567,8 @@ input AssemblyDistrictCreateInput {
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1558,6 +1586,16 @@ input AssemblyDistrictCreateInput {
   makeDrafts: String
   versions: AssemblyDistrictVersionRelateToManyForCreateInput
   currentVersion: AssemblyDistrictVersionRelateToOneForCreateInput
+}
+
+input RedirectRelateToOneForCreateInput {
+  create: RedirectCreateInput
+  connect: RedirectWhereUniqueInput
+}
+
+input EventRelateToManyForCreateInput {
+  create: [EventCreateInput!]
+  connect: [EventWhereUniqueInput!]
 }
 
 input ImageRelateToOneForCreateInput {
@@ -1613,6 +1651,9 @@ type AssemblyDistrictVersion {
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1655,6 +1696,8 @@ input AssemblyDistrictVersionWhereInput {
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1707,6 +1750,8 @@ input AssemblyDistrictVersionUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1750,6 +1795,8 @@ input AssemblyDistrictVersionCreateInput {
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1794,6 +1841,9 @@ type AssemblyDistrictDraft {
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1834,6 +1884,8 @@ input AssemblyDistrictDraftWhereInput {
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1885,6 +1937,8 @@ input AssemblyDistrictDraftUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1921,6 +1975,8 @@ input AssemblyDistrictDraftCreateInput {
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1958,6 +2014,9 @@ type Board implements BasePage & BasePageWithSlug {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2008,6 +2067,8 @@ input BoardWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2086,6 +2147,8 @@ input BoardUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2160,6 +2223,8 @@ input BoardCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2227,6 +2292,9 @@ type BoardVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2270,6 +2338,8 @@ input BoardVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2319,6 +2389,8 @@ input BoardVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2362,6 +2434,8 @@ input BoardVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2406,6 +2480,9 @@ type BoardDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2447,6 +2524,8 @@ input BoardDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2495,6 +2574,8 @@ input BoardDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2531,6 +2612,8 @@ input BoardDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2569,6 +2652,9 @@ type Community implements BasePage & BasePageWithSlug {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2613,6 +2699,8 @@ input CommunityWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -2674,6 +2762,8 @@ input CommunityUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -2734,6 +2824,8 @@ input CommunityCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -2789,6 +2881,9 @@ type CommunityVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2826,6 +2921,8 @@ input CommunityVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -2864,6 +2961,8 @@ input CommunityVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -2900,6 +2999,8 @@ input CommunityVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -2937,6 +3038,9 @@ type CommunityDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2972,6 +3076,8 @@ input CommunityDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -3009,6 +3115,8 @@ input CommunityDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -3038,6 +3146,8 @@ input CommunityDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -3072,6 +3182,9 @@ type Facility implements BasePage & BasePageWithSlug {
   contactsCount(where: ContactWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -3115,6 +3228,8 @@ input FacilityWhereInput {
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   hours: OperatingHourManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -3171,6 +3286,8 @@ input FacilityUpdateInput {
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -3231,6 +3348,8 @@ input FacilityCreateInput {
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -3288,6 +3407,9 @@ type FacilityVersion {
   contactsCount(where: ContactWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -3324,6 +3446,8 @@ input FacilityVersionWhereInput {
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   hours: OperatingHourManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -3363,6 +3487,8 @@ input FacilityVersionUpdateInput {
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -3400,6 +3526,8 @@ input FacilityVersionCreateInput {
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -3439,6 +3567,9 @@ type FacilityDraft {
   contactsCount(where: ContactWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -3473,6 +3604,8 @@ input FacilityDraftWhereInput {
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   hours: OperatingHourManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -3511,6 +3644,8 @@ input FacilityDraftUpdateInput {
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -3541,6 +3676,8 @@ input FacilityDraftCreateInput {
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -3571,6 +3708,9 @@ type OrgUnit implements BasePage & BasePageWithSlug {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3615,6 +3755,8 @@ input OrgUnitWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
@@ -3678,6 +3820,8 @@ input OrgUnitUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3745,6 +3889,8 @@ input OrgUnitCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3806,6 +3952,9 @@ type OrgUnitVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3843,6 +3992,8 @@ input OrgUnitVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
@@ -3883,6 +4034,8 @@ input OrgUnitVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3914,6 +4067,8 @@ input OrgUnitVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3947,6 +4102,9 @@ type OrgUnitDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3982,6 +4140,8 @@ input OrgUnitDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
@@ -4021,6 +4181,8 @@ input OrgUnitDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -4051,6 +4213,8 @@ input OrgUnitDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -4086,6 +4250,9 @@ type Park implements BasePage & BasePageWithSlug {
   contactsCount(where: ContactWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4132,6 +4299,8 @@ input ParkWhereInput {
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   hours: OperatingHourManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -4201,6 +4370,8 @@ input ParkUpdateInput {
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -4270,6 +4441,8 @@ input ParkCreateInput {
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -4333,6 +4506,9 @@ type ParkVersion {
   contactsCount(where: ContactWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4372,6 +4548,8 @@ input ParkVersionWhereInput {
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   hours: OperatingHourManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -4412,6 +4590,8 @@ input ParkVersionUpdateInput {
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -4444,6 +4624,8 @@ input ParkVersionCreateInput {
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -4479,6 +4661,9 @@ type ParkDraft {
   contactsCount(where: ContactWhereInput! = {}): Int
   hours(where: OperatingHourWhereInput! = {}, orderBy: [OperatingHourOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OperatingHourWhereUniqueInput): [OperatingHour!]
   hoursCount(where: OperatingHourWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4516,6 +4701,8 @@ input ParkDraftWhereInput {
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
   hours: OperatingHourManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
@@ -4555,6 +4742,8 @@ input ParkDraftUpdateInput {
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
   hours: OperatingHourRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
@@ -4586,6 +4775,8 @@ input ParkDraftCreateInput {
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
   hours: OperatingHourRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
@@ -4617,6 +4808,9 @@ type PublicNotice implements BasePage & BasePageWithSlug {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4674,6 +4868,8 @@ input PublicNoticeWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -4746,6 +4942,8 @@ input PublicNoticeUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4814,6 +5012,8 @@ input PublicNoticeCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4877,6 +5077,9 @@ type PublicNoticeVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4927,6 +5130,8 @@ input PublicNoticeVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -4976,6 +5181,8 @@ input PublicNoticeVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5020,6 +5227,8 @@ input PublicNoticeVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5065,6 +5274,9 @@ type PublicNoticeDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5113,6 +5325,8 @@ input PublicNoticeDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5161,6 +5375,8 @@ input PublicNoticeDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5198,6 +5414,8 @@ input PublicNoticeDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5239,6 +5457,9 @@ type Service implements BasePage & BasePageWithSlug {
   primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5290,6 +5511,8 @@ input ServiceWhereInput {
   documents: DocumentManyRelationFilter
   primaryContact: ContactWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5357,6 +5580,8 @@ input ServiceUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   primaryContact: ContactRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5422,6 +5647,8 @@ input ServiceCreateInput {
   documents: DocumentRelateToManyForCreateInput
   primaryContact: ContactRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5482,6 +5709,9 @@ type ServiceVersion {
   primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5526,6 +5756,8 @@ input ServiceVersionWhereInput {
   documents: DocumentManyRelationFilter
   primaryContact: ContactWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5570,6 +5802,8 @@ input ServiceVersionUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   primaryContact: ContactRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5611,6 +5845,8 @@ input ServiceVersionCreateInput {
   documents: DocumentRelateToManyForCreateInput
   primaryContact: ContactRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5653,6 +5889,9 @@ type ServiceDraft {
   primaryContact: Contact
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5695,6 +5934,8 @@ input ServiceDraftWhereInput {
   documents: DocumentManyRelationFilter
   primaryContact: ContactWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5738,6 +5979,8 @@ input ServiceDraftUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   primaryContact: ContactRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5772,6 +6015,8 @@ input ServiceDraftCreateInput {
   documents: DocumentRelateToManyForCreateInput
   primaryContact: ContactRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5806,6 +6051,9 @@ type Topic implements BasePage & BasePageWithSlug {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -5862,6 +6110,8 @@ input TopicWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -5935,6 +6185,8 @@ input TopicUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -6008,6 +6260,8 @@ input TopicCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -6074,6 +6328,9 @@ type TopicVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6123,6 +6380,8 @@ input TopicVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -6167,6 +6426,8 @@ input TopicVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -6209,6 +6470,8 @@ input TopicVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -6252,6 +6515,9 @@ type TopicDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6299,6 +6565,8 @@ input TopicDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -6342,6 +6610,8 @@ input TopicDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -6377,6 +6647,8 @@ input TopicDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -6415,6 +6687,9 @@ type Trail implements BasePage & BasePageWithSlug {
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6477,6 +6752,8 @@ input TrailWhereInput {
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -6572,6 +6849,8 @@ input TrailUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6645,6 +6924,8 @@ input TrailCreateInput {
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6715,6 +6996,9 @@ type TrailVersion {
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6770,6 +7054,8 @@ input TrailVersionWhereInput {
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -6848,6 +7134,8 @@ input TrailVersionUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6904,6 +7192,8 @@ input TrailVersionCreateInput {
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6961,6 +7251,9 @@ type TrailDraft {
   address: Location
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7014,6 +7307,8 @@ input TrailDraftWhereInput {
   documents: DocumentManyRelationFilter
   address: LocationWhereInput
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7091,6 +7386,8 @@ input TrailDraftUpdateInput {
   documents: DocumentRelateToManyForUpdateInput
   address: LocationRelateToOneForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7140,6 +7437,8 @@ input TrailDraftCreateInput {
   documents: DocumentRelateToManyForCreateInput
   address: LocationRelateToOneForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7190,6 +7489,9 @@ type Plan {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -7204,8 +7506,6 @@ type Plan {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   status: String
   drafts(where: PlanDraftWhereInput! = {}, orderBy: [PlanDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDraftWhereUniqueInput): [PlanDraft!]
   draftsCount(where: PlanDraftWhereInput! = {}): Int
@@ -7240,6 +7540,8 @@ input PlanWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -7251,7 +7553,6 @@ input PlanWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
-  events: EventManyRelationFilter
   status: StringFilter
   drafts: PlanDraftManyRelationFilter
   versions: PlanVersionManyRelationFilter
@@ -7274,12 +7575,6 @@ input PlanDocumentManyRelationFilter {
   every: PlanDocumentWhereInput
   some: PlanDocumentWhereInput
   none: PlanDocumentWhereInput
-}
-
-input EventManyRelationFilter {
-  every: EventWhereInput
-  some: EventWhereInput
-  none: EventWhereInput
 }
 
 input PlanDraftManyRelationFilter {
@@ -7327,6 +7622,8 @@ input PlanUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -7338,7 +7635,6 @@ input PlanUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
-  events: EventRelateToManyForUpdateInput
   status: String
   drafts: PlanDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -7377,13 +7673,6 @@ input PlanDocumentRelateToManyForUpdateInput {
   set: [PlanDocumentWhereUniqueInput!]
   create: [PlanDocumentCreateInput!]
   connect: [PlanDocumentWhereUniqueInput!]
-}
-
-input EventRelateToManyForUpdateInput {
-  disconnect: [EventWhereUniqueInput!]
-  set: [EventWhereUniqueInput!]
-  create: [EventCreateInput!]
-  connect: [EventWhereUniqueInput!]
 }
 
 input PlanDraftRelateToManyForUpdateInput {
@@ -7426,6 +7715,8 @@ input PlanCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -7437,7 +7728,6 @@ input PlanCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
-  events: EventRelateToManyForCreateInput
   status: String
   drafts: PlanDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7468,11 +7758,6 @@ input PlanDocumentRelateToOneForCreateInput {
 input PlanDocumentRelateToManyForCreateInput {
   create: [PlanDocumentCreateInput!]
   connect: [PlanDocumentWhereUniqueInput!]
-}
-
-input EventRelateToManyForCreateInput {
-  create: [EventCreateInput!]
-  connect: [EventWhereUniqueInput!]
 }
 
 input PlanDraftRelateToManyForCreateInput {
@@ -7512,6 +7797,9 @@ type PlanVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -7526,8 +7814,6 @@ type PlanVersion {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   isLive: Plan
   republish: String
 }
@@ -7555,6 +7841,8 @@ input PlanVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -7566,7 +7854,6 @@ input PlanVersionWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
-  events: EventManyRelationFilter
   isLive: PlanWhereInput
 }
 
@@ -7601,6 +7888,8 @@ input PlanVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -7612,7 +7901,6 @@ input PlanVersionUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
-  events: EventRelateToManyForUpdateInput
   isLive: PlanRelateToOneForUpdateInput
   republish: String
 }
@@ -7637,6 +7925,8 @@ input PlanVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -7648,7 +7938,6 @@ input PlanVersionCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
-  events: EventRelateToManyForCreateInput
   isLive: PlanRelateToOneForCreateInput
   republish: String
 }
@@ -7675,6 +7964,9 @@ type PlanDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -7689,8 +7981,6 @@ type PlanDraft {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   publish: String
 }
 
@@ -7716,6 +8006,8 @@ input PlanDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -7727,7 +8019,6 @@ input PlanDraftWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
-  events: EventManyRelationFilter
 }
 
 input PlanDraftOrderByInput {
@@ -7761,6 +8052,8 @@ input PlanDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -7772,7 +8065,6 @@ input PlanDraftUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
-  events: EventRelateToManyForUpdateInput
   publish: String
 }
 
@@ -7796,6 +8088,8 @@ input PlanDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -7807,7 +8101,6 @@ input PlanDraftCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
-  events: EventRelateToManyForCreateInput
   publish: String
 }
 
@@ -7934,6 +8227,9 @@ type Event {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -7972,6 +8268,8 @@ input EventWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -8027,6 +8325,8 @@ input EventUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8078,6 +8378,8 @@ input EventCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8126,6 +8428,9 @@ type EventDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8155,6 +8460,8 @@ input EventDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -8192,6 +8499,8 @@ input EventDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8225,6 +8534,8 @@ input EventDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8259,6 +8570,9 @@ type EventVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  redirect: Redirect
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8290,6 +8604,8 @@ input EventVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  redirect: RedirectWhereInput
+  events: EventManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -8328,6 +8644,8 @@ input EventVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  redirect: RedirectRelateToOneForUpdateInput
+  events: EventRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8356,6 +8674,8 @@ input EventVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  redirect: RedirectRelateToOneForCreateInput
+  events: EventRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8770,6 +9090,7 @@ type Url {
   title: String
   description: String
   url: String
+  indexInSearchEngine: String
   owner: User
   createdAt: DateTime
   updatedAt: DateTime
@@ -8789,6 +9110,7 @@ input UrlWhereInput {
   title: StringFilter
   description: StringFilter
   url: StringFilter
+  indexInSearchEngine: StringNullableFilter
   owner: UserWhereInput
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -8799,6 +9121,7 @@ input UrlOrderByInput {
   title: OrderDirection
   description: OrderDirection
   url: OrderDirection
+  indexInSearchEngine: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -8807,6 +9130,7 @@ input UrlUpdateInput {
   title: String
   description: String
   url: String
+  indexInSearchEngine: String
   owner: UserRelateToOneForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -8821,6 +9145,7 @@ input UrlCreateInput {
   title: String
   description: String
   url: String
+  indexInSearchEngine: String
   owner: UserRelateToOneForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -9351,6 +9676,50 @@ input TagCreateInput {
   name: String
 }
 
+type Redirect {
+  id: ID!
+  from: String
+  to: InternalLink
+  redirectMessage: String
+}
+
+input RedirectWhereUniqueInput {
+  id: ID
+}
+
+input RedirectWhereInput {
+  AND: [RedirectWhereInput!]
+  OR: [RedirectWhereInput!]
+  NOT: [RedirectWhereInput!]
+  id: IDFilter
+  from: StringFilter
+  to: InternalLinkWhereInput
+  redirectMessage: StringFilter
+}
+
+input RedirectOrderByInput {
+  id: OrderDirection
+  from: OrderDirection
+  redirectMessage: OrderDirection
+}
+
+input RedirectUpdateInput {
+  from: String
+  to: InternalLinkRelateToOneForUpdateInput
+  redirectMessage: String
+}
+
+input RedirectUpdateArgs {
+  where: RedirectWhereUniqueInput!
+  data: RedirectUpdateInput!
+}
+
+input RedirectCreateInput {
+  from: String
+  to: InternalLinkRelateToOneForCreateInput
+  redirectMessage: String
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -9735,6 +10104,12 @@ type Mutation {
   updateTags(data: [TagUpdateArgs!]!): [Tag]
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
+  createRedirect(data: RedirectCreateInput!): Redirect
+  createRedirects(data: [RedirectCreateInput!]!): [Redirect]
+  updateRedirect(where: RedirectWhereUniqueInput!, data: RedirectUpdateInput!): Redirect
+  updateRedirects(data: [RedirectUpdateArgs!]!): [Redirect]
+  deleteRedirect(where: RedirectWhereUniqueInput!): Redirect
+  deleteRedirects(where: [RedirectWhereUniqueInput!]!): [Redirect]
   endSession: Boolean!
 }
 
@@ -9928,6 +10303,9 @@ type Query {
   tag(where: TagWhereUniqueInput!): Tag
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  redirect(where: RedirectWhereUniqueInput!): Redirect
+  redirects(where: RedirectWhereInput! = {}, orderBy: [RedirectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: RedirectWhereUniqueInput): [Redirect!]
+  redirectsCount(where: RedirectWhereInput! = {}): Int
   keystone: KeystoneMeta!
   getPage(slug: String!, type: String!): Page
   internalSearch(query: String): [InternalLinkSearch]
