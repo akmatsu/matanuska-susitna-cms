@@ -8,6 +8,7 @@ export const Redirect: ListConfig<any> = list({
   },
   fields: {
     from: text({
+      isIndexed: 'unique',
       label: 'Redirect From Path. E.G. /example/path',
       validation: {
         isRequired: true,
