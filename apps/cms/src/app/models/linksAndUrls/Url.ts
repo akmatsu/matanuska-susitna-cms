@@ -6,7 +6,7 @@ import {
   titleAndDescription,
   urlRegex,
 } from '../../fieldUtils';
-import { text } from '@keystone-6/core/fields';
+import { select, text } from '@keystone-6/core/fields';
 
 export const Url: ListConfig<any> = list({
   access: {
@@ -26,6 +26,18 @@ export const Url: ListConfig<any> = list({
           explanation: 'Must be a valid URL.',
         },
       },
+    }),
+    indexInSearchEngine: select({
+      options: [
+        {
+          label: 'No',
+          value: 'no',
+        },
+        {
+          label: 'Yes',
+          value: 'yes',
+        },
+      ],
     }),
     owner,
     ...timestamps,

@@ -603,6 +603,21 @@ export function basePage(
       }),
     }),
 
+    redirect: relationship({
+      ref: 'Redirect',
+      many: false,
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+      },
+    }),
+
+    events: relationship({
+      ref: 'Event',
+      many: true,
+    }),
+
     ...timestamps,
   };
 }
