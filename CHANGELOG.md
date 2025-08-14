@@ -1,3 +1,16 @@
+# [0.18.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.17.0...v0.18.0) (2025-08-14)
+
+
+### Bug Fixes
+
+* fixed items in dashboard side nav ([4292930](https://github.com/akmatsu/matanuska-susitna-cms/commit/42929304ffe1fddcd104ab4b056277136059882e))
+
+
+### Features
+
+* added a insufficient permissions warning to the tops of the page; ([66311aa](https://github.com/akmatsu/matanuska-susitna-cms/commit/66311aab01bbd01d5d03687de927615a3fc16848))
+* added topics to shared pages ([797a737](https://github.com/akmatsu/matanuska-susitna-cms/commit/797a737b9bf396652a893187296942d9a931cddb))
+
 # [0.17.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.16.0...v0.17.0) (2025-08-14)
 
 
