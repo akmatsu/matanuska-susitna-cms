@@ -44,19 +44,22 @@ export function CustomNavigation({
   authenticatedItem,
 }: NavigationProps) {
   const documentLists = lists.filter(
-    (list) => list.key.includes('Document') || list.key.includes('Image'),
+    (list) =>
+      list.key.includes('Document') ||
+      list.key.includes('Image') ||
+      /^(ElectionResult)$/gi.test(list.key),
   );
   const userLists = lists.filter(
     (list) => list.key.includes('User') || list.key.includes('Contact'),
   );
   const systemLists = lists.filter((list) =>
-    /Alert|Tag|Highlight|ApiKey/g.test(list.key),
+    /^(Alert|Tag|Highlight|ApiKey|Redirect)$/g.test(list.key),
   );
   const specialPages = lists.filter((list) =>
-    /HomePage|BoardPage/gi.test(list.key),
+    /^(HomePage|BoardPage|ElectionsPage|Election)$/gi.test(list.key),
   );
   const pageLists = lists.filter((list) =>
-    /Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|PublicNotice|Board|Topic/gi.test(
+    /^(Service|Community|AssemblyDistrict|OrgUnit|Park|Facility|Trail|PublicNotice|Board|Topic|Event|Plan)$/gi.test(
       list.key,
     ),
   );
@@ -79,14 +82,13 @@ export function CustomNavigation({
 
       <ListSection lists={specialPages} title="Special Pages" />
       <ListSection lists={userLists} title="Users" />
+      <ListSection lists={pageLists} title="Pages" />
       <ListSection lists={documentLists} title="Document Management">
         <NavItem href="/bulk-document-upload">Bulk Document Upload</NavItem>
       </ListSection>
-      <ListSection lists={pageLists} title="Pages" />
       <ListSection lists={systemLists} title="System">
         <NavItem href={PAGES.TYPESENSE}>Manage Typesense</NavItem>
       </ListSection>
-
       <ListSection lists={otherLists} title="Other Items" />
       <p className="mx-6 mt-4 mb-8 text-xs text-gray-500">
         This system is the official CMS of the{' '}
