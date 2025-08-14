@@ -114,6 +114,13 @@ export const graphqlExtendTypeDefs = gql`
       cursor: DocumentWhereUniqueInput
     ): [Document!]
     documentsCount(where: DocumentWhereInput! = {}): Int
+    topics(
+      where: TopicWhereInput! = {}
+      orderBy: [TopicOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: TopicWhereUniqueInput
+    ): [Topic!]
   }
 
   interface BasePageWithActions implements BasePage & BasePageWithSlug {
@@ -171,6 +178,13 @@ export const graphqlExtendTypeDefs = gql`
       cursor: InternalLinkWhereUniqueInput
     ): [InternalLink!]
     actionsCount(where: InternalLinkWhereInput! = {}): Int
+    topics(
+      where: TopicWhereInput! = {}
+      orderBy: [TopicOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: TopicWhereUniqueInput
+    ): [Topic!]
   }
 
   extend type BoardPage implements BasePage
