@@ -12,7 +12,7 @@ import {
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
 import { isAdmin } from './access/roles';
-import { isOwner } from './access/group';
+import { belongsToGroup, isOwner } from './access/group';
 import { appConfig } from '../configs/appConfig';
 import {
   blueHarvestImage,
@@ -29,7 +29,7 @@ import {
 } from '../utils/typesense';
 import { logger } from '../configs/logger';
 import v from 'voca';
-import { plural } from 'pluralize';
+import { plural, singular } from 'pluralize';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -376,21 +376,6 @@ export function contacts() {
   });
 }
 
-// export function contactRelationshipMany() {
-//   return relationship({
-//     ref: 'ContactListItem',
-//     many: true,
-//     ui: {
-//       displayMode: 'cards',
-//       cardFields: ['order', 'label', 'contact'],
-//       inlineCreate: { fields: ['order', 'label', 'contact'] },
-//       itemView: {
-//         fieldPosition: 'sidebar',
-//       },
-//     },
-//   });
-// }
-
 export function contactRelationship() {
   return relationship({
     ref: 'Contact',
@@ -401,18 +386,6 @@ export function contactRelationship() {
     },
   });
 }
-
-// export function documentRelationshipMany() {
-//   return relationship({
-//     ref: 'DocumentListItem',
-//     many: true,
-//     ui: {
-//       displayMode: 'cards',
-//       cardFields: ['order', 'label', 'document'],
-//       inlineCreate: { fields: ['order', 'label', 'document'] },
-//     },
-//   });
-// }
 
 export function documentRelationship() {
   return relationship({
@@ -477,6 +450,34 @@ export function basePage(
   opts?: BasePageOptions,
 ): BaseFields<any> {
   return {
+    canEdit: virtual({
+      label: 'Insufficient Access',
+      ui: {
+        createView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
+        itemView: {
+          async fieldMode(args) {
+            const res =
+              (await isAdmin(args)) ||
+              (await isOwner(args)) ||
+              (await belongsToGroup(args, singular(listNamePlural)));
+
+            return res ? 'hidden' : 'read';
+          },
+        },
+        views: './src/components/customFields/InsufficientAccessField.tsx',
+      },
+      field: graphql.field({
+        type: graphql.String,
+        resolve() {
+          return 'You do not have permission to edit this page. Any changes you make will not be saved. Please contact support to get access to this page';
+        },
+      }),
+    }),
     heroImage: blueHarvestImage(opts?.heroImageConfig),
     ...titleAndDescription(opts?.titleAndDescriptionOpts),
     ...publishable({ isDraft: opts?.isDraft, isVersion: opts?.isVersion }),

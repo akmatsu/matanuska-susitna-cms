@@ -11,7 +11,6 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import AssemblyDistrict from './AssemblyDistrict';
 
 const {
   Main: Topic,
