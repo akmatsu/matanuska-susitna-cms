@@ -255,10 +255,6 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
           }),
         },
       }),
-      topics: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.plans' : 'Topic',
-        many: true,
-      }),
     };
   },
   {

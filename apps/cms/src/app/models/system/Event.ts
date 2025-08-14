@@ -51,8 +51,56 @@ export const Event = list({
       documents: true,
       actions: true,
     }),
-    services: serviceRelationship({ refField: 'events' }),
     startDate: timestampField({ isNullable: false, isRequired: true }),
     endDate: timestampField(),
+    boards: relationship({
+      ref: 'Board.events',
+      many: true,
+    }),
+
+    services: relationship({
+      ref: 'Service.events',
+      many: true,
+    }),
+
+    communities: relationship({
+      ref: 'Community.events',
+      many: true,
+    }),
+
+    parks: relationship({
+      ref: 'Park.events',
+      many: true,
+    }),
+
+    trails: relationship({
+      ref: 'Trail.events',
+      many: true,
+    }),
+
+    facilities: relationship({
+      ref: 'Facility.events',
+      many: true,
+    }),
+
+    orgUnits: relationship({
+      ref: 'OrgUnit.events',
+      many: true,
+    }),
+
+    publicNotices: relationship({
+      ref: 'PublicNotice.events',
+      many: true,
+    }),
+
+    plans: relationship({
+      ref: 'Plan.events',
+      many: true,
+    }),
+
+    assemblyDistricts: relationship({
+      ref: 'AssemblyDistrict.events',
+      many: true,
+    }),
   },
 });

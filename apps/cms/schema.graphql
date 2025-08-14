@@ -1293,7 +1293,7 @@ input EarlyVotingLocationRelateToManyForCreateInput {
   connect: [EarlyVotingLocationWhereUniqueInput!]
 }
 
-type AssemblyDistrict implements BasePage & BasePageWithSlug {
+type AssemblyDistrict implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -1319,6 +1319,8 @@ type AssemblyDistrict implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1331,8 +1333,6 @@ type AssemblyDistrict implements BasePage & BasePageWithSlug {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: AssemblyDistrictDraftWhereInput! = {}, orderBy: [AssemblyDistrictDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictDraftWhereUniqueInput): [AssemblyDistrictDraft!]
   draftsCount(where: AssemblyDistrictDraftWhereInput! = {}): Int
@@ -1370,6 +1370,7 @@ input AssemblyDistrictWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1381,7 +1382,6 @@ input AssemblyDistrictWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: AssemblyDistrictDraftManyRelationFilter
   versions: AssemblyDistrictVersionManyRelationFilter
@@ -1392,6 +1392,12 @@ input EventManyRelationFilter {
   every: EventWhereInput
   some: EventWhereInput
   none: EventWhereInput
+}
+
+input TopicManyRelationFilter {
+  every: TopicWhereInput
+  some: TopicWhereInput
+  none: TopicWhereInput
 }
 
 input StringNullableFilter {
@@ -1413,12 +1419,6 @@ input BoardManyRelationFilter {
   every: BoardWhereInput
   some: BoardWhereInput
   none: BoardWhereInput
-}
-
-input TopicManyRelationFilter {
-  every: TopicWhereInput
-  some: TopicWhereInput
-  none: TopicWhereInput
 }
 
 input AssemblyDistrictDraftManyRelationFilter {
@@ -1474,6 +1474,7 @@ input AssemblyDistrictUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1485,7 +1486,6 @@ input AssemblyDistrictUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -1506,6 +1506,13 @@ input EventRelateToManyForUpdateInput {
   connect: [EventWhereUniqueInput!]
 }
 
+input TopicRelateToManyForUpdateInput {
+  disconnect: [TopicWhereUniqueInput!]
+  set: [TopicWhereUniqueInput!]
+  create: [TopicCreateInput!]
+  connect: [TopicWhereUniqueInput!]
+}
+
 input ImageRelateToOneForUpdateInput {
   create: ImageCreateInput
   connect: ImageWhereUniqueInput
@@ -1517,13 +1524,6 @@ input BoardRelateToManyForUpdateInput {
   set: [BoardWhereUniqueInput!]
   create: [BoardCreateInput!]
   connect: [BoardWhereUniqueInput!]
-}
-
-input TopicRelateToManyForUpdateInput {
-  disconnect: [TopicWhereUniqueInput!]
-  set: [TopicWhereUniqueInput!]
-  create: [TopicCreateInput!]
-  connect: [TopicWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForUpdateInput {
@@ -1569,6 +1569,7 @@ input AssemblyDistrictCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1580,7 +1581,6 @@ input AssemblyDistrictCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -1598,6 +1598,11 @@ input EventRelateToManyForCreateInput {
   connect: [EventWhereUniqueInput!]
 }
 
+input TopicRelateToManyForCreateInput {
+  create: [TopicCreateInput!]
+  connect: [TopicWhereUniqueInput!]
+}
+
 input ImageRelateToOneForCreateInput {
   create: ImageCreateInput
   connect: ImageWhereUniqueInput
@@ -1606,11 +1611,6 @@ input ImageRelateToOneForCreateInput {
 input BoardRelateToManyForCreateInput {
   create: [BoardCreateInput!]
   connect: [BoardWhereUniqueInput!]
-}
-
-input TopicRelateToManyForCreateInput {
-  create: [TopicCreateInput!]
-  connect: [TopicWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForCreateInput {
@@ -1654,6 +1654,8 @@ type AssemblyDistrictVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1666,8 +1668,6 @@ type AssemblyDistrictVersion {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: AssemblyDistrict
   republish: String
 }
@@ -1698,6 +1698,7 @@ input AssemblyDistrictVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1709,7 +1710,6 @@ input AssemblyDistrictVersionWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
-  topics: TopicManyRelationFilter
   isLive: AssemblyDistrictWhereInput
 }
 
@@ -1752,6 +1752,7 @@ input AssemblyDistrictVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1763,7 +1764,6 @@ input AssemblyDistrictVersionUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: AssemblyDistrictRelateToOneForUpdateInput
   republish: String
 }
@@ -1797,6 +1797,7 @@ input AssemblyDistrictVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1808,7 +1809,6 @@ input AssemblyDistrictVersionCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: AssemblyDistrictRelateToOneForCreateInput
   republish: String
 }
@@ -1844,6 +1844,8 @@ type AssemblyDistrictDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1856,8 +1858,6 @@ type AssemblyDistrictDraft {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -1886,6 +1886,7 @@ input AssemblyDistrictDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1897,7 +1898,6 @@ input AssemblyDistrictDraftWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
-  topics: TopicManyRelationFilter
 }
 
 input AssemblyDistrictDraftOrderByInput {
@@ -1939,6 +1939,7 @@ input AssemblyDistrictDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1950,7 +1951,6 @@ input AssemblyDistrictDraftUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -1977,6 +1977,7 @@ input AssemblyDistrictDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1988,11 +1989,10 @@ input AssemblyDistrictDraftCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
-type Board implements BasePage & BasePageWithSlug {
+type Board implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -2017,6 +2017,8 @@ type Board implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2031,8 +2033,6 @@ type Board implements BasePage & BasePageWithSlug {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: BoardDraftWhereInput! = {}, orderBy: [BoardDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardDraftWhereUniqueInput): [BoardDraft!]
   draftsCount(where: BoardDraftWhereInput! = {}): Int
@@ -2069,6 +2069,7 @@ input BoardWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2081,7 +2082,6 @@ input BoardWhereInput {
   isActive: BooleanFilter
   districts: AssemblyDistrictManyRelationFilter
   communities: CommunityManyRelationFilter
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: BoardDraftManyRelationFilter
   versions: BoardVersionManyRelationFilter
@@ -2149,6 +2149,7 @@ input BoardUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2161,7 +2162,6 @@ input BoardUpdateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: BoardDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -2225,6 +2225,7 @@ input BoardCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2237,7 +2238,6 @@ input BoardCreateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: BoardDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -2295,6 +2295,8 @@ type BoardVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2309,8 +2311,6 @@ type BoardVersion {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Board
   republish: String
 }
@@ -2340,6 +2340,7 @@ input BoardVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2352,7 +2353,6 @@ input BoardVersionWhereInput {
   isActive: BooleanFilter
   districts: AssemblyDistrictManyRelationFilter
   communities: CommunityManyRelationFilter
-  topics: TopicManyRelationFilter
   isLive: BoardWhereInput
 }
 
@@ -2391,6 +2391,7 @@ input BoardVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2403,7 +2404,6 @@ input BoardVersionUpdateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: BoardRelateToOneForUpdateInput
   republish: String
 }
@@ -2436,6 +2436,7 @@ input BoardVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2448,7 +2449,6 @@ input BoardVersionCreateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: BoardRelateToOneForCreateInput
   republish: String
 }
@@ -2483,6 +2483,8 @@ type BoardDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2497,8 +2499,6 @@ type BoardDraft {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -2526,6 +2526,7 @@ input BoardDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2538,7 +2539,6 @@ input BoardDraftWhereInput {
   isActive: BooleanFilter
   districts: AssemblyDistrictManyRelationFilter
   communities: CommunityManyRelationFilter
-  topics: TopicManyRelationFilter
 }
 
 input BoardDraftOrderByInput {
@@ -2576,6 +2576,7 @@ input BoardDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2588,7 +2589,6 @@ input BoardDraftUpdateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -2614,6 +2614,7 @@ input BoardDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2626,11 +2627,10 @@ input BoardDraftCreateInput {
   isActive: Boolean
   districts: AssemblyDistrictRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
-type Community implements BasePage & BasePageWithSlug {
+type Community implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -2655,6 +2655,8 @@ type Community implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2663,8 +2665,6 @@ type Community implements BasePage & BasePageWithSlug {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
   draftsCount(where: CommunityDraftWhereInput! = {}): Int
@@ -2701,12 +2701,12 @@ input CommunityWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: CommunityDraftManyRelationFilter
   versions: CommunityVersionManyRelationFilter
@@ -2764,12 +2764,12 @@ input CommunityUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: CommunityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -2826,12 +2826,12 @@ input CommunityCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: CommunityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -2884,6 +2884,8 @@ type CommunityVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -2892,8 +2894,6 @@ type CommunityVersion {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Community
   republish: String
 }
@@ -2923,12 +2923,12 @@ input CommunityVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
-  topics: TopicManyRelationFilter
   isLive: CommunityWhereInput
 }
 
@@ -2963,12 +2963,12 @@ input CommunityVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: CommunityRelateToOneForUpdateInput
   republish: String
 }
@@ -3001,12 +3001,12 @@ input CommunityVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: CommunityRelateToOneForCreateInput
   republish: String
 }
@@ -3041,6 +3041,8 @@ type CommunityDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -3049,8 +3051,6 @@ type CommunityDraft {
   districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -3078,12 +3078,12 @@ input CommunityDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
-  topics: TopicManyRelationFilter
 }
 
 input CommunityDraftOrderByInput {
@@ -3117,12 +3117,12 @@ input CommunityDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -3148,16 +3148,16 @@ input CommunityDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
-type Facility implements BasePage & BasePageWithSlug {
+type Facility implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -3185,13 +3185,13 @@ type Facility implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: FacilityDraftWhereInput! = {}, orderBy: [FacilityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityDraftWhereUniqueInput): [FacilityDraft!]
   draftsCount(where: FacilityDraftWhereInput! = {}): Int
@@ -3230,11 +3230,11 @@ input FacilityWhereInput {
   hours: OperatingHourManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: FacilityDraftManyRelationFilter
   versions: FacilityVersionManyRelationFilter
@@ -3288,11 +3288,11 @@ input FacilityUpdateInput {
   hours: OperatingHourRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: FacilityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -3350,11 +3350,11 @@ input FacilityCreateInput {
   hours: OperatingHourRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: FacilityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -3410,13 +3410,13 @@ type FacilityVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Facility
   republish: String
 }
@@ -3448,11 +3448,11 @@ input FacilityVersionWhereInput {
   hours: OperatingHourManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  topics: TopicManyRelationFilter
   isLive: FacilityWhereInput
 }
 
@@ -3489,11 +3489,11 @@ input FacilityVersionUpdateInput {
   hours: OperatingHourRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: FacilityRelateToOneForUpdateInput
   republish: String
 }
@@ -3528,11 +3528,11 @@ input FacilityVersionCreateInput {
   hours: OperatingHourRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: FacilityRelateToOneForCreateInput
   republish: String
 }
@@ -3570,13 +3570,13 @@ type FacilityDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -3606,11 +3606,11 @@ input FacilityDraftWhereInput {
   hours: OperatingHourManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  topics: TopicManyRelationFilter
 }
 
 input FacilityDraftOrderByInput {
@@ -3646,11 +3646,11 @@ input FacilityDraftUpdateInput {
   hours: OperatingHourRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -3678,15 +3678,15 @@ input FacilityDraftCreateInput {
   hours: OperatingHourRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
-type OrgUnit implements BasePage & BasePageWithSlug {
+type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -3711,6 +3711,8 @@ type OrgUnit implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3719,8 +3721,6 @@ type OrgUnit implements BasePage & BasePageWithSlug {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: OrgUnitDraftWhereInput! = {}, orderBy: [OrgUnitDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitDraftWhereUniqueInput): [OrgUnitDraft!]
   draftsCount(where: OrgUnitDraftWhereInput! = {}): Int
@@ -3757,13 +3757,13 @@ input OrgUnitWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: OrgUnitDraftManyRelationFilter
   versions: OrgUnitVersionManyRelationFilter
@@ -3822,13 +3822,13 @@ input OrgUnitUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -3891,13 +3891,13 @@ input OrgUnitCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -3955,6 +3955,8 @@ type OrgUnitVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3963,8 +3965,6 @@ type OrgUnitVersion {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: OrgUnit
   republish: String
 }
@@ -3994,13 +3994,13 @@ input OrgUnitVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
-  topics: TopicManyRelationFilter
   isLive: OrgUnitWhereInput
 }
 
@@ -4036,13 +4036,13 @@ input OrgUnitVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: OrgUnitRelateToOneForUpdateInput
   republish: String
 }
@@ -4069,13 +4069,13 @@ input OrgUnitVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: OrgUnitRelateToOneForCreateInput
   republish: String
 }
@@ -4105,6 +4105,8 @@ type OrgUnitDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -4113,8 +4115,6 @@ type OrgUnitDraft {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -4142,13 +4142,13 @@ input OrgUnitDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
-  topics: TopicManyRelationFilter
 }
 
 input OrgUnitDraftOrderByInput {
@@ -4183,13 +4183,13 @@ input OrgUnitDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -4215,17 +4215,17 @@ input OrgUnitDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
-type Park implements BasePage & BasePageWithSlug {
+type Park implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -4253,6 +4253,8 @@ type Park implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4261,8 +4263,6 @@ type Park implements BasePage & BasePageWithSlug {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: ParkDraftWhereInput! = {}, orderBy: [ParkDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkDraftWhereUniqueInput): [ParkDraft!]
   draftsCount(where: ParkDraftWhereInput! = {}): Int
@@ -4301,12 +4301,12 @@ input ParkWhereInput {
   hours: OperatingHourManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: ParkDraftManyRelationFilter
   versions: ParkVersionManyRelationFilter
@@ -4372,12 +4372,12 @@ input ParkUpdateInput {
   hours: OperatingHourRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: ParkDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -4443,12 +4443,12 @@ input ParkCreateInput {
   hours: OperatingHourRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: ParkDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -4509,6 +4509,8 @@ type ParkVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4517,8 +4519,6 @@ type ParkVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Park
   republish: String
 }
@@ -4550,12 +4550,12 @@ input ParkVersionWhereInput {
   hours: OperatingHourManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  topics: TopicManyRelationFilter
   isLive: ParkWhereInput
 }
 
@@ -4592,12 +4592,12 @@ input ParkVersionUpdateInput {
   hours: OperatingHourRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: ParkRelateToOneForUpdateInput
   republish: String
 }
@@ -4626,12 +4626,12 @@ input ParkVersionCreateInput {
   hours: OperatingHourRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: ParkRelateToOneForCreateInput
   republish: String
 }
@@ -4664,6 +4664,8 @@ type ParkDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4672,8 +4674,6 @@ type ParkDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -4703,12 +4703,12 @@ input ParkDraftWhereInput {
   hours: OperatingHourManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  topics: TopicManyRelationFilter
 }
 
 input ParkDraftOrderByInput {
@@ -4744,12 +4744,12 @@ input ParkDraftUpdateInput {
   hours: OperatingHourRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -4777,16 +4777,16 @@ input ParkDraftCreateInput {
   hours: OperatingHourRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
-type PublicNotice implements BasePage & BasePageWithSlug {
+type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -4811,6 +4811,8 @@ type PublicNotice implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4830,8 +4832,6 @@ type PublicNotice implements BasePage & BasePageWithSlug {
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   status: String
@@ -4870,6 +4870,7 @@ input PublicNoticeWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -4882,7 +4883,6 @@ input PublicNoticeWhereInput {
   trails: TrailManyRelationFilter
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
-  topics: TopicManyRelationFilter
   boards: BoardManyRelationFilter
   status: StringFilter
   drafts: PublicNoticeDraftManyRelationFilter
@@ -4944,6 +4944,7 @@ input PublicNoticeUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -4956,7 +4957,6 @@ input PublicNoticeUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForUpdateInput
@@ -5014,6 +5014,7 @@ input PublicNoticeCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5026,7 +5027,6 @@ input PublicNoticeCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForCreateInput
@@ -5080,6 +5080,8 @@ type PublicNoticeVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5099,8 +5101,6 @@ type PublicNoticeVersion {
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   isLive: PublicNotice
@@ -5132,6 +5132,7 @@ input PublicNoticeVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5144,7 +5145,6 @@ input PublicNoticeVersionWhereInput {
   trails: TrailManyRelationFilter
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
-  topics: TopicManyRelationFilter
   boards: BoardManyRelationFilter
   isLive: PublicNoticeWhereInput
 }
@@ -5183,6 +5183,7 @@ input PublicNoticeVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5195,7 +5196,6 @@ input PublicNoticeVersionUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   isLive: PublicNoticeRelateToOneForUpdateInput
   republish: String
@@ -5229,6 +5229,7 @@ input PublicNoticeVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5241,7 +5242,6 @@ input PublicNoticeVersionCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   isLive: PublicNoticeRelateToOneForCreateInput
   republish: String
@@ -5277,6 +5277,8 @@ type PublicNoticeDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5296,8 +5298,6 @@ type PublicNoticeDraft {
   communitiesCount(where: CommunityWhereInput! = {}): Int
   assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   publish: String
@@ -5327,6 +5327,7 @@ input PublicNoticeDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5339,7 +5340,6 @@ input PublicNoticeDraftWhereInput {
   trails: TrailManyRelationFilter
   communities: CommunityManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
-  topics: TopicManyRelationFilter
   boards: BoardManyRelationFilter
 }
 
@@ -5377,6 +5377,7 @@ input PublicNoticeDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5389,7 +5390,6 @@ input PublicNoticeDraftUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   publish: String
 }
@@ -5416,6 +5416,7 @@ input PublicNoticeDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5428,12 +5429,11 @@ input PublicNoticeDraftCreateInput {
   trails: TrailRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   publish: String
 }
 
-type Service implements BasePage & BasePageWithSlug {
+type Service implements BasePageWithSlug & BasePage {
   id: ID!
   heroImage: String
   title: String
@@ -5460,6 +5460,8 @@ type Service implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5472,8 +5474,6 @@ type Service implements BasePage & BasePageWithSlug {
   parksCount(where: ParkWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   editorNotes: String
   status: String
   drafts(where: ServiceDraftWhereInput! = {}, orderBy: [ServiceDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceDraftWhereUniqueInput): [ServiceDraft!]
@@ -5513,6 +5513,7 @@ input ServiceWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5520,7 +5521,6 @@ input ServiceWhereInput {
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
-  topics: TopicManyRelationFilter
   editorNotes: StringFilter
   status: StringFilter
   drafts: ServiceDraftManyRelationFilter
@@ -5582,6 +5582,7 @@ input ServiceUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5589,7 +5590,6 @@ input ServiceUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   editorNotes: String
   status: String
   drafts: ServiceDraftRelateToManyForUpdateInput
@@ -5649,6 +5649,7 @@ input ServiceCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5656,7 +5657,6 @@ input ServiceCreateInput {
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   editorNotes: String
   status: String
   drafts: ServiceDraftRelateToManyForCreateInput
@@ -5712,6 +5712,8 @@ type ServiceVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5724,8 +5726,6 @@ type ServiceVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   editorNotes: String
   isLive: Service
   republish: String
@@ -5758,6 +5758,7 @@ input ServiceVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5765,7 +5766,6 @@ input ServiceVersionWhereInput {
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
-  topics: TopicManyRelationFilter
   editorNotes: StringFilter
   isLive: ServiceWhereInput
 }
@@ -5804,6 +5804,7 @@ input ServiceVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5811,7 +5812,6 @@ input ServiceVersionUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   editorNotes: String
   isLive: ServiceRelateToOneForUpdateInput
   republish: String
@@ -5847,6 +5847,7 @@ input ServiceVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -5854,7 +5855,6 @@ input ServiceVersionCreateInput {
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   editorNotes: String
   isLive: ServiceRelateToOneForCreateInput
   republish: String
@@ -5892,6 +5892,8 @@ type ServiceDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
@@ -5904,8 +5906,6 @@ type ServiceDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   editorNotes: String
   publish: String
 }
@@ -5936,6 +5936,7 @@ input ServiceDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
@@ -5943,7 +5944,6 @@ input ServiceDraftWhereInput {
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
-  topics: TopicManyRelationFilter
   editorNotes: StringFilter
 }
 
@@ -5981,6 +5981,7 @@ input ServiceDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
@@ -5988,7 +5989,6 @@ input ServiceDraftUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   editorNotes: String
   publish: String
 }
@@ -6017,6 +6017,7 @@ input ServiceDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
@@ -6024,12 +6025,11 @@ input ServiceDraftCreateInput {
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   editorNotes: String
   publish: String
 }
 
-type Topic implements BasePage & BasePageWithSlug {
+type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -6054,6 +6054,8 @@ type Topic implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6064,8 +6066,6 @@ type Topic implements BasePage & BasePageWithSlug {
   servicesCount(where: ServiceWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6078,6 +6078,8 @@ type Topic implements BasePage & BasePageWithSlug {
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   status: String
   drafts(where: TopicDraftWhereInput! = {}, orderBy: [TopicDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicDraftWhereUniqueInput): [TopicDraft!]
   draftsCount(where: TopicDraftWhereInput! = {}): Int
@@ -6114,19 +6116,20 @@ input TopicWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
   communities: CommunityManyRelationFilter
-  districts: AssemblyDistrictManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
   plans: PlanManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   status: StringFilter
   drafts: TopicDraftManyRelationFilter
   versions: TopicVersionManyRelationFilter
@@ -6196,19 +6199,20 @@ input TopicUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
-  districts: AssemblyDistrictRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   status: String
   drafts: TopicDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -6279,19 +6283,20 @@ input TopicCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
-  districts: AssemblyDistrictRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   status: String
   drafts: TopicDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -6354,6 +6359,8 @@ type TopicVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6364,8 +6371,6 @@ type TopicVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6378,6 +6383,8 @@ type TopicVersion {
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   isLive: Topic
   republish: String
 }
@@ -6407,19 +6414,20 @@ input TopicVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
   communities: CommunityManyRelationFilter
-  districts: AssemblyDistrictManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
   plans: PlanManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   isLive: TopicWhereInput
 }
 
@@ -6454,19 +6462,20 @@ input TopicVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
-  districts: AssemblyDistrictRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   isLive: TopicRelateToOneForUpdateInput
   republish: String
 }
@@ -6499,19 +6508,20 @@ input TopicVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
-  districts: AssemblyDistrictRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   isLive: TopicRelateToOneForCreateInput
   republish: String
 }
@@ -6546,6 +6556,8 @@ type TopicDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6556,8 +6568,6 @@ type TopicDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6570,6 +6580,8 @@ type TopicDraft {
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   publish: String
 }
 
@@ -6597,19 +6609,20 @@ input TopicDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
   communities: CommunityManyRelationFilter
-  districts: AssemblyDistrictManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
   plans: PlanManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
 }
 
 input TopicDraftOrderByInput {
@@ -6643,19 +6656,20 @@ input TopicDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   communities: CommunityRelateToManyForUpdateInput
-  districts: AssemblyDistrictRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   publish: String
 }
 
@@ -6681,23 +6695,24 @@ input TopicDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   communities: CommunityRelateToManyForCreateInput
-  districts: AssemblyDistrictRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   publish: String
 }
 
-type Trail implements BasePage & BasePageWithSlug {
+type Trail implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -6723,6 +6738,8 @@ type Trail implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6748,8 +6765,6 @@ type Trail implements BasePage & BasePageWithSlug {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: TrailDraftWhereInput! = {}, orderBy: [TrailDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailDraftWhereUniqueInput): [TrailDraft!]
   draftsCount(where: TrailDraftWhereInput! = {}): Int
@@ -6787,6 +6802,7 @@ input TrailWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -6811,7 +6827,6 @@ input TrailWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: TrailDraftManyRelationFilter
   versions: TrailVersionManyRelationFilter
@@ -6884,6 +6899,7 @@ input TrailUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6908,7 +6924,6 @@ input TrailUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: TrailDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -6959,6 +6974,7 @@ input TrailCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -6983,7 +6999,6 @@ input TrailCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: TrailDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7032,6 +7047,8 @@ type TrailVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7057,8 +7074,6 @@ type TrailVersion {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Trail
   republish: String
 }
@@ -7089,6 +7104,7 @@ input TrailVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7113,7 +7129,6 @@ input TrailVersionWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  topics: TopicManyRelationFilter
   isLive: TrailWhereInput
 }
 
@@ -7169,6 +7184,7 @@ input TrailVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7193,7 +7209,6 @@ input TrailVersionUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: TrailRelateToOneForUpdateInput
   republish: String
 }
@@ -7227,6 +7242,7 @@ input TrailVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7251,7 +7267,6 @@ input TrailVersionCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: TrailRelateToOneForCreateInput
   republish: String
 }
@@ -7287,6 +7302,8 @@ type TrailDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7312,8 +7329,6 @@ type TrailDraft {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -7342,6 +7357,7 @@ input TrailDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7366,7 +7382,6 @@ input TrailDraftWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  topics: TopicManyRelationFilter
 }
 
 input TrailDraftOrderByInput {
@@ -7421,6 +7436,7 @@ input TrailDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7445,7 +7461,6 @@ input TrailDraftUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -7472,6 +7487,7 @@ input TrailDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7496,11 +7512,10 @@ input TrailDraftCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
-type Plan implements BasePage & BasePageWithSlug {
+type Plan implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -7525,6 +7540,8 @@ type Plan implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -7539,8 +7556,6 @@ type Plan implements BasePage & BasePageWithSlug {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   status: String
   drafts(where: PlanDraftWhereInput! = {}, orderBy: [PlanDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDraftWhereUniqueInput): [PlanDraft!]
   draftsCount(where: PlanDraftWhereInput! = {}): Int
@@ -7577,6 +7592,7 @@ input PlanWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -7588,7 +7604,6 @@ input PlanWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
-  topics: TopicManyRelationFilter
   status: StringFilter
   drafts: PlanDraftManyRelationFilter
   versions: PlanVersionManyRelationFilter
@@ -7654,6 +7669,7 @@ input PlanUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -7665,7 +7681,6 @@ input PlanUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   status: String
   drafts: PlanDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -7741,6 +7756,7 @@ input PlanCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -7752,7 +7768,6 @@ input PlanCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   status: String
   drafts: PlanDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7820,6 +7835,8 @@ type PlanVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -7834,8 +7851,6 @@ type PlanVersion {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   isLive: Plan
   republish: String
 }
@@ -7865,6 +7880,7 @@ input PlanVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -7876,7 +7892,6 @@ input PlanVersionWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
-  topics: TopicManyRelationFilter
   isLive: PlanWhereInput
 }
 
@@ -7913,6 +7928,7 @@ input PlanVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -7924,7 +7940,6 @@ input PlanVersionUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   isLive: PlanRelateToOneForUpdateInput
   republish: String
 }
@@ -7951,6 +7966,7 @@ input PlanVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -7962,7 +7978,6 @@ input PlanVersionCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   isLive: PlanRelateToOneForCreateInput
   republish: String
 }
@@ -7992,6 +8007,8 @@ type PlanDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -8006,8 +8023,6 @@ type PlanDraft {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  topicsCount(where: TopicWhereInput! = {}): Int
   publish: String
 }
 
@@ -8035,6 +8050,7 @@ input PlanDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -8046,7 +8062,6 @@ input PlanDraftWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
-  topics: TopicManyRelationFilter
 }
 
 input PlanDraftOrderByInput {
@@ -8082,6 +8097,7 @@ input PlanDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -8093,7 +8109,6 @@ input PlanDraftUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
-  topics: TopicRelateToManyForUpdateInput
   publish: String
 }
 
@@ -8119,6 +8134,7 @@ input PlanDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -8130,7 +8146,6 @@ input PlanDraftCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
-  topics: TopicRelateToManyForCreateInput
   publish: String
 }
 
@@ -8235,7 +8250,7 @@ input PlanDocumentCreateInput {
   document: DocumentRelateToManyForCreateInput
 }
 
-type Event implements BasePage & BasePageWithSlug {
+type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
   id: ID!
   heroImage: String
   title: String
@@ -8260,10 +8275,32 @@ type Event implements BasePage & BasePageWithSlug {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   status: String
   drafts(where: EventDraftWhereInput! = {}, orderBy: [EventDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventDraftWhereUniqueInput): [EventDraft!]
   draftsCount(where: EventDraftWhereInput! = {}): Int
@@ -8300,10 +8337,21 @@ input EventWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
+  boards: BoardManyRelationFilter
+  services: ServiceManyRelationFilter
+  communities: CommunityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
+  plans: PlanManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   status: StringFilter
   drafts: EventDraftManyRelationFilter
   versions: EventVersionManyRelationFilter
@@ -8357,10 +8405,21 @@ input EventUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards: BoardRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   status: String
   drafts: EventDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -8410,10 +8469,21 @@ input EventCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards: BoardRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   status: String
   drafts: EventDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -8461,10 +8531,32 @@ type EventDraft {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   publish: String
 }
 
@@ -8492,10 +8584,21 @@ input EventDraftWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
+  boards: BoardManyRelationFilter
+  services: ServiceManyRelationFilter
+  communities: CommunityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
+  plans: PlanManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
 }
 
 input EventDraftOrderByInput {
@@ -8531,10 +8634,21 @@ input EventDraftUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards: BoardRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   publish: String
 }
 
@@ -8566,10 +8680,21 @@ input EventDraftCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards: BoardRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   publish: String
 }
 
@@ -8603,10 +8728,32 @@ type EventVersion {
   redirect: Redirect
   events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
   eventsCount(where: EventWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   isLive: Event
   republish: String
 }
@@ -8636,10 +8783,21 @@ input EventVersionWhereInput {
   contacts: ContactManyRelationFilter
   redirect: RedirectWhereInput
   events: EventManyRelationFilter
+  topics: TopicManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
+  boards: BoardManyRelationFilter
+  services: ServiceManyRelationFilter
+  communities: CommunityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  publicNotices: PublicNoticeManyRelationFilter
+  plans: PlanManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   isLive: EventWhereInput
 }
 
@@ -8676,10 +8834,21 @@ input EventVersionUpdateInput {
   contacts: ContactRelateToManyForUpdateInput
   redirect: RedirectRelateToOneForUpdateInput
   events: EventRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards: BoardRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  publicNotices: PublicNoticeRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   isLive: EventRelateToOneForUpdateInput
   republish: String
 }
@@ -8706,10 +8875,21 @@ input EventVersionCreateInput {
   contacts: ContactRelateToManyForCreateInput
   redirect: RedirectRelateToOneForCreateInput
   events: EventRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
+  boards: BoardRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  publicNotices: PublicNoticeRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   isLive: EventRelateToOneForCreateInput
   republish: String
 }
@@ -10484,13 +10664,63 @@ interface BasePage {
   description: String
   body: String
   heroImage: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  owner: User
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
 }
 
-interface BasePageWithSlug {
+interface BasePageWithSlug implements BasePage {
   slug: String
   id: ID!
   title: String
   description: String
   body: String
   heroImage: String
+  redirect: Redirect
+  createdAt: DateTime
+  updatedAt: DateTime
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: User
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  status: String
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+}
+
+interface BasePageWithActions implements BasePage & BasePageWithSlug {
+  slug: String
+  id: ID!
+  title: String
+  description: String
+  body: String
+  heroImage: String
+  redirect: Redirect
+  createdAt: DateTime
+  updatedAt: DateTime
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: User
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  status: String
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
 }

@@ -290,6 +290,7 @@ model AssemblyDistrict {
   redirect                                   Redirect?                 @relation("AssemblyDistrict_redirect", fields: [redirectId], references: [id])
   redirectId                                 String?                   @map("redirect")
   events                                     Event[]                   @relation("AssemblyDistrict_events")
+  topics                                     Topic[]                   @relation("AssemblyDistrict_topics")
   createdAt                                  DateTime?                 @default(now())
   updatedAt                                  DateTime?                 @default(now()) @updatedAt
   photo                                      Image?                    @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
@@ -302,7 +303,6 @@ model AssemblyDistrict {
   termStart                                  DateTime?
   termEnd                                    DateTime?
   boards                                     Board[]                   @relation("AssemblyDistrict_boards")
-  topics                                     Topic[]                   @relation("AssemblyDistrict_topics")
   status                                     String                    @default("unpublished")
   drafts                                     AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_original")
   makeDrafts                                 String?
@@ -317,8 +317,10 @@ model AssemblyDistrict {
   from_PublicNotice_assemblyDistricts        PublicNotice[]            @relation("PublicNotice_assemblyDistricts")
   from_PublicNoticeVersion_assemblyDistricts PublicNoticeVersion[]     @relation("PublicNoticeVersion_assemblyDistricts")
   from_PublicNoticeDraft_assemblyDistricts   PublicNoticeDraft[]       @relation("PublicNoticeDraft_assemblyDistricts")
-  from_TopicVersion_districts                TopicVersion[]            @relation("TopicVersion_districts")
-  from_TopicDraft_districts                  TopicDraft[]              @relation("TopicDraft_districts")
+  from_TopicVersion_assemblyDistricts        TopicVersion[]            @relation("TopicVersion_assemblyDistricts")
+  from_TopicDraft_assemblyDistricts          TopicDraft[]              @relation("TopicDraft_assemblyDistricts")
+  from_EventDraft_assemblyDistricts          EventDraft[]              @relation("EventDraft_assemblyDistricts")
+  from_EventVersion_assemblyDistricts        EventVersion[]            @relation("EventVersion_assemblyDistricts")
 
   @@index([ownerId])
   @@index([addressId])
@@ -349,6 +351,7 @@ model AssemblyDistrictVersion {
   redirect    Redirect?         @relation("AssemblyDistrictVersion_redirect", fields: [redirectId], references: [id])
   redirectId  String?           @map("redirect")
   events      Event[]           @relation("AssemblyDistrictVersion_events")
+  topics      Topic[]           @relation("AssemblyDistrictVersion_topics")
   createdAt   DateTime?         @default(now())
   updatedAt   DateTime?         @default(now()) @updatedAt
   photo       Image?            @relation("AssemblyDistrictVersion_photo", fields: [photoId], references: [id])
@@ -361,7 +364,6 @@ model AssemblyDistrictVersion {
   termStart   DateTime?
   termEnd     DateTime?
   boards      Board[]           @relation("AssemblyDistrictVersion_boards")
-  topics      Topic[]           @relation("AssemblyDistrictVersion_topics")
   isLive      AssemblyDistrict? @relation("AssemblyDistrict_currentVersion")
   republish   String?
 
@@ -395,6 +397,7 @@ model AssemblyDistrictDraft {
   redirect    Redirect?         @relation("AssemblyDistrictDraft_redirect", fields: [redirectId], references: [id])
   redirectId  String?           @map("redirect")
   events      Event[]           @relation("AssemblyDistrictDraft_events")
+  topics      Topic[]           @relation("AssemblyDistrictDraft_topics")
   createdAt   DateTime?         @default(now())
   updatedAt   DateTime?         @default(now()) @updatedAt
   photo       Image?            @relation("AssemblyDistrictDraft_photo", fields: [photoId], references: [id])
@@ -407,7 +410,6 @@ model AssemblyDistrictDraft {
   termStart   DateTime?
   termEnd     DateTime?
   boards      Board[]           @relation("AssemblyDistrictDraft_boards")
-  topics      Topic[]           @relation("AssemblyDistrictDraft_topics")
   publish     String?
 
   @@index([originalId])
@@ -437,6 +439,7 @@ model Board {
   redirect                            Redirect?                 @relation("Board_redirect", fields: [redirectId], references: [id])
   redirectId                          String?                   @map("redirect")
   events                              Event[]                   @relation("Board_events")
+  topics                              Topic[]                   @relation("Board_topics")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   directory                           Document?                 @relation("Board_directory", fields: [directoryId], references: [id])
@@ -453,7 +456,6 @@ model Board {
   isActive                            Boolean                   @default(true)
   districts                           AssemblyDistrict[]        @relation("AssemblyDistrict_boards")
   communities                         Community[]               @relation("Board_communities")
-  topics                              Topic[]                   @relation("Board_topics")
   status                              String                    @default("unpublished")
   drafts                              BoardDraft[]              @relation("BoardDraft_original")
   makeDrafts                          String?
@@ -469,6 +471,8 @@ model Board {
   from_PublicNoticeDraft_boards       PublicNoticeDraft[]       @relation("PublicNoticeDraft_boards")
   from_TopicVersion_boards            TopicVersion[]            @relation("TopicVersion_boards")
   from_TopicDraft_boards              TopicDraft[]              @relation("TopicDraft_boards")
+  from_EventDraft_boards              EventDraft[]              @relation("EventDraft_boards")
+  from_EventVersion_boards            EventVersion[]            @relation("EventVersion_boards")
 
   @@index([ownerId])
   @@index([redirectId])
@@ -499,6 +503,7 @@ model BoardVersion {
   redirect                     Redirect?          @relation("BoardVersion_redirect", fields: [redirectId], references: [id])
   redirectId                   String?            @map("redirect")
   events                       Event[]            @relation("BoardVersion_events")
+  topics                       Topic[]            @relation("BoardVersion_topics")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardVersion_directory", fields: [directoryId], references: [id])
@@ -515,7 +520,6 @@ model BoardVersion {
   isActive                     Boolean            @default(true)
   districts                    AssemblyDistrict[] @relation("BoardVersion_districts")
   communities                  Community[]        @relation("BoardVersion_communities")
-  topics                       Topic[]            @relation("BoardVersion_topics")
   isLive                       Board?             @relation("Board_currentVersion")
   republish                    String?
 
@@ -549,6 +553,7 @@ model BoardDraft {
   redirect                     Redirect?          @relation("BoardDraft_redirect", fields: [redirectId], references: [id])
   redirectId                   String?            @map("redirect")
   events                       Event[]            @relation("BoardDraft_events")
+  topics                       Topic[]            @relation("BoardDraft_topics")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardDraft_directory", fields: [directoryId], references: [id])
@@ -565,7 +570,6 @@ model BoardDraft {
   isActive                     Boolean            @default(true)
   districts                    AssemblyDistrict[] @relation("BoardDraft_districts")
   communities                  Community[]        @relation("BoardDraft_communities")
-  topics                       Topic[]            @relation("BoardDraft_topics")
   publish                      String?
 
   @@index([originalId])
@@ -597,12 +601,12 @@ model Community {
   redirect                             Redirect?             @relation("Community_redirect", fields: [redirectId], references: [id])
   redirectId                           String?               @map("redirect")
   events                               Event[]               @relation("Community_events")
+  topics                               Topic[]               @relation("Community_topics")
   createdAt                            DateTime?             @default(now())
   updatedAt                            DateTime?             @default(now()) @updatedAt
   services                             Service[]             @relation("Community_services")
   districts                            AssemblyDistrict[]    @relation("Community_districts")
   boards                               Board[]               @relation("Board_communities")
-  topics                               Topic[]               @relation("Community_topics")
   status                               String                @default("unpublished")
   drafts                               CommunityDraft[]      @relation("CommunityDraft_original")
   makeDrafts                           String?
@@ -618,6 +622,8 @@ model Community {
   from_ServiceDraft_communities        ServiceDraft[]        @relation("ServiceDraft_communities")
   from_TopicVersion_communities        TopicVersion[]        @relation("TopicVersion_communities")
   from_TopicDraft_communities          TopicDraft[]          @relation("TopicDraft_communities")
+  from_EventDraft_communities          EventDraft[]          @relation("EventDraft_communities")
+  from_EventVersion_communities        EventVersion[]        @relation("EventVersion_communities")
 
   @@index([ownerId])
   @@index([redirectId])
@@ -644,12 +650,12 @@ model CommunityVersion {
   redirect    Redirect?          @relation("CommunityVersion_redirect", fields: [redirectId], references: [id])
   redirectId  String?            @map("redirect")
   events      Event[]            @relation("CommunityVersion_events")
+  topics      Topic[]            @relation("CommunityVersion_topics")
   createdAt   DateTime?          @default(now())
   updatedAt   DateTime?          @default(now()) @updatedAt
   services    Service[]          @relation("CommunityVersion_services")
   districts   AssemblyDistrict[] @relation("CommunityVersion_districts")
   boards      Board[]            @relation("CommunityVersion_boards")
-  topics      Topic[]            @relation("CommunityVersion_topics")
   isLive      Community?         @relation("Community_currentVersion")
   republish   String?
 
@@ -679,12 +685,12 @@ model CommunityDraft {
   redirect    Redirect?          @relation("CommunityDraft_redirect", fields: [redirectId], references: [id])
   redirectId  String?            @map("redirect")
   events      Event[]            @relation("CommunityDraft_events")
+  topics      Topic[]            @relation("CommunityDraft_topics")
   createdAt   DateTime?          @default(now())
   updatedAt   DateTime?          @default(now()) @updatedAt
   services    Service[]          @relation("CommunityDraft_services")
   districts   AssemblyDistrict[] @relation("CommunityDraft_districts")
   boards      Board[]            @relation("CommunityDraft_boards")
-  topics      Topic[]            @relation("CommunityDraft_topics")
   publish     String?
 
   @@index([originalId])
@@ -714,13 +720,13 @@ model Facility {
   hours                               OperatingHour[]       @relation("Facility_hours")
   redirect                            Redirect?             @relation("Facility_redirect", fields: [redirectId], references: [id])
   redirectId                          String?               @map("redirect")
-  events                              Event[]               @relation("Facility_events")
+  events                              Event[]               @relation("Event_facilities")
+  topics                              Topic[]               @relation("Facility_topics")
   createdAt                           DateTime?             @default(now())
   updatedAt                           DateTime?             @default(now()) @updatedAt
   services                            Service[]             @relation("Facility_services")
   park                                Park?                 @relation("Facility_park", fields: [parkId], references: [id])
   parkId                              String?               @map("park")
-  topics                              Topic[]               @relation("Facility_topics")
   status                              String                @default("unpublished")
   drafts                              FacilityDraft[]       @relation("FacilityDraft_original")
   makeDrafts                          String?
@@ -736,6 +742,8 @@ model Facility {
   from_ServiceDraft_facilities        ServiceDraft[]        @relation("ServiceDraft_facilities")
   from_TopicVersion_facilities        TopicVersion[]        @relation("TopicVersion_facilities")
   from_TopicDraft_facilities          TopicDraft[]          @relation("TopicDraft_facilities")
+  from_EventDraft_facilities          EventDraft[]          @relation("EventDraft_facilities")
+  from_EventVersion_facilities        EventVersion[]        @relation("EventVersion_facilities")
   from_FacilityListItem_facility      FacilityListItem[]    @relation("FacilityListItem_facility")
 
   @@index([ownerId])
@@ -768,12 +776,12 @@ model FacilityVersion {
   redirect    Redirect?       @relation("FacilityVersion_redirect", fields: [redirectId], references: [id])
   redirectId  String?         @map("redirect")
   events      Event[]         @relation("FacilityVersion_events")
+  topics      Topic[]         @relation("FacilityVersion_topics")
   createdAt   DateTime?       @default(now())
   updatedAt   DateTime?       @default(now()) @updatedAt
   services    Service[]       @relation("FacilityVersion_services")
   park        Park?           @relation("FacilityVersion_park", fields: [parkId], references: [id])
   parkId      String?         @map("park")
-  topics      Topic[]         @relation("FacilityVersion_topics")
   isLive      Facility?       @relation("Facility_currentVersion")
   republish   String?
 
@@ -808,12 +816,12 @@ model FacilityDraft {
   redirect    Redirect?       @relation("FacilityDraft_redirect", fields: [redirectId], references: [id])
   redirectId  String?         @map("redirect")
   events      Event[]         @relation("FacilityDraft_events")
+  topics      Topic[]         @relation("FacilityDraft_topics")
   createdAt   DateTime?       @default(now())
   updatedAt   DateTime?       @default(now()) @updatedAt
   services    Service[]       @relation("FacilityDraft_services")
   park        Park?           @relation("FacilityDraft_park", fields: [parkId], references: [id])
   parkId      String?         @map("park")
-  topics      Topic[]         @relation("FacilityDraft_topics")
   publish     String?
 
   @@index([originalId])
@@ -842,7 +850,8 @@ model OrgUnit {
   contacts                          Contact[]             @relation("OrgUnit_contacts")
   redirect                          Redirect?             @relation("OrgUnit_redirect", fields: [redirectId], references: [id])
   redirectId                        String?               @map("redirect")
-  events                            Event[]               @relation("OrgUnit_events")
+  events                            Event[]               @relation("Event_orgUnits")
+  topics                            Topic[]               @relation("OrgUnit_topics")
   createdAt                         DateTime?             @default(now())
   updatedAt                         DateTime?             @default(now()) @updatedAt
   showPage                          Boolean               @default(true)
@@ -850,7 +859,6 @@ model OrgUnit {
   children                          OrgUnit[]             @relation("OrgUnit_parent")
   parent                            OrgUnit?              @relation("OrgUnit_parent", fields: [parentId], references: [id])
   parentId                          String?               @map("parent")
-  topics                            Topic[]               @relation("OrgUnit_topics")
   status                            String                @default("unpublished")
   drafts                            OrgUnitDraft[]        @relation("OrgUnitDraft_original")
   makeDrafts                        String?
@@ -868,6 +876,8 @@ model OrgUnit {
   from_ServiceDraft_orgUnits        ServiceDraft[]        @relation("ServiceDraft_orgUnits")
   from_TopicVersion_orgUnits        TopicVersion[]        @relation("TopicVersion_orgUnits")
   from_TopicDraft_orgUnits          TopicDraft[]          @relation("TopicDraft_orgUnits")
+  from_EventDraft_orgUnits          EventDraft[]          @relation("EventDraft_orgUnits")
+  from_EventVersion_orgUnits        EventVersion[]        @relation("EventVersion_orgUnits")
 
   @@index([ownerId])
   @@index([redirectId])
@@ -895,6 +905,7 @@ model OrgUnitVersion {
   redirect    Redirect?      @relation("OrgUnitVersion_redirect", fields: [redirectId], references: [id])
   redirectId  String?        @map("redirect")
   events      Event[]        @relation("OrgUnitVersion_events")
+  topics      Topic[]        @relation("OrgUnitVersion_topics")
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   showPage    Boolean        @default(true)
@@ -902,7 +913,6 @@ model OrgUnitVersion {
   children    OrgUnit[]      @relation("OrgUnitVersion_children")
   parent      OrgUnit?       @relation("OrgUnitVersion_parent", fields: [parentId], references: [id])
   parentId    String?        @map("parent")
-  topics      Topic[]        @relation("OrgUnitVersion_topics")
   isLive      OrgUnit?       @relation("OrgUnit_currentVersion")
   republish   String?
 
@@ -933,6 +943,7 @@ model OrgUnitDraft {
   redirect    Redirect?      @relation("OrgUnitDraft_redirect", fields: [redirectId], references: [id])
   redirectId  String?        @map("redirect")
   events      Event[]        @relation("OrgUnitDraft_events")
+  topics      Topic[]        @relation("OrgUnitDraft_topics")
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   showPage    Boolean        @default(true)
@@ -940,7 +951,6 @@ model OrgUnitDraft {
   children    OrgUnit[]      @relation("OrgUnitDraft_children")
   parent      OrgUnit?       @relation("OrgUnitDraft_parent", fields: [parentId], references: [id])
   parentId    String?        @map("parent")
-  topics      Topic[]        @relation("OrgUnitDraft_topics")
   publish     String?
 
   @@index([originalId])
@@ -971,13 +981,13 @@ model Park {
   hours                          OperatingHour[]       @relation("Park_hours")
   redirect                       Redirect?             @relation("Park_redirect", fields: [redirectId], references: [id])
   redirectId                     String?               @map("redirect")
-  events                         Event[]               @relation("Park_events")
+  events                         Event[]               @relation("Event_parks")
+  topics                         Topic[]               @relation("Park_topics")
   createdAt                      DateTime?             @default(now())
   updatedAt                      DateTime?             @default(now()) @updatedAt
   services                       Service[]             @relation("Park_services")
   trails                         Trail[]               @relation("Trail_park")
   facilities                     Facility[]            @relation("Facility_park")
-  topics                         Topic[]               @relation("Park_topics")
   status                         String                @default("unpublished")
   drafts                         ParkDraft[]           @relation("ParkDraft_original")
   makeDrafts                     String?
@@ -995,6 +1005,8 @@ model Park {
   from_TopicDraft_parks          TopicDraft[]          @relation("TopicDraft_parks")
   from_TrailVersion_park         TrailVersion[]        @relation("TrailVersion_park")
   from_TrailDraft_park           TrailDraft[]          @relation("TrailDraft_park")
+  from_EventDraft_parks          EventDraft[]          @relation("EventDraft_parks")
+  from_EventVersion_parks        EventVersion[]        @relation("EventVersion_parks")
 
   @@index([ownerId])
   @@index([addressId])
@@ -1025,12 +1037,12 @@ model ParkVersion {
   redirect    Redirect?       @relation("ParkVersion_redirect", fields: [redirectId], references: [id])
   redirectId  String?         @map("redirect")
   events      Event[]         @relation("ParkVersion_events")
+  topics      Topic[]         @relation("ParkVersion_topics")
   createdAt   DateTime?       @default(now())
   updatedAt   DateTime?       @default(now()) @updatedAt
   services    Service[]       @relation("ParkVersion_services")
   trails      Trail[]         @relation("ParkVersion_trails")
   facilities  Facility[]      @relation("ParkVersion_facilities")
-  topics      Topic[]         @relation("ParkVersion_topics")
   isLive      Park?           @relation("Park_currentVersion")
   republish   String?
 
@@ -1064,12 +1076,12 @@ model ParkDraft {
   redirect    Redirect?       @relation("ParkDraft_redirect", fields: [redirectId], references: [id])
   redirectId  String?         @map("redirect")
   events      Event[]         @relation("ParkDraft_events")
+  topics      Topic[]         @relation("ParkDraft_topics")
   createdAt   DateTime?       @default(now())
   updatedAt   DateTime?       @default(now()) @updatedAt
   services    Service[]       @relation("ParkDraft_services")
   trails      Trail[]         @relation("ParkDraft_trails")
   facilities  Facility[]      @relation("ParkDraft_facilities")
-  topics      Topic[]         @relation("ParkDraft_topics")
   publish     String?
 
   @@index([originalId])
@@ -1097,7 +1109,8 @@ model PublicNotice {
   contacts                        Contact[]             @relation("PublicNotice_contacts")
   redirect                        Redirect?             @relation("PublicNotice_redirect", fields: [redirectId], references: [id])
   redirectId                      String?               @map("redirect")
-  events                          Event[]               @relation("PublicNotice_events")
+  events                          Event[]               @relation("Event_publicNotices")
+  topics                          Topic[]               @relation("PublicNotice_topics")
   createdAt                       DateTime?             @default(now())
   updatedAt                       DateTime?             @default(now()) @updatedAt
   urgency                         Int                   @default(2)
@@ -1110,7 +1123,6 @@ model PublicNotice {
   trails                          Trail[]               @relation("PublicNotice_trails")
   communities                     Community[]           @relation("PublicNotice_communities")
   assemblyDistricts               AssemblyDistrict[]    @relation("PublicNotice_assemblyDistricts")
-  topics                          Topic[]               @relation("PublicNotice_topics")
   boards                          Board[]               @relation("PublicNotice_boards")
   status                          String                @default("unpublished")
   drafts                          PublicNoticeDraft[]   @relation("PublicNoticeDraft_original")
@@ -1120,6 +1132,8 @@ model PublicNotice {
   currentVersionId                String?               @unique @map("currentVersion")
   from_TopicVersion_publicNotices TopicVersion[]        @relation("TopicVersion_publicNotices")
   from_TopicDraft_publicNotices   TopicDraft[]          @relation("TopicDraft_publicNotices")
+  from_EventDraft_publicNotices   EventDraft[]          @relation("EventDraft_publicNotices")
+  from_EventVersion_publicNotices EventVersion[]        @relation("EventVersion_publicNotices")
 
   @@index([ownerId])
   @@index([redirectId])
@@ -1146,6 +1160,7 @@ model PublicNoticeVersion {
   redirect          Redirect?          @relation("PublicNoticeVersion_redirect", fields: [redirectId], references: [id])
   redirectId        String?            @map("redirect")
   events            Event[]            @relation("PublicNoticeVersion_events")
+  topics            Topic[]            @relation("PublicNoticeVersion_topics")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   urgency           Int                @default(2)
@@ -1158,7 +1173,6 @@ model PublicNoticeVersion {
   trails            Trail[]            @relation("PublicNoticeVersion_trails")
   communities       Community[]        @relation("PublicNoticeVersion_communities")
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeVersion_assemblyDistricts")
-  topics            Topic[]            @relation("PublicNoticeVersion_topics")
   boards            Board[]            @relation("PublicNoticeVersion_boards")
   isLive            PublicNotice?      @relation("PublicNotice_currentVersion")
   republish         String?
@@ -1189,6 +1203,7 @@ model PublicNoticeDraft {
   redirect          Redirect?          @relation("PublicNoticeDraft_redirect", fields: [redirectId], references: [id])
   redirectId        String?            @map("redirect")
   events            Event[]            @relation("PublicNoticeDraft_events")
+  topics            Topic[]            @relation("PublicNoticeDraft_topics")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   urgency           Int                @default(2)
@@ -1201,7 +1216,6 @@ model PublicNoticeDraft {
   trails            Trail[]            @relation("PublicNoticeDraft_trails")
   communities       Community[]        @relation("PublicNoticeDraft_communities")
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeDraft_assemblyDistricts")
-  topics            Topic[]            @relation("PublicNoticeDraft_topics")
   boards            Board[]            @relation("PublicNoticeDraft_boards")
   publish           String?
 
@@ -1233,7 +1247,8 @@ model Service {
   contacts                          Contact[]             @relation("Service_contacts")
   redirect                          Redirect?             @relation("Service_redirect", fields: [redirectId], references: [id])
   redirectId                        String?               @map("redirect")
-  events                            Event[]               @relation("Service_events")
+  events                            Event[]               @relation("Event_services")
+  topics                            Topic[]               @relation("Service_topics")
   createdAt                         DateTime?             @default(now())
   updatedAt                         DateTime?             @default(now()) @updatedAt
   communities                       Community[]           @relation("Community_services")
@@ -1241,7 +1256,6 @@ model Service {
   trails                            Trail[]               @relation("Service_trails")
   parks                             Park[]                @relation("Park_services")
   facilities                        Facility[]            @relation("Facility_services")
-  topics                            Topic[]               @relation("Service_topics")
   editorNotes                       String                @default("")
   status                            String                @default("unpublished")
   drafts                            ServiceDraft[]        @relation("ServiceDraft_original")
@@ -1264,6 +1278,8 @@ model Service {
   from_TopicDraft_services          TopicDraft[]          @relation("TopicDraft_services")
   from_TrailVersion_services        TrailVersion[]        @relation("TrailVersion_services")
   from_TrailDraft_services          TrailDraft[]          @relation("TrailDraft_services")
+  from_EventDraft_services          EventDraft[]          @relation("EventDraft_services")
+  from_EventVersion_services        EventVersion[]        @relation("EventVersion_services")
 
   @@index([ownerId])
   @@index([primaryActionId])
@@ -1296,6 +1312,7 @@ model ServiceVersion {
   redirect         Redirect?      @relation("ServiceVersion_redirect", fields: [redirectId], references: [id])
   redirectId       String?        @map("redirect")
   events           Event[]        @relation("ServiceVersion_events")
+  topics           Topic[]        @relation("ServiceVersion_topics")
   createdAt        DateTime?      @default(now())
   updatedAt        DateTime?      @default(now()) @updatedAt
   communities      Community[]    @relation("ServiceVersion_communities")
@@ -1303,7 +1320,6 @@ model ServiceVersion {
   trails           Trail[]        @relation("ServiceVersion_trails")
   parks            Park[]         @relation("ServiceVersion_parks")
   facilities       Facility[]     @relation("ServiceVersion_facilities")
-  topics           Topic[]        @relation("ServiceVersion_topics")
   editorNotes      String         @default("")
   isLive           Service?       @relation("Service_currentVersion")
   republish        String?
@@ -1340,6 +1356,7 @@ model ServiceDraft {
   redirect         Redirect?      @relation("ServiceDraft_redirect", fields: [redirectId], references: [id])
   redirectId       String?        @map("redirect")
   events           Event[]        @relation("ServiceDraft_events")
+  topics           Topic[]        @relation("ServiceDraft_topics")
   createdAt        DateTime?      @default(now())
   updatedAt        DateTime?      @default(now()) @updatedAt
   communities      Community[]    @relation("ServiceDraft_communities")
@@ -1347,7 +1364,6 @@ model ServiceDraft {
   trails           Trail[]        @relation("ServiceDraft_trails")
   parks            Park[]         @relation("ServiceDraft_parks")
   facilities       Facility[]     @relation("ServiceDraft_facilities")
-  topics           Topic[]        @relation("ServiceDraft_topics")
   editorNotes      String         @default("")
   publish          String?
 
@@ -1377,20 +1393,21 @@ model Topic {
   contacts                            Contact[]                 @relation("Topic_contacts")
   redirect                            Redirect?                 @relation("Topic_redirect", fields: [redirectId], references: [id])
   redirectId                          String?                   @map("redirect")
-  events                              Event[]                   @relation("Topic_events")
+  events                              Event[]                   @relation("Event_topics")
+  topics                              Topic[]                   @relation("Topic_topics")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   highlights                          Highlight[]               @relation("Topic_highlights")
   boards                              Board[]                   @relation("Board_topics")
   services                            Service[]                 @relation("Service_topics")
   communities                         Community[]               @relation("Community_topics")
-  districts                           AssemblyDistrict[]        @relation("AssemblyDistrict_topics")
   parks                               Park[]                    @relation("Park_topics")
   trails                              Trail[]                   @relation("Topic_trails")
   facilities                          Facility[]                @relation("Facility_topics")
   orgUnits                            OrgUnit[]                 @relation("OrgUnit_topics")
   publicNotices                       PublicNotice[]            @relation("PublicNotice_topics")
   plans                               Plan[]                    @relation("Plan_topics")
+  assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_topics")
   status                              String                    @default("unpublished")
   drafts                              TopicDraft[]              @relation("TopicDraft_original")
   makeDrafts                          String?
@@ -1413,51 +1430,57 @@ model Topic {
   from_PublicNoticeDraft_topics       PublicNoticeDraft[]       @relation("PublicNoticeDraft_topics")
   from_ServiceVersion_topics          ServiceVersion[]          @relation("ServiceVersion_topics")
   from_ServiceDraft_topics            ServiceDraft[]            @relation("ServiceDraft_topics")
+  from_Topic_topics                   Topic[]                   @relation("Topic_topics")
+  from_TopicVersion_topics            TopicVersion[]            @relation("TopicVersion_topics")
+  from_TopicDraft_topics              TopicDraft[]              @relation("TopicDraft_topics")
   from_TrailVersion_topics            TrailVersion[]            @relation("TrailVersion_topics")
   from_TrailDraft_topics              TrailDraft[]              @relation("TrailDraft_topics")
   from_PlanVersion_topics             PlanVersion[]             @relation("PlanVersion_topics")
   from_PlanDraft_topics               PlanDraft[]               @relation("PlanDraft_topics")
+  from_EventDraft_topics              EventDraft[]              @relation("EventDraft_topics")
+  from_EventVersion_topics            EventVersion[]            @relation("EventVersion_topics")
 
   @@index([ownerId])
   @@index([redirectId])
 }
 
 model TopicVersion {
-  id            String             @id @default(cuid())
-  original      Topic?             @relation("TopicVersion_original", fields: [originalId], references: [id])
-  originalId    String?            @map("original")
-  heroImage     String?
-  title         String             @default("")
-  description   String             @default("")
-  publishAt     DateTime?
-  unpublishAt   DateTime?
-  reviewDate    DateTime?
-  owner         User?              @relation("TopicVersion_owner", fields: [ownerId], references: [id])
-  ownerId       String?            @map("owner")
-  body          String?
-  tags          Tag[]              @relation("TopicVersion_tags")
-  userGroups    UserGroup[]        @relation("TopicVersion_userGroups")
-  actions       InternalLink[]     @relation("TopicVersion_actions")
-  documents     Document[]         @relation("TopicVersion_documents")
-  contacts      Contact[]          @relation("TopicVersion_contacts")
-  redirect      Redirect?          @relation("TopicVersion_redirect", fields: [redirectId], references: [id])
-  redirectId    String?            @map("redirect")
-  events        Event[]            @relation("TopicVersion_events")
-  createdAt     DateTime?          @default(now())
-  updatedAt     DateTime?          @default(now()) @updatedAt
-  highlights    Highlight[]        @relation("TopicVersion_highlights")
-  boards        Board[]            @relation("TopicVersion_boards")
-  services      Service[]          @relation("TopicVersion_services")
-  communities   Community[]        @relation("TopicVersion_communities")
-  districts     AssemblyDistrict[] @relation("TopicVersion_districts")
-  parks         Park[]             @relation("TopicVersion_parks")
-  trails        Trail[]            @relation("TopicVersion_trails")
-  facilities    Facility[]         @relation("TopicVersion_facilities")
-  orgUnits      OrgUnit[]          @relation("TopicVersion_orgUnits")
-  publicNotices PublicNotice[]     @relation("TopicVersion_publicNotices")
-  plans         Plan[]             @relation("TopicVersion_plans")
-  isLive        Topic?             @relation("Topic_currentVersion")
-  republish     String?
+  id                String             @id @default(cuid())
+  original          Topic?             @relation("TopicVersion_original", fields: [originalId], references: [id])
+  originalId        String?            @map("original")
+  heroImage         String?
+  title             String             @default("")
+  description       String             @default("")
+  publishAt         DateTime?
+  unpublishAt       DateTime?
+  reviewDate        DateTime?
+  owner             User?              @relation("TopicVersion_owner", fields: [ownerId], references: [id])
+  ownerId           String?            @map("owner")
+  body              String?
+  tags              Tag[]              @relation("TopicVersion_tags")
+  userGroups        UserGroup[]        @relation("TopicVersion_userGroups")
+  actions           InternalLink[]     @relation("TopicVersion_actions")
+  documents         Document[]         @relation("TopicVersion_documents")
+  contacts          Contact[]          @relation("TopicVersion_contacts")
+  redirect          Redirect?          @relation("TopicVersion_redirect", fields: [redirectId], references: [id])
+  redirectId        String?            @map("redirect")
+  events            Event[]            @relation("TopicVersion_events")
+  topics            Topic[]            @relation("TopicVersion_topics")
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now()) @updatedAt
+  highlights        Highlight[]        @relation("TopicVersion_highlights")
+  boards            Board[]            @relation("TopicVersion_boards")
+  services          Service[]          @relation("TopicVersion_services")
+  communities       Community[]        @relation("TopicVersion_communities")
+  parks             Park[]             @relation("TopicVersion_parks")
+  trails            Trail[]            @relation("TopicVersion_trails")
+  facilities        Facility[]         @relation("TopicVersion_facilities")
+  orgUnits          OrgUnit[]          @relation("TopicVersion_orgUnits")
+  publicNotices     PublicNotice[]     @relation("TopicVersion_publicNotices")
+  plans             Plan[]             @relation("TopicVersion_plans")
+  assemblyDistricts AssemblyDistrict[] @relation("TopicVersion_assemblyDistricts")
+  isLive            Topic?             @relation("Topic_currentVersion")
+  republish         String?
 
   @@index([originalId])
   @@index([ownerId])
@@ -1465,40 +1488,41 @@ model TopicVersion {
 }
 
 model TopicDraft {
-  id            String             @id @default(cuid())
-  original      Topic?             @relation("TopicDraft_original", fields: [originalId], references: [id])
-  originalId    String?            @map("original")
-  heroImage     String?
-  title         String             @default("")
-  description   String             @default("")
-  publishAt     DateTime?
-  unpublishAt   DateTime?
-  reviewDate    DateTime?
-  owner         User?              @relation("TopicDraft_owner", fields: [ownerId], references: [id])
-  ownerId       String?            @map("owner")
-  body          String?
-  tags          Tag[]              @relation("TopicDraft_tags")
-  userGroups    UserGroup[]        @relation("TopicDraft_userGroups")
-  actions       InternalLink[]     @relation("TopicDraft_actions")
-  documents     Document[]         @relation("TopicDraft_documents")
-  contacts      Contact[]          @relation("TopicDraft_contacts")
-  redirect      Redirect?          @relation("TopicDraft_redirect", fields: [redirectId], references: [id])
-  redirectId    String?            @map("redirect")
-  events        Event[]            @relation("TopicDraft_events")
-  createdAt     DateTime?          @default(now())
-  updatedAt     DateTime?          @default(now()) @updatedAt
-  highlights    Highlight[]        @relation("TopicDraft_highlights")
-  boards        Board[]            @relation("TopicDraft_boards")
-  services      Service[]          @relation("TopicDraft_services")
-  communities   Community[]        @relation("TopicDraft_communities")
-  districts     AssemblyDistrict[] @relation("TopicDraft_districts")
-  parks         Park[]             @relation("TopicDraft_parks")
-  trails        Trail[]            @relation("TopicDraft_trails")
-  facilities    Facility[]         @relation("TopicDraft_facilities")
-  orgUnits      OrgUnit[]          @relation("TopicDraft_orgUnits")
-  publicNotices PublicNotice[]     @relation("TopicDraft_publicNotices")
-  plans         Plan[]             @relation("TopicDraft_plans")
-  publish       String?
+  id                String             @id @default(cuid())
+  original          Topic?             @relation("TopicDraft_original", fields: [originalId], references: [id])
+  originalId        String?            @map("original")
+  heroImage         String?
+  title             String             @default("")
+  description       String             @default("")
+  publishAt         DateTime?
+  unpublishAt       DateTime?
+  reviewDate        DateTime?
+  owner             User?              @relation("TopicDraft_owner", fields: [ownerId], references: [id])
+  ownerId           String?            @map("owner")
+  body              String?
+  tags              Tag[]              @relation("TopicDraft_tags")
+  userGroups        UserGroup[]        @relation("TopicDraft_userGroups")
+  actions           InternalLink[]     @relation("TopicDraft_actions")
+  documents         Document[]         @relation("TopicDraft_documents")
+  contacts          Contact[]          @relation("TopicDraft_contacts")
+  redirect          Redirect?          @relation("TopicDraft_redirect", fields: [redirectId], references: [id])
+  redirectId        String?            @map("redirect")
+  events            Event[]            @relation("TopicDraft_events")
+  topics            Topic[]            @relation("TopicDraft_topics")
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now()) @updatedAt
+  highlights        Highlight[]        @relation("TopicDraft_highlights")
+  boards            Board[]            @relation("TopicDraft_boards")
+  services          Service[]          @relation("TopicDraft_services")
+  communities       Community[]        @relation("TopicDraft_communities")
+  parks             Park[]             @relation("TopicDraft_parks")
+  trails            Trail[]            @relation("TopicDraft_trails")
+  facilities        Facility[]         @relation("TopicDraft_facilities")
+  orgUnits          OrgUnit[]          @relation("TopicDraft_orgUnits")
+  publicNotices     PublicNotice[]     @relation("TopicDraft_publicNotices")
+  plans             Plan[]             @relation("TopicDraft_plans")
+  assemblyDistricts AssemblyDistrict[] @relation("TopicDraft_assemblyDistricts")
+  publish           String?
 
   @@index([originalId])
   @@index([ownerId])
@@ -1526,7 +1550,8 @@ model Trail {
   contacts                        Contact[]             @relation("Trail_contacts")
   redirect                        Redirect?             @relation("Trail_redirect", fields: [redirectId], references: [id])
   redirectId                      String?               @map("redirect")
-  events                          Event[]               @relation("Trail_events")
+  events                          Event[]               @relation("Event_trails")
+  topics                          Topic[]               @relation("Topic_trails")
   createdAt                       DateTime?             @default(now())
   updatedAt                       DateTime?             @default(now()) @updatedAt
   open                            Boolean               @default(false)
@@ -1552,7 +1577,6 @@ model Trail {
   services                        Service[]             @relation("Service_trails")
   park                            Park?                 @relation("Trail_park", fields: [parkId], references: [id])
   parkId                          String?               @map("park")
-  topics                          Topic[]               @relation("Topic_trails")
   status                          String                @default("unpublished")
   drafts                          TrailDraft[]          @relation("TrailDraft_original")
   makeDrafts                      String?
@@ -1568,6 +1592,8 @@ model Trail {
   from_ServiceDraft_trails        ServiceDraft[]        @relation("ServiceDraft_trails")
   from_TopicVersion_trails        TopicVersion[]        @relation("TopicVersion_trails")
   from_TopicDraft_trails          TopicDraft[]          @relation("TopicDraft_trails")
+  from_EventDraft_trails          EventDraft[]          @relation("EventDraft_trails")
+  from_EventVersion_trails        EventVersion[]        @relation("EventVersion_trails")
 
   @@index([ownerId])
   @@index([addressId])
@@ -1598,6 +1624,7 @@ model TrailVersion {
   redirect           Redirect?      @relation("TrailVersion_redirect", fields: [redirectId], references: [id])
   redirectId         String?        @map("redirect")
   events             Event[]        @relation("TrailVersion_events")
+  topics             Topic[]        @relation("TrailVersion_topics")
   createdAt          DateTime?      @default(now())
   updatedAt          DateTime?      @default(now()) @updatedAt
   open               Boolean        @default(false)
@@ -1623,7 +1650,6 @@ model TrailVersion {
   services           Service[]      @relation("TrailVersion_services")
   park               Park?          @relation("TrailVersion_park", fields: [parkId], references: [id])
   parkId             String?        @map("park")
-  topics             Topic[]        @relation("TrailVersion_topics")
   isLive             Trail?         @relation("Trail_currentVersion")
   republish          String?
 
@@ -1657,6 +1683,7 @@ model TrailDraft {
   redirect           Redirect?      @relation("TrailDraft_redirect", fields: [redirectId], references: [id])
   redirectId         String?        @map("redirect")
   events             Event[]        @relation("TrailDraft_events")
+  topics             Topic[]        @relation("TrailDraft_topics")
   createdAt          DateTime?      @default(now())
   updatedAt          DateTime?      @default(now()) @updatedAt
   open               Boolean        @default(false)
@@ -1682,7 +1709,6 @@ model TrailDraft {
   services           Service[]      @relation("TrailDraft_services")
   park               Park?          @relation("TrailDraft_park", fields: [parkId], references: [id])
   parkId             String?        @map("park")
-  topics             Topic[]        @relation("TrailDraft_topics")
   publish            String?
 
   @@index([originalId])
@@ -1711,7 +1737,8 @@ model Plan {
   contacts                      Contact[]      @relation("Plan_contacts")
   redirect                      Redirect?      @relation("Plan_redirect", fields: [redirectId], references: [id])
   redirectId                    String?        @map("redirect")
-  events                        Event[]        @relation("Plan_events")
+  events                        Event[]        @relation("Event_plans")
+  topics                        Topic[]        @relation("Plan_topics")
   createdAt                     DateTime?      @default(now())
   updatedAt                     DateTime?      @default(now()) @updatedAt
   effort                        ExternalLink?  @relation("Plan_effort", fields: [effortId], references: [id])
@@ -1727,7 +1754,6 @@ model Plan {
   draftDocument                 PlanDocument?  @relation("Plan_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?        @map("draftDocument")
   pastDocuments                 PlanDocument[] @relation("Plan_pastDocuments")
-  topics                        Topic[]        @relation("Plan_topics")
   status                        String         @default("unpublished")
   drafts                        PlanDraft[]    @relation("PlanDraft_original")
   makeDrafts                    String?
@@ -1740,6 +1766,8 @@ model Plan {
   from_PlanVersion_components   PlanVersion[]  @relation("PlanVersion_components")
   from_PlanDraft_parent         PlanDraft[]    @relation("PlanDraft_parent")
   from_PlanDraft_components     PlanDraft[]    @relation("PlanDraft_components")
+  from_EventDraft_plans         EventDraft[]   @relation("EventDraft_plans")
+  from_EventVersion_plans       EventVersion[] @relation("EventVersion_plans")
 
   @@index([ownerId])
   @@index([redirectId])
@@ -1770,6 +1798,7 @@ model PlanVersion {
   redirect                      Redirect?      @relation("PlanVersion_redirect", fields: [redirectId], references: [id])
   redirectId                    String?        @map("redirect")
   events                        Event[]        @relation("PlanVersion_events")
+  topics                        Topic[]        @relation("PlanVersion_topics")
   createdAt                     DateTime?      @default(now())
   updatedAt                     DateTime?      @default(now()) @updatedAt
   effort                        ExternalLink?  @relation("PlanVersion_effort", fields: [effortId], references: [id])
@@ -1785,7 +1814,6 @@ model PlanVersion {
   draftDocument                 PlanDocument?  @relation("PlanVersion_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?        @map("draftDocument")
   pastDocuments                 PlanDocument[] @relation("PlanVersion_pastDocuments")
-  topics                        Topic[]        @relation("PlanVersion_topics")
   isLive                        Plan?          @relation("Plan_currentVersion")
   republish                     String?
 
@@ -1819,6 +1847,7 @@ model PlanDraft {
   redirect                      Redirect?      @relation("PlanDraft_redirect", fields: [redirectId], references: [id])
   redirectId                    String?        @map("redirect")
   events                        Event[]        @relation("PlanDraft_events")
+  topics                        Topic[]        @relation("PlanDraft_topics")
   createdAt                     DateTime?      @default(now())
   updatedAt                     DateTime?      @default(now()) @updatedAt
   effort                        ExternalLink?  @relation("PlanDraft_effort", fields: [effortId], references: [id])
@@ -1834,7 +1863,6 @@ model PlanDraft {
   draftDocument                 PlanDocument?  @relation("PlanDraft_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?        @map("draftDocument")
   pastDocuments                 PlanDocument[] @relation("PlanDraft_pastDocuments")
-  topics                        Topic[]        @relation("PlanDraft_topics")
   publish                       String?
 
   @@index([originalId])
@@ -1893,47 +1921,47 @@ model Event {
   redirect                            Redirect?                 @relation("Event_redirect", fields: [redirectId], references: [id])
   redirectId                          String?                   @map("redirect")
   events                              Event[]                   @relation("Event_events")
+  topics                              Topic[]                   @relation("Event_topics")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   startDate                           DateTime?
   endDate                             DateTime?
+  boards                              Board[]                   @relation("Board_events")
+  services                            Service[]                 @relation("Event_services")
+  communities                         Community[]               @relation("Community_events")
+  parks                               Park[]                    @relation("Event_parks")
+  trails                              Trail[]                   @relation("Event_trails")
+  facilities                          Facility[]                @relation("Event_facilities")
+  orgUnits                            OrgUnit[]                 @relation("Event_orgUnits")
+  publicNotices                       PublicNotice[]            @relation("Event_publicNotices")
+  plans                               Plan[]                    @relation("Event_plans")
+  assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_events")
   status                              String                    @default("unpublished")
   drafts                              EventDraft[]              @relation("EventDraft_original")
   makeDrafts                          String?
   versions                            EventVersion[]            @relation("EventVersion_original")
   currentVersion                      EventVersion?             @relation("Event_currentVersion", fields: [currentVersionId], references: [id])
   currentVersionId                    String?                   @unique @map("currentVersion")
-  from_AssemblyDistrict_events        AssemblyDistrict[]        @relation("AssemblyDistrict_events")
   from_AssemblyDistrictVersion_events AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_events")
   from_AssemblyDistrictDraft_events   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_events")
-  from_Board_events                   Board[]                   @relation("Board_events")
   from_BoardVersion_events            BoardVersion[]            @relation("BoardVersion_events")
   from_BoardDraft_events              BoardDraft[]              @relation("BoardDraft_events")
-  from_Community_events               Community[]               @relation("Community_events")
   from_CommunityVersion_events        CommunityVersion[]        @relation("CommunityVersion_events")
   from_CommunityDraft_events          CommunityDraft[]          @relation("CommunityDraft_events")
-  from_Facility_events                Facility[]                @relation("Facility_events")
   from_FacilityVersion_events         FacilityVersion[]         @relation("FacilityVersion_events")
   from_FacilityDraft_events           FacilityDraft[]           @relation("FacilityDraft_events")
-  from_OrgUnit_events                 OrgUnit[]                 @relation("OrgUnit_events")
   from_OrgUnitVersion_events          OrgUnitVersion[]          @relation("OrgUnitVersion_events")
   from_OrgUnitDraft_events            OrgUnitDraft[]            @relation("OrgUnitDraft_events")
-  from_Park_events                    Park[]                    @relation("Park_events")
   from_ParkVersion_events             ParkVersion[]             @relation("ParkVersion_events")
   from_ParkDraft_events               ParkDraft[]               @relation("ParkDraft_events")
-  from_PublicNotice_events            PublicNotice[]            @relation("PublicNotice_events")
   from_PublicNoticeVersion_events     PublicNoticeVersion[]     @relation("PublicNoticeVersion_events")
   from_PublicNoticeDraft_events       PublicNoticeDraft[]       @relation("PublicNoticeDraft_events")
-  from_Service_events                 Service[]                 @relation("Service_events")
   from_ServiceVersion_events          ServiceVersion[]          @relation("ServiceVersion_events")
   from_ServiceDraft_events            ServiceDraft[]            @relation("ServiceDraft_events")
-  from_Topic_events                   Topic[]                   @relation("Topic_events")
   from_TopicVersion_events            TopicVersion[]            @relation("TopicVersion_events")
   from_TopicDraft_events              TopicDraft[]              @relation("TopicDraft_events")
-  from_Trail_events                   Trail[]                   @relation("Trail_events")
   from_TrailVersion_events            TrailVersion[]            @relation("TrailVersion_events")
   from_TrailDraft_events              TrailDraft[]              @relation("TrailDraft_events")
-  from_Plan_events                    Plan[]                    @relation("Plan_events")
   from_PlanVersion_events             PlanVersion[]             @relation("PlanVersion_events")
   from_PlanDraft_events               PlanDraft[]               @relation("PlanDraft_events")
   from_Event_events                   Event[]                   @relation("Event_events")
@@ -1945,31 +1973,42 @@ model Event {
 }
 
 model EventDraft {
-  id          String         @id @default(cuid())
-  original    Event?         @relation("EventDraft_original", fields: [originalId], references: [id])
-  originalId  String?        @map("original")
-  heroImage   String?
-  title       String         @default("")
-  description String         @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  owner       User?          @relation("EventDraft_owner", fields: [ownerId], references: [id])
-  ownerId     String?        @map("owner")
-  body        String?
-  tags        Tag[]          @relation("EventDraft_tags")
-  userGroups  UserGroup[]    @relation("EventDraft_userGroups")
-  actions     InternalLink[] @relation("EventDraft_actions")
-  documents   Document[]     @relation("EventDraft_documents")
-  contacts    Contact[]      @relation("EventDraft_contacts")
-  redirect    Redirect?      @relation("EventDraft_redirect", fields: [redirectId], references: [id])
-  redirectId  String?        @map("redirect")
-  events      Event[]        @relation("EventDraft_events")
-  createdAt   DateTime?      @default(now())
-  updatedAt   DateTime?      @default(now()) @updatedAt
-  startDate   DateTime?
-  endDate     DateTime?
-  publish     String?
+  id                String             @id @default(cuid())
+  original          Event?             @relation("EventDraft_original", fields: [originalId], references: [id])
+  originalId        String?            @map("original")
+  heroImage         String?
+  title             String             @default("")
+  description       String             @default("")
+  publishAt         DateTime?
+  unpublishAt       DateTime?
+  reviewDate        DateTime?
+  owner             User?              @relation("EventDraft_owner", fields: [ownerId], references: [id])
+  ownerId           String?            @map("owner")
+  body              String?
+  tags              Tag[]              @relation("EventDraft_tags")
+  userGroups        UserGroup[]        @relation("EventDraft_userGroups")
+  actions           InternalLink[]     @relation("EventDraft_actions")
+  documents         Document[]         @relation("EventDraft_documents")
+  contacts          Contact[]          @relation("EventDraft_contacts")
+  redirect          Redirect?          @relation("EventDraft_redirect", fields: [redirectId], references: [id])
+  redirectId        String?            @map("redirect")
+  events            Event[]            @relation("EventDraft_events")
+  topics            Topic[]            @relation("EventDraft_topics")
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now()) @updatedAt
+  startDate         DateTime?
+  endDate           DateTime?
+  boards            Board[]            @relation("EventDraft_boards")
+  services          Service[]          @relation("EventDraft_services")
+  communities       Community[]        @relation("EventDraft_communities")
+  parks             Park[]             @relation("EventDraft_parks")
+  trails            Trail[]            @relation("EventDraft_trails")
+  facilities        Facility[]         @relation("EventDraft_facilities")
+  orgUnits          OrgUnit[]          @relation("EventDraft_orgUnits")
+  publicNotices     PublicNotice[]     @relation("EventDraft_publicNotices")
+  plans             Plan[]             @relation("EventDraft_plans")
+  assemblyDistricts AssemblyDistrict[] @relation("EventDraft_assemblyDistricts")
+  publish           String?
 
   @@index([originalId])
   @@index([ownerId])
@@ -1977,32 +2016,43 @@ model EventDraft {
 }
 
 model EventVersion {
-  id          String         @id @default(cuid())
-  original    Event?         @relation("EventVersion_original", fields: [originalId], references: [id])
-  originalId  String?        @map("original")
-  heroImage   String?
-  title       String         @default("")
-  description String         @default("")
-  publishAt   DateTime?
-  unpublishAt DateTime?
-  reviewDate  DateTime?
-  owner       User?          @relation("EventVersion_owner", fields: [ownerId], references: [id])
-  ownerId     String?        @map("owner")
-  body        String?
-  tags        Tag[]          @relation("EventVersion_tags")
-  userGroups  UserGroup[]    @relation("EventVersion_userGroups")
-  actions     InternalLink[] @relation("EventVersion_actions")
-  documents   Document[]     @relation("EventVersion_documents")
-  contacts    Contact[]      @relation("EventVersion_contacts")
-  redirect    Redirect?      @relation("EventVersion_redirect", fields: [redirectId], references: [id])
-  redirectId  String?        @map("redirect")
-  events      Event[]        @relation("EventVersion_events")
-  createdAt   DateTime?      @default(now())
-  updatedAt   DateTime?      @default(now()) @updatedAt
-  startDate   DateTime?
-  endDate     DateTime?
-  isLive      Event?         @relation("Event_currentVersion")
-  republish   String?
+  id                String             @id @default(cuid())
+  original          Event?             @relation("EventVersion_original", fields: [originalId], references: [id])
+  originalId        String?            @map("original")
+  heroImage         String?
+  title             String             @default("")
+  description       String             @default("")
+  publishAt         DateTime?
+  unpublishAt       DateTime?
+  reviewDate        DateTime?
+  owner             User?              @relation("EventVersion_owner", fields: [ownerId], references: [id])
+  ownerId           String?            @map("owner")
+  body              String?
+  tags              Tag[]              @relation("EventVersion_tags")
+  userGroups        UserGroup[]        @relation("EventVersion_userGroups")
+  actions           InternalLink[]     @relation("EventVersion_actions")
+  documents         Document[]         @relation("EventVersion_documents")
+  contacts          Contact[]          @relation("EventVersion_contacts")
+  redirect          Redirect?          @relation("EventVersion_redirect", fields: [redirectId], references: [id])
+  redirectId        String?            @map("redirect")
+  events            Event[]            @relation("EventVersion_events")
+  topics            Topic[]            @relation("EventVersion_topics")
+  createdAt         DateTime?          @default(now())
+  updatedAt         DateTime?          @default(now()) @updatedAt
+  startDate         DateTime?
+  endDate           DateTime?
+  boards            Board[]            @relation("EventVersion_boards")
+  services          Service[]          @relation("EventVersion_services")
+  communities       Community[]        @relation("EventVersion_communities")
+  parks             Park[]             @relation("EventVersion_parks")
+  trails            Trail[]            @relation("EventVersion_trails")
+  facilities        Facility[]         @relation("EventVersion_facilities")
+  orgUnits          OrgUnit[]          @relation("EventVersion_orgUnits")
+  publicNotices     PublicNotice[]     @relation("EventVersion_publicNotices")
+  plans             Plan[]             @relation("EventVersion_plans")
+  assemblyDistricts AssemblyDistrict[] @relation("EventVersion_assemblyDistricts")
+  isLive            Event?             @relation("Event_currentVersion")
+  republish         String?
 
   @@index([originalId])
   @@index([ownerId])

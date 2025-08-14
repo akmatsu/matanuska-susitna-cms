@@ -88,6 +88,7 @@ const BoardPage: ListConfig<any> = list({
     }),
     contacts: contacts(),
     // newContacts: contactRelationshipMany(),
+
     ...timestamps,
   },
 });

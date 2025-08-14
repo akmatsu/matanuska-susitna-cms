@@ -107,11 +107,6 @@ const {
         },
       }),
 
-      topics: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.services' : 'Topic',
-        many: true,
-      }),
-
       editorNotes: text({
         ui: {
           displayMode: 'textarea',

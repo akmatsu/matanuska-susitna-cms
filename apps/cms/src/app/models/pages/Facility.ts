@@ -76,10 +76,6 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.facilities' : 'Park',
         many: false,
       }),
-      topics: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.facilities' : 'Topic',
-        many: true,
-      }),
     };
   },
   {

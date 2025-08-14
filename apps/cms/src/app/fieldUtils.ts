@@ -615,7 +615,23 @@ export function basePage(
     }),
 
     events: relationship({
-      ref: 'Event',
+      ref:
+        listNamePlural !== 'Events'
+          ? !opts?.isDraft && !opts?.isVersion
+            ? `Event.${v.camelCase(listNamePlural)}`
+            : 'Event'
+          : 'Event',
+
+      many: true,
+    }),
+
+    topics: relationship({
+      ref:
+        listNamePlural !== 'Topics'
+          ? !opts?.isDraft && !opts?.isVersion
+            ? `Topic.${v.camelCase(listNamePlural)}`
+            : 'Topic'
+          : 'Topic',
       many: true,
     }),
 

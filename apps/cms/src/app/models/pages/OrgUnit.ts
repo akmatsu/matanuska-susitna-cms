@@ -39,10 +39,6 @@ const {
           !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.children' : 'OrgUnit',
         many: false,
       }),
-      topics: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Topic.orgUnits' : 'Topic',
-        many: true,
-      }),
     };
   },
   {

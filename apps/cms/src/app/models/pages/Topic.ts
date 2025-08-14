@@ -11,6 +11,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
+import AssemblyDistrict from './AssemblyDistrict';
 
 const {
   Main: Topic,
@@ -53,14 +54,6 @@ const {
         many: true,
       }),
 
-      districts: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'AssemblyDistrict.topics'
-            : 'AssemblyDistrict',
-        many: true,
-      }),
-
       parks: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.topics' : 'Park',
         many: true,
@@ -92,6 +85,14 @@ const {
 
       plans: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.topics' : 'Plan',
+        many: true,
+      }),
+
+      assemblyDistricts: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'AssemblyDistrict.topics'
+            : 'AssemblyDistrict',
         many: true,
       }),
     };

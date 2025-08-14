@@ -82,11 +82,7 @@ const {
         ref: 'AssemblyDistrict',
         many: true,
       }),
-      topics: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion ? 'Topic.publicNotices' : 'Topic',
-        many: true,
-      }),
+
       boards: relationship({
         ref: 'Board',
         many: true,
