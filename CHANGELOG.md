@@ -1,3 +1,11 @@
+# [0.17.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.16.0...v0.17.0) (2025-08-14)
+
+
+### Features
+
+* added topics and events to all page types ([9082e66](https://github.com/akmatsu/matanuska-susitna-cms/commit/9082e662b9464ef0980c8ecb59c19dc4f6a6e85e))
+* expanded basePage, basePageWithSlug and added BasePageWithActions ([774cdec](https://github.com/akmatsu/matanuska-susitna-cms/commit/774cdec8edb438a17358a0219f3b2da055ba166a))
+
 # [0.16.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.15.0...v0.16.0) (2025-08-12)
 
 
