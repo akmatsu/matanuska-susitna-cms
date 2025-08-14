@@ -46,41 +46,144 @@ export const graphqlExtendTypeDefs = gql`
     description: String
     body: String
     heroImage: String
+    createdAt: DateTime
+    updatedAt: DateTime
+    contacts(
+      where: ContactWhereInput! = {}
+      orderBy: [ContactOrderByInput!]! = []
+      take: Int! = 100
+      skip: Int! = 0
+      cursor: ContactWhereUniqueInput
+    ): [Contact!]
+    contactsCount(where: ContactWhereInput! = {}): Int
+    owner: User
+    documents(
+      where: DocumentWhereInput! = {}
+      orderBy: [DocumentOrderByInput!]! = []
+      take: Int! = 100
+      skip: Int! = 0
+      cursor: DocumentWhereUniqueInput
+    ): [Document!]
+    documentsCount(where: DocumentWhereInput! = {}): Int
   }
 
-  interface BasePageWithSlug {
+  interface BasePageWithSlug implements BasePage {
     slug: String
     id: ID!
     title: String
     description: String
     body: String
     heroImage: String
+    redirect: Redirect
+    createdAt: DateTime
+    updatedAt: DateTime
+    events(
+      where: EventWhereInput! = {}
+      orderBy: [EventOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: EventWhereUniqueInput
+    ): [Event!]
+    eventsCount(where: EventWhereInput! = {}): Int
+    contacts(
+      where: ContactWhereInput! = {}
+      orderBy: [ContactOrderByInput!]! = []
+      take: Int! = 100
+      skip: Int! = 0
+      cursor: ContactWhereUniqueInput
+    ): [Contact!]
+    contactsCount(where: ContactWhereInput! = {}): Int
+    publishAt: DateTime
+    unpublishAt: DateTime
+    reviewDate: DateTime
+    owner: User
+    tags(
+      where: TagWhereInput! = {}
+      orderBy: [TagOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: TagWhereUniqueInput
+    ): [Tag!]
+    tagsCount(where: TagWhereInput! = {}): Int
+    status: String
+    documents(
+      where: DocumentWhereInput! = {}
+      orderBy: [DocumentOrderByInput!]! = []
+      take: Int! = 100
+      skip: Int! = 0
+      cursor: DocumentWhereUniqueInput
+    ): [Document!]
+    documentsCount(where: DocumentWhereInput! = {}): Int
   }
 
-  extend type Topic implements BasePage
-  extend type AssemblyDistrict implements BasePage
-  extend type Community implements BasePage
-  extend type Board implements BasePage
-  extend type PublicNotice implements BasePage
-  extend type Park implements BasePage
-  extend type Trail implements BasePage
-  extend type Service implements BasePage
-  extend type Facility implements BasePage
-  extend type OrgUnit implements BasePage
-  extend type BoardPage implements BasePage
-  extend type Plan implements BasePage
-  extend type Event implements BasePage
+  interface BasePageWithActions implements BasePage & BasePageWithSlug {
+    slug: String
+    id: ID!
+    title: String
+    description: String
+    body: String
+    heroImage: String
+    redirect: Redirect
+    createdAt: DateTime
+    updatedAt: DateTime
+    events(
+      where: EventWhereInput! = {}
+      orderBy: [EventOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: EventWhereUniqueInput
+    ): [Event!]
+    eventsCount(where: EventWhereInput! = {}): Int
+    contacts(
+      where: ContactWhereInput! = {}
+      orderBy: [ContactOrderByInput!]! = []
+      take: Int! = 100
+      skip: Int! = 0
+      cursor: ContactWhereUniqueInput
+    ): [Contact!]
+    contactsCount(where: ContactWhereInput! = {}): Int
+    publishAt: DateTime
+    unpublishAt: DateTime
+    reviewDate: DateTime
+    owner: User
+    tags(
+      where: TagWhereInput! = {}
+      orderBy: [TagOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: TagWhereUniqueInput
+    ): [Tag!]
+    tagsCount(where: TagWhereInput! = {}): Int
+    status: String
+    documents(
+      where: DocumentWhereInput! = {}
+      orderBy: [DocumentOrderByInput!]! = []
+      take: Int! = 100
+      skip: Int! = 0
+      cursor: DocumentWhereUniqueInput
+    ): [Document!]
+    documentsCount(where: DocumentWhereInput! = {}): Int
+    actions(
+      where: InternalLinkWhereInput! = {}
+      orderBy: [InternalLinkOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: InternalLinkWhereUniqueInput
+    ): [InternalLink!]
+    actionsCount(where: InternalLinkWhereInput! = {}): Int
+  }
 
-  extend type Topic implements BasePageWithSlug
-  extend type AssemblyDistrict implements BasePageWithSlug
-  extend type Community implements BasePageWithSlug
-  extend type Board implements BasePageWithSlug
-  extend type PublicNotice implements BasePageWithSlug
-  extend type Park implements BasePageWithSlug
-  extend type Trail implements BasePageWithSlug
-  extend type Service implements BasePageWithSlug
-  extend type Facility implements BasePageWithSlug
-  extend type OrgUnit implements BasePageWithSlug
-  extend type Plan implements BasePageWithSlug
-  extend type Event implements BasePageWithSlug
+  extend type BoardPage implements BasePage
+  extend type Service implements BasePageWithSlug & BasePage
+  extend type Topic implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type AssemblyDistrict implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type Community implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type Board implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type Park implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type Trail implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type Facility implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type Plan implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type Event implements BasePageWithSlug & BasePage & BasePageWithActions
 `;
