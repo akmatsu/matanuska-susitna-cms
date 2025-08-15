@@ -51,14 +51,6 @@ const Event = DraftAndVersionsFactory(
         many: true,
       }),
 
-      publicNotices: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'PublicNotice.events'
-            : 'PublicNotice',
-        many: true,
-      }),
-
       plans: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.events' : 'Plan',
         many: true,

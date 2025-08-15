@@ -67,6 +67,11 @@ const {
         ref: opts?.isDraft || opts?.isVersion ? 'Park' : 'Park.trails',
         many: false,
       }),
+      communities: relationship({
+        ref:
+          opts?.isDraft || opts?.isVersion ? 'Community' : 'Community.trails',
+        many: false,
+      }),
     };
   },
   {

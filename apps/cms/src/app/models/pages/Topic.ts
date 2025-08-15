@@ -74,14 +74,6 @@ const {
         many: true,
       }),
 
-      publicNotices: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'PublicNotice.topics'
-            : 'PublicNotice',
-        many: true,
-      }),
-
       plans: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.topics' : 'Plan',
         many: true,

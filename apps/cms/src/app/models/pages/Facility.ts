@@ -76,10 +76,17 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.facilities' : 'Park',
         many: false,
       }),
+      communities: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'Community.facilities'
+            : 'Community',
+        many: false,
+      }),
     };
   },
   {
-    query: `${basePageQuery} services {id} park {id} address {id} hours {id} actions {id} documents {id}`,
+    query: `${basePageQuery} services {id} park {id} address {id} hours {id} actions {id} documents {id} communities {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Facility'),
@@ -92,7 +99,7 @@ const {
       async afterOperation(args) {
         await typesenseUpsert(
           'facility',
-          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title}',
+          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title} community {title}',
           args,
         );
       },

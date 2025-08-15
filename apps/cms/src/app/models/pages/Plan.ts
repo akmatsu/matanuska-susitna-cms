@@ -1,6 +1,11 @@
 import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import { basePage, documentRelationship } from '../../fieldUtils';
+import {
+  basePage,
+  documentRelationship,
+  typesenseDelete,
+  typesenseUpsert,
+} from '../../fieldUtils';
 import { group, list, ListConfig } from '@keystone-6/core';
 import { filterByPubStatus, generalOperationAccess } from '../../access';
 
@@ -265,6 +270,18 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
     mainAccess: {
       operation: generalOperationAccess,
       filter: filterByPubStatus,
+    },
+    mainHooks: {
+      async beforeOperation(args) {
+        await typesenseDelete(args);
+      },
+      async afterOperation(args) {
+        await typesenseUpsert(
+          'plan',
+          'id title slug description body publishAt tags {name} orgUnits {title} communities {title} contacts {name}',
+          args,
+        );
+      },
     },
   },
 );
