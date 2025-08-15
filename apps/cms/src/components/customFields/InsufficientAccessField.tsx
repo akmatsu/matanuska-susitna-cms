@@ -1,12 +1,6 @@
-import { CellContainer } from '@keystone-6/core/admin-ui/components';
-import {
-  CellComponent,
-  FieldControllerConfig,
-  FieldProps,
-} from '@keystone-6/core/types';
+import { FieldControllerConfig, FieldProps } from '@keystone-6/core/types';
 import { FieldContainer } from '@keystone-ui/fields';
 import Link from 'next/link';
-import { ComponentProps } from 'react';
 
 export function Field({ field }: FieldProps<typeof controller>) {
   return (
