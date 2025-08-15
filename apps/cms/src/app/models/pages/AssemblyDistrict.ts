@@ -146,7 +146,7 @@ const {
       async afterOperation(args) {
         await typesenseUpsert(
           'assemblyDistrict',
-          'id title description body slug liveUrl publishAt tags {name}',
+          'id title description body slug liveUrl publishAt tags {name} communities {title}',
           args,
         );
       },

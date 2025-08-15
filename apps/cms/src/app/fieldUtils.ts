@@ -444,7 +444,7 @@ export type BasePageOptions = {
 };
 
 export const basePageQuery =
-  'id heroImage title description body tags { id } userGroups { id } contacts { id }';
+  'id heroImage title description body tags { id } userGroups { id } contacts { id } events {id}';
 export function basePage(
   listNamePlural: string,
   opts?: BasePageOptions,
@@ -633,6 +633,16 @@ export function basePage(
             ? `Topic.${v.camelCase(listNamePlural)}`
             : 'Topic'
           : 'Topic',
+      many: true,
+    }),
+
+    publicNotices: relationship({
+      ref:
+        listNamePlural !== 'PublicNotices'
+          ? !opts?.isDraft && !opts?.isVersion
+            ? `PublicNotice.${v.camelCase(listNamePlural)}`
+            : 'PublicNotice'
+          : 'PublicNotice',
       many: true,
     }),
 

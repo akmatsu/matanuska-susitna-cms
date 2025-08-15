@@ -7,6 +7,7 @@ import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
+import PublicNotice from './PublicNotice';
 
 const {
   Main: Community,
@@ -39,6 +40,30 @@ const {
           !opts?.isDraft && !opts?.isVersion
             ? `Board.${lowercaseFirstLetter(listNamePlural)}`
             : 'Board',
+        many: true,
+      }),
+
+      facilities: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? `Facility.${lowercaseFirstLetter(listNamePlural)}`
+            : 'Facility',
+        many: true,
+      }),
+
+      parks: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? `Park.${lowercaseFirstLetter(listNamePlural)}`
+            : 'Park',
+        many: true,
+      }),
+
+      trails: relationship({
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? `Trail.${lowercaseFirstLetter(listNamePlural)}`
+            : 'Trail',
         many: true,
       }),
     };

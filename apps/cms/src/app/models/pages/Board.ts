@@ -153,7 +153,7 @@ const {
       async afterOperation(args) {
         await typesenseUpsert(
           'board',
-          'id title description body slug publishAt tags {name} type',
+          'id title description body slug publishAt tags {name} type communities {title}',
           args,
         );
       },

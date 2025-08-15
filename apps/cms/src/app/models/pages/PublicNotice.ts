@@ -55,36 +55,56 @@ const {
         },
       }),
       parks: relationship({
-        ref: 'Park',
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Park.publicNotices' : 'Park',
         many: true,
       }),
       services: relationship({
-        ref: 'Service',
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'Service.publicNotices'
+            : 'Service',
         many: true,
       }),
       orgUnits: relationship({
-        ref: 'OrgUnit',
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'OrgUnit.publicNotices'
+            : 'OrgUnit',
         many: true,
       }),
       facilities: relationship({
-        ref: 'Facility',
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'Facility.publicNotices'
+            : 'Facility',
         many: true,
       }),
       trails: relationship({
-        ref: 'Trail',
+        ref:
+          !opts?.isDraft && !opts?.isVersion ? 'Trail.publicNotices' : 'Trail',
         many: true,
       }),
       communities: relationship({
-        ref: 'Community',
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'Community.publicNotices'
+            : 'Community',
         many: true,
       }),
       assemblyDistricts: relationship({
-        ref: 'AssemblyDistrict',
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'AssemblyDistrict.publicNotices'
+            : 'AssemblyDistrict',
         many: true,
       }),
-
       boards: relationship({
-        ref: 'Board',
+        ref:
+          !opts?.isDraft && !opts?.isVersion ? 'Board.publicNotices' : 'Board',
+        many: true,
+      }),
+      plans: relationship({
+        ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.publicNotices' : 'Plan',
         many: true,
       }),
     };
