@@ -1,8 +1,8 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { elevatedOperationAccess } from '../../access';
 import { relationship, text } from '@keystone-6/core/fields';
 
-export const Redirect: ListConfig<any> = list({
+export const Redirect = list({
   access: {
     operation: elevatedOperationAccess,
   },

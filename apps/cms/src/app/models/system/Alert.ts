@@ -1,4 +1,4 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { timestamps } from '../../fieldUtils';
 import { select, text } from '@keystone-6/core/fields';
 import { customText } from '../../../components/customFields/Markdown';
@@ -6,7 +6,7 @@ import { isContentManager } from '../../access/roles';
 import { elevatedOperationAccess } from '../../access';
 import { createAndSendBulletin } from '../../../utils/emailUtils';
 
-export const Alert: ListConfig<any> = list({
+export const Alert = list({
   access: {
     operation: elevatedOperationAccess,
   },

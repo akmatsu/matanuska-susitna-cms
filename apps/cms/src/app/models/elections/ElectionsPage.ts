@@ -1,4 +1,4 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import {
   generalOperationAccess,
   isElectionUser,
@@ -14,7 +14,7 @@ import {
 import { customText } from '../../../components/customFields/Markdown';
 import { integer, relationship, text } from '@keystone-6/core/fields';
 
-export const EarlyVotingLocation: ListConfig<any> = list({
+export const EarlyVotingLocation = list({
   access: {
     operation: generalOperationAccess,
   },
@@ -72,7 +72,7 @@ export const EarlyVotingLocation: ListConfig<any> = list({
   },
 });
 
-const ElectionsPage: ListConfig<any> = list({
+const ElectionsPage = list({
   access: {
     operation: {
       query: () => true,

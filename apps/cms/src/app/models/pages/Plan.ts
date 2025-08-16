@@ -1,17 +1,29 @@
 import { integer, relationship, select, text } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 import {
   basePage,
+  cardsUi,
   documentRelationship,
+  sidebar,
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
-import { group, list, ListConfig } from '@keystone-6/core';
+import { group, list } from '@keystone-6/core';
 import { filterByPubStatus, generalOperationAccess } from '../../access';
+import { planDocumentFieldHooks } from './plan/planDocumentFieldHooks';
 
 const planListName = 'Plan';
+const PLAN_TYPES = [
+  { label: 'Legislative', value: 'legislative' },
+  { label: 'Strategic', value: 'strategic' },
+] as const;
 
-const PlanCode: ListConfig<any> = list({
+type PlanType = (typeof PLAN_TYPES)[number]['value'];
+
+const PlanCode = list({
   access: {
     operation: generalOperationAccess,
   },
@@ -31,7 +43,7 @@ const PlanCode: ListConfig<any> = list({
   },
 });
 
-const PlanDocument: ListConfig<any> = list({
+const PlanDocument = list({
   access: {
     operation: generalOperationAccess,
   },
@@ -66,15 +78,8 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
             ref: 'ExternalLink',
             ui: {
               description:
-                'A link to website for this plan or an effort to update this plan.',
-              displayMode: 'cards',
-              cardFields: ['label', 'url'],
-              inlineCreate: {
-                fields: ['label', 'url'],
-              },
-              inlineEdit: {
-                fields: ['label', 'url'],
-              },
+                'A link to website for this plan or an effort to update this plan',
+              ...cardsUi(['label', 'url']),
             },
           }),
           autoRedirectToExternalWebsite: select({
@@ -95,57 +100,35 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
           }),
         },
       }),
+
       ...group({
         label: 'Plan relationships',
         description: 'Any relationships this plan has with other plans.',
         fields: {
-          parent: relationship({
-            ref:
-              opts?.isDraft || opts?.isVersion
-                ? planListName
-                : `${planListName}.components`,
+          parent: relationshipController({
+            listName: 'components',
+            ref: planListName,
           }),
-          components: relationship({
-            ref:
-              opts?.isDraft || opts?.isVersion
-                ? planListName
-                : `${planListName}.parent`,
+
+          components: relationshipController({
+            listName: 'components',
+            ref: planListName,
             many: true,
           }),
         },
       }),
+
       type: select({
-        options: [
-          { label: 'Legislative', value: 'legislative' },
-          { label: 'Strategic', value: 'strategic' },
-        ],
-        validation: {
-          isRequired: true,
-        },
-        defaultValue: 'legislative',
-        ui: {
-          displayMode: 'segmented-control',
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-        },
+        options: PLAN_TYPES,
+        validation: { isRequired: true },
+        defaultValue: 'legislative' as PlanType,
+        ui: { displayMode: 'segmented-control', ...sidebar },
       }),
+
       code: relationship({
         ref: 'PlanCode',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['code'],
-          inlineCreate: {
-            fields: ['code'],
-          },
-          inlineEdit: {
-            fields: ['code'],
-          },
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-        },
+        ui: { ...cardsUi(['code']), ...sidebar },
       }),
 
       ...group({
@@ -156,42 +139,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
             ui: {
               description: 'The current legislative document for this plan',
             },
-            hooks: {
-              resolveInput({ resolvedData, fieldKey, operation, item }) {
-                if (operation === 'update') {
-                  const pastConnect = resolvedData.pastDocuments?.connect;
-                  const draftConnect = resolvedData.draftDocument?.connect;
-
-                  if (
-                    draftConnect?.id &&
-                    draftConnect.id === item.currentDocumentId
-                  ) {
-                    return {
-                      disconnect: true,
-                    };
-                  }
-
-                  if (Array.isArray(pastConnect)) {
-                    for (let i = 0, l = pastConnect.length; i < l; i++) {
-                      const id = pastConnect[i]?.id;
-                      if (id === item.currentDocumentId) {
-                        return {
-                          disconnect: true,
-                        };
-                      }
-                    }
-                  } else if (
-                    pastConnect?.id &&
-                    pastConnect.id === item.currentDocumentId
-                  ) {
-                    return {
-                      disconnect: true,
-                    };
-                  }
-                }
-                return resolvedData[fieldKey];
-              },
-            },
+            hooks: planDocumentFieldHooks.currentDocument,
           }),
           draftDocument: relationship({
             ref: 'PlanDocument',
@@ -199,22 +147,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
               description:
                 'A draft of a new version of the legislative document',
             },
-            hooks: {
-              resolveInput({ resolvedData, fieldKey, operation, item }) {
-                if (operation === 'update') {
-                  if (
-                    item.draftDocumentId ===
-                    resolvedData.currentDocument?.connect?.id
-                  ) {
-                    return {
-                      disconnect: true,
-                    };
-                  }
-                }
-
-                return resolvedData[fieldKey];
-              },
-            },
+            hooks: planDocumentFieldHooks.draftDocument,
           }),
           pastDocuments: relationship({
             ref: 'PlanDocument',
@@ -222,41 +155,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
             ui: {
               description: 'Past legislative documents for this plan',
             },
-            hooks: {
-              resolveInput({ operation, fieldKey, item, resolvedData }) {
-                if (operation === 'update') {
-                  const connectCurrentId =
-                    resolvedData.currentDocument?.connect?.id;
-                  const connectDraftId =
-                    resolvedData.draftDocument?.connect?.id;
-                  const disconnect = [
-                    connectCurrentId && {
-                      id: connectCurrentId,
-                    },
-                    connectDraftId && {
-                      id: connectDraftId,
-                    },
-                  ].filter(Boolean);
-
-                  const connect = [
-                    resolvedData.currentDocument?.connect?.id &&
-                      item.currentDocumentId &&
-                      item.currentDocumentId !==
-                        resolvedData.currentDocument?.connect?.id && {
-                        id: item.currentDocumentId,
-                      },
-                  ].filter(Boolean);
-
-                  if (disconnect.length > 0 || connect.length > 0) {
-                    return {
-                      ...(disconnect.length > 0 && { disconnect }),
-                      ...(connect.length > 0 && { connect }),
-                    };
-                  }
-                }
-                return resolvedData[fieldKey];
-              },
-            },
+            hooks: planDocumentFieldHooks.pastDocuments,
           }),
         },
       }),

@@ -1,10 +1,10 @@
-import { group, list, ListConfig } from '@keystone-6/core';
+import { group, list } from '@keystone-6/core';
 import { timestamps, titleAndDescription } from '../../fieldUtils';
 import { elevatedOperationAccess, isContentManager } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import { relationship } from '@keystone-6/core/fields';
 
-const HomePage: ListConfig<any> = list({
+const HomePage = list({
   isSingleton: true,
   access: {
     operation: elevatedOperationAccess,

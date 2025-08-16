@@ -1,4 +1,4 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { integer, relationship, text } from '@keystone-6/core/fields';
 import { generalOperationAccess } from '../../access';
 import { contactRelationship } from '../../fieldUtils';
@@ -7,7 +7,7 @@ const phoneNumberRegex =
   /^(\(\d{3}\)\s\d{3}-\d{4}|\d{3}-\d{3}-\d{4}|\d{3}\.\d{3}\.\d{4})$/;
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const ContactListItem: ListConfig<any> = list({
+export const ContactListItem = list({
   access: {
     operation: generalOperationAccess,
   },
@@ -36,7 +36,7 @@ export const ContactListItem: ListConfig<any> = list({
   },
 });
 
-export const Contact: ListConfig<any> = list({
+export const Contact = list({
   access: {
     operation: generalOperationAccess,
   },

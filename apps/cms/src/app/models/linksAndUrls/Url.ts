@@ -1,4 +1,4 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { generalOperationAccess, isContentManager } from '../../access';
 import {
   owner,
@@ -8,7 +8,7 @@ import {
 } from '../../fieldUtils';
 import { select, text } from '@keystone-6/core/fields';
 
-export const Url: ListConfig<any> = list({
+export const Url = list({
   access: {
     operation: generalOperationAccess,
   },
