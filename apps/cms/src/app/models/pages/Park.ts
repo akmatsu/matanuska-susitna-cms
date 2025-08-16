@@ -9,15 +9,19 @@ import {
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
-import { relationship } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
+
+const listName = 'Park';
 
 const {
   Main: Park,
   Version: ParkVersion,
   Draft: ParkDraft,
 } = DraftAndVersionsFactory(
-  'Park',
+  listName,
   (listNamePlural, opts) => {
     return {
       ...basePage(listNamePlural, {
@@ -27,21 +31,28 @@ const {
         actions: true,
         documents: true,
       }),
-      services: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? `Service.parks` : 'Service',
+      services: relationshipController({
+        listName,
+        ref: 'Service',
+        opts,
         many: true,
       }),
-      trails: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Trail.park' : 'Trail',
+      trails: relationshipController({
+        listName,
+        ref: 'Trail',
+        opts,
         many: true,
       }),
-      facilities: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Facility.park' : 'Facility',
+      facilities: relationshipController({
+        listName,
+        ref: 'Facility',
+        opts,
         many: true,
       }),
-      communities: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion ? 'Community.parks' : 'Community',
+      communities: relationshipController({
+        listName,
+        ref: 'Community',
+        opts,
         many: true,
       }),
     };

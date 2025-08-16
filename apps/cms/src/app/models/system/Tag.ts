@@ -1,9 +1,9 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { text } from '@keystone-6/core/fields';
 import { isAdmin } from '../../access/roles';
 import { generalOperationAccess } from '../../access';
 
-export const Tag: ListConfig<any> = list({
+export const Tag = list({
   access: {
     operation: generalOperationAccess,
   },

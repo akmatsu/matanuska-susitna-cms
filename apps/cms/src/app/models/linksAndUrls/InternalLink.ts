@@ -1,11 +1,11 @@
-import { graphql, list, ListConfig } from '@keystone-6/core';
+import { graphql, list } from '@keystone-6/core';
 import { generalOperationAccess, isContentManager } from '../../access';
 import { polymorphicRelationship } from '../../../components/customFields/polymorphicRelationship';
 import { text, virtual } from '@keystone-6/core/fields';
 import { capitalizeFirstLetter } from '../../../utils';
 import { logger } from '../../../configs/logger';
 
-export const InternalLink: ListConfig<any> = list({
+export const InternalLink = list({
   access: {
     operation: generalOperationAccess,
   },

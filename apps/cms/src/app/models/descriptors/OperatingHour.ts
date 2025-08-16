@@ -1,9 +1,9 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { generalOperationAccess } from '../../access';
 import { select } from '@keystone-6/core/fields';
 import { timeField } from '../../../components/customFields/timeField';
 
-export const OperatingHour: ListConfig<any> = list({
+export const OperatingHour = list({
   access: {
     operation: generalOperationAccess,
   },

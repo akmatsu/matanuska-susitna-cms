@@ -1,6 +1,7 @@
 import { BaseFields, graphql, group } from '@keystone-6/core';
 import {
   relationship,
+  RelationshipFieldConfig,
   text,
   timestamp,
   virtual,
@@ -8,6 +9,7 @@ import {
 import {
   BaseItem,
   BaseListTypeInfo,
+  CommonFieldConfig,
   FieldHooks,
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
@@ -30,6 +32,7 @@ import {
 import { logger } from '../configs/logger';
 import v from 'voca';
 import { plural, singular } from 'pluralize';
+import { relationshipController } from './DraftAndVersionsFactory';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -449,6 +452,7 @@ export function basePage(
   listNamePlural: string,
   opts?: BasePageOptions,
 ): BaseFields<any> {
+  const listName = singular(listNamePlural);
   return {
     canEdit: virtual({
       label: 'Insufficient Access',
@@ -558,7 +562,6 @@ export function basePage(
           inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
         },
       }),
-      // newDocuments: documentRelationshipMany(),
     }),
 
     ...(opts?.address && {
@@ -587,7 +590,6 @@ export function basePage(
     }),
 
     contacts: contacts(),
-    // newContacts: contactRelationshipMany(),
     ...(opts?.hours && {
       hours: relationship({
         ref: 'OperatingHour',
@@ -615,35 +617,25 @@ export function basePage(
       },
     }),
 
-    events: relationship({
-      ref:
-        listNamePlural !== 'Events'
-          ? !opts?.isDraft && !opts?.isVersion
-            ? `Event.${v.camelCase(listNamePlural)}`
-            : 'Event'
-          : 'Event',
-
+    events: relationshipController({
+      ref: 'Contact',
+      listName,
+      opts,
       many: true,
     }),
 
-    topics: relationship({
-      ref:
-        listNamePlural !== 'Topics'
-          ? !opts?.isDraft && !opts?.isVersion
-            ? `Topic.${v.camelCase(listNamePlural)}`
-            : 'Topic'
-          : 'Topic',
+    topics: relationshipController({
+      ref: 'Topic',
+      listName,
+      opts,
       many: true,
     }),
 
-    publicNotices: relationship({
-      ref:
-        listNamePlural !== 'PublicNotices'
-          ? !opts?.isDraft && !opts?.isVersion
-            ? `PublicNotice.${v.camelCase(listNamePlural)}`
-            : 'PublicNotice'
-          : 'PublicNotice',
+    publicNotices: relationshipController({
+      ref: 'PublicNotice',
       many: true,
+      listName,
+      opts,
     }),
 
     ...timestamps,
@@ -721,3 +713,16 @@ export async function typesenseDelete({
     }
   }
 }
+
+export function cardsUi<T extends BaseListTypeInfo>(fields: string[]) {
+  return {
+    displayMode: 'cards' as const,
+    cardFields: fields,
+    inlineCreate: { fields },
+    inlineEdit: { fields },
+  } satisfies RelationshipFieldConfig<T>['ui'];
+}
+
+export const sidebar = {
+  itemView: { fieldPosition: 'sidebar' },
+} satisfies CommonFieldConfig<BaseListTypeInfo>['ui'];

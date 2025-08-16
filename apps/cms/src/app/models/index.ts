@@ -1,5 +1,3 @@
-import { type Lists } from '.keystone/types';
-
 // Model imports
 import elections from './elections';
 import users from './users';
@@ -19,4 +17,4 @@ export const lists = {
   ...discriptors,
   ...users,
   ...system,
-} satisfies Lists;
+};

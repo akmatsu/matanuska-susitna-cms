@@ -1,4 +1,3 @@
-import { type Lists } from '.keystone/types';
 import { BaseFields, list, ListConfig } from '@keystone-6/core';
 import { generalOperationAccess } from './access';
 import {
@@ -43,6 +42,27 @@ export type CoreFieldsFunction<TFields extends BaseFields<any>> = (
   listNamePlural: string,
   opts?: BasePageOptions,
 ) => TFields;
+
+export function relationshipController<ListTypeInfo extends BaseListTypeInfo>({
+  ref,
+  listName,
+  opts,
+  ...config
+}: {
+  /** The name of the field on the model you are connect to */
+  listName: string;
+  opts?: BasePageOptions;
+} & RelationshipFieldConfig<ListTypeInfo>) {
+  return relationship({
+    ref:
+      ref !== listName
+        ? !opts?.isDraft && !opts?.isVersion
+          ? `${ref}.${plural(v.camelCase(listName))}`
+          : ref
+        : ref,
+    ...config,
+  });
+}
 
 export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
   listKey: string,
@@ -330,7 +350,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         },
       },
     }),
-  } satisfies Lists;
+  };
 }
 
 async function createVersion(

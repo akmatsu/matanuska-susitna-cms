@@ -1,9 +1,9 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { relationship, text } from '@keystone-6/core/fields';
 import { owner } from '../../fieldUtils';
 import { generalItemAccess, generalOperationAccess } from '../../access';
 
-export const UserGroup: ListConfig<any> = list({
+export const UserGroup = list({
   access: {
     operation: generalOperationAccess,
     item: generalItemAccess('UserGroup'),

@@ -1,8 +1,8 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { generalOperationAccess, isAdmin } from '../../access';
 import { relationship, text } from '@keystone-6/core/fields';
 
-export const ExternalLink: ListConfig<any> = list({
+export const ExternalLink = list({
   access: {
     operation: generalOperationAccess,
   },

@@ -1,8 +1,8 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { isElectionUser, isNotElectionUser } from '../../access';
 import { checkbox, relationship } from '@keystone-6/core/fields';
 
-export const ElectionResult: ListConfig<any> = list({
+export const ElectionResult = list({
   access: {
     operation: {
       query: () => true,

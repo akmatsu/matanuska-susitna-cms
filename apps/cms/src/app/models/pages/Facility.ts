@@ -13,9 +13,9 @@ import {
 import { integer, relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
-import { list, type ListConfig } from '@keystone-6/core';
+import { list, type } from '@keystone-6/core';
 
-export const FacilityListItem: ListConfig<any> = list({
+export const FacilityListItem = list({
   access: {
     operation: generalOperationAccess,
   },

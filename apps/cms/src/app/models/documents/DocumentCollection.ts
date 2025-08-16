@@ -1,4 +1,4 @@
-import { graphql, list, ListConfig } from '@keystone-6/core';
+import { graphql, list } from '@keystone-6/core';
 import { relationship, text, virtual } from '@keystone-6/core/fields';
 import { generalOperationAccess } from '../../access';
 import {
@@ -10,7 +10,7 @@ import {
 } from '../../fieldUtils';
 import { appConfig } from '../../../configs/appConfig';
 
-export const DocumentCollection: ListConfig<any> = list({
+export const DocumentCollection = list({
   access: {
     operation: generalOperationAccess,
   },

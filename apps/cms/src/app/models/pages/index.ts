@@ -1,4 +1,3 @@
-import { type Lists } from '.keystone/types';
 import AssemblyDistrict from './AssemblyDistrict';
 import Board from './Board';
 import Community from './Community';
@@ -26,6 +25,6 @@ const lists = {
   ...Plan,
   ...Event,
   FacilityListItem,
-} satisfies Lists;
+};
 
 export default lists;

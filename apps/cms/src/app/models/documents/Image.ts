@@ -1,10 +1,10 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { generalOperationAccess } from '../../access';
 import { tags, titleAndDescription } from '../../fieldUtils';
 import { image } from '@keystone-6/core/fields';
 import { appConfig } from '../../../configs/appConfig';
 
-export const Image: ListConfig<any> = list({
+export const Image = list({
   access: {
     operation: generalOperationAccess,
   },

@@ -1,10 +1,10 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { file, integer, relationship, text } from '@keystone-6/core/fields';
 import { appConfig } from '../../../configs/appConfig';
 import { generalOperationAccess } from '../../access';
 import { documentRelationship } from '../../fieldUtils';
 
-export const DocumentListItem: ListConfig<any> = list({
+export const DocumentListItem = list({
   access: {
     operation: generalOperationAccess,
   },
@@ -33,7 +33,7 @@ export const DocumentListItem: ListConfig<any> = list({
   },
 });
 
-export const Document: ListConfig<any> = list({
+export const Document = list({
   access: {
     operation: generalOperationAccess,
   },

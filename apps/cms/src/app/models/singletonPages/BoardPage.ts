@@ -1,4 +1,4 @@
-import { list, ListConfig } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 import { elevatedOperationAccess, isContentManager } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import {
@@ -10,7 +10,7 @@ import {
 import { customText } from '../../../components/customFields/Markdown';
 import { relationship } from '@keystone-6/core/fields';
 
-const BoardPage: ListConfig<any> = list({
+const BoardPage = list({
   isSingleton: true,
   access: {
     operation: elevatedOperationAccess,
