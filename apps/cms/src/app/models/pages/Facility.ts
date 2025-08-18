@@ -13,7 +13,7 @@ import {
 import { integer, relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
-import { list, type } from '@keystone-6/core';
+import { list } from '@keystone-6/core';
 
 export const FacilityListItem = list({
   access: {

@@ -6,6 +6,7 @@
     "discriptors",
     "Keymap",
     "milkdown",
-    "prosemirror"
+    "prosemirror",
+    "reindexing"
   ]
 }

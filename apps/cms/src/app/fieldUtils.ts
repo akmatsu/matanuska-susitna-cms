@@ -2,6 +2,7 @@ import { BaseFields, graphql, group } from '@keystone-6/core';
 import {
   relationship,
   RelationshipFieldConfig,
+  select,
   text,
   timestamp,
   virtual,
@@ -618,15 +619,15 @@ export function basePage(
     }),
 
     events: relationshipController({
-      ref: 'Contact',
-      listName,
+      ref: 'Event',
+      listName: listNamePlural,
       opts,
       many: true,
     }),
 
     topics: relationshipController({
       ref: 'Topic',
-      listName,
+      listName: listNamePlural,
       opts,
       many: true,
     }),
@@ -634,7 +635,7 @@ export function basePage(
     publicNotices: relationshipController({
       ref: 'PublicNotice',
       many: true,
-      listName,
+      listName: listNamePlural,
       opts,
     }),
 
@@ -726,3 +727,26 @@ export function cardsUi<T extends BaseListTypeInfo>(fields: string[]) {
 export const sidebar = {
   itemView: { fieldPosition: 'sidebar' },
 } satisfies CommonFieldConfig<BaseListTypeInfo>['ui'];
+
+const TOGGLE_TYPES = [
+  { label: 'Yes', value: 1 },
+  { label: 'No', value: 0 },
+] as const;
+
+type ToggleType = (typeof TOGGLE_TYPES)[number]['value'];
+
+export function switchField() {
+  return select({
+    type: 'integer',
+    options: TOGGLE_TYPES,
+    ui: {
+      description:
+        'Automatically redirect to the external website when this plan is accessed.',
+      displayMode: 'segmented-control',
+    },
+    defaultValue: 0 as ToggleType,
+    validation: {
+      isRequired: true,
+    },
+  });
+}

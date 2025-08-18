@@ -32,7 +32,7 @@ const {
         documents: true,
       }),
       services: relationshipController({
-        listName,
+        listName: listNamePlural,
         ref: 'Service',
         opts,
         many: true,
@@ -50,7 +50,7 @@ const {
         many: true,
       }),
       communities: relationshipController({
-        listName,
+        listName: listNamePlural,
         ref: 'Community',
         opts,
         many: true,
