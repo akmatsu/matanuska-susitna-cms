@@ -66,6 +66,11 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
   },
 ];
 
+export type PageType = {
+  type: string;
+  getItems: (context: KeystoneContext<any>) => Promise<TypeSensePageDocument[]>;
+};
+
 export const PAGE_TYPES = [
   {
     type: 'service',
@@ -159,7 +164,7 @@ export function toSearchableObj(
   type: string,
 ): TypeSensePageDocument {
   return {
-    type: item.type.replace(/_/gi, ' ') || type,
+    type: item?.type?.replace(/_/gi, ' ') || type,
     id: item.id,
     slug: item.slug,
     title: item.title,

@@ -15,7 +15,7 @@ import {
 import { mapDataFields } from '../utils/draftUtils';
 import { publishDraft } from '../components/customFields/publishDraft';
 import { BasePageOptions } from './fieldUtils';
-import { plural } from 'pluralize';
+import { isPlural, plural, singular } from 'pluralize';
 import { deepMerge, lowercaseFirstLetter } from '../utils';
 import { getPublishQueue } from '../queues/redis';
 import { createDrafts } from '../components/customFields/drafts';
@@ -53,11 +53,13 @@ export function relationshipController<ListTypeInfo extends BaseListTypeInfo>({
   listName: string;
   opts?: BasePageOptions;
 } & RelationshipFieldConfig<ListTypeInfo>) {
+  const listNameSingular = isPlural(listName) ? singular(listName) : listName;
+
   return relationship({
     ref:
-      ref !== listName
+      ref !== listNameSingular
         ? !opts?.isDraft && !opts?.isVersion
-          ? `${ref}.${plural(v.camelCase(listName))}`
+          ? `${ref}.${v.camelCase(listName)}`
           : ref
         : ref,
     ...config,

@@ -8,6 +8,7 @@ import {
   cardsUi,
   documentRelationship,
   sidebar,
+  switchField,
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
@@ -82,22 +83,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
               ...cardsUi(['label', 'url']),
             },
           }),
-          autoRedirectToExternalWebsite: select({
-            type: 'integer',
-            options: [
-              { label: 'No', value: 0 },
-              { label: 'Yes', value: 1 },
-            ],
-            ui: {
-              description:
-                'Automatically redirect to the external website when this plan is accessed.',
-              displayMode: 'segmented-control',
-            },
-            defaultValue: 0,
-            validation: {
-              isRequired: true,
-            },
-          }),
+          autoRedirectToExternalWebsite: switchField(),
         },
       }),
 
@@ -108,12 +94,14 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
           parent: relationshipController({
             listName: 'components',
             ref: planListName,
+            opts,
           }),
 
           components: relationshipController({
-            listName: 'components',
+            listName: 'parent',
             ref: planListName,
             many: true,
+            opts,
           }),
         },
       }),
