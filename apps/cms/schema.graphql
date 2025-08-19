@@ -9447,7 +9447,6 @@ enum ImageExtension {
 
 input ImageWhereUniqueInput {
   id: ID
-  title: String
 }
 
 input ImageWhereInput {
