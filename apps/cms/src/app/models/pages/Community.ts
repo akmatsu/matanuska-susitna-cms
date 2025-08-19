@@ -7,7 +7,6 @@ import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
-import PublicNotice from './PublicNotice';
 
 const {
   Main: Community,
