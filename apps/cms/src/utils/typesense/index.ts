@@ -259,6 +259,97 @@ export const PAGE_TYPES = [
       );
     },
   },
+  {
+    type: 'topic',
+    async getItems(context) {
+      const sudoCtx = context.sudo();
+      const data = await sudoCtx.prisma.electionsPage.findMany({
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          howElectionsWork: true,
+          boroughElectionContact: {
+            select: {
+              name: true,
+              title: true,
+            },
+          },
+          earlyVotingLocations: {
+            select: {
+              title: true,
+              address: {
+                select: {
+                  lineOne: true,
+                  lineTwo: true,
+                  title: true,
+                  description: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      return data.map((p) => {
+        const formatted = {
+          ...p,
+          id: `${p.id}-elections`,
+          slug: 'elections',
+          body: `${p.earlyVotingLocations.map((l) => `${l.title} ${l.address?.lineOne} ${l.address?.lineTwo} ${l.address?.title} ${l.address?.description}`).join(', ')}. ${p.howElectionsWork} ${p.boroughElectionContact?.name} ${p.boroughElectionContact?.title}  `,
+        };
+        return toSearchableObj(formatted, 'topic');
+      });
+    },
+  },
+  {
+    type: 'topic',
+    async getItems(context) {
+      const sudoCtx = context.sudo();
+      const data = await sudoCtx.prisma.boardPage.findMany({
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          body: true,
+          actions: {
+            select: {
+              label: true,
+            },
+          },
+          documents: {
+            select: {
+              title: true,
+            },
+          },
+          vacancyReport: {
+            select: {
+              title: true,
+            },
+          },
+          contacts: {
+            select: {
+              name: true,
+              title: true,
+            },
+          },
+          applicationForm: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      });
+      return data.map((p) => {
+        const d = {
+          ...p,
+          id: `${p.id}-board`,
+          slug: 'boards',
+          body: `${p.body} ${p.actions.map((a) => a.label).join(', ')} ${p.documents.map((d) => d.title).join(', ')} ${p.vacancyReport?.title} ${p.contacts.map((c) => `${c.name} ${c.title}`).join(', ')} ${p.applicationForm?.title}`,
+        };
+        return toSearchableObj(d, 'topic');
+      });
+    },
+  },
 ] satisfies PageType[];
 
 export function toSearchableObj(
