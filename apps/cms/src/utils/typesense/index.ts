@@ -2,6 +2,8 @@ import Typesense from 'typesense';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
 import { KeystoneContext } from '@keystone-6/core/types';
+import type { CommonContext } from '../../controllers/types';
+import OrgUnit from '../../app/models/pages/OrgUnit';
 
 export type TypeSensePageDocument = {
   id: string;
@@ -68,96 +70,196 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
 
 export type PageType = {
   type: string;
-  getItems: (context: KeystoneContext<any>) => Promise<TypeSensePageDocument[]>;
+  getItems: (context: CommonContext) => Promise<TypeSensePageDocument[]>;
+};
+
+const sharedFields = {
+  id: true,
+  title: true,
+  slug: true,
+  description: true,
+  body: true,
+  publishAt: true,
+  tags: {
+    select: {
+      name: true,
+    },
+  },
+};
+
+const sharedFieldsWithCommunities = {
+  ...sharedFields,
+
+  communities: {
+    select: {
+      title: true,
+    },
+  },
+};
+
+const orgUnits = {
+  orgUnits: {
+    select: {
+      title: true,
+    },
+  },
 };
 
 export const PAGE_TYPES = [
   {
     type: 'service',
-    async getItems(context: KeystoneContext<any>) {
+    async getItems(context) {
       const services = await context.prisma.service.findMany({
         select: {
-          id: true,
-          title: true,
-          slug: true,
-          description: true,
-          body: true,
-          publishAt: true,
-          orgUnits: {
-            select: {
-              title: true,
-            },
-          },
-          communities: {
-            select: {
-              title: true,
-            },
-          },
-          tags: {
-            select: {
-              name: true,
-            },
-          },
+          ...orgUnits,
+          ...sharedFieldsWithCommunities,
         },
       });
 
-      return services.map((service: any) =>
-        toSearchableObj(service, 'service'),
-      );
+      return services.map((service) => toSearchableObj(service, 'service'));
     },
   },
   {
     type: 'community',
-    async getItems(context: KeystoneContext<any>) {
+    async getItems(context) {
       const communities = await context.prisma.community.findMany({
         select: {
-          id: true,
-          title: true,
-          slug: true,
-          description: true,
-          publishAt: true,
+          ...sharedFields,
           districts: {
             select: {
               title: true,
             },
           },
-          tags: {
-            select: {
-              name: true,
-            },
-          },
         },
       });
 
-      return communities.map((community: any) =>
+      return communities.map((community) =>
         toSearchableObj(community, 'community'),
       );
     },
   },
   {
     type: 'department',
-    async getItems(context: KeystoneContext<any>) {
+    async getItems(context) {
       const departments = await context.prisma.orgUnit.findMany({
         select: {
-          id: true,
-          title: true,
-          slug: true,
-          description: true,
-          publishAt: true,
-          tags: {
+          ...sharedFields,
+        },
+      });
+
+      return departments.map((department) =>
+        toSearchableObj(department, 'department'),
+      );
+    },
+  },
+  {
+    type: 'park',
+    async getItems(context) {
+      const parks = await context.prisma.park.findMany({
+        select: {
+          ...sharedFieldsWithCommunities,
+        },
+      });
+
+      return parks.map((park) => toSearchableObj(park, 'park'));
+    },
+  },
+  {
+    type: 'trail',
+    async getItems(context) {
+      const trails = await context.prisma.trail.findMany({
+        select: {
+          ...sharedFieldsWithCommunities,
+        },
+      });
+
+      return trails.map((trail) => toSearchableObj(trail, 'trail'));
+    },
+  },
+  {
+    type: 'facility',
+    async getItems(context) {
+      const facilities = await context.prisma.facility.findMany({
+        select: {
+          ...sharedFieldsWithCommunities,
+        },
+      });
+
+      return facilities.map((facility) =>
+        toSearchableObj(facility, 'facility'),
+      );
+    },
+  },
+  {
+    type: 'assemblyDistrict',
+    async getItems(context) {
+      const assemblyDistricts = await context.prisma.assemblyDistrict.findMany({
+        select: {
+          ...sharedFields,
+        },
+      });
+
+      return assemblyDistricts.map((district) =>
+        toSearchableObj(district, 'assembly_district'),
+      );
+    },
+  },
+  {
+    type: 'board',
+    async getItems(context) {
+      const boards = await context.prisma.board.findMany({
+        select: {
+          ...sharedFieldsWithCommunities,
+        },
+      });
+
+      return boards.map((board) => toSearchableObj(board, 'board'));
+    },
+  },
+  {
+    type: 'plan',
+    async getItems(context) {
+      const plans = await context.prisma.plan.findMany({
+        select: {
+          ...sharedFields,
+        },
+      });
+
+      return plans.map((plan) => toSearchableObj(plan, 'plan'));
+    },
+  },
+  {
+    type: 'topic',
+    async getItems(context) {
+      const topics = await context.prisma.topic.findMany({
+        select: {
+          ...sharedFieldsWithCommunities,
+        },
+      });
+
+      return topics.map((topic) => toSearchableObj(topic, 'topic'));
+    },
+  },
+  {
+    type: 'publicNotice',
+    async getItems(context) {
+      const publicNotices = await context.prisma.publicNotice.findMany({
+        select: {
+          ...sharedFieldsWithCommunities,
+          assemblyDistricts: {
             select: {
-              name: true,
+              title: true,
             },
           },
         },
       });
 
-      return departments.map((department: any) =>
-        toSearchableObj(department, 'department'),
+      return publicNotices.map((publicNotice) =>
+        toSearchableObj(publicNotice, 'public_notice'),
       );
     },
   },
-];
+] satisfies PageType[];
 
 export function toSearchableObj(
   item: any,
