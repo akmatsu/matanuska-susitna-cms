@@ -19,6 +19,24 @@ import {
 } from '../features';
 import { configureInternalLinksFeature } from '../features/internalLinks/config';
 import { configureRemarkDirectivesFeature } from '../features/remarkDirectives/config';
+import { configureImageBlockFeature } from '../features/imageInline/config';
+import { gql } from '../../../../../graphql';
+import { useMutation } from '@keystone-6/core/admin-ui/apollo';
+
+const uploadImageQuery = gql(`
+  mutation UploadImage($upload: Upload!, $title: String!) {
+    createImage(data:  {
+      title: $title
+      file:  {
+        upload: $upload
+      }
+    }) {
+      file {
+        url
+      }
+    }
+  }
+`);
 
 export function useEditorConfig({
   block = true,
@@ -31,10 +49,13 @@ export function useEditorConfig({
   table = true,
   list = true,
   internalLinks = true,
+  images = true,
   ...props
 }: MdEditorProps) {
   const nodeViewFactory = useNodeViewFactory();
   const pluginViewFactory = usePluginViewFactory();
+
+  const [uploadImage] = useMutation(uploadImageQuery);
 
   return useEditor((root) => {
     const editor = MilkEditor.make();
@@ -74,6 +95,9 @@ export function useEditorConfig({
     }
     if (primaryActionButton) {
       configurePrimaryActionButtonFeature(editor, nodeViewFactory);
+    }
+    if (images) {
+      configureImageBlockFeature(editor, uploadImage);
     }
 
     return editor;

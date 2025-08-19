@@ -12,7 +12,7 @@ export const Image = list({
     maxTake: 100,
   },
   fields: {
-    ...titleAndDescription(),
+    ...titleAndDescription({ isUnique: false }),
     tags: tags('images'),
     file: image({
       storage: appConfig.nodeEnv === 'production' ? 's3Images' : 'localImages',

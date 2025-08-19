@@ -68,6 +68,12 @@ export type MdEditorProps = {
    * @default true
    */
   internalLinks?: boolean;
+
+  /**
+   * Enables images in markdown
+   * @default true
+   */
+  images?: boolean;
 };
 
 export type PluginViewFactoryFn = (

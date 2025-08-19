@@ -82,7 +82,7 @@ export type AlertWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type AssemblyDistrict = BasePage & BasePageWithSlug & {
+export type AssemblyDistrict = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'AssemblyDistrict';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -91,6 +91,7 @@ export type AssemblyDistrict = BasePage & BasePageWithSlug & {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -101,20 +102,21 @@ export type AssemblyDistrict = BasePage & BasePageWithSlug & {
   drafts?: Maybe<Array<AssemblyDistrictDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   fax?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
   memberName?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   phone?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Image>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
@@ -204,31 +206,31 @@ export type AssemblyDistrictDraftsCountArgs = {
 };
 
 
-export type AssemblyDistrictNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type AssemblyDistrictEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type AssemblyDistrictNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type AssemblyDistrictEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type AssemblyDistrictNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type AssemblyDistrictPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type AssemblyDistrictNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type AssemblyDistrictPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -300,16 +302,17 @@ export type AssemblyDistrictCreateInput = {
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<AssemblyDistrictDraftRelateToManyForCreateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   fax?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
   memberName?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   phone?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<ImageRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -333,6 +336,7 @@ export type AssemblyDistrictDraft = {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -340,21 +344,22 @@ export type AssemblyDistrictDraft = {
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   fax?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   memberName?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<AssemblyDistrict>;
   owner?: Maybe<User>;
   phone?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Image>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   tags?: Maybe<Array<Tag>>;
   tagsCount?: Maybe<Scalars['Int']['output']>;
@@ -426,31 +431,31 @@ export type AssemblyDistrictDraftDocumentsCountArgs = {
 };
 
 
-export type AssemblyDistrictDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type AssemblyDistrictDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type AssemblyDistrictDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type AssemblyDistrictDraftEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type AssemblyDistrictDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type AssemblyDistrictDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type AssemblyDistrictDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type AssemblyDistrictDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -506,17 +511,18 @@ export type AssemblyDistrictDraftCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   fax?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   memberName?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<AssemblyDistrictRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   phone?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<ImageRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   termEnd?: InputMaybe<Scalars['DateTime']['input']>;
@@ -583,17 +589,18 @@ export type AssemblyDistrictDraftUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   fax?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   memberName?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<AssemblyDistrictRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   phone?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<ImageRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   termEnd?: InputMaybe<Scalars['DateTime']['input']>;
@@ -619,16 +626,17 @@ export type AssemblyDistrictDraftWhereInput = {
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   email?: InputMaybe<StringNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   fax?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<IdFilter>;
   memberName?: InputMaybe<StringFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<AssemblyDistrictWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   phone?: InputMaybe<StringNullableFilter>;
   photo?: InputMaybe<ImageWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   termEnd?: InputMaybe<DateTimeNullableFilter>;
@@ -714,16 +722,17 @@ export type AssemblyDistrictUpdateInput = {
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<AssemblyDistrictDraftRelateToManyForUpdateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   fax?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
   memberName?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   phone?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<ImageRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -747,6 +756,7 @@ export type AssemblyDistrictVersion = {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -754,21 +764,22 @@ export type AssemblyDistrictVersion = {
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
   email?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   fax?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isLive?: Maybe<AssemblyDistrict>;
   liveUrl?: Maybe<Scalars['String']['output']>;
   memberName?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<AssemblyDistrict>;
   owner?: Maybe<User>;
   phone?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Image>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   tags?: Maybe<Array<Tag>>;
@@ -841,31 +852,31 @@ export type AssemblyDistrictVersionDocumentsCountArgs = {
 };
 
 
-export type AssemblyDistrictVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type AssemblyDistrictVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type AssemblyDistrictVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type AssemblyDistrictVersionEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type AssemblyDistrictVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type AssemblyDistrictVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type AssemblyDistrictVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type AssemblyDistrictVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -921,17 +932,18 @@ export type AssemblyDistrictVersionCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   fax?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<AssemblyDistrictRelateToOneForCreateInput>;
   memberName?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<AssemblyDistrictRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   phone?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<ImageRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
@@ -1010,17 +1022,18 @@ export type AssemblyDistrictVersionUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   email?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   fax?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<AssemblyDistrictRelateToOneForUpdateInput>;
   memberName?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<AssemblyDistrictRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   phone?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<ImageRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
@@ -1047,17 +1060,18 @@ export type AssemblyDistrictVersionWhereInput = {
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   email?: InputMaybe<StringNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   fax?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<AssemblyDistrictWhereInput>;
   memberName?: InputMaybe<StringFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<AssemblyDistrictWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   phone?: InputMaybe<StringNullableFilter>;
   photo?: InputMaybe<ImageWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   termEnd?: InputMaybe<DateTimeNullableFilter>;
@@ -1090,15 +1104,16 @@ export type AssemblyDistrictWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<AssemblyDistrictDraftManyRelationFilter>;
   email?: InputMaybe<StringNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   fax?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<IdFilter>;
   memberName?: InputMaybe<StringFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   phone?: InputMaybe<StringNullableFilter>;
   photo?: InputMaybe<ImageWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<StringFilter>;
@@ -1122,19 +1137,243 @@ export type AssemblyDistrictWhereUniqueInput = {
 
 export type BasePage = {
   body?: Maybe<Scalars['String']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  owner?: Maybe<User>;
   title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type BasePageContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type BasePageContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type BasePageDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type BasePageDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+export type BasePageWithActions = {
+  actions?: Maybe<Array<InternalLink>>;
+  actionsCount?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  owner?: Maybe<User>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
+  slug?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type BasePageWithActionsActionsArgs = {
+  cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
+  orderBy?: Array<InternalLinkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InternalLinkWhereInput;
+};
+
+
+export type BasePageWithActionsActionsCountArgs = {
+  where?: InternalLinkWhereInput;
+};
+
+
+export type BasePageWithActionsContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type BasePageWithActionsContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type BasePageWithActionsDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type BasePageWithActionsDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type BasePageWithActionsEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type BasePageWithActionsEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type BasePageWithActionsTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type BasePageWithActionsTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type BasePageWithActionsTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
 };
 
 export type BasePageWithSlug = {
   body?: Maybe<Scalars['String']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  owner?: Maybe<User>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type BasePageWithSlugContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type BasePageWithSlugContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type BasePageWithSlugDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type BasePageWithSlugDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type BasePageWithSlugEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type BasePageWithSlugEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type BasePageWithSlugTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type BasePageWithSlugTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type BasePageWithSlugTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
 };
 
 export enum BlueHarvestImageOrderDirection {
@@ -1142,13 +1381,14 @@ export enum BlueHarvestImageOrderDirection {
   Desc = 'desc'
 }
 
-export type Board = BasePage & BasePageWithSlug & {
+export type Board = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'Board';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
   calendarId?: Maybe<Scalars['String']['output']>;
   calendarQueryString?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -1163,6 +1403,8 @@ export type Board = BasePage & BasePageWithSlug & {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   drafts?: Maybe<Array<BoardDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isActive?: Maybe<Scalars['Boolean']['output']>;
@@ -1171,12 +1413,11 @@ export type Board = BasePage & BasePageWithSlug & {
   linkToResolutions?: Maybe<ExternalLink>;
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   slug?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
@@ -1279,31 +1520,31 @@ export type BoardDraftsCountArgs = {
 };
 
 
-export type BoardNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type BoardEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type BoardNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type BoardEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type BoardNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type BoardPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type BoardNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type BoardPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -1376,16 +1617,17 @@ export type BoardCreateInput = {
   districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<BoardDraftRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   linkToAgendas?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   linkToResolutions?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -1406,6 +1648,7 @@ export type BoardDraft = {
   body?: Maybe<Scalars['String']['output']>;
   calendarId?: Maybe<Scalars['String']['output']>;
   calendarQueryString?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -1417,6 +1660,8 @@ export type BoardDraft = {
   districtsCount?: Maybe<Scalars['Int']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isActive?: Maybe<Scalars['Boolean']['output']>;
@@ -1424,14 +1669,13 @@ export type BoardDraft = {
   linkToPublicOpinionMessage?: Maybe<ExternalLink>;
   linkToResolutions?: Maybe<ExternalLink>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Board>;
   owner?: Maybe<User>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   tags?: Maybe<Array<Tag>>;
   tagsCount?: Maybe<Scalars['Int']['output']>;
@@ -1516,31 +1760,31 @@ export type BoardDraftDocumentsCountArgs = {
 };
 
 
-export type BoardDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type BoardDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type BoardDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type BoardDraftEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type BoardDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type BoardDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type BoardDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type BoardDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -1597,17 +1841,18 @@ export type BoardDraftCreateInput = {
   directory?: InputMaybe<DocumentRelateToOneForCreateInput>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   linkToAgendas?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   linkToResolutions?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<BoardRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -1671,17 +1916,18 @@ export type BoardDraftUpdateInput = {
   directory?: InputMaybe<DocumentRelateToOneForUpdateInput>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   linkToAgendas?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   linkToResolutions?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<BoardRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -1707,16 +1953,17 @@ export type BoardDraftWhereInput = {
   directory?: InputMaybe<DocumentWhereInput>;
   districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isActive?: InputMaybe<BooleanFilter>;
   linkToAgendas?: InputMaybe<ExternalLinkWhereInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkWhereInput>;
   linkToResolutions?: InputMaybe<ExternalLinkWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<BoardWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
@@ -1772,10 +2019,6 @@ export type BoardPage = BasePage & {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1824,34 +2067,6 @@ export type BoardPageDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
 
-
-export type BoardPageNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type BoardPageNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type BoardPageNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type BoardPageNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
-};
-
 export type BoardPageCreateInput = {
   ParliTrainingLink?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
@@ -1862,8 +2077,6 @@ export type BoardPageCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1895,8 +2108,6 @@ export type BoardPageUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1916,8 +2127,6 @@ export type BoardPageWhereInput = {
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   title?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
@@ -1971,16 +2180,17 @@ export type BoardUpdateInput = {
   districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<BoardDraftRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   linkToAgendas?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   linkToResolutions?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
@@ -2001,6 +2211,7 @@ export type BoardVersion = {
   body?: Maybe<Scalars['String']['output']>;
   calendarId?: Maybe<Scalars['String']['output']>;
   calendarQueryString?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -2012,6 +2223,8 @@ export type BoardVersion = {
   districtsCount?: Maybe<Scalars['Int']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isActive?: Maybe<Scalars['Boolean']['output']>;
@@ -2020,13 +2233,12 @@ export type BoardVersion = {
   linkToPublicOpinionMessage?: Maybe<ExternalLink>;
   linkToResolutions?: Maybe<ExternalLink>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Board>;
   owner?: Maybe<User>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   tags?: Maybe<Array<Tag>>;
@@ -2112,31 +2324,31 @@ export type BoardVersionDocumentsCountArgs = {
 };
 
 
-export type BoardVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type BoardVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type BoardVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type BoardVersionEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type BoardVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type BoardVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type BoardVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type BoardVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -2193,17 +2405,18 @@ export type BoardVersionCreateInput = {
   directory?: InputMaybe<DocumentRelateToOneForCreateInput>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   isLive?: InputMaybe<BoardRelateToOneForCreateInput>;
   linkToAgendas?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   linkToResolutions?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<BoardRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
@@ -2279,17 +2492,18 @@ export type BoardVersionUpdateInput = {
   directory?: InputMaybe<DocumentRelateToOneForUpdateInput>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   isLive?: InputMaybe<BoardRelateToOneForUpdateInput>;
   linkToAgendas?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   linkToResolutions?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<BoardRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
@@ -2316,17 +2530,18 @@ export type BoardVersionWhereInput = {
   directory?: InputMaybe<DocumentWhereInput>;
   districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isActive?: InputMaybe<BooleanFilter>;
   isLive?: InputMaybe<BoardWhereInput>;
   linkToAgendas?: InputMaybe<ExternalLinkWhereInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkWhereInput>;
   linkToResolutions?: InputMaybe<ExternalLinkWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<BoardWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
@@ -2359,15 +2574,16 @@ export type BoardWhereInput = {
   districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<BoardDraftManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isActive?: InputMaybe<BooleanFilter>;
   linkToAgendas?: InputMaybe<ExternalLinkWhereInput>;
   linkToPublicOpinionMessage?: InputMaybe<ExternalLinkWhereInput>;
   linkToResolutions?: InputMaybe<ExternalLinkWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<StringFilter>;
@@ -2393,13 +2609,14 @@ export type BooleanFilter = {
   not?: InputMaybe<BooleanFilter>;
 };
 
-export type Community = BasePage & BasePageWithSlug & {
+export type Community = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'Community';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2411,16 +2628,21 @@ export type Community = BasePage & BasePageWithSlug & {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   drafts?: Maybe<Array<CommunityDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  facilities?: Maybe<Array<Facility>>;
+  facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
+  parks?: Maybe<Array<Park>>;
+  parksCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -2431,6 +2653,8 @@ export type Community = BasePage & BasePageWithSlug & {
   title?: Maybe<Scalars['String']['output']>;
   topics?: Maybe<Array<Topic>>;
   topicsCount?: Maybe<Scalars['Int']['output']>;
+  trails?: Maybe<Array<Trail>>;
+  trailsCount?: Maybe<Scalars['Int']['output']>;
   unpublishAt?: Maybe<Scalars['DateTime']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   userGroups?: Maybe<Array<UserGroup>>;
@@ -2524,31 +2748,59 @@ export type CommunityDraftsCountArgs = {
 };
 
 
-export type CommunityNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type CommunityEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type CommunityNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type CommunityEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type CommunityNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type CommunityFacilitiesArgs = {
+  cursor?: InputMaybe<FacilityWhereUniqueInput>;
+  orderBy?: Array<FacilityOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: FacilityWhereInput;
 };
 
 
-export type CommunityNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type CommunityFacilitiesCountArgs = {
+  where?: FacilityWhereInput;
+};
+
+
+export type CommunityParksArgs = {
+  cursor?: InputMaybe<ParkWhereUniqueInput>;
+  orderBy?: Array<ParkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ParkWhereInput;
+};
+
+
+export type CommunityParksCountArgs = {
+  where?: ParkWhereInput;
+};
+
+
+export type CommunityPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type CommunityPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -2594,6 +2846,20 @@ export type CommunityTopicsCountArgs = {
 };
 
 
+export type CommunityTrailsArgs = {
+  cursor?: InputMaybe<TrailWhereUniqueInput>;
+  orderBy?: Array<TrailOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TrailWhereInput;
+};
+
+
+export type CommunityTrailsCountArgs = {
+  where?: TrailWhereInput;
+};
+
+
 export type CommunityUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
   orderBy?: Array<UserGroupOrderByInput>;
@@ -2632,12 +2898,15 @@ export type CommunityCreateInput = {
   districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<CommunityDraftRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -2645,6 +2914,7 @@ export type CommunityCreateInput = {
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  trails?: InputMaybe<TrailRelateToManyForCreateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
@@ -2658,6 +2928,7 @@ export type CommunityDraft = {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -2666,17 +2937,22 @@ export type CommunityDraft = {
   districtsCount?: Maybe<Scalars['Int']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  facilities?: Maybe<Array<Facility>>;
+  facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Community>;
   owner?: Maybe<User>;
+  parks?: Maybe<Array<Park>>;
+  parksCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -2685,6 +2961,8 @@ export type CommunityDraft = {
   title?: Maybe<Scalars['String']['output']>;
   topics?: Maybe<Array<Topic>>;
   topicsCount?: Maybe<Scalars['Int']['output']>;
+  trails?: Maybe<Array<Trail>>;
+  trailsCount?: Maybe<Scalars['Int']['output']>;
   unpublishAt?: Maybe<Scalars['DateTime']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   userGroups?: Maybe<Array<UserGroup>>;
@@ -2762,31 +3040,59 @@ export type CommunityDraftDocumentsCountArgs = {
 };
 
 
-export type CommunityDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type CommunityDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type CommunityDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type CommunityDraftEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type CommunityDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type CommunityDraftFacilitiesArgs = {
+  cursor?: InputMaybe<FacilityWhereUniqueInput>;
+  orderBy?: Array<FacilityOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: FacilityWhereInput;
 };
 
 
-export type CommunityDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type CommunityDraftFacilitiesCountArgs = {
+  where?: FacilityWhereInput;
+};
+
+
+export type CommunityDraftParksArgs = {
+  cursor?: InputMaybe<ParkWhereUniqueInput>;
+  orderBy?: Array<ParkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ParkWhereInput;
+};
+
+
+export type CommunityDraftParksCountArgs = {
+  where?: ParkWhereInput;
+};
+
+
+export type CommunityDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type CommunityDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -2832,6 +3138,20 @@ export type CommunityDraftTopicsCountArgs = {
 };
 
 
+export type CommunityDraftTrailsArgs = {
+  cursor?: InputMaybe<TrailWhereUniqueInput>;
+  orderBy?: Array<TrailOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TrailWhereInput;
+};
+
+
+export type CommunityDraftTrailsCountArgs = {
+  where?: TrailWhereInput;
+};
+
+
 export type CommunityDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
   orderBy?: Array<UserGroupOrderByInput>;
@@ -2854,18 +3174,22 @@ export type CommunityDraftCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<CommunityRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  trails?: InputMaybe<TrailRelateToManyForCreateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
@@ -2917,18 +3241,22 @@ export type CommunityDraftUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
@@ -2946,17 +3274,21 @@ export type CommunityDraftWhereInput = {
   description?: InputMaybe<StringFilter>;
   districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<CommunityWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
+  parks?: InputMaybe<ParkManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
   topics?: InputMaybe<TopicManyRelationFilter>;
+  trails?: InputMaybe<TrailManyRelationFilter>;
   unpublishAt?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
   userGroups?: InputMaybe<UserGroupManyRelationFilter>;
@@ -3027,12 +3359,15 @@ export type CommunityUpdateInput = {
   districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<CommunityDraftRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -3040,6 +3375,7 @@ export type CommunityUpdateInput = {
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
@@ -3053,6 +3389,7 @@ export type CommunityVersion = {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -3061,17 +3398,22 @@ export type CommunityVersion = {
   districtsCount?: Maybe<Scalars['Int']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  facilities?: Maybe<Array<Facility>>;
+  facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isLive?: Maybe<Community>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Community>;
   owner?: Maybe<User>;
+  parks?: Maybe<Array<Park>>;
+  parksCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
@@ -3081,6 +3423,8 @@ export type CommunityVersion = {
   title?: Maybe<Scalars['String']['output']>;
   topics?: Maybe<Array<Topic>>;
   topicsCount?: Maybe<Scalars['Int']['output']>;
+  trails?: Maybe<Array<Trail>>;
+  trailsCount?: Maybe<Scalars['Int']['output']>;
   unpublishAt?: Maybe<Scalars['DateTime']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   userGroups?: Maybe<Array<UserGroup>>;
@@ -3158,31 +3502,59 @@ export type CommunityVersionDocumentsCountArgs = {
 };
 
 
-export type CommunityVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type CommunityVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type CommunityVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type CommunityVersionEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type CommunityVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type CommunityVersionFacilitiesArgs = {
+  cursor?: InputMaybe<FacilityWhereUniqueInput>;
+  orderBy?: Array<FacilityOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: FacilityWhereInput;
 };
 
 
-export type CommunityVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type CommunityVersionFacilitiesCountArgs = {
+  where?: FacilityWhereInput;
+};
+
+
+export type CommunityVersionParksArgs = {
+  cursor?: InputMaybe<ParkWhereUniqueInput>;
+  orderBy?: Array<ParkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ParkWhereInput;
+};
+
+
+export type CommunityVersionParksCountArgs = {
+  where?: ParkWhereInput;
+};
+
+
+export type CommunityVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type CommunityVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -3228,6 +3600,20 @@ export type CommunityVersionTopicsCountArgs = {
 };
 
 
+export type CommunityVersionTrailsArgs = {
+  cursor?: InputMaybe<TrailWhereUniqueInput>;
+  orderBy?: Array<TrailOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TrailWhereInput;
+};
+
+
+export type CommunityVersionTrailsCountArgs = {
+  where?: TrailWhereInput;
+};
+
+
 export type CommunityVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
   orderBy?: Array<UserGroupOrderByInput>;
@@ -3250,19 +3636,23 @@ export type CommunityVersionCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<CommunityRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<CommunityRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  trails?: InputMaybe<TrailRelateToManyForCreateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
@@ -3325,19 +3715,23 @@ export type CommunityVersionUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<CommunityRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
@@ -3355,18 +3749,22 @@ export type CommunityVersionWhereInput = {
   description?: InputMaybe<StringFilter>;
   districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<CommunityWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<CommunityWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
+  parks?: InputMaybe<ParkManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
   topics?: InputMaybe<TopicManyRelationFilter>;
+  trails?: InputMaybe<TrailManyRelationFilter>;
   unpublishAt?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
   userGroups?: InputMaybe<UserGroupManyRelationFilter>;
@@ -3391,11 +3789,14 @@ export type CommunityWhereInput = {
   districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<CommunityDraftManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
+  parks?: InputMaybe<ParkManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   slug?: InputMaybe<StringFilter>;
@@ -3403,6 +3804,7 @@ export type CommunityWhereInput = {
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
   topics?: InputMaybe<TopicManyRelationFilter>;
+  trails?: InputMaybe<TrailManyRelationFilter>;
   unpublishAt?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
   userGroups?: InputMaybe<UserGroupManyRelationFilter>;
@@ -3448,28 +3850,10 @@ export type ContactListItemCreateInput = {
   order?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type ContactListItemManyRelationFilter = {
-  every?: InputMaybe<ContactListItemWhereInput>;
-  none?: InputMaybe<ContactListItemWhereInput>;
-  some?: InputMaybe<ContactListItemWhereInput>;
-};
-
 export type ContactListItemOrderByInput = {
   id?: InputMaybe<OrderDirection>;
   label?: InputMaybe<OrderDirection>;
   order?: InputMaybe<OrderDirection>;
-};
-
-export type ContactListItemRelateToManyForCreateInput = {
-  connect?: InputMaybe<Array<ContactListItemWhereUniqueInput>>;
-  create?: InputMaybe<Array<ContactListItemCreateInput>>;
-};
-
-export type ContactListItemRelateToManyForUpdateInput = {
-  connect?: InputMaybe<Array<ContactListItemWhereUniqueInput>>;
-  create?: InputMaybe<Array<ContactListItemCreateInput>>;
-  disconnect?: InputMaybe<Array<ContactListItemWhereUniqueInput>>;
-  set?: InputMaybe<Array<ContactListItemWhereUniqueInput>>;
 };
 
 export type ContactListItemUpdateArgs = {
@@ -3635,8 +4019,6 @@ export type DocumentCollection = {
   embed?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   referencedBy?: Maybe<Array<Maybe<Service>>>;
   tags?: Maybe<Array<Tag>>;
@@ -3658,20 +4040,6 @@ export type DocumentCollectionDocumentsArgs = {
 
 export type DocumentCollectionDocumentsCountArgs = {
   where?: DocumentWhereInput;
-};
-
-
-export type DocumentCollectionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type DocumentCollectionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
 };
 
 
@@ -3706,7 +4074,6 @@ export type DocumentCollectionCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -3747,7 +4114,6 @@ export type DocumentCollectionUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -3762,7 +4128,6 @@ export type DocumentCollectionWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   editorNotes?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
@@ -3812,28 +4177,10 @@ export type DocumentListItemCreateInput = {
   order?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type DocumentListItemManyRelationFilter = {
-  every?: InputMaybe<DocumentListItemWhereInput>;
-  none?: InputMaybe<DocumentListItemWhereInput>;
-  some?: InputMaybe<DocumentListItemWhereInput>;
-};
-
 export type DocumentListItemOrderByInput = {
   id?: InputMaybe<OrderDirection>;
   label?: InputMaybe<OrderDirection>;
   order?: InputMaybe<OrderDirection>;
-};
-
-export type DocumentListItemRelateToManyForCreateInput = {
-  connect?: InputMaybe<Array<DocumentListItemWhereUniqueInput>>;
-  create?: InputMaybe<Array<DocumentListItemCreateInput>>;
-};
-
-export type DocumentListItemRelateToManyForUpdateInput = {
-  connect?: InputMaybe<Array<DocumentListItemWhereUniqueInput>>;
-  create?: InputMaybe<Array<DocumentListItemCreateInput>>;
-  disconnect?: InputMaybe<Array<DocumentListItemWhereUniqueInput>>;
-  set?: InputMaybe<Array<DocumentListItemWhereUniqueInput>>;
 };
 
 export type DocumentListItemUpdateArgs = {
@@ -5023,6 +5370,1416 @@ export type ElectionsPageWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Event = BasePage & BasePageWithActions & BasePageWithSlug & {
+  __typename?: 'Event';
+  actions?: Maybe<Array<InternalLink>>;
+  actionsCount?: Maybe<Scalars['Int']['output']>;
+  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+  boards?: Maybe<Array<Board>>;
+  boardsCount?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Array<Community>>;
+  communitiesCount?: Maybe<Scalars['Int']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  currentVersion?: Maybe<EventVersion>;
+  description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  drafts?: Maybe<Array<EventDraft>>;
+  draftsCount?: Maybe<Scalars['Int']['output']>;
+  endDate?: Maybe<Scalars['DateTime']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  facilities?: Maybe<Array<Facility>>;
+  facilitiesCount?: Maybe<Scalars['Int']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  liveUrl?: Maybe<Scalars['String']['output']>;
+  makeDrafts?: Maybe<Scalars['String']['output']>;
+  orgUnits?: Maybe<Array<OrgUnit>>;
+  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+  owner?: Maybe<User>;
+  parks?: Maybe<Array<Park>>;
+  parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
+  services?: Maybe<Array<Service>>;
+  servicesCount?: Maybe<Scalars['Int']['output']>;
+  slug?: Maybe<Scalars['String']['output']>;
+  startDate?: Maybe<Scalars['DateTime']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
+  trails?: Maybe<Array<Trail>>;
+  trailsCount?: Maybe<Scalars['Int']['output']>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userGroups?: Maybe<Array<UserGroup>>;
+  userGroupsCount?: Maybe<Scalars['Int']['output']>;
+  versions?: Maybe<Array<EventVersion>>;
+  versionsCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type EventActionsArgs = {
+  cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
+  orderBy?: Array<InternalLinkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InternalLinkWhereInput;
+};
+
+
+export type EventActionsCountArgs = {
+  where?: InternalLinkWhereInput;
+};
+
+
+export type EventAssemblyDistrictsArgs = {
+  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
+  orderBy?: Array<AssemblyDistrictOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type EventAssemblyDistrictsCountArgs = {
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type EventBoardsArgs = {
+  cursor?: InputMaybe<BoardWhereUniqueInput>;
+  orderBy?: Array<BoardOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: BoardWhereInput;
+};
+
+
+export type EventBoardsCountArgs = {
+  where?: BoardWhereInput;
+};
+
+
+export type EventCommunitiesArgs = {
+  cursor?: InputMaybe<CommunityWhereUniqueInput>;
+  orderBy?: Array<CommunityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: CommunityWhereInput;
+};
+
+
+export type EventCommunitiesCountArgs = {
+  where?: CommunityWhereInput;
+};
+
+
+export type EventContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type EventContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type EventDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type EventDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type EventDraftsArgs = {
+  cursor?: InputMaybe<EventDraftWhereUniqueInput>;
+  orderBy?: Array<EventDraftOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventDraftWhereInput;
+};
+
+
+export type EventDraftsCountArgs = {
+  where?: EventDraftWhereInput;
+};
+
+
+export type EventEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type EventEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type EventFacilitiesArgs = {
+  cursor?: InputMaybe<FacilityWhereUniqueInput>;
+  orderBy?: Array<FacilityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: FacilityWhereInput;
+};
+
+
+export type EventFacilitiesCountArgs = {
+  where?: FacilityWhereInput;
+};
+
+
+export type EventOrgUnitsArgs = {
+  cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
+  orderBy?: Array<OrgUnitOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: OrgUnitWhereInput;
+};
+
+
+export type EventOrgUnitsCountArgs = {
+  where?: OrgUnitWhereInput;
+};
+
+
+export type EventParksArgs = {
+  cursor?: InputMaybe<ParkWhereUniqueInput>;
+  orderBy?: Array<ParkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ParkWhereInput;
+};
+
+
+export type EventParksCountArgs = {
+  where?: ParkWhereInput;
+};
+
+
+export type EventPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type EventPlansCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type EventPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type EventPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type EventServicesArgs = {
+  cursor?: InputMaybe<ServiceWhereUniqueInput>;
+  orderBy?: Array<ServiceOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ServiceWhereInput;
+};
+
+
+export type EventServicesCountArgs = {
+  where?: ServiceWhereInput;
+};
+
+
+export type EventTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type EventTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type EventTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type EventTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
+export type EventTrailsArgs = {
+  cursor?: InputMaybe<TrailWhereUniqueInput>;
+  orderBy?: Array<TrailOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TrailWhereInput;
+};
+
+
+export type EventTrailsCountArgs = {
+  where?: TrailWhereInput;
+};
+
+
+export type EventUserGroupsArgs = {
+  cursor?: InputMaybe<UserGroupWhereUniqueInput>;
+  orderBy?: Array<UserGroupOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: UserGroupWhereInput;
+};
+
+
+export type EventUserGroupsCountArgs = {
+  where?: UserGroupWhereInput;
+};
+
+
+export type EventVersionsArgs = {
+  cursor?: InputMaybe<EventVersionWhereUniqueInput>;
+  orderBy?: Array<EventVersionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventVersionWhereInput;
+};
+
+
+export type EventVersionsCountArgs = {
+  where?: EventVersionWhereInput;
+};
+
+export type EventCreateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
+  boards?: InputMaybe<BoardRelateToManyForCreateInput>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentVersion?: InputMaybe<EventVersionRelateToOneForCreateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  drafts?: InputMaybe<EventDraftRelateToManyForCreateInput>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  makeDrafts?: InputMaybe<Scalars['String']['input']>;
+  orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
+  owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  services?: InputMaybe<ServiceRelateToManyForCreateInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<TagRelateToManyForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  trails?: InputMaybe<TrailRelateToManyForCreateInput>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
+  versions?: InputMaybe<EventVersionRelateToManyForCreateInput>;
+};
+
+export type EventDraft = {
+  __typename?: 'EventDraft';
+  actions?: Maybe<Array<InternalLink>>;
+  actionsCount?: Maybe<Scalars['Int']['output']>;
+  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+  boards?: Maybe<Array<Board>>;
+  boardsCount?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Array<Community>>;
+  communitiesCount?: Maybe<Scalars['Int']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  endDate?: Maybe<Scalars['DateTime']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  facilities?: Maybe<Array<Facility>>;
+  facilitiesCount?: Maybe<Scalars['Int']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  liveUrl?: Maybe<Scalars['String']['output']>;
+  orgUnits?: Maybe<Array<OrgUnit>>;
+  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+  original?: Maybe<Event>;
+  owner?: Maybe<User>;
+  parks?: Maybe<Array<Park>>;
+  parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+  publish?: Maybe<Scalars['String']['output']>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
+  services?: Maybe<Array<Service>>;
+  servicesCount?: Maybe<Scalars['Int']['output']>;
+  startDate?: Maybe<Scalars['DateTime']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
+  trails?: Maybe<Array<Trail>>;
+  trailsCount?: Maybe<Scalars['Int']['output']>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userGroups?: Maybe<Array<UserGroup>>;
+  userGroupsCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type EventDraftActionsArgs = {
+  cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
+  orderBy?: Array<InternalLinkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InternalLinkWhereInput;
+};
+
+
+export type EventDraftActionsCountArgs = {
+  where?: InternalLinkWhereInput;
+};
+
+
+export type EventDraftAssemblyDistrictsArgs = {
+  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
+  orderBy?: Array<AssemblyDistrictOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type EventDraftAssemblyDistrictsCountArgs = {
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type EventDraftBoardsArgs = {
+  cursor?: InputMaybe<BoardWhereUniqueInput>;
+  orderBy?: Array<BoardOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: BoardWhereInput;
+};
+
+
+export type EventDraftBoardsCountArgs = {
+  where?: BoardWhereInput;
+};
+
+
+export type EventDraftCommunitiesArgs = {
+  cursor?: InputMaybe<CommunityWhereUniqueInput>;
+  orderBy?: Array<CommunityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: CommunityWhereInput;
+};
+
+
+export type EventDraftCommunitiesCountArgs = {
+  where?: CommunityWhereInput;
+};
+
+
+export type EventDraftContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type EventDraftContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type EventDraftDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type EventDraftDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type EventDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type EventDraftEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type EventDraftFacilitiesArgs = {
+  cursor?: InputMaybe<FacilityWhereUniqueInput>;
+  orderBy?: Array<FacilityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: FacilityWhereInput;
+};
+
+
+export type EventDraftFacilitiesCountArgs = {
+  where?: FacilityWhereInput;
+};
+
+
+export type EventDraftOrgUnitsArgs = {
+  cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
+  orderBy?: Array<OrgUnitOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: OrgUnitWhereInput;
+};
+
+
+export type EventDraftOrgUnitsCountArgs = {
+  where?: OrgUnitWhereInput;
+};
+
+
+export type EventDraftParksArgs = {
+  cursor?: InputMaybe<ParkWhereUniqueInput>;
+  orderBy?: Array<ParkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ParkWhereInput;
+};
+
+
+export type EventDraftParksCountArgs = {
+  where?: ParkWhereInput;
+};
+
+
+export type EventDraftPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type EventDraftPlansCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type EventDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type EventDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type EventDraftServicesArgs = {
+  cursor?: InputMaybe<ServiceWhereUniqueInput>;
+  orderBy?: Array<ServiceOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ServiceWhereInput;
+};
+
+
+export type EventDraftServicesCountArgs = {
+  where?: ServiceWhereInput;
+};
+
+
+export type EventDraftTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type EventDraftTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type EventDraftTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type EventDraftTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
+export type EventDraftTrailsArgs = {
+  cursor?: InputMaybe<TrailWhereUniqueInput>;
+  orderBy?: Array<TrailOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TrailWhereInput;
+};
+
+
+export type EventDraftTrailsCountArgs = {
+  where?: TrailWhereInput;
+};
+
+
+export type EventDraftUserGroupsArgs = {
+  cursor?: InputMaybe<UserGroupWhereUniqueInput>;
+  orderBy?: Array<UserGroupOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: UserGroupWhereInput;
+};
+
+
+export type EventDraftUserGroupsCountArgs = {
+  where?: UserGroupWhereInput;
+};
+
+export type EventDraftCreateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
+  boards?: InputMaybe<BoardRelateToManyForCreateInput>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
+  original?: InputMaybe<EventRelateToOneForCreateInput>;
+  owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
+  publish?: InputMaybe<Scalars['String']['input']>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  services?: InputMaybe<ServiceRelateToManyForCreateInput>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  trails?: InputMaybe<TrailRelateToManyForCreateInput>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
+};
+
+export type EventDraftManyRelationFilter = {
+  every?: InputMaybe<EventDraftWhereInput>;
+  none?: InputMaybe<EventDraftWhereInput>;
+  some?: InputMaybe<EventDraftWhereInput>;
+};
+
+export type EventDraftOrderByInput = {
+  body?: InputMaybe<MyOrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  description?: InputMaybe<OrderDirection>;
+  endDate?: InputMaybe<OrderDirection>;
+  heroImage?: InputMaybe<BlueHarvestImageOrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  publish?: InputMaybe<OrderDirection>;
+  publishAt?: InputMaybe<OrderDirection>;
+  reviewDate?: InputMaybe<OrderDirection>;
+  startDate?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+  unpublishAt?: InputMaybe<OrderDirection>;
+  updatedAt?: InputMaybe<OrderDirection>;
+};
+
+export type EventDraftRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<EventDraftWhereUniqueInput>>;
+  create?: InputMaybe<Array<EventDraftCreateInput>>;
+};
+
+export type EventDraftRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<EventDraftWhereUniqueInput>>;
+  create?: InputMaybe<Array<EventDraftCreateInput>>;
+  disconnect?: InputMaybe<Array<EventDraftWhereUniqueInput>>;
+  set?: InputMaybe<Array<EventDraftWhereUniqueInput>>;
+};
+
+export type EventDraftUpdateArgs = {
+  data: EventDraftUpdateInput;
+  where: EventDraftWhereUniqueInput;
+};
+
+export type EventDraftUpdateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
+  boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
+  original?: InputMaybe<EventRelateToOneForUpdateInput>;
+  owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
+  publish?: InputMaybe<Scalars['String']['input']>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
+};
+
+export type EventDraftWhereInput = {
+  AND?: InputMaybe<Array<EventDraftWhereInput>>;
+  NOT?: InputMaybe<Array<EventDraftWhereInput>>;
+  OR?: InputMaybe<Array<EventDraftWhereInput>>;
+  actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
+  boards?: InputMaybe<BoardManyRelationFilter>;
+  body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityManyRelationFilter>;
+  contacts?: InputMaybe<ContactManyRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  description?: InputMaybe<StringFilter>;
+  documents?: InputMaybe<DocumentManyRelationFilter>;
+  endDate?: InputMaybe<DateTimeNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  facilities?: InputMaybe<FacilityManyRelationFilter>;
+  id?: InputMaybe<IdFilter>;
+  orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
+  original?: InputMaybe<EventWhereInput>;
+  owner?: InputMaybe<UserWhereInput>;
+  parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
+  publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
+  reviewDate?: InputMaybe<DateTimeNullableFilter>;
+  services?: InputMaybe<ServiceManyRelationFilter>;
+  startDate?: InputMaybe<DateTimeNullableFilter>;
+  tags?: InputMaybe<TagManyRelationFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
+  trails?: InputMaybe<TrailManyRelationFilter>;
+  unpublishAt?: InputMaybe<DateTimeNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeNullableFilter>;
+  userGroups?: InputMaybe<UserGroupManyRelationFilter>;
+};
+
+export type EventDraftWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type EventManyRelationFilter = {
+  every?: InputMaybe<EventWhereInput>;
+  none?: InputMaybe<EventWhereInput>;
+  some?: InputMaybe<EventWhereInput>;
+};
+
+export type EventOrderByInput = {
+  body?: InputMaybe<MyOrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  description?: InputMaybe<OrderDirection>;
+  endDate?: InputMaybe<OrderDirection>;
+  heroImage?: InputMaybe<BlueHarvestImageOrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  makeDrafts?: InputMaybe<OrderDirection>;
+  publishAt?: InputMaybe<OrderDirection>;
+  reviewDate?: InputMaybe<OrderDirection>;
+  slug?: InputMaybe<OrderDirection>;
+  startDate?: InputMaybe<OrderDirection>;
+  status?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+  unpublishAt?: InputMaybe<OrderDirection>;
+  updatedAt?: InputMaybe<OrderDirection>;
+};
+
+export type EventRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<EventWhereUniqueInput>>;
+  create?: InputMaybe<Array<EventCreateInput>>;
+};
+
+export type EventRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<EventWhereUniqueInput>>;
+  create?: InputMaybe<Array<EventCreateInput>>;
+  disconnect?: InputMaybe<Array<EventWhereUniqueInput>>;
+  set?: InputMaybe<Array<EventWhereUniqueInput>>;
+};
+
+export type EventRelateToOneForCreateInput = {
+  connect?: InputMaybe<EventWhereUniqueInput>;
+  create?: InputMaybe<EventCreateInput>;
+};
+
+export type EventRelateToOneForUpdateInput = {
+  connect?: InputMaybe<EventWhereUniqueInput>;
+  create?: InputMaybe<EventCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type EventUpdateArgs = {
+  data: EventUpdateInput;
+  where: EventWhereUniqueInput;
+};
+
+export type EventUpdateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
+  boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentVersion?: InputMaybe<EventVersionRelateToOneForUpdateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  drafts?: InputMaybe<EventDraftRelateToManyForUpdateInput>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  makeDrafts?: InputMaybe<Scalars['String']['input']>;
+  orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
+  owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<TagRelateToManyForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
+  versions?: InputMaybe<EventVersionRelateToManyForUpdateInput>;
+};
+
+export type EventVersion = {
+  __typename?: 'EventVersion';
+  actions?: Maybe<Array<InternalLink>>;
+  actionsCount?: Maybe<Scalars['Int']['output']>;
+  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+  boards?: Maybe<Array<Board>>;
+  boardsCount?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Array<Community>>;
+  communitiesCount?: Maybe<Scalars['Int']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  endDate?: Maybe<Scalars['DateTime']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  facilities?: Maybe<Array<Facility>>;
+  facilitiesCount?: Maybe<Scalars['Int']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  isLive?: Maybe<Event>;
+  liveUrl?: Maybe<Scalars['String']['output']>;
+  orgUnits?: Maybe<Array<OrgUnit>>;
+  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+  original?: Maybe<Event>;
+  owner?: Maybe<User>;
+  parks?: Maybe<Array<Park>>;
+  parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  republish?: Maybe<Scalars['String']['output']>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
+  services?: Maybe<Array<Service>>;
+  servicesCount?: Maybe<Scalars['Int']['output']>;
+  startDate?: Maybe<Scalars['DateTime']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
+  trails?: Maybe<Array<Trail>>;
+  trailsCount?: Maybe<Scalars['Int']['output']>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userGroups?: Maybe<Array<UserGroup>>;
+  userGroupsCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type EventVersionActionsArgs = {
+  cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
+  orderBy?: Array<InternalLinkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InternalLinkWhereInput;
+};
+
+
+export type EventVersionActionsCountArgs = {
+  where?: InternalLinkWhereInput;
+};
+
+
+export type EventVersionAssemblyDistrictsArgs = {
+  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
+  orderBy?: Array<AssemblyDistrictOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type EventVersionAssemblyDistrictsCountArgs = {
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type EventVersionBoardsArgs = {
+  cursor?: InputMaybe<BoardWhereUniqueInput>;
+  orderBy?: Array<BoardOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: BoardWhereInput;
+};
+
+
+export type EventVersionBoardsCountArgs = {
+  where?: BoardWhereInput;
+};
+
+
+export type EventVersionCommunitiesArgs = {
+  cursor?: InputMaybe<CommunityWhereUniqueInput>;
+  orderBy?: Array<CommunityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: CommunityWhereInput;
+};
+
+
+export type EventVersionCommunitiesCountArgs = {
+  where?: CommunityWhereInput;
+};
+
+
+export type EventVersionContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type EventVersionContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type EventVersionDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type EventVersionDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type EventVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type EventVersionEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type EventVersionFacilitiesArgs = {
+  cursor?: InputMaybe<FacilityWhereUniqueInput>;
+  orderBy?: Array<FacilityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: FacilityWhereInput;
+};
+
+
+export type EventVersionFacilitiesCountArgs = {
+  where?: FacilityWhereInput;
+};
+
+
+export type EventVersionOrgUnitsArgs = {
+  cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
+  orderBy?: Array<OrgUnitOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: OrgUnitWhereInput;
+};
+
+
+export type EventVersionOrgUnitsCountArgs = {
+  where?: OrgUnitWhereInput;
+};
+
+
+export type EventVersionParksArgs = {
+  cursor?: InputMaybe<ParkWhereUniqueInput>;
+  orderBy?: Array<ParkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ParkWhereInput;
+};
+
+
+export type EventVersionParksCountArgs = {
+  where?: ParkWhereInput;
+};
+
+
+export type EventVersionPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type EventVersionPlansCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type EventVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type EventVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type EventVersionServicesArgs = {
+  cursor?: InputMaybe<ServiceWhereUniqueInput>;
+  orderBy?: Array<ServiceOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ServiceWhereInput;
+};
+
+
+export type EventVersionServicesCountArgs = {
+  where?: ServiceWhereInput;
+};
+
+
+export type EventVersionTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type EventVersionTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type EventVersionTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type EventVersionTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
+export type EventVersionTrailsArgs = {
+  cursor?: InputMaybe<TrailWhereUniqueInput>;
+  orderBy?: Array<TrailOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TrailWhereInput;
+};
+
+
+export type EventVersionTrailsCountArgs = {
+  where?: TrailWhereInput;
+};
+
+
+export type EventVersionUserGroupsArgs = {
+  cursor?: InputMaybe<UserGroupWhereUniqueInput>;
+  orderBy?: Array<UserGroupOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: UserGroupWhereInput;
+};
+
+
+export type EventVersionUserGroupsCountArgs = {
+  where?: UserGroupWhereInput;
+};
+
+export type EventVersionCreateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
+  boards?: InputMaybe<BoardRelateToManyForCreateInput>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  isLive?: InputMaybe<EventRelateToOneForCreateInput>;
+  orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
+  original?: InputMaybe<EventRelateToOneForCreateInput>;
+  owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
+  republish?: InputMaybe<Scalars['String']['input']>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  services?: InputMaybe<ServiceRelateToManyForCreateInput>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  trails?: InputMaybe<TrailRelateToManyForCreateInput>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
+};
+
+export type EventVersionManyRelationFilter = {
+  every?: InputMaybe<EventVersionWhereInput>;
+  none?: InputMaybe<EventVersionWhereInput>;
+  some?: InputMaybe<EventVersionWhereInput>;
+};
+
+export type EventVersionOrderByInput = {
+  body?: InputMaybe<MyOrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  description?: InputMaybe<OrderDirection>;
+  endDate?: InputMaybe<OrderDirection>;
+  heroImage?: InputMaybe<BlueHarvestImageOrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  publishAt?: InputMaybe<OrderDirection>;
+  republish?: InputMaybe<OrderDirection>;
+  reviewDate?: InputMaybe<OrderDirection>;
+  startDate?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+  unpublishAt?: InputMaybe<OrderDirection>;
+  updatedAt?: InputMaybe<OrderDirection>;
+};
+
+export type EventVersionRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<EventVersionWhereUniqueInput>>;
+  create?: InputMaybe<Array<EventVersionCreateInput>>;
+};
+
+export type EventVersionRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<EventVersionWhereUniqueInput>>;
+  create?: InputMaybe<Array<EventVersionCreateInput>>;
+  disconnect?: InputMaybe<Array<EventVersionWhereUniqueInput>>;
+  set?: InputMaybe<Array<EventVersionWhereUniqueInput>>;
+};
+
+export type EventVersionRelateToOneForCreateInput = {
+  connect?: InputMaybe<EventVersionWhereUniqueInput>;
+  create?: InputMaybe<EventVersionCreateInput>;
+};
+
+export type EventVersionRelateToOneForUpdateInput = {
+  connect?: InputMaybe<EventVersionWhereUniqueInput>;
+  create?: InputMaybe<EventVersionCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type EventVersionUpdateArgs = {
+  data: EventVersionUpdateInput;
+  where: EventVersionWhereUniqueInput;
+};
+
+export type EventVersionUpdateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
+  boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  isLive?: InputMaybe<EventRelateToOneForUpdateInput>;
+  orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
+  original?: InputMaybe<EventRelateToOneForUpdateInput>;
+  owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
+  republish?: InputMaybe<Scalars['String']['input']>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
+  startDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
+};
+
+export type EventVersionWhereInput = {
+  AND?: InputMaybe<Array<EventVersionWhereInput>>;
+  NOT?: InputMaybe<Array<EventVersionWhereInput>>;
+  OR?: InputMaybe<Array<EventVersionWhereInput>>;
+  actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
+  boards?: InputMaybe<BoardManyRelationFilter>;
+  body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityManyRelationFilter>;
+  contacts?: InputMaybe<ContactManyRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  description?: InputMaybe<StringFilter>;
+  documents?: InputMaybe<DocumentManyRelationFilter>;
+  endDate?: InputMaybe<DateTimeNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  facilities?: InputMaybe<FacilityManyRelationFilter>;
+  id?: InputMaybe<IdFilter>;
+  isLive?: InputMaybe<EventWhereInput>;
+  orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
+  original?: InputMaybe<EventWhereInput>;
+  owner?: InputMaybe<UserWhereInput>;
+  parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
+  publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
+  reviewDate?: InputMaybe<DateTimeNullableFilter>;
+  services?: InputMaybe<ServiceManyRelationFilter>;
+  startDate?: InputMaybe<DateTimeNullableFilter>;
+  tags?: InputMaybe<TagManyRelationFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
+  trails?: InputMaybe<TrailManyRelationFilter>;
+  unpublishAt?: InputMaybe<DateTimeNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeNullableFilter>;
+  userGroups?: InputMaybe<UserGroupManyRelationFilter>;
+};
+
+export type EventVersionWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  isLive?: InputMaybe<EventWhereUniqueInput>;
+};
+
+export type EventWhereInput = {
+  AND?: InputMaybe<Array<EventWhereInput>>;
+  NOT?: InputMaybe<Array<EventWhereInput>>;
+  OR?: InputMaybe<Array<EventWhereInput>>;
+  actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
+  boards?: InputMaybe<BoardManyRelationFilter>;
+  body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityManyRelationFilter>;
+  contacts?: InputMaybe<ContactManyRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  currentVersion?: InputMaybe<EventVersionWhereInput>;
+  description?: InputMaybe<StringFilter>;
+  documents?: InputMaybe<DocumentManyRelationFilter>;
+  drafts?: InputMaybe<EventDraftManyRelationFilter>;
+  endDate?: InputMaybe<DateTimeNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  facilities?: InputMaybe<FacilityManyRelationFilter>;
+  id?: InputMaybe<IdFilter>;
+  orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
+  owner?: InputMaybe<UserWhereInput>;
+  parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
+  publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
+  reviewDate?: InputMaybe<DateTimeNullableFilter>;
+  services?: InputMaybe<ServiceManyRelationFilter>;
+  slug?: InputMaybe<StringFilter>;
+  startDate?: InputMaybe<DateTimeNullableFilter>;
+  status?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<TagManyRelationFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
+  trails?: InputMaybe<TrailManyRelationFilter>;
+  unpublishAt?: InputMaybe<DateTimeNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeNullableFilter>;
+  userGroups?: InputMaybe<UserGroupManyRelationFilter>;
+  versions?: InputMaybe<EventVersionManyRelationFilter>;
+};
+
+export type EventWhereUniqueInput = {
+  currentVersion?: InputMaybe<EventVersionWhereUniqueInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ExternalLink = {
   __typename?: 'ExternalLink';
   id: Scalars['ID']['output'];
@@ -5092,12 +6849,14 @@ export type ExternalLinkWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Facility = BasePage & BasePageWithSlug & {
+export type Facility = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'Facility';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   address?: Maybe<Location>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Community>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -5107,19 +6866,20 @@ export type Facility = BasePage & BasePageWithSlug & {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   drafts?: Maybe<Array<FacilityDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   hours?: Maybe<Array<OperatingHour>>;
   hoursCount?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   park?: Maybe<Park>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -5195,6 +6955,20 @@ export type FacilityDraftsCountArgs = {
 };
 
 
+export type FacilityEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type FacilityEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type FacilityHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
   orderBy?: Array<OperatingHourOrderByInput>;
@@ -5209,31 +6983,17 @@ export type FacilityHoursCountArgs = {
 };
 
 
-export type FacilityNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type FacilityPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type FacilityNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type FacilityNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type FacilityNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type FacilityPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -5310,20 +7070,22 @@ export type FacilityCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   address?: InputMaybe<LocationRelateToOneForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   currentVersion?: InputMaybe<FacilityVersionRelateToOneForCreateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<FacilityDraftRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForCreateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   park?: InputMaybe<ParkRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -5343,26 +7105,29 @@ export type FacilityDraft = {
   actionsCount?: Maybe<Scalars['Int']['output']>;
   address?: Maybe<Location>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Community>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   hours?: Maybe<Array<OperatingHour>>;
   hoursCount?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Facility>;
   owner?: Maybe<User>;
   park?: Maybe<Park>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -5420,6 +7185,20 @@ export type FacilityDraftDocumentsCountArgs = {
 };
 
 
+export type FacilityDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type FacilityDraftEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type FacilityDraftHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
   orderBy?: Array<OperatingHourOrderByInput>;
@@ -5434,31 +7213,17 @@ export type FacilityDraftHoursCountArgs = {
 };
 
 
-export type FacilityDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type FacilityDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type FacilityDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type FacilityDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type FacilityDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type FacilityDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -5521,19 +7286,21 @@ export type FacilityDraftCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   address?: InputMaybe<LocationRelateToOneForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<FacilityRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   park?: InputMaybe<ParkRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
@@ -5585,19 +7352,21 @@ export type FacilityDraftUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<FacilityRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   park?: InputMaybe<ParkRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
@@ -5615,18 +7384,20 @@ export type FacilityDraftWhereInput = {
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   address?: InputMaybe<LocationWhereInput>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityWhereInput>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   hours?: InputMaybe<OperatingHourManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<FacilityWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   park?: InputMaybe<ParkWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -5735,20 +7506,22 @@ export type FacilityUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   currentVersion?: InputMaybe<FacilityVersionRelateToOneForUpdateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<FacilityDraftRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForUpdateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   park?: InputMaybe<ParkRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -5768,26 +7541,29 @@ export type FacilityVersion = {
   actionsCount?: Maybe<Scalars['Int']['output']>;
   address?: Maybe<Location>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Community>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   hours?: Maybe<Array<OperatingHour>>;
   hoursCount?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   isLive?: Maybe<Facility>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Facility>;
   owner?: Maybe<User>;
   park?: Maybe<Park>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
@@ -5846,6 +7622,20 @@ export type FacilityVersionDocumentsCountArgs = {
 };
 
 
+export type FacilityVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type FacilityVersionEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type FacilityVersionHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
   orderBy?: Array<OperatingHourOrderByInput>;
@@ -5860,31 +7650,17 @@ export type FacilityVersionHoursCountArgs = {
 };
 
 
-export type FacilityVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type FacilityVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type FacilityVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type FacilityVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type FacilityVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type FacilityVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -5947,19 +7723,21 @@ export type FacilityVersionCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   address?: InputMaybe<LocationRelateToOneForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForCreateInput>;
   isLive?: InputMaybe<FacilityRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<FacilityRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   park?: InputMaybe<ParkRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
@@ -6023,19 +7801,21 @@ export type FacilityVersionUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForUpdateInput>;
   isLive?: InputMaybe<FacilityRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<FacilityRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   park?: InputMaybe<ParkRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
@@ -6054,19 +7834,21 @@ export type FacilityVersionWhereInput = {
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   address?: InputMaybe<LocationWhereInput>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityWhereInput>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   hours?: InputMaybe<OperatingHourManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<FacilityWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<FacilityWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   park?: InputMaybe<ParkWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -6089,19 +7871,21 @@ export type FacilityWhereInput = {
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   address?: InputMaybe<LocationWhereInput>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityWhereInput>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   currentVersion?: InputMaybe<FacilityVersionWhereInput>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<FacilityDraftManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   hours?: InputMaybe<OperatingHourManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   park?: InputMaybe<ParkWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   slug?: InputMaybe<StringFilter>;
@@ -6789,6 +8573,12 @@ export type Mutation = {
   createElections?: Maybe<Array<Maybe<Election>>>;
   createElectionsPage?: Maybe<ElectionsPage>;
   createElectionsPages?: Maybe<Array<Maybe<ElectionsPage>>>;
+  createEvent?: Maybe<Event>;
+  createEventDraft?: Maybe<EventDraft>;
+  createEventDrafts?: Maybe<Array<Maybe<EventDraft>>>;
+  createEventVersion?: Maybe<EventVersion>;
+  createEventVersions?: Maybe<Array<Maybe<EventVersion>>>;
+  createEvents?: Maybe<Array<Maybe<Event>>>;
   createExternalLink?: Maybe<ExternalLink>;
   createExternalLinks?: Maybe<Array<Maybe<ExternalLink>>>;
   createFacilities?: Maybe<Array<Maybe<Facility>>>;
@@ -6823,12 +8613,24 @@ export type Mutation = {
   createParkVersion?: Maybe<ParkVersion>;
   createParkVersions?: Maybe<Array<Maybe<ParkVersion>>>;
   createParks?: Maybe<Array<Maybe<Park>>>;
+  createPlan?: Maybe<Plan>;
+  createPlanCode?: Maybe<PlanCode>;
+  createPlanCodes?: Maybe<Array<Maybe<PlanCode>>>;
+  createPlanDocument?: Maybe<PlanDocument>;
+  createPlanDocuments?: Maybe<Array<Maybe<PlanDocument>>>;
+  createPlanDraft?: Maybe<PlanDraft>;
+  createPlanDrafts?: Maybe<Array<Maybe<PlanDraft>>>;
+  createPlanVersion?: Maybe<PlanVersion>;
+  createPlanVersions?: Maybe<Array<Maybe<PlanVersion>>>;
+  createPlans?: Maybe<Array<Maybe<Plan>>>;
   createPublicNotice?: Maybe<PublicNotice>;
   createPublicNoticeDraft?: Maybe<PublicNoticeDraft>;
   createPublicNoticeDrafts?: Maybe<Array<Maybe<PublicNoticeDraft>>>;
   createPublicNoticeVersion?: Maybe<PublicNoticeVersion>;
   createPublicNoticeVersions?: Maybe<Array<Maybe<PublicNoticeVersion>>>;
   createPublicNotices?: Maybe<Array<Maybe<PublicNotice>>>;
+  createRedirect?: Maybe<Redirect>;
+  createRedirects?: Maybe<Array<Maybe<Redirect>>>;
   createService?: Maybe<Service>;
   createServiceDraft?: Maybe<ServiceDraft>;
   createServiceDrafts?: Maybe<Array<Maybe<ServiceDraft>>>;
@@ -6899,6 +8701,12 @@ export type Mutation = {
   deleteElections?: Maybe<Array<Maybe<Election>>>;
   deleteElectionsPage?: Maybe<ElectionsPage>;
   deleteElectionsPages?: Maybe<Array<Maybe<ElectionsPage>>>;
+  deleteEvent?: Maybe<Event>;
+  deleteEventDraft?: Maybe<EventDraft>;
+  deleteEventDrafts?: Maybe<Array<Maybe<EventDraft>>>;
+  deleteEventVersion?: Maybe<EventVersion>;
+  deleteEventVersions?: Maybe<Array<Maybe<EventVersion>>>;
+  deleteEvents?: Maybe<Array<Maybe<Event>>>;
   deleteExternalLink?: Maybe<ExternalLink>;
   deleteExternalLinks?: Maybe<Array<Maybe<ExternalLink>>>;
   deleteFacilities?: Maybe<Array<Maybe<Facility>>>;
@@ -6933,12 +8741,24 @@ export type Mutation = {
   deleteParkVersion?: Maybe<ParkVersion>;
   deleteParkVersions?: Maybe<Array<Maybe<ParkVersion>>>;
   deleteParks?: Maybe<Array<Maybe<Park>>>;
+  deletePlan?: Maybe<Plan>;
+  deletePlanCode?: Maybe<PlanCode>;
+  deletePlanCodes?: Maybe<Array<Maybe<PlanCode>>>;
+  deletePlanDocument?: Maybe<PlanDocument>;
+  deletePlanDocuments?: Maybe<Array<Maybe<PlanDocument>>>;
+  deletePlanDraft?: Maybe<PlanDraft>;
+  deletePlanDrafts?: Maybe<Array<Maybe<PlanDraft>>>;
+  deletePlanVersion?: Maybe<PlanVersion>;
+  deletePlanVersions?: Maybe<Array<Maybe<PlanVersion>>>;
+  deletePlans?: Maybe<Array<Maybe<Plan>>>;
   deletePublicNotice?: Maybe<PublicNotice>;
   deletePublicNoticeDraft?: Maybe<PublicNoticeDraft>;
   deletePublicNoticeDrafts?: Maybe<Array<Maybe<PublicNoticeDraft>>>;
   deletePublicNoticeVersion?: Maybe<PublicNoticeVersion>;
   deletePublicNoticeVersions?: Maybe<Array<Maybe<PublicNoticeVersion>>>;
   deletePublicNotices?: Maybe<Array<Maybe<PublicNotice>>>;
+  deleteRedirect?: Maybe<Redirect>;
+  deleteRedirects?: Maybe<Array<Maybe<Redirect>>>;
   deleteService?: Maybe<Service>;
   deleteServiceDraft?: Maybe<ServiceDraft>;
   deleteServiceDrafts?: Maybe<Array<Maybe<ServiceDraft>>>;
@@ -7010,6 +8830,12 @@ export type Mutation = {
   updateElections?: Maybe<Array<Maybe<Election>>>;
   updateElectionsPage?: Maybe<ElectionsPage>;
   updateElectionsPages?: Maybe<Array<Maybe<ElectionsPage>>>;
+  updateEvent?: Maybe<Event>;
+  updateEventDraft?: Maybe<EventDraft>;
+  updateEventDrafts?: Maybe<Array<Maybe<EventDraft>>>;
+  updateEventVersion?: Maybe<EventVersion>;
+  updateEventVersions?: Maybe<Array<Maybe<EventVersion>>>;
+  updateEvents?: Maybe<Array<Maybe<Event>>>;
   updateExternalLink?: Maybe<ExternalLink>;
   updateExternalLinks?: Maybe<Array<Maybe<ExternalLink>>>;
   updateFacilities?: Maybe<Array<Maybe<Facility>>>;
@@ -7044,12 +8870,24 @@ export type Mutation = {
   updateParkVersion?: Maybe<ParkVersion>;
   updateParkVersions?: Maybe<Array<Maybe<ParkVersion>>>;
   updateParks?: Maybe<Array<Maybe<Park>>>;
+  updatePlan?: Maybe<Plan>;
+  updatePlanCode?: Maybe<PlanCode>;
+  updatePlanCodes?: Maybe<Array<Maybe<PlanCode>>>;
+  updatePlanDocument?: Maybe<PlanDocument>;
+  updatePlanDocuments?: Maybe<Array<Maybe<PlanDocument>>>;
+  updatePlanDraft?: Maybe<PlanDraft>;
+  updatePlanDrafts?: Maybe<Array<Maybe<PlanDraft>>>;
+  updatePlanVersion?: Maybe<PlanVersion>;
+  updatePlanVersions?: Maybe<Array<Maybe<PlanVersion>>>;
+  updatePlans?: Maybe<Array<Maybe<Plan>>>;
   updatePublicNotice?: Maybe<PublicNotice>;
   updatePublicNoticeDraft?: Maybe<PublicNoticeDraft>;
   updatePublicNoticeDrafts?: Maybe<Array<Maybe<PublicNoticeDraft>>>;
   updatePublicNoticeVersion?: Maybe<PublicNoticeVersion>;
   updatePublicNoticeVersions?: Maybe<Array<Maybe<PublicNoticeVersion>>>;
   updatePublicNotices?: Maybe<Array<Maybe<PublicNotice>>>;
+  updateRedirect?: Maybe<Redirect>;
+  updateRedirects?: Maybe<Array<Maybe<Redirect>>>;
   updateService?: Maybe<Service>;
   updateServiceDraft?: Maybe<ServiceDraft>;
   updateServiceDrafts?: Maybe<Array<Maybe<ServiceDraft>>>;
@@ -7299,6 +9137,36 @@ export type MutationCreateElectionsPagesArgs = {
 };
 
 
+export type MutationCreateEventArgs = {
+  data: EventCreateInput;
+};
+
+
+export type MutationCreateEventDraftArgs = {
+  data: EventDraftCreateInput;
+};
+
+
+export type MutationCreateEventDraftsArgs = {
+  data: Array<EventDraftCreateInput>;
+};
+
+
+export type MutationCreateEventVersionArgs = {
+  data: EventVersionCreateInput;
+};
+
+
+export type MutationCreateEventVersionsArgs = {
+  data: Array<EventVersionCreateInput>;
+};
+
+
+export type MutationCreateEventsArgs = {
+  data: Array<EventCreateInput>;
+};
+
+
 export type MutationCreateExternalLinkArgs = {
   data: ExternalLinkCreateInput;
 };
@@ -7469,6 +9337,56 @@ export type MutationCreateParksArgs = {
 };
 
 
+export type MutationCreatePlanArgs = {
+  data: PlanCreateInput;
+};
+
+
+export type MutationCreatePlanCodeArgs = {
+  data: PlanCodeCreateInput;
+};
+
+
+export type MutationCreatePlanCodesArgs = {
+  data: Array<PlanCodeCreateInput>;
+};
+
+
+export type MutationCreatePlanDocumentArgs = {
+  data: PlanDocumentCreateInput;
+};
+
+
+export type MutationCreatePlanDocumentsArgs = {
+  data: Array<PlanDocumentCreateInput>;
+};
+
+
+export type MutationCreatePlanDraftArgs = {
+  data: PlanDraftCreateInput;
+};
+
+
+export type MutationCreatePlanDraftsArgs = {
+  data: Array<PlanDraftCreateInput>;
+};
+
+
+export type MutationCreatePlanVersionArgs = {
+  data: PlanVersionCreateInput;
+};
+
+
+export type MutationCreatePlanVersionsArgs = {
+  data: Array<PlanVersionCreateInput>;
+};
+
+
+export type MutationCreatePlansArgs = {
+  data: Array<PlanCreateInput>;
+};
+
+
 export type MutationCreatePublicNoticeArgs = {
   data: PublicNoticeCreateInput;
 };
@@ -7496,6 +9414,16 @@ export type MutationCreatePublicNoticeVersionsArgs = {
 
 export type MutationCreatePublicNoticesArgs = {
   data: Array<PublicNoticeCreateInput>;
+};
+
+
+export type MutationCreateRedirectArgs = {
+  data: RedirectCreateInput;
+};
+
+
+export type MutationCreateRedirectsArgs = {
+  data: Array<RedirectCreateInput>;
 };
 
 
@@ -7849,6 +9777,36 @@ export type MutationDeleteElectionsPagesArgs = {
 };
 
 
+export type MutationDeleteEventArgs = {
+  where: EventWhereUniqueInput;
+};
+
+
+export type MutationDeleteEventDraftArgs = {
+  where: EventDraftWhereUniqueInput;
+};
+
+
+export type MutationDeleteEventDraftsArgs = {
+  where: Array<EventDraftWhereUniqueInput>;
+};
+
+
+export type MutationDeleteEventVersionArgs = {
+  where: EventVersionWhereUniqueInput;
+};
+
+
+export type MutationDeleteEventVersionsArgs = {
+  where: Array<EventVersionWhereUniqueInput>;
+};
+
+
+export type MutationDeleteEventsArgs = {
+  where: Array<EventWhereUniqueInput>;
+};
+
+
 export type MutationDeleteExternalLinkArgs = {
   where: ExternalLinkWhereUniqueInput;
 };
@@ -8019,6 +9977,56 @@ export type MutationDeleteParksArgs = {
 };
 
 
+export type MutationDeletePlanArgs = {
+  where: PlanWhereUniqueInput;
+};
+
+
+export type MutationDeletePlanCodeArgs = {
+  where: PlanCodeWhereUniqueInput;
+};
+
+
+export type MutationDeletePlanCodesArgs = {
+  where: Array<PlanCodeWhereUniqueInput>;
+};
+
+
+export type MutationDeletePlanDocumentArgs = {
+  where: PlanDocumentWhereUniqueInput;
+};
+
+
+export type MutationDeletePlanDocumentsArgs = {
+  where: Array<PlanDocumentWhereUniqueInput>;
+};
+
+
+export type MutationDeletePlanDraftArgs = {
+  where: PlanDraftWhereUniqueInput;
+};
+
+
+export type MutationDeletePlanDraftsArgs = {
+  where: Array<PlanDraftWhereUniqueInput>;
+};
+
+
+export type MutationDeletePlanVersionArgs = {
+  where: PlanVersionWhereUniqueInput;
+};
+
+
+export type MutationDeletePlanVersionsArgs = {
+  where: Array<PlanVersionWhereUniqueInput>;
+};
+
+
+export type MutationDeletePlansArgs = {
+  where: Array<PlanWhereUniqueInput>;
+};
+
+
 export type MutationDeletePublicNoticeArgs = {
   where: PublicNoticeWhereUniqueInput;
 };
@@ -8046,6 +10054,16 @@ export type MutationDeletePublicNoticeVersionsArgs = {
 
 export type MutationDeletePublicNoticesArgs = {
   where: Array<PublicNoticeWhereUniqueInput>;
+};
+
+
+export type MutationDeleteRedirectArgs = {
+  where: RedirectWhereUniqueInput;
+};
+
+
+export type MutationDeleteRedirectsArgs = {
+  where: Array<RedirectWhereUniqueInput>;
 };
 
 
@@ -8421,6 +10439,39 @@ export type MutationUpdateElectionsPagesArgs = {
 };
 
 
+export type MutationUpdateEventArgs = {
+  data: EventUpdateInput;
+  where: EventWhereUniqueInput;
+};
+
+
+export type MutationUpdateEventDraftArgs = {
+  data: EventDraftUpdateInput;
+  where: EventDraftWhereUniqueInput;
+};
+
+
+export type MutationUpdateEventDraftsArgs = {
+  data: Array<EventDraftUpdateArgs>;
+};
+
+
+export type MutationUpdateEventVersionArgs = {
+  data: EventVersionUpdateInput;
+  where: EventVersionWhereUniqueInput;
+};
+
+
+export type MutationUpdateEventVersionsArgs = {
+  data: Array<EventVersionUpdateArgs>;
+};
+
+
+export type MutationUpdateEventsArgs = {
+  data: Array<EventUpdateArgs>;
+};
+
+
 export type MutationUpdateExternalLinkArgs = {
   data: ExternalLinkUpdateInput;
   where: ExternalLinkWhereUniqueInput;
@@ -8608,6 +10659,61 @@ export type MutationUpdateParksArgs = {
 };
 
 
+export type MutationUpdatePlanArgs = {
+  data: PlanUpdateInput;
+  where: PlanWhereUniqueInput;
+};
+
+
+export type MutationUpdatePlanCodeArgs = {
+  data: PlanCodeUpdateInput;
+  where: PlanCodeWhereUniqueInput;
+};
+
+
+export type MutationUpdatePlanCodesArgs = {
+  data: Array<PlanCodeUpdateArgs>;
+};
+
+
+export type MutationUpdatePlanDocumentArgs = {
+  data: PlanDocumentUpdateInput;
+  where: PlanDocumentWhereUniqueInput;
+};
+
+
+export type MutationUpdatePlanDocumentsArgs = {
+  data: Array<PlanDocumentUpdateArgs>;
+};
+
+
+export type MutationUpdatePlanDraftArgs = {
+  data: PlanDraftUpdateInput;
+  where: PlanDraftWhereUniqueInput;
+};
+
+
+export type MutationUpdatePlanDraftsArgs = {
+  data: Array<PlanDraftUpdateArgs>;
+};
+
+
+export type MutationUpdatePlanVersionArgs = {
+  data: PlanVersionUpdateInput;
+  where: PlanVersionWhereUniqueInput;
+};
+
+
+export type MutationUpdatePlanVersionsArgs = {
+  data: Array<PlanVersionUpdateArgs>;
+};
+
+
+export type MutationUpdatePlansArgs = {
+  data: Array<PlanUpdateArgs>;
+};
+
+
 export type MutationUpdatePublicNoticeArgs = {
   data: PublicNoticeUpdateInput;
   where: PublicNoticeWhereUniqueInput;
@@ -8638,6 +10744,17 @@ export type MutationUpdatePublicNoticeVersionsArgs = {
 
 export type MutationUpdatePublicNoticesArgs = {
   data: Array<PublicNoticeUpdateArgs>;
+};
+
+
+export type MutationUpdateRedirectArgs = {
+  data: RedirectUpdateInput;
+  where: RedirectWhereUniqueInput;
+};
+
+
+export type MutationUpdateRedirectsArgs = {
+  data: Array<RedirectUpdateArgs>;
 };
 
 
@@ -8905,11 +11022,12 @@ export enum OrderDirection {
   Desc = 'desc'
 }
 
-export type OrgUnit = BasePage & BasePageWithSlug & {
+export type OrgUnit = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'OrgUnit';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   children?: Maybe<Array<OrgUnit>>;
   childrenCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -8921,17 +11039,18 @@ export type OrgUnit = BasePage & BasePageWithSlug & {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   drafts?: Maybe<Array<OrgUnitDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   parent?: Maybe<OrgUnit>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -9022,31 +11141,31 @@ export type OrgUnitDraftsCountArgs = {
 };
 
 
-export type OrgUnitNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type OrgUnitEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type OrgUnitNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type OrgUnitEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type OrgUnitNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type OrgUnitPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type OrgUnitNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type OrgUnitPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -9129,13 +11248,14 @@ export type OrgUnitCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<OrgUnitDraftRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parent?: InputMaybe<OrgUnitRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   showPage?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9155,6 +11275,7 @@ export type OrgUnitDraft = {
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   children?: Maybe<Array<OrgUnit>>;
   childrenCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -9163,18 +11284,19 @@ export type OrgUnitDraft = {
   description?: Maybe<Scalars['String']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<OrgUnit>;
   owner?: Maybe<User>;
   parent?: Maybe<OrgUnit>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -9247,31 +11369,31 @@ export type OrgUnitDraftDocumentsCountArgs = {
 };
 
 
-export type OrgUnitDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type OrgUnitDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type OrgUnitDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type OrgUnitDraftEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type OrgUnitDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type OrgUnitDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type OrgUnitDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type OrgUnitDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -9338,14 +11460,15 @@ export type OrgUnitDraftCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<OrgUnitRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parent?: InputMaybe<OrgUnitRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   showPage?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9403,14 +11526,15 @@ export type OrgUnitDraftUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<OrgUnitRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parent?: InputMaybe<OrgUnitRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   showPage?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9433,13 +11557,14 @@ export type OrgUnitDraftWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<OrgUnitWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parent?: InputMaybe<OrgUnitWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   showPage?: InputMaybe<BooleanFilter>;
@@ -9516,13 +11641,14 @@ export type OrgUnitUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<OrgUnitDraftRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parent?: InputMaybe<OrgUnitRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   showPage?: InputMaybe<Scalars['Boolean']['input']>;
@@ -9542,6 +11668,7 @@ export type OrgUnitVersion = {
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   children?: Maybe<Array<OrgUnit>>;
   childrenCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -9550,18 +11677,19 @@ export type OrgUnitVersion = {
   description?: Maybe<Scalars['String']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isLive?: Maybe<OrgUnit>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<OrgUnit>;
   owner?: Maybe<User>;
   parent?: Maybe<OrgUnit>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
@@ -9635,31 +11763,31 @@ export type OrgUnitVersionDocumentsCountArgs = {
 };
 
 
-export type OrgUnitVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type OrgUnitVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type OrgUnitVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type OrgUnitVersionEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type OrgUnitVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type OrgUnitVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type OrgUnitVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type OrgUnitVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -9726,14 +11854,15 @@ export type OrgUnitVersionCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<OrgUnitRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<OrgUnitRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parent?: InputMaybe<OrgUnitRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
@@ -9803,14 +11932,15 @@ export type OrgUnitVersionUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<OrgUnitRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<OrgUnitRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parent?: InputMaybe<OrgUnitRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
@@ -9834,14 +11964,15 @@ export type OrgUnitVersionWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<OrgUnitWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<OrgUnitWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parent?: InputMaybe<OrgUnitWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   showPage?: InputMaybe<BooleanFilter>;
@@ -9871,12 +12002,13 @@ export type OrgUnitWhereInput = {
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<OrgUnitDraftManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   parent?: InputMaybe<OrgUnitWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   showPage?: InputMaybe<BooleanFilter>;
@@ -9900,12 +12032,15 @@ export type OrgUnitWhereUniqueInput = {
 
 export type Page = AssemblyDistrict | Board | Community | Facility | OrgUnit | Park | PublicNotice | Service | Topic | Trail;
 
-export type Park = BasePage & BasePageWithSlug & {
+export type Park = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'Park';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
   address?: Maybe<Location>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Array<Community>>;
+  communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -9915,6 +12050,8 @@ export type Park = BasePage & BasePageWithSlug & {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   drafts?: Maybe<Array<ParkDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -9923,12 +12060,11 @@ export type Park = BasePage & BasePageWithSlug & {
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -9961,6 +12097,20 @@ export type ParkActionsArgs = {
 
 export type ParkActionsCountArgs = {
   where?: InternalLinkWhereInput;
+};
+
+
+export type ParkCommunitiesArgs = {
+  cursor?: InputMaybe<CommunityWhereUniqueInput>;
+  orderBy?: Array<CommunityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: CommunityWhereInput;
+};
+
+
+export type ParkCommunitiesCountArgs = {
+  where?: CommunityWhereInput;
 };
 
 
@@ -10006,6 +12156,20 @@ export type ParkDraftsCountArgs = {
 };
 
 
+export type ParkEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type ParkEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type ParkFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
   orderBy?: Array<FacilityOrderByInput>;
@@ -10034,31 +12198,17 @@ export type ParkHoursCountArgs = {
 };
 
 
-export type ParkNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type ParkPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type ParkNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ParkNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type ParkNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type ParkPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -10149,20 +12299,22 @@ export type ParkCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   address?: InputMaybe<LocationRelateToOneForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   currentVersion?: InputMaybe<ParkVersionRelateToOneForCreateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<ParkDraftRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForCreateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -10183,12 +12335,17 @@ export type ParkDraft = {
   actionsCount?: Maybe<Scalars['Int']['output']>;
   address?: Maybe<Location>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Array<Community>>;
+  communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -10196,14 +12353,13 @@ export type ParkDraft = {
   hoursCount?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Park>;
   owner?: Maybe<User>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -10235,6 +12391,20 @@ export type ParkDraftActionsCountArgs = {
 };
 
 
+export type ParkDraftCommunitiesArgs = {
+  cursor?: InputMaybe<CommunityWhereUniqueInput>;
+  orderBy?: Array<CommunityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: CommunityWhereInput;
+};
+
+
+export type ParkDraftCommunitiesCountArgs = {
+  where?: CommunityWhereInput;
+};
+
+
 export type ParkDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
   orderBy?: Array<ContactOrderByInput>;
@@ -10260,6 +12430,20 @@ export type ParkDraftDocumentsArgs = {
 
 export type ParkDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
+};
+
+
+export type ParkDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type ParkDraftEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
@@ -10291,31 +12475,17 @@ export type ParkDraftHoursCountArgs = {
 };
 
 
-export type ParkDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type ParkDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type ParkDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ParkDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type ParkDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type ParkDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -10392,19 +12562,21 @@ export type ParkDraftCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   address?: InputMaybe<LocationRelateToOneForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<ParkRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
@@ -10457,19 +12629,21 @@ export type ParkDraftUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<ParkRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
@@ -10488,18 +12662,20 @@ export type ParkDraftWhereInput = {
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   address?: InputMaybe<LocationWhereInput>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   hours?: InputMaybe<OperatingHourManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<ParkWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -10569,20 +12745,22 @@ export type ParkUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   currentVersion?: InputMaybe<ParkVersionRelateToOneForUpdateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<ParkDraftRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForUpdateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -10603,12 +12781,17 @@ export type ParkVersion = {
   actionsCount?: Maybe<Scalars['Int']['output']>;
   address?: Maybe<Location>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Array<Community>>;
+  communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -10617,13 +12800,12 @@ export type ParkVersion = {
   id: Scalars['ID']['output'];
   isLive?: Maybe<Park>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Park>;
   owner?: Maybe<User>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
@@ -10656,6 +12838,20 @@ export type ParkVersionActionsCountArgs = {
 };
 
 
+export type ParkVersionCommunitiesArgs = {
+  cursor?: InputMaybe<CommunityWhereUniqueInput>;
+  orderBy?: Array<CommunityOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: CommunityWhereInput;
+};
+
+
+export type ParkVersionCommunitiesCountArgs = {
+  where?: CommunityWhereInput;
+};
+
+
 export type ParkVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
   orderBy?: Array<ContactOrderByInput>;
@@ -10681,6 +12877,20 @@ export type ParkVersionDocumentsArgs = {
 
 export type ParkVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
+};
+
+
+export type ParkVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type ParkVersionEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
@@ -10712,31 +12922,17 @@ export type ParkVersionHoursCountArgs = {
 };
 
 
-export type ParkVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type ParkVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type ParkVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ParkVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type ParkVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type ParkVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -10813,19 +13009,21 @@ export type ParkVersionCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
   address?: InputMaybe<LocationRelateToOneForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForCreateInput>;
   isLive?: InputMaybe<ParkRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   original?: InputMaybe<ParkRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
@@ -10890,19 +13088,21 @@ export type ParkVersionUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
   address?: InputMaybe<LocationRelateToOneForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   hours?: InputMaybe<OperatingHourRelateToManyForUpdateInput>;
   isLive?: InputMaybe<ParkRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   original?: InputMaybe<ParkRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
@@ -10922,19 +13122,21 @@ export type ParkVersionWhereInput = {
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   address?: InputMaybe<LocationWhereInput>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   hours?: InputMaybe<OperatingHourManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<ParkWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   original?: InputMaybe<ParkWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -10958,19 +13160,21 @@ export type ParkWhereInput = {
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
   address?: InputMaybe<LocationWhereInput>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   currentVersion?: InputMaybe<ParkVersionWhereInput>;
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<ParkDraftManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   hours?: InputMaybe<OperatingHourManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   slug?: InputMaybe<StringFilter>;
@@ -11001,7 +13205,1276 @@ export type PasswordState = {
   isSet: Scalars['Boolean']['output'];
 };
 
-export type PublicNotice = BasePage & BasePageWithSlug & {
+export type Plan = BasePage & BasePageWithActions & BasePageWithSlug & {
+  __typename?: 'Plan';
+  actions?: Maybe<Array<InternalLink>>;
+  actionsCount?: Maybe<Scalars['Int']['output']>;
+  autoRedirectToExternalWebsite?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Array<PlanCode>>;
+  codeCount?: Maybe<Scalars['Int']['output']>;
+  components?: Maybe<Array<Plan>>;
+  componentsCount?: Maybe<Scalars['Int']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  currentDocument?: Maybe<PlanDocument>;
+  currentVersion?: Maybe<PlanVersion>;
+  description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  draftDocument?: Maybe<PlanDocument>;
+  drafts?: Maybe<Array<PlanDraft>>;
+  draftsCount?: Maybe<Scalars['Int']['output']>;
+  effort?: Maybe<ExternalLink>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  liveUrl?: Maybe<Scalars['String']['output']>;
+  makeDrafts?: Maybe<Scalars['String']['output']>;
+  owner?: Maybe<User>;
+  parent?: Maybe<Plan>;
+  pastDocuments?: Maybe<Array<PlanDocument>>;
+  pastDocumentsCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
+  slug?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userGroups?: Maybe<Array<UserGroup>>;
+  userGroupsCount?: Maybe<Scalars['Int']['output']>;
+  versions?: Maybe<Array<PlanVersion>>;
+  versionsCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type PlanActionsArgs = {
+  cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
+  orderBy?: Array<InternalLinkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InternalLinkWhereInput;
+};
+
+
+export type PlanActionsCountArgs = {
+  where?: InternalLinkWhereInput;
+};
+
+
+export type PlanCodeArgs = {
+  cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
+  orderBy?: Array<PlanCodeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanCodeWhereInput;
+};
+
+
+export type PlanCodeCountArgs = {
+  where?: PlanCodeWhereInput;
+};
+
+
+export type PlanComponentsArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type PlanComponentsCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type PlanContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type PlanContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type PlanDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type PlanDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type PlanDraftsArgs = {
+  cursor?: InputMaybe<PlanDraftWhereUniqueInput>;
+  orderBy?: Array<PlanDraftOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanDraftWhereInput;
+};
+
+
+export type PlanDraftsCountArgs = {
+  where?: PlanDraftWhereInput;
+};
+
+
+export type PlanEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type PlanEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type PlanPastDocumentsArgs = {
+  cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
+  orderBy?: Array<PlanDocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type PlanPastDocumentsCountArgs = {
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type PlanPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PlanPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PlanTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type PlanTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type PlanTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type PlanTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
+export type PlanUserGroupsArgs = {
+  cursor?: InputMaybe<UserGroupWhereUniqueInput>;
+  orderBy?: Array<UserGroupOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: UserGroupWhereInput;
+};
+
+
+export type PlanUserGroupsCountArgs = {
+  where?: UserGroupWhereInput;
+};
+
+
+export type PlanVersionsArgs = {
+  cursor?: InputMaybe<PlanVersionWhereUniqueInput>;
+  orderBy?: Array<PlanVersionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanVersionWhereInput;
+};
+
+
+export type PlanVersionsCountArgs = {
+  where?: PlanVersionWhereInput;
+};
+
+export type PlanCode = {
+  __typename?: 'PlanCode';
+  code?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+};
+
+export type PlanCodeCreateInput = {
+  code?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PlanCodeManyRelationFilter = {
+  every?: InputMaybe<PlanCodeWhereInput>;
+  none?: InputMaybe<PlanCodeWhereInput>;
+  some?: InputMaybe<PlanCodeWhereInput>;
+};
+
+export type PlanCodeOrderByInput = {
+  code?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+};
+
+export type PlanCodeRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<PlanCodeWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanCodeCreateInput>>;
+};
+
+export type PlanCodeRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<PlanCodeWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanCodeCreateInput>>;
+  disconnect?: InputMaybe<Array<PlanCodeWhereUniqueInput>>;
+  set?: InputMaybe<Array<PlanCodeWhereUniqueInput>>;
+};
+
+export type PlanCodeUpdateArgs = {
+  data: PlanCodeUpdateInput;
+  where: PlanCodeWhereUniqueInput;
+};
+
+export type PlanCodeUpdateInput = {
+  code?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PlanCodeWhereInput = {
+  AND?: InputMaybe<Array<PlanCodeWhereInput>>;
+  NOT?: InputMaybe<Array<PlanCodeWhereInput>>;
+  OR?: InputMaybe<Array<PlanCodeWhereInput>>;
+  code?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+};
+
+export type PlanCodeWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type PlanCreateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  autoRedirectToExternalWebsite?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<PlanCodeRelateToManyForCreateInput>;
+  components?: InputMaybe<PlanRelateToManyForCreateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentDocument?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+  currentVersion?: InputMaybe<PlanVersionRelateToOneForCreateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  draftDocument?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+  drafts?: InputMaybe<PlanDraftRelateToManyForCreateInput>;
+  effort?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  makeDrafts?: InputMaybe<Scalars['String']['input']>;
+  owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parent?: InputMaybe<PlanRelateToOneForCreateInput>;
+  pastDocuments?: InputMaybe<PlanDocumentRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<TagRelateToManyForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
+  versions?: InputMaybe<PlanVersionRelateToManyForCreateInput>;
+};
+
+export type PlanDocument = {
+  __typename?: 'PlanDocument';
+  adoptedYear?: Maybe<Scalars['Int']['output']>;
+  document?: Maybe<Array<Document>>;
+  documentCount?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  label?: Maybe<Scalars['String']['output']>;
+  precededBy?: Maybe<PlanDocument>;
+  supersededBy?: Maybe<PlanDocument>;
+};
+
+
+export type PlanDocumentDocumentArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type PlanDocumentDocumentCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+export type PlanDocumentCreateInput = {
+  adoptedYear?: InputMaybe<Scalars['Int']['input']>;
+  document?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  precededBy?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+  supersededBy?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+};
+
+export type PlanDocumentManyRelationFilter = {
+  every?: InputMaybe<PlanDocumentWhereInput>;
+  none?: InputMaybe<PlanDocumentWhereInput>;
+  some?: InputMaybe<PlanDocumentWhereInput>;
+};
+
+export type PlanDocumentOrderByInput = {
+  adoptedYear?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  label?: InputMaybe<OrderDirection>;
+};
+
+export type PlanDocumentRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<PlanDocumentWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanDocumentCreateInput>>;
+};
+
+export type PlanDocumentRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<PlanDocumentWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanDocumentCreateInput>>;
+  disconnect?: InputMaybe<Array<PlanDocumentWhereUniqueInput>>;
+  set?: InputMaybe<Array<PlanDocumentWhereUniqueInput>>;
+};
+
+export type PlanDocumentRelateToOneForCreateInput = {
+  connect?: InputMaybe<PlanDocumentWhereUniqueInput>;
+  create?: InputMaybe<PlanDocumentCreateInput>;
+};
+
+export type PlanDocumentRelateToOneForUpdateInput = {
+  connect?: InputMaybe<PlanDocumentWhereUniqueInput>;
+  create?: InputMaybe<PlanDocumentCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PlanDocumentUpdateArgs = {
+  data: PlanDocumentUpdateInput;
+  where: PlanDocumentWhereUniqueInput;
+};
+
+export type PlanDocumentUpdateInput = {
+  adoptedYear?: InputMaybe<Scalars['Int']['input']>;
+  document?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  precededBy?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+  supersededBy?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+};
+
+export type PlanDocumentWhereInput = {
+  AND?: InputMaybe<Array<PlanDocumentWhereInput>>;
+  NOT?: InputMaybe<Array<PlanDocumentWhereInput>>;
+  OR?: InputMaybe<Array<PlanDocumentWhereInput>>;
+  adoptedYear?: InputMaybe<IntNullableFilter>;
+  document?: InputMaybe<DocumentManyRelationFilter>;
+  id?: InputMaybe<IdFilter>;
+  label?: InputMaybe<StringFilter>;
+  precededBy?: InputMaybe<PlanDocumentWhereInput>;
+  supersededBy?: InputMaybe<PlanDocumentWhereInput>;
+};
+
+export type PlanDocumentWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  precededBy?: InputMaybe<PlanDocumentWhereUniqueInput>;
+  supersededBy?: InputMaybe<PlanDocumentWhereUniqueInput>;
+};
+
+export type PlanDraft = {
+  __typename?: 'PlanDraft';
+  actions?: Maybe<Array<InternalLink>>;
+  actionsCount?: Maybe<Scalars['Int']['output']>;
+  autoRedirectToExternalWebsite?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Array<PlanCode>>;
+  codeCount?: Maybe<Scalars['Int']['output']>;
+  components?: Maybe<Array<Plan>>;
+  componentsCount?: Maybe<Scalars['Int']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  currentDocument?: Maybe<PlanDocument>;
+  description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  draftDocument?: Maybe<PlanDocument>;
+  effort?: Maybe<ExternalLink>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  liveUrl?: Maybe<Scalars['String']['output']>;
+  original?: Maybe<Plan>;
+  owner?: Maybe<User>;
+  parent?: Maybe<Plan>;
+  pastDocuments?: Maybe<Array<PlanDocument>>;
+  pastDocumentsCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+  publish?: Maybe<Scalars['String']['output']>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userGroups?: Maybe<Array<UserGroup>>;
+  userGroupsCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type PlanDraftActionsArgs = {
+  cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
+  orderBy?: Array<InternalLinkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InternalLinkWhereInput;
+};
+
+
+export type PlanDraftActionsCountArgs = {
+  where?: InternalLinkWhereInput;
+};
+
+
+export type PlanDraftCodeArgs = {
+  cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
+  orderBy?: Array<PlanCodeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanCodeWhereInput;
+};
+
+
+export type PlanDraftCodeCountArgs = {
+  where?: PlanCodeWhereInput;
+};
+
+
+export type PlanDraftComponentsArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type PlanDraftComponentsCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type PlanDraftContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type PlanDraftContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type PlanDraftDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type PlanDraftDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type PlanDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type PlanDraftEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type PlanDraftPastDocumentsArgs = {
+  cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
+  orderBy?: Array<PlanDocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type PlanDraftPastDocumentsCountArgs = {
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type PlanDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PlanDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PlanDraftTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type PlanDraftTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type PlanDraftTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type PlanDraftTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
+export type PlanDraftUserGroupsArgs = {
+  cursor?: InputMaybe<UserGroupWhereUniqueInput>;
+  orderBy?: Array<UserGroupOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: UserGroupWhereInput;
+};
+
+
+export type PlanDraftUserGroupsCountArgs = {
+  where?: UserGroupWhereInput;
+};
+
+export type PlanDraftCreateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  autoRedirectToExternalWebsite?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<PlanCodeRelateToManyForCreateInput>;
+  components?: InputMaybe<PlanRelateToManyForCreateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentDocument?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  draftDocument?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+  effort?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  original?: InputMaybe<PlanRelateToOneForCreateInput>;
+  owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parent?: InputMaybe<PlanRelateToOneForCreateInput>;
+  pastDocuments?: InputMaybe<PlanDocumentRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
+  publish?: InputMaybe<Scalars['String']['input']>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
+};
+
+export type PlanDraftManyRelationFilter = {
+  every?: InputMaybe<PlanDraftWhereInput>;
+  none?: InputMaybe<PlanDraftWhereInput>;
+  some?: InputMaybe<PlanDraftWhereInput>;
+};
+
+export type PlanDraftOrderByInput = {
+  autoRedirectToExternalWebsite?: InputMaybe<OrderDirection>;
+  body?: InputMaybe<MyOrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  description?: InputMaybe<OrderDirection>;
+  heroImage?: InputMaybe<BlueHarvestImageOrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  publish?: InputMaybe<OrderDirection>;
+  publishAt?: InputMaybe<OrderDirection>;
+  reviewDate?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+  type?: InputMaybe<OrderDirection>;
+  unpublishAt?: InputMaybe<OrderDirection>;
+  updatedAt?: InputMaybe<OrderDirection>;
+};
+
+export type PlanDraftRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<PlanDraftWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanDraftCreateInput>>;
+};
+
+export type PlanDraftRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<PlanDraftWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanDraftCreateInput>>;
+  disconnect?: InputMaybe<Array<PlanDraftWhereUniqueInput>>;
+  set?: InputMaybe<Array<PlanDraftWhereUniqueInput>>;
+};
+
+export type PlanDraftUpdateArgs = {
+  data: PlanDraftUpdateInput;
+  where: PlanDraftWhereUniqueInput;
+};
+
+export type PlanDraftUpdateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  autoRedirectToExternalWebsite?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<PlanCodeRelateToManyForUpdateInput>;
+  components?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentDocument?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  draftDocument?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+  effort?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  original?: InputMaybe<PlanRelateToOneForUpdateInput>;
+  owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parent?: InputMaybe<PlanRelateToOneForUpdateInput>;
+  pastDocuments?: InputMaybe<PlanDocumentRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
+  publish?: InputMaybe<Scalars['String']['input']>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
+};
+
+export type PlanDraftWhereInput = {
+  AND?: InputMaybe<Array<PlanDraftWhereInput>>;
+  NOT?: InputMaybe<Array<PlanDraftWhereInput>>;
+  OR?: InputMaybe<Array<PlanDraftWhereInput>>;
+  actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  autoRedirectToExternalWebsite?: InputMaybe<IntFilter>;
+  body?: InputMaybe<MyStringFilter>;
+  code?: InputMaybe<PlanCodeManyRelationFilter>;
+  components?: InputMaybe<PlanManyRelationFilter>;
+  contacts?: InputMaybe<ContactManyRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  currentDocument?: InputMaybe<PlanDocumentWhereInput>;
+  description?: InputMaybe<StringFilter>;
+  documents?: InputMaybe<DocumentManyRelationFilter>;
+  draftDocument?: InputMaybe<PlanDocumentWhereInput>;
+  effort?: InputMaybe<ExternalLinkWhereInput>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  id?: InputMaybe<IdFilter>;
+  original?: InputMaybe<PlanWhereInput>;
+  owner?: InputMaybe<UserWhereInput>;
+  parent?: InputMaybe<PlanWhereInput>;
+  pastDocuments?: InputMaybe<PlanDocumentManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
+  publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
+  reviewDate?: InputMaybe<DateTimeNullableFilter>;
+  tags?: InputMaybe<TagManyRelationFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
+  type?: InputMaybe<StringFilter>;
+  unpublishAt?: InputMaybe<DateTimeNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeNullableFilter>;
+  userGroups?: InputMaybe<UserGroupManyRelationFilter>;
+};
+
+export type PlanDraftWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type PlanManyRelationFilter = {
+  every?: InputMaybe<PlanWhereInput>;
+  none?: InputMaybe<PlanWhereInput>;
+  some?: InputMaybe<PlanWhereInput>;
+};
+
+export type PlanOrderByInput = {
+  autoRedirectToExternalWebsite?: InputMaybe<OrderDirection>;
+  body?: InputMaybe<MyOrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  description?: InputMaybe<OrderDirection>;
+  heroImage?: InputMaybe<BlueHarvestImageOrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  makeDrafts?: InputMaybe<OrderDirection>;
+  publishAt?: InputMaybe<OrderDirection>;
+  reviewDate?: InputMaybe<OrderDirection>;
+  slug?: InputMaybe<OrderDirection>;
+  status?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+  type?: InputMaybe<OrderDirection>;
+  unpublishAt?: InputMaybe<OrderDirection>;
+  updatedAt?: InputMaybe<OrderDirection>;
+};
+
+export type PlanRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<PlanWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanCreateInput>>;
+};
+
+export type PlanRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<PlanWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanCreateInput>>;
+  disconnect?: InputMaybe<Array<PlanWhereUniqueInput>>;
+  set?: InputMaybe<Array<PlanWhereUniqueInput>>;
+};
+
+export type PlanRelateToOneForCreateInput = {
+  connect?: InputMaybe<PlanWhereUniqueInput>;
+  create?: InputMaybe<PlanCreateInput>;
+};
+
+export type PlanRelateToOneForUpdateInput = {
+  connect?: InputMaybe<PlanWhereUniqueInput>;
+  create?: InputMaybe<PlanCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PlanUpdateArgs = {
+  data: PlanUpdateInput;
+  where: PlanWhereUniqueInput;
+};
+
+export type PlanUpdateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  autoRedirectToExternalWebsite?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<PlanCodeRelateToManyForUpdateInput>;
+  components?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentDocument?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+  currentVersion?: InputMaybe<PlanVersionRelateToOneForUpdateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  draftDocument?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+  drafts?: InputMaybe<PlanDraftRelateToManyForUpdateInput>;
+  effort?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  makeDrafts?: InputMaybe<Scalars['String']['input']>;
+  owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parent?: InputMaybe<PlanRelateToOneForUpdateInput>;
+  pastDocuments?: InputMaybe<PlanDocumentRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<TagRelateToManyForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
+  versions?: InputMaybe<PlanVersionRelateToManyForUpdateInput>;
+};
+
+export type PlanVersion = {
+  __typename?: 'PlanVersion';
+  actions?: Maybe<Array<InternalLink>>;
+  actionsCount?: Maybe<Scalars['Int']['output']>;
+  autoRedirectToExternalWebsite?: Maybe<Scalars['Int']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Array<PlanCode>>;
+  codeCount?: Maybe<Scalars['Int']['output']>;
+  components?: Maybe<Array<Plan>>;
+  componentsCount?: Maybe<Scalars['Int']['output']>;
+  contacts?: Maybe<Array<Contact>>;
+  contactsCount?: Maybe<Scalars['Int']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  currentDocument?: Maybe<PlanDocument>;
+  description?: Maybe<Scalars['String']['output']>;
+  documents?: Maybe<Array<Document>>;
+  documentsCount?: Maybe<Scalars['Int']['output']>;
+  draftDocument?: Maybe<PlanDocument>;
+  effort?: Maybe<ExternalLink>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  isLive?: Maybe<Plan>;
+  liveUrl?: Maybe<Scalars['String']['output']>;
+  original?: Maybe<Plan>;
+  owner?: Maybe<User>;
+  parent?: Maybe<Plan>;
+  pastDocuments?: Maybe<Array<PlanDocument>>;
+  pastDocumentsCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+  publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
+  republish?: Maybe<Scalars['String']['output']>;
+  reviewDate?: Maybe<Scalars['DateTime']['output']>;
+  tags?: Maybe<Array<Tag>>;
+  tagsCount?: Maybe<Scalars['Int']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  userGroups?: Maybe<Array<UserGroup>>;
+  userGroupsCount?: Maybe<Scalars['Int']['output']>;
+};
+
+
+export type PlanVersionActionsArgs = {
+  cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
+  orderBy?: Array<InternalLinkOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InternalLinkWhereInput;
+};
+
+
+export type PlanVersionActionsCountArgs = {
+  where?: InternalLinkWhereInput;
+};
+
+
+export type PlanVersionCodeArgs = {
+  cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
+  orderBy?: Array<PlanCodeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanCodeWhereInput;
+};
+
+
+export type PlanVersionCodeCountArgs = {
+  where?: PlanCodeWhereInput;
+};
+
+
+export type PlanVersionComponentsArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type PlanVersionComponentsCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type PlanVersionContactsArgs = {
+  cursor?: InputMaybe<ContactWhereUniqueInput>;
+  orderBy?: Array<ContactOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: ContactWhereInput;
+};
+
+
+export type PlanVersionContactsCountArgs = {
+  where?: ContactWhereInput;
+};
+
+
+export type PlanVersionDocumentsArgs = {
+  cursor?: InputMaybe<DocumentWhereUniqueInput>;
+  orderBy?: Array<DocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  where?: DocumentWhereInput;
+};
+
+
+export type PlanVersionDocumentsCountArgs = {
+  where?: DocumentWhereInput;
+};
+
+
+export type PlanVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type PlanVersionEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
+export type PlanVersionPastDocumentsArgs = {
+  cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
+  orderBy?: Array<PlanDocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type PlanVersionPastDocumentsCountArgs = {
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type PlanVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PlanVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PlanVersionTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
+  orderBy?: Array<TagOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TagWhereInput;
+};
+
+
+export type PlanVersionTagsCountArgs = {
+  where?: TagWhereInput;
+};
+
+
+export type PlanVersionTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type PlanVersionTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
+export type PlanVersionUserGroupsArgs = {
+  cursor?: InputMaybe<UserGroupWhereUniqueInput>;
+  orderBy?: Array<UserGroupOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: UserGroupWhereInput;
+};
+
+
+export type PlanVersionUserGroupsCountArgs = {
+  where?: UserGroupWhereInput;
+};
+
+export type PlanVersionCreateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  autoRedirectToExternalWebsite?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<PlanCodeRelateToManyForCreateInput>;
+  components?: InputMaybe<PlanRelateToManyForCreateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentDocument?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  draftDocument?: InputMaybe<PlanDocumentRelateToOneForCreateInput>;
+  effort?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  isLive?: InputMaybe<PlanRelateToOneForCreateInput>;
+  original?: InputMaybe<PlanRelateToOneForCreateInput>;
+  owner?: InputMaybe<UserRelateToOneForCreateInput>;
+  parent?: InputMaybe<PlanRelateToOneForCreateInput>;
+  pastDocuments?: InputMaybe<PlanDocumentRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
+  republish?: InputMaybe<Scalars['String']['input']>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForCreateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForCreateInput>;
+};
+
+export type PlanVersionManyRelationFilter = {
+  every?: InputMaybe<PlanVersionWhereInput>;
+  none?: InputMaybe<PlanVersionWhereInput>;
+  some?: InputMaybe<PlanVersionWhereInput>;
+};
+
+export type PlanVersionOrderByInput = {
+  autoRedirectToExternalWebsite?: InputMaybe<OrderDirection>;
+  body?: InputMaybe<MyOrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  description?: InputMaybe<OrderDirection>;
+  heroImage?: InputMaybe<BlueHarvestImageOrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  publishAt?: InputMaybe<OrderDirection>;
+  republish?: InputMaybe<OrderDirection>;
+  reviewDate?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+  type?: InputMaybe<OrderDirection>;
+  unpublishAt?: InputMaybe<OrderDirection>;
+  updatedAt?: InputMaybe<OrderDirection>;
+};
+
+export type PlanVersionRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<PlanVersionWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanVersionCreateInput>>;
+};
+
+export type PlanVersionRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<PlanVersionWhereUniqueInput>>;
+  create?: InputMaybe<Array<PlanVersionCreateInput>>;
+  disconnect?: InputMaybe<Array<PlanVersionWhereUniqueInput>>;
+  set?: InputMaybe<Array<PlanVersionWhereUniqueInput>>;
+};
+
+export type PlanVersionRelateToOneForCreateInput = {
+  connect?: InputMaybe<PlanVersionWhereUniqueInput>;
+  create?: InputMaybe<PlanVersionCreateInput>;
+};
+
+export type PlanVersionRelateToOneForUpdateInput = {
+  connect?: InputMaybe<PlanVersionWhereUniqueInput>;
+  create?: InputMaybe<PlanVersionCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type PlanVersionUpdateArgs = {
+  data: PlanVersionUpdateInput;
+  where: PlanVersionWhereUniqueInput;
+};
+
+export type PlanVersionUpdateInput = {
+  actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  autoRedirectToExternalWebsite?: InputMaybe<Scalars['Int']['input']>;
+  body?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<PlanCodeRelateToManyForUpdateInput>;
+  components?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  currentDocument?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  draftDocument?: InputMaybe<PlanDocumentRelateToOneForUpdateInput>;
+  effort?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  isLive?: InputMaybe<PlanRelateToOneForUpdateInput>;
+  original?: InputMaybe<PlanRelateToOneForUpdateInput>;
+  owner?: InputMaybe<UserRelateToOneForUpdateInput>;
+  parent?: InputMaybe<PlanRelateToOneForUpdateInput>;
+  pastDocuments?: InputMaybe<PlanDocumentRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
+  publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
+  republish?: InputMaybe<Scalars['String']['input']>;
+  reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
+  tags?: InputMaybe<TagRelateToManyForUpdateInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  userGroups?: InputMaybe<UserGroupRelateToManyForUpdateInput>;
+};
+
+export type PlanVersionWhereInput = {
+  AND?: InputMaybe<Array<PlanVersionWhereInput>>;
+  NOT?: InputMaybe<Array<PlanVersionWhereInput>>;
+  OR?: InputMaybe<Array<PlanVersionWhereInput>>;
+  actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  autoRedirectToExternalWebsite?: InputMaybe<IntFilter>;
+  body?: InputMaybe<MyStringFilter>;
+  code?: InputMaybe<PlanCodeManyRelationFilter>;
+  components?: InputMaybe<PlanManyRelationFilter>;
+  contacts?: InputMaybe<ContactManyRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  currentDocument?: InputMaybe<PlanDocumentWhereInput>;
+  description?: InputMaybe<StringFilter>;
+  documents?: InputMaybe<DocumentManyRelationFilter>;
+  draftDocument?: InputMaybe<PlanDocumentWhereInput>;
+  effort?: InputMaybe<ExternalLinkWhereInput>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  id?: InputMaybe<IdFilter>;
+  isLive?: InputMaybe<PlanWhereInput>;
+  original?: InputMaybe<PlanWhereInput>;
+  owner?: InputMaybe<UserWhereInput>;
+  parent?: InputMaybe<PlanWhereInput>;
+  pastDocuments?: InputMaybe<PlanDocumentManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
+  publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
+  reviewDate?: InputMaybe<DateTimeNullableFilter>;
+  tags?: InputMaybe<TagManyRelationFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
+  type?: InputMaybe<StringFilter>;
+  unpublishAt?: InputMaybe<DateTimeNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeNullableFilter>;
+  userGroups?: InputMaybe<UserGroupManyRelationFilter>;
+};
+
+export type PlanVersionWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  isLive?: InputMaybe<PlanWhereUniqueInput>;
+};
+
+export type PlanWhereInput = {
+  AND?: InputMaybe<Array<PlanWhereInput>>;
+  NOT?: InputMaybe<Array<PlanWhereInput>>;
+  OR?: InputMaybe<Array<PlanWhereInput>>;
+  actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  autoRedirectToExternalWebsite?: InputMaybe<IntFilter>;
+  body?: InputMaybe<MyStringFilter>;
+  code?: InputMaybe<PlanCodeManyRelationFilter>;
+  components?: InputMaybe<PlanManyRelationFilter>;
+  contacts?: InputMaybe<ContactManyRelationFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  currentDocument?: InputMaybe<PlanDocumentWhereInput>;
+  currentVersion?: InputMaybe<PlanVersionWhereInput>;
+  description?: InputMaybe<StringFilter>;
+  documents?: InputMaybe<DocumentManyRelationFilter>;
+  draftDocument?: InputMaybe<PlanDocumentWhereInput>;
+  drafts?: InputMaybe<PlanDraftManyRelationFilter>;
+  effort?: InputMaybe<ExternalLinkWhereInput>;
+  events?: InputMaybe<EventManyRelationFilter>;
+  id?: InputMaybe<IdFilter>;
+  owner?: InputMaybe<UserWhereInput>;
+  parent?: InputMaybe<PlanWhereInput>;
+  pastDocuments?: InputMaybe<PlanDocumentManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
+  publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
+  reviewDate?: InputMaybe<DateTimeNullableFilter>;
+  slug?: InputMaybe<StringFilter>;
+  status?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<TagManyRelationFilter>;
+  title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
+  type?: InputMaybe<StringFilter>;
+  unpublishAt?: InputMaybe<DateTimeNullableFilter>;
+  updatedAt?: InputMaybe<DateTimeNullableFilter>;
+  userGroups?: InputMaybe<UserGroupManyRelationFilter>;
+  versions?: InputMaybe<PlanVersionManyRelationFilter>;
+};
+
+export type PlanWhereUniqueInput = {
+  currentVersion?: InputMaybe<PlanVersionWhereUniqueInput>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PublicNotice = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'PublicNotice';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -11010,6 +14483,7 @@ export type PublicNotice = BasePage & BasePageWithSlug & {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -11023,22 +14497,25 @@ export type PublicNotice = BasePage & BasePageWithSlug & {
   draftsCount?: Maybe<Scalars['Int']['output']>;
   effectiveDate?: Maybe<Scalars['DateTime']['output']>;
   endDate?: Maybe<Scalars['DateTime']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   parks?: Maybe<Array<Park>>;
   parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -11159,6 +14636,20 @@ export type PublicNoticeDraftsCountArgs = {
 };
 
 
+export type PublicNoticeEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type PublicNoticeEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type PublicNoticeFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
   orderBy?: Array<FacilityOrderByInput>;
@@ -11170,34 +14661,6 @@ export type PublicNoticeFacilitiesArgs = {
 
 export type PublicNoticeFacilitiesCountArgs = {
   where?: FacilityWhereInput;
-};
-
-
-export type PublicNoticeNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type PublicNoticeNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type PublicNoticeNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type PublicNoticeNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
 };
 
 
@@ -11226,6 +14689,34 @@ export type PublicNoticeParksArgs = {
 
 export type PublicNoticeParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type PublicNoticePlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type PublicNoticePlansCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type PublicNoticePublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PublicNoticePublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -11326,15 +14817,17 @@ export type PublicNoticeCreateInput = {
   drafts?: InputMaybe<PublicNoticeDraftRelateToManyForCreateInput>;
   effectiveDate?: InputMaybe<Scalars['DateTime']['input']>;
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -11359,6 +14852,7 @@ export type PublicNoticeDraft = {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -11369,23 +14863,26 @@ export type PublicNoticeDraft = {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   effectiveDate?: Maybe<Scalars['DateTime']['output']>;
   endDate?: Maybe<Scalars['DateTime']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<PublicNotice>;
   owner?: Maybe<User>;
   parks?: Maybe<Array<Park>>;
   parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -11488,6 +14985,20 @@ export type PublicNoticeDraftDocumentsCountArgs = {
 };
 
 
+export type PublicNoticeDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type PublicNoticeDraftEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type PublicNoticeDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
   orderBy?: Array<FacilityOrderByInput>;
@@ -11499,34 +15010,6 @@ export type PublicNoticeDraftFacilitiesArgs = {
 
 export type PublicNoticeDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
-};
-
-
-export type PublicNoticeDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type PublicNoticeDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type PublicNoticeDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type PublicNoticeDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
 };
 
 
@@ -11555,6 +15038,34 @@ export type PublicNoticeDraftParksArgs = {
 
 export type PublicNoticeDraftParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type PublicNoticeDraftPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type PublicNoticeDraftPlansCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type PublicNoticeDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PublicNoticeDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -11639,16 +15150,18 @@ export type PublicNoticeDraftCreateInput = {
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   effectiveDate?: InputMaybe<Scalars['DateTime']['input']>;
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   original?: InputMaybe<PublicNoticeRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
@@ -11713,16 +15226,18 @@ export type PublicNoticeDraftUpdateInput = {
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   effectiveDate?: InputMaybe<Scalars['DateTime']['input']>;
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   original?: InputMaybe<PublicNoticeRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
@@ -11750,15 +15265,17 @@ export type PublicNoticeDraftWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   effectiveDate?: InputMaybe<DateTimeNullableFilter>;
   endDate?: InputMaybe<DateTimeNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   original?: InputMaybe<PublicNoticeWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -11842,15 +15359,17 @@ export type PublicNoticeUpdateInput = {
   drafts?: InputMaybe<PublicNoticeDraftRelateToManyForUpdateInput>;
   effectiveDate?: InputMaybe<Scalars['DateTime']['input']>;
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -11875,6 +15394,7 @@ export type PublicNoticeVersion = {
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -11885,23 +15405,26 @@ export type PublicNoticeVersion = {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   effectiveDate?: Maybe<Scalars['DateTime']['output']>;
   endDate?: Maybe<Scalars['DateTime']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isLive?: Maybe<PublicNotice>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<PublicNotice>;
   owner?: Maybe<User>;
   parks?: Maybe<Array<Park>>;
   parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
@@ -12005,6 +15528,20 @@ export type PublicNoticeVersionDocumentsCountArgs = {
 };
 
 
+export type PublicNoticeVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type PublicNoticeVersionEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type PublicNoticeVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
   orderBy?: Array<FacilityOrderByInput>;
@@ -12016,34 +15553,6 @@ export type PublicNoticeVersionFacilitiesArgs = {
 
 export type PublicNoticeVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
-};
-
-
-export type PublicNoticeVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type PublicNoticeVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type PublicNoticeVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type PublicNoticeVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
 };
 
 
@@ -12072,6 +15581,34 @@ export type PublicNoticeVersionParksArgs = {
 
 export type PublicNoticeVersionParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type PublicNoticeVersionPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type PublicNoticeVersionPlansCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
+export type PublicNoticeVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type PublicNoticeVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -12156,16 +15693,18 @@ export type PublicNoticeVersionCreateInput = {
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   effectiveDate?: InputMaybe<Scalars['DateTime']['input']>;
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<PublicNoticeRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   original?: InputMaybe<PublicNoticeRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
@@ -12242,16 +15781,18 @@ export type PublicNoticeVersionUpdateInput = {
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   effectiveDate?: InputMaybe<Scalars['DateTime']['input']>;
   endDate?: InputMaybe<Scalars['DateTime']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<PublicNoticeRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   original?: InputMaybe<PublicNoticeRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
@@ -12280,16 +15821,18 @@ export type PublicNoticeVersionWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   effectiveDate?: InputMaybe<DateTimeNullableFilter>;
   endDate?: InputMaybe<DateTimeNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<PublicNoticeWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   original?: InputMaybe<PublicNoticeWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -12324,14 +15867,16 @@ export type PublicNoticeWhereInput = {
   drafts?: InputMaybe<PublicNoticeDraftManyRelationFilter>;
   effectiveDate?: InputMaybe<DateTimeNullableFilter>;
   endDate?: InputMaybe<DateTimeNullableFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   slug?: InputMaybe<StringFilter>;
@@ -12422,6 +15967,15 @@ export type Query = {
   electionsPage?: Maybe<ElectionsPage>;
   electionsPages?: Maybe<Array<ElectionsPage>>;
   electionsPagesCount?: Maybe<Scalars['Int']['output']>;
+  event?: Maybe<Event>;
+  eventDraft?: Maybe<EventDraft>;
+  eventDrafts?: Maybe<Array<EventDraft>>;
+  eventDraftsCount?: Maybe<Scalars['Int']['output']>;
+  eventVersion?: Maybe<EventVersion>;
+  eventVersions?: Maybe<Array<EventVersion>>;
+  eventVersionsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   externalLink?: Maybe<ExternalLink>;
   externalLinks?: Maybe<Array<ExternalLink>>;
   externalLinksCount?: Maybe<Scalars['Int']['output']>;
@@ -12477,6 +16031,21 @@ export type Query = {
   parkVersionsCount?: Maybe<Scalars['Int']['output']>;
   parks?: Maybe<Array<Park>>;
   parksCount?: Maybe<Scalars['Int']['output']>;
+  plan?: Maybe<Plan>;
+  planCode?: Maybe<PlanCode>;
+  planCodes?: Maybe<Array<PlanCode>>;
+  planCodesCount?: Maybe<Scalars['Int']['output']>;
+  planDocument?: Maybe<PlanDocument>;
+  planDocuments?: Maybe<Array<PlanDocument>>;
+  planDocumentsCount?: Maybe<Scalars['Int']['output']>;
+  planDraft?: Maybe<PlanDraft>;
+  planDrafts?: Maybe<Array<PlanDraft>>;
+  planDraftsCount?: Maybe<Scalars['Int']['output']>;
+  planVersion?: Maybe<PlanVersion>;
+  planVersions?: Maybe<Array<PlanVersion>>;
+  planVersionsCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
   publicNotice?: Maybe<PublicNotice>;
   publicNoticeDraft?: Maybe<PublicNoticeDraft>;
   publicNoticeDrafts?: Maybe<Array<PublicNoticeDraft>>;
@@ -12486,6 +16055,9 @@ export type Query = {
   publicNoticeVersionsCount?: Maybe<Scalars['Int']['output']>;
   publicNotices?: Maybe<Array<PublicNotice>>;
   publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+  redirect?: Maybe<Redirect>;
+  redirects?: Maybe<Array<Redirect>>;
+  redirectsCount?: Maybe<Scalars['Int']['output']>;
   service?: Maybe<Service>;
   serviceDraft?: Maybe<ServiceDraft>;
   serviceDrafts?: Maybe<Array<ServiceDraft>>;
@@ -12946,6 +16518,63 @@ export type QueryElectionsPagesCountArgs = {
 };
 
 
+export type QueryEventArgs = {
+  where: EventWhereUniqueInput;
+};
+
+
+export type QueryEventDraftArgs = {
+  where: EventDraftWhereUniqueInput;
+};
+
+
+export type QueryEventDraftsArgs = {
+  cursor?: InputMaybe<EventDraftWhereUniqueInput>;
+  orderBy?: Array<EventDraftOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventDraftWhereInput;
+};
+
+
+export type QueryEventDraftsCountArgs = {
+  where?: EventDraftWhereInput;
+};
+
+
+export type QueryEventVersionArgs = {
+  where: EventVersionWhereUniqueInput;
+};
+
+
+export type QueryEventVersionsArgs = {
+  cursor?: InputMaybe<EventVersionWhereUniqueInput>;
+  orderBy?: Array<EventVersionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventVersionWhereInput;
+};
+
+
+export type QueryEventVersionsCountArgs = {
+  where?: EventVersionWhereInput;
+};
+
+
+export type QueryEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type QueryEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type QueryExternalLinkArgs = {
   where: ExternalLinkWhereUniqueInput;
 };
@@ -13286,6 +16915,101 @@ export type QueryParksCountArgs = {
 };
 
 
+export type QueryPlanArgs = {
+  where: PlanWhereUniqueInput;
+};
+
+
+export type QueryPlanCodeArgs = {
+  where: PlanCodeWhereUniqueInput;
+};
+
+
+export type QueryPlanCodesArgs = {
+  cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
+  orderBy?: Array<PlanCodeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanCodeWhereInput;
+};
+
+
+export type QueryPlanCodesCountArgs = {
+  where?: PlanCodeWhereInput;
+};
+
+
+export type QueryPlanDocumentArgs = {
+  where: PlanDocumentWhereUniqueInput;
+};
+
+
+export type QueryPlanDocumentsArgs = {
+  cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
+  orderBy?: Array<PlanDocumentOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type QueryPlanDocumentsCountArgs = {
+  where?: PlanDocumentWhereInput;
+};
+
+
+export type QueryPlanDraftArgs = {
+  where: PlanDraftWhereUniqueInput;
+};
+
+
+export type QueryPlanDraftsArgs = {
+  cursor?: InputMaybe<PlanDraftWhereUniqueInput>;
+  orderBy?: Array<PlanDraftOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanDraftWhereInput;
+};
+
+
+export type QueryPlanDraftsCountArgs = {
+  where?: PlanDraftWhereInput;
+};
+
+
+export type QueryPlanVersionArgs = {
+  where: PlanVersionWhereUniqueInput;
+};
+
+
+export type QueryPlanVersionsArgs = {
+  cursor?: InputMaybe<PlanVersionWhereUniqueInput>;
+  orderBy?: Array<PlanVersionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanVersionWhereInput;
+};
+
+
+export type QueryPlanVersionsCountArgs = {
+  where?: PlanVersionWhereInput;
+};
+
+
+export type QueryPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type QueryPlansCountArgs = {
+  where?: PlanWhereInput;
+};
+
+
 export type QueryPublicNoticeArgs = {
   where: PublicNoticeWhereUniqueInput;
 };
@@ -13340,6 +17064,25 @@ export type QueryPublicNoticesArgs = {
 
 export type QueryPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
+};
+
+
+export type QueryRedirectArgs = {
+  where: RedirectWhereUniqueInput;
+};
+
+
+export type QueryRedirectsArgs = {
+  cursor?: InputMaybe<RedirectWhereUniqueInput>;
+  orderBy?: Array<RedirectOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: RedirectWhereInput;
+};
+
+
+export type QueryRedirectsCountArgs = {
+  where?: RedirectWhereInput;
 };
 
 
@@ -13594,9 +17337,67 @@ export enum QueryMode {
   Insensitive = 'insensitive'
 }
 
+export type Redirect = {
+  __typename?: 'Redirect';
+  from?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  redirectMessage?: Maybe<Scalars['String']['output']>;
+  to?: Maybe<InternalLink>;
+};
+
+export type RedirectCreateInput = {
+  from?: InputMaybe<Scalars['String']['input']>;
+  redirectMessage?: InputMaybe<Scalars['String']['input']>;
+  to?: InputMaybe<InternalLinkRelateToOneForCreateInput>;
+};
+
+export type RedirectOrderByInput = {
+  from?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  redirectMessage?: InputMaybe<OrderDirection>;
+};
+
+export type RedirectRelateToOneForCreateInput = {
+  connect?: InputMaybe<RedirectWhereUniqueInput>;
+  create?: InputMaybe<RedirectCreateInput>;
+};
+
+export type RedirectRelateToOneForUpdateInput = {
+  connect?: InputMaybe<RedirectWhereUniqueInput>;
+  create?: InputMaybe<RedirectCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type RedirectUpdateArgs = {
+  data: RedirectUpdateInput;
+  where: RedirectWhereUniqueInput;
+};
+
+export type RedirectUpdateInput = {
+  from?: InputMaybe<Scalars['String']['input']>;
+  redirectMessage?: InputMaybe<Scalars['String']['input']>;
+  to?: InputMaybe<InternalLinkRelateToOneForUpdateInput>;
+};
+
+export type RedirectWhereInput = {
+  AND?: InputMaybe<Array<RedirectWhereInput>>;
+  NOT?: InputMaybe<Array<RedirectWhereInput>>;
+  OR?: InputMaybe<Array<RedirectWhereInput>>;
+  from?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+  redirectMessage?: InputMaybe<StringFilter>;
+  to?: InputMaybe<InternalLinkWhereInput>;
+};
+
+export type RedirectWhereUniqueInput = {
+  from?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type Service = BasePage & BasePageWithSlug & {
   __typename?: 'Service';
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -13609,16 +17410,14 @@ export type Service = BasePage & BasePageWithSlug & {
   drafts?: Maybe<Array<ServiceDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
   editorNotes?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
@@ -13626,7 +17425,10 @@ export type Service = BasePage & BasePageWithSlug & {
   parksCount?: Maybe<Scalars['Int']['output']>;
   primaryAction?: Maybe<ExternalLink>;
   primaryContact?: Maybe<Contact>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   secondaryActions?: Maybe<Array<ExternalLink>>;
   secondaryActionsCount?: Maybe<Scalars['Int']['output']>;
@@ -13704,6 +17506,20 @@ export type ServiceDraftsCountArgs = {
 };
 
 
+export type ServiceEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type ServiceEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type ServiceFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
   orderBy?: Array<FacilityOrderByInput>;
@@ -13715,34 +17531,6 @@ export type ServiceFacilitiesArgs = {
 
 export type ServiceFacilitiesCountArgs = {
   where?: FacilityWhereInput;
-};
-
-
-export type ServiceNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ServiceNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ServiceNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type ServiceNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
 };
 
 
@@ -13771,6 +17559,20 @@ export type ServiceParksArgs = {
 
 export type ServiceParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type ServicePublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type ServicePublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -13867,17 +17669,18 @@ export type ServiceCreateInput = {
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<ServiceDraftRelateToManyForCreateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
   primaryAction?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   primaryContact?: InputMaybe<ContactRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   secondaryActions?: InputMaybe<ExternalLinkRelateToManyForCreateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -13895,6 +17698,7 @@ export type ServiceCreateInput = {
 export type ServiceDraft = {
   __typename?: 'ServiceDraft';
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -13904,15 +17708,13 @@ export type ServiceDraft = {
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
   editorNotes?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Service>;
@@ -13921,8 +17723,11 @@ export type ServiceDraft = {
   parksCount?: Maybe<Scalars['Int']['output']>;
   primaryAction?: Maybe<ExternalLink>;
   primaryContact?: Maybe<Contact>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   secondaryActions?: Maybe<Array<ExternalLink>>;
   secondaryActionsCount?: Maybe<Scalars['Int']['output']>;
@@ -13982,6 +17787,20 @@ export type ServiceDraftDocumentsCountArgs = {
 };
 
 
+export type ServiceDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type ServiceDraftEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type ServiceDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
   orderBy?: Array<FacilityOrderByInput>;
@@ -13993,34 +17812,6 @@ export type ServiceDraftFacilitiesArgs = {
 
 export type ServiceDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
-};
-
-
-export type ServiceDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ServiceDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ServiceDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type ServiceDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
 };
 
 
@@ -14049,6 +17840,20 @@ export type ServiceDraftParksArgs = {
 
 export type ServiceDraftParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type ServiceDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type ServiceDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -14129,18 +17934,19 @@ export type ServiceDraftCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   original?: InputMaybe<ServiceRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
   primaryAction?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   primaryContact?: InputMaybe<ContactRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   secondaryActions?: InputMaybe<ExternalLinkRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
@@ -14198,18 +18004,19 @@ export type ServiceDraftUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   original?: InputMaybe<ServiceRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
   primaryAction?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   primaryContact?: InputMaybe<ContactRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   secondaryActions?: InputMaybe<ExternalLinkRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
@@ -14232,17 +18039,18 @@ export type ServiceDraftWhereInput = {
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   editorNotes?: InputMaybe<StringFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   original?: InputMaybe<ServiceWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
   primaryAction?: InputMaybe<ExternalLinkWhereInput>;
   primaryContact?: InputMaybe<ContactWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   secondaryActions?: InputMaybe<ExternalLinkManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -14319,17 +18127,18 @@ export type ServiceUpdateInput = {
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<ServiceDraftRelateToManyForUpdateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
   primaryAction?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   primaryContact?: InputMaybe<ContactRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   secondaryActions?: InputMaybe<ExternalLinkRelateToManyForUpdateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -14347,6 +18156,7 @@ export type ServiceUpdateInput = {
 export type ServiceVersion = {
   __typename?: 'ServiceVersion';
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -14356,16 +18166,14 @@ export type ServiceVersion = {
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
   editorNotes?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   isLive?: Maybe<Service>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Service>;
@@ -14374,7 +18182,10 @@ export type ServiceVersion = {
   parksCount?: Maybe<Scalars['Int']['output']>;
   primaryAction?: Maybe<ExternalLink>;
   primaryContact?: Maybe<Contact>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   secondaryActions?: Maybe<Array<ExternalLink>>;
@@ -14435,6 +18246,20 @@ export type ServiceVersionDocumentsCountArgs = {
 };
 
 
+export type ServiceVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type ServiceVersionEventsCountArgs = {
+  where?: EventWhereInput;
+};
+
+
 export type ServiceVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
   orderBy?: Array<FacilityOrderByInput>;
@@ -14446,34 +18271,6 @@ export type ServiceVersionFacilitiesArgs = {
 
 export type ServiceVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
-};
-
-
-export type ServiceVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ServiceVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type ServiceVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type ServiceVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
 };
 
 
@@ -14502,6 +18299,20 @@ export type ServiceVersionParksArgs = {
 
 export type ServiceVersionParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type ServiceVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PublicNoticeWhereInput;
+};
+
+
+export type ServiceVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -14582,18 +18393,19 @@ export type ServiceVersionCreateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<ServiceRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   original?: InputMaybe<ServiceRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
   primaryAction?: InputMaybe<ExternalLinkRelateToOneForCreateInput>;
   primaryContact?: InputMaybe<ContactRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   secondaryActions?: InputMaybe<ExternalLinkRelateToManyForCreateInput>;
@@ -14663,18 +18475,19 @@ export type ServiceVersionUpdateInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   editorNotes?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<ServiceRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   original?: InputMaybe<ServiceRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
   primaryAction?: InputMaybe<ExternalLinkRelateToOneForUpdateInput>;
   primaryContact?: InputMaybe<ContactRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   secondaryActions?: InputMaybe<ExternalLinkRelateToManyForUpdateInput>;
@@ -14698,18 +18511,19 @@ export type ServiceVersionWhereInput = {
   description?: InputMaybe<StringFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   editorNotes?: InputMaybe<StringFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<ServiceWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   original?: InputMaybe<ServiceWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
   primaryAction?: InputMaybe<ExternalLinkWhereInput>;
   primaryContact?: InputMaybe<ContactWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   secondaryActions?: InputMaybe<ExternalLinkManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
@@ -14739,16 +18553,17 @@ export type ServiceWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<ServiceDraftManyRelationFilter>;
   editorNotes?: InputMaybe<StringFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
   primaryAction?: InputMaybe<ExternalLinkWhereInput>;
   primaryContact?: InputMaybe<ContactWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   secondaryActions?: InputMaybe<ExternalLinkManyRelationFilter>;
   slug?: InputMaybe<StringFilter>;
@@ -14854,13 +18669,16 @@ export type TagWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Topic = BasePage & BasePageWithSlug & {
+export type Topic = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'Topic';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
+  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
@@ -14868,12 +18686,12 @@ export type Topic = BasePage & BasePageWithSlug & {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   currentVersion?: Maybe<TopicVersion>;
   description?: Maybe<Scalars['String']['output']>;
-  districts?: Maybe<Array<AssemblyDistrict>>;
-  districtsCount?: Maybe<Scalars['Int']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
   drafts?: Maybe<Array<TopicDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -14882,18 +18700,17 @@ export type Topic = BasePage & BasePageWithSlug & {
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   owner?: Maybe<User>;
   parks?: Maybe<Array<Park>>;
   parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
   publicNotices?: Maybe<Array<PublicNotice>>;
   publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
@@ -14902,6 +18719,8 @@ export type Topic = BasePage & BasePageWithSlug & {
   tags?: Maybe<Array<Tag>>;
   tagsCount?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
   trails?: Maybe<Array<Trail>>;
   trailsCount?: Maybe<Scalars['Int']['output']>;
   unpublishAt?: Maybe<Scalars['DateTime']['output']>;
@@ -14924,6 +18743,20 @@ export type TopicActionsArgs = {
 
 export type TopicActionsCountArgs = {
   where?: InternalLinkWhereInput;
+};
+
+
+export type TopicAssemblyDistrictsArgs = {
+  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
+  orderBy?: Array<AssemblyDistrictOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type TopicAssemblyDistrictsCountArgs = {
+  where?: AssemblyDistrictWhereInput;
 };
 
 
@@ -14969,20 +18802,6 @@ export type TopicContactsCountArgs = {
 };
 
 
-export type TopicDistrictsArgs = {
-  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
-  orderBy?: Array<AssemblyDistrictOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: AssemblyDistrictWhereInput;
-};
-
-
-export type TopicDistrictsCountArgs = {
-  where?: AssemblyDistrictWhereInput;
-};
-
-
 export type TopicDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -15008,6 +18827,20 @@ export type TopicDraftsArgs = {
 
 export type TopicDraftsCountArgs = {
   where?: TopicDraftWhereInput;
+};
+
+
+export type TopicEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type TopicEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
@@ -15039,34 +18872,6 @@ export type TopicHighlightsCountArgs = {
 };
 
 
-export type TopicNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type TopicNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type TopicNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type TopicNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
-};
-
-
 export type TopicOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
   orderBy?: Array<OrgUnitOrderByInput>;
@@ -15092,6 +18897,20 @@ export type TopicParksArgs = {
 
 export type TopicParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type TopicPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type TopicPlansCountArgs = {
+  where?: PlanWhereInput;
 };
 
 
@@ -15134,6 +18953,20 @@ export type TopicTagsArgs = {
 
 export type TopicTagsCountArgs = {
   where?: TagWhereInput;
+};
+
+
+export type TopicTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type TopicTopicsCountArgs = {
+  where?: TopicWhereInput;
 };
 
 
@@ -15180,6 +19013,7 @@ export type TopicVersionsCountArgs = {
 
 export type TopicCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
@@ -15187,26 +19021,27 @@ export type TopicCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   currentVersion?: InputMaybe<TopicVersionRelateToOneForCreateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
-  districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   drafts?: InputMaybe<TopicDraftRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   highlights?: InputMaybe<HighlightRelateToManyForCreateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
   publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
   trails?: InputMaybe<TrailRelateToManyForCreateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -15218,19 +19053,22 @@ export type TopicDraft = {
   __typename?: 'TopicDraft';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
+  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  districts?: Maybe<Array<AssemblyDistrict>>;
-  districtsCount?: Maybe<Scalars['Int']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -15238,26 +19076,27 @@ export type TopicDraft = {
   highlightsCount?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Topic>;
   owner?: Maybe<User>;
   parks?: Maybe<Array<Park>>;
   parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
   publicNotices?: Maybe<Array<PublicNotice>>;
   publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
   servicesCount?: Maybe<Scalars['Int']['output']>;
   tags?: Maybe<Array<Tag>>;
   tagsCount?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
   trails?: Maybe<Array<Trail>>;
   trailsCount?: Maybe<Scalars['Int']['output']>;
   unpublishAt?: Maybe<Scalars['DateTime']['output']>;
@@ -15278,6 +19117,20 @@ export type TopicDraftActionsArgs = {
 
 export type TopicDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
+};
+
+
+export type TopicDraftAssemblyDistrictsArgs = {
+  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
+  orderBy?: Array<AssemblyDistrictOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type TopicDraftAssemblyDistrictsCountArgs = {
+  where?: AssemblyDistrictWhereInput;
 };
 
 
@@ -15323,20 +19176,6 @@ export type TopicDraftContactsCountArgs = {
 };
 
 
-export type TopicDraftDistrictsArgs = {
-  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
-  orderBy?: Array<AssemblyDistrictOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: AssemblyDistrictWhereInput;
-};
-
-
-export type TopicDraftDistrictsCountArgs = {
-  where?: AssemblyDistrictWhereInput;
-};
-
-
 export type TopicDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -15348,6 +19187,20 @@ export type TopicDraftDocumentsArgs = {
 
 export type TopicDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
+};
+
+
+export type TopicDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type TopicDraftEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
@@ -15379,34 +19232,6 @@ export type TopicDraftHighlightsCountArgs = {
 };
 
 
-export type TopicDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type TopicDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type TopicDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type TopicDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
-};
-
-
 export type TopicDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
   orderBy?: Array<OrgUnitOrderByInput>;
@@ -15432,6 +19257,20 @@ export type TopicDraftParksArgs = {
 
 export type TopicDraftParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type TopicDraftPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type TopicDraftPlansCountArgs = {
+  where?: PlanWhereInput;
 };
 
 
@@ -15477,6 +19316,20 @@ export type TopicDraftTagsCountArgs = {
 };
 
 
+export type TopicDraftTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type TopicDraftTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
 export type TopicDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
   orderBy?: Array<TrailOrderByInput>;
@@ -15506,30 +19359,32 @@ export type TopicDraftUserGroupsCountArgs = {
 
 export type TopicDraftCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   highlights?: InputMaybe<HighlightRelateToManyForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   original?: InputMaybe<TopicRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
   publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
   trails?: InputMaybe<TrailRelateToManyForCreateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -15575,30 +19430,32 @@ export type TopicDraftUpdateArgs = {
 
 export type TopicDraftUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   highlights?: InputMaybe<HighlightRelateToManyForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   original?: InputMaybe<TopicRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
   publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
   trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -15610,29 +19467,31 @@ export type TopicDraftWhereInput = {
   NOT?: InputMaybe<Array<TopicDraftWhereInput>>;
   OR?: InputMaybe<Array<TopicDraftWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
   communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
-  districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   highlights?: InputMaybe<HighlightManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   original?: InputMaybe<TopicWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
   publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
   trails?: InputMaybe<TrailManyRelationFilter>;
   unpublishAt?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
@@ -15695,6 +19554,7 @@ export type TopicUpdateArgs = {
 
 export type TopicUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
@@ -15702,26 +19562,27 @@ export type TopicUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   currentVersion?: InputMaybe<TopicVersionRelateToOneForUpdateInput>;
   description?: InputMaybe<Scalars['String']['input']>;
-  districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   drafts?: InputMaybe<TopicDraftRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   highlights?: InputMaybe<HighlightRelateToManyForUpdateInput>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
   publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   slug?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<Scalars['String']['input']>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
   trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -15733,19 +19594,22 @@ export type TopicVersion = {
   __typename?: 'TopicVersion';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
+  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
   boards?: Maybe<Array<Board>>;
   boardsCount?: Maybe<Scalars['Int']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
   communities?: Maybe<Array<Community>>;
   communitiesCount?: Maybe<Scalars['Int']['output']>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  districts?: Maybe<Array<AssemblyDistrict>>;
-  districtsCount?: Maybe<Scalars['Int']['output']>;
   documents?: Maybe<Array<Document>>;
   documentsCount?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   facilities?: Maybe<Array<Facility>>;
   facilitiesCount?: Maybe<Scalars['Int']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -15754,19 +19618,18 @@ export type TopicVersion = {
   id: Scalars['ID']['output'];
   isLive?: Maybe<Topic>;
   liveUrl?: Maybe<Scalars['String']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   orgUnits?: Maybe<Array<OrgUnit>>;
   orgUnitsCount?: Maybe<Scalars['Int']['output']>;
   original?: Maybe<Topic>;
   owner?: Maybe<User>;
   parks?: Maybe<Array<Park>>;
   parksCount?: Maybe<Scalars['Int']['output']>;
+  plans?: Maybe<Array<Plan>>;
+  plansCount?: Maybe<Scalars['Int']['output']>;
   publicNotices?: Maybe<Array<PublicNotice>>;
   publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   services?: Maybe<Array<Service>>;
@@ -15774,6 +19637,8 @@ export type TopicVersion = {
   tags?: Maybe<Array<Tag>>;
   tagsCount?: Maybe<Scalars['Int']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  topics?: Maybe<Array<Topic>>;
+  topicsCount?: Maybe<Scalars['Int']['output']>;
   trails?: Maybe<Array<Trail>>;
   trailsCount?: Maybe<Scalars['Int']['output']>;
   unpublishAt?: Maybe<Scalars['DateTime']['output']>;
@@ -15794,6 +19659,20 @@ export type TopicVersionActionsArgs = {
 
 export type TopicVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
+};
+
+
+export type TopicVersionAssemblyDistrictsArgs = {
+  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
+  orderBy?: Array<AssemblyDistrictOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AssemblyDistrictWhereInput;
+};
+
+
+export type TopicVersionAssemblyDistrictsCountArgs = {
+  where?: AssemblyDistrictWhereInput;
 };
 
 
@@ -15839,20 +19718,6 @@ export type TopicVersionContactsCountArgs = {
 };
 
 
-export type TopicVersionDistrictsArgs = {
-  cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
-  orderBy?: Array<AssemblyDistrictOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: AssemblyDistrictWhereInput;
-};
-
-
-export type TopicVersionDistrictsCountArgs = {
-  where?: AssemblyDistrictWhereInput;
-};
-
-
 export type TopicVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -15864,6 +19729,20 @@ export type TopicVersionDocumentsArgs = {
 
 export type TopicVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
+};
+
+
+export type TopicVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: EventWhereInput;
+};
+
+
+export type TopicVersionEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
@@ -15895,34 +19774,6 @@ export type TopicVersionHighlightsCountArgs = {
 };
 
 
-export type TopicVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
-};
-
-
-export type TopicVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
-};
-
-
-export type TopicVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
-  skip?: Scalars['Int']['input'];
-  take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
-};
-
-
-export type TopicVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
-};
-
-
 export type TopicVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
   orderBy?: Array<OrgUnitOrderByInput>;
@@ -15948,6 +19799,20 @@ export type TopicVersionParksArgs = {
 
 export type TopicVersionParksCountArgs = {
   where?: ParkWhereInput;
+};
+
+
+export type TopicVersionPlansArgs = {
+  cursor?: InputMaybe<PlanWhereUniqueInput>;
+  orderBy?: Array<PlanOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: PlanWhereInput;
+};
+
+
+export type TopicVersionPlansCountArgs = {
+  where?: PlanWhereInput;
 };
 
 
@@ -15993,6 +19858,20 @@ export type TopicVersionTagsCountArgs = {
 };
 
 
+export type TopicVersionTopicsArgs = {
+  cursor?: InputMaybe<TopicWhereUniqueInput>;
+  orderBy?: Array<TopicOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: TopicWhereInput;
+};
+
+
+export type TopicVersionTopicsCountArgs = {
+  where?: TopicWhereInput;
+};
+
+
 export type TopicVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
   orderBy?: Array<TrailOrderByInput>;
@@ -16022,31 +19901,33 @@ export type TopicVersionUserGroupsCountArgs = {
 
 export type TopicVersionCreateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForCreateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   boards?: InputMaybe<BoardRelateToManyForCreateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  districts?: InputMaybe<AssemblyDistrictRelateToManyForCreateInput>;
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForCreateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   highlights?: InputMaybe<HighlightRelateToManyForCreateInput>;
   isLive?: InputMaybe<TopicRelateToOneForCreateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForCreateInput>;
   original?: InputMaybe<TopicRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   parks?: InputMaybe<ParkRelateToManyForCreateInput>;
+  plans?: InputMaybe<PlanRelateToManyForCreateInput>;
   publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
   tags?: InputMaybe<TagRelateToManyForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForCreateInput>;
   trails?: InputMaybe<TrailRelateToManyForCreateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -16103,31 +19984,33 @@ export type TopicVersionUpdateArgs = {
 
 export type TopicVersionUpdateInput = {
   actions?: InputMaybe<InternalLinkRelateToManyForUpdateInput>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   boards?: InputMaybe<BoardRelateToManyForUpdateInput>;
   body?: InputMaybe<Scalars['String']['input']>;
   communities?: InputMaybe<CommunityRelateToManyForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  districts?: InputMaybe<AssemblyDistrictRelateToManyForUpdateInput>;
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   facilities?: InputMaybe<FacilityRelateToManyForUpdateInput>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   highlights?: InputMaybe<HighlightRelateToManyForUpdateInput>;
   isLive?: InputMaybe<TopicRelateToOneForUpdateInput>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   orgUnits?: InputMaybe<OrgUnitRelateToManyForUpdateInput>;
   original?: InputMaybe<TopicRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   parks?: InputMaybe<ParkRelateToManyForUpdateInput>;
+  plans?: InputMaybe<PlanRelateToManyForUpdateInput>;
   publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
   tags?: InputMaybe<TagRelateToManyForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
+  topics?: InputMaybe<TopicRelateToManyForUpdateInput>;
   trails?: InputMaybe<TrailRelateToManyForUpdateInput>;
   unpublishAt?: InputMaybe<Scalars['DateTime']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -16139,30 +20022,32 @@ export type TopicVersionWhereInput = {
   NOT?: InputMaybe<Array<TopicVersionWhereInput>>;
   OR?: InputMaybe<Array<TopicVersionWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
   communities?: InputMaybe<CommunityManyRelationFilter>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
-  districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   highlights?: InputMaybe<HighlightManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   isLive?: InputMaybe<TopicWhereInput>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   original?: InputMaybe<TopicWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
   publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
   trails?: InputMaybe<TrailManyRelationFilter>;
   unpublishAt?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
@@ -16179,6 +20064,7 @@ export type TopicWhereInput = {
   NOT?: InputMaybe<Array<TopicWhereInput>>;
   OR?: InputMaybe<Array<TopicWhereInput>>;
   actions?: InputMaybe<InternalLinkManyRelationFilter>;
+  assemblyDistricts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   boards?: InputMaybe<BoardManyRelationFilter>;
   body?: InputMaybe<MyStringFilter>;
   communities?: InputMaybe<CommunityManyRelationFilter>;
@@ -16186,25 +20072,26 @@ export type TopicWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   currentVersion?: InputMaybe<TopicVersionWhereInput>;
   description?: InputMaybe<StringFilter>;
-  districts?: InputMaybe<AssemblyDistrictManyRelationFilter>;
   documents?: InputMaybe<DocumentManyRelationFilter>;
   drafts?: InputMaybe<TopicDraftManyRelationFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   facilities?: InputMaybe<FacilityManyRelationFilter>;
   highlights?: InputMaybe<HighlightManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   orgUnits?: InputMaybe<OrgUnitManyRelationFilter>;
   owner?: InputMaybe<UserWhereInput>;
   parks?: InputMaybe<ParkManyRelationFilter>;
+  plans?: InputMaybe<PlanManyRelationFilter>;
   publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
   slug?: InputMaybe<StringFilter>;
   status?: InputMaybe<StringFilter>;
   tags?: InputMaybe<TagManyRelationFilter>;
   title?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicManyRelationFilter>;
   trails?: InputMaybe<TrailManyRelationFilter>;
   unpublishAt?: InputMaybe<DateTimeNullableFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
@@ -16219,7 +20106,7 @@ export type TopicWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Trail = BasePage & BasePageWithSlug & {
+export type Trail = BasePage & BasePageWithActions & BasePageWithSlug & {
   __typename?: 'Trail';
   actions?: Maybe<Array<InternalLink>>;
   actionsCount?: Maybe<Scalars['Int']['output']>;
@@ -16227,6 +20114,8 @@ export type Trail = BasePage & BasePageWithSlug & {
   atv?: Maybe<Scalars['Boolean']['output']>;
   biking?: Maybe<Scalars['Boolean']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Community>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -16241,6 +20130,8 @@ export type Trail = BasePage & BasePageWithSlug & {
   drafts?: Maybe<Array<TrailDraft>>;
   draftsCount?: Maybe<Scalars['Int']['output']>;
   elevationChange?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   fall?: Maybe<Scalars['Boolean']['output']>;
   frisbeeGolf?: Maybe<Scalars['Boolean']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -16251,14 +20142,13 @@ export type Trail = BasePage & BasePageWithSlug & {
   liveUrl?: Maybe<Scalars['String']['output']>;
   makeDrafts?: Maybe<Scalars['String']['output']>;
   mushing?: Maybe<Scalars['Boolean']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   open?: Maybe<Scalars['Boolean']['output']>;
   owner?: Maybe<User>;
   park?: Maybe<Park>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   running?: Maybe<Scalars['Boolean']['output']>;
   services?: Maybe<Array<Service>>;
@@ -16340,31 +20230,31 @@ export type TrailDraftsCountArgs = {
 };
 
 
-export type TrailNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type TrailEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type TrailNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type TrailEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type TrailNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type TrailPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type TrailNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type TrailPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -16443,6 +20333,7 @@ export type TrailCreateInput = {
   atv?: InputMaybe<Scalars['Boolean']['input']>;
   biking?: InputMaybe<Scalars['Boolean']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   crossCountrySkiing?: InputMaybe<Scalars['Boolean']['input']>;
@@ -16454,6 +20345,7 @@ export type TrailCreateInput = {
   dogWalking?: InputMaybe<Scalars['Boolean']['input']>;
   drafts?: InputMaybe<TrailDraftRelateToManyForCreateInput>;
   elevationChange?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   fall?: InputMaybe<Scalars['Boolean']['input']>;
   frisbeeGolf?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
@@ -16462,12 +20354,12 @@ export type TrailCreateInput = {
   length?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
   mushing?: InputMaybe<Scalars['Boolean']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   open?: InputMaybe<Scalars['Boolean']['input']>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   park?: InputMaybe<ParkRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   running?: InputMaybe<Scalars['Boolean']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
@@ -16495,6 +20387,8 @@ export type TrailDraft = {
   atv?: Maybe<Scalars['Boolean']['output']>;
   biking?: Maybe<Scalars['Boolean']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Community>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -16506,6 +20400,8 @@ export type TrailDraft = {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   dogWalking?: Maybe<Scalars['Boolean']['output']>;
   elevationChange?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   fall?: Maybe<Scalars['Boolean']['output']>;
   frisbeeGolf?: Maybe<Scalars['Boolean']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -16515,16 +20411,15 @@ export type TrailDraft = {
   length?: Maybe<Scalars['String']['output']>;
   liveUrl?: Maybe<Scalars['String']['output']>;
   mushing?: Maybe<Scalars['Boolean']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   open?: Maybe<Scalars['Boolean']['output']>;
   original?: Maybe<Trail>;
   owner?: Maybe<User>;
   park?: Maybe<Park>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publish?: Maybe<Scalars['String']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   running?: Maybe<Scalars['Boolean']['output']>;
   services?: Maybe<Array<Service>>;
@@ -16588,31 +20483,31 @@ export type TrailDraftDocumentsCountArgs = {
 };
 
 
-export type TrailDraftNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type TrailDraftEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type TrailDraftNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type TrailDraftEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type TrailDraftNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type TrailDraftPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type TrailDraftNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type TrailDraftPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -16677,6 +20572,7 @@ export type TrailDraftCreateInput = {
   atv?: InputMaybe<Scalars['Boolean']['input']>;
   biking?: InputMaybe<Scalars['Boolean']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   crossCountrySkiing?: InputMaybe<Scalars['Boolean']['input']>;
@@ -16686,6 +20582,7 @@ export type TrailDraftCreateInput = {
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   dogWalking?: InputMaybe<Scalars['Boolean']['input']>;
   elevationChange?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   fall?: InputMaybe<Scalars['Boolean']['input']>;
   frisbeeGolf?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
@@ -16693,14 +20590,14 @@ export type TrailDraftCreateInput = {
   horsebackRiding?: InputMaybe<Scalars['Boolean']['input']>;
   length?: InputMaybe<Scalars['String']['input']>;
   mushing?: InputMaybe<Scalars['Boolean']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   open?: InputMaybe<Scalars['Boolean']['input']>;
   original?: InputMaybe<TrailRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   park?: InputMaybe<ParkRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   running?: InputMaybe<Scalars['Boolean']['input']>;
   services?: InputMaybe<ServiceRelateToManyForCreateInput>;
@@ -16780,6 +20677,7 @@ export type TrailDraftUpdateInput = {
   atv?: InputMaybe<Scalars['Boolean']['input']>;
   biking?: InputMaybe<Scalars['Boolean']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   crossCountrySkiing?: InputMaybe<Scalars['Boolean']['input']>;
@@ -16789,6 +20687,7 @@ export type TrailDraftUpdateInput = {
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   dogWalking?: InputMaybe<Scalars['Boolean']['input']>;
   elevationChange?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   fall?: InputMaybe<Scalars['Boolean']['input']>;
   frisbeeGolf?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
@@ -16796,14 +20695,14 @@ export type TrailDraftUpdateInput = {
   horsebackRiding?: InputMaybe<Scalars['Boolean']['input']>;
   length?: InputMaybe<Scalars['String']['input']>;
   mushing?: InputMaybe<Scalars['Boolean']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   open?: InputMaybe<Scalars['Boolean']['input']>;
   original?: InputMaybe<TrailRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   park?: InputMaybe<ParkRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publish?: InputMaybe<Scalars['String']['input']>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   running?: InputMaybe<Scalars['Boolean']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
@@ -16829,6 +20728,7 @@ export type TrailDraftWhereInput = {
   atv?: InputMaybe<BooleanFilter>;
   biking?: InputMaybe<BooleanFilter>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityWhereInput>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   crossCountrySkiing?: InputMaybe<BooleanFilter>;
@@ -16838,6 +20738,7 @@ export type TrailDraftWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   dogWalking?: InputMaybe<BooleanFilter>;
   elevationChange?: InputMaybe<StringFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   fall?: InputMaybe<BooleanFilter>;
   frisbeeGolf?: InputMaybe<BooleanFilter>;
   hiking?: InputMaybe<BooleanFilter>;
@@ -16845,13 +20746,13 @@ export type TrailDraftWhereInput = {
   id?: InputMaybe<IdFilter>;
   length?: InputMaybe<StringFilter>;
   mushing?: InputMaybe<BooleanFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   open?: InputMaybe<BooleanFilter>;
   original?: InputMaybe<TrailWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   park?: InputMaybe<ParkWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   running?: InputMaybe<BooleanFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
@@ -16948,6 +20849,7 @@ export type TrailUpdateInput = {
   atv?: InputMaybe<Scalars['Boolean']['input']>;
   biking?: InputMaybe<Scalars['Boolean']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   crossCountrySkiing?: InputMaybe<Scalars['Boolean']['input']>;
@@ -16959,6 +20861,7 @@ export type TrailUpdateInput = {
   dogWalking?: InputMaybe<Scalars['Boolean']['input']>;
   drafts?: InputMaybe<TrailDraftRelateToManyForUpdateInput>;
   elevationChange?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   fall?: InputMaybe<Scalars['Boolean']['input']>;
   frisbeeGolf?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
@@ -16967,12 +20870,12 @@ export type TrailUpdateInput = {
   length?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
   mushing?: InputMaybe<Scalars['Boolean']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   open?: InputMaybe<Scalars['Boolean']['input']>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   park?: InputMaybe<ParkRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   running?: InputMaybe<Scalars['Boolean']['input']>;
   services?: InputMaybe<ServiceRelateToManyForUpdateInput>;
@@ -17000,6 +20903,8 @@ export type TrailVersion = {
   atv?: Maybe<Scalars['Boolean']['output']>;
   biking?: Maybe<Scalars['Boolean']['output']>;
   body?: Maybe<Scalars['String']['output']>;
+  canEdit?: Maybe<Scalars['String']['output']>;
+  communities?: Maybe<Community>;
   contacts?: Maybe<Array<Contact>>;
   contactsCount?: Maybe<Scalars['Int']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -17011,6 +20916,8 @@ export type TrailVersion = {
   documentsCount?: Maybe<Scalars['Int']['output']>;
   dogWalking?: Maybe<Scalars['Boolean']['output']>;
   elevationChange?: Maybe<Scalars['String']['output']>;
+  events?: Maybe<Array<Event>>;
+  eventsCount?: Maybe<Scalars['Int']['output']>;
   fall?: Maybe<Scalars['Boolean']['output']>;
   frisbeeGolf?: Maybe<Scalars['Boolean']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -17021,15 +20928,14 @@ export type TrailVersion = {
   length?: Maybe<Scalars['String']['output']>;
   liveUrl?: Maybe<Scalars['String']['output']>;
   mushing?: Maybe<Scalars['Boolean']['output']>;
-  newContacts?: Maybe<Array<ContactListItem>>;
-  newContactsCount?: Maybe<Scalars['Int']['output']>;
-  newDocuments?: Maybe<Array<DocumentListItem>>;
-  newDocumentsCount?: Maybe<Scalars['Int']['output']>;
   open?: Maybe<Scalars['Boolean']['output']>;
   original?: Maybe<Trail>;
   owner?: Maybe<User>;
   park?: Maybe<Park>;
+  publicNotices?: Maybe<Array<PublicNotice>>;
+  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
   publishAt?: Maybe<Scalars['DateTime']['output']>;
+  redirect?: Maybe<Redirect>;
   republish?: Maybe<Scalars['String']['output']>;
   reviewDate?: Maybe<Scalars['DateTime']['output']>;
   running?: Maybe<Scalars['Boolean']['output']>;
@@ -17094,31 +21000,31 @@ export type TrailVersionDocumentsCountArgs = {
 };
 
 
-export type TrailVersionNewContactsArgs = {
-  cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
-  orderBy?: Array<ContactListItemOrderByInput>;
+export type TrailVersionEventsArgs = {
+  cursor?: InputMaybe<EventWhereUniqueInput>;
+  orderBy?: Array<EventOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: ContactListItemWhereInput;
+  where?: EventWhereInput;
 };
 
 
-export type TrailVersionNewContactsCountArgs = {
-  where?: ContactListItemWhereInput;
+export type TrailVersionEventsCountArgs = {
+  where?: EventWhereInput;
 };
 
 
-export type TrailVersionNewDocumentsArgs = {
-  cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
-  orderBy?: Array<DocumentListItemOrderByInput>;
+export type TrailVersionPublicNoticesArgs = {
+  cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
+  orderBy?: Array<PublicNoticeOrderByInput>;
   skip?: Scalars['Int']['input'];
   take?: InputMaybe<Scalars['Int']['input']>;
-  where?: DocumentListItemWhereInput;
+  where?: PublicNoticeWhereInput;
 };
 
 
-export type TrailVersionNewDocumentsCountArgs = {
-  where?: DocumentListItemWhereInput;
+export type TrailVersionPublicNoticesCountArgs = {
+  where?: PublicNoticeWhereInput;
 };
 
 
@@ -17183,6 +21089,7 @@ export type TrailVersionCreateInput = {
   atv?: InputMaybe<Scalars['Boolean']['input']>;
   biking?: InputMaybe<Scalars['Boolean']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForCreateInput>;
   contacts?: InputMaybe<ContactRelateToManyForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   crossCountrySkiing?: InputMaybe<Scalars['Boolean']['input']>;
@@ -17192,6 +21099,7 @@ export type TrailVersionCreateInput = {
   documents?: InputMaybe<DocumentRelateToManyForCreateInput>;
   dogWalking?: InputMaybe<Scalars['Boolean']['input']>;
   elevationChange?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForCreateInput>;
   fall?: InputMaybe<Scalars['Boolean']['input']>;
   frisbeeGolf?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
@@ -17200,13 +21108,13 @@ export type TrailVersionCreateInput = {
   isLive?: InputMaybe<TrailRelateToOneForCreateInput>;
   length?: InputMaybe<Scalars['String']['input']>;
   mushing?: InputMaybe<Scalars['Boolean']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForCreateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForCreateInput>;
   open?: InputMaybe<Scalars['Boolean']['input']>;
   original?: InputMaybe<TrailRelateToOneForCreateInput>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   park?: InputMaybe<ParkRelateToOneForCreateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForCreateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForCreateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   running?: InputMaybe<Scalars['Boolean']['input']>;
@@ -17298,6 +21206,7 @@ export type TrailVersionUpdateInput = {
   atv?: InputMaybe<Scalars['Boolean']['input']>;
   biking?: InputMaybe<Scalars['Boolean']['input']>;
   body?: InputMaybe<Scalars['String']['input']>;
+  communities?: InputMaybe<CommunityRelateToOneForUpdateInput>;
   contacts?: InputMaybe<ContactRelateToManyForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   crossCountrySkiing?: InputMaybe<Scalars['Boolean']['input']>;
@@ -17307,6 +21216,7 @@ export type TrailVersionUpdateInput = {
   documents?: InputMaybe<DocumentRelateToManyForUpdateInput>;
   dogWalking?: InputMaybe<Scalars['Boolean']['input']>;
   elevationChange?: InputMaybe<Scalars['String']['input']>;
+  events?: InputMaybe<EventRelateToManyForUpdateInput>;
   fall?: InputMaybe<Scalars['Boolean']['input']>;
   frisbeeGolf?: InputMaybe<Scalars['Boolean']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
@@ -17315,13 +21225,13 @@ export type TrailVersionUpdateInput = {
   isLive?: InputMaybe<TrailRelateToOneForUpdateInput>;
   length?: InputMaybe<Scalars['String']['input']>;
   mushing?: InputMaybe<Scalars['Boolean']['input']>;
-  newContacts?: InputMaybe<ContactListItemRelateToManyForUpdateInput>;
-  newDocuments?: InputMaybe<DocumentListItemRelateToManyForUpdateInput>;
   open?: InputMaybe<Scalars['Boolean']['input']>;
   original?: InputMaybe<TrailRelateToOneForUpdateInput>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   park?: InputMaybe<ParkRelateToOneForUpdateInput>;
+  publicNotices?: InputMaybe<PublicNoticeRelateToManyForUpdateInput>;
   publishAt?: InputMaybe<Scalars['DateTime']['input']>;
+  redirect?: InputMaybe<RedirectRelateToOneForUpdateInput>;
   republish?: InputMaybe<Scalars['String']['input']>;
   reviewDate?: InputMaybe<Scalars['DateTime']['input']>;
   running?: InputMaybe<Scalars['Boolean']['input']>;
@@ -17348,6 +21258,7 @@ export type TrailVersionWhereInput = {
   atv?: InputMaybe<BooleanFilter>;
   biking?: InputMaybe<BooleanFilter>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityWhereInput>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   crossCountrySkiing?: InputMaybe<BooleanFilter>;
@@ -17357,6 +21268,7 @@ export type TrailVersionWhereInput = {
   documents?: InputMaybe<DocumentManyRelationFilter>;
   dogWalking?: InputMaybe<BooleanFilter>;
   elevationChange?: InputMaybe<StringFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   fall?: InputMaybe<BooleanFilter>;
   frisbeeGolf?: InputMaybe<BooleanFilter>;
   hiking?: InputMaybe<BooleanFilter>;
@@ -17365,13 +21277,13 @@ export type TrailVersionWhereInput = {
   isLive?: InputMaybe<TrailWhereInput>;
   length?: InputMaybe<StringFilter>;
   mushing?: InputMaybe<BooleanFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   open?: InputMaybe<BooleanFilter>;
   original?: InputMaybe<TrailWhereInput>;
   owner?: InputMaybe<UserWhereInput>;
   park?: InputMaybe<ParkWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   running?: InputMaybe<BooleanFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
@@ -17402,6 +21314,7 @@ export type TrailWhereInput = {
   atv?: InputMaybe<BooleanFilter>;
   biking?: InputMaybe<BooleanFilter>;
   body?: InputMaybe<MyStringFilter>;
+  communities?: InputMaybe<CommunityWhereInput>;
   contacts?: InputMaybe<ContactManyRelationFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   crossCountrySkiing?: InputMaybe<BooleanFilter>;
@@ -17413,6 +21326,7 @@ export type TrailWhereInput = {
   dogWalking?: InputMaybe<BooleanFilter>;
   drafts?: InputMaybe<TrailDraftManyRelationFilter>;
   elevationChange?: InputMaybe<StringFilter>;
+  events?: InputMaybe<EventManyRelationFilter>;
   fall?: InputMaybe<BooleanFilter>;
   frisbeeGolf?: InputMaybe<BooleanFilter>;
   hiking?: InputMaybe<BooleanFilter>;
@@ -17420,12 +21334,12 @@ export type TrailWhereInput = {
   id?: InputMaybe<IdFilter>;
   length?: InputMaybe<StringFilter>;
   mushing?: InputMaybe<BooleanFilter>;
-  newContacts?: InputMaybe<ContactListItemManyRelationFilter>;
-  newDocuments?: InputMaybe<DocumentListItemManyRelationFilter>;
   open?: InputMaybe<BooleanFilter>;
   owner?: InputMaybe<UserWhereInput>;
   park?: InputMaybe<ParkWhereInput>;
+  publicNotices?: InputMaybe<PublicNoticeManyRelationFilter>;
   publishAt?: InputMaybe<DateTimeNullableFilter>;
+  redirect?: InputMaybe<RedirectWhereInput>;
   reviewDate?: InputMaybe<DateTimeNullableFilter>;
   running?: InputMaybe<BooleanFilter>;
   services?: InputMaybe<ServiceManyRelationFilter>;
@@ -17457,6 +21371,7 @@ export type Url = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  indexInSearchEngine?: Maybe<Scalars['String']['output']>;
   owner?: Maybe<User>;
   title?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -17466,6 +21381,7 @@ export type Url = {
 export type UrlCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  indexInSearchEngine?: InputMaybe<Scalars['String']['input']>;
   owner?: InputMaybe<UserRelateToOneForCreateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -17476,6 +21392,7 @@ export type UrlOrderByInput = {
   createdAt?: InputMaybe<OrderDirection>;
   description?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
+  indexInSearchEngine?: InputMaybe<OrderDirection>;
   title?: InputMaybe<OrderDirection>;
   updatedAt?: InputMaybe<OrderDirection>;
   url?: InputMaybe<OrderDirection>;
@@ -17500,6 +21417,7 @@ export type UrlUpdateArgs = {
 export type UrlUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  indexInSearchEngine?: InputMaybe<Scalars['String']['input']>;
   owner?: InputMaybe<UserRelateToOneForUpdateInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -17513,6 +21431,7 @@ export type UrlWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   description?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
+  indexInSearchEngine?: InputMaybe<StringNullableFilter>;
   owner?: InputMaybe<UserWhereInput>;
   title?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
@@ -17775,6 +21694,14 @@ export type LinkSearchQueryVariables = Exact<{
 
 export type LinkSearchQuery = { __typename?: 'Query', internalSearch?: Array<{ __typename: 'AssemblyDistrict', id: string, title?: string | null } | { __typename: 'Board', id: string, title?: string | null } | { __typename: 'BoardPage', id: string, title?: string | null } | { __typename: 'Community', id: string, title?: string | null } | { __typename: 'Facility', id: string, title?: string | null } | { __typename: 'HomePage', id: string, title?: string | null } | { __typename: 'OrgUnit', id: string, title?: string | null } | { __typename: 'Park', id: string, title?: string | null } | { __typename: 'PublicNotice', id: string, title?: string | null } | { __typename: 'Service', id: string, title?: string | null } | { __typename: 'Topic' } | { __typename: 'Trail', id: string, title?: string | null } | { __typename: 'Url', id: string, title?: string | null } | null> | null };
 
+export type UploadImageMutationVariables = Exact<{
+  upload: Scalars['Upload']['input'];
+  title: Scalars['String']['input'];
+}>;
+
+
+export type UploadImageMutation = { __typename?: 'Mutation', createImage?: { __typename?: 'Image', file?: { __typename?: 'ImageFieldOutput', url: string } | null } | null };
+
 
 export const CreateDocumentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDocuments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocumentCreateInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDocuments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"filesize"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<CreateDocumentsMutation, CreateDocumentsMutationVariables>;
 export const TagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<TagsQuery, TagsQueryVariables>;
@@ -17784,3 +21711,4 @@ export const DocumentCollectionDocument = {"kind":"Document","definitions":[{"ki
 export const DocumentCollectionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DocumentCollections"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocumentCollectionWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"documentCollections"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<DocumentCollectionsQuery, DocumentCollectionsQueryVariables>;
 export const GetInternalLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetInternalLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getInternalLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AssemblyDistrict"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Board"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BoardPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Community"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Facility"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"HomePage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"OrgUnit"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Park"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PublicNotice"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Trail"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Url"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetInternalLinkQuery, GetInternalLinkQueryVariables>;
 export const LinkSearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LinkSearch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"internalSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AssemblyDistrict"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Board"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"BoardPage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Community"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Facility"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"HomePage"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"OrgUnit"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Park"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PublicNotice"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Service"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Trail"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Url"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<LinkSearchQuery, LinkSearchQueryVariables>;
+export const UploadImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"upload"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"file"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"upload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"upload"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<UploadImageMutation, UploadImageMutationVariables>;

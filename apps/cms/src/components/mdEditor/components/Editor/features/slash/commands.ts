@@ -7,13 +7,15 @@ import {
   clearRange,
   runCommand,
 } from './utils';
-
-import { editorViewCtx } from '@milkdown/kit/core';
+import { imageBlockSchema } from '@milkdown/kit/component/image-block';
+import { commandsCtx, editorViewCtx } from '@milkdown/kit/core';
 import { createTable } from '@milkdown/kit/preset/gfm';
 import { MD_PAYMENTS_ALL_STEPS, MD_STEP_TEMPLATE } from './mdTemplates';
 import {
+  addBlockTypeCommand,
   blockquoteSchema,
   bulletListSchema,
+  clearTextInCurrentBlockCommand,
   headingSchema,
   hrSchema,
   orderedListSchema,
@@ -22,10 +24,15 @@ import { NodeSelection } from '@milkdown/kit/prose/state';
 import { PrimaryActionButtonNode } from '../PrimaryAction';
 import { DocCollectionNode } from '../DocCollection/schema';
 
+type SlashCommand = {
+  label: string;
+  action: (ctx: Ctx) => void;
+};
+
 export const SLASH_COMMANDS = [
   {
     label: 'Header 1',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndSetBlockType(headingSchema.type(ctx), { level: 1 }),
@@ -34,7 +41,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Header 2',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndSetBlockType(headingSchema.type(ctx), { level: 2 }),
@@ -43,7 +50,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Header 3',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndSetBlockType(headingSchema.type(ctx), { level: 3 }),
@@ -52,7 +59,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Header 4',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndSetBlockType(headingSchema.type(ctx), { level: 4 }),
@@ -61,7 +68,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Header 5',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndSetBlockType(headingSchema.type(ctx), { level: 5 }),
@@ -70,7 +77,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Header 6',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndSetBlockType(headingSchema.type(ctx), { level: 6 }),
@@ -79,7 +86,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Quote',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndWrapInBlockType(blockquoteSchema.type(ctx)),
@@ -88,13 +95,13 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Divider',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(ctx, clearContentAndAddBlockType(hrSchema.type(ctx)));
     },
   },
   {
     label: 'Ordered List',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndWrapInBlockType(orderedListSchema.type(ctx)),
@@ -103,7 +110,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Unordered List',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndWrapInBlockType(bulletListSchema.type(ctx)),
@@ -113,7 +120,7 @@ export const SLASH_COMMANDS = [
 
   {
     label: 'Table',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       const view = ctx.get(editorViewCtx);
       const { dispatch, state } = view;
       const tr = clearRange(state.tr);
@@ -130,7 +137,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Primary Action Button',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndSetBlockType(PrimaryActionButtonNode.type(ctx), {
@@ -141,7 +148,7 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Document Collection',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(
         ctx,
         clearContentAndAddBlockType(DocCollectionNode.type(ctx), { id: '' }),
@@ -150,14 +157,25 @@ export const SLASH_COMMANDS = [
   },
   {
     label: 'Step',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(ctx, clearContentAndInsert(ctx, MD_STEP_TEMPLATE));
     },
   },
   {
     label: 'Step template: Payments',
-    action: (ctx: Ctx) => {
+    action: (ctx) => {
       return runCommand(ctx, clearContentAndInsert(ctx, MD_PAYMENTS_ALL_STEPS));
     },
   },
-];
+  {
+    label: 'Image',
+    action: (ctx) => {
+      const commands = ctx.get(commandsCtx);
+      const imageBlock = imageBlockSchema.type(ctx);
+      commands.call(clearTextInCurrentBlockCommand.key);
+      commands.call(addBlockTypeCommand.key, {
+        nodeType: imageBlock,
+      });
+    },
+  },
+] satisfies SlashCommand[];

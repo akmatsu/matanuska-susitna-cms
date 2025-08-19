@@ -2261,7 +2261,7 @@ model DocumentListItem {
 
 model Image {
   id                                 String                    @id @default(cuid())
-  title                              String                    @unique @default("")
+  title                              String                    @default("")
   description                        String                    @default("")
   tags                               Tag[]                     @relation("Image_tags")
   file_id                            String?
