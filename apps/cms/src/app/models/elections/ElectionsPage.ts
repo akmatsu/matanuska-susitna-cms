@@ -13,6 +13,7 @@ import {
 } from '../../fieldUtils';
 import { customText } from '../../../components/customFields/Markdown';
 import { integer, relationship, text } from '@keystone-6/core/fields';
+import { electionsPageHooks } from './electionsPageHooks';
 
 export const EarlyVotingLocation = list({
   access: {
@@ -155,6 +156,7 @@ const ElectionsPage = list({
 
     ...timestamps,
   },
+  hooks: electionsPageHooks,
 });
 
 export default ElectionsPage;
