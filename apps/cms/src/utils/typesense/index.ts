@@ -399,11 +399,19 @@ export async function parseElectionsPage<T extends boolean>(
   if (many) {
     const data = await sudoCtx.prisma.electionsPage.findMany({ select });
     return data.map((p) => {
-      return toSearchableObj(p, 'topic', '-elections');
+      const d = {
+        ...p,
+        slug: 'elections',
+      };
+      return toSearchableObj(d, 'topic', '-elections');
     }) as any;
   } else {
     const data = await sudoCtx.prisma.electionsPage.findFirst({ select });
-    return toSearchableObj(data, 'topic', '-elections') as any;
+    const d = {
+      ...data,
+      slug: 'elections',
+    };
+    return toSearchableObj(d, 'topic', '-elections') as any;
   }
 }
 
@@ -450,9 +458,19 @@ export async function parseBoardPage<T extends boolean>(
       select,
     });
 
-    return data.map((p) => toSearchableObj(p, 'topic', '-boards')) as any;
+    return data.map((p) => {
+      const d = {
+        ...p,
+        slug: 'boards',
+      };
+      return toSearchableObj(d, 'topic', '-boards');
+    }) as any;
   } else {
     const data = await sudoCtx.prisma.boardPage.findFirst({ select });
-    return toSearchableObj(data, 'topic', '-boards') as any;
+    const d = {
+      ...data,
+      slug: 'boards',
+    };
+    return toSearchableObj(d, 'topic', '-boards') as any;
   }
 }
