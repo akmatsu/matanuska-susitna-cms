@@ -9,6 +9,7 @@ import {
 } from '../../fieldUtils';
 import { customText } from '../../../components/customFields/Markdown';
 import { relationship } from '@keystone-6/core/fields';
+import { boardsPageHooks } from './boardPageHooks';
 
 const BoardPage = list({
   isSingleton: true,
@@ -91,6 +92,7 @@ const BoardPage = list({
 
     ...timestamps,
   },
+  hooks: boardsPageHooks,
 });
 
 export default BoardPage;

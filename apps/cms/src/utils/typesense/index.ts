@@ -3,7 +3,7 @@ import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
 import { KeystoneContext } from '@keystone-6/core/types';
 import type { CommonContext } from '../../controllers/types';
-import OrgUnit from '../../app/models/pages/OrgUnit';
+import { Prisma } from '@prisma/client';
 
 export type TypeSensePageDocument = {
   id: string;
@@ -261,157 +261,198 @@ export const PAGE_TYPES = [
   },
   {
     type: 'topic',
-    async getItems(context) {
-      const sudoCtx = context.sudo();
-      const data = await sudoCtx.prisma.electionsPage.findMany({
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          howElectionsWork: true,
-          boroughElectionContact: {
-            select: {
-              name: true,
-              title: true,
-            },
-          },
-          earlyVotingLocations: {
-            select: {
-              title: true,
-              address: {
-                select: {
-                  lineOne: true,
-                  lineTwo: true,
-                  title: true,
-                  description: true,
-                },
-              },
-            },
-          },
-        },
-      });
-      return data.map((p) => {
-        const formatted = {
-          ...p,
-          id: `${p.id}-elections`,
-          slug: 'elections',
-          body: `${p.earlyVotingLocations.map((l) => `${l.title} ${l.address?.lineOne} ${l.address?.lineTwo} ${l.address?.title} ${l.address?.description}`).join(', ')}. ${p.howElectionsWork} ${p.boroughElectionContact?.name} ${p.boroughElectionContact?.title}  `,
-        };
-        return toSearchableObj(formatted, 'topic');
-      });
-    },
+    getItems: (ctx) => parseElectionsPage(ctx, true),
   },
   {
     type: 'topic',
-    async getItems(context) {
-      const sudoCtx = context.sudo();
-      const data = await sudoCtx.prisma.boardPage.findMany({
-        select: {
-          id: true,
-          title: true,
-          description: true,
-          body: true,
-          actions: {
-            select: {
-              label: true,
-            },
-          },
-          documents: {
-            select: {
-              title: true,
-            },
-          },
-          vacancyReport: {
-            select: {
-              title: true,
-            },
-          },
-          contacts: {
-            select: {
-              name: true,
-              title: true,
-            },
-          },
-          applicationForm: {
-            select: {
-              title: true,
-            },
-          },
-        },
-      });
-      return data.map((p) => {
-        const d = {
-          ...p,
-          id: `${p.id}-board`,
-          slug: 'boards',
-          body: `${p.body} ${p.actions.map((a) => a.label).join(', ')} ${p.documents.map((d) => d.title).join(', ')} ${p.vacancyReport?.title} ${p.contacts.map((c) => `${c.name} ${c.title}`).join(', ')} ${p.applicationForm?.title}`,
-        };
-        return toSearchableObj(d, 'topic');
-      });
-    },
+    getItems: (ctx) => parseBoardPage(ctx, true),
   },
 ] satisfies PageType[];
 
 export function toSearchableObj(
   item: any,
   type: string,
+  prependId?: string,
 ): TypeSensePageDocument {
-  return {
+  const baseObj: TypeSensePageDocument = {
     type: item?.type?.replace(/_/gi, ' ') || type,
-    id: item.id,
+    id: `${item.id}${prependId}`,
     slug: item.slug,
     title: item.title,
-    ...(item.description && { description: item.description }),
-    ...(item.body && { body: item.body }),
-    ...(item.actionLabel && { action_label: item.actionLabel }),
-    ...(item.publishAt && {
-      published_at: Math.floor(new Date(item.publishAt).getTime() / 1000),
-    }),
-    ...(item.tags && {
-      tags: item.tags.map((tag: { name: string }) => tag.name || ''),
-    }),
-
-    ...(item.orgUnits && {
-      departments: item.orgUnits.map(
-        (department: { title: string }) => department.title || '',
-      ),
-    }),
-
-    ...(item.districts && {
-      districts: item.districts.map(
-        (district: { title: string }) => district.title || '',
-      ),
-    }),
-
-    ...(item.communities && {
-      communities: item.communities.map(
-        (community: { title: string }) => community.title || '',
-      ),
-    }),
-
-    ...(item.urgency && {
-      urgency: item.urgency,
-    }),
-
-    related_pages: [
-      ...mapRelatedEntities(item.orgUnits, 'department'),
-      ...mapRelatedEntities(item.services, 'service'),
-      ...mapRelatedEntities(item.assemblyDistricts, 'district'),
-      ...mapRelatedEntities(item.communities, 'community'),
-      ...mapRelatedEntities(item.parks, 'park'),
-      ...mapRelatedEntities(item.trails, 'trail'),
-      ...mapRelatedEntities(item.facilities, 'facility'),
-    ],
   };
+
+  const bodyParts: string[] = [];
+
+  if (item.body) {
+    baseObj.body = item.body;
+    bodyParts.push(item.body);
+  }
+
+  if (item.description) {
+    baseObj.description = item.description;
+  }
+
+  if (item.secondaryActions) {
+    bodyParts.push(
+      ...item.actions.map((a: { label: string }) => a.label || ''),
+    );
+  }
+
+  if (item.publishAt)
+    baseObj.published_at = Math.floor(
+      new Date(item.publishAt).getTime() / 1000,
+    );
+
+  if (item.tags) {
+    baseObj.tags = item.tags.map((tag: { name: string }) => tag.name || '');
+  }
+
+  if (item.orgUnits) {
+    baseObj.departments = item.orgUnits.map(
+      (d: { title: string }) => d.title || '',
+    );
+  }
+
+  if (item.districts) {
+    baseObj.districts = item.districts.map(
+      (d: { title: string }) => d.title || '',
+    );
+  }
+
+  if (item.assemblyDistricts) {
+    baseObj.districts = item.assemblyDistricts.map(
+      (d: { title: string }) => d.title || '',
+    );
+  }
+
+  if (item.communities) {
+    baseObj.communities = item.communities.map(
+      (c: { title: string }) => c.title || '',
+    );
+  }
+
+  // Check for unmapped relevant keys.
+  const relevantKeys = ['title', 'name', 'label', 'description'];
+  for (const [key, value] of Object.entries(item)) {
+    // If there is any unmapped relevant keys in the root of the item add it to bodyParts
+    if (
+      !Object.keys(baseObj).includes(key) &&
+      relevantKeys.some((rk) => key.toLowerCase().includes(rk)) &&
+      typeof value === 'string'
+    ) {
+      bodyParts.push(value);
+    }
+
+    // If the value is an array, check each item for relevant keys.
+    if (Array.isArray(value)) {
+      value.forEach((v) => {
+        if (typeof v === 'object') {
+          relevantKeys.forEach((rk) => {
+            if (v[rk]) bodyParts.push(v[rk]);
+          });
+        }
+      });
+      // If the value is an object check the object for relevant keys
+    } else if (typeof value === 'object' && value !== null) {
+      relevantKeys.forEach((rk) => {
+        const obj = value as Record<string, any>;
+        if (obj[rk]) bodyParts.push(obj[rk]);
+      });
+    }
+  }
+
+  baseObj.body = Array.from(new Set(bodyParts)).join(', ').trim();
+
+  return baseObj;
 }
 
-function mapRelatedEntities(
-  item: { title: string }[] | undefined | null,
-  type: string,
-) {
-  if (!item) return [];
+export async function parseElectionsPage<T extends boolean>(
+  context: CommonContext,
+  many?: T,
+): Promise<T extends true ? TypeSensePageDocument[] : TypeSensePageDocument> {
+  const sudoCtx = context.sudo();
+  const select: Prisma.ElectionsPageSelect = {
+    id: true,
+    title: true,
+    description: true,
+    howElectionsWork: true,
+    boroughElectionContact: {
+      select: {
+        name: true,
+        title: true,
+      },
+    },
+    earlyVotingLocations: {
+      select: {
+        title: true,
+        address: {
+          select: {
+            lineOne: true,
+            lineTwo: true,
+            title: true,
+            description: true,
+          },
+        },
+      },
+    },
+  };
+  if (many) {
+    const data = await sudoCtx.prisma.electionsPage.findMany({ select });
+    return data.map((p) => {
+      return toSearchableObj(p, 'topic', '-elections');
+    }) as any;
+  } else {
+    const data = await sudoCtx.prisma.electionsPage.findFirst({ select });
+    return toSearchableObj(data, 'topic', '-elections') as any;
+  }
+}
 
-  return item.map((entity) => {
-    return type + ':' + entity.title;
-  });
+export async function parseBoardPage<T extends boolean>(
+  context: CommonContext,
+  many?: T,
+): Promise<T extends true ? TypeSensePageDocument[] : TypeSensePageDocument> {
+  const sudoCtx = context.sudo();
+  const select: Prisma.BoardPageSelect = {
+    id: true,
+    title: true,
+    description: true,
+    body: true,
+    actions: {
+      select: {
+        label: true,
+      },
+    },
+    documents: {
+      select: {
+        title: true,
+      },
+    },
+    vacancyReport: {
+      select: {
+        title: true,
+      },
+    },
+    contacts: {
+      select: {
+        name: true,
+        title: true,
+      },
+    },
+    applicationForm: {
+      select: {
+        title: true,
+      },
+    },
+  };
+
+  if (many) {
+    const data = await sudoCtx.prisma.boardPage.findMany({
+      select,
+    });
+
+    return data.map((p) => toSearchableObj(p, 'topic', '-boards')) as any;
+  } else {
+    const data = await sudoCtx.prisma.boardPage.findFirst({ select });
+    return toSearchableObj(data, 'topic', '-boards') as any;
+  }
 }

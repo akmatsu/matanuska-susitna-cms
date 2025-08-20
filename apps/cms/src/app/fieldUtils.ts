@@ -29,6 +29,7 @@ import {
   toSearchableObj,
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
+  TypeSensePageDocument,
 } from '../utils/typesense';
 import { logger } from '../configs/logger';
 import v from 'voca';
@@ -758,4 +759,16 @@ export function switchField() {
       isRequired: true,
     },
   });
+}
+
+export function docUpsert(doc: TypeSensePageDocument) {
+  return TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+    .documents()
+    .upsert(doc);
+}
+
+export function docDelete(id: string) {
+  return TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+    .documents(id)
+    .delete();
 }
