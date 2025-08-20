@@ -1,3 +1,23 @@
+# [0.19.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.18.0...v0.19.0) (2025-08-20)
+
+
+### Bug Fixes
+
+* add missing relationships and index plans in the search engine ([6cf2dd1](https://github.com/akmatsu/matanuska-susitna-cms/commit/6cf2dd11b7dea17d97d4013b52091c547343d690))
+* all page items are now indexed in the search engine ([4cc6eb4](https://github.com/akmatsu/matanuska-susitna-cms/commit/4cc6eb4a214b894bb989d6cef34deb8f35458430))
+* fixed linting warnings ([633e18f](https://github.com/akmatsu/matanuska-susitna-cms/commit/633e18f67570f9b1f3a6d4d1d9f54a2b3b98c25d))
+* fixed type errors, fixed access warnigns appearing when they shouldn't, owner field is read only when not admin or owner ([b1ea2d9](https://github.com/akmatsu/matanuska-susitna-cms/commit/b1ea2d9727af9459678a0c5dc6de6d798a9617ee))
+* improved plan and topic indexing ([ea8a8f6](https://github.com/akmatsu/matanuska-susitna-cms/commit/ea8a8f658b271d6bd44ef1e3f54c8ec1ec3e8414))
+* now indexing elections and boards pages ([7076660](https://github.com/akmatsu/matanuska-susitna-cms/commit/707666002266808e23e791ed35ceb63754517b62))
+
+
+### Features
+
+* added the ability to add images in body text ([b073eaa](https://github.com/akmatsu/matanuska-susitna-cms/commit/b073eaab0cb2606a292eb287f70416d2ef725d1b))
+* created away to reset all indeces in typesense ([9c34026](https://github.com/akmatsu/matanuska-susitna-cms/commit/9c340264aa9b51d5ebd7cfcca7b579dd96ba447b))
+* fixed slug not working ([8985067](https://github.com/akmatsu/matanuska-susitna-cms/commit/8985067938922a89c39e8ce1e3a9fdc571af9ce8))
+* removed unused code ([5b14c02](https://github.com/akmatsu/matanuska-susitna-cms/commit/5b14c0250798ccc7e0d72176119abc4e9c129f71))
+
 # [0.18.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.17.0...v0.18.0) (2025-08-14)
 
 
