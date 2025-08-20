@@ -463,7 +463,6 @@ export function basePage(
   listNamePlural: string,
   opts?: BasePageOptions,
 ): BaseFields<any> {
-  const listName = singular(listNamePlural);
   return {
     canEdit: virtual({
       label: 'Insufficient Access',

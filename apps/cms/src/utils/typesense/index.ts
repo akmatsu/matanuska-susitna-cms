@@ -1,7 +1,6 @@
 import Typesense from 'typesense';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
-import { KeystoneContext } from '@keystone-6/core/types';
 import type { CommonContext } from '../../controllers/types';
 import { Prisma } from '@prisma/client';
 
