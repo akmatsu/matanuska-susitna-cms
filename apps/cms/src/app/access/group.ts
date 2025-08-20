@@ -4,8 +4,8 @@ import { BaseAccessArgs, findUser, isAdmin } from './roles';
 /**
  * Checks if the user is the owner of the item.
  */
-export async function isOwner(
-  args: BaseAccessArgs<BaseListTypeInfo>,
+export async function isOwner<T extends BaseListTypeInfo = any>(
+  args: BaseAccessArgs<T>,
 ): Promise<boolean> {
   const user = await findUser(args);
   if (!user) return false;
@@ -16,8 +16,8 @@ export async function isOwner(
 /**
  * Checks if the user belongs to any groups that have access to the given item.
  */
-export async function belongsToGroup(
-  args: BaseAccessArgs<BaseListTypeInfo>,
+export async function belongsToGroup<T extends BaseListTypeInfo = any>(
+  args: BaseAccessArgs<T>,
   listKey: string,
 ): Promise<boolean> {
   const user = await findUser(args);
@@ -33,7 +33,9 @@ export async function belongsToGroup(
   return checkIfUserHasItemGroup(combinedGroups, itemGroups);
 }
 
-export async function isElectionUser(args: BaseAccessArgs<BaseListTypeInfo>) {
+export async function isElectionUser<T extends BaseListTypeInfo = any>(
+  args: BaseAccessArgs<T>,
+) {
   const isadmin = await isAdmin(args);
   if (isadmin) return true;
 
@@ -41,8 +43,8 @@ export async function isElectionUser(args: BaseAccessArgs<BaseListTypeInfo>) {
   return isInElectionsUserGroup;
 }
 
-export async function isNotElectionUser(
-  args: BaseAccessArgs<BaseListTypeInfo>,
+export async function isNotElectionUser<T extends BaseListTypeInfo = any>(
+  args: BaseAccessArgs<T>,
 ) {
   const isInElectionUserGroup = await isElectionUser(args);
   return !isInElectionUserGroup;

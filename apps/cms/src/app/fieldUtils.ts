@@ -14,7 +14,7 @@ import {
   FieldHooks,
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
-import { isAdmin } from './access/roles';
+import { isAdmin, isContentManager } from './access/roles';
 import { belongsToGroup, isOwner } from './access/group';
 import { appConfig } from '../configs/appConfig';
 import {
@@ -321,13 +321,22 @@ export const slug = text({
   },
 });
 
-export const owner = relationship({
+export const owner = relationship<any>({
   ref: 'User',
   ui: {
+    description:
+      'Please note only the page owners and admins can change this field.',
     createView: {
       fieldMode: 'hidden',
     },
     hideCreate: true,
+    itemView: {
+      async fieldMode(args) {
+        const canEdit = (await isAdmin(args)) || (await isOwner(args));
+
+        return canEdit ? 'edit' : 'read';
+      },
+    },
   },
   hooks: {
     resolveInput: relateActiveUser,
@@ -405,8 +414,8 @@ export function documentRelationship() {
   });
 }
 
-export function userGroups() {
-  return relationship({
+export function userGroups<T extends BaseListTypeInfo = any>() {
+  return relationship<T>({
     ref: `UserGroup`,
     many: true,
     ui: {
@@ -467,7 +476,7 @@ export function basePage(
         itemView: {
           async fieldMode(args) {
             const res =
-              (await isAdmin(args)) ||
+              (await isContentManager(args)) ||
               (await isOwner(args)) ||
               (await belongsToGroup(args, singular(listNamePlural)));
 
