@@ -165,7 +165,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
       async afterOperation(args) {
         await typesenseUpsert(
           'plan',
-          'id title slug description body publishAt tags {name} orgUnits {title} communities {title} contacts {name}',
+          'id title slug description body publishAt tags {name} orgUnits {title} communities {title} contacts {name} actions {label} documents {title}',
           args,
         );
       },
