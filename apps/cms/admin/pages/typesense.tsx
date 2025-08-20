@@ -152,6 +152,34 @@ export default function CustomPage() {
     }
   }
 
+  async function reindexPages() {
+    try {
+      setCreateLoading(true);
+      const res = await fetch('typesense/reindex', {
+        method: 'POST',
+      });
+
+      if (!res.ok) {
+        throw new Error(
+          `Failed to reindex pages, ${res.status}: ${res.statusText}`,
+        );
+      }
+      toasts.addToast({
+        tone: 'positive',
+        title: 'Reindexing pages successful',
+        message: 'Reindexing pages successful',
+      });
+    } catch (err) {
+      toasts.addToast({
+        tone: 'negative',
+        title: 'Failed to reindex pages',
+        message: `Failed to reindex pages, ${err}`,
+      });
+    } finally {
+      setCreateLoading(false);
+    }
+  }
+
   return (
     <PageContainer header="Typesense">
       <h1 className="text-4xl font-bold">Typesense</h1>
@@ -190,6 +218,10 @@ export default function CustomPage() {
 
         <Button onClick={importPages} isLoading={createLoading}>
           Import Pages
+        </Button>
+
+        <Button onClick={reindexPages} isLoading={createLoading}>
+          Reindex Pages
         </Button>
       </div>
     </PageContainer>

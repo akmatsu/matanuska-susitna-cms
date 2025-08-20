@@ -1,27 +1,22 @@
-import { FieldHooks, ListHooks } from '@keystone-6/core/types';
-import { Lists } from '.keystone/types';
+import { ListHooks } from '@keystone-6/core/types';
 import { logger } from '../../../configs/logger';
-import {
-  TYPESENSE_CLIENT,
-  TYPESENSE_COLLECTIONS,
-} from '../../../utils/typesense';
+import { parseElectionsPage } from '../../../utils/typesense';
+import { docDelete, docUpsert } from '../../fieldUtils';
 
 export const electionsPageHooks = {
   async beforeOperation(args) {
     try {
-      TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-        .documents(`${args.item?.id.toString()}-`)
-        .delete();
+      docDelete(`${args.item?.id.toString()}-elections`);
     } catch (error) {
       logger.error(error, 'Error deleting elections page typesense document');
     }
   },
-  async afterOperation({ context, item, operation }) {
+  async afterOperation({ context }) {
     try {
-      const sudoCtx = context.sudo();
-      const doc = await sudoCtx.prisma.electionsPage.findFirst();
+      const doc = await parseElectionsPage(context, false);
+      docUpsert(doc);
     } catch (error) {
       logger.error(error, 'Error updating elections page typesense document');
     }
   },
-} satisfies ListHooks<Lists.ElectionsPage.TypeInfo>;
+} satisfies ListHooks<any>;
