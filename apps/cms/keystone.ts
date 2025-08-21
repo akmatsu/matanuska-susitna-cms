@@ -52,7 +52,7 @@ export default config<TypeInfo<Session>>({
       credentials: true,
       methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS', 'PATCH'],
     },
-    maxFileSize: 500 * 1024 * 124,
+    maxFileSize: 500 * 1024 * 1024,
     extendExpressApp: routes,
     port: appConfig.server.port,
   },
