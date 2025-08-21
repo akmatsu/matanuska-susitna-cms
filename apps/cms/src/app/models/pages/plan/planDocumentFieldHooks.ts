@@ -43,6 +43,7 @@ export const planDocumentFieldHooks = {
       // Disconnect if new draft docs include current doc
       const newPastIds = asArr(resolvedData.pastDocuments?.connect).map(toId);
       if (currentId && newPastIds.includes(currentId)) return disconnect;
+      return resolvedData[fieldKey];
     },
   },
   draftDocument: {
@@ -53,6 +54,7 @@ export const planDocumentFieldHooks = {
       const draftId = item.draftDocumentId;
       const newCurrentId = toId(resolvedData.currentDocument?.connect);
       if (draftId && draftId === newCurrentId) return disconnect;
+      return resolvedData[fieldKey];
     },
   },
   pastDocuments: {
@@ -80,6 +82,7 @@ export const planDocumentFieldHooks = {
           ...(connect.length > 0 && { connect }),
         };
       }
+      return resolvedData[fieldKey];
     },
   },
 } satisfies PlanDocumentFieldHooks;
