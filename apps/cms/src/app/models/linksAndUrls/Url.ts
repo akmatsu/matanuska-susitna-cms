@@ -1,12 +1,16 @@
 import { list } from '@keystone-6/core';
 import { generalOperationAccess, isContentManager } from '../../access';
 import {
+  docDelete,
   owner,
   timestamps,
   titleAndDescription,
+  typesenseDelete,
   urlRegex,
 } from '../../fieldUtils';
 import { select, text } from '@keystone-6/core/fields';
+import { Lists } from '.keystone/types';
+import { ListHooks } from '@keystone-6/core/types';
 
 export const Url = list({
   access: {
@@ -41,5 +45,22 @@ export const Url = list({
     }),
     owner,
     ...timestamps,
+  },
+  hooks: {
+    async beforeOperation(args) {
+      await typesenseDelete(args);
+    },
+
+    async afterOperation({ operation, item, originalItem }) {
+      if (operation === 'update') {
+        if (
+          (item.indexInSearchEngine === 'no' ||
+            item.indexInSearchEngine === null) &&
+          originalItem.indexInSearchEngine === 'yes'
+        ) {
+          docDelete(item.id.toString());
+        }
+      }
+    },
   },
 });
