@@ -1,3 +1,10 @@
+## [0.19.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.19.0...v0.19.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* increased maxFileSize to 500 MB ([da10b3b](https://github.com/akmatsu/matanuska-susitna-cms/commit/da10b3bcd20c5bc25131499a97a3250075b41885))
+
 # [0.19.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.18.0...v0.19.0) (2025-08-20)
 
 
