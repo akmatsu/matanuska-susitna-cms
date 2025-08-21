@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.19.2...v0.20.0) (2025-08-21)
+
+
+### Features
+
+* deleting index URLs if index is set to no or they are deleted ([fc8d972](https://github.com/akmatsu/matanuska-susitna-cms/commit/fc8d972b9e94bcf8ca6b69b7b42cef732552300b))
+
 ## [0.19.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.19.1...v0.19.2) (2025-08-21)
 
 
