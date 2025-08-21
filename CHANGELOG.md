@@ -1,3 +1,10 @@
+## [0.19.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.19.1...v0.19.2) (2025-08-21)
+
+
+### Bug Fixes
+
+* fixed plan Documents not saving on plans ([07dc885](https://github.com/akmatsu/matanuska-susitna-cms/commit/07dc885078b0f4598c00b3d0d9e8cf7cf7052148))
+
 ## [0.19.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.19.0...v0.19.1) (2025-08-21)
 
 
