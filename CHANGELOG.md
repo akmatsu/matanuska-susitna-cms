@@ -1,3 +1,10 @@
+# [0.21.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.20.0...v0.21.0) (2025-08-26)
+
+
+### Features
+
+* added missing relationships and updated graphql schema with shared fields ([9fd5a59](https://github.com/akmatsu/matanuska-susitna-cms/commit/9fd5a59f166a9d3852feca0ba87b1ff0ab0ff2eb))
+
 # [0.20.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.19.2...v0.20.0) (2025-08-21)
 
 
