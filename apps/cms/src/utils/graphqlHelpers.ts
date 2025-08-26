@@ -121,6 +121,38 @@ export const graphqlExtendTypeDefs = gql`
       skip: Int! = 0
       cursor: TopicWhereUniqueInput
     ): [Topic!]
+    publicNotices(
+      where: PublicNoticeWhereInput! = {}
+      orderBy: [PublicNoticeOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: PublicNoticeWhereUniqueInput
+    ): [PublicNotice!]
+    publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+    assemblyDistricts(
+      where: AssemblyDistrictWhereInput! = {}
+      orderBy: [AssemblyDistrictOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: AssemblyDistrictWhereUniqueInput
+    ): [AssemblyDistrict!]
+    assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+    communities(
+      where: CommunityWhereInput! = {}
+      orderBy: [CommunityOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: CommunityWhereUniqueInput
+    ): [Community!]
+    communitiesCount(where: CommunityWhereInput! = {}): Int
+    orgUnits(
+      where: OrgUnitWhereInput! = {}
+      orderBy: [OrgUnitOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: OrgUnitWhereUniqueInput
+    ): [OrgUnit!]
+    orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   }
 
   interface BasePageWithActions implements BasePage & BasePageWithSlug {
@@ -185,6 +217,39 @@ export const graphqlExtendTypeDefs = gql`
       skip: Int! = 0
       cursor: TopicWhereUniqueInput
     ): [Topic!]
+    publicNotices(
+      where: PublicNoticeWhereInput! = {}
+      orderBy: [PublicNoticeOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: PublicNoticeWhereUniqueInput
+    ): [PublicNotice!]
+    publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+    topicsCount(where: TopicWhereInput! = {}): Int
+    assemblyDistricts(
+      where: AssemblyDistrictWhereInput! = {}
+      orderBy: [AssemblyDistrictOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: AssemblyDistrictWhereUniqueInput
+    ): [AssemblyDistrict!]
+    assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+    communities(
+      where: CommunityWhereInput! = {}
+      orderBy: [CommunityOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: CommunityWhereUniqueInput
+    ): [Community!]
+    communitiesCount(where: CommunityWhereInput! = {}): Int
+    orgUnits(
+      where: OrgUnitWhereInput! = {}
+      orderBy: [OrgUnitOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: OrgUnitWhereUniqueInput
+    ): [OrgUnit!]
+    orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   }
 
   extend type BoardPage implements BasePage

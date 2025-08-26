@@ -1,7 +1,7 @@
 import { relationship } from '@keystone-6/core/fields';
 import { filterByPubStatus, generalOperationAccess } from '../../access';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import { basePage, timestampField } from '../../fieldUtils';
+import { basePage, basePageQuery, timestampField } from '../../fieldUtils';
 
 const Event = DraftAndVersionsFactory(
   'Event',
@@ -46,26 +46,14 @@ const Event = DraftAndVersionsFactory(
         many: true,
       }),
 
-      orgUnits: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.events' : 'OrgUnit',
-        many: true,
-      }),
-
       plans: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.events' : 'Plan',
-        many: true,
-      }),
-
-      assemblyDistricts: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'AssemblyDistrict.events'
-            : 'AssemblyDistrict',
         many: true,
       }),
     };
   },
   {
+    query: `${basePageQuery} plans {id} facilities {id} parks {id} trails {id} services {id} boards {id} communities {id} startDate endDate actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       filter: filterByPubStatus,

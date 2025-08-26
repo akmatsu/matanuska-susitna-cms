@@ -124,7 +124,7 @@ export const PAGE_TYPES = [
       const communities = await context.prisma.community.findMany({
         select: {
           ...sharedFields,
-          districts: {
+          assemblyDistricts: {
             select: {
               title: true,
             },

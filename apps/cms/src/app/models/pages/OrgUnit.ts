@@ -10,7 +10,10 @@ import {
   generalOperationAccess,
 } from '../../access';
 import { checkbox, relationship } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 
 const {
   Main: OrgUnit,
@@ -38,6 +41,36 @@ const {
         ref:
           !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.children' : 'OrgUnit',
         many: false,
+      }),
+      boards: relationshipController({
+        ref: 'Board',
+        listName: 'orgUnits',
+        many: true,
+        opts,
+      }),
+      facilities: relationshipController({
+        ref: 'Facility',
+        listName: 'orgUnits',
+        many: true,
+        opts,
+      }),
+      parks: relationshipController({
+        ref: 'Park',
+        listName: 'orgUnits',
+        many: true,
+        opts,
+      }),
+      trails: relationshipController({
+        ref: 'Trail',
+        listName: 'orgUnits',
+        many: true,
+        opts,
+      }),
+      plans: relationshipController({
+        ref: 'Plan',
+        listName: 'orgUnits',
+        many: true,
+        opts,
       }),
     };
   },

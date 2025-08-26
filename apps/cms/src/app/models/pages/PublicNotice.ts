@@ -91,13 +91,7 @@ const {
             : 'Community',
         many: true,
       }),
-      assemblyDistricts: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'AssemblyDistrict.publicNotices'
-            : 'AssemblyDistrict',
-        many: true,
-      }),
+
       boards: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion ? 'Board.publicNotices' : 'Board',

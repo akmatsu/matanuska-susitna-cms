@@ -55,6 +55,12 @@ const {
         opts,
         many: true,
       }),
+      assemblyDistricts: relationshipController({
+        listName: listNamePlural,
+        ref: 'AssemblyDistrict',
+        opts,
+        many: true,
+      }),
     };
   },
   {

@@ -78,14 +78,6 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.topics' : 'Plan',
         many: true,
       }),
-
-      assemblyDistricts: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'AssemblyDistrict.topics'
-            : 'AssemblyDistrict',
-        many: true,
-      }),
     };
   },
   {

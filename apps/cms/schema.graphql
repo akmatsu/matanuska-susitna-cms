@@ -1324,6 +1324,12 @@ type AssemblyDistrict implements BasePageWithSlug & BasePage & BasePageWithActio
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1336,6 +1342,16 @@ type AssemblyDistrict implements BasePageWithSlug & BasePage & BasePageWithActio
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: AssemblyDistrictDraftWhereInput! = {}, orderBy: [AssemblyDistrictDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictDraftWhereUniqueInput): [AssemblyDistrictDraft!]
   draftsCount(where: AssemblyDistrictDraftWhereInput! = {}): Int
@@ -1375,6 +1391,9 @@ input AssemblyDistrictWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1386,6 +1405,11 @@ input AssemblyDistrictWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  services: ServiceManyRelationFilter
+  trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: AssemblyDistrictDraftManyRelationFilter
   versions: AssemblyDistrictVersionManyRelationFilter
@@ -1410,6 +1434,24 @@ input PublicNoticeManyRelationFilter {
   none: PublicNoticeWhereInput
 }
 
+input CommunityManyRelationFilter {
+  every: CommunityWhereInput
+  some: CommunityWhereInput
+  none: CommunityWhereInput
+}
+
+input OrgUnitManyRelationFilter {
+  every: OrgUnitWhereInput
+  some: OrgUnitWhereInput
+  none: OrgUnitWhereInput
+}
+
+input AssemblyDistrictManyRelationFilter {
+  every: AssemblyDistrictWhereInput
+  some: AssemblyDistrictWhereInput
+  none: AssemblyDistrictWhereInput
+}
+
 input StringNullableFilter {
   equals: String
   in: [String!]
@@ -1429,6 +1471,36 @@ input BoardManyRelationFilter {
   every: BoardWhereInput
   some: BoardWhereInput
   none: BoardWhereInput
+}
+
+input FacilityManyRelationFilter {
+  every: FacilityWhereInput
+  some: FacilityWhereInput
+  none: FacilityWhereInput
+}
+
+input ParkManyRelationFilter {
+  every: ParkWhereInput
+  some: ParkWhereInput
+  none: ParkWhereInput
+}
+
+input ServiceManyRelationFilter {
+  every: ServiceWhereInput
+  some: ServiceWhereInput
+  none: ServiceWhereInput
+}
+
+input TrailManyRelationFilter {
+  every: TrailWhereInput
+  some: TrailWhereInput
+  none: TrailWhereInput
+}
+
+input PlanManyRelationFilter {
+  every: PlanWhereInput
+  some: PlanWhereInput
+  none: PlanWhereInput
 }
 
 input AssemblyDistrictDraftManyRelationFilter {
@@ -1486,6 +1558,9 @@ input AssemblyDistrictUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1497,6 +1572,11 @@ input AssemblyDistrictUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -1531,6 +1611,27 @@ input PublicNoticeRelateToManyForUpdateInput {
   connect: [PublicNoticeWhereUniqueInput!]
 }
 
+input CommunityRelateToManyForUpdateInput {
+  disconnect: [CommunityWhereUniqueInput!]
+  set: [CommunityWhereUniqueInput!]
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
+}
+
+input OrgUnitRelateToManyForUpdateInput {
+  disconnect: [OrgUnitWhereUniqueInput!]
+  set: [OrgUnitWhereUniqueInput!]
+  create: [OrgUnitCreateInput!]
+  connect: [OrgUnitWhereUniqueInput!]
+}
+
+input AssemblyDistrictRelateToManyForUpdateInput {
+  disconnect: [AssemblyDistrictWhereUniqueInput!]
+  set: [AssemblyDistrictWhereUniqueInput!]
+  create: [AssemblyDistrictCreateInput!]
+  connect: [AssemblyDistrictWhereUniqueInput!]
+}
+
 input ImageRelateToOneForUpdateInput {
   create: ImageCreateInput
   connect: ImageWhereUniqueInput
@@ -1542,6 +1643,41 @@ input BoardRelateToManyForUpdateInput {
   set: [BoardWhereUniqueInput!]
   create: [BoardCreateInput!]
   connect: [BoardWhereUniqueInput!]
+}
+
+input FacilityRelateToManyForUpdateInput {
+  disconnect: [FacilityWhereUniqueInput!]
+  set: [FacilityWhereUniqueInput!]
+  create: [FacilityCreateInput!]
+  connect: [FacilityWhereUniqueInput!]
+}
+
+input ParkRelateToManyForUpdateInput {
+  disconnect: [ParkWhereUniqueInput!]
+  set: [ParkWhereUniqueInput!]
+  create: [ParkCreateInput!]
+  connect: [ParkWhereUniqueInput!]
+}
+
+input ServiceRelateToManyForUpdateInput {
+  disconnect: [ServiceWhereUniqueInput!]
+  set: [ServiceWhereUniqueInput!]
+  create: [ServiceCreateInput!]
+  connect: [ServiceWhereUniqueInput!]
+}
+
+input TrailRelateToManyForUpdateInput {
+  disconnect: [TrailWhereUniqueInput!]
+  set: [TrailWhereUniqueInput!]
+  create: [TrailCreateInput!]
+  connect: [TrailWhereUniqueInput!]
+}
+
+input PlanRelateToManyForUpdateInput {
+  disconnect: [PlanWhereUniqueInput!]
+  set: [PlanWhereUniqueInput!]
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForUpdateInput {
@@ -1589,6 +1725,9 @@ input AssemblyDistrictCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1600,6 +1739,11 @@ input AssemblyDistrictCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -1627,6 +1771,21 @@ input PublicNoticeRelateToManyForCreateInput {
   connect: [PublicNoticeWhereUniqueInput!]
 }
 
+input CommunityRelateToManyForCreateInput {
+  create: [CommunityCreateInput!]
+  connect: [CommunityWhereUniqueInput!]
+}
+
+input OrgUnitRelateToManyForCreateInput {
+  create: [OrgUnitCreateInput!]
+  connect: [OrgUnitWhereUniqueInput!]
+}
+
+input AssemblyDistrictRelateToManyForCreateInput {
+  create: [AssemblyDistrictCreateInput!]
+  connect: [AssemblyDistrictWhereUniqueInput!]
+}
+
 input ImageRelateToOneForCreateInput {
   create: ImageCreateInput
   connect: ImageWhereUniqueInput
@@ -1635,6 +1794,31 @@ input ImageRelateToOneForCreateInput {
 input BoardRelateToManyForCreateInput {
   create: [BoardCreateInput!]
   connect: [BoardWhereUniqueInput!]
+}
+
+input FacilityRelateToManyForCreateInput {
+  create: [FacilityCreateInput!]
+  connect: [FacilityWhereUniqueInput!]
+}
+
+input ParkRelateToManyForCreateInput {
+  create: [ParkCreateInput!]
+  connect: [ParkWhereUniqueInput!]
+}
+
+input ServiceRelateToManyForCreateInput {
+  create: [ServiceCreateInput!]
+  connect: [ServiceWhereUniqueInput!]
+}
+
+input TrailRelateToManyForCreateInput {
+  create: [TrailCreateInput!]
+  connect: [TrailWhereUniqueInput!]
+}
+
+input PlanRelateToManyForCreateInput {
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForCreateInput {
@@ -1683,6 +1867,12 @@ type AssemblyDistrictVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1695,6 +1885,16 @@ type AssemblyDistrictVersion {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   isLive: AssemblyDistrict
   republish: String
 }
@@ -1727,6 +1927,9 @@ input AssemblyDistrictVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1738,6 +1941,11 @@ input AssemblyDistrictVersionWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  services: ServiceManyRelationFilter
+  trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
   isLive: AssemblyDistrictWhereInput
 }
 
@@ -1782,6 +1990,9 @@ input AssemblyDistrictVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1793,6 +2004,11 @@ input AssemblyDistrictVersionUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   isLive: AssemblyDistrictRelateToOneForUpdateInput
   republish: String
 }
@@ -1828,6 +2044,9 @@ input AssemblyDistrictVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1839,6 +2058,11 @@ input AssemblyDistrictVersionCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   isLive: AssemblyDistrictRelateToOneForCreateInput
   republish: String
 }
@@ -1879,6 +2103,12 @@ type AssemblyDistrictDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1891,6 +2121,16 @@ type AssemblyDistrictDraft {
   termEnd: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -1921,6 +2161,9 @@ input AssemblyDistrictDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1932,6 +2175,11 @@ input AssemblyDistrictDraftWhereInput {
   termStart: DateTimeNullableFilter
   termEnd: DateTimeNullableFilter
   boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  services: ServiceManyRelationFilter
+  trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
 }
 
 input AssemblyDistrictDraftOrderByInput {
@@ -1975,6 +2223,9 @@ input AssemblyDistrictDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1986,6 +2237,11 @@ input AssemblyDistrictDraftUpdateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -2014,6 +2270,9 @@ input AssemblyDistrictDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -2025,6 +2284,11 @@ input AssemblyDistrictDraftCreateInput {
   termStart: DateTime
   termEnd: DateTime
   boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -2058,6 +2322,12 @@ type Board implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2068,10 +2338,6 @@ type Board implements BasePageWithSlug & BasePage & BasePageWithActions {
   linkToPublicOpinionMessage: ExternalLink
   type: String
   isActive: Boolean
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   status: String
   drafts(where: BoardDraftWhereInput! = {}, orderBy: [BoardDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardDraftWhereUniqueInput): [BoardDraft!]
   draftsCount(where: BoardDraftWhereInput! = {}): Int
@@ -2110,6 +2376,9 @@ input BoardWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2120,24 +2389,10 @@ input BoardWhereInput {
   linkToPublicOpinionMessage: ExternalLinkWhereInput
   type: StringFilter
   isActive: BooleanFilter
-  districts: AssemblyDistrictManyRelationFilter
-  communities: CommunityManyRelationFilter
   status: StringFilter
   drafts: BoardDraftManyRelationFilter
   versions: BoardVersionManyRelationFilter
   currentVersion: BoardVersionWhereInput
-}
-
-input AssemblyDistrictManyRelationFilter {
-  every: AssemblyDistrictWhereInput
-  some: AssemblyDistrictWhereInput
-  none: AssemblyDistrictWhereInput
-}
-
-input CommunityManyRelationFilter {
-  every: CommunityWhereInput
-  some: CommunityWhereInput
-  none: CommunityWhereInput
 }
 
 input BoardDraftManyRelationFilter {
@@ -2191,6 +2446,9 @@ input BoardUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2201,27 +2459,11 @@ input BoardUpdateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
   type: String
   isActive: Boolean
-  districts: AssemblyDistrictRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   status: String
   drafts: BoardDraftRelateToManyForUpdateInput
   makeDrafts: String
   versions: BoardVersionRelateToManyForUpdateInput
   currentVersion: BoardVersionRelateToOneForUpdateInput
-}
-
-input AssemblyDistrictRelateToManyForUpdateInput {
-  disconnect: [AssemblyDistrictWhereUniqueInput!]
-  set: [AssemblyDistrictWhereUniqueInput!]
-  create: [AssemblyDistrictCreateInput!]
-  connect: [AssemblyDistrictWhereUniqueInput!]
-}
-
-input CommunityRelateToManyForUpdateInput {
-  disconnect: [CommunityWhereUniqueInput!]
-  set: [CommunityWhereUniqueInput!]
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
 }
 
 input BoardDraftRelateToManyForUpdateInput {
@@ -2268,6 +2510,9 @@ input BoardCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2278,23 +2523,11 @@ input BoardCreateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
   type: String
   isActive: Boolean
-  districts: AssemblyDistrictRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   status: String
   drafts: BoardDraftRelateToManyForCreateInput
   makeDrafts: String
   versions: BoardVersionRelateToManyForCreateInput
   currentVersion: BoardVersionRelateToOneForCreateInput
-}
-
-input AssemblyDistrictRelateToManyForCreateInput {
-  create: [AssemblyDistrictCreateInput!]
-  connect: [AssemblyDistrictWhereUniqueInput!]
-}
-
-input CommunityRelateToManyForCreateInput {
-  create: [CommunityCreateInput!]
-  connect: [CommunityWhereUniqueInput!]
 }
 
 input BoardDraftRelateToManyForCreateInput {
@@ -2342,6 +2575,12 @@ type BoardVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2352,10 +2591,6 @@ type BoardVersion {
   linkToPublicOpinionMessage: ExternalLink
   type: String
   isActive: Boolean
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   isLive: Board
   republish: String
 }
@@ -2387,6 +2622,9 @@ input BoardVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2397,8 +2635,6 @@ input BoardVersionWhereInput {
   linkToPublicOpinionMessage: ExternalLinkWhereInput
   type: StringFilter
   isActive: BooleanFilter
-  districts: AssemblyDistrictManyRelationFilter
-  communities: CommunityManyRelationFilter
   isLive: BoardWhereInput
 }
 
@@ -2439,6 +2675,9 @@ input BoardVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2449,8 +2688,6 @@ input BoardVersionUpdateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
   type: String
   isActive: Boolean
-  districts: AssemblyDistrictRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   isLive: BoardRelateToOneForUpdateInput
   republish: String
 }
@@ -2485,6 +2722,9 @@ input BoardVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2495,8 +2735,6 @@ input BoardVersionCreateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
   type: String
   isActive: Boolean
-  districts: AssemblyDistrictRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   isLive: BoardRelateToOneForCreateInput
   republish: String
 }
@@ -2536,6 +2774,12 @@ type BoardDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2546,10 +2790,6 @@ type BoardDraft {
   linkToPublicOpinionMessage: ExternalLink
   type: String
   isActive: Boolean
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   publish: String
 }
 
@@ -2579,6 +2819,9 @@ input BoardDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2589,8 +2832,6 @@ input BoardDraftWhereInput {
   linkToPublicOpinionMessage: ExternalLinkWhereInput
   type: StringFilter
   isActive: BooleanFilter
-  districts: AssemblyDistrictManyRelationFilter
-  communities: CommunityManyRelationFilter
 }
 
 input BoardDraftOrderByInput {
@@ -2630,6 +2871,9 @@ input BoardDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2640,8 +2884,6 @@ input BoardDraftUpdateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
   type: String
   isActive: Boolean
-  districts: AssemblyDistrictRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   publish: String
 }
 
@@ -2669,6 +2911,9 @@ input BoardDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2679,8 +2924,6 @@ input BoardDraftCreateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
   type: String
   isActive: Boolean
-  districts: AssemblyDistrictRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   publish: String
 }
 
@@ -2714,12 +2957,16 @@ type Community implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
@@ -2728,6 +2975,8 @@ type Community implements BasePageWithSlug & BasePage & BasePageWithActions {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
   draftsCount(where: CommunityDraftWhereInput! = {}): Int
@@ -2766,42 +3015,21 @@ input CommunityWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
-  districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: CommunityDraftManyRelationFilter
   versions: CommunityVersionManyRelationFilter
   currentVersion: CommunityVersionWhereInput
-}
-
-input ServiceManyRelationFilter {
-  every: ServiceWhereInput
-  some: ServiceWhereInput
-  none: ServiceWhereInput
-}
-
-input FacilityManyRelationFilter {
-  every: FacilityWhereInput
-  some: FacilityWhereInput
-  none: FacilityWhereInput
-}
-
-input ParkManyRelationFilter {
-  every: ParkWhereInput
-  some: ParkWhereInput
-  none: ParkWhereInput
-}
-
-input TrailManyRelationFilter {
-  every: TrailWhereInput
-  some: TrailWhereInput
-  none: TrailWhereInput
 }
 
 input CommunityDraftManyRelationFilter {
@@ -2851,47 +3079,22 @@ input CommunityUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
-  districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: CommunityDraftRelateToManyForUpdateInput
   makeDrafts: String
   versions: CommunityVersionRelateToManyForUpdateInput
   currentVersion: CommunityVersionRelateToOneForUpdateInput
-}
-
-input ServiceRelateToManyForUpdateInput {
-  disconnect: [ServiceWhereUniqueInput!]
-  set: [ServiceWhereUniqueInput!]
-  create: [ServiceCreateInput!]
-  connect: [ServiceWhereUniqueInput!]
-}
-
-input FacilityRelateToManyForUpdateInput {
-  disconnect: [FacilityWhereUniqueInput!]
-  set: [FacilityWhereUniqueInput!]
-  create: [FacilityCreateInput!]
-  connect: [FacilityWhereUniqueInput!]
-}
-
-input ParkRelateToManyForUpdateInput {
-  disconnect: [ParkWhereUniqueInput!]
-  set: [ParkWhereUniqueInput!]
-  create: [ParkCreateInput!]
-  connect: [ParkWhereUniqueInput!]
-}
-
-input TrailRelateToManyForUpdateInput {
-  disconnect: [TrailWhereUniqueInput!]
-  set: [TrailWhereUniqueInput!]
-  create: [TrailCreateInput!]
-  connect: [TrailWhereUniqueInput!]
 }
 
 input CommunityDraftRelateToManyForUpdateInput {
@@ -2938,39 +3141,22 @@ input CommunityCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
-  districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: CommunityDraftRelateToManyForCreateInput
   makeDrafts: String
   versions: CommunityVersionRelateToManyForCreateInput
   currentVersion: CommunityVersionRelateToOneForCreateInput
-}
-
-input ServiceRelateToManyForCreateInput {
-  create: [ServiceCreateInput!]
-  connect: [ServiceWhereUniqueInput!]
-}
-
-input FacilityRelateToManyForCreateInput {
-  create: [FacilityCreateInput!]
-  connect: [FacilityWhereUniqueInput!]
-}
-
-input ParkRelateToManyForCreateInput {
-  create: [ParkCreateInput!]
-  connect: [ParkWhereUniqueInput!]
-}
-
-input TrailRelateToManyForCreateInput {
-  create: [TrailCreateInput!]
-  connect: [TrailWhereUniqueInput!]
 }
 
 input CommunityDraftRelateToManyForCreateInput {
@@ -3018,12 +3204,16 @@ type CommunityVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
@@ -3032,6 +3222,8 @@ type CommunityVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   isLive: Community
   republish: String
 }
@@ -3063,14 +3255,17 @@ input CommunityVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
-  districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
   isLive: CommunityWhereInput
 }
 
@@ -3107,14 +3302,17 @@ input CommunityVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
-  districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   isLive: CommunityRelateToOneForUpdateInput
   republish: String
 }
@@ -3149,14 +3347,17 @@ input CommunityVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
-  districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   isLive: CommunityRelateToOneForCreateInput
   republish: String
 }
@@ -3196,12 +3397,16 @@ type CommunityDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  districts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  districtsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
@@ -3210,6 +3415,8 @@ type CommunityDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -3239,14 +3446,17 @@ input CommunityDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
-  districts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
 }
 
 input CommunityDraftOrderByInput {
@@ -3282,14 +3492,17 @@ input CommunityDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
-  districts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -3317,14 +3530,17 @@ input CommunityDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
-  districts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -3361,12 +3577,17 @@ type Facility implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  communities: Community
   status: String
   drafts(where: FacilityDraftWhereInput! = {}, orderBy: [FacilityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityDraftWhereUniqueInput): [FacilityDraft!]
   draftsCount(where: FacilityDraftWhereInput! = {}): Int
@@ -3407,11 +3628,13 @@ input FacilityWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  communities: CommunityWhereInput
   status: StringFilter
   drafts: FacilityDraftManyRelationFilter
   versions: FacilityVersionManyRelationFilter
@@ -3467,11 +3690,13 @@ input FacilityUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  communities: CommunityRelateToOneForUpdateInput
   status: String
   drafts: FacilityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -3531,11 +3756,13 @@ input FacilityCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  communities: CommunityRelateToOneForCreateInput
   status: String
   drafts: FacilityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -3596,12 +3823,17 @@ type FacilityVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  communities: Community
   isLive: Facility
   republish: String
 }
@@ -3635,11 +3867,13 @@ input FacilityVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  communities: CommunityWhereInput
   isLive: FacilityWhereInput
 }
 
@@ -3678,11 +3912,13 @@ input FacilityVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  communities: CommunityRelateToOneForUpdateInput
   isLive: FacilityRelateToOneForUpdateInput
   republish: String
 }
@@ -3719,11 +3955,13 @@ input FacilityVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  communities: CommunityRelateToOneForCreateInput
   isLive: FacilityRelateToOneForCreateInput
   republish: String
 }
@@ -3766,12 +4004,17 @@ type FacilityDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  communities: Community
   publish: String
 }
 
@@ -3803,11 +4046,13 @@ input FacilityDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  communities: CommunityWhereInput
 }
 
 input FacilityDraftOrderByInput {
@@ -3845,11 +4090,13 @@ input FacilityDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  communities: CommunityRelateToOneForUpdateInput
   publish: String
 }
 
@@ -3879,11 +4126,13 @@ input FacilityDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  communities: CommunityRelateToOneForCreateInput
   publish: String
 }
 
@@ -3917,6 +4166,12 @@ type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -3925,6 +4180,16 @@ type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: OrgUnitDraftWhereInput! = {}, orderBy: [OrgUnitDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitDraftWhereUniqueInput): [OrgUnitDraft!]
   draftsCount(where: OrgUnitDraftWhereInput! = {}): Int
@@ -3963,22 +4228,24 @@ input OrgUnitWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
+  boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: OrgUnitDraftManyRelationFilter
   versions: OrgUnitVersionManyRelationFilter
   currentVersion: OrgUnitVersionWhereInput
-}
-
-input OrgUnitManyRelationFilter {
-  every: OrgUnitWhereInput
-  some: OrgUnitWhereInput
-  none: OrgUnitWhereInput
 }
 
 input OrgUnitDraftManyRelationFilter {
@@ -4029,24 +4296,25 @@ input OrgUnitUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForUpdateInput
   makeDrafts: String
   versions: OrgUnitVersionRelateToManyForUpdateInput
   currentVersion: OrgUnitVersionRelateToOneForUpdateInput
-}
-
-input OrgUnitRelateToManyForUpdateInput {
-  disconnect: [OrgUnitWhereUniqueInput!]
-  set: [OrgUnitWhereUniqueInput!]
-  create: [OrgUnitCreateInput!]
-  connect: [OrgUnitWhereUniqueInput!]
 }
 
 input OrgUnitRelateToOneForUpdateInput {
@@ -4099,22 +4367,25 @@ input OrgUnitCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForCreateInput
   makeDrafts: String
   versions: OrgUnitVersionRelateToManyForCreateInput
   currentVersion: OrgUnitVersionRelateToOneForCreateInput
-}
-
-input OrgUnitRelateToManyForCreateInput {
-  create: [OrgUnitCreateInput!]
-  connect: [OrgUnitWhereUniqueInput!]
 }
 
 input OrgUnitRelateToOneForCreateInput {
@@ -4167,6 +4438,12 @@ type OrgUnitVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -4175,6 +4452,16 @@ type OrgUnitVersion {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   isLive: OrgUnit
   republish: String
 }
@@ -4206,12 +4493,20 @@ input OrgUnitVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
+  boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
   isLive: OrgUnitWhereInput
 }
 
@@ -4249,12 +4544,20 @@ input OrgUnitVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   isLive: OrgUnitRelateToOneForUpdateInput
   republish: String
 }
@@ -4283,12 +4586,20 @@ input OrgUnitVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   isLive: OrgUnitRelateToOneForCreateInput
   republish: String
 }
@@ -4323,6 +4634,12 @@ type OrgUnitDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
@@ -4331,6 +4648,16 @@ type OrgUnitDraft {
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -4360,12 +4687,20 @@ input OrgUnitDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   showPage: BooleanFilter
   services: ServiceManyRelationFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
+  boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
+  plans: PlanManyRelationFilter
 }
 
 input OrgUnitDraftOrderByInput {
@@ -4402,12 +4737,20 @@ input OrgUnitDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForUpdateInput
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -4435,12 +4778,20 @@ input OrgUnitDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   showPage: Boolean
   services: ServiceRelateToManyForCreateInput
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -4477,6 +4828,12 @@ type Park implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4485,8 +4842,6 @@ type Park implements BasePageWithSlug & BasePage & BasePageWithActions {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   status: String
   drafts(where: ParkDraftWhereInput! = {}, orderBy: [ParkDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkDraftWhereUniqueInput): [ParkDraft!]
   draftsCount(where: ParkDraftWhereInput! = {}): Int
@@ -4527,12 +4882,14 @@ input ParkWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  communities: CommunityManyRelationFilter
   status: StringFilter
   drafts: ParkDraftManyRelationFilter
   versions: ParkVersionManyRelationFilter
@@ -4588,12 +4945,14 @@ input ParkUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   status: String
   drafts: ParkDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -4647,12 +5006,14 @@ input ParkCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   status: String
   drafts: ParkDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -4708,6 +5069,12 @@ type ParkVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4716,8 +5083,6 @@ type ParkVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   isLive: Park
   republish: String
 }
@@ -4751,12 +5116,14 @@ input ParkVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  communities: CommunityManyRelationFilter
   isLive: ParkWhereInput
 }
 
@@ -4795,12 +5162,14 @@ input ParkVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   isLive: ParkRelateToOneForUpdateInput
   republish: String
 }
@@ -4831,12 +5200,14 @@ input ParkVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   isLive: ParkRelateToOneForCreateInput
   republish: String
 }
@@ -4874,6 +5245,12 @@ type ParkDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
@@ -4882,8 +5259,6 @@ type ParkDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   publish: String
 }
 
@@ -4915,12 +5290,14 @@ input ParkDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   services: ServiceManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  communities: CommunityManyRelationFilter
 }
 
 input ParkDraftOrderByInput {
@@ -4958,12 +5335,14 @@ input ParkDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   publish: String
 }
 
@@ -4993,12 +5372,14 @@ input ParkDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   services: ServiceRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   publish: String
 }
 
@@ -5032,6 +5413,12 @@ type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5041,16 +5428,10 @@ type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions {
   parksCount(where: ParkWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
@@ -5093,6 +5474,9 @@ input PublicNoticeWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5100,23 +5484,14 @@ input PublicNoticeWhereInput {
   endDate: DateTimeNullableFilter
   parks: ParkManyRelationFilter
   services: ServiceManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   facilities: FacilityManyRelationFilter
   trails: TrailManyRelationFilter
-  communities: CommunityManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
   plans: PlanManyRelationFilter
   status: StringFilter
   drafts: PublicNoticeDraftManyRelationFilter
   versions: PublicNoticeVersionManyRelationFilter
   currentVersion: PublicNoticeVersionWhereInput
-}
-
-input PlanManyRelationFilter {
-  every: PlanWhereInput
-  some: PlanWhereInput
-  none: PlanWhereInput
 }
 
 input PublicNoticeDraftManyRelationFilter {
@@ -5169,6 +5544,9 @@ input PublicNoticeUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5176,11 +5554,8 @@ input PublicNoticeUpdateInput {
   endDate: DateTime
   parks: ParkRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
   status: String
@@ -5188,13 +5563,6 @@ input PublicNoticeUpdateInput {
   makeDrafts: String
   versions: PublicNoticeVersionRelateToManyForUpdateInput
   currentVersion: PublicNoticeVersionRelateToOneForUpdateInput
-}
-
-input PlanRelateToManyForUpdateInput {
-  disconnect: [PlanWhereUniqueInput!]
-  set: [PlanWhereUniqueInput!]
-  create: [PlanCreateInput!]
-  connect: [PlanWhereUniqueInput!]
 }
 
 input PublicNoticeDraftRelateToManyForUpdateInput {
@@ -5241,6 +5609,9 @@ input PublicNoticeCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5248,11 +5619,8 @@ input PublicNoticeCreateInput {
   endDate: DateTime
   parks: ParkRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
   status: String
@@ -5260,11 +5628,6 @@ input PublicNoticeCreateInput {
   makeDrafts: String
   versions: PublicNoticeVersionRelateToManyForCreateInput
   currentVersion: PublicNoticeVersionRelateToOneForCreateInput
-}
-
-input PlanRelateToManyForCreateInput {
-  create: [PlanCreateInput!]
-  connect: [PlanWhereUniqueInput!]
 }
 
 input PublicNoticeDraftRelateToManyForCreateInput {
@@ -5312,6 +5675,12 @@ type PublicNoticeVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5321,16 +5690,10 @@ type PublicNoticeVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
@@ -5366,6 +5729,9 @@ input PublicNoticeVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5373,11 +5739,8 @@ input PublicNoticeVersionWhereInput {
   endDate: DateTimeNullableFilter
   parks: ParkManyRelationFilter
   services: ServiceManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   facilities: FacilityManyRelationFilter
   trails: TrailManyRelationFilter
-  communities: CommunityManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
   plans: PlanManyRelationFilter
   isLive: PublicNoticeWhereInput
@@ -5419,6 +5782,9 @@ input PublicNoticeVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5426,11 +5792,8 @@ input PublicNoticeVersionUpdateInput {
   endDate: DateTime
   parks: ParkRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
   isLive: PublicNoticeRelateToOneForUpdateInput
@@ -5467,6 +5830,9 @@ input PublicNoticeVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5474,11 +5840,8 @@ input PublicNoticeVersionCreateInput {
   endDate: DateTime
   parks: ParkRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
   isLive: PublicNoticeRelateToOneForCreateInput
@@ -5520,6 +5883,12 @@ type PublicNoticeDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5529,16 +5898,10 @@ type PublicNoticeDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
@@ -5572,6 +5935,9 @@ input PublicNoticeDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5579,11 +5945,8 @@ input PublicNoticeDraftWhereInput {
   endDate: DateTimeNullableFilter
   parks: ParkManyRelationFilter
   services: ServiceManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   facilities: FacilityManyRelationFilter
   trails: TrailManyRelationFilter
-  communities: CommunityManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
   boards: BoardManyRelationFilter
   plans: PlanManyRelationFilter
 }
@@ -5624,6 +5987,9 @@ input PublicNoticeDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5631,11 +5997,8 @@ input PublicNoticeDraftUpdateInput {
   endDate: DateTime
   parks: ParkRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
   publish: String
@@ -5665,6 +6028,9 @@ input PublicNoticeDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5672,11 +6038,8 @@ input PublicNoticeDraftCreateInput {
   endDate: DateTime
   parks: ParkRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
   publish: String
@@ -5714,12 +6077,14 @@ type Service implements BasePageWithSlug & BasePage {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
-  createdAt: DateTime
-  updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
@@ -5767,10 +6132,11 @@ input ServiceWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
-  createdAt: DateTimeNullableFilter
-  updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
@@ -5837,10 +6203,11 @@ input ServiceUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
@@ -5905,10 +6272,11 @@ input ServiceCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
@@ -5972,12 +6340,14 @@ type ServiceVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
-  createdAt: DateTime
-  updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
@@ -6018,10 +6388,11 @@ input ServiceVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
-  createdAt: DateTimeNullableFilter
-  updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
@@ -6065,10 +6436,11 @@ input ServiceVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
@@ -6109,10 +6481,11 @@ input ServiceVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
@@ -6158,12 +6531,14 @@ type ServiceDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
-  createdAt: DateTime
-  updatedAt: DateTime
   communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
   communitiesCount(where: CommunityWhereInput! = {}): Int
   orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
@@ -6202,10 +6577,11 @@ input ServiceDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
-  createdAt: DateTimeNullableFilter
-  updatedAt: DateTimeNullableFilter
   communities: CommunityManyRelationFilter
   orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
@@ -6248,10 +6624,11 @@ input ServiceDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   communities: CommunityRelateToManyForUpdateInput
   orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
@@ -6285,10 +6662,11 @@ input ServiceDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
-  createdAt: DateTime
-  updatedAt: DateTime
   communities: CommunityRelateToManyForCreateInput
   orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
@@ -6326,6 +6704,12 @@ type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6334,20 +6718,14 @@ type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
   boardsCount(where: BoardWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   status: String
   drafts(where: TopicDraftWhereInput! = {}, orderBy: [TopicDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicDraftWhereUniqueInput): [TopicDraft!]
   draftsCount(where: TopicDraftWhereInput! = {}): Int
@@ -6386,18 +6764,18 @@ input TopicWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   plans: PlanManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
   status: StringFilter
   drafts: TopicDraftManyRelationFilter
   versions: TopicVersionManyRelationFilter
@@ -6457,18 +6835,18 @@ input TopicUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   status: String
   drafts: TopicDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -6527,18 +6905,18 @@ input TopicCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   status: String
   drafts: TopicDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -6596,6 +6974,12 @@ type TopicVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6604,20 +6988,14 @@ type TopicVersion {
   boardsCount(where: BoardWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   isLive: Topic
   republish: String
 }
@@ -6649,18 +7027,18 @@ input TopicVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   plans: PlanManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
   isLive: TopicWhereInput
 }
 
@@ -6697,18 +7075,18 @@ input TopicVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   isLive: TopicRelateToOneForUpdateInput
   republish: String
 }
@@ -6743,18 +7121,18 @@ input TopicVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   isLive: TopicRelateToOneForCreateInput
   republish: String
 }
@@ -6794,6 +7172,12 @@ type TopicDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6802,20 +7186,14 @@ type TopicDraft {
   boardsCount(where: BoardWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   publish: String
 }
 
@@ -6845,18 +7223,18 @@ input TopicDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   plans: PlanManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
 }
 
 input TopicDraftOrderByInput {
@@ -6892,18 +7270,18 @@ input TopicDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   publish: String
 }
 
@@ -6931,18 +7309,18 @@ input TopicDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   publish: String
 }
 
@@ -6977,6 +7355,12 @@ type Trail implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7002,7 +7386,6 @@ type Trail implements BasePageWithSlug & BasePage & BasePageWithActions {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  communities: Community
   status: String
   drafts(where: TrailDraftWhereInput! = {}, orderBy: [TrailDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailDraftWhereUniqueInput): [TrailDraft!]
   draftsCount(where: TrailDraftWhereInput! = {}): Int
@@ -7042,6 +7425,9 @@ input TrailWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7066,7 +7452,6 @@ input TrailWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  communities: CommunityWhereInput
   status: StringFilter
   drafts: TrailDraftManyRelationFilter
   versions: TrailVersionManyRelationFilter
@@ -7141,6 +7526,9 @@ input TrailUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7165,7 +7553,6 @@ input TrailUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  communities: CommunityRelateToOneForUpdateInput
   status: String
   drafts: TrailDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -7218,6 +7605,9 @@ input TrailCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7242,7 +7632,6 @@ input TrailCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  communities: CommunityRelateToOneForCreateInput
   status: String
   drafts: TrailDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7296,6 +7685,12 @@ type TrailVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7321,7 +7716,6 @@ type TrailVersion {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  communities: Community
   isLive: Trail
   republish: String
 }
@@ -7354,6 +7748,9 @@ input TrailVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7378,7 +7775,6 @@ input TrailVersionWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  communities: CommunityWhereInput
   isLive: TrailWhereInput
 }
 
@@ -7436,6 +7832,9 @@ input TrailVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7460,7 +7859,6 @@ input TrailVersionUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  communities: CommunityRelateToOneForUpdateInput
   isLive: TrailRelateToOneForUpdateInput
   republish: String
 }
@@ -7496,6 +7894,9 @@ input TrailVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7520,7 +7921,6 @@ input TrailVersionCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  communities: CommunityRelateToOneForCreateInput
   isLive: TrailRelateToOneForCreateInput
   republish: String
 }
@@ -7561,6 +7961,12 @@ type TrailDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7586,7 +7992,6 @@ type TrailDraft {
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   park: Park
-  communities: Community
   publish: String
 }
 
@@ -7617,6 +8022,9 @@ input TrailDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7641,7 +8049,6 @@ input TrailDraftWhereInput {
   elevationChange: StringFilter
   services: ServiceManyRelationFilter
   park: ParkWhereInput
-  communities: CommunityWhereInput
 }
 
 input TrailDraftOrderByInput {
@@ -7698,6 +8105,9 @@ input TrailDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7722,7 +8132,6 @@ input TrailDraftUpdateInput {
   elevationChange: String
   services: ServiceRelateToManyForUpdateInput
   park: ParkRelateToOneForUpdateInput
-  communities: CommunityRelateToOneForUpdateInput
   publish: String
 }
 
@@ -7751,6 +8160,9 @@ input TrailDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7775,7 +8187,6 @@ input TrailDraftCreateInput {
   elevationChange: String
   services: ServiceRelateToManyForCreateInput
   park: ParkRelateToOneForCreateInput
-  communities: CommunityRelateToOneForCreateInput
   publish: String
 }
 
@@ -7809,6 +8220,12 @@ type Plan implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -7861,6 +8278,9 @@ input PlanWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -7939,6 +8359,9 @@ input PlanUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -8027,6 +8450,9 @@ input PlanCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -8110,6 +8536,12 @@ type PlanVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -8155,6 +8587,9 @@ input PlanVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -8204,6 +8639,9 @@ input PlanVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -8243,6 +8681,9 @@ input PlanVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -8288,6 +8729,12 @@ type PlanDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -8331,6 +8778,9 @@ input PlanDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -8379,6 +8829,9 @@ input PlanDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -8417,6 +8870,9 @@ input PlanDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -8562,6 +9018,12 @@ type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8570,20 +9032,14 @@ type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
   boardsCount(where: BoardWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   status: String
   drafts(where: EventDraftWhereInput! = {}, orderBy: [EventDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventDraftWhereUniqueInput): [EventDraft!]
   draftsCount(where: EventDraftWhereInput! = {}): Int
@@ -8622,19 +9078,19 @@ input EventWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   plans: PlanManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
   status: StringFilter
   drafts: EventDraftManyRelationFilter
   versions: EventVersionManyRelationFilter
@@ -8690,19 +9146,19 @@ input EventUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   status: String
   drafts: EventDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -8754,19 +9210,19 @@ input EventCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   status: String
   drafts: EventDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -8819,6 +9275,12 @@ type EventDraft {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -8827,20 +9289,14 @@ type EventDraft {
   boardsCount(where: BoardWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   publish: String
 }
 
@@ -8870,19 +9326,19 @@ input EventDraftWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   plans: PlanManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
 }
 
 input EventDraftOrderByInput {
@@ -8920,19 +9376,19 @@ input EventDraftUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   publish: String
 }
 
@@ -8966,19 +9422,19 @@ input EventDraftCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   publish: String
 }
 
@@ -9017,6 +9473,12 @@ type EventVersion {
   topicsCount(where: TopicWhereInput! = {}): Int
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9025,20 +9487,14 @@ type EventVersion {
   boardsCount(where: BoardWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   isLive: Event
   republish: String
 }
@@ -9070,19 +9526,19 @@ input EventVersionWhereInput {
   events: EventManyRelationFilter
   topics: TopicManyRelationFilter
   publicNotices: PublicNoticeManyRelationFilter
+  communities: CommunityManyRelationFilter
+  orgUnits: OrgUnitManyRelationFilter
+  assemblyDistricts: AssemblyDistrictManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
   boards: BoardManyRelationFilter
   services: ServiceManyRelationFilter
-  communities: CommunityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  orgUnits: OrgUnitManyRelationFilter
   plans: PlanManyRelationFilter
-  assemblyDistricts: AssemblyDistrictManyRelationFilter
   isLive: EventWhereInput
 }
 
@@ -9121,19 +9577,19 @@ input EventVersionUpdateInput {
   events: EventRelateToManyForUpdateInput
   topics: TopicRelateToManyForUpdateInput
   publicNotices: PublicNoticeRelateToManyForUpdateInput
+  communities: CommunityRelateToManyForUpdateInput
+  orgUnits: OrgUnitRelateToManyForUpdateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
   boards: BoardRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
-  communities: CommunityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  orgUnits: OrgUnitRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   isLive: EventRelateToOneForUpdateInput
   republish: String
 }
@@ -9162,19 +9618,19 @@ input EventVersionCreateInput {
   events: EventRelateToManyForCreateInput
   topics: TopicRelateToManyForCreateInput
   publicNotices: PublicNoticeRelateToManyForCreateInput
+  communities: CommunityRelateToManyForCreateInput
+  orgUnits: OrgUnitRelateToManyForCreateInput
+  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
   endDate: DateTime
   boards: BoardRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
-  communities: CommunityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  orgUnits: OrgUnitRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
-  assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   isLive: EventRelateToOneForCreateInput
   republish: String
 }
@@ -10981,6 +11437,14 @@ interface BasePageWithSlug implements BasePage {
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
 }
 
 interface BasePageWithActions implements BasePage & BasePageWithSlug {
@@ -11009,4 +11473,13 @@ interface BasePageWithActions implements BasePage & BasePageWithSlug {
   actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
   actionsCount(where: InternalLinkWhereInput! = {}): Int
   topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
+  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
+  topicsCount(where: TopicWhereInput! = {}): Int
+  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
+  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
+  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
+  communitiesCount(where: CommunityWhereInput! = {}): Int
+  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
+  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
 }

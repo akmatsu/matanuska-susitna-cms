@@ -11,7 +11,10 @@ import {
   typesenseUpsert,
 } from '../../fieldUtils';
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 
 const {
   Main: Trail,
@@ -67,10 +70,12 @@ const {
         ref: opts?.isDraft || opts?.isVersion ? 'Park' : 'Park.trails',
         many: false,
       }),
-      communities: relationship({
-        ref:
-          opts?.isDraft || opts?.isVersion ? 'Community' : 'Community.trails',
-        many: false,
+
+      communities: relationshipController({
+        ref: 'Community',
+        listName: 'Trails',
+        many: true,
+        opts,
       }),
     };
   },

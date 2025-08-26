@@ -12,7 +12,10 @@ import {
   typesenseUpsert,
 } from '../../fieldUtils';
 import { relationship, text, timestamp } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 
 const {
   Main: AssemblyDistrict,
@@ -126,8 +129,41 @@ const {
       }),
 
       boards: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Board.districts' : 'Board',
+        ref:
+          !opts?.isDraft && !opts?.isVersion
+            ? 'Board.assemblyDistricts'
+            : 'Board',
         many: true,
+      }),
+      facilities: relationshipController({
+        ref: 'Facility',
+        listName: 'assemblyDistricts',
+        many: true,
+        opts,
+      }),
+      parks: relationshipController({
+        ref: 'Park',
+        listName: 'assemblyDistricts',
+        many: true,
+        opts,
+      }),
+      services: relationshipController({
+        ref: 'Service',
+        listName: 'assemblyDistricts',
+        many: true,
+        opts,
+      }),
+      trails: relationshipController({
+        ref: 'Trail',
+        listName: 'assemblyDistricts',
+        many: true,
+        opts,
+      }),
+      plans: relationshipController({
+        ref: 'Plan',
+        listName: 'assemblyDistricts',
+        many: true,
+        opts,
       }),
     };
   },

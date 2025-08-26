@@ -110,36 +110,12 @@ const {
           },
         },
       }),
-
-      districts: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'AssemblyDistrict.boards'
-            : 'AssemblyDistrict',
-        many: true,
-        ui: {
-          hideCreate: true,
-          inlineConnect: true,
-        },
-      }),
-
-      communities: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion ? 'Community.boards' : 'Community',
-        many: true,
-        ui: {
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-          hideCreate: true,
-        },
-      }),
     };
   },
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} type isActive districts {id} communities {id} documents {id} actions {id} linkToAgendas {id} linkToResolutions {id} linkToPublicOpinionMessage {id}`,
+    query: `${basePageQuery} type isActive assemblyDistricts {id} communities {id} documents {id} actions {id} linkToAgendas {id} linkToResolutions {id} linkToPublicOpinionMessage {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Board'),

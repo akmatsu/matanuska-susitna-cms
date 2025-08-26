@@ -96,10 +96,5 @@ export const Event = list({
       ref: 'Plan.events',
       many: true,
     }),
-
-    assemblyDistricts: relationship({
-      ref: 'AssemblyDistrict.events',
-      many: true,
-    }),
   },
 });

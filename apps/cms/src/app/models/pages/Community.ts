@@ -5,7 +5,10 @@ import {
 } from '../../access';
 import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
 
 const {
@@ -23,15 +26,6 @@ const {
             ? `Service.${lowercaseFirstLetter(listNamePlural)}`
             : 'Service',
         many: true,
-      }),
-
-      districts: relationship({
-        ref: 'AssemblyDistrict',
-        many: true,
-        ui: {
-          hideCreate: true,
-          inlineConnect: true,
-        },
       }),
 
       boards: relationship({
@@ -65,6 +59,12 @@ const {
             : 'Trail',
         many: true,
       }),
+      plans: relationshipController({
+        ref: 'Plan',
+        listName: 'communities',
+        many: true,
+        opts,
+      }),
     };
   },
   {
@@ -83,7 +83,7 @@ const {
       async afterOperation(args) {
         await typesenseUpsert(
           'community',
-          'id title slug description publishAt tags {name} districts {title}',
+          'id title slug description publishAt tags {name} assemblyDistricts {title}',
           args,
         );
       },

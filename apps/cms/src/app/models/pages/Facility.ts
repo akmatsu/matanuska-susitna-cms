@@ -11,7 +11,10 @@ import {
   typesenseUpsert,
 } from '../../fieldUtils';
 import { integer, relationship } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
 import { list } from '@keystone-6/core';
 
@@ -76,12 +79,12 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.facilities' : 'Park',
         many: false,
       }),
-      communities: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'Community.facilities'
-            : 'Community',
-        many: false,
+
+      communities: relationshipController({
+        ref: 'Community',
+        listName: 'facilities',
+        many: true,
+        opts,
       }),
     };
   },

@@ -1,4 +1,4 @@
-import { BaseFields, graphql, group } from '@keystone-6/core';
+import { BaseFields, graphql, group, list } from '@keystone-6/core';
 import {
   relationship,
   RelationshipFieldConfig,
@@ -35,6 +35,7 @@ import { logger } from '../configs/logger';
 import v from 'voca';
 import { plural, singular } from 'pluralize';
 import { relationshipController } from './DraftAndVersionsFactory';
+import AssemblyDistrict from './models/pages/AssemblyDistrict';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -632,6 +633,14 @@ export function basePage(
       listName: listNamePlural,
       opts,
       many: true,
+      ui: {
+        itemView: {
+          fieldMode: listNamePlural === 'Events' ? 'hidden' : 'edit',
+        },
+        createView: {
+          fieldMode: listNamePlural === 'Events' ? 'hidden' : 'edit',
+        },
+      },
     }),
 
     topics: relationshipController({
@@ -646,6 +655,51 @@ export function basePage(
       many: true,
       listName: listNamePlural,
       opts,
+    }),
+
+    communities: relationshipController({
+      ref: 'Community',
+      many: true,
+      listName: listNamePlural,
+      opts,
+      ui: {
+        itemView: {
+          fieldMode: listNamePlural === 'Communities' ? 'hidden' : 'edit',
+        },
+        createView: {
+          fieldMode: listNamePlural === 'Communities' ? 'hidden' : 'edit',
+        },
+      },
+    }),
+
+    orgUnits: relationshipController({
+      ref: 'OrgUnit',
+      many: true,
+      listName: listNamePlural,
+      opts,
+      ui: {
+        itemView: {
+          fieldMode: listNamePlural === 'OrgUnits' ? 'hidden' : 'edit',
+        },
+        createView: {
+          fieldMode: listNamePlural === 'OrgUnits' ? 'hidden' : 'edit',
+        },
+      },
+    }),
+
+    assemblyDistricts: relationshipController({
+      ref: 'AssemblyDistrict',
+      many: true,
+      listName: listNamePlural,
+      opts,
+      ui: {
+        itemView: {
+          fieldMode: listNamePlural === 'AssemblyDistricts' ? 'hidden' : 'edit',
+        },
+        createView: {
+          fieldMode: listNamePlural === 'AssemblyDistricts' ? 'hidden' : 'edit',
+        },
+      },
     }),
 
     ...timestamps,
