@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.21.0...v0.22.0) (2025-08-27)
+
+
+### Features
+
+* fixed header sizing ([fac9a26](https://github.com/akmatsu/matanuska-susitna-cms/commit/fac9a2662d14240dff5a7e6c07bb65e7e621552b))
+
 # [0.21.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.20.0...v0.21.0) (2025-08-26)
 
 
