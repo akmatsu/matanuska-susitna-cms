@@ -58,13 +58,6 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.publicNotices' : 'Park',
         many: true,
       }),
-      services: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'Service.publicNotices'
-            : 'Service',
-        many: true,
-      }),
       orgUnits: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion

@@ -68,13 +68,6 @@ const {
         actions: true,
         documents: true,
       }),
-      services: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? `Service.${lowercaseFirstLetter(listNamePlural)}`
-            : 'Service',
-        many: true,
-      }),
       park: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.facilities' : 'Park',
         many: false,

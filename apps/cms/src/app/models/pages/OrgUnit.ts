@@ -28,11 +28,6 @@ const {
         defaultValue: true,
         ui: { itemView: { fieldPosition: 'sidebar' } },
       }),
-      services: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion ? 'Service.orgUnits' : 'Service',
-        many: true,
-      }),
       children: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.parent' : 'OrgUnit',
         many: true,

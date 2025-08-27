@@ -19,11 +19,6 @@ const Event = DraftAndVersionsFactory(
         many: true,
       }),
 
-      services: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Service.events' : 'Service',
-        many: true,
-      }),
-
       communities: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion ? 'Community.events' : 'Community',

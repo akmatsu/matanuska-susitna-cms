@@ -20,14 +20,6 @@ const {
   (listNamePlural, opts) => {
     return {
       ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
-      services: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? `Service.${lowercaseFirstLetter(listNamePlural)}`
-            : 'Service',
-        many: true,
-      }),
-
       boards: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion

@@ -31,12 +31,7 @@ const {
         actions: true,
         documents: true,
       }),
-      services: relationshipController({
-        listName: listNamePlural,
-        ref: 'Service',
-        opts,
-        many: true,
-      }),
+
       trails: relationshipController({
         listName,
         ref: 'Trail',

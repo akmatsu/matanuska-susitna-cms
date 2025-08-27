@@ -13,7 +13,6 @@ export const UserGroup = list({
     owner,
     description: text({ ui: { displayMode: 'textarea' } }),
     users: relationship({ ref: 'User.groups', many: true }),
-    // services: relationship({ ref: 'Service.userGroups', many: true }),
     // parks: relationship({ ref: 'Park.userGroups', many: true }),
     // trails: relationship({ ref: 'Trail.userGroups', many: true }),
     // facilities: relationship({ ref: 'Facility.userGroups', many: true }),

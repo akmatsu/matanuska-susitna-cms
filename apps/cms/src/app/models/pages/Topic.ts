@@ -42,11 +42,6 @@ const {
         many: true,
       }),
 
-      services: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Service.topics' : 'Service',
-        many: true,
-      }),
-
       communities: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion ? 'Community.topics' : 'Community',

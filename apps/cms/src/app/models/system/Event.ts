@@ -57,11 +57,6 @@ export const Event = list({
       many: true,
     }),
 
-    services: relationship({
-      ref: 'Service.events',
-      many: true,
-    }),
-
     communities: relationship({
       ref: 'Community.events',
       many: true,

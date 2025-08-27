@@ -147,12 +147,6 @@ const {
         many: true,
         opts,
       }),
-      services: relationshipController({
-        ref: 'Service',
-        listName: 'assemblyDistricts',
-        many: true,
-        opts,
-      }),
       trails: relationshipController({
         ref: 'Trail',
         listName: 'assemblyDistricts',

@@ -62,10 +62,6 @@ const {
       }),
       length: text(),
       elevationChange: text(),
-      services: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? `Service.trails` : 'Service',
-        many: true,
-      }),
       park: relationship({
         ref: opts?.isDraft || opts?.isVersion ? 'Park' : 'Park.trails',
         many: false,

@@ -12,11 +12,6 @@ export const Tag = list({
   },
   fields: {
     name: text(),
-    // services: relationship({
-    //   ref: 'Service.tags',
-    //   many: true,
-    //   ui: { createView: { fieldMode: 'hidden' } },
-    // }),
     // communities: relationship({
     //   ref: 'Community.tags',
     //   many: true,
