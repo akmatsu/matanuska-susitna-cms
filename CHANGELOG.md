@@ -1,3 +1,10 @@
+# [0.23.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.22.0...v0.23.0) (2025-08-27)
+
+
+### Features
+
+* added services to graphql helpers ([9af49a8](https://github.com/akmatsu/matanuska-susitna-cms/commit/9af49a8e50fde48953a5209db6baf2b50be452d8))
+
 # [0.22.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.21.0...v0.22.0) (2025-08-27)
 
 
