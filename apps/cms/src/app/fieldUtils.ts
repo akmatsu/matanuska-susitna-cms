@@ -702,6 +702,21 @@ export function basePage(
       },
     }),
 
+    services: relationshipController({
+      ref: 'Service',
+      many: true,
+      listName: listNamePlural,
+      opts,
+      ui: {
+        itemView: {
+          fieldMode: listNamePlural === 'Services' ? 'hidden' : 'edit',
+        },
+        createView: {
+          fieldMode: listNamePlural === 'Services' ? 'hidden' : 'edit',
+        },
+      },
+    }),
+
     ...timestamps,
   };
 }

@@ -153,6 +153,14 @@ export const graphqlExtendTypeDefs = gql`
       cursor: OrgUnitWhereUniqueInput
     ): [OrgUnit!]
     orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+    services(
+      where: ServiceWhereInput! = {}
+      orderBy: [ServiceOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: ServiceWhereUniqueInput
+    ): [Service!]
+    servicesCount(where: ServiceWhereInput! = {}): Int
   }
 
   interface BasePageWithActions implements BasePage & BasePageWithSlug {
@@ -250,6 +258,14 @@ export const graphqlExtendTypeDefs = gql`
       cursor: OrgUnitWhereUniqueInput
     ): [OrgUnit!]
     orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
+    services(
+      where: ServiceWhereInput! = {}
+      orderBy: [ServiceOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: ServiceWhereUniqueInput
+    ): [Service!]
+    servicesCount(where: ServiceWhereInput! = {}): Int
   }
 
   extend type BoardPage implements BasePage

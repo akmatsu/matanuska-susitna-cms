@@ -5,7 +5,10 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access/utils';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 
 /**
  * Creates a relationship with the {@link Service} model.
@@ -105,6 +108,19 @@ const {
           },
           hideCreate: true,
         },
+      }),
+      boards: relationshipController({
+        ref: 'Board',
+        many: true,
+        listName: listNamePlural,
+        opts,
+      }),
+
+      plans: relationshipController({
+        ref: 'Plan',
+        many: true,
+        listName: listNamePlural,
+        opts,
       }),
 
       editorNotes: text({
