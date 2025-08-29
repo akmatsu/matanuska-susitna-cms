@@ -15,7 +15,6 @@ import {
   DraftAndVersionsFactory,
   relationshipController,
 } from '../../DraftAndVersionsFactory';
-import { lowercaseFirstLetter } from '../../../utils';
 import { list } from '@keystone-6/core';
 
 export const FacilityListItem = list({

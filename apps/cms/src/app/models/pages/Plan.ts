@@ -6,15 +6,20 @@ import {
 import {
   basePage,
   cardsUi,
-  documentRelationship,
+  documentRelationshipSingle,
   sidebar,
   switchField,
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
 import { group, list } from '@keystone-6/core';
-import { filterByPubStatus, generalOperationAccess } from '../../access';
+import {
+  filterByPubStatus,
+  generalItemAccess,
+  generalOperationAccess,
+} from '../../access';
 import { planDocumentFieldHooks } from './plan/planDocumentFieldHooks';
+import { logger } from '../../../configs/logger';
 
 const planListName = 'Plan';
 const PLAN_TYPES = [
@@ -57,7 +62,7 @@ const PlanDocument = list({
       ref: 'PlanDocument.supersededBy',
     }),
     adoptedYear: integer(),
-    document: documentRelationship(),
+    document: documentRelationshipSingle(),
   },
 });
 
@@ -124,6 +129,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
         fields: {
           currentDocument: relationship({
             ref: 'PlanDocument',
+            many: false,
             ui: {
               description: 'The current legislative document for this plan',
             },
@@ -131,6 +137,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
           }),
           draftDocument: relationship({
             ref: 'PlanDocument',
+            many: false,
             ui: {
               description:
                 'A draft of a new version of the legislative document',
@@ -153,9 +160,10 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
     versionLimit: 20,
     versionAgeDays: 365,
     query:
-      'id heroImage title description body tags {id} orgUnits {id} communities {id} contacts {id} userGroups {id} editorNotes __typename actions {id} documents {id} code {id} currentDocument {id} draftDocument {id} pastDocuments {id} events {id} type parent {id} components {id} effort {id} autoRedirectToExternalWebsite',
+      'id heroImage title description body tags {id} orgUnits {id} communities {id} contacts {id} userGroups {id} __typename actions {id} documents {id} code {id} currentDocument {id} draftDocument {id} pastDocuments {id} events {id} type parent {id} components {id} effort {id} autoRedirectToExternalWebsite',
     mainAccess: {
       operation: generalOperationAccess,
+      item: generalItemAccess('Plan'),
       filter: filterByPubStatus,
     },
     mainHooks: {
@@ -163,6 +171,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
         await typesenseDelete(args);
       },
       async afterOperation(args) {
+        logger.info('Muffins are happening');
         await typesenseUpsert(
           'plan',
           'id title slug description body publishAt tags {name} orgUnits {title} communities {title} contacts {name} actions {label} documents {title}',

@@ -416,6 +416,20 @@ export function documentRelationship() {
   });
 }
 
+export function documentRelationshipSingle() {
+  return relationship({
+    ref: 'Document',
+    many: false,
+    ui: {
+      displayMode: 'cards',
+      inlineConnect: true,
+      cardFields: ['title', 'description', 'file', 'tags'],
+      inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
+      inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+    },
+  });
+}
+
 export function userGroups<T extends BaseListTypeInfo = any>() {
   return relationship<T>({
     ref: `UserGroup`,
@@ -768,7 +782,9 @@ export async function typesenseUpsert(
     try {
       TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
         .documents(item.id.toString())
-        .delete();
+        .delete({
+          ignore_not_found: true,
+        });
     } catch (error: any) {
       logger.error(error, 'Error deleting Typesense document');
     }
@@ -784,9 +800,13 @@ export async function typesenseDelete({
 }) {
   if (operation === 'delete' && item) {
     try {
-      TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-        .documents(item.id.toString())
-        .delete();
+      const id = item.id.toString();
+
+      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+        .documents(id)
+        .delete({
+          ignore_not_found: true,
+        });
     } catch (error: any) {
       logger.error(error, 'Error deleting Typesense document');
     }

@@ -2145,7 +2145,8 @@ model PlanDocument {
   precededBy                       PlanDocument? @relation("PlanDocument_precededBy", fields: [precededById], references: [id])
   precededById                     String?       @unique @map("precededBy")
   adoptedYear                      Int?
-  document                         Document[]    @relation("PlanDocument_document")
+  document                         Document?     @relation("PlanDocument_document", fields: [documentId], references: [id])
+  documentId                       String?       @map("document")
   from_Plan_currentDocument        Plan[]        @relation("Plan_currentDocument")
   from_Plan_draftDocument          Plan[]        @relation("Plan_draftDocument")
   from_Plan_pastDocuments          Plan[]        @relation("Plan_pastDocuments")
@@ -2155,6 +2156,8 @@ model PlanDocument {
   from_PlanDraft_currentDocument   PlanDraft[]   @relation("PlanDraft_currentDocument")
   from_PlanDraft_draftDocument     PlanDraft[]   @relation("PlanDraft_draftDocument")
   from_PlanDraft_pastDocuments     PlanDraft[]   @relation("PlanDraft_pastDocuments")
+
+  @@index([documentId])
 }
 
 model Event {

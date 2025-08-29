@@ -9003,8 +9003,7 @@ type PlanDocument {
   supersededBy: PlanDocument
   precededBy: PlanDocument
   adoptedYear: Int
-  document(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
-  documentCount(where: DocumentWhereInput! = {}): Int
+  document: Document
 }
 
 input PlanDocumentWhereUniqueInput {
@@ -9022,7 +9021,7 @@ input PlanDocumentWhereInput {
   supersededBy: PlanDocumentWhereInput
   precededBy: PlanDocumentWhereInput
   adoptedYear: IntNullableFilter
-  document: DocumentManyRelationFilter
+  document: DocumentWhereInput
 }
 
 input IntNullableFilter {
@@ -9047,7 +9046,7 @@ input PlanDocumentUpdateInput {
   supersededBy: PlanDocumentRelateToOneForUpdateInput
   precededBy: PlanDocumentRelateToOneForUpdateInput
   adoptedYear: Int
-  document: DocumentRelateToManyForUpdateInput
+  document: DocumentRelateToOneForUpdateInput
 }
 
 input PlanDocumentUpdateArgs {
@@ -9060,7 +9059,7 @@ input PlanDocumentCreateInput {
   supersededBy: PlanDocumentRelateToOneForCreateInput
   precededBy: PlanDocumentRelateToOneForCreateInput
   adoptedYear: Int
-  document: DocumentRelateToManyForCreateInput
+  document: DocumentRelateToOneForCreateInput
 }
 
 type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
