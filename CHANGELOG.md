@@ -1,3 +1,10 @@
+## [0.24.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.24.0...v0.24.1) (2025-09-03)
+
+
+### Bug Fixes
+
+* auth id on users now nullable ([c9e4c03](https://github.com/akmatsu/matanuska-susitna-cms/commit/c9e4c03471ad72ac852ee3d53c97fdad19538ce7))
+
 # [0.24.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.23.0...v0.24.0) (2025-09-03)
 
 
