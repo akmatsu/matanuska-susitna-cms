@@ -28,16 +28,31 @@ export const nextAuthOptions: AuthOptions = {
     async signIn({ user }) {
       const sudoContext = (await getKeystoneContext()).sudo();
 
-      const u = await sudoContext.query.User.findOne({
+      let u = await sudoContext.db.User.findOne({
         where: { authId: user.id },
       });
 
       if (!u) {
-        await sudoContext.query.User.createOne({
+        const tu = await sudoContext.db.User.findOne({
+          where: { email: user.email },
+        });
+
+        if (tu) {
+          u = await sudoContext.db.User.updateOne({
+            where: { id: tu.id },
+            data: {
+              authId: user.id,
+            },
+          });
+        }
+      }
+
+      if (!u) {
+        await sudoContext.db.User.createOne({
           data: {
             authId: user.id,
             name: user.name,
-            email: user.email,
+            email: user.email?.toLowerCase(),
           },
         });
       }
@@ -95,15 +110,15 @@ export const nextAuthSessionStrategy = {
       cookies[key] = decodeURIComponent(value);
     }
 
-    const nextAuthSession = await getServerSession(
+    const nextAuthSession = (await getServerSession(
       { headers, cookies } as any,
       res,
       nextAuthOptions,
-    );
+    )) as (Session & { keystone: { authId: string } }) | null;
     if (!nextAuthSession) {
       logger.warn(
-        'Warning in nexsAuthSessionStrategy "NO NEXT AUTH SESSION":',
         nextAuthSession,
+        'Warning in nexsAuthSessionStrategy "NO NEXT AUTH SESSION":',
       );
       return;
     }
@@ -111,8 +126,8 @@ export const nextAuthSessionStrategy = {
     const { authId } = nextAuthSession.keystone;
     if (!authId) {
       logger.warn(
-        'Warning in nextAuthSessionStrategy "NO AUTH ID":',
         nextAuthSession,
+        'Warning in nextAuthSessionStrategy "NO AUTH ID":',
       );
       return;
     }
@@ -122,8 +137,8 @@ export const nextAuthSessionStrategy = {
     });
     if (!user) {
       logger.warn(
-        'Warning in nextAuthSessionStrategy "NO USER":',
         nextAuthSession,
+        'Warning in nextAuthSessionStrategy "NO USER":',
       );
       return;
     }

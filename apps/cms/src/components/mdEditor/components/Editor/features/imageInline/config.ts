@@ -46,7 +46,7 @@ export function configureImageBlockFeature(
               title: file.name,
             },
           });
-          console.log(data);
+
           return 'url';
         },
         imageIcon: '🖼️',
