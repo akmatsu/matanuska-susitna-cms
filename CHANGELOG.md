@@ -1,3 +1,11 @@
+# [0.24.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.23.0...v0.24.0) (2025-09-03)
+
+
+### Features
+
+* can now create users without requiring them to login ([2d02b1a](https://github.com/akmatsu/matanuska-susitna-cms/commit/2d02b1aaab586b4b1e6585a1d6e5e6eeca0912d4))
+* delete highlights and internal links when removing from or deleting parent ([c9b95ba](https://github.com/akmatsu/matanuska-susitna-cms/commit/c9b95ba27babbe6a0dd0dc7f8057e02009c69df9))
+
 # [0.23.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.22.0...v0.23.0) (2025-08-27)
 
 
