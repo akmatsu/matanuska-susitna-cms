@@ -16,10 +16,14 @@ export const User = list({
   fields: {
     authId: text({
       isIndexed: 'unique',
+      defaultValue: null,
       ui: {
         itemView: { fieldMode: 'read' },
         createView: { fieldMode: 'hidden' },
         listView: { fieldMode: 'hidden' },
+      },
+      db: {
+        isNullable: true,
       },
     }),
     name: text({ validation: { isRequired: true } }),

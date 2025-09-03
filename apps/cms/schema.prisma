@@ -2658,7 +2658,7 @@ model OperatingHour {
 
 model User {
   id                                 String                    @id @default(cuid())
-  authId                             String                    @unique @default("")
+  authId                             String?                   @unique
   name                               String                    @default("")
   email                              String                    @unique @default("")
   password                           String?

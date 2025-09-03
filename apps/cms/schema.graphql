@@ -10487,7 +10487,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
-  authId: StringFilter
+  authId: StringNullableFilter
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
