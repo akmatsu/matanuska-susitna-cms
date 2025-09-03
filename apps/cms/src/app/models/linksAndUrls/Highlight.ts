@@ -44,6 +44,32 @@ export const Highlight = list({
         inlineCreate: { fields: ['label', 'selectItem'] },
         inlineEdit: { fields: ['label', 'selectItem'] },
       },
+      hooks: {
+        async beforeOperation({ context, operation, item }) {
+          if (operation === 'delete') {
+            if (item.linkedItemId) {
+              const sudoCtx = context.sudo();
+              sudoCtx.db.InternalLink.deleteOne({
+                where: { id: item.linkedItemId as string },
+              });
+            }
+          }
+        },
+
+        async afterOperation({ context, operation, item, originalItem }) {
+          if (operation === 'update') {
+            if (
+              originalItem.linkedItemId &&
+              item.linkedItemId !== originalItem.linkedItemId
+            ) {
+              const sudoCtx = context.sudo();
+              sudoCtx.db.InternalLink.deleteOne({
+                where: { id: originalItem.linkedItemId as string },
+              });
+            }
+          }
+        },
+      },
     }),
     editorNotes: text({
       ui: {

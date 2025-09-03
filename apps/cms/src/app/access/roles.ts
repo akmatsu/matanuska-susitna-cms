@@ -83,8 +83,8 @@ export async function isAdmin(
  *
  * @see {@link ROLES.CONTENT_MANAGER}
  */
-export async function isContentManager<T extends BaseListTypeInfo = any>(
-  args: BaseAccessArgs<T>,
+export async function isContentManager(
+  args: BaseAccessArgs<BaseListTypeInfo>,
 ): Promise<boolean> {
   const user = await findUser(args);
   return checkRole(user?.role, ROLES.CONTENT_MANAGER);
