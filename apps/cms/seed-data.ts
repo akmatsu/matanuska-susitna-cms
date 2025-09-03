@@ -35,7 +35,6 @@ async function insertSeedData() {
   const serviceCount = await service.count();
 
   if (serviceCount <= 1 && adminUser) {
-    console.log('Creating services');
     const fakeServices = faker.helpers.multiple(
       () => {
         return {
@@ -98,7 +97,6 @@ async function insertSeedData() {
 
   const boardCount = await board.count();
   if (boardCount <= 1 && adminUser) {
-    console.log('Making boards');
     const fakeBoards = faker.helpers.multiple(
       () => {
         return {
@@ -182,7 +180,6 @@ async function insertSeedData() {
 
   const parks = await sudoContextDB.Park.count();
   if (parks <= 1 && adminUser) {
-    console.log('Making parks');
     const actionUrls = await sudoContextDB.Url.createMany({
       data: faker.helpers.multiple(
         () => {
@@ -495,7 +492,6 @@ async function insertSeedData() {
 
   const electionPageCount = await sudoContextDB.ElectionsPage.count();
   if (electionPageCount < 1) {
-    console.log('making election page');
     await sudoContextDB.ElectionsPage.createOne({
       data: {
         title: 'Matanuska-Susitna Borough Elections',
@@ -526,7 +522,6 @@ The cities of Houston, Palmer, and Wasilla hold elections on the first Tuesday i
 
   const boardPageCount = await sudoContextDB.BoardPage.count();
   if (boardPageCount < 1) {
-    console.log('making board page');
     await sudoContextDB.BoardPage.createOne({
       data: {
         title: 'Matanuska-Susitna Boards & Commissions',

@@ -10,14 +10,14 @@ export const User = list({
   },
 
   ui: {
-    hideCreate: true,
+    hideCreate: async (args) => !(await isAdmin(args)),
     isHidden: async (args) => !(await isAdmin(args)),
   },
   fields: {
     authId: text({
       isIndexed: 'unique',
       ui: {
-        itemView: { fieldMode: 'hidden' },
+        itemView: { fieldMode: 'read' },
         createView: { fieldMode: 'hidden' },
         listView: { fieldMode: 'hidden' },
       },
