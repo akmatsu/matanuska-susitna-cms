@@ -35,7 +35,6 @@ import { logger } from '../configs/logger';
 import v from 'voca';
 import { plural, singular } from 'pluralize';
 import { relationshipController } from './DraftAndVersionsFactory';
-import AssemblyDistrict from './models/pages/AssemblyDistrict';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =

@@ -7,6 +7,7 @@ import {
 } from '@keystone-6/core/types';
 import {
   FieldContainer,
+  FieldDescription,
   FieldLabel,
   MultiSelect,
   Select,
@@ -28,6 +29,9 @@ export function Field(props: FieldProps<typeof controller>) {
   return (
     <FieldContainer>
       <FieldLabel>{props.field.label}</FieldLabel>
+      <FieldDescription id={`${props.field.path}-description`}>
+        {props.field.description}
+      </FieldDescription>
       <Select
         id={props.field.path}
         isClearable
@@ -62,6 +66,9 @@ export const CardValue: CardValueComponent = (
   return (
     <FieldContainer>
       <FieldLabel>{props.field.label}</FieldLabel>
+      <FieldDescription id={`${props.field.path}-description`}>
+        {props.field.description}
+      </FieldDescription>
       <span className={props.item.icon}>
         {props.item.icon ? '' : 'No icon selected'}
       </span>
