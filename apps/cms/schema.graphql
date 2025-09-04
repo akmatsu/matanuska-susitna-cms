@@ -291,13 +291,8 @@ type HomePage {
   heroImage: String
   title: String
   description: String
-  toolbeltOne: Highlight
-  toolbeltTwo: Highlight
-  toolbeltThree: Highlight
-  toolbeltFour: Highlight
-  highlightOne: Highlight
-  highlightTwo: Highlight
-  highlightThree: Highlight
+  featuredItems(where: featuredItemWhereInput! = {}, orderBy: [featuredItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: featuredItemWhereUniqueInput): [featuredItem!]
+  featuredItemsCount(where: featuredItemWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -314,15 +309,15 @@ input HomePageWhereInput {
   id: IDFilter
   title: StringFilter
   description: StringFilter
-  toolbeltOne: HighlightWhereInput
-  toolbeltTwo: HighlightWhereInput
-  toolbeltThree: HighlightWhereInput
-  toolbeltFour: HighlightWhereInput
-  highlightOne: HighlightWhereInput
-  highlightTwo: HighlightWhereInput
-  highlightThree: HighlightWhereInput
+  featuredItems: featuredItemManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+}
+
+input featuredItemManyRelationFilter {
+  every: featuredItemWhereInput
+  some: featuredItemWhereInput
+  none: featuredItemWhereInput
 }
 
 input HomePageOrderByInput {
@@ -338,21 +333,16 @@ input HomePageUpdateInput {
   heroImage: String
   title: String
   description: String
-  toolbeltOne: HighlightRelateToOneForUpdateInput
-  toolbeltTwo: HighlightRelateToOneForUpdateInput
-  toolbeltThree: HighlightRelateToOneForUpdateInput
-  toolbeltFour: HighlightRelateToOneForUpdateInput
-  highlightOne: HighlightRelateToOneForUpdateInput
-  highlightTwo: HighlightRelateToOneForUpdateInput
-  highlightThree: HighlightRelateToOneForUpdateInput
+  featuredItems: featuredItemRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
 
-input HighlightRelateToOneForUpdateInput {
-  create: HighlightCreateInput
-  connect: HighlightWhereUniqueInput
-  disconnect: Boolean
+input featuredItemRelateToManyForUpdateInput {
+  disconnect: [featuredItemWhereUniqueInput!]
+  set: [featuredItemWhereUniqueInput!]
+  create: [featuredItemCreateInput!]
+  connect: [featuredItemWhereUniqueInput!]
 }
 
 input HomePageUpdateArgs {
@@ -364,20 +354,95 @@ input HomePageCreateInput {
   heroImage: String
   title: String
   description: String
-  toolbeltOne: HighlightRelateToOneForCreateInput
-  toolbeltTwo: HighlightRelateToOneForCreateInput
-  toolbeltThree: HighlightRelateToOneForCreateInput
-  toolbeltFour: HighlightRelateToOneForCreateInput
-  highlightOne: HighlightRelateToOneForCreateInput
-  highlightTwo: HighlightRelateToOneForCreateInput
-  highlightThree: HighlightRelateToOneForCreateInput
+  featuredItems: featuredItemRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
 
-input HighlightRelateToOneForCreateInput {
-  create: HighlightCreateInput
-  connect: HighlightWhereUniqueInput
+input featuredItemRelateToManyForCreateInput {
+  create: [featuredItemCreateInput!]
+  connect: [featuredItemWhereUniqueInput!]
+}
+
+type featuredItem {
+  id: ID!
+  order: Int
+  icon: String
+  linkedItem: InternalLink
+}
+
+input featuredItemWhereUniqueInput {
+  id: ID
+}
+
+input featuredItemWhereInput {
+  AND: [featuredItemWhereInput!]
+  OR: [featuredItemWhereInput!]
+  NOT: [featuredItemWhereInput!]
+  id: IDFilter
+  order: IntFilter
+  icon: StringNullableFilter
+  linkedItem: InternalLinkWhereInput
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: StringNullableFilter
+}
+
+input featuredItemOrderByInput {
+  id: OrderDirection
+  order: OrderDirection
+  icon: OrderDirection
+}
+
+input featuredItemUpdateInput {
+  order: Int
+  icon: String
+  linkedItem: InternalLinkRelateToOneForUpdateInput
+}
+
+input InternalLinkRelateToOneForUpdateInput {
+  create: InternalLinkCreateInput
+  connect: InternalLinkWhereUniqueInput
+  disconnect: Boolean
+}
+
+input featuredItemUpdateArgs {
+  where: featuredItemWhereUniqueInput!
+  data: featuredItemUpdateInput!
+}
+
+input featuredItemCreateInput {
+  order: Int
+  icon: String
+  linkedItem: InternalLinkRelateToOneForCreateInput
+}
+
+input InternalLinkRelateToOneForCreateInput {
+  create: InternalLinkCreateInput
+  connect: InternalLinkWhereUniqueInput
 }
 
 type Election {
@@ -1113,17 +1178,6 @@ input EarlyVotingLocationWhereInput {
   hours: OperatingHourManyRelationFilter
 }
 
-input IntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntFilter
-}
-
 input OperatingHourManyRelationFilter {
   every: OperatingHourWhereInput
   some: OperatingHourWhereInput
@@ -1456,21 +1510,6 @@ input ServiceManyRelationFilter {
   every: ServiceWhereInput
   some: ServiceWhereInput
   none: ServiceWhereInput
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  mode: QueryMode
-  not: StringNullableFilter
 }
 
 input BoardManyRelationFilter {
@@ -10179,6 +10218,10 @@ type Highlight {
   id: ID!
   title: String
   image: String
+  owner: User
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  priority: Int
   message: String
   linkedItem: InternalLink
   editorNotes: String
@@ -10197,6 +10240,9 @@ input HighlightWhereInput {
   NOT: [HighlightWhereInput!]
   id: IDFilter
   title: StringFilter
+  owner: UserWhereInput
+  userGroups: UserGroupManyRelationFilter
+  priority: IntNullableFilter
   message: StringFilter
   linkedItem: InternalLinkWhereInput
   editorNotes: StringFilter
@@ -10208,6 +10254,7 @@ input HighlightOrderByInput {
   id: OrderDirection
   title: OrderDirection
   image: BlueHarvestImageOrderDirection
+  priority: OrderDirection
   message: OrderDirection
   editorNotes: OrderDirection
   createdAt: OrderDirection
@@ -10217,17 +10264,14 @@ input HighlightOrderByInput {
 input HighlightUpdateInput {
   title: String
   image: String
+  owner: UserRelateToOneForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  priority: Int
   message: String
   linkedItem: InternalLinkRelateToOneForUpdateInput
   editorNotes: String
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input InternalLinkRelateToOneForUpdateInput {
-  create: InternalLinkCreateInput
-  connect: InternalLinkWhereUniqueInput
-  disconnect: Boolean
 }
 
 input HighlightUpdateArgs {
@@ -10238,16 +10282,14 @@ input HighlightUpdateArgs {
 input HighlightCreateInput {
   title: String
   image: String
+  owner: UserRelateToOneForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  priority: Int
   message: String
   linkedItem: InternalLinkRelateToOneForCreateInput
   editorNotes: String
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input InternalLinkRelateToOneForCreateInput {
-  create: InternalLinkCreateInput
-  connect: InternalLinkWhereUniqueInput
 }
 
 type Contact {
@@ -10763,6 +10805,12 @@ type Mutation {
   updateHomePages(data: [HomePageUpdateArgs!]!): [HomePage]
   deleteHomePage(where: HomePageWhereUniqueInput! = {id: 1}): HomePage
   deleteHomePages(where: [HomePageWhereUniqueInput!]!): [HomePage]
+  createfeaturedItem(data: featuredItemCreateInput!): featuredItem
+  createFeaturedItems(data: [featuredItemCreateInput!]!): [featuredItem]
+  updatefeaturedItem(where: featuredItemWhereUniqueInput!, data: featuredItemUpdateInput!): featuredItem
+  updateFeaturedItems(data: [featuredItemUpdateArgs!]!): [featuredItem]
+  deletefeaturedItem(where: featuredItemWhereUniqueInput!): featuredItem
+  deleteFeaturedItems(where: [featuredItemWhereUniqueInput!]!): [featuredItem]
   createElection(data: ElectionCreateInput!): Election
   createElections(data: [ElectionCreateInput!]!): [Election]
   updateElection(where: ElectionWhereUniqueInput!, data: ElectionUpdateInput!): Election
@@ -11145,6 +11193,9 @@ type Query {
   homePage(where: HomePageWhereUniqueInput! = {id: 1}): HomePage
   homePages(where: HomePageWhereInput! = {id: {equals: 1}}, orderBy: [HomePageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: HomePageWhereUniqueInput): [HomePage!]
   homePagesCount(where: HomePageWhereInput! = {id: {equals: 1}}): Int
+  featuredItem(where: featuredItemWhereUniqueInput!): featuredItem
+  featuredItems(where: featuredItemWhereInput! = {}, orderBy: [featuredItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: featuredItemWhereUniqueInput): [featuredItem!]
+  featuredItemsCount(where: featuredItemWhereInput! = {}): Int
   election(where: ElectionWhereUniqueInput!): Election
   elections(where: ElectionWhereInput! = {}, orderBy: [ElectionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionWhereUniqueInput): [Election!]
   electionsCount(where: ElectionWhereInput! = {}): Int

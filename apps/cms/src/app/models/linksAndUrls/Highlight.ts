@@ -1,17 +1,20 @@
 import { list } from '@keystone-6/core';
-import { timestamps } from '../../fieldUtils';
-import { relationship, text } from '@keystone-6/core/fields';
-import { isContentManager } from '../../access/roles';
-import { elevatedOperationAccess } from '../../access';
+import { owner, timestamps, userGroups } from '../../fieldUtils';
+import { relationship, select, text } from '@keystone-6/core/fields';
+import {
+  generalItemAccess,
+  generalOperationAccess,
+  isAdmin,
+} from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 
 export const Highlight = list({
   access: {
-    operation: elevatedOperationAccess,
+    operation: generalOperationAccess,
+    item: generalItemAccess('Highlight'),
   },
   ui: {
-    hideCreate: true,
-    isHidden: async (args) => !(await isContentManager(args)),
+    hideCreate: false,
   },
   graphql: {
     maxTake: 100,
@@ -33,6 +36,40 @@ export const Highlight = list({
 
     image: blueHarvestImage({
       notBanner: true,
+    }),
+    owner,
+    userGroups: userGroups(),
+    priority: select({
+      type: 'integer',
+      defaultValue: 4,
+
+      ui: {
+        displayMode: 'select',
+        description:
+          'Currently only admins can change the priority. Contact a site administrator for assistance.',
+        itemView: {
+          async fieldMode(args) {
+            const canEdit = await isAdmin(args);
+
+            return canEdit ? 'edit' : 'read';
+          },
+        },
+        createView: {
+          async fieldMode(args) {
+            const canEdit = await isAdmin(args);
+
+            return canEdit ? 'edit' : 'hidden';
+          },
+        },
+      },
+      options: [
+        { label: 'Highest', value: 1 },
+        { label: 'High', value: 2 },
+        { label: 'Medium', value: 3 },
+        { label: 'Normal', value: 4 },
+        { label: 'Low', value: 5 },
+        { label: 'Lowest', value: 6 },
+      ],
     }),
 
     message: text({ ui: { displayMode: 'textarea' } }),

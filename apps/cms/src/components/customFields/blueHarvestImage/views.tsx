@@ -123,6 +123,7 @@ export const CardValue: CardValueComponent = ({
   return (
     <FieldContainer>
       <FieldLabel>{field.label}</FieldLabel>
+
       <p>I AM THE CARD YAYAYAY</p>
     </FieldContainer>
   );

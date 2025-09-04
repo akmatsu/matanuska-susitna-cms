@@ -3,7 +3,7 @@ import HomePage from './HomePage';
 
 const lists = {
   BoardPage,
-  HomePage,
+  ...HomePage,
 };
 
 export default lists;
