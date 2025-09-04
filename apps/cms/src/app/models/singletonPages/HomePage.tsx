@@ -33,6 +33,8 @@ const featuredItem = list({
       ],
       ui: {
         views: './src/components/customFields/IconSelection',
+        description:
+          "Select an icon to display with this featured item, don't worry about the color, it will be styled automatically.",
       },
     }),
     linkedItem: relationship({

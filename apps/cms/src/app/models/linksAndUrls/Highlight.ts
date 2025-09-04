@@ -19,6 +19,7 @@ export const Highlight = list({
   graphql: {
     maxTake: 100,
   },
+
   fields: {
     title: text({
       validation: {
