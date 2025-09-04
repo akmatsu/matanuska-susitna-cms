@@ -301,38 +301,6 @@ async function insertSeedData() {
         },
       ],
     });
-    const urls = await sudoContextDB.Url.createMany({
-      data: [
-        {
-          title: 'Animal Care',
-          url: 'https://animalcare.matsugov.us/',
-        },
-        {
-          title: 'Problem Reporter',
-          url: 'https://problemreporter.matsugov.us/',
-        },
-        {
-          title: 'MyProperty Lookup',
-          url: 'https://myproperty.matsugov.us/index.aspx',
-        },
-        {
-          title: 'Parcel Viewer',
-          url: 'https://mapping.matsugov.us/Html5Viewer/index.html?viewer=MSB_Parcel_Viewer',
-        },
-        {
-          title: 'Career Opportunities',
-          url: 'https://www.governmentjobs.com/careers/matsugov',
-        },
-        {
-          title: 'Legislation',
-          url: 'https://matanuska.legistar.com/Legislation.aspx',
-        },
-        {
-          title: 'Projects',
-          url: 'https://projects.matsugov.us/',
-        },
-      ],
-    });
 
     await sudoContextDB.HomePage.createOne({
       data: {
