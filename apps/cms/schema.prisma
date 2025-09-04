@@ -39,34 +39,25 @@ model BoardPage {
 }
 
 model HomePage {
-  id               Int        @id
-  heroImage        String?
-  title            String     @unique @default("")
-  description      String     @default("")
-  toolbeltOne      Highlight? @relation("HomePage_toolbeltOne", fields: [toolbeltOneId], references: [id])
-  toolbeltOneId    String?    @map("toolbeltOne")
-  toolbeltTwo      Highlight? @relation("HomePage_toolbeltTwo", fields: [toolbeltTwoId], references: [id])
-  toolbeltTwoId    String?    @map("toolbeltTwo")
-  toolbeltThree    Highlight? @relation("HomePage_toolbeltThree", fields: [toolbeltThreeId], references: [id])
-  toolbeltThreeId  String?    @map("toolbeltThree")
-  toolbeltFour     Highlight? @relation("HomePage_toolbeltFour", fields: [toolbeltFourId], references: [id])
-  toolbeltFourId   String?    @map("toolbeltFour")
-  highlightOne     Highlight? @relation("HomePage_highlightOne", fields: [highlightOneId], references: [id])
-  highlightOneId   String?    @map("highlightOne")
-  highlightTwo     Highlight? @relation("HomePage_highlightTwo", fields: [highlightTwoId], references: [id])
-  highlightTwoId   String?    @map("highlightTwo")
-  highlightThree   Highlight? @relation("HomePage_highlightThree", fields: [highlightThreeId], references: [id])
-  highlightThreeId String?    @map("highlightThree")
-  createdAt        DateTime?  @default(now())
-  updatedAt        DateTime?  @default(now()) @updatedAt
+  id            Int            @id
+  heroImage     String?
+  title         String         @unique @default("")
+  description   String         @default("")
+  featuredItems featuredItem[] @relation("HomePage_featuredItems")
+  createdAt     DateTime?      @default(now())
+  updatedAt     DateTime?      @default(now()) @updatedAt
+}
 
-  @@index([toolbeltOneId])
-  @@index([toolbeltTwoId])
-  @@index([toolbeltThreeId])
-  @@index([toolbeltFourId])
-  @@index([highlightOneId])
-  @@index([highlightTwoId])
-  @@index([highlightThreeId])
+model featuredItem {
+  id                          String        @id @default(cuid())
+  order                       Int           @default(1)
+  icon                        String?
+  linkedItem                  InternalLink? @relation("featuredItem_linkedItem", fields: [linkedItemId], references: [id])
+  linkedItemId                String?       @map("linkedItem")
+  from_HomePage_featuredItems HomePage[]    @relation("HomePage_featuredItems")
+
+  @@index([order])
+  @@index([linkedItemId])
 }
 
 model Election {
@@ -2476,6 +2467,7 @@ model InternalLink {
   label                                String                    @default("")
   selectItem                           Json?
   from_BoardPage_actions               BoardPage[]               @relation("BoardPage_actions")
+  from_featuredItem_linkedItem         featuredItem[]            @relation("featuredItem_linkedItem")
   from_AssemblyDistrict_actions        AssemblyDistrict[]        @relation("AssemblyDistrict_actions")
   from_AssemblyDistrictVersion_actions AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_actions")
   from_AssemblyDistrictDraft_actions   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_actions")
@@ -2532,23 +2524,21 @@ model Highlight {
   id                           String         @id @default(cuid())
   title                        String         @unique @default("")
   image                        String?
+  owner                        User?          @relation("Highlight_owner", fields: [ownerId], references: [id])
+  ownerId                      String?        @map("owner")
+  userGroups                   UserGroup[]    @relation("Highlight_userGroups")
+  priority                     Int?           @default(4)
   message                      String         @default("")
   linkedItem                   InternalLink?  @relation("Highlight_linkedItem", fields: [linkedItemId], references: [id])
   linkedItemId                 String?        @map("linkedItem")
   editorNotes                  String         @default("")
   createdAt                    DateTime?      @default(now())
   updatedAt                    DateTime?      @default(now()) @updatedAt
-  from_HomePage_toolbeltOne    HomePage[]     @relation("HomePage_toolbeltOne")
-  from_HomePage_toolbeltTwo    HomePage[]     @relation("HomePage_toolbeltTwo")
-  from_HomePage_toolbeltThree  HomePage[]     @relation("HomePage_toolbeltThree")
-  from_HomePage_toolbeltFour   HomePage[]     @relation("HomePage_toolbeltFour")
-  from_HomePage_highlightOne   HomePage[]     @relation("HomePage_highlightOne")
-  from_HomePage_highlightTwo   HomePage[]     @relation("HomePage_highlightTwo")
-  from_HomePage_highlightThree HomePage[]     @relation("HomePage_highlightThree")
   from_Topic_highlights        Topic[]        @relation("Topic_highlights")
   from_TopicVersion_highlights TopicVersion[] @relation("TopicVersion_highlights")
   from_TopicDraft_highlights   TopicDraft[]   @relation("TopicDraft_highlights")
 
+  @@index([ownerId])
   @@index([linkedItemId])
 }
 
@@ -2709,6 +2699,7 @@ model User {
   from_EventVersion_owner            EventVersion[]            @relation("EventVersion_owner")
   from_DocumentCollection_owner      DocumentCollection[]      @relation("DocumentCollection_owner")
   from_Url_owner                     Url[]                     @relation("Url_owner")
+  from_Highlight_owner               Highlight[]               @relation("Highlight_owner")
   from_UserGroup_owner               UserGroup[]               @relation("UserGroup_owner")
 }
 
@@ -2760,6 +2751,7 @@ model UserGroup {
   from_EventDraft_userGroups              EventDraft[]              @relation("EventDraft_userGroups")
   from_EventVersion_userGroups            EventVersion[]            @relation("EventVersion_userGroups")
   from_DocumentCollection_userGroups      DocumentCollection[]      @relation("DocumentCollection_userGroups")
+  from_Highlight_userGroups               Highlight[]               @relation("Highlight_userGroups")
 
   @@index([ownerId])
 }
