@@ -1,3 +1,13 @@
+# [0.25.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.24.1...v0.25.0) (2025-09-04)
+
+
+### Features
+
+* can now select icons on featured items ([9b90f1b](https://github.com/akmatsu/matanuska-susitna-cms/commit/9b90f1baa3c3b4044b22cb54cc9219c2b0bf1540))
+* implemented highlights and featured items ([0517fad](https://github.com/akmatsu/matanuska-susitna-cms/commit/0517fadd48cb44dc4acf8ccd86e32af6d51ccaab))
+* polymorphic pages now support more types ([027e43a](https://github.com/akmatsu/matanuska-susitna-cms/commit/027e43a04d8a4429eadd088f7d57f8b390745a27))
+* removed old fields from seed data ([9cc152d](https://github.com/akmatsu/matanuska-susitna-cms/commit/9cc152d1fd929181f30f8b55ff7673bb71bdcb1b))
+
 ## [0.24.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.24.0...v0.24.1) (2025-09-03)
 
 
