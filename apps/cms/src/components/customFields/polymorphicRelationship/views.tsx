@@ -129,9 +129,13 @@ export function Field({
               }}
             ></Select>
 
-            <Button onClick={() => setIsDrawerOpen(true)}>
-              Create a new {value?.itemType?.label}
-            </Button>
+            {value.itemType.value !== 'boardPage' &&
+              value.itemType.value !== 'homePage' &&
+              value.itemType.value !== 'electionsPage' && (
+                <Button onClick={() => setIsDrawerOpen(true)}>
+                  Create a new {value?.itemType?.label}
+                </Button>
+              )}
           </div>
         )}
       </div>
@@ -171,6 +175,12 @@ export const controller = (
       { value: 'community', label: 'Community' },
       { value: 'assemblyDistrict', label: 'Assembly District' },
       { value: 'orgUnit', label: 'Org Unit' },
+      { value: 'topic', label: 'Topic' },
+      { value: 'plan', label: 'Plan' },
+      { value: 'board', label: 'Board' },
+      { value: 'boardPage', label: 'Board Page' },
+      { value: 'electionsPage', label: 'Elections Page' },
+      { value: 'homePage', label: 'Home Page' },
       { value: 'url', label: 'Url' },
     ],
     path: config.path,
