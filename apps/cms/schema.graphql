@@ -10114,7 +10114,7 @@ type InternalLink {
   item: LinkedItemUnion
 }
 
-union LinkedItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url
+union LinkedItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url | Topic | Plan | Board | BoardPage | ElectionsPage | HomePage
 
 input InternalLinkWhereUniqueInput {
   id: ID

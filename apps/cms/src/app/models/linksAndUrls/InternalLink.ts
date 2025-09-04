@@ -32,6 +32,12 @@ export const InternalLink = list({
           ... on AssemblyDistrict { id title slug description __typename}
           ... on OrgUnit { id title slug description __typename}
           ... on Url { id title description url __typename}
+          ... on Topic { id title description slug __typename}
+          ... on Plan { id title description slug __typename}
+          ... on Board { id title slug description __typename}
+          ... on BoardPage { id title __typename}
+          ... on ElectionsPage { id title __typename}
+          ... on HomePage { id title __typename}
         }`,
         views: './src/components/customFields/polymorphicItem/views',
       },
@@ -48,6 +54,12 @@ export const InternalLink = list({
               lists.AssemblyDistrict.types.output,
               lists.OrgUnit.types.output,
               lists.Url.types.output,
+              lists.Topic.types.output,
+              lists.Plan.types.output,
+              lists.Board.types.output,
+              lists.BoardPage.types.output,
+              lists.ElectionsPage.types.output,
+              lists.HomePage.types.output,
             ],
             resolveType(item) {
               return item.__typename as string;
@@ -96,6 +108,12 @@ export const InternalLink = list({
                   ${capitalizedListKey === 'AssemblyDistrict' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'OrgUnit' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Url' ? 'id title description url' : ''}
+                  ${capitalizedListKey === 'Topic' ? 'id title description slug' : ''}
+                  ${capitalizedListKey === 'Plan' ? 'id title description slug' : ''}
+                  ${capitalizedListKey === 'Board' ? 'id title slug description' : ''}
+                  ${capitalizedListKey === 'BoardPage' ? 'id title' : ''}
+                  ${capitalizedListKey === 'ElectionsPage' ? 'id title' : ''}
+                  ${capitalizedListKey === 'HomePage' ? 'id title' : ''}
                 `.trim(),
               });
 
