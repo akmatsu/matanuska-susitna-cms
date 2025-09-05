@@ -778,7 +778,6 @@ export async function typesenseUpsert(
     item.status !== 'published'
   ) {
     try {
-      logger.info('Running!');
       await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
         .documents(item.id.toString())
         .delete();
