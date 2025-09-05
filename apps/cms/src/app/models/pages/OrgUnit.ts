@@ -1,6 +1,7 @@
 import {
   basePage,
   basePageQuery,
+  iconSelect,
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
@@ -9,7 +10,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import { checkbox, relationship } from '@keystone-6/core/fields';
+import { relationship, select, text } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
@@ -24,9 +25,37 @@ const {
   (listNamePlural, opts) => {
     return {
       ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
-      showPage: checkbox({
-        defaultValue: true,
-        ui: { itemView: { fieldPosition: 'sidebar' } },
+      icon: iconSelect,
+      type: select({
+        defaultValue: 'Department',
+        options: [
+          { label: 'Office', value: 'office' },
+          { label: 'Department', value: 'department' },
+          { label: 'Division', value: 'division' },
+        ],
+      }),
+
+      duties: text({
+        ui: {
+          displayMode: 'textarea',
+          description:
+            'This is used on the departments landing page to describe the OrgUnit',
+        },
+      }),
+
+      showPage: select({
+        ui: {
+          displayMode: 'segmented-control',
+          description: 'Should this org unit have its own page on the website?',
+        },
+        defaultValue: 'yes',
+        options: [
+          { label: 'No', value: 'no' },
+          { label: 'Yes', value: 'yes' },
+        ],
+      }),
+      childrenLabel: text({
+        defaultValue: 'Divisions',
       }),
       children: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.parent' : 'OrgUnit',

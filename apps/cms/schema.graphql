@@ -4230,7 +4230,11 @@ type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
   servicesCount(where: ServiceWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
@@ -4288,7 +4292,11 @@ input OrgUnitWhereInput {
   services: ServiceManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  showPage: BooleanFilter
+  icon: StringNullableFilter
+  type: StringNullableFilter
+  duties: StringFilter
+  showPage: StringNullableFilter
+  childrenLabel: StringFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
   boards: BoardManyRelationFilter
@@ -4326,7 +4334,11 @@ input OrgUnitOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  icon: OrderDirection
+  type: OrderDirection
+  duties: OrderDirection
   showPage: OrderDirection
+  childrenLabel: OrderDirection
   status: OrderDirection
   makeDrafts: OrderDirection
 }
@@ -4356,7 +4368,11 @@ input OrgUnitUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
   boards: BoardRelateToManyForUpdateInput
@@ -4427,7 +4443,11 @@ input OrgUnitCreateInput {
   services: ServiceRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
   boards: BoardRelateToManyForCreateInput
@@ -4502,7 +4522,11 @@ type OrgUnitVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
@@ -4553,7 +4577,11 @@ input OrgUnitVersionWhereInput {
   services: ServiceManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  showPage: BooleanFilter
+  icon: StringNullableFilter
+  type: StringNullableFilter
+  duties: StringFilter
+  showPage: StringNullableFilter
+  childrenLabel: StringFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
   boards: BoardManyRelationFilter
@@ -4575,7 +4603,11 @@ input OrgUnitVersionOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  icon: OrderDirection
+  type: OrderDirection
+  duties: OrderDirection
   showPage: OrderDirection
+  childrenLabel: OrderDirection
   republish: OrderDirection
 }
 
@@ -4604,7 +4636,11 @@ input OrgUnitVersionUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
   boards: BoardRelateToManyForUpdateInput
@@ -4646,7 +4682,11 @@ input OrgUnitVersionCreateInput {
   services: ServiceRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
   boards: BoardRelateToManyForCreateInput
@@ -4698,7 +4738,11 @@ type OrgUnitDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
   childrenCount(where: OrgUnitWhereInput! = {}): Int
   parent: OrgUnit
@@ -4747,7 +4791,11 @@ input OrgUnitDraftWhereInput {
   services: ServiceManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  showPage: BooleanFilter
+  icon: StringNullableFilter
+  type: StringNullableFilter
+  duties: StringFilter
+  showPage: StringNullableFilter
+  childrenLabel: StringFilter
   children: OrgUnitManyRelationFilter
   parent: OrgUnitWhereInput
   boards: BoardManyRelationFilter
@@ -4768,7 +4816,11 @@ input OrgUnitDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  icon: OrderDirection
+  type: OrderDirection
+  duties: OrderDirection
   showPage: OrderDirection
+  childrenLabel: OrderDirection
   publish: OrderDirection
 }
 
@@ -4797,7 +4849,11 @@ input OrgUnitDraftUpdateInput {
   services: ServiceRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children: OrgUnitRelateToManyForUpdateInput
   parent: OrgUnitRelateToOneForUpdateInput
   boards: BoardRelateToManyForUpdateInput
@@ -4838,7 +4894,11 @@ input OrgUnitDraftCreateInput {
   services: ServiceRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  showPage: Boolean
+  icon: String
+  type: String
+  duties: String
+  showPage: String
+  childrenLabel: String
   children: OrgUnitRelateToManyForCreateInput
   parent: OrgUnitRelateToOneForCreateInput
   boards: BoardRelateToManyForCreateInput
@@ -9787,6 +9847,56 @@ input FacilityListItemCreateInput {
   facility: FacilityRelateToOneForCreateInput
 }
 
+type LandingPage {
+  id: ID!
+  heroImage: String
+  title: String
+  description: String
+  body: String
+}
+
+input LandingPageWhereUniqueInput {
+  id: ID
+  title: String
+}
+
+input LandingPageWhereInput {
+  AND: [LandingPageWhereInput!]
+  OR: [LandingPageWhereInput!]
+  NOT: [LandingPageWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  body: MyStringFilter
+}
+
+input LandingPageOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  body: MyOrderDirection
+}
+
+input LandingPageUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  body: String
+}
+
+input LandingPageUpdateArgs {
+  where: LandingPageWhereUniqueInput!
+  data: LandingPageUpdateInput!
+}
+
+input LandingPageCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  body: String
+}
+
 type Document {
   id: ID!
   title: String
@@ -11081,6 +11191,12 @@ type Mutation {
   updateFacilityListItems(data: [FacilityListItemUpdateArgs!]!): [FacilityListItem]
   deleteFacilityListItem(where: FacilityListItemWhereUniqueInput!): FacilityListItem
   deleteFacilityListItems(where: [FacilityListItemWhereUniqueInput!]!): [FacilityListItem]
+  createLandingPage(data: LandingPageCreateInput!): LandingPage
+  createLandingPages(data: [LandingPageCreateInput!]!): [LandingPage]
+  updateLandingPage(where: LandingPageWhereUniqueInput!, data: LandingPageUpdateInput!): LandingPage
+  updateLandingPages(data: [LandingPageUpdateArgs!]!): [LandingPage]
+  deleteLandingPage(where: LandingPageWhereUniqueInput!): LandingPage
+  deleteLandingPages(where: [LandingPageWhereUniqueInput!]!): [LandingPage]
   createDocument(data: DocumentCreateInput!): Document
   createDocuments(data: [DocumentCreateInput!]!): [Document]
   updateDocument(where: DocumentWhereUniqueInput!, data: DocumentUpdateInput!): Document
@@ -11331,6 +11447,9 @@ type Query {
   facilityListItem(where: FacilityListItemWhereUniqueInput!): FacilityListItem
   facilityListItems(where: FacilityListItemWhereInput! = {}, orderBy: [FacilityListItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityListItemWhereUniqueInput): [FacilityListItem!]
   facilityListItemsCount(where: FacilityListItemWhereInput! = {}): Int
+  landingPage(where: LandingPageWhereUniqueInput!): LandingPage
+  landingPages(where: LandingPageWhereInput! = {}, orderBy: [LandingPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LandingPageWhereUniqueInput): [LandingPage!]
+  landingPagesCount(where: LandingPageWhereInput! = {}): Int
   document(where: DocumentWhereUniqueInput!): Document
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int

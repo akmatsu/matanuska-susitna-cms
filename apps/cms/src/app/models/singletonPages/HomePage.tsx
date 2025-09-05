@@ -1,5 +1,5 @@
 import { list } from '@keystone-6/core';
-import { timestamps, titleAndDescription } from '../../fieldUtils';
+import { iconSelect, timestamps, titleAndDescription } from '../../fieldUtils';
 import {
   elevatedOperationAccess,
   generalOperationAccess,
@@ -21,22 +21,7 @@ const featuredItem = list({
       defaultValue: 1,
       isIndexed: true,
     }),
-    icon: select({
-      options: [
-        { label: 'Paw', value: 'icon-[mdi--pets]' },
-        { label: 'Message Alert', value: 'icon-[mdi--message-alert]' },
-        { label: 'Home', value: 'icon-[mdi--home]' },
-        { label: 'Map', value: 'icon-[mdi--map]' },
-        { label: 'Briefcase', value: 'icon-[mdi--briefcase]' },
-        { label: 'Legal', value: 'icon-[mdi--legal]' },
-        { label: 'Excavator', value: 'icon-[mdi--excavator]' },
-      ],
-      ui: {
-        views: './src/components/customFields/IconSelection',
-        description:
-          "Select an icon to display with this featured item, don't worry about the color, it will be styled automatically.",
-      },
-    }),
+    icon: iconSelect,
     linkedItem: relationship({
       ref: 'InternalLink',
       ui: {

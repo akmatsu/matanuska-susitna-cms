@@ -859,3 +859,30 @@ export function docDelete(id: string) {
     .documents(id)
     .delete();
 }
+
+export const iconSelect = select({
+  options: [
+    { label: 'Paw', value: 'icon-[mdi--pets]' },
+    { label: 'Message Alert', value: 'icon-[mdi--message-alert]' },
+    { label: 'Home', value: 'icon-[mdi--home]' },
+    { label: 'Map', value: 'icon-[mdi--map]' },
+    { label: 'Briefcase', value: 'icon-[mdi--briefcase]' },
+    { label: 'Legal', value: 'icon-[mdi--legal]' },
+    { label: 'Excavator', value: 'icon-[mdi--excavator]' },
+    { label: 'User Tie', value: 'icon-[mdi--user-tie]' },
+    { label: 'Document', value: 'icon-[mdi--file-document]' },
+    { label: 'Houses', value: 'icon-[mdi--house-group]' },
+    { label: 'Fire Truck', value: 'icon-[mdi--fire-truck]' },
+    { label: 'Money', value: 'icon-[mdi--money]' },
+    { label: 'Server', value: 'icon-[mdi--server]' },
+    { label: 'Pier', value: 'icon-[mdi--pier-crane]' },
+    { label: 'Microphone', value: 'icon-[mdi--microphone]' },
+    { label: 'Road', value: 'icon-[mdi--road-variant]' },
+    { label: 'Cart', value: 'icon-[mdi--cart]' },
+  ],
+  ui: {
+    views: './src/components/customFields/IconSelection',
+    description:
+      "Select an icon to display with this featured item, don't worry about the color, it will be styled automatically.",
+  },
+});
