@@ -109,6 +109,9 @@ export const PAGE_TYPES = [
     type: 'service',
     async getItems(context) {
       const services = await context.prisma.service.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...orgUnits,
           ...sharedFieldsWithCommunities,
@@ -122,6 +125,9 @@ export const PAGE_TYPES = [
     type: 'community',
     async getItems(context) {
       const communities = await context.prisma.community.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFields,
           assemblyDistricts: {
@@ -141,6 +147,10 @@ export const PAGE_TYPES = [
     type: 'department',
     async getItems(context) {
       const departments = await context.prisma.orgUnit.findMany({
+        where: {
+          status: 'published',
+          showPage: 'yes',
+        },
         select: {
           ...sharedFields,
         },
@@ -155,6 +165,9 @@ export const PAGE_TYPES = [
     type: 'park',
     async getItems(context) {
       const parks = await context.prisma.park.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFieldsWithCommunities,
         },
@@ -167,6 +180,9 @@ export const PAGE_TYPES = [
     type: 'trail',
     async getItems(context) {
       const trails = await context.prisma.trail.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFieldsWithCommunities,
         },
@@ -179,6 +195,9 @@ export const PAGE_TYPES = [
     type: 'facility',
     async getItems(context) {
       const facilities = await context.prisma.facility.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFieldsWithCommunities,
         },
@@ -193,6 +212,9 @@ export const PAGE_TYPES = [
     type: 'assemblyDistrict',
     async getItems(context) {
       const assemblyDistricts = await context.prisma.assemblyDistrict.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFields,
         },
@@ -207,6 +229,9 @@ export const PAGE_TYPES = [
     type: 'board',
     async getItems(context) {
       const boards = await context.prisma.board.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFieldsWithCommunities,
         },
@@ -219,6 +244,9 @@ export const PAGE_TYPES = [
     type: 'plan',
     async getItems(context) {
       const plans = await context.prisma.plan.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFields,
         },
@@ -231,6 +259,9 @@ export const PAGE_TYPES = [
     type: 'topic',
     async getItems(context) {
       const topics = await context.prisma.topic.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFieldsWithCommunities,
         },
@@ -243,6 +274,9 @@ export const PAGE_TYPES = [
     type: 'publicNotice',
     async getItems(context) {
       const publicNotices = await context.prisma.publicNotice.findMany({
+        where: {
+          status: 'published',
+        },
         select: {
           ...sharedFieldsWithCommunities,
           assemblyDistricts: {
@@ -275,7 +309,7 @@ export function toSearchableObj(
 ): TypeSensePageDocument {
   const baseObj: TypeSensePageDocument = {
     type: item?.type?.replace(/_/gi, ' ') || type,
-    id: `${item.id}${prependId}`,
+    id: `${item.id}${prependId ?? ''}`,
     slug: item.slug,
     title: item.title,
   };
