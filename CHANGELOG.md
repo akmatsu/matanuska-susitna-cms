@@ -1,3 +1,16 @@
+# [0.26.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.25.0...v0.26.0) (2025-09-05)
+
+
+### Bug Fixes
+
+* fixed items being indexed in search engine when they shouldn't be ([f4b7dd3](https://github.com/akmatsu/matanuska-susitna-cms/commit/f4b7dd310c9481a2d4a75d38c7372aba9b760e40))
+
+
+### Features
+
+* implemented the new landing pages CT and added some new fields to org units ([ac764bf](https://github.com/akmatsu/matanuska-susitna-cms/commit/ac764bfda4702f780b589460321d94dc21edd52c))
+* org units now default to divisions ([8a8b99c](https://github.com/akmatsu/matanuska-susitna-cms/commit/8a8b99c96e715afb90deec011e29b4346fa1bb96))
+
 # [0.25.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.24.1...v0.25.0) (2025-09-04)
 
 
