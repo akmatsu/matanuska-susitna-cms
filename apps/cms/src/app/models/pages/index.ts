@@ -10,6 +10,7 @@ import Topic from './Topic';
 import Trail from './Trail';
 import Plan from './Plan';
 import Event from './Event';
+import LandingPages from './LandingPages';
 
 const lists = {
   ...AssemblyDistrict,
@@ -25,6 +26,7 @@ const lists = {
   ...Plan,
   ...Event,
   FacilityListItem,
+  ...LandingPages,
 };
 
 export default lists;
