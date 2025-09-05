@@ -955,7 +955,7 @@ model OrgUnit {
   createdAt                             DateTime?                 @default(now())
   updatedAt                             DateTime?                 @default(now()) @updatedAt
   icon                                  String?
-  type                                  String?                   @default("Department")
+  type                                  String?
   duties                                String                    @default("")
   showPage                              String?                   @default("yes")
   childrenLabel                         String                    @default("Divisions")
@@ -1038,7 +1038,7 @@ model OrgUnitVersion {
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
-  type              String?            @default("Department")
+  type              String?
   duties            String             @default("")
   showPage          String?            @default("yes")
   childrenLabel     String             @default("Divisions")
@@ -1089,7 +1089,7 @@ model OrgUnitDraft {
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
-  type              String?            @default("Department")
+  type              String?
   duties            String             @default("")
   showPage          String?            @default("yes")
   childrenLabel     String             @default("Divisions")
