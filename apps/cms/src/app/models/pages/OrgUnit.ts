@@ -1,6 +1,7 @@
 import {
   basePage,
   basePageQuery,
+  docDelete,
   iconSelect,
   typesenseDelete,
   typesenseUpsert,
@@ -110,11 +111,20 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'orgUnit',
-          'id title slug description body publishAt tags {name}',
-          args,
-        );
+        if (args.item?.showPage === 'yes')
+          await typesenseUpsert(
+            'orgUnit',
+            'id title slug description body publishAt tags {name}',
+            args,
+          );
+        else if (args.operation === 'update') {
+          if (
+            args.originalItem.showPage !== args.item?.showPage &&
+            args.item?.showPage === 'no'
+          ) {
+            await docDelete(args.item.id.toString());
+          }
+        }
       },
     },
   },

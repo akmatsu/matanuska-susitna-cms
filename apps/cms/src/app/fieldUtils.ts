@@ -775,15 +775,13 @@ export async function typesenseUpsert(
     operation === 'update' &&
     item &&
     originalItem &&
-    item.status === 'unpublished' &&
-    originalItem.status === 'published'
+    item.status !== 'published'
   ) {
     try {
-      TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+      logger.info('Running!');
+      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
         .documents(item.id.toString())
-        .delete({
-          ignore_not_found: true,
-        });
+        .delete();
     } catch (error: any) {
       logger.error(error, 'Error deleting Typesense document');
     }
