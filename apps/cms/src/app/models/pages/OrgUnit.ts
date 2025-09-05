@@ -28,7 +28,6 @@ const {
       ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
       icon: iconSelect,
       type: select({
-        defaultValue: 'Department',
         options: [
           { label: 'Office', value: 'office' },
           { label: 'Department', value: 'department' },
