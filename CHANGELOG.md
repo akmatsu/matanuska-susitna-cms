@@ -1,3 +1,10 @@
+## [0.26.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.26.0...v0.26.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* removed duties field from org units ([d2bdbac](https://github.com/akmatsu/matanuska-susitna-cms/commit/d2bdbacef61b2203cdd2db1d8f0e7157ca8645a6))
+
 # [0.26.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.25.0...v0.26.0) (2025-09-05)
 
 
