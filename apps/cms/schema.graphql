@@ -4232,7 +4232,6 @@ type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
@@ -4294,7 +4293,6 @@ input OrgUnitWhereInput {
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
   type: StringNullableFilter
-  duties: StringFilter
   showPage: StringNullableFilter
   childrenLabel: StringFilter
   children: OrgUnitManyRelationFilter
@@ -4336,7 +4334,6 @@ input OrgUnitOrderByInput {
   updatedAt: OrderDirection
   icon: OrderDirection
   type: OrderDirection
-  duties: OrderDirection
   showPage: OrderDirection
   childrenLabel: OrderDirection
   status: OrderDirection
@@ -4370,7 +4367,6 @@ input OrgUnitUpdateInput {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children: OrgUnitRelateToManyForUpdateInput
@@ -4445,7 +4441,6 @@ input OrgUnitCreateInput {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children: OrgUnitRelateToManyForCreateInput
@@ -4524,7 +4519,6 @@ type OrgUnitVersion {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
@@ -4579,7 +4573,6 @@ input OrgUnitVersionWhereInput {
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
   type: StringNullableFilter
-  duties: StringFilter
   showPage: StringNullableFilter
   childrenLabel: StringFilter
   children: OrgUnitManyRelationFilter
@@ -4605,7 +4598,6 @@ input OrgUnitVersionOrderByInput {
   updatedAt: OrderDirection
   icon: OrderDirection
   type: OrderDirection
-  duties: OrderDirection
   showPage: OrderDirection
   childrenLabel: OrderDirection
   republish: OrderDirection
@@ -4638,7 +4630,6 @@ input OrgUnitVersionUpdateInput {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children: OrgUnitRelateToManyForUpdateInput
@@ -4684,7 +4675,6 @@ input OrgUnitVersionCreateInput {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children: OrgUnitRelateToManyForCreateInput
@@ -4740,7 +4730,6 @@ type OrgUnitDraft {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
@@ -4793,7 +4782,6 @@ input OrgUnitDraftWhereInput {
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
   type: StringNullableFilter
-  duties: StringFilter
   showPage: StringNullableFilter
   childrenLabel: StringFilter
   children: OrgUnitManyRelationFilter
@@ -4818,7 +4806,6 @@ input OrgUnitDraftOrderByInput {
   updatedAt: OrderDirection
   icon: OrderDirection
   type: OrderDirection
-  duties: OrderDirection
   showPage: OrderDirection
   childrenLabel: OrderDirection
   publish: OrderDirection
@@ -4851,7 +4838,6 @@ input OrgUnitDraftUpdateInput {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children: OrgUnitRelateToManyForUpdateInput
@@ -4896,7 +4882,6 @@ input OrgUnitDraftCreateInput {
   updatedAt: DateTime
   icon: String
   type: String
-  duties: String
   showPage: String
   childrenLabel: String
   children: OrgUnitRelateToManyForCreateInput

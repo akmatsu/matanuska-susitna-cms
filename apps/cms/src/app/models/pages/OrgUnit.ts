@@ -35,14 +35,6 @@ const {
         ],
       }),
 
-      duties: text({
-        ui: {
-          displayMode: 'textarea',
-          description:
-            'This is used on the departments landing page to describe the OrgUnit',
-        },
-      }),
-
       showPage: select({
         ui: {
           displayMode: 'segmented-control',

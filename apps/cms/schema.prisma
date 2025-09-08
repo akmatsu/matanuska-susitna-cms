@@ -956,7 +956,6 @@ model OrgUnit {
   updatedAt                             DateTime?                 @default(now()) @updatedAt
   icon                                  String?
   type                                  String?
-  duties                                String                    @default("")
   showPage                              String?                   @default("yes")
   childrenLabel                         String                    @default("Divisions")
   children                              OrgUnit[]                 @relation("OrgUnit_parent")
@@ -1039,7 +1038,6 @@ model OrgUnitVersion {
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
   type              String?
-  duties            String             @default("")
   showPage          String?            @default("yes")
   childrenLabel     String             @default("Divisions")
   children          OrgUnit[]          @relation("OrgUnitVersion_children")
@@ -1090,7 +1088,6 @@ model OrgUnitDraft {
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
   type              String?
-  duties            String             @default("")
   showPage          String?            @default("yes")
   childrenLabel     String             @default("Divisions")
   children          OrgUnit[]          @relation("OrgUnitDraft_children")
