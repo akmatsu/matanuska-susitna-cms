@@ -1,12 +1,13 @@
-import { type Lists } from '.keystone/types';
 import { Tag } from './Tag';
 import { Alert } from './Alert';
 import { Redirect } from './Redirect';
+import pageViews from './pageViews';
 
 const lists = {
   Alert,
   Tag,
   Redirect,
-} satisfies Lists;
+  ...pageViews,
+};
 
 export default lists;

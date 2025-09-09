@@ -1,4 +1,4 @@
-import { BaseFields, graphql, group, list } from '@keystone-6/core';
+import { BaseFields, graphql, group } from '@keystone-6/core';
 import {
   relationship,
   RelationshipFieldConfig,

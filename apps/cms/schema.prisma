@@ -2875,3 +2875,15 @@ model Redirect {
 
   @@index([toId])
 }
+
+model PageView {
+  id       String   @id @default(cuid())
+  pageId   String   @default("")
+  pageType String   @default("")
+  date     DateTime
+  views    Int      @default(0)
+
+  @@index([pageId])
+  @@index([pageType])
+  @@index([date])
+}

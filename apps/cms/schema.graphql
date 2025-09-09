@@ -10882,6 +10882,56 @@ input RedirectCreateInput {
   redirectMessage: String
 }
 
+type PageView {
+  id: ID!
+  pageId: String
+  pageType: String
+  date: DateTime
+  views: Int
+}
+
+input PageViewWhereUniqueInput {
+  id: ID
+}
+
+input PageViewWhereInput {
+  AND: [PageViewWhereInput!]
+  OR: [PageViewWhereInput!]
+  NOT: [PageViewWhereInput!]
+  id: IDFilter
+  pageId: StringFilter
+  pageType: StringFilter
+  date: DateTimeFilter
+  views: IntFilter
+}
+
+input PageViewOrderByInput {
+  id: OrderDirection
+  pageId: OrderDirection
+  pageType: OrderDirection
+  date: OrderDirection
+  views: OrderDirection
+}
+
+input PageViewUpdateInput {
+  pageId: String
+  pageType: String
+  date: DateTime
+  views: Int
+}
+
+input PageViewUpdateArgs {
+  where: PageViewWhereUniqueInput!
+  data: PageViewUpdateInput!
+}
+
+input PageViewCreateInput {
+  pageId: String
+  pageType: String
+  date: DateTime
+  views: Int
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -11284,6 +11334,12 @@ type Mutation {
   updateRedirects(data: [RedirectUpdateArgs!]!): [Redirect]
   deleteRedirect(where: RedirectWhereUniqueInput!): Redirect
   deleteRedirects(where: [RedirectWhereUniqueInput!]!): [Redirect]
+  createPageView(data: PageViewCreateInput!): PageView
+  createPageViews(data: [PageViewCreateInput!]!): [PageView]
+  updatePageView(where: PageViewWhereUniqueInput!, data: PageViewUpdateInput!): PageView
+  updatePageViews(data: [PageViewUpdateArgs!]!): [PageView]
+  deletePageView(where: PageViewWhereUniqueInput!): PageView
+  deletePageViews(where: [PageViewWhereUniqueInput!]!): [PageView]
   endSession: Boolean!
 }
 
@@ -11486,6 +11542,9 @@ type Query {
   redirect(where: RedirectWhereUniqueInput!): Redirect
   redirects(where: RedirectWhereInput! = {}, orderBy: [RedirectOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: RedirectWhereUniqueInput): [Redirect!]
   redirectsCount(where: RedirectWhereInput! = {}): Int
+  pageView(where: PageViewWhereUniqueInput!): PageView
+  pageViews(where: PageViewWhereInput! = {}, orderBy: [PageViewOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageViewWhereUniqueInput): [PageView!]
+  pageViewsCount(where: PageViewWhereInput! = {}): Int
   keystone: KeystoneMeta!
   getPage(slug: String!, type: String!): Page
   internalSearch(query: String): [InternalLinkSearch]

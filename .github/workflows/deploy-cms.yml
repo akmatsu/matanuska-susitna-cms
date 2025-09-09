@@ -138,6 +138,7 @@ jobs:
             # Start the production server
             pm2 reload cms || pm2 start pnpm --name cms -- run cms:start
             pm2 reload cms-publish-worker || pm2 start pnpm --name cms-publish-worker -- run cms:publish-worker
+            pm2 reload cms-process-page-views-worker || pm2 start pnpm --name cms-process-page-views-worker -- run cms:process-page-views-worker
             
             # Remove temporary folders.
             rm -rf ../cms.zip
