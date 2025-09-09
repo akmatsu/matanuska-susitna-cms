@@ -2878,6 +2878,7 @@ model Redirect {
 
 model PageView {
   id       String   @id @default(cuid())
+  pageKey  String   @unique @default("")
   pageId   String   @default("")
   pageType String   @default("")
   date     DateTime
