@@ -10,6 +10,12 @@ const PageView = list({
     isHidden: async (args) => !(await isAdmin(args)),
   },
   fields: {
+    pageKey: text({
+      validation: { isRequired: true },
+      isIndexed: 'unique',
+      isFilterable: true,
+      isOrderable: true,
+    }),
     pageId: text({
       validation: { isRequired: true },
       isIndexed: true,

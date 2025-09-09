@@ -10884,6 +10884,7 @@ input RedirectCreateInput {
 
 type PageView {
   id: ID!
+  pageKey: String
   pageId: String
   pageType: String
   date: DateTime
@@ -10892,6 +10893,7 @@ type PageView {
 
 input PageViewWhereUniqueInput {
   id: ID
+  pageKey: String
 }
 
 input PageViewWhereInput {
@@ -10899,6 +10901,7 @@ input PageViewWhereInput {
   OR: [PageViewWhereInput!]
   NOT: [PageViewWhereInput!]
   id: IDFilter
+  pageKey: StringFilter
   pageId: StringFilter
   pageType: StringFilter
   date: DateTimeFilter
@@ -10907,6 +10910,7 @@ input PageViewWhereInput {
 
 input PageViewOrderByInput {
   id: OrderDirection
+  pageKey: OrderDirection
   pageId: OrderDirection
   pageType: OrderDirection
   date: OrderDirection
@@ -10914,6 +10918,7 @@ input PageViewOrderByInput {
 }
 
 input PageViewUpdateInput {
+  pageKey: String
   pageId: String
   pageType: String
   date: DateTime
@@ -10926,6 +10931,7 @@ input PageViewUpdateArgs {
 }
 
 input PageViewCreateInput {
+  pageKey: String
   pageId: String
   pageType: String
   date: DateTime

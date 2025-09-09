@@ -34,5 +34,5 @@ export const routes: (
   app.post('/typesense/reindex', json(), reindexTypesense(commonContext));
   app.patch('/publish/:list/:id', json(), publishDraft(commonContext));
   app.patch('/republish/:list/:id', json(), republishVersion(commonContext));
-  app.patch('/pageViews', json(), countPageView(commonContext));
+  app.patch('/api/page-views', json(), countPageView(commonContext));
 };

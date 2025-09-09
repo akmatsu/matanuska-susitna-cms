@@ -1,3 +1,15 @@
+/**
+ * Page Views Aggregation Worker
+ *
+ * This worker aggregates daily page view counts from Redis and upserts them into the CMS database.
+ *
+ * - Scans Redis for keys matching the previous day's page views.
+ * - Aggregates view counts for each page (by pageType, pageId, date).
+ * - Upserts (inserts or updates) the aggregated counts into the database using a unique pageKey.
+ * - Cleans up old page view records in the database (older than 90 days).
+ * - Designed to be idempotent and safe to run multiple times per day.
+ */
+
 import { getContext } from '@keystone-6/core/context';
 import { logger } from '../../configs/logger';
 import { REDIS_CONNECTION } from '../config';
@@ -5,26 +17,33 @@ import config from '../../../keystone';
 import * as PrismaModule from '.prisma/client';
 import Redis from 'ioredis';
 import { Worker } from 'bullmq';
+import { subDays, format, parseISO } from 'date-fns';
 
 async function processPageViews(redis: Redis) {
+  // Get a Keystone context with Prisma client
   const ctx = getContext(config, PrismaModule);
-  // Get yesterday's date in YYYY-MM-DD format
-  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000)
-    .toISOString()
-    .slice(0, 10);
 
+  // Calculate the date string for yesterday (format: yyyy-MM-dd)
+  const yesterdayDate = subDays(new Date(), 1);
+  const yesterday = format(yesterdayDate, 'yyyy-MM-dd');
+
+  // Redis key pattern for yesterday's page views
+  // Example key: pageViews:article:123:2025-09-08
   const pattern = `pageViews:*:*:${yesterday}`;
 
   let cursor = '0';
+  // Collects all updates to be made to the DB
   const updates: Array<{
     pageId: string;
     pageType: string;
     date: string;
     views: number;
+    pageKey: string;
   }> = [];
 
   try {
     logger.info('Starting page views aggregation for ' + yesterday);
+    // Scan Redis for all keys matching the pattern, in batches of 500
     do {
       const [nextCursor, keys] = await redis.scan(
         cursor,
@@ -36,16 +55,22 @@ async function processPageViews(redis: Redis) {
       cursor = nextCursor;
 
       if (keys.length > 0) {
+        // Get the view counts for all found keys
         const counts = await redis.mget(...keys);
 
+        // For each key, extract pageType, pageId, and aggregate the view count
         keys.forEach((key, index) => {
-          const parts = key.split(':'); // [page, pageType, pageId, views, date]
+          // Key format: pageViews:pageType:pageId:date
+          const parts = key.split(':');
           const pageType = parts[1];
           const pageId = parts[2];
           const views = parseInt(counts[index] || '0', 10);
+          const date = yesterday;
+          // Composite unique key for deduplication
+          const pageKey = `${pageType}:${pageId}:${date}`;
 
           if (views > 0) {
-            updates.push({ pageId, pageType, date: yesterday, views });
+            updates.push({ pageId, pageType, date, views, pageKey });
           }
         });
       }
@@ -55,21 +80,35 @@ async function processPageViews(redis: Redis) {
       `Aggregated ${updates.length} page view records for ${yesterday}`,
     );
 
+    // Get a sudo context for privileged DB access
     const sudo = ctx.sudo();
 
-    await sudo.db.PageView.createMany({
-      data: updates.map((u) => ({
-        pageId: u.pageId,
-        pageType: u.pageType,
-        date: new Date(`${u.date}T00:00:00.000Z`),
-        views: u.views,
-      })),
-    });
+    // Upsert each page view record into the DB using the unique pageKey
+    // This ensures no duplicates and allows safe re-processing
+    await Promise.all(
+      updates.map(
+        async (update) =>
+          await sudo.prisma.pageView.upsert({
+            where: { pageKey: update.pageKey },
+            update: {
+              views: {
+                set: update.views,
+              },
+            },
+            create: {
+              pageId: update.pageId,
+              pageType: update.pageType,
+              date: parseISO(update.date),
+              views: update.views,
+              pageKey: update.pageKey,
+            },
+          }),
+      ),
+    );
 
-    // This needs to be in ISO8601 format
-    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .slice(0, 10);
+    // Clean up old page view records in the DB (older than 90 days)
+    // This keeps the DB lean and performant
+    const ninetyDaysAgo = subDays(new Date(), 90).toISOString();
 
     const viewsToDelete = await sudo.db.PageView.findMany({
       where: {
@@ -85,10 +124,12 @@ async function processPageViews(redis: Redis) {
       });
     }
   } catch (error) {
+    // Log any errors that occur during aggregation
     logger.error('Error aggregating page views: ' + error);
   }
 }
 
+// Worker entry point: starts the BullMQ worker to process page views
 const processPageViewsWorker = async () => {
   return new Worker(
     'processPageViews',
@@ -99,6 +140,7 @@ const processPageViewsWorker = async () => {
   );
 };
 
+// If this file is run directly, start the worker
 if (require.main === module) {
   processPageViewsWorker();
   logger.info('Process Page Views Worker Started');
