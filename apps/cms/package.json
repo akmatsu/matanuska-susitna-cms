@@ -18,7 +18,8 @@
     "typesense:import:communities": "npx ts-node ./scripts/importCommunities.ts",
     "migration:resolve": "keystone prisma migrate resolve --rolled-back \"20250612224434_feat_change_address_type_on_assembly_districts\"",
     "migration:status": "keystone prisma migrate status",
-    "start:publish-worker": "tsx ./src/queues/workers/publishWorker.ts",
+    "start:publish-worker": "tsx ./src/redis/publish/worker.ts",
+    "start:process-page-views-worker": "tsx ./src/redis/processPageViews/worker.ts",
     "db:seed": "tsx ./seed-data.ts",
     "codegen": "pnpm exec graphql-codegen --config ./codegen.ts",
     "codegen:watch": "pnpm exec graphql-codegen --config ./codegen.ts --watch"

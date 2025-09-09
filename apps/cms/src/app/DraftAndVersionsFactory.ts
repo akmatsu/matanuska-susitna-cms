@@ -17,7 +17,7 @@ import { publishDraft } from '../components/customFields/publishDraft';
 import { BasePageOptions } from './fieldUtils';
 import { isPlural, plural, singular } from 'pluralize';
 import { deepMerge, lowercaseFirstLetter } from '../utils';
-import { getPublishQueue } from '../queues/redis';
+import { getPublishQueue } from '../redis';
 import { createDrafts } from '../components/customFields/drafts';
 import { logger } from '../configs/logger';
 import v from 'voca';

@@ -6,7 +6,11 @@ import { appConfig } from './src/configs/appConfig';
 import { type Session } from './src/session';
 import { nextAuthSessionStrategy } from './src/session';
 import { routes } from './src/routes/baseRoutes';
-import { connectRedis, getPublishQueueEvents } from './src/queues/redis';
+import {
+  connectRedis,
+  getPublishQueueEvents,
+  scheduleProcessPageViewsJob,
+} from './src/redis';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { KeystoneContext } from '@keystone-6/core/types';
 import { graphqlExtendTypeDefs } from './src/utils/graphqlHelpers';
@@ -26,6 +30,7 @@ export default config<TypeInfo<Session>>({
     onConnect: async () => {
       await connectRedis();
       getPublishQueueEvents();
+      await scheduleProcessPageViewsJob();
     },
   },
 

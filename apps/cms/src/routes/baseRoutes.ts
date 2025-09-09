@@ -16,6 +16,7 @@ import {
   publishDraft,
   republishVersion,
 } from '../controllers/DraftAndVersionControllers';
+import { countPageView } from '../controllers/pageViewsController';
 
 export const routes: (
   app: Express,
@@ -33,4 +34,5 @@ export const routes: (
   app.post('/typesense/reindex', json(), reindexTypesense(commonContext));
   app.patch('/publish/:list/:id', json(), publishDraft(commonContext));
   app.patch('/republish/:list/:id', json(), republishVersion(commonContext));
+  app.patch('/pageViews', json(), countPageView(commonContext));
 };
