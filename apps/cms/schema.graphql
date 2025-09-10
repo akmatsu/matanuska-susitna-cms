@@ -10889,7 +10889,10 @@ type PageView {
   pageType: String
   date: DateTime
   views: Int
+  item: PageViewItemUnion
 }
+
+union PageViewItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url | Topic | Plan | Board | ElectionsPage
 
 input PageViewWhereUniqueInput {
   id: ID
