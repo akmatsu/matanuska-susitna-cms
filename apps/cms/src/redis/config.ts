@@ -15,7 +15,6 @@ export const REDIS_CONNECTION = new IORedis({
 export async function connectRedis(): Promise<void> {
   try {
     await REDIS_CONNECTION.connect();
-    logger.info('✅ Connected to Redis');
   } catch (error) {
     logger.error(error, '🚨 Error connecting to Redis');
   }
