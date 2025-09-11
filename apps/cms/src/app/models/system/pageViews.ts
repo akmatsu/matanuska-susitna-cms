@@ -1,5 +1,5 @@
 import { graphql, list } from '@keystone-6/core';
-import { adminOnlyOperationAccess, isAdmin } from '../../access';
+import { elevatedOperationAccess, isAdmin } from '../../access';
 import { integer, text, timestamp, virtual } from '@keystone-6/core/fields';
 import { logger } from '../../../configs/logger';
 import { capitalizeFirstLetter } from '../../../utils';
@@ -7,7 +7,7 @@ import { BaseItem } from '@keystone-6/core/types';
 
 const PageView = list({
   access: {
-    operation: adminOnlyOperationAccess,
+    operation: elevatedOperationAccess,
   },
   ui: {
     isHidden: async (args) => !(await isAdmin(args)),

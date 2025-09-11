@@ -404,12 +404,11 @@ async function createVersion(
     };
 
     // Create a new version
-    const newVersion = await sudoCtx.prisma[
+    await sudoCtx.prisma[
       lowercaseFirstLetter(listKey) + 'Version'
     ].create({
       data: versionData,
     });
-    logger.info(`✔ Created new ${listKey}Version with id ${newVersion.id}`);
 
     const count = await sudoCtx.query[listKey + 'Version'].count({
       where: {

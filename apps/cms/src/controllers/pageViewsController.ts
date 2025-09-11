@@ -23,7 +23,6 @@ export const countPageView: RequestControllerWithContext =
       await REDIS_CONNECTION.incr(redisKey);
 
       await REDIS_CONNECTION.expire(redisKey, 60 * 60 * 24 * 90); // expire in 90 days
-
       return res.status(204).end(); // No content
     } catch (error: any) {
       logger.error(error, 'Error counting page view');
