@@ -90,10 +90,6 @@ const {
           !opts?.isDraft && !opts?.isVersion ? 'Board.publicNotices' : 'Board',
         many: true,
       }),
-      plans: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.publicNotices' : 'Plan',
-        many: true,
-      }),
     };
   },
   {

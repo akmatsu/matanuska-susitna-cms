@@ -15,7 +15,7 @@
       "cache": false,
       "persistent": true
     },
-    "start:process-page-views": {
+    "start:process-page-views-worker": {
       "cache": false,
       "persistent": true
     },

@@ -68,11 +68,6 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.topics' : 'OrgUnit',
         many: true,
       }),
-
-      plans: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.topics' : 'Plan',
-        many: true,
-      }),
     };
   },
   {

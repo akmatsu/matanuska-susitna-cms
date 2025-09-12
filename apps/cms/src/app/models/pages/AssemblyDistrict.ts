@@ -153,12 +153,6 @@ const {
         many: true,
         opts,
       }),
-      plans: relationshipController({
-        ref: 'Plan',
-        listName: 'assemblyDistricts',
-        many: true,
-        opts,
-      }),
     };
   },
   {
