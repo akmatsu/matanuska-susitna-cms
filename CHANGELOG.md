@@ -1,3 +1,10 @@
+# [0.28.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.27.0...v0.28.0) (2025-09-12)
+
+
+### Features
+
+* no longer indexing pages that have a redirect connected to them ([740e42f](https://github.com/akmatsu/matanuska-susitna-cms/commit/740e42fe52d301ab80c0798e28e9a522c42273cd))
+
 # [0.27.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.26.1...v0.27.0) (2025-09-11)
 
 
