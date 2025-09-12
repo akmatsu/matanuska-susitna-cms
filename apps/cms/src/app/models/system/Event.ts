@@ -86,10 +86,5 @@ export const Event = list({
       ref: 'PublicNotice.events',
       many: true,
     }),
-
-    plans: relationship({
-      ref: 'Plan.events',
-      many: true,
-    }),
   },
 });

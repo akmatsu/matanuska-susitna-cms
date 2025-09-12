@@ -40,11 +40,6 @@ const Event = DraftAndVersionsFactory(
           !opts?.isDraft && !opts?.isVersion ? 'Facility.events' : 'Facility',
         many: true,
       }),
-
-      plans: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'Plan.events' : 'Plan',
-        many: true,
-      }),
     };
   },
   {

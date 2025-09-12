@@ -19,7 +19,6 @@ import {
   generalOperationAccess,
 } from '../../access';
 import { planDocumentFieldHooks } from './plan/planDocumentFieldHooks';
-import { logger } from '../../../configs/logger';
 
 const planListName = 'Plan';
 const PLAN_TYPES = [
@@ -153,6 +152,30 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
             hooks: planDocumentFieldHooks.pastDocuments,
           }),
         },
+      }),
+      boards: relationshipController({
+        ref: 'Board',
+        many: true,
+        listName: planListNamePlural,
+        opts,
+      }),
+      facilities: relationshipController({
+        ref: 'Facility',
+        many: true,
+        listName: planListNamePlural,
+        opts,
+      }),
+      parks: relationshipController({
+        ref: 'Park',
+        many: true,
+        listName: planListNamePlural,
+        opts,
+      }),
+      trails: relationshipController({
+        ref: 'Trail',
+        many: true,
+        listName: planListNamePlural,
+        opts,
       }),
     };
   },

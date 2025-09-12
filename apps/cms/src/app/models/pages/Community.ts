@@ -51,12 +51,6 @@ const {
             : 'Trail',
         many: true,
       }),
-      plans: relationshipController({
-        ref: 'Plan',
-        listName: 'communities',
-        many: true,
-        opts,
-      }),
     };
   },
   {

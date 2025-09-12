@@ -116,13 +116,6 @@ const {
         opts,
       }),
 
-      plans: relationshipController({
-        ref: 'Plan',
-        many: true,
-        listName: listNamePlural,
-        opts,
-      }),
-
       editorNotes: text({
         ui: {
           displayMode: 'textarea',

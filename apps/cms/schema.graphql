@@ -1386,6 +1386,8 @@ type AssemblyDistrict implements BasePageWithSlug & BasePage & BasePageWithActio
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1404,8 +1406,6 @@ type AssemblyDistrict implements BasePageWithSlug & BasePage & BasePageWithActio
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: AssemblyDistrictDraftWhereInput! = {}, orderBy: [AssemblyDistrictDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictDraftWhereUniqueInput): [AssemblyDistrictDraft!]
   draftsCount(where: AssemblyDistrictDraftWhereInput! = {}): Int
@@ -1449,6 +1449,7 @@ input AssemblyDistrictWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1463,7 +1464,6 @@ input AssemblyDistrictWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: AssemblyDistrictDraftManyRelationFilter
   versions: AssemblyDistrictVersionManyRelationFilter
@@ -1512,6 +1512,12 @@ input ServiceManyRelationFilter {
   none: ServiceWhereInput
 }
 
+input PlanManyRelationFilter {
+  every: PlanWhereInput
+  some: PlanWhereInput
+  none: PlanWhereInput
+}
+
 input BoardManyRelationFilter {
   every: BoardWhereInput
   some: BoardWhereInput
@@ -1534,12 +1540,6 @@ input TrailManyRelationFilter {
   every: TrailWhereInput
   some: TrailWhereInput
   none: TrailWhereInput
-}
-
-input PlanManyRelationFilter {
-  every: PlanWhereInput
-  some: PlanWhereInput
-  none: PlanWhereInput
 }
 
 input AssemblyDistrictDraftManyRelationFilter {
@@ -1601,6 +1601,7 @@ input AssemblyDistrictUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1615,7 +1616,6 @@ input AssemblyDistrictUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -1678,6 +1678,13 @@ input ServiceRelateToManyForUpdateInput {
   connect: [ServiceWhereUniqueInput!]
 }
 
+input PlanRelateToManyForUpdateInput {
+  disconnect: [PlanWhereUniqueInput!]
+  set: [PlanWhereUniqueInput!]
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
+}
+
 input ImageRelateToOneForUpdateInput {
   create: ImageCreateInput
   connect: ImageWhereUniqueInput
@@ -1710,13 +1717,6 @@ input TrailRelateToManyForUpdateInput {
   set: [TrailWhereUniqueInput!]
   create: [TrailCreateInput!]
   connect: [TrailWhereUniqueInput!]
-}
-
-input PlanRelateToManyForUpdateInput {
-  disconnect: [PlanWhereUniqueInput!]
-  set: [PlanWhereUniqueInput!]
-  create: [PlanCreateInput!]
-  connect: [PlanWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForUpdateInput {
@@ -1768,6 +1768,7 @@ input AssemblyDistrictCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -1782,7 +1783,6 @@ input AssemblyDistrictCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: AssemblyDistrictDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -1830,6 +1830,11 @@ input ServiceRelateToManyForCreateInput {
   connect: [ServiceWhereUniqueInput!]
 }
 
+input PlanRelateToManyForCreateInput {
+  create: [PlanCreateInput!]
+  connect: [PlanWhereUniqueInput!]
+}
+
 input ImageRelateToOneForCreateInput {
   create: ImageCreateInput
   connect: ImageWhereUniqueInput
@@ -1853,11 +1858,6 @@ input ParkRelateToManyForCreateInput {
 input TrailRelateToManyForCreateInput {
   create: [TrailCreateInput!]
   connect: [TrailWhereUniqueInput!]
-}
-
-input PlanRelateToManyForCreateInput {
-  create: [PlanCreateInput!]
-  connect: [PlanWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForCreateInput {
@@ -1914,6 +1914,8 @@ type AssemblyDistrictVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1932,8 +1934,6 @@ type AssemblyDistrictVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   isLive: AssemblyDistrict
   republish: String
 }
@@ -1970,6 +1970,7 @@ input AssemblyDistrictVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1984,7 +1985,6 @@ input AssemblyDistrictVersionWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
   isLive: AssemblyDistrictWhereInput
 }
 
@@ -2033,6 +2033,7 @@ input AssemblyDistrictVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -2047,7 +2048,6 @@ input AssemblyDistrictVersionUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   isLive: AssemblyDistrictRelateToOneForUpdateInput
   republish: String
 }
@@ -2087,6 +2087,7 @@ input AssemblyDistrictVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -2101,7 +2102,6 @@ input AssemblyDistrictVersionCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   isLive: AssemblyDistrictRelateToOneForCreateInput
   republish: String
 }
@@ -2150,6 +2150,8 @@ type AssemblyDistrictDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -2168,8 +2170,6 @@ type AssemblyDistrictDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -2204,6 +2204,7 @@ input AssemblyDistrictDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -2218,7 +2219,6 @@ input AssemblyDistrictDraftWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
 }
 
 input AssemblyDistrictDraftOrderByInput {
@@ -2266,6 +2266,7 @@ input AssemblyDistrictDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -2280,7 +2281,6 @@ input AssemblyDistrictDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -2313,6 +2313,7 @@ input AssemblyDistrictDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -2327,7 +2328,6 @@ input AssemblyDistrictDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -2369,6 +2369,8 @@ type Board implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2421,6 +2423,7 @@ input BoardWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2492,6 +2495,7 @@ input BoardUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2557,6 +2561,7 @@ input BoardCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2627,6 +2632,8 @@ type BoardVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2672,6 +2679,7 @@ input BoardVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2726,6 +2734,7 @@ input BoardVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2774,6 +2783,7 @@ input BoardVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2831,6 +2841,8 @@ type BoardDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2874,6 +2886,7 @@ input BoardDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2927,6 +2940,7 @@ input BoardDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2968,6 +2982,7 @@ input BoardDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -3019,6 +3034,8 @@ type Community implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -3029,8 +3046,6 @@ type Community implements BasePageWithSlug & BasePage & BasePageWithActions {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
   draftsCount(where: CommunityDraftWhereInput! = {}): Int
@@ -3073,13 +3088,13 @@ input CommunityWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: CommunityDraftManyRelationFilter
   versions: CommunityVersionManyRelationFilter
@@ -3137,13 +3152,13 @@ input CommunityUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: CommunityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -3199,13 +3214,13 @@ input CommunityCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: CommunityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -3266,6 +3281,8 @@ type CommunityVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -3276,8 +3293,6 @@ type CommunityVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   isLive: Community
   republish: String
 }
@@ -3313,13 +3328,13 @@ input CommunityVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
   isLive: CommunityWhereInput
 }
 
@@ -3360,13 +3375,13 @@ input CommunityVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   isLive: CommunityRelateToOneForUpdateInput
   republish: String
 }
@@ -3405,13 +3420,13 @@ input CommunityVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   isLive: CommunityRelateToOneForCreateInput
   republish: String
 }
@@ -3459,6 +3474,8 @@ type CommunityDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -3469,8 +3486,6 @@ type CommunityDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -3504,13 +3519,13 @@ input CommunityDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
 }
 
 input CommunityDraftOrderByInput {
@@ -3550,13 +3565,13 @@ input CommunityDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -3588,13 +3603,13 @@ input CommunityDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -3639,6 +3654,8 @@ type Facility implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   park: Park
@@ -3686,6 +3703,7 @@ input FacilityWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   park: ParkWhereInput
@@ -3748,6 +3766,7 @@ input FacilityUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForUpdateInput
@@ -3814,6 +3833,7 @@ input FacilityCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForCreateInput
@@ -3885,6 +3905,8 @@ type FacilityVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   park: Park
@@ -3925,6 +3947,7 @@ input FacilityVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   park: ParkWhereInput
@@ -3970,6 +3993,7 @@ input FacilityVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForUpdateInput
@@ -4013,6 +4037,7 @@ input FacilityVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForCreateInput
@@ -4066,6 +4091,8 @@ type FacilityDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   park: Park
@@ -4104,6 +4131,7 @@ input FacilityDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   park: ParkWhereInput
@@ -4148,6 +4176,7 @@ input FacilityDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForUpdateInput
@@ -4184,6 +4213,7 @@ input FacilityDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForCreateInput
@@ -4228,6 +4258,8 @@ type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4245,8 +4277,6 @@ type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: OrgUnitDraftWhereInput! = {}, orderBy: [OrgUnitDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitDraftWhereUniqueInput): [OrgUnitDraft!]
   draftsCount(where: OrgUnitDraftWhereInput! = {}): Int
@@ -4289,6 +4319,7 @@ input OrgUnitWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
@@ -4301,7 +4332,6 @@ input OrgUnitWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: OrgUnitDraftManyRelationFilter
   versions: OrgUnitVersionManyRelationFilter
@@ -4363,6 +4393,7 @@ input OrgUnitUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4375,7 +4406,6 @@ input OrgUnitUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -4437,6 +4467,7 @@ input OrgUnitCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4449,7 +4480,6 @@ input OrgUnitCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: OrgUnitDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -4515,6 +4545,8 @@ type OrgUnitVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4532,8 +4564,6 @@ type OrgUnitVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   isLive: OrgUnit
   republish: String
 }
@@ -4569,6 +4599,7 @@ input OrgUnitVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
@@ -4581,7 +4612,6 @@ input OrgUnitVersionWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
   isLive: OrgUnitWhereInput
 }
 
@@ -4626,6 +4656,7 @@ input OrgUnitVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4638,7 +4669,6 @@ input OrgUnitVersionUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   isLive: OrgUnitRelateToOneForUpdateInput
   republish: String
 }
@@ -4671,6 +4701,7 @@ input OrgUnitVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4683,7 +4714,6 @@ input OrgUnitVersionCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   isLive: OrgUnitRelateToOneForCreateInput
   republish: String
 }
@@ -4726,6 +4756,8 @@ type OrgUnitDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4743,8 +4775,6 @@ type OrgUnitDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -4778,6 +4808,7 @@ input OrgUnitDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
@@ -4790,7 +4821,6 @@ input OrgUnitDraftWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
-  plans: PlanManyRelationFilter
 }
 
 input OrgUnitDraftOrderByInput {
@@ -4834,6 +4864,7 @@ input OrgUnitDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4846,7 +4877,6 @@ input OrgUnitDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -4878,6 +4908,7 @@ input OrgUnitDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4890,7 +4921,6 @@ input OrgUnitDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -4935,6 +4965,8 @@ type Park implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -4985,6 +5017,7 @@ input ParkWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -5048,6 +5081,7 @@ input ParkUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -5109,6 +5143,7 @@ input ParkCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -5176,6 +5211,8 @@ type ParkVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -5219,6 +5256,7 @@ input ParkVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -5265,6 +5303,7 @@ input ParkVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -5303,6 +5342,7 @@ input ParkVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -5352,6 +5392,8 @@ type ParkDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -5393,6 +5435,7 @@ input ParkDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -5438,6 +5481,7 @@ input ParkDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -5475,6 +5519,7 @@ input ParkDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -5520,6 +5565,8 @@ type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5533,8 +5580,6 @@ type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions {
   trailsCount(where: TrailWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: PublicNoticeDraftWhereInput! = {}, orderBy: [PublicNoticeDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeDraftWhereUniqueInput): [PublicNoticeDraft!]
   draftsCount(where: PublicNoticeDraftWhereInput! = {}): Int
@@ -5577,6 +5622,7 @@ input PublicNoticeWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5586,7 +5632,6 @@ input PublicNoticeWhereInput {
   facilities: FacilityManyRelationFilter
   trails: TrailManyRelationFilter
   boards: BoardManyRelationFilter
-  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: PublicNoticeDraftManyRelationFilter
   versions: PublicNoticeVersionManyRelationFilter
@@ -5647,6 +5692,7 @@ input PublicNoticeUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5656,7 +5702,6 @@ input PublicNoticeUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -5712,6 +5757,7 @@ input PublicNoticeCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5721,7 +5767,6 @@ input PublicNoticeCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: PublicNoticeDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -5782,6 +5827,8 @@ type PublicNoticeVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5795,8 +5842,6 @@ type PublicNoticeVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   isLive: PublicNotice
   republish: String
 }
@@ -5832,6 +5877,7 @@ input PublicNoticeVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -5841,7 +5887,6 @@ input PublicNoticeVersionWhereInput {
   facilities: FacilityManyRelationFilter
   trails: TrailManyRelationFilter
   boards: BoardManyRelationFilter
-  plans: PlanManyRelationFilter
   isLive: PublicNoticeWhereInput
 }
 
@@ -5885,6 +5930,7 @@ input PublicNoticeVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5894,7 +5940,6 @@ input PublicNoticeVersionUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   isLive: PublicNoticeRelateToOneForUpdateInput
   republish: String
 }
@@ -5933,6 +5978,7 @@ input PublicNoticeVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -5942,7 +5988,6 @@ input PublicNoticeVersionCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   isLive: PublicNoticeRelateToOneForCreateInput
   republish: String
 }
@@ -5990,6 +6035,8 @@ type PublicNoticeDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -6003,8 +6050,6 @@ type PublicNoticeDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -6038,6 +6083,7 @@ input PublicNoticeDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   urgency: IntFilter
@@ -6047,7 +6093,6 @@ input PublicNoticeDraftWhereInput {
   facilities: FacilityManyRelationFilter
   trails: TrailManyRelationFilter
   boards: BoardManyRelationFilter
-  plans: PlanManyRelationFilter
 }
 
 input PublicNoticeDraftOrderByInput {
@@ -6090,6 +6135,7 @@ input PublicNoticeDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -6099,7 +6145,6 @@ input PublicNoticeDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -6131,6 +6176,7 @@ input PublicNoticeDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   urgency: Int
@@ -6140,7 +6186,6 @@ input PublicNoticeDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -6184,6 +6229,8 @@ type Service implements BasePageWithSlug & BasePage {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6194,8 +6241,6 @@ type Service implements BasePageWithSlug & BasePage {
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   editorNotes: String
   status: String
   drafts(where: ServiceDraftWhereInput! = {}, orderBy: [ServiceDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceDraftWhereUniqueInput): [ServiceDraft!]
@@ -6241,13 +6286,13 @@ input ServiceWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
   boards: BoardManyRelationFilter
-  plans: PlanManyRelationFilter
   editorNotes: StringFilter
   status: StringFilter
   drafts: ServiceDraftManyRelationFilter
@@ -6315,13 +6360,13 @@ input ServiceUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   editorNotes: String
   status: String
   drafts: ServiceDraftRelateToManyForUpdateInput
@@ -6387,13 +6432,13 @@ input ServiceCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   editorNotes: String
   status: String
   drafts: ServiceDraftRelateToManyForCreateInput
@@ -6462,6 +6507,8 @@ type ServiceVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6472,8 +6519,6 @@ type ServiceVersion {
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   editorNotes: String
   isLive: Service
   republish: String
@@ -6512,13 +6557,13 @@ input ServiceVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
   boards: BoardManyRelationFilter
-  plans: PlanManyRelationFilter
   editorNotes: StringFilter
   isLive: ServiceWhereInput
 }
@@ -6563,13 +6608,13 @@ input ServiceVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   editorNotes: String
   isLive: ServiceRelateToOneForUpdateInput
   republish: String
@@ -6611,13 +6656,13 @@ input ServiceVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   editorNotes: String
   isLive: ServiceRelateToOneForCreateInput
   republish: String
@@ -6668,6 +6713,8 @@ type ServiceDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6678,8 +6725,6 @@ type ServiceDraft {
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   editorNotes: String
   publish: String
 }
@@ -6716,13 +6761,13 @@ input ServiceDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
   parks: ParkManyRelationFilter
   facilities: FacilityManyRelationFilter
   boards: BoardManyRelationFilter
-  plans: PlanManyRelationFilter
   editorNotes: StringFilter
 }
 
@@ -6766,13 +6811,13 @@ input ServiceDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   editorNotes: String
   publish: String
 }
@@ -6807,13 +6852,13 @@ input ServiceDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   editorNotes: String
   publish: String
 }
@@ -6856,6 +6901,8 @@ type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -6868,8 +6915,6 @@ type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: TopicDraftWhereInput! = {}, orderBy: [TopicDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicDraftWhereUniqueInput): [TopicDraft!]
   draftsCount(where: TopicDraftWhereInput! = {}): Int
@@ -6912,6 +6957,7 @@ input TopicWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -6919,7 +6965,6 @@ input TopicWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: TopicDraftManyRelationFilter
   versions: TopicVersionManyRelationFilter
@@ -6983,6 +7028,7 @@ input TopicUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -6990,7 +7036,6 @@ input TopicUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: TopicDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -7053,6 +7098,7 @@ input TopicCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -7060,7 +7106,6 @@ input TopicCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: TopicDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7126,6 +7171,8 @@ type TopicVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -7138,8 +7185,6 @@ type TopicVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   isLive: Topic
   republish: String
 }
@@ -7175,6 +7220,7 @@ input TopicVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -7182,7 +7228,6 @@ input TopicVersionWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  plans: PlanManyRelationFilter
   isLive: TopicWhereInput
 }
 
@@ -7223,6 +7268,7 @@ input TopicVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -7230,7 +7276,6 @@ input TopicVersionUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   isLive: TopicRelateToOneForUpdateInput
   republish: String
 }
@@ -7269,6 +7314,7 @@ input TopicVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -7276,7 +7322,6 @@ input TopicVersionCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   isLive: TopicRelateToOneForCreateInput
   republish: String
 }
@@ -7324,6 +7369,8 @@ type TopicDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
@@ -7336,8 +7383,6 @@ type TopicDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -7371,6 +7416,7 @@ input TopicDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   highlights: HighlightManyRelationFilter
@@ -7378,7 +7424,6 @@ input TopicDraftWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  plans: PlanManyRelationFilter
 }
 
 input TopicDraftOrderByInput {
@@ -7418,6 +7463,7 @@ input TopicDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForUpdateInput
@@ -7425,7 +7471,6 @@ input TopicDraftUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -7457,6 +7502,7 @@ input TopicDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   highlights: HighlightRelateToManyForCreateInput
@@ -7464,7 +7510,6 @@ input TopicDraftCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -7507,6 +7552,8 @@ type Trail implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7573,6 +7620,7 @@ input TrailWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7674,6 +7722,7 @@ input TrailUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7753,6 +7802,7 @@ input TrailCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7837,6 +7887,8 @@ type TrailVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -7896,6 +7948,7 @@ input TrailVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -7980,6 +8033,7 @@ input TrailVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -8042,6 +8096,7 @@ input TrailVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -8113,6 +8168,8 @@ type TrailDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -8170,6 +8227,7 @@ input TrailDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   open: BooleanFilter
@@ -8253,6 +8311,7 @@ input TrailDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -8308,6 +8367,7 @@ input TrailDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   open: Boolean
@@ -8372,6 +8432,8 @@ type Plan implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -8386,6 +8448,14 @@ type Plan implements BasePageWithSlug & BasePage & BasePageWithActions {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
   status: String
   drafts(where: PlanDraftWhereInput! = {}, orderBy: [PlanDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDraftWhereUniqueInput): [PlanDraft!]
   draftsCount(where: PlanDraftWhereInput! = {}): Int
@@ -8428,6 +8498,7 @@ input PlanWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -8439,6 +8510,10 @@ input PlanWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
   status: StringFilter
   drafts: PlanDraftManyRelationFilter
   versions: PlanVersionManyRelationFilter
@@ -8510,6 +8585,7 @@ input PlanUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -8521,6 +8597,10 @@ input PlanUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
   status: String
   drafts: PlanDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -8602,6 +8682,7 @@ input PlanCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -8613,6 +8694,10 @@ input PlanCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
   status: String
   drafts: PlanDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -8693,6 +8778,8 @@ type PlanVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -8707,6 +8794,14 @@ type PlanVersion {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
   isLive: Plan
   republish: String
 }
@@ -8742,6 +8837,7 @@ input PlanVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -8753,6 +8849,10 @@ input PlanVersionWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
   isLive: PlanWhereInput
 }
 
@@ -8795,6 +8895,7 @@ input PlanVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -8806,6 +8907,10 @@ input PlanVersionUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
   isLive: PlanRelateToOneForUpdateInput
   republish: String
 }
@@ -8838,6 +8943,7 @@ input PlanVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -8849,6 +8955,10 @@ input PlanVersionCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
   isLive: PlanRelateToOneForCreateInput
   republish: String
 }
@@ -8891,6 +9001,8 @@ type PlanDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -8905,6 +9017,14 @@ type PlanDraft {
   draftDocument: PlanDocument
   pastDocuments(where: PlanDocumentWhereInput! = {}, orderBy: [PlanDocumentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanDocumentWhereUniqueInput): [PlanDocument!]
   pastDocumentsCount(where: PlanDocumentWhereInput! = {}): Int
+  boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
+  boardsCount(where: BoardWhereInput! = {}): Int
+  facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
+  facilitiesCount(where: FacilityWhereInput! = {}): Int
+  parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
+  parksCount(where: ParkWhereInput! = {}): Int
+  trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
+  trailsCount(where: TrailWhereInput! = {}): Int
   publish: String
 }
 
@@ -8938,6 +9058,7 @@ input PlanDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -8949,6 +9070,10 @@ input PlanDraftWhereInput {
   currentDocument: PlanDocumentWhereInput
   draftDocument: PlanDocumentWhereInput
   pastDocuments: PlanDocumentManyRelationFilter
+  boards: BoardManyRelationFilter
+  facilities: FacilityManyRelationFilter
+  parks: ParkManyRelationFilter
+  trails: TrailManyRelationFilter
 }
 
 input PlanDraftOrderByInput {
@@ -8990,6 +9115,7 @@ input PlanDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -9001,6 +9127,10 @@ input PlanDraftUpdateInput {
   currentDocument: PlanDocumentRelateToOneForUpdateInput
   draftDocument: PlanDocumentRelateToOneForUpdateInput
   pastDocuments: PlanDocumentRelateToManyForUpdateInput
+  boards: BoardRelateToManyForUpdateInput
+  facilities: FacilityRelateToManyForUpdateInput
+  parks: ParkRelateToManyForUpdateInput
+  trails: TrailRelateToManyForUpdateInput
   publish: String
 }
 
@@ -9032,6 +9162,7 @@ input PlanDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -9043,6 +9174,10 @@ input PlanDraftCreateInput {
   currentDocument: PlanDocumentRelateToOneForCreateInput
   draftDocument: PlanDocumentRelateToOneForCreateInput
   pastDocuments: PlanDocumentRelateToManyForCreateInput
+  boards: BoardRelateToManyForCreateInput
+  facilities: FacilityRelateToManyForCreateInput
+  parks: ParkRelateToManyForCreateInput
+  trails: TrailRelateToManyForCreateInput
   publish: String
 }
 
@@ -9184,6 +9319,8 @@ type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9196,8 +9333,6 @@ type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   status: String
   drafts(where: EventDraftWhereInput! = {}, orderBy: [EventDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventDraftWhereUniqueInput): [EventDraft!]
   draftsCount(where: EventDraftWhereInput! = {}): Int
@@ -9240,6 +9375,7 @@ input EventWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -9248,7 +9384,6 @@ input EventWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  plans: PlanManyRelationFilter
   status: StringFilter
   drafts: EventDraftManyRelationFilter
   versions: EventVersionManyRelationFilter
@@ -9308,6 +9443,7 @@ input EventUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9316,7 +9452,6 @@ input EventUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   status: String
   drafts: EventDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -9372,6 +9507,7 @@ input EventCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9380,7 +9516,6 @@ input EventCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   status: String
   drafts: EventDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -9441,6 +9576,8 @@ type EventDraft {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9453,8 +9590,6 @@ type EventDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   publish: String
 }
 
@@ -9488,6 +9623,7 @@ input EventDraftWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -9496,7 +9632,6 @@ input EventDraftWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  plans: PlanManyRelationFilter
 }
 
 input EventDraftOrderByInput {
@@ -9538,6 +9673,7 @@ input EventDraftUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9546,7 +9682,6 @@ input EventDraftUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   publish: String
 }
 
@@ -9584,6 +9719,7 @@ input EventDraftCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9592,7 +9728,6 @@ input EventDraftCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   publish: String
 }
 
@@ -9639,6 +9774,8 @@ type EventVersion {
   assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9651,8 +9788,6 @@ type EventVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
   isLive: Event
   republish: String
 }
@@ -9688,6 +9823,7 @@ input EventVersionWhereInput {
   orgUnits: OrgUnitManyRelationFilter
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
+  plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -9696,7 +9832,6 @@ input EventVersionWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
-  plans: PlanManyRelationFilter
   isLive: EventWhereInput
 }
 
@@ -9739,6 +9874,7 @@ input EventVersionUpdateInput {
   orgUnits: OrgUnitRelateToManyForUpdateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9747,7 +9883,6 @@ input EventVersionUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
-  plans: PlanRelateToManyForUpdateInput
   isLive: EventRelateToOneForUpdateInput
   republish: String
 }
@@ -9780,6 +9915,7 @@ input EventVersionCreateInput {
   orgUnits: OrgUnitRelateToManyForCreateInput
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
+  plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9788,7 +9924,6 @@ input EventVersionCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
-  plans: PlanRelateToManyForCreateInput
   isLive: EventRelateToOneForCreateInput
   republish: String
 }
@@ -11693,7 +11828,7 @@ enum KeystoneAdminUISortDirection {
 
 union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url
 
-union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic
+union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Plan
 
 interface BasePage {
   id: ID!
@@ -11744,6 +11879,8 @@ interface BasePageWithSlug implements BasePage {
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
 }
 
 interface BasePageWithActions implements BasePage & BasePageWithSlug {
@@ -11783,4 +11920,6 @@ interface BasePageWithActions implements BasePage & BasePageWithSlug {
   orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
   services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
+  plansCount(where: PlanWhereInput! = {}): Int
 }

@@ -27,6 +27,7 @@ export const graphqlExtendTypeDefs = gql`
     | Park
     | Trail
     | Topic
+    | Plan
 
   type Query {
     getPage(slug: String!, type: String!): Page
@@ -161,6 +162,14 @@ export const graphqlExtendTypeDefs = gql`
       cursor: ServiceWhereUniqueInput
     ): [Service!]
     servicesCount(where: ServiceWhereInput! = {}): Int
+    plans(
+      where: PlanWhereInput! = {}
+      orderBy: [PlanOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: PlanWhereUniqueInput
+    ): [Plan!]
+    plansCount(where: PlanWhereInput! = {}): Int
   }
 
   interface BasePageWithActions implements BasePage & BasePageWithSlug {
@@ -266,6 +275,14 @@ export const graphqlExtendTypeDefs = gql`
       cursor: ServiceWhereUniqueInput
     ): [Service!]
     servicesCount(where: ServiceWhereInput! = {}): Int
+    plans(
+      where: PlanWhereInput! = {}
+      orderBy: [PlanOrderByInput!]! = []
+      take: Int
+      skip: Int! = 0
+      cursor: PlanWhereUniqueInput
+    ): [Plan!]
+    plansCount(where: PlanWhereInput! = {}): Int
   }
 
   extend type BoardPage implements BasePage

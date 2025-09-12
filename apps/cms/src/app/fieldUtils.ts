@@ -730,6 +730,21 @@ export function basePage(
       },
     }),
 
+    plans: relationshipController({
+      ref: 'Plan',
+      many: true,
+      listName: listNamePlural,
+      opts,
+      ui: {
+        itemView: {
+          fieldMode: listNamePlural === 'Plans' ? 'hidden' : 'edit',
+        },
+        createView: {
+          fieldMode: listNamePlural === 'Plans' ? 'hidden' : 'edit',
+        },
+      },
+    }),
+
     ...timestamps,
   };
 }

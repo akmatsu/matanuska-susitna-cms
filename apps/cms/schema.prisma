@@ -287,6 +287,7 @@ model AssemblyDistrict {
   orgUnits                                       OrgUnit[]                 @relation("AssemblyDistrict_orgUnits")
   assemblyDistricts                              AssemblyDistrict[]        @relation("AssemblyDistrict_assemblyDistricts")
   services                                       Service[]                 @relation("AssemblyDistrict_services")
+  plans                                          Plan[]                    @relation("AssemblyDistrict_plans")
   createdAt                                      DateTime?                 @default(now())
   updatedAt                                      DateTime?                 @default(now()) @updatedAt
   photo                                          Image?                    @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
@@ -302,7 +303,6 @@ model AssemblyDistrict {
   facilities                                     Facility[]                @relation("AssemblyDistrict_facilities")
   parks                                          Park[]                    @relation("AssemblyDistrict_parks")
   trails                                         Trail[]                   @relation("AssemblyDistrict_trails")
-  plans                                          Plan[]                    @relation("AssemblyDistrict_plans")
   status                                         String                    @default("unpublished")
   drafts                                         AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_original")
   makeDrafts                                     String?
@@ -370,6 +370,7 @@ model AssemblyDistrictVersion {
   orgUnits          OrgUnit[]          @relation("AssemblyDistrictVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("AssemblyDistrictVersion_assemblyDistricts")
   services          Service[]          @relation("AssemblyDistrictVersion_services")
+  plans             Plan[]             @relation("AssemblyDistrictVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   photo             Image?             @relation("AssemblyDistrictVersion_photo", fields: [photoId], references: [id])
@@ -385,7 +386,6 @@ model AssemblyDistrictVersion {
   facilities        Facility[]         @relation("AssemblyDistrictVersion_facilities")
   parks             Park[]             @relation("AssemblyDistrictVersion_parks")
   trails            Trail[]            @relation("AssemblyDistrictVersion_trails")
-  plans             Plan[]             @relation("AssemblyDistrictVersion_plans")
   isLive            AssemblyDistrict?  @relation("AssemblyDistrict_currentVersion")
   republish         String?
 
@@ -425,6 +425,7 @@ model AssemblyDistrictDraft {
   orgUnits          OrgUnit[]          @relation("AssemblyDistrictDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("AssemblyDistrictDraft_assemblyDistricts")
   services          Service[]          @relation("AssemblyDistrictDraft_services")
+  plans             Plan[]             @relation("AssemblyDistrictDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   photo             Image?             @relation("AssemblyDistrictDraft_photo", fields: [photoId], references: [id])
@@ -440,7 +441,6 @@ model AssemblyDistrictDraft {
   facilities        Facility[]         @relation("AssemblyDistrictDraft_facilities")
   parks             Park[]             @relation("AssemblyDistrictDraft_parks")
   trails            Trail[]            @relation("AssemblyDistrictDraft_trails")
-  plans             Plan[]             @relation("AssemblyDistrictDraft_plans")
   publish           String?
 
   @@index([originalId])
@@ -476,6 +476,7 @@ model Board {
   orgUnits                            OrgUnit[]                 @relation("Board_orgUnits")
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_boards")
   services                            Service[]                 @relation("Board_services")
+  plans                               Plan[]                    @relation("Board_plans")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   directory                           Document?                 @relation("Board_directory", fields: [directoryId], references: [id])
@@ -508,6 +509,8 @@ model Board {
   from_ServiceDraft_boards            ServiceDraft[]            @relation("ServiceDraft_boards")
   from_TopicVersion_boards            TopicVersion[]            @relation("TopicVersion_boards")
   from_TopicDraft_boards              TopicDraft[]              @relation("TopicDraft_boards")
+  from_PlanVersion_boards             PlanVersion[]             @relation("PlanVersion_boards")
+  from_PlanDraft_boards               PlanDraft[]               @relation("PlanDraft_boards")
   from_EventDraft_boards              EventDraft[]              @relation("EventDraft_boards")
   from_EventVersion_boards            EventVersion[]            @relation("EventVersion_boards")
 
@@ -546,6 +549,7 @@ model BoardVersion {
   orgUnits                     OrgUnit[]          @relation("BoardVersion_orgUnits")
   assemblyDistricts            AssemblyDistrict[] @relation("BoardVersion_assemblyDistricts")
   services                     Service[]          @relation("BoardVersion_services")
+  plans                        Plan[]             @relation("BoardVersion_plans")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardVersion_directory", fields: [directoryId], references: [id])
@@ -599,6 +603,7 @@ model BoardDraft {
   orgUnits                     OrgUnit[]          @relation("BoardDraft_orgUnits")
   assemblyDistricts            AssemblyDistrict[] @relation("BoardDraft_assemblyDistricts")
   services                     Service[]          @relation("BoardDraft_services")
+  plans                        Plan[]             @relation("BoardDraft_plans")
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardDraft_directory", fields: [directoryId], references: [id])
@@ -650,13 +655,13 @@ model Community {
   orgUnits                                 OrgUnit[]                 @relation("Community_orgUnits")
   assemblyDistricts                        AssemblyDistrict[]        @relation("AssemblyDistrict_communities")
   services                                 Service[]                 @relation("Community_services")
+  plans                                    Plan[]                    @relation("Community_plans")
   createdAt                                DateTime?                 @default(now())
   updatedAt                                DateTime?                 @default(now()) @updatedAt
   boards                                   Board[]                   @relation("Board_communities")
   facilities                               Facility[]                @relation("Community_facilities")
   parks                                    Park[]                    @relation("Community_parks")
   trails                                   Trail[]                   @relation("Community_trails")
-  plans                                    Plan[]                    @relation("Community_plans")
   status                                   String                    @default("unpublished")
   drafts                                   CommunityDraft[]          @relation("CommunityDraft_original")
   makeDrafts                               String?
@@ -720,13 +725,13 @@ model CommunityVersion {
   orgUnits          OrgUnit[]          @relation("CommunityVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("CommunityVersion_assemblyDistricts")
   services          Service[]          @relation("CommunityVersion_services")
+  plans             Plan[]             @relation("CommunityVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   boards            Board[]            @relation("CommunityVersion_boards")
   facilities        Facility[]         @relation("CommunityVersion_facilities")
   parks             Park[]             @relation("CommunityVersion_parks")
   trails            Trail[]            @relation("CommunityVersion_trails")
-  plans             Plan[]             @relation("CommunityVersion_plans")
   isLive            Community?         @relation("Community_currentVersion")
   republish         String?
 
@@ -762,13 +767,13 @@ model CommunityDraft {
   orgUnits          OrgUnit[]          @relation("CommunityDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("CommunityDraft_assemblyDistricts")
   services          Service[]          @relation("CommunityDraft_services")
+  plans             Plan[]             @relation("CommunityDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   boards            Board[]            @relation("CommunityDraft_boards")
   facilities        Facility[]         @relation("CommunityDraft_facilities")
   parks             Park[]             @relation("CommunityDraft_parks")
   trails            Trail[]            @relation("CommunityDraft_trails")
-  plans             Plan[]             @relation("CommunityDraft_plans")
   publish           String?
 
   @@index([originalId])
@@ -805,6 +810,7 @@ model Facility {
   orgUnits                                OrgUnit[]                 @relation("Facility_orgUnits")
   assemblyDistricts                       AssemblyDistrict[]        @relation("AssemblyDistrict_facilities")
   services                                Service[]                 @relation("Facility_services")
+  plans                                   Plan[]                    @relation("Facility_plans")
   createdAt                               DateTime?                 @default(now())
   updatedAt                               DateTime?                 @default(now()) @updatedAt
   park                                    Park?                     @relation("Facility_park", fields: [parkId], references: [id])
@@ -829,6 +835,8 @@ model Facility {
   from_ServiceDraft_facilities            ServiceDraft[]            @relation("ServiceDraft_facilities")
   from_TopicVersion_facilities            TopicVersion[]            @relation("TopicVersion_facilities")
   from_TopicDraft_facilities              TopicDraft[]              @relation("TopicDraft_facilities")
+  from_PlanVersion_facilities             PlanVersion[]             @relation("PlanVersion_facilities")
+  from_PlanDraft_facilities               PlanDraft[]               @relation("PlanDraft_facilities")
   from_EventDraft_facilities              EventDraft[]              @relation("EventDraft_facilities")
   from_EventVersion_facilities            EventVersion[]            @relation("EventVersion_facilities")
   from_FacilityListItem_facility          FacilityListItem[]        @relation("FacilityListItem_facility")
@@ -869,6 +877,7 @@ model FacilityVersion {
   orgUnits          OrgUnit[]          @relation("FacilityVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("FacilityVersion_assemblyDistricts")
   services          Service[]          @relation("FacilityVersion_services")
+  plans             Plan[]             @relation("FacilityVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   park              Park?              @relation("FacilityVersion_park", fields: [parkId], references: [id])
@@ -913,6 +922,7 @@ model FacilityDraft {
   orgUnits          OrgUnit[]          @relation("FacilityDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("FacilityDraft_assemblyDistricts")
   services          Service[]          @relation("FacilityDraft_services")
+  plans             Plan[]             @relation("FacilityDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   park              Park?              @relation("FacilityDraft_park", fields: [parkId], references: [id])
@@ -952,6 +962,7 @@ model OrgUnit {
   orgUnits                              OrgUnit[]                 @relation("OrgUnit_orgUnits")
   assemblyDistricts                     AssemblyDistrict[]        @relation("AssemblyDistrict_orgUnits")
   services                              Service[]                 @relation("OrgUnit_services")
+  plans                                 Plan[]                    @relation("OrgUnit_plans")
   createdAt                             DateTime?                 @default(now())
   updatedAt                             DateTime?                 @default(now()) @updatedAt
   icon                                  String?
@@ -965,7 +976,6 @@ model OrgUnit {
   facilities                            Facility[]                @relation("Facility_orgUnits")
   parks                                 Park[]                    @relation("OrgUnit_parks")
   trails                                Trail[]                   @relation("OrgUnit_trails")
-  plans                                 Plan[]                    @relation("OrgUnit_plans")
   status                                String                    @default("unpublished")
   drafts                                OrgUnitDraft[]            @relation("OrgUnitDraft_original")
   makeDrafts                            String?
@@ -1034,6 +1044,7 @@ model OrgUnitVersion {
   orgUnits          OrgUnit[]          @relation("OrgUnitVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("OrgUnitVersion_assemblyDistricts")
   services          Service[]          @relation("OrgUnitVersion_services")
+  plans             Plan[]             @relation("OrgUnitVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
@@ -1047,7 +1058,6 @@ model OrgUnitVersion {
   facilities        Facility[]         @relation("OrgUnitVersion_facilities")
   parks             Park[]             @relation("OrgUnitVersion_parks")
   trails            Trail[]            @relation("OrgUnitVersion_trails")
-  plans             Plan[]             @relation("OrgUnitVersion_plans")
   isLive            OrgUnit?           @relation("OrgUnit_currentVersion")
   republish         String?
 
@@ -1084,6 +1094,7 @@ model OrgUnitDraft {
   orgUnits          OrgUnit[]          @relation("OrgUnitDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("OrgUnitDraft_assemblyDistricts")
   services          Service[]          @relation("OrgUnitDraft_services")
+  plans             Plan[]             @relation("OrgUnitDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
@@ -1097,7 +1108,6 @@ model OrgUnitDraft {
   facilities        Facility[]         @relation("OrgUnitDraft_facilities")
   parks             Park[]             @relation("OrgUnitDraft_parks")
   trails            Trail[]            @relation("OrgUnitDraft_trails")
-  plans             Plan[]             @relation("OrgUnitDraft_plans")
   publish           String?
 
   @@index([originalId])
@@ -1135,6 +1145,7 @@ model Park {
   orgUnits                           OrgUnit[]                 @relation("OrgUnit_parks")
   assemblyDistricts                  AssemblyDistrict[]        @relation("AssemblyDistrict_parks")
   services                           Service[]                 @relation("Park_services")
+  plans                              Plan[]                    @relation("Park_plans")
   createdAt                          DateTime?                 @default(now())
   updatedAt                          DateTime?                 @default(now()) @updatedAt
   trails                             Trail[]                   @relation("Trail_park")
@@ -1161,6 +1172,8 @@ model Park {
   from_TopicDraft_parks              TopicDraft[]              @relation("TopicDraft_parks")
   from_TrailVersion_park             TrailVersion[]            @relation("TrailVersion_park")
   from_TrailDraft_park               TrailDraft[]              @relation("TrailDraft_park")
+  from_PlanVersion_parks             PlanVersion[]             @relation("PlanVersion_parks")
+  from_PlanDraft_parks               PlanDraft[]               @relation("PlanDraft_parks")
   from_EventDraft_parks              EventDraft[]              @relation("EventDraft_parks")
   from_EventVersion_parks            EventVersion[]            @relation("EventVersion_parks")
 
@@ -1199,6 +1212,7 @@ model ParkVersion {
   orgUnits          OrgUnit[]          @relation("ParkVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("ParkVersion_assemblyDistricts")
   services          Service[]          @relation("ParkVersion_services")
+  plans             Plan[]             @relation("ParkVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ParkVersion_trails")
@@ -1242,6 +1256,7 @@ model ParkDraft {
   orgUnits          OrgUnit[]          @relation("ParkDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("ParkDraft_assemblyDistricts")
   services          Service[]          @relation("ParkDraft_services")
+  plans             Plan[]             @relation("ParkDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ParkDraft_trails")
@@ -1280,6 +1295,7 @@ model PublicNotice {
   orgUnits                                   OrgUnit[]                 @relation("OrgUnit_publicNotices")
   assemblyDistricts                          AssemblyDistrict[]        @relation("AssemblyDistrict_publicNotices")
   services                                   Service[]                 @relation("PublicNotice_services")
+  plans                                      Plan[]                    @relation("Plan_publicNotices")
   createdAt                                  DateTime?                 @default(now())
   updatedAt                                  DateTime?                 @default(now()) @updatedAt
   urgency                                    Int                       @default(2)
@@ -1289,7 +1305,6 @@ model PublicNotice {
   facilities                                 Facility[]                @relation("Facility_publicNotices")
   trails                                     Trail[]                   @relation("PublicNotice_trails")
   boards                                     Board[]                   @relation("Board_publicNotices")
-  plans                                      Plan[]                    @relation("Plan_publicNotices")
   status                                     String                    @default("unpublished")
   drafts                                     PublicNoticeDraft[]       @relation("PublicNoticeDraft_original")
   makeDrafts                                 String?
@@ -1353,6 +1368,7 @@ model PublicNoticeVersion {
   orgUnits          OrgUnit[]          @relation("PublicNoticeVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeVersion_assemblyDistricts")
   services          Service[]          @relation("PublicNoticeVersion_services")
+  plans             Plan[]             @relation("PublicNoticeVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   urgency           Int                @default(2)
@@ -1362,7 +1378,6 @@ model PublicNoticeVersion {
   facilities        Facility[]         @relation("PublicNoticeVersion_facilities")
   trails            Trail[]            @relation("PublicNoticeVersion_trails")
   boards            Board[]            @relation("PublicNoticeVersion_boards")
-  plans             Plan[]             @relation("PublicNoticeVersion_plans")
   isLive            PublicNotice?      @relation("PublicNotice_currentVersion")
   republish         String?
 
@@ -1398,6 +1413,7 @@ model PublicNoticeDraft {
   orgUnits          OrgUnit[]          @relation("PublicNoticeDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeDraft_assemblyDistricts")
   services          Service[]          @relation("PublicNoticeDraft_services")
+  plans             Plan[]             @relation("PublicNoticeDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   urgency           Int                @default(2)
@@ -1407,7 +1423,6 @@ model PublicNoticeDraft {
   facilities        Facility[]         @relation("PublicNoticeDraft_facilities")
   trails            Trail[]            @relation("PublicNoticeDraft_trails")
   boards            Board[]            @relation("PublicNoticeDraft_boards")
-  plans             Plan[]             @relation("PublicNoticeDraft_plans")
   publish           String?
 
   @@index([originalId])
@@ -1445,13 +1460,13 @@ model Service {
   orgUnits                              OrgUnit[]                 @relation("OrgUnit_services")
   assemblyDistricts                     AssemblyDistrict[]        @relation("AssemblyDistrict_services")
   services                              Service[]                 @relation("Service_services")
+  plans                                 Plan[]                    @relation("Plan_services")
   createdAt                             DateTime?                 @default(now())
   updatedAt                             DateTime?                 @default(now()) @updatedAt
   trails                                Trail[]                   @relation("Service_trails")
   parks                                 Park[]                    @relation("Park_services")
   facilities                            Facility[]                @relation("Facility_services")
   boards                                Board[]                   @relation("Board_services")
-  plans                                 Plan[]                    @relation("Plan_services")
   editorNotes                           String                    @default("")
   status                                String                    @default("unpublished")
   drafts                                ServiceDraft[]            @relation("ServiceDraft_original")
@@ -1522,13 +1537,13 @@ model ServiceVersion {
   orgUnits          OrgUnit[]          @relation("ServiceVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("ServiceVersion_assemblyDistricts")
   services          Service[]          @relation("ServiceVersion_services")
+  plans             Plan[]             @relation("ServiceVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ServiceVersion_trails")
   parks             Park[]             @relation("ServiceVersion_parks")
   facilities        Facility[]         @relation("ServiceVersion_facilities")
   boards            Board[]            @relation("ServiceVersion_boards")
-  plans             Plan[]             @relation("ServiceVersion_plans")
   editorNotes       String             @default("")
   isLive            Service?           @relation("Service_currentVersion")
   republish         String?
@@ -1571,13 +1586,13 @@ model ServiceDraft {
   orgUnits          OrgUnit[]          @relation("ServiceDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("ServiceDraft_assemblyDistricts")
   services          Service[]          @relation("ServiceDraft_services")
+  plans             Plan[]             @relation("ServiceDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ServiceDraft_trails")
   parks             Park[]             @relation("ServiceDraft_parks")
   facilities        Facility[]         @relation("ServiceDraft_facilities")
   boards            Board[]            @relation("ServiceDraft_boards")
-  plans             Plan[]             @relation("ServiceDraft_plans")
   editorNotes       String             @default("")
   publish           String?
 
@@ -1614,6 +1629,7 @@ model Topic {
   orgUnits                            OrgUnit[]                 @relation("OrgUnit_topics")
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_topics")
   services                            Service[]                 @relation("Service_topics")
+  plans                               Plan[]                    @relation("Plan_topics")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   highlights                          Highlight[]               @relation("Topic_highlights")
@@ -1621,7 +1637,6 @@ model Topic {
   parks                               Park[]                    @relation("Park_topics")
   trails                              Trail[]                   @relation("Topic_trails")
   facilities                          Facility[]                @relation("Facility_topics")
-  plans                               Plan[]                    @relation("Plan_topics")
   status                              String                    @default("unpublished")
   drafts                              TopicDraft[]              @relation("TopicDraft_original")
   makeDrafts                          String?
@@ -1685,6 +1700,7 @@ model TopicVersion {
   orgUnits          OrgUnit[]          @relation("TopicVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("TopicVersion_assemblyDistricts")
   services          Service[]          @relation("TopicVersion_services")
+  plans             Plan[]             @relation("TopicVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   highlights        Highlight[]        @relation("TopicVersion_highlights")
@@ -1692,7 +1708,6 @@ model TopicVersion {
   parks             Park[]             @relation("TopicVersion_parks")
   trails            Trail[]            @relation("TopicVersion_trails")
   facilities        Facility[]         @relation("TopicVersion_facilities")
-  plans             Plan[]             @relation("TopicVersion_plans")
   isLive            Topic?             @relation("Topic_currentVersion")
   republish         String?
 
@@ -1728,6 +1743,7 @@ model TopicDraft {
   orgUnits          OrgUnit[]          @relation("TopicDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("TopicDraft_assemblyDistricts")
   services          Service[]          @relation("TopicDraft_services")
+  plans             Plan[]             @relation("TopicDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   highlights        Highlight[]        @relation("TopicDraft_highlights")
@@ -1735,7 +1751,6 @@ model TopicDraft {
   parks             Park[]             @relation("TopicDraft_parks")
   trails            Trail[]            @relation("TopicDraft_trails")
   facilities        Facility[]         @relation("TopicDraft_facilities")
-  plans             Plan[]             @relation("TopicDraft_plans")
   publish           String?
 
   @@index([originalId])
@@ -1771,6 +1786,7 @@ model Trail {
   orgUnits                            OrgUnit[]                 @relation("OrgUnit_trails")
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_trails")
   services                            Service[]                 @relation("Service_trails")
+  plans                               Plan[]                    @relation("Plan_trails")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   open                                Boolean                   @default(false)
@@ -1815,6 +1831,8 @@ model Trail {
   from_ServiceDraft_trails            ServiceDraft[]            @relation("ServiceDraft_trails")
   from_TopicVersion_trails            TopicVersion[]            @relation("TopicVersion_trails")
   from_TopicDraft_trails              TopicDraft[]              @relation("TopicDraft_trails")
+  from_PlanVersion_trails             PlanVersion[]             @relation("PlanVersion_trails")
+  from_PlanDraft_trails               PlanDraft[]               @relation("PlanDraft_trails")
   from_EventDraft_trails              EventDraft[]              @relation("EventDraft_trails")
   from_EventVersion_trails            EventVersion[]            @relation("EventVersion_trails")
 
@@ -1853,6 +1871,7 @@ model TrailVersion {
   orgUnits           OrgUnit[]          @relation("TrailVersion_orgUnits")
   assemblyDistricts  AssemblyDistrict[] @relation("TrailVersion_assemblyDistricts")
   services           Service[]          @relation("TrailVersion_services")
+  plans              Plan[]             @relation("TrailVersion_plans")
   createdAt          DateTime?          @default(now())
   updatedAt          DateTime?          @default(now()) @updatedAt
   open               Boolean            @default(false)
@@ -1916,6 +1935,7 @@ model TrailDraft {
   orgUnits           OrgUnit[]          @relation("TrailDraft_orgUnits")
   assemblyDistricts  AssemblyDistrict[] @relation("TrailDraft_assemblyDistricts")
   services           Service[]          @relation("TrailDraft_services")
+  plans              Plan[]             @relation("TrailDraft_plans")
   createdAt          DateTime?          @default(now())
   updatedAt          DateTime?          @default(now()) @updatedAt
   open               Boolean            @default(false)
@@ -1975,6 +1995,7 @@ model Plan {
   orgUnits                           OrgUnit[]                 @relation("OrgUnit_plans")
   assemblyDistricts                  AssemblyDistrict[]        @relation("AssemblyDistrict_plans")
   services                           Service[]                 @relation("Plan_services")
+  plans                              Plan[]                    @relation("Plan_plans")
   createdAt                          DateTime?                 @default(now())
   updatedAt                          DateTime?                 @default(now()) @updatedAt
   effort                             ExternalLink?             @relation("Plan_effort", fields: [effortId], references: [id])
@@ -1990,6 +2011,10 @@ model Plan {
   draftDocument                      PlanDocument?             @relation("Plan_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId                    String?                   @map("draftDocument")
   pastDocuments                      PlanDocument[]            @relation("Plan_pastDocuments")
+  boards                             Board[]                   @relation("Board_plans")
+  facilities                         Facility[]                @relation("Facility_plans")
+  parks                              Park[]                    @relation("Park_plans")
+  trails                             Trail[]                   @relation("Plan_trails")
   status                             String                    @default("unpublished")
   drafts                             PlanDraft[]               @relation("PlanDraft_original")
   makeDrafts                         String?
@@ -1998,18 +2023,29 @@ model Plan {
   currentVersionId                   String?                   @unique @map("currentVersion")
   from_AssemblyDistrictVersion_plans AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_plans")
   from_AssemblyDistrictDraft_plans   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_plans")
+  from_BoardVersion_plans            BoardVersion[]            @relation("BoardVersion_plans")
+  from_BoardDraft_plans              BoardDraft[]              @relation("BoardDraft_plans")
   from_CommunityVersion_plans        CommunityVersion[]        @relation("CommunityVersion_plans")
   from_CommunityDraft_plans          CommunityDraft[]          @relation("CommunityDraft_plans")
+  from_FacilityVersion_plans         FacilityVersion[]         @relation("FacilityVersion_plans")
+  from_FacilityDraft_plans           FacilityDraft[]           @relation("FacilityDraft_plans")
   from_OrgUnitVersion_plans          OrgUnitVersion[]          @relation("OrgUnitVersion_plans")
   from_OrgUnitDraft_plans            OrgUnitDraft[]            @relation("OrgUnitDraft_plans")
+  from_ParkVersion_plans             ParkVersion[]             @relation("ParkVersion_plans")
+  from_ParkDraft_plans               ParkDraft[]               @relation("ParkDraft_plans")
   from_PublicNoticeVersion_plans     PublicNoticeVersion[]     @relation("PublicNoticeVersion_plans")
   from_PublicNoticeDraft_plans       PublicNoticeDraft[]       @relation("PublicNoticeDraft_plans")
   from_ServiceVersion_plans          ServiceVersion[]          @relation("ServiceVersion_plans")
   from_ServiceDraft_plans            ServiceDraft[]            @relation("ServiceDraft_plans")
   from_TopicVersion_plans            TopicVersion[]            @relation("TopicVersion_plans")
   from_TopicDraft_plans              TopicDraft[]              @relation("TopicDraft_plans")
+  from_TrailVersion_plans            TrailVersion[]            @relation("TrailVersion_plans")
+  from_TrailDraft_plans              TrailDraft[]              @relation("TrailDraft_plans")
+  from_Plan_plans                    Plan[]                    @relation("Plan_plans")
+  from_PlanVersion_plans             PlanVersion[]             @relation("PlanVersion_plans")
   from_PlanVersion_parent            PlanVersion[]             @relation("PlanVersion_parent")
   from_PlanVersion_components        PlanVersion[]             @relation("PlanVersion_components")
+  from_PlanDraft_plans               PlanDraft[]               @relation("PlanDraft_plans")
   from_PlanDraft_parent              PlanDraft[]               @relation("PlanDraft_parent")
   from_PlanDraft_components          PlanDraft[]               @relation("PlanDraft_components")
   from_EventDraft_plans              EventDraft[]              @relation("EventDraft_plans")
@@ -2050,6 +2086,7 @@ model PlanVersion {
   orgUnits                      OrgUnit[]          @relation("PlanVersion_orgUnits")
   assemblyDistricts             AssemblyDistrict[] @relation("PlanVersion_assemblyDistricts")
   services                      Service[]          @relation("PlanVersion_services")
+  plans                         Plan[]             @relation("PlanVersion_plans")
   createdAt                     DateTime?          @default(now())
   updatedAt                     DateTime?          @default(now()) @updatedAt
   effort                        ExternalLink?      @relation("PlanVersion_effort", fields: [effortId], references: [id])
@@ -2065,6 +2102,10 @@ model PlanVersion {
   draftDocument                 PlanDocument?      @relation("PlanVersion_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?            @map("draftDocument")
   pastDocuments                 PlanDocument[]     @relation("PlanVersion_pastDocuments")
+  boards                        Board[]            @relation("PlanVersion_boards")
+  facilities                    Facility[]         @relation("PlanVersion_facilities")
+  parks                         Park[]             @relation("PlanVersion_parks")
+  trails                        Trail[]            @relation("PlanVersion_trails")
   isLive                        Plan?              @relation("Plan_currentVersion")
   republish                     String?
 
@@ -2104,6 +2145,7 @@ model PlanDraft {
   orgUnits                      OrgUnit[]          @relation("PlanDraft_orgUnits")
   assemblyDistricts             AssemblyDistrict[] @relation("PlanDraft_assemblyDistricts")
   services                      Service[]          @relation("PlanDraft_services")
+  plans                         Plan[]             @relation("PlanDraft_plans")
   createdAt                     DateTime?          @default(now())
   updatedAt                     DateTime?          @default(now()) @updatedAt
   effort                        ExternalLink?      @relation("PlanDraft_effort", fields: [effortId], references: [id])
@@ -2119,6 +2161,10 @@ model PlanDraft {
   draftDocument                 PlanDocument?      @relation("PlanDraft_draftDocument", fields: [draftDocumentId], references: [id])
   draftDocumentId               String?            @map("draftDocument")
   pastDocuments                 PlanDocument[]     @relation("PlanDraft_pastDocuments")
+  boards                        Board[]            @relation("PlanDraft_boards")
+  facilities                    Facility[]         @relation("PlanDraft_facilities")
+  parks                         Park[]             @relation("PlanDraft_parks")
+  trails                        Trail[]            @relation("PlanDraft_trails")
   publish                       String?
 
   @@index([originalId])
@@ -2186,6 +2232,7 @@ model Event {
   orgUnits                            OrgUnit[]                 @relation("Event_orgUnits")
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_events")
   services                            Service[]                 @relation("Event_services")
+  plans                               Plan[]                    @relation("Event_plans")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   startDate                           DateTime?
@@ -2194,7 +2241,6 @@ model Event {
   parks                               Park[]                    @relation("Event_parks")
   trails                              Trail[]                   @relation("Event_trails")
   facilities                          Facility[]                @relation("Event_facilities")
-  plans                               Plan[]                    @relation("Event_plans")
   status                              String                    @default("unpublished")
   drafts                              EventDraft[]              @relation("EventDraft_original")
   makeDrafts                          String?
@@ -2258,6 +2304,7 @@ model EventDraft {
   orgUnits          OrgUnit[]          @relation("EventDraft_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("EventDraft_assemblyDistricts")
   services          Service[]          @relation("EventDraft_services")
+  plans             Plan[]             @relation("EventDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   startDate         DateTime?
@@ -2266,7 +2313,6 @@ model EventDraft {
   parks             Park[]             @relation("EventDraft_parks")
   trails            Trail[]            @relation("EventDraft_trails")
   facilities        Facility[]         @relation("EventDraft_facilities")
-  plans             Plan[]             @relation("EventDraft_plans")
   publish           String?
 
   @@index([originalId])
@@ -2301,6 +2347,7 @@ model EventVersion {
   orgUnits          OrgUnit[]          @relation("EventVersion_orgUnits")
   assemblyDistricts AssemblyDistrict[] @relation("EventVersion_assemblyDistricts")
   services          Service[]          @relation("EventVersion_services")
+  plans             Plan[]             @relation("EventVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   startDate         DateTime?
@@ -2309,7 +2356,6 @@ model EventVersion {
   parks             Park[]             @relation("EventVersion_parks")
   trails            Trail[]            @relation("EventVersion_trails")
   facilities        Facility[]         @relation("EventVersion_facilities")
-  plans             Plan[]             @relation("EventVersion_plans")
   isLive            Event?             @relation("Event_currentVersion")
   republish         String?
 

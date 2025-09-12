@@ -82,12 +82,6 @@ const {
         many: true,
         opts,
       }),
-      plans: relationshipController({
-        ref: 'Plan',
-        listName: 'orgUnits',
-        many: true,
-        opts,
-      }),
     };
   },
   {
