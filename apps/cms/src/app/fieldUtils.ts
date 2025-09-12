@@ -638,6 +638,7 @@ export function basePage(
         itemView: {
           fieldPosition: 'sidebar',
         },
+        labelField: 'from',
       },
     }),
 
@@ -786,13 +787,33 @@ export async function typesenseUpsert(
     }
   }
 
-  if (
+  const unpublish =
     operation === 'update' &&
     item &&
     originalItem &&
-    item.status !== 'published'
-  ) {
+    item.status !== 'published' &&
+    originalItem.status === 'published';
+
+  const unpublishDueToRedirect =
+    operation === 'update' &&
+    item &&
+    'redirectId' in item &&
+    item.redirectId &&
+    originalItem &&
+    'redirectId' in originalItem &&
+    originalItem.redirectId !== item.redirectId;
+
+  if (unpublish) {
     try {
+      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
+        .documents(item.id.toString())
+        .delete();
+    } catch (error: any) {
+      logger.error(error, 'Error deleting Typesense document');
+    }
+  } else if (unpublishDueToRedirect) {
+    try {
+      logger.info('Unpublishing due to redirect');
       await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
         .documents(item.id.toString())
         .delete();
