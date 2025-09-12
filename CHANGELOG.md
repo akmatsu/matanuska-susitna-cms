@@ -1,3 +1,13 @@
+# [0.27.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.26.1...v0.27.0) (2025-09-11)
+
+
+### Features
+
+* can now grab the linked item on the page view ([9b8127f](https://github.com/akmatsu/matanuska-susitna-cms/commit/9b8127fb22377a8876ad15ba7777026e92d80d36))
+* created process page views system ([2578a22](https://github.com/akmatsu/matanuska-susitna-cms/commit/2578a22a4472b2b4e73a9fa4df347471ac7825e0))
+* implemented page view tracking ([a44dfaf](https://github.com/akmatsu/matanuska-susitna-cms/commit/a44dfafafbc737413da4af6fc82b101a7e2874ca))
+* now tracking page views in the system ([c2c6b5a](https://github.com/akmatsu/matanuska-susitna-cms/commit/c2c6b5af860b47a4aaa4ffcb19c6bfbcc3f6edc7))
+
 ## [0.26.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.26.0...v0.26.1) (2025-09-08)
 
 
