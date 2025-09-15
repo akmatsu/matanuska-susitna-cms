@@ -1,3 +1,10 @@
+## [0.28.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.28.1...v0.28.2) (2025-09-15)
+
+
+### Bug Fixes
+
+* created a way to grab top pages without duplicates based on views ([698de66](https://github.com/akmatsu/matanuska-susitna-cms/commit/698de6678442a0a8d6aa602e1e4a0730eee1c7a2))
+
 ## [0.28.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.28.0...v0.28.1) (2025-09-15)
 
 
