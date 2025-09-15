@@ -1,5 +1,5 @@
 // Keystone config docs: https://keystonejs.com/docs/apis/config\
-import { config, graphql } from '@keystone-6/core';
+import { config } from '@keystone-6/core';
 import { lists } from './src/app';
 import { TypeInfo } from '.keystone/types';
 import { appConfig } from './src/configs/appConfig';
@@ -16,7 +16,6 @@ import { KeystoneContext } from '@keystone-6/core/types';
 import { graphqlExtendTypeDefs } from './src/utils/graphqlHelpers';
 import { CommonContext } from './src/controllers/types';
 import v from 'voca';
-import { logger } from './src/configs/logger';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -407,7 +406,6 @@ export default config<TypeInfo<Session>>({
               root,
               args: { after?: string; before?: string; take?: number },
               ctx: CommonContext,
-              info,
             ) => {
               const where: any = {};
 

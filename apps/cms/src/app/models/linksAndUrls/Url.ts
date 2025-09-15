@@ -9,8 +9,6 @@ import {
   urlRegex,
 } from '../../fieldUtils';
 import { select, text } from '@keystone-6/core/fields';
-import { Lists } from '.keystone/types';
-import { ListHooks } from '@keystone-6/core/types';
 
 export const Url = list({
   access: {

@@ -6,7 +6,7 @@ import {
   isContentManager,
 } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
-import { integer, relationship, select } from '@keystone-6/core/fields';
+import { integer, relationship } from '@keystone-6/core/fields';
 
 const featuredItem = list({
   access: {
