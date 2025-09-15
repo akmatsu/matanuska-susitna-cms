@@ -29,16 +29,18 @@ export const graphqlExtendTypeDefs = gql`
     | Topic
     | Plan
 
-  type Query {
+  extend type Query {
     getPage(slug: String!, type: String!): Page
-  }
-
-  type Query {
     internalSearch(query: String): [InternalLinkSearch]
+    getInternalLink(id: ID!, type: String!): InternalLinkSearch
+    topPages(after: DateTime, before: DateTime, take: Int): [TopPage!]!
   }
 
-  type Query {
-    getInternalLink(id: ID!, type: String!): InternalLinkSearch
+  type TopPage {
+    pageType: String!
+    pageId: String!
+    totalViews: Int!
+    item: PageViewItemUnion
   }
 
   interface BasePage {

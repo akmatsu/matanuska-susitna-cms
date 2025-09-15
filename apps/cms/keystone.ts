@@ -1,5 +1,5 @@
 // Keystone config docs: https://keystonejs.com/docs/apis/config\
-import { config } from '@keystone-6/core';
+import { config, graphql } from '@keystone-6/core';
 import { lists } from './src/app';
 import { TypeInfo } from '.keystone/types';
 import { appConfig } from './src/configs/appConfig';
@@ -14,6 +14,9 @@ import {
 import { mergeSchemas } from '@graphql-tools/schema';
 import { KeystoneContext } from '@keystone-6/core/types';
 import { graphqlExtendTypeDefs } from './src/utils/graphqlHelpers';
+import { CommonContext } from './src/controllers/types';
+import v from 'voca';
+import { logger } from './src/configs/logger';
 
 export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
@@ -104,6 +107,25 @@ export default config<TypeInfo<Session>>({
         schemas: [schema],
         typeDefs: graphqlExtendTypeDefs,
         resolvers: {
+          PageViewItemUnion: {
+            __resolveType(value: any) {
+              if ('howElectionsWork' in value) return 'ElectionsPage';
+              if ('effort' in value) return 'Plan';
+              if ('startDate' in value) return 'Event';
+              if ('primaryActionId' in value) return 'Service';
+              if ('linkToAgendasId' in value) return 'Board';
+              if ('effectiveDate' in value) return 'PublicNotice';
+              if ('parentId' in value) return 'OrgUnit';
+              if ('memberName' in value) return 'OrgUnit';
+              if ('url' in value) return 'Url';
+              if ('elevationChange' in value) return 'Trail';
+              if ('districtNumber' in value) return 'AssemblyDistrict';
+              if ('parkId' in value) return 'Facility';
+              if ('addressId' in value) return 'Park';
+              if ('communities' in value) return 'Topic';
+              return 'Community';
+            },
+          },
           InternalLinkSearch: {
             __resolveType(value: any) {
               if ('effort' in value) return 'Plan';
@@ -380,6 +402,51 @@ export default config<TypeInfo<Session>>({
                 ...events,
                 ...urls,
               ];
+            },
+            topPages: async (
+              root,
+              args: { after?: string; before?: string; take?: number },
+              ctx: CommonContext,
+              info,
+            ) => {
+              const where: any = {};
+
+              if (args.after) {
+                where.date = { gte: args.after };
+              }
+              if (args.before) {
+                where.date = { lte: args.before };
+              }
+              const results = await ctx.prisma.pageView.groupBy({
+                by: ['pageId', 'pageType'],
+                _sum: { views: true },
+                orderBy: {
+                  _sum: {
+                    views: 'desc',
+                  },
+                },
+                where,
+                take: args.take,
+              });
+
+              return Promise.all(
+                results.map(async (r) => {
+                  const { pageType, pageId } = r;
+                  const listKey = v.capitalize(pageType);
+                  let item = null;
+                  if (listKey in ctx.db) {
+                    item = await ctx.db[listKey as keyof typeof ctx.db].findOne(
+                      { where: { id: pageId } },
+                    );
+                  }
+                  return {
+                    pageType,
+                    pageId,
+                    totalViews: r._sum.views || 0,
+                    item,
+                  };
+                }),
+              );
             },
           },
         },

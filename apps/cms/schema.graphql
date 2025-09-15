@@ -11693,6 +11693,7 @@ type Query {
   getPage(slug: String!, type: String!): Page
   internalSearch(query: String): [InternalLinkSearch]
   getInternalLink(id: ID!, type: String!): InternalLinkSearch
+  topPages(after: DateTime, before: DateTime, take: Int): [TopPage!]!
 }
 
 type KeystoneMeta {
@@ -11829,6 +11830,13 @@ enum KeystoneAdminUISortDirection {
 union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url
 
 union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Plan
+
+type TopPage {
+  pageType: String!
+  pageId: String!
+  totalViews: Int!
+  item: PageViewItemUnion
+}
 
 interface BasePage {
   id: ID!
