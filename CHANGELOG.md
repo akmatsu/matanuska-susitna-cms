@@ -1,3 +1,10 @@
+## [0.28.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.28.0...v0.28.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* page communtiy and facilities should now return a slug in page views ([d3e1ea1](https://github.com/akmatsu/matanuska-susitna-cms/commit/d3e1ea1b14bb658d2aac0d06457345d799664a2e))
+
 # [0.28.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.27.0...v0.28.0) (2025-09-12)
 
 
