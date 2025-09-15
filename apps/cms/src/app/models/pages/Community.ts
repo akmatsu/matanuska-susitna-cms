@@ -5,10 +5,7 @@ import {
 } from '../../access';
 import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { relationship } from '@keystone-6/core/fields';
-import {
-  DraftAndVersionsFactory,
-  relationshipController,
-} from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
 
 const {

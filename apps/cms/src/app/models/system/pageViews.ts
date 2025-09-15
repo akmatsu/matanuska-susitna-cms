@@ -107,13 +107,13 @@ const PageView = list({
                   ${capitalizedListKey === 'Service' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Park' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Trail' ? 'id title slug description' : ''}
-                  ${capitalizedListKey === 'Facility' ? 'id title description' : ''}
-                  ${capitalizedListKey === 'Community' ? 'id title description' : ''}
+                  ${capitalizedListKey === 'Facility' ? 'id title slug description' : ''}
+                  ${capitalizedListKey === 'Community' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'AssemblyDistrict' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'OrgUnit' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Url' ? 'id title description url' : ''}
-                  ${capitalizedListKey === 'Topic' ? 'id title description slug' : ''}
-                  ${capitalizedListKey === 'Plan' ? 'id title description slug' : ''}
+                  ${capitalizedListKey === 'Topic' ? 'id title slug description' : ''}
+                  ${capitalizedListKey === 'Plan' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Board' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'ElectionsPage' ? 'id title' : ''}
                 `.trim(),
