@@ -1,3 +1,10 @@
+# [0.29.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.28.2...v0.29.0) (2025-09-16)
+
+
+### Features
+
+* can now add highlights to topics and landing pages ([#38](https://github.com/akmatsu/matanuska-susitna-cms/issues/38)) ([bec2645](https://github.com/akmatsu/matanuska-susitna-cms/commit/bec2645cffe0ac1011032273e26dda65de4a8c6b))
+
 ## [0.28.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.28.1...v0.28.2) (2025-09-15)
 
 
