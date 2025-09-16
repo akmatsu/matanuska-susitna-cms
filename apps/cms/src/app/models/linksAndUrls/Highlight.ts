@@ -7,6 +7,7 @@ import {
   isAdmin,
 } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
+import { relationshipController } from '../../DraftAndVersionsFactory';
 
 export const Highlight = list({
   access: {
@@ -107,6 +108,26 @@ export const Highlight = list({
             }
           }
         },
+      },
+    }),
+    landingPages: relationship({
+      ref: 'LandingPage.highlights',
+      many: true,
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        hideCreate: true,
+      },
+    }),
+    topics: relationship({
+      ref: 'Topic.highlights',
+      many: true,
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        hideCreate: true,
       },
     }),
     editorNotes: text({

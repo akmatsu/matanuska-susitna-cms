@@ -1632,11 +1632,11 @@ model Topic {
   plans                               Plan[]                    @relation("Plan_topics")
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
-  highlights                          Highlight[]               @relation("Topic_highlights")
   boards                              Board[]                   @relation("Board_topics")
   parks                               Park[]                    @relation("Park_topics")
   trails                              Trail[]                   @relation("Topic_trails")
   facilities                          Facility[]                @relation("Facility_topics")
+  highlights                          Highlight[]               @relation("Highlight_topics")
   status                              String                    @default("unpublished")
   drafts                              TopicDraft[]              @relation("TopicDraft_original")
   makeDrafts                          String?
@@ -1703,11 +1703,11 @@ model TopicVersion {
   plans             Plan[]             @relation("TopicVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
-  highlights        Highlight[]        @relation("TopicVersion_highlights")
   boards            Board[]            @relation("TopicVersion_boards")
   parks             Park[]             @relation("TopicVersion_parks")
   trails            Trail[]            @relation("TopicVersion_trails")
   facilities        Facility[]         @relation("TopicVersion_facilities")
+  highlights        Highlight[]        @relation("TopicVersion_highlights")
   isLive            Topic?             @relation("Topic_currentVersion")
   republish         String?
 
@@ -1746,11 +1746,11 @@ model TopicDraft {
   plans             Plan[]             @relation("TopicDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
-  highlights        Highlight[]        @relation("TopicDraft_highlights")
   boards            Board[]            @relation("TopicDraft_boards")
   parks             Park[]             @relation("TopicDraft_parks")
   trails            Trail[]            @relation("TopicDraft_trails")
   facilities        Facility[]         @relation("TopicDraft_facilities")
+  highlights        Highlight[]        @relation("TopicDraft_highlights")
   publish           String?
 
   @@index([originalId])
@@ -2374,11 +2374,12 @@ model FacilityListItem {
 }
 
 model LandingPage {
-  id          String  @id @default(cuid())
+  id          String      @id @default(cuid())
   heroImage   String?
-  title       String  @unique @default("")
-  description String  @default("")
+  title       String      @unique @default("")
+  description String      @default("")
   body        String?
+  highlights  Highlight[] @relation("Highlight_landingPages")
 }
 
 model Document {
@@ -2594,10 +2595,11 @@ model Highlight {
   message                      String         @default("")
   linkedItem                   InternalLink?  @relation("Highlight_linkedItem", fields: [linkedItemId], references: [id])
   linkedItemId                 String?        @map("linkedItem")
+  landingPages                 LandingPage[]  @relation("Highlight_landingPages")
+  topics                       Topic[]        @relation("Highlight_topics")
   editorNotes                  String         @default("")
   createdAt                    DateTime?      @default(now())
   updatedAt                    DateTime?      @default(now()) @updatedAt
-  from_Topic_highlights        Topic[]        @relation("Topic_highlights")
   from_TopicVersion_highlights TopicVersion[] @relation("TopicVersion_highlights")
   from_TopicDraft_highlights   TopicDraft[]   @relation("TopicDraft_highlights")
 
