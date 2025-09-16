@@ -6905,8 +6905,6 @@ type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
-  highlightsCount(where: HighlightWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
@@ -6915,6 +6913,8 @@ type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
+  highlightsCount(where: HighlightWhereInput! = {}): Int
   status: String
   drafts(where: TopicDraftWhereInput! = {}, orderBy: [TopicDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicDraftWhereUniqueInput): [TopicDraft!]
   draftsCount(where: TopicDraftWhereInput! = {}): Int
@@ -6960,11 +6960,11 @@ input TopicWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  highlights: HighlightManyRelationFilter
   status: StringFilter
   drafts: TopicDraftManyRelationFilter
   versions: TopicVersionManyRelationFilter
@@ -7031,11 +7031,11 @@ input TopicUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  highlights: HighlightRelateToManyForUpdateInput
   status: String
   drafts: TopicDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -7101,11 +7101,11 @@ input TopicCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  highlights: HighlightRelateToManyForCreateInput
   status: String
   drafts: TopicDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -7175,8 +7175,6 @@ type TopicVersion {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
-  highlightsCount(where: HighlightWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
@@ -7185,6 +7183,8 @@ type TopicVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
+  highlightsCount(where: HighlightWhereInput! = {}): Int
   isLive: Topic
   republish: String
 }
@@ -7223,11 +7223,11 @@ input TopicVersionWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  highlights: HighlightManyRelationFilter
   isLive: TopicWhereInput
 }
 
@@ -7271,11 +7271,11 @@ input TopicVersionUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  highlights: HighlightRelateToManyForUpdateInput
   isLive: TopicRelateToOneForUpdateInput
   republish: String
 }
@@ -7317,11 +7317,11 @@ input TopicVersionCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  highlights: HighlightRelateToManyForCreateInput
   isLive: TopicRelateToOneForCreateInput
   republish: String
 }
@@ -7373,8 +7373,6 @@ type TopicDraft {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
-  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
-  highlightsCount(where: HighlightWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   parks(where: ParkWhereInput! = {}, orderBy: [ParkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ParkWhereUniqueInput): [Park!]
@@ -7383,6 +7381,8 @@ type TopicDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
+  highlightsCount(where: HighlightWhereInput! = {}): Int
   publish: String
 }
 
@@ -7419,11 +7419,11 @@ input TopicDraftWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  highlights: HighlightManyRelationFilter
   boards: BoardManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  highlights: HighlightManyRelationFilter
 }
 
 input TopicDraftOrderByInput {
@@ -7466,11 +7466,11 @@ input TopicDraftUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
-  highlights: HighlightRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  highlights: HighlightRelateToManyForUpdateInput
   publish: String
 }
 
@@ -7505,11 +7505,11 @@ input TopicDraftCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
-  highlights: HighlightRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  highlights: HighlightRelateToManyForCreateInput
   publish: String
 }
 
@@ -9973,6 +9973,8 @@ type LandingPage {
   title: String
   description: String
   body: String
+  highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
+  highlightsCount(where: HighlightWhereInput! = {}): Int
 }
 
 input LandingPageWhereUniqueInput {
@@ -9988,6 +9990,7 @@ input LandingPageWhereInput {
   title: StringFilter
   description: StringFilter
   body: MyStringFilter
+  highlights: HighlightManyRelationFilter
 }
 
 input LandingPageOrderByInput {
@@ -10003,6 +10006,7 @@ input LandingPageUpdateInput {
   title: String
   description: String
   body: String
+  highlights: HighlightRelateToManyForUpdateInput
 }
 
 input LandingPageUpdateArgs {
@@ -10015,6 +10019,7 @@ input LandingPageCreateInput {
   title: String
   description: String
   body: String
+  highlights: HighlightRelateToManyForCreateInput
 }
 
 type Document {
@@ -10454,6 +10459,10 @@ type Highlight {
   priority: Int
   message: String
   linkedItem: InternalLink
+  landingPages(where: LandingPageWhereInput! = {}, orderBy: [LandingPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LandingPageWhereUniqueInput): [LandingPage!]
+  landingPagesCount(where: LandingPageWhereInput! = {}): Int
+  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
+  topicsCount(where: TopicWhereInput! = {}): Int
   editorNotes: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -10475,9 +10484,17 @@ input HighlightWhereInput {
   priority: IntNullableFilter
   message: StringFilter
   linkedItem: InternalLinkWhereInput
+  landingPages: LandingPageManyRelationFilter
+  topics: TopicManyRelationFilter
   editorNotes: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+}
+
+input LandingPageManyRelationFilter {
+  every: LandingPageWhereInput
+  some: LandingPageWhereInput
+  none: LandingPageWhereInput
 }
 
 input HighlightOrderByInput {
@@ -10499,9 +10516,18 @@ input HighlightUpdateInput {
   priority: Int
   message: String
   linkedItem: InternalLinkRelateToOneForUpdateInput
+  landingPages: LandingPageRelateToManyForUpdateInput
+  topics: TopicRelateToManyForUpdateInput
   editorNotes: String
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input LandingPageRelateToManyForUpdateInput {
+  disconnect: [LandingPageWhereUniqueInput!]
+  set: [LandingPageWhereUniqueInput!]
+  create: [LandingPageCreateInput!]
+  connect: [LandingPageWhereUniqueInput!]
 }
 
 input HighlightUpdateArgs {
@@ -10517,9 +10543,16 @@ input HighlightCreateInput {
   priority: Int
   message: String
   linkedItem: InternalLinkRelateToOneForCreateInput
+  landingPages: LandingPageRelateToManyForCreateInput
+  topics: TopicRelateToManyForCreateInput
   editorNotes: String
   createdAt: DateTime
   updatedAt: DateTime
+}
+
+input LandingPageRelateToManyForCreateInput {
+  create: [LandingPageCreateInput!]
+  connect: [LandingPageWhereUniqueInput!]
 }
 
 type Contact {

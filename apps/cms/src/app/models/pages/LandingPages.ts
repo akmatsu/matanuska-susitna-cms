@@ -3,6 +3,7 @@ import { elevatedOperationAccess, isContentManager } from '../../access';
 import { titleAndDescription } from '../../fieldUtils';
 import { customText } from '../../../components/customFields/Markdown';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
+import { relationship } from '@keystone-6/core/fields';
 
 const LandingPage = list({
   access: {
@@ -15,6 +16,10 @@ const LandingPage = list({
     heroImage: blueHarvestImage(),
     ...titleAndDescription(),
     body: customText(),
+    highlights: relationship({
+      ref: 'Highlight.landingPages',
+      many: true,
+    }),
   },
 });
 

@@ -1,5 +1,8 @@
 import { relationship } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 import {
   basePage,
   basePageQuery,
@@ -24,17 +27,6 @@ const {
         ...opts,
         actions: true,
         documents: true,
-      }),
-
-      highlights: relationship({
-        ref: 'Highlight',
-        many: true,
-
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['title', 'image', 'message', 'linkedItem'],
-          inlineConnect: false,
-        },
       }),
 
       boards: relationship({
@@ -67,6 +59,13 @@ const {
       orgUnits: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.topics' : 'OrgUnit',
         many: true,
+      }),
+
+      highlights: relationshipController({
+        ref: 'Highlight',
+        listName: listNamePlural,
+        many: true,
+        opts,
       }),
     };
   },
