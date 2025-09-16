@@ -2577,6 +2577,7 @@ model Url {
   indexInSearchEngine   String?
   owner                 User?          @relation("Url_owner", fields: [ownerId], references: [id])
   ownerId               String?        @map("owner")
+  tags                  Tag[]          @relation("Url_tags")
   createdAt             DateTime?      @default(now())
   updatedAt             DateTime?      @default(now()) @updatedAt
   from_ExternalLink_url ExternalLink[] @relation("ExternalLink_url")
@@ -2876,6 +2877,7 @@ model Tag {
   from_Document_tags                Document[]                @relation("Document_tags")
   from_DocumentCollection_tags      DocumentCollection[]      @relation("DocumentCollection_tags")
   from_Image_tags                   Image[]                   @relation("Image_tags")
+  from_Url_tags                     Url[]                     @relation("Url_tags")
 }
 
 model Redirect {

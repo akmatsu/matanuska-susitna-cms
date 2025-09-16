@@ -3,6 +3,7 @@ import { generalOperationAccess, isContentManager } from '../../access';
 import {
   docDelete,
   owner,
+  tags,
   timestamps,
   titleAndDescription,
   typesenseDelete,
@@ -42,6 +43,7 @@ export const Url = list({
       ],
     }),
     owner,
+    tags: tags(),
     ...timestamps,
   },
   hooks: {

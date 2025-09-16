@@ -770,55 +770,33 @@ export async function typesenseUpsert(
     item &&
     item.status === 'published'
   ) {
-    try {
-      const thing = v.capitalize(listNameSingular);
-      const doc = await context.query[thing]?.findOne({
-        where: { id: item.id.toString() },
-        query,
-      });
+    const unpublish =
+      operation === 'update' &&
+      item &&
+      originalItem &&
+      item.status !== 'published' &&
+      originalItem.status === 'published';
 
-      const document = toSearchableObj(doc, listNameSingular);
+    if (unpublish) {
+      try {
+        await docDelete(item.id.toString());
+      } catch (error: any) {
+        logger.error(error, 'Error deleting Typesense document');
+      }
+    } else {
+      try {
+        const thing = v.capitalize(listNameSingular);
+        const doc = await context.query[thing]?.findOne({
+          where: { id: item.id.toString() },
+          query,
+        });
 
-      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-        .documents()
-        .upsert(document);
-    } catch (error: any) {
-      logger.error(error, 'Error updating Typesense document');
-    }
-  }
+        const document = toSearchableObj(doc, listNameSingular);
 
-  const unpublish =
-    operation === 'update' &&
-    item &&
-    originalItem &&
-    item.status !== 'published' &&
-    originalItem.status === 'published';
-
-  const unpublishDueToRedirect =
-    operation === 'update' &&
-    item &&
-    'redirectId' in item &&
-    item.redirectId &&
-    originalItem &&
-    'redirectId' in originalItem &&
-    originalItem.redirectId !== item.redirectId;
-
-  if (unpublish) {
-    try {
-      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-        .documents(item.id.toString())
-        .delete();
-    } catch (error: any) {
-      logger.error(error, 'Error deleting Typesense document');
-    }
-  } else if (unpublishDueToRedirect) {
-    try {
-      logger.info('Unpublishing due to redirect');
-      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-        .documents(item.id.toString())
-        .delete();
-    } catch (error: any) {
-      logger.error(error, 'Error deleting Typesense document');
+        await docUpsert(document);
+      } catch (error: any) {
+        logger.error(error, 'Error updating Typesense document');
+      }
     }
   }
 }
@@ -832,13 +810,7 @@ export async function typesenseDelete({
 }) {
   if (operation === 'delete' && item) {
     try {
-      const id = item.id.toString();
-
-      await TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
-        .documents(id)
-        .delete({
-          ignore_not_found: true,
-        });
+      await docDelete(item.id.toString());
     } catch (error: any) {
       logger.error(error, 'Error deleting Typesense document');
     }
@@ -890,7 +862,9 @@ export function docUpsert(doc: TypeSensePageDocument) {
 export function docDelete(id: string) {
   return TYPESENSE_CLIENT.collections(TYPESENSE_COLLECTIONS.PAGES)
     .documents(id)
-    .delete();
+    .delete({
+      ignore_not_found: true,
+    });
 }
 
 export const iconSelect = select({

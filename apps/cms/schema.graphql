@@ -10390,6 +10390,8 @@ type Url {
   url: String
   indexInSearchEngine: String
   owner: User
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -10410,6 +10412,7 @@ input UrlWhereInput {
   url: StringFilter
   indexInSearchEngine: StringNullableFilter
   owner: UserWhereInput
+  tags: TagManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -10430,6 +10433,7 @@ input UrlUpdateInput {
   url: String
   indexInSearchEngine: String
   owner: UserRelateToOneForUpdateInput
+  tags: TagRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -10445,6 +10449,7 @@ input UrlCreateInput {
   url: String
   indexInSearchEngine: String
   owner: UserRelateToOneForCreateInput
+  tags: TagRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
 }
