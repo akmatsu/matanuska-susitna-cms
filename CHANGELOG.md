@@ -1,3 +1,10 @@
+# [0.30.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.29.0...v0.30.0) (2025-09-17)
+
+
+### Features
+
+* added tags to URLs ([fe85191](https://github.com/akmatsu/matanuska-susitna-cms/commit/fe851914b4633017e8a05958abd1a1aae1e75fa4))
+
 # [0.29.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.28.2...v0.29.0) (2025-09-16)
 
 
