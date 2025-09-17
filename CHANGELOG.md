@@ -1,3 +1,10 @@
+# [0.31.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.30.0...v0.31.0) (2025-09-17)
+
+
+### Features
+
+* added types to cities ([8478476](https://github.com/akmatsu/matanuska-susitna-cms/commit/8478476ee375984d91842facb618dc1d80cc4a03))
+
 # [0.30.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.29.0...v0.30.0) (2025-09-17)
 
 
