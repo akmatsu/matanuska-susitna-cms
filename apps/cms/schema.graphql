@@ -3046,6 +3046,7 @@ type Community implements BasePageWithSlug & BasePage & BasePageWithActions {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  type: String
   status: String
   drafts(where: CommunityDraftWhereInput! = {}, orderBy: [CommunityDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityDraftWhereUniqueInput): [CommunityDraft!]
   draftsCount(where: CommunityDraftWhereInput! = {}): Int
@@ -3095,6 +3096,7 @@ input CommunityWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  type: StringNullableFilter
   status: StringFilter
   drafts: CommunityDraftManyRelationFilter
   versions: CommunityVersionManyRelationFilter
@@ -3125,6 +3127,7 @@ input CommunityOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  type: OrderDirection
   status: OrderDirection
   makeDrafts: OrderDirection
 }
@@ -3159,6 +3162,7 @@ input CommunityUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  type: String
   status: String
   drafts: CommunityDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -3221,6 +3225,7 @@ input CommunityCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  type: String
   status: String
   drafts: CommunityDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -3293,6 +3298,7 @@ type CommunityVersion {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  type: String
   isLive: Community
   republish: String
 }
@@ -3335,6 +3341,7 @@ input CommunityVersionWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  type: StringNullableFilter
   isLive: CommunityWhereInput
 }
 
@@ -3349,6 +3356,7 @@ input CommunityVersionOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  type: OrderDirection
   republish: OrderDirection
 }
 
@@ -3382,6 +3390,7 @@ input CommunityVersionUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  type: String
   isLive: CommunityRelateToOneForUpdateInput
   republish: String
 }
@@ -3427,6 +3436,7 @@ input CommunityVersionCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  type: String
   isLive: CommunityRelateToOneForCreateInput
   republish: String
 }
@@ -3486,6 +3496,7 @@ type CommunityDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  type: String
   publish: String
 }
 
@@ -3526,6 +3537,7 @@ input CommunityDraftWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  type: StringNullableFilter
 }
 
 input CommunityDraftOrderByInput {
@@ -3539,6 +3551,7 @@ input CommunityDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  type: OrderDirection
   publish: OrderDirection
 }
 
@@ -3572,6 +3585,7 @@ input CommunityDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  type: String
   publish: String
 }
 
@@ -3610,6 +3624,7 @@ input CommunityDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  type: String
   publish: String
 }
 

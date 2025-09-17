@@ -4,7 +4,7 @@ import {
   generalOperationAccess,
 } from '../../access';
 import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
-import { relationship } from '@keystone-6/core/fields';
+import { relationship, select } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
 
@@ -47,6 +47,19 @@ const {
             ? `Trail.${lowercaseFirstLetter(listNamePlural)}`
             : 'Trail',
         many: true,
+      }),
+
+      type: select({
+        options: [
+          {
+            label: 'City',
+            value: 'city',
+          },
+          {
+            label: 'Community',
+            value: 'community',
+          },
+        ],
       }),
     };
   },

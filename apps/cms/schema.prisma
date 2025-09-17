@@ -662,6 +662,7 @@ model Community {
   facilities                               Facility[]                @relation("Community_facilities")
   parks                                    Park[]                    @relation("Community_parks")
   trails                                   Trail[]                   @relation("Community_trails")
+  type                                     String?
   status                                   String                    @default("unpublished")
   drafts                                   CommunityDraft[]          @relation("CommunityDraft_original")
   makeDrafts                               String?
@@ -732,6 +733,7 @@ model CommunityVersion {
   facilities        Facility[]         @relation("CommunityVersion_facilities")
   parks             Park[]             @relation("CommunityVersion_parks")
   trails            Trail[]            @relation("CommunityVersion_trails")
+  type              String?
   isLive            Community?         @relation("Community_currentVersion")
   republish         String?
 
@@ -774,6 +776,7 @@ model CommunityDraft {
   facilities        Facility[]         @relation("CommunityDraft_facilities")
   parks             Park[]             @relation("CommunityDraft_parks")
   trails            Trail[]            @relation("CommunityDraft_trails")
+  type              String?
   publish           String?
 
   @@index([originalId])
