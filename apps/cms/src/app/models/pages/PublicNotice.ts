@@ -17,6 +17,24 @@ const {
   (listNamePlural, opts) => {
     return {
       ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
+      type: select({
+        type: 'string',
+        defaultValue: 'AKMATSUGOV_PublicNotice',
+        options: [
+          { label: 'General', value: 'AKMATSUGOV_PublicNotice' },
+          { label: 'Air Quality Alerts', value: 'MSB_AirQuality' },
+          { label: 'Land Sales', value: 'AKMATSUGOV_CommunityDevelopment ' },
+          {
+            label: 'Road Construction & Closures',
+            value: 'MSB_RoadConstruction',
+          },
+        ],
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+        },
+      }),
       urgency: select({
         type: 'integer',
         options: [
@@ -111,14 +129,28 @@ const {
           args,
         );
 
-        if (args.operation === 'create') {
-          await createAndSendBulletin(
-            args.item.title as string,
-            args.item.description as string,
-            'public-notices',
-            args.item.slug as string,
-            args.item.heroImage as string | undefined | null,
-          );
+        if (args.operation === 'create' || args.operation === 'update') {
+          const doTheThing = () => {
+            return createAndSendBulletin(
+              args.item.title as string,
+              args.item.description as string,
+              'public-notices',
+              args.item.slug as string,
+              args.item.heroImage as string | undefined | null,
+              args.item.type as string,
+            );
+          };
+
+          if (args.item.status === 'published') {
+            if (
+              args.operation === 'update' &&
+              args.originalItem.status !== 'published'
+            ) {
+              await doTheThing();
+            } else if (args.operation === 'create') {
+              await doTheThing();
+            }
+          }
         }
       },
     },

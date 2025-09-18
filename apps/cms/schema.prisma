@@ -1301,6 +1301,7 @@ model PublicNotice {
   plans                                      Plan[]                    @relation("Plan_publicNotices")
   createdAt                                  DateTime?                 @default(now())
   updatedAt                                  DateTime?                 @default(now()) @updatedAt
+  type                                       String?                   @default("AKMATSUGOV_PublicNotice")
   urgency                                    Int                       @default(2)
   effectiveDate                              DateTime?
   endDate                                    DateTime?
@@ -1374,6 +1375,7 @@ model PublicNoticeVersion {
   plans             Plan[]             @relation("PublicNoticeVersion_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
+  type              String?            @default("AKMATSUGOV_PublicNotice")
   urgency           Int                @default(2)
   effectiveDate     DateTime?
   endDate           DateTime?
@@ -1419,6 +1421,7 @@ model PublicNoticeDraft {
   plans             Plan[]             @relation("PublicNoticeDraft_plans")
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
+  type              String?            @default("AKMATSUGOV_PublicNotice")
   urgency           Int                @default(2)
   effectiveDate     DateTime?
   endDate           DateTime?

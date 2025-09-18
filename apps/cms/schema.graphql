@@ -5584,6 +5584,7 @@ type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -5640,6 +5641,7 @@ input PublicNoticeWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  type: StringNullableFilter
   urgency: IntFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
@@ -5677,6 +5679,7 @@ input PublicNoticeOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  type: OrderDirection
   urgency: OrderDirection
   effectiveDate: OrderDirection
   endDate: OrderDirection
@@ -5710,6 +5713,7 @@ input PublicNoticeUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -5775,6 +5779,7 @@ input PublicNoticeCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -5846,6 +5851,7 @@ type PublicNoticeVersion {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -5895,6 +5901,7 @@ input PublicNoticeVersionWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  type: StringNullableFilter
   urgency: IntFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
@@ -5916,6 +5923,7 @@ input PublicNoticeVersionOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  type: OrderDirection
   urgency: OrderDirection
   effectiveDate: OrderDirection
   endDate: OrderDirection
@@ -5948,6 +5956,7 @@ input PublicNoticeVersionUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -5996,6 +6005,7 @@ input PublicNoticeVersionCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -6054,6 +6064,7 @@ type PublicNoticeDraft {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -6101,6 +6112,7 @@ input PublicNoticeDraftWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  type: StringNullableFilter
   urgency: IntFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
@@ -6121,6 +6133,7 @@ input PublicNoticeDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  type: OrderDirection
   urgency: OrderDirection
   effectiveDate: OrderDirection
   endDate: OrderDirection
@@ -6153,6 +6166,7 @@ input PublicNoticeDraftUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime
@@ -6194,6 +6208,7 @@ input PublicNoticeDraftCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  type: String
   urgency: Int
   effectiveDate: DateTime
   endDate: DateTime

@@ -8,6 +8,7 @@ export async function createAndSendBulletin(
   listName: string,
   slug: string,
   imageUrl?: string | null,
+  govDeliveryTopicCode: string = 'AKMATSUGOV_PublicNotice',
 ) {
   try {
     await axios.request({
@@ -84,7 +85,7 @@ export async function createAndSendBulletin(
    <share_content_enabled type='boolean'>true</share_content_enabled>
    <topics type='array'>
      <topic>
-       <code>AKMATSUGOVSTAGE_TEST_TOPIC</code>
+       <code>${govDeliveryTopicCode}</code>
      </topic>
    </topics>
    <categories type='array' />
