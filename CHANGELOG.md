@@ -1,3 +1,11 @@
+## [0.32.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.32.1...v0.32.2) (2025-09-18)
+
+
+### Bug Fixes
+
+* removed slug from query ([7078e46](https://github.com/akmatsu/matanuska-susitna-cms/commit/7078e4614dec35b80f685b7034c60971565624df))
+* slug removed from draft verson query ([5611857](https://github.com/akmatsu/matanuska-susitna-cms/commit/561185757c79e921248093a0db28b4b6fe1026c0))
+
 ## [0.32.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.32.0...v0.32.1) (2025-09-18)
 
 
