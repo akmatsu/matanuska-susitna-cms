@@ -129,7 +129,7 @@ const {
       async afterOperation(args) {
         await typesenseUpsert(
           'public-notice',
-          'id title description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title} urgency',
+          'id title slug description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title} urgency',
           args,
         );
 
