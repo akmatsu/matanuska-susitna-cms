@@ -471,8 +471,9 @@ export type BasePageOptions = {
   isVersion?: boolean;
 };
 
+// GQL query for base page fields
 export const basePageQuery =
-  'id heroImage title description body tags { id } userGroups { id } contacts { id } events {id}';
+  'id heroImage title description body tags { id } userGroups { id } owner { id } slug contacts { id } redirect { id } events { id } topics { id } publicNotices { id } communities { id } orgUnits { id } assemblyDistricts { id } services { id } plans { id }';
 export function basePage(
   listNamePlural: string,
   opts?: BasePageOptions,

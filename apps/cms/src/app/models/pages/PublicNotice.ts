@@ -1,4 +1,9 @@
-import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
+import {
+  basePage,
+  basePageQuery,
+  typesenseDelete,
+  typesenseUpsert,
+} from '../../fieldUtils';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -111,8 +116,7 @@ const {
     };
   },
   {
-    query:
-      'id heroImage title description body tags {id} userGroups {id} urgency effectiveDate endDate parks {id} services {id} orgUnits {id} facilities {id} trails {id} communities {id} assemblyDistricts {id} __typename actions {id} documents {id} contacts {id}',
+    query: `${basePageQuery} type urgency effectiveDate endDate parks { id } facilities { id } trails { id } boards { id } actions { id } documents { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('PublicNotice'),

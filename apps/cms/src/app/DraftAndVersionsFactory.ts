@@ -339,6 +339,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
                   attempts: 3,
                 },
               );
+              logger.info('Scheduled publish job');
             }
 
             // If publishAt is removed, remove any existing publish job
@@ -404,9 +405,7 @@ async function createVersion(
     };
 
     // Create a new version
-    await sudoCtx.prisma[
-      lowercaseFirstLetter(listKey) + 'Version'
-    ].create({
+    await sudoCtx.prisma[lowercaseFirstLetter(listKey) + 'Version'].create({
       data: versionData,
     });
 
