@@ -3,7 +3,12 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
+import {
+  basePage,
+  basePageQuery,
+  typesenseDelete,
+  typesenseUpsert,
+} from '../../fieldUtils';
 import { relationship, select } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
@@ -64,7 +69,7 @@ const {
     };
   },
   {
-    query: `${basePage} boards {id} facilities {id} parks {id} trails {id} type actions {id} documents {id}`,
+    query: `${basePageQuery} boards {id} facilities {id} parks {id} trails {id} type actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),

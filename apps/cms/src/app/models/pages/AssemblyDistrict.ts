@@ -6,6 +6,7 @@ import {
 } from '../../access';
 import {
   basePage,
+  basePageQuery,
   emailRegex,
   phoneNumberRegex,
   typesenseDelete,
@@ -161,7 +162,7 @@ const {
       item: generalItemAccess('AssemblyDistrict'),
       filter: filterByPubStatus,
     },
-    query: `${basePage} photo { id } memberName bio email phone fax termStart termEnd boards {id} facilities {id} parks {id} trails {id} actions {id} documents {id} address { id }`,
+    query: `${basePageQuery} photo { id } memberName bio email phone fax termStart termEnd boards {id} facilities {id} parks {id} trails {id} actions {id} documents {id} address { id }`,
     mainHooks: {
       async beforeOperation(args) {
         await typesenseDelete(args);

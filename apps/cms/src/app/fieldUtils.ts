@@ -180,7 +180,7 @@ export function publishable(opts?: {
 
       fields: {
         publishAt: timestampField({
-          hideView: opts?.isDraft,
+          hideView: !opts?.isDraft,
           hooks: {
             async resolveInput({
               operation,
