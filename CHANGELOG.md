@@ -1,3 +1,10 @@
+## [0.32.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.32.0...v0.32.1) (2025-09-18)
+
+
+### Bug Fixes
+
+* query field on public notices should be correct now ([8e9e706](https://github.com/akmatsu/matanuska-susitna-cms/commit/8e9e7061c6e251a76c0a8a5e265ce1ba0958b9b9))
+
 # [0.32.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.31.0...v0.32.0) (2025-09-18)
 
 
