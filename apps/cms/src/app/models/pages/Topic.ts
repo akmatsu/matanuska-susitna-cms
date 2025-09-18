@@ -34,12 +34,6 @@ const {
         many: true,
       }),
 
-      communities: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion ? 'Community.topics' : 'Community',
-        many: true,
-      }),
-
       parks: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.topics' : 'Park',
         many: true,
@@ -56,11 +50,6 @@ const {
         many: true,
       }),
 
-      orgUnits: relationship({
-        ref: !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.topics' : 'OrgUnit',
-        many: true,
-      }),
-
       highlights: relationshipController({
         ref: 'Highlight',
         listName: listNamePlural,
@@ -72,7 +61,7 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} highlights { id } boards { id } services { id } communities { id } districts { id } parks { id } trails { id } facilities { id } orgUnits { id } publicNotices { id }`,
+    query: `${basePageQuery} trails {id} parks {id} boards {id} facilities {id} highlights { id } actions { id } documents { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Topic'),

@@ -81,13 +81,6 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.publicNotices' : 'Park',
         many: true,
       }),
-      orgUnits: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'OrgUnit.publicNotices'
-            : 'OrgUnit',
-        many: true,
-      }),
       facilities: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion
@@ -98,13 +91,6 @@ const {
       trails: relationship({
         ref:
           !opts?.isDraft && !opts?.isVersion ? 'Trail.publicNotices' : 'Trail',
-        many: true,
-      }),
-      communities: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'Community.publicNotices'
-            : 'Community',
         many: true,
       }),
 

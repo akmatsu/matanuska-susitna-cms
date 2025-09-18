@@ -81,7 +81,7 @@ const {
     };
   },
   {
-    query: `${basePageQuery} services {id} park {id} address {id} hours {id} actions {id} documents {id} communities {id}`,
+    query: `${basePageQuery} park {id} address {id} hours {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Facility'),

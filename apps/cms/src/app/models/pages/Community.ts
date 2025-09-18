@@ -64,8 +64,7 @@ const {
     };
   },
   {
-    query:
-      'id title description body tags {id} userGroups {id} contacts {id} services {id} actions {id} documents {id}',
+    query: `${basePage} boards {id} facilities {id} parks {id} trails {id} type actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),

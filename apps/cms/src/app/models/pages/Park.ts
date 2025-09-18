@@ -44,22 +44,10 @@ const {
         opts,
         many: true,
       }),
-      communities: relationshipController({
-        listName: listNamePlural,
-        ref: 'Community',
-        opts,
-        many: true,
-      }),
-      assemblyDistricts: relationshipController({
-        listName: listNamePlural,
-        ref: 'AssemblyDistrict',
-        opts,
-        many: true,
-      }),
     };
   },
   {
-    query: `${basePageQuery} services {id} trails {id} facilities {id} address {id} hours {id} actions {id} documents {id} communities {id}`,
+    query: `${basePageQuery} trails {id} facilities {id} address {id} hours {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Park'),

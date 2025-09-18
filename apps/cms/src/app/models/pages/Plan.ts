@@ -5,6 +5,7 @@ import {
 } from '../../DraftAndVersionsFactory';
 import {
   basePage,
+  basePageQuery,
   cardsUi,
   documentRelationshipSingle,
   sidebar,
@@ -182,8 +183,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query:
-      'id heroImage title description body tags {id} orgUnits {id} communities {id} contacts {id} userGroups {id} __typename actions {id} documents {id} code {id} currentDocument {id} draftDocument {id} pastDocuments {id} events {id} type parent {id} components {id} effort {id} autoRedirectToExternalWebsite',
+    query: `${basePageQuery} boards {id} facilities {id} parks {id} trails {id} type code {id} currentDocument {id} draftDocument {id} pastDocuments {id} autoRedirectToExternalWebsite effort { id } actions { id } documents { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Plan'),

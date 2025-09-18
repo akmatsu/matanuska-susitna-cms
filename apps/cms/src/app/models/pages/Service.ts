@@ -1,5 +1,10 @@
 import { relationship, text } from '@keystone-6/core/fields';
-import { basePage, typesenseDelete, typesenseUpsert } from '../../fieldUtils';
+import {
+  basePage,
+  basePageQuery,
+  typesenseDelete,
+  typesenseUpsert,
+} from '../../fieldUtils';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -37,34 +42,6 @@ const {
         primaryContact: true,
         secondaryActions: true,
         documents: true,
-      }),
-      communities: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion
-            ? 'Community.services'
-            : 'Community',
-        many: true,
-        ui: {
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-          hideCreate: true,
-        },
-      }),
-
-      orgUnits: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion ? 'OrgUnit.services' : 'OrgUnit',
-        many: true,
-        ui: {
-          itemView: {
-            fieldPosition: 'sidebar',
-          },
-          createView: {
-            fieldMode: 'hidden',
-          },
-          hideCreate: true,
-        },
       }),
 
       trails: relationship({
@@ -127,7 +104,7 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `id heroImage title description body tags {id} orgUnits {id} communities {id} contacts {id} userGroups {id} trails {id} parks {id} facilities {id} editorNotes __typename primaryAction {id} secondaryActions {id} primaryContact {id} documents {id}`,
+    query: `${basePageQuery} trails {id} parks {id} facilities {id} boards {id} editorNotes primaryAction {id} secondaryActions {id} primaryContact {id} documents {id}`,
 
     mainAccess: {
       operation: generalOperationAccess,

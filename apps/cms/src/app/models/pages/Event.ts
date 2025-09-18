@@ -43,7 +43,7 @@ const Event = DraftAndVersionsFactory(
     };
   },
   {
-    query: `${basePageQuery} plans {id} facilities {id} parks {id} trails {id} services {id} boards {id} communities {id} startDate endDate actions {id} documents {id}`,
+  query: `${basePageQuery} startDate endDate boards {id} communities {id} parks {id} trails {id} facilities {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       filter: filterByPubStatus,

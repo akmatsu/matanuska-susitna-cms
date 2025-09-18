@@ -161,8 +161,7 @@ const {
       item: generalItemAccess('AssemblyDistrict'),
       filter: filterByPubStatus,
     },
-    query:
-      'id title description body tags {id} photo {id} contacts {id} bio memberName address email phone fax termStart termEnd __typename actions {id} documents {id}',
+    query: `${basePage} photo { id } memberName bio email phone fax termStart termEnd boards {id} facilities {id} parks {id} trails {id} actions {id} documents {id} address { id }`,
     mainHooks: {
       async beforeOperation(args) {
         await typesenseDelete(args);

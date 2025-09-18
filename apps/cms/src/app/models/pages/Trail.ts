@@ -66,17 +66,10 @@ const {
         ref: opts?.isDraft || opts?.isVersion ? 'Park' : 'Park.trails',
         many: false,
       }),
-
-      communities: relationshipController({
-        ref: 'Community',
-        listName: 'Trails',
-        many: true,
-        opts,
-      }),
     };
   },
   {
-    query: `${basePageQuery} services {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange actions {id} documents {id}`,
+    query: `${basePageQuery} address {id} actions {id} documents {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Trail'),

@@ -115,7 +115,7 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} type isActive assemblyDistricts {id} communities {id} documents {id} actions {id} linkToAgendas {id} linkToResolutions {id} linkToPublicOpinionMessage {id}`,
+    query: `${basePageQuery} directory {id} calendarId calendarQueryString type isActive linkToAgendas {id} linkToResolutions {id} linkToPublicOpinionMessage {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Board'),

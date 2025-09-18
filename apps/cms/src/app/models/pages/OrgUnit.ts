@@ -85,7 +85,7 @@ const {
     };
   },
   {
-    query: `${basePageQuery} services {id} parent {id} children {id} showPage actions {id} documents {id}`,
+    query: `${basePageQuery} parent {id} children {id} showPage actions {id} documents {id} icon type childrenLabel boards {id} facilities {id} parks {id} trails {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('OrgUnit'),
