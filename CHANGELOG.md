@@ -1,3 +1,15 @@
+# [0.33.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.32.2...v0.33.0) (2025-09-18)
+
+
+### Bug Fixes
+
+* fixed draft and version query fields in all page CTs ([1b0643c](https://github.com/akmatsu/matanuska-susitna-cms/commit/1b0643c03d3926114338942fa0c1db9bedf19f77))
+
+
+### Features
+
+* fixed problem with publishing ([74b69e5](https://github.com/akmatsu/matanuska-susitna-cms/commit/74b69e52a3d05ee92bafecb3ca97842dd6a931c2))
+
 ## [0.32.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.32.1...v0.32.2) (2025-09-18)
 
 
