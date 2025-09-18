@@ -1,3 +1,10 @@
+# [0.32.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.31.0...v0.32.0) (2025-09-18)
+
+
+### Features
+
+* added types to public notices which will determine the topic sent by gov delivery ([ab2c5a0](https://github.com/akmatsu/matanuska-susitna-cms/commit/ab2c5a03aa2ec23ac19a00940211a6d2e4eceb83))
+
 # [0.31.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.30.0...v0.31.0) (2025-09-17)
 
 
