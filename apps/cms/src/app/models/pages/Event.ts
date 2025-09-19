@@ -1,7 +1,11 @@
 import { relationship } from '@keystone-6/core/fields';
 import { filterByPubStatus, generalOperationAccess } from '../../access';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import {
+  DraftAndVersionsFactory,
+  relationshipController,
+} from '../../DraftAndVersionsFactory';
 import { basePage, basePageQuery, timestampField } from '../../fieldUtils';
+import LandingPages from './LandingPages';
 
 const Event = DraftAndVersionsFactory(
   'Event',
@@ -16,12 +20,6 @@ const Event = DraftAndVersionsFactory(
       endDate: timestampField(),
       boards: relationship({
         ref: !opts?.isDraft && !opts?.isVersion ? 'Board.events' : 'Board',
-        many: true,
-      }),
-
-      communities: relationship({
-        ref:
-          !opts?.isDraft && !opts?.isVersion ? 'Community.events' : 'Community',
         many: true,
       }),
 
@@ -40,10 +38,17 @@ const Event = DraftAndVersionsFactory(
           !opts?.isDraft && !opts?.isVersion ? 'Facility.events' : 'Facility',
         many: true,
       }),
+
+      landingPages: relationshipController({
+        ref: 'LandingPage',
+        listName: listNamePlural,
+        many: true,
+        opts,
+      }),
     };
   },
   {
-  query: `${basePageQuery} startDate endDate boards {id} communities {id} parks {id} trails {id} facilities {id} actions {id} documents {id}`,
+    query: `${basePageQuery} startDate endDate boards {id} communities {id} parks {id} trails {id} facilities {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       filter: filterByPubStatus,

@@ -9363,6 +9363,8 @@ type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  landingPages(where: LandingPageWhereInput! = {}, orderBy: [LandingPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LandingPageWhereUniqueInput): [LandingPage!]
+  landingPagesCount(where: LandingPageWhereInput! = {}): Int
   status: String
   drafts(where: EventDraftWhereInput! = {}, orderBy: [EventDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventDraftWhereUniqueInput): [EventDraft!]
   draftsCount(where: EventDraftWhereInput! = {}): Int
@@ -9414,10 +9416,17 @@ input EventWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  landingPages: LandingPageManyRelationFilter
   status: StringFilter
   drafts: EventDraftManyRelationFilter
   versions: EventVersionManyRelationFilter
   currentVersion: EventVersionWhereInput
+}
+
+input LandingPageManyRelationFilter {
+  every: LandingPageWhereInput
+  some: LandingPageWhereInput
+  none: LandingPageWhereInput
 }
 
 input EventDraftManyRelationFilter {
@@ -9482,11 +9491,19 @@ input EventUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  landingPages: LandingPageRelateToManyForUpdateInput
   status: String
   drafts: EventDraftRelateToManyForUpdateInput
   makeDrafts: String
   versions: EventVersionRelateToManyForUpdateInput
   currentVersion: EventVersionRelateToOneForUpdateInput
+}
+
+input LandingPageRelateToManyForUpdateInput {
+  disconnect: [LandingPageWhereUniqueInput!]
+  set: [LandingPageWhereUniqueInput!]
+  create: [LandingPageCreateInput!]
+  connect: [LandingPageWhereUniqueInput!]
 }
 
 input EventDraftRelateToManyForUpdateInput {
@@ -9546,11 +9563,17 @@ input EventCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  landingPages: LandingPageRelateToManyForCreateInput
   status: String
   drafts: EventDraftRelateToManyForCreateInput
   makeDrafts: String
   versions: EventVersionRelateToManyForCreateInput
   currentVersion: EventVersionRelateToOneForCreateInput
+}
+
+input LandingPageRelateToManyForCreateInput {
+  create: [LandingPageCreateInput!]
+  connect: [LandingPageWhereUniqueInput!]
 }
 
 input EventDraftRelateToManyForCreateInput {
@@ -9620,6 +9643,8 @@ type EventDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  landingPages(where: LandingPageWhereInput! = {}, orderBy: [LandingPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LandingPageWhereUniqueInput): [LandingPage!]
+  landingPagesCount(where: LandingPageWhereInput! = {}): Int
   publish: String
 }
 
@@ -9662,6 +9687,7 @@ input EventDraftWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  landingPages: LandingPageManyRelationFilter
 }
 
 input EventDraftOrderByInput {
@@ -9712,6 +9738,7 @@ input EventDraftUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  landingPages: LandingPageRelateToManyForUpdateInput
   publish: String
 }
 
@@ -9758,6 +9785,7 @@ input EventDraftCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  landingPages: LandingPageRelateToManyForCreateInput
   publish: String
 }
 
@@ -9818,6 +9846,8 @@ type EventVersion {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  landingPages(where: LandingPageWhereInput! = {}, orderBy: [LandingPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LandingPageWhereUniqueInput): [LandingPage!]
+  landingPagesCount(where: LandingPageWhereInput! = {}): Int
   isLive: Event
   republish: String
 }
@@ -9862,6 +9892,7 @@ input EventVersionWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  landingPages: LandingPageManyRelationFilter
   isLive: EventWhereInput
 }
 
@@ -9913,6 +9944,7 @@ input EventVersionUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  landingPages: LandingPageRelateToManyForUpdateInput
   isLive: EventRelateToOneForUpdateInput
   republish: String
 }
@@ -9954,6 +9986,7 @@ input EventVersionCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  landingPages: LandingPageRelateToManyForCreateInput
   isLive: EventRelateToOneForCreateInput
   republish: String
 }
@@ -10005,6 +10038,8 @@ type LandingPage {
   body: String
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
   highlightsCount(where: HighlightWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
 }
 
 input LandingPageWhereUniqueInput {
@@ -10021,6 +10056,7 @@ input LandingPageWhereInput {
   description: StringFilter
   body: MyStringFilter
   highlights: HighlightManyRelationFilter
+  events: EventManyRelationFilter
 }
 
 input LandingPageOrderByInput {
@@ -10037,6 +10073,7 @@ input LandingPageUpdateInput {
   description: String
   body: String
   highlights: HighlightRelateToManyForUpdateInput
+  events: EventRelateToManyForUpdateInput
 }
 
 input LandingPageUpdateArgs {
@@ -10050,6 +10087,7 @@ input LandingPageCreateInput {
   description: String
   body: String
   highlights: HighlightRelateToManyForCreateInput
+  events: EventRelateToManyForCreateInput
 }
 
 type Document {
@@ -10526,12 +10564,6 @@ input HighlightWhereInput {
   updatedAt: DateTimeNullableFilter
 }
 
-input LandingPageManyRelationFilter {
-  every: LandingPageWhereInput
-  some: LandingPageWhereInput
-  none: LandingPageWhereInput
-}
-
 input HighlightOrderByInput {
   id: OrderDirection
   title: OrderDirection
@@ -10558,13 +10590,6 @@ input HighlightUpdateInput {
   updatedAt: DateTime
 }
 
-input LandingPageRelateToManyForUpdateInput {
-  disconnect: [LandingPageWhereUniqueInput!]
-  set: [LandingPageWhereUniqueInput!]
-  create: [LandingPageCreateInput!]
-  connect: [LandingPageWhereUniqueInput!]
-}
-
 input HighlightUpdateArgs {
   where: HighlightWhereUniqueInput!
   data: HighlightUpdateInput!
@@ -10583,11 +10608,6 @@ input HighlightCreateInput {
   editorNotes: String
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-input LandingPageRelateToManyForCreateInput {
-  create: [LandingPageCreateInput!]
-  connect: [LandingPageWhereUniqueInput!]
 }
 
 type Contact {

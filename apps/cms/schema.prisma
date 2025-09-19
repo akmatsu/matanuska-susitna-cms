@@ -2247,6 +2247,7 @@ model Event {
   parks                               Park[]                    @relation("Event_parks")
   trails                              Trail[]                   @relation("Event_trails")
   facilities                          Facility[]                @relation("Event_facilities")
+  landingPages                        LandingPage[]             @relation("Event_landingPages")
   status                              String                    @default("unpublished")
   drafts                              EventDraft[]              @relation("EventDraft_original")
   makeDrafts                          String?
@@ -2319,6 +2320,7 @@ model EventDraft {
   parks             Park[]             @relation("EventDraft_parks")
   trails            Trail[]            @relation("EventDraft_trails")
   facilities        Facility[]         @relation("EventDraft_facilities")
+  landingPages      LandingPage[]      @relation("EventDraft_landingPages")
   publish           String?
 
   @@index([originalId])
@@ -2362,6 +2364,7 @@ model EventVersion {
   parks             Park[]             @relation("EventVersion_parks")
   trails            Trail[]            @relation("EventVersion_trails")
   facilities        Facility[]         @relation("EventVersion_facilities")
+  landingPages      LandingPage[]      @relation("EventVersion_landingPages")
   isLive            Event?             @relation("Event_currentVersion")
   republish         String?
 
@@ -2380,12 +2383,15 @@ model FacilityListItem {
 }
 
 model LandingPage {
-  id          String      @id @default(cuid())
-  heroImage   String?
-  title       String      @unique @default("")
-  description String      @default("")
-  body        String?
-  highlights  Highlight[] @relation("Highlight_landingPages")
+  id                             String         @id @default(cuid())
+  heroImage                      String?
+  title                          String         @unique @default("")
+  description                    String         @default("")
+  body                           String?
+  highlights                     Highlight[]    @relation("Highlight_landingPages")
+  events                         Event[]        @relation("Event_landingPages")
+  from_EventDraft_landingPages   EventDraft[]   @relation("EventDraft_landingPages")
+  from_EventVersion_landingPages EventVersion[] @relation("EventVersion_landingPages")
 }
 
 model Document {

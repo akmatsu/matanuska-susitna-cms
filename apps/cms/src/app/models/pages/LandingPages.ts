@@ -20,6 +20,10 @@ const LandingPage = list({
       ref: 'Highlight.landingPages',
       many: true,
     }),
+    events: relationship({
+      ref: 'Event.landingPages',
+      many: true,
+    }),
   },
 });
 
