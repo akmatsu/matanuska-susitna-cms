@@ -1,3 +1,10 @@
+## [0.33.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.33.0...v0.33.1) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed facility indexing ([29f3b7a](https://github.com/akmatsu/matanuska-susitna-cms/commit/29f3b7ab61ec7dd0148da3a416bec15cbfd0f614))
+
 # [0.33.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.32.2...v0.33.0) (2025-09-18)
 
 
