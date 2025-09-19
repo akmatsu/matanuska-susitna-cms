@@ -111,7 +111,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           },
           options: [
             { label: 'Unpublished', value: 'unpublished' },
-            { label: 'Published', value: 'published' },
+            { label: 'Published', value: 'pbulished' },
           ],
           defaultValue: 'unpublished',
           ui: {

@@ -38,13 +38,6 @@ const Event = DraftAndVersionsFactory(
           !opts?.isDraft && !opts?.isVersion ? 'Facility.events' : 'Facility',
         many: true,
       }),
-
-      landingPages: relationshipController({
-        ref: 'LandingPage',
-        listName: listNamePlural,
-        many: true,
-        opts,
-      }),
     };
   },
   {
