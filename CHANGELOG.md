@@ -1,3 +1,10 @@
+# [0.34.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.33.1...v0.34.0) (2025-09-19)
+
+
+### Features
+
+* fixed public notices not indexing correctly ([dfef21d](https://github.com/akmatsu/matanuska-susitna-cms/commit/dfef21d50fa703d26fedbe3996d57e7277dc9a4d))
+
 ## [0.33.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.33.0...v0.33.1) (2025-09-19)
 
 
