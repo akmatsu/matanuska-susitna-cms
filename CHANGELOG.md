@@ -1,3 +1,10 @@
+## [0.36.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.36.0...v0.36.1) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed typo in publish status ([70bca31](https://github.com/akmatsu/matanuska-susitna-cms/commit/70bca31ccf54aa8f4436b7f0953155c65d45fd2f))
+
 # [0.36.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.35.0...v0.36.0) (2025-09-19)
 
 
