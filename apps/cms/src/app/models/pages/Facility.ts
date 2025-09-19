@@ -71,13 +71,6 @@ const {
         ref: !opts?.isDraft && !opts?.isVersion ? 'Park.facilities' : 'Park',
         many: false,
       }),
-
-      communities: relationshipController({
-        ref: 'Community',
-        listName: 'facilities',
-        many: true,
-        opts,
-      }),
     };
   },
   {
@@ -94,7 +87,7 @@ const {
       async afterOperation(args) {
         await typesenseUpsert(
           'facility',
-          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title} community {title}',
+          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title} communities {title}',
           args,
         );
       },

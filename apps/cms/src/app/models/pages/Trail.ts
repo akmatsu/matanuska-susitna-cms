@@ -11,10 +11,7 @@ import {
   typesenseUpsert,
 } from '../../fieldUtils';
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
-import {
-  DraftAndVersionsFactory,
-  relationshipController,
-} from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 
 const {
   Main: Trail,
