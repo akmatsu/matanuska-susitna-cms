@@ -25,7 +25,8 @@ const publishWorker = async () => {
 
         logger.info(`🔔 Processing ${operation} for ${itemId}...`);
 
-        const { title, ...draft } = await sudoCtx.query[
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { title, id, original, ...draft } = await sudoCtx.query[
           `${listKey}Draft` as typeof listKey
         ].findOne({
           where: {

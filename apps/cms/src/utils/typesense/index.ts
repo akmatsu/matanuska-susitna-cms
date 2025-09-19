@@ -3,6 +3,7 @@ import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
 import type { CommonContext } from '../../controllers/types';
 import { Prisma } from '@prisma/client';
+import { logger } from '../../configs/logger';
 
 export type TypeSensePageDocument = {
   id: string;

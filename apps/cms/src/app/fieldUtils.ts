@@ -786,7 +786,7 @@ export async function typesenseUpsert(
       }
     } else {
       try {
-        const thing = v.capitalize(listNameSingular);
+        const thing = v.capitalize(v.camelCase(listNameSingular));
         const doc = await context.query[thing]?.findOne({
           where: { id: item.id.toString() },
           query,

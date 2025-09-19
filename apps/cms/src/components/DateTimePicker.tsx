@@ -25,7 +25,7 @@ export function DateTimePicker({
         selected={startDate}
         onChange={handleChange}
         showTimeSelect
-        timeIntervals={15}
+        timeIntervals={1}
         dateFormat="Pp"
         className="w-full rounded-md border border-gray-300 p-2 pl-10 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
         showIcon

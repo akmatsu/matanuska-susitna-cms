@@ -11,10 +11,7 @@ import {
   typesenseUpsert,
 } from '../../fieldUtils';
 import { integer, relationship } from '@keystone-6/core/fields';
-import {
-  DraftAndVersionsFactory,
-  relationshipController,
-} from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
 import { list } from '@keystone-6/core';
 
 export const FacilityListItem = list({
