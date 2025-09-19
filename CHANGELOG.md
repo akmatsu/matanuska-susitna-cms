@@ -1,3 +1,10 @@
+# [0.35.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.34.0...v0.35.0) (2025-09-19)
+
+
+### Features
+
+* added events to landing pages ([41c76b2](https://github.com/akmatsu/matanuska-susitna-cms/commit/41c76b2c67c5506f53b58486d537a5ea997f2286))
+
 # [0.34.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.33.1...v0.34.0) (2025-09-19)
 
 
