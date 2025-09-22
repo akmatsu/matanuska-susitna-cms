@@ -1,3 +1,10 @@
+# [0.37.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.36.1...v0.37.0) (2025-09-22)
+
+
+### Features
+
+* added documents to elections ([eee5f6c](https://github.com/akmatsu/matanuska-susitna-cms/commit/eee5f6c73269d899c33d8db4761af9fa2c733fea))
+
 ## [0.36.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.36.0...v0.36.1) (2025-09-19)
 
 
