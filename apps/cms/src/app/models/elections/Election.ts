@@ -171,6 +171,18 @@ const {
         },
       }),
 
+      documents: relationship({
+        ref: 'Document',
+        many: true,
+        ui: {
+          displayMode: 'cards',
+          inlineConnect: true,
+          cardFields: ['title', 'description', 'file', 'tags'],
+          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
+          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+        },
+      }),
+
       propositions: relationship({
         ref: 'Document',
         many: true,

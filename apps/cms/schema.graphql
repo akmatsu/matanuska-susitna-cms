@@ -469,6 +469,8 @@ type Election {
   electionOfficialApplication: Document
   electionOfficialApplicationDeadline: DateTime
   candidates: Document
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
   propositions(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   propositionsCount(where: DocumentWhereInput! = {}): Int
   electionBrochure: Document
@@ -523,6 +525,7 @@ input ElectionWhereInput {
   electionOfficialApplication: DocumentWhereInput
   electionOfficialApplicationDeadline: DateTimeNullableFilter
   candidates: DocumentWhereInput
+  documents: DocumentManyRelationFilter
   propositions: DocumentManyRelationFilter
   electionBrochure: DocumentWhereInput
   electionBallots: DocumentManyRelationFilter
@@ -618,6 +621,7 @@ input ElectionUpdateInput {
   electionOfficialApplication: DocumentRelateToOneForUpdateInput
   electionOfficialApplicationDeadline: DateTime
   candidates: DocumentRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
   propositions: DocumentRelateToManyForUpdateInput
   electionBrochure: DocumentRelateToOneForUpdateInput
   electionBallots: DocumentRelateToManyForUpdateInput
@@ -700,6 +704,7 @@ input ElectionCreateInput {
   electionOfficialApplication: DocumentRelateToOneForCreateInput
   electionOfficialApplicationDeadline: DateTime
   candidates: DocumentRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
   propositions: DocumentRelateToManyForCreateInput
   electionBrochure: DocumentRelateToOneForCreateInput
   electionBallots: DocumentRelateToManyForCreateInput
@@ -769,6 +774,8 @@ type ElectionVersion {
   electionOfficialApplication: Document
   electionOfficialApplicationDeadline: DateTime
   candidates: Document
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
   propositions(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   propositionsCount(where: DocumentWhereInput! = {}): Int
   electionBrochure: Document
@@ -816,6 +823,7 @@ input ElectionVersionWhereInput {
   electionOfficialApplication: DocumentWhereInput
   electionOfficialApplicationDeadline: DateTimeNullableFilter
   candidates: DocumentWhereInput
+  documents: DocumentManyRelationFilter
   propositions: DocumentManyRelationFilter
   electionBrochure: DocumentWhereInput
   electionBallots: DocumentManyRelationFilter
@@ -871,6 +879,7 @@ input ElectionVersionUpdateInput {
   electionOfficialApplication: DocumentRelateToOneForUpdateInput
   electionOfficialApplicationDeadline: DateTime
   candidates: DocumentRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
   propositions: DocumentRelateToManyForUpdateInput
   electionBrochure: DocumentRelateToOneForUpdateInput
   electionBallots: DocumentRelateToManyForUpdateInput
@@ -916,6 +925,7 @@ input ElectionVersionCreateInput {
   electionOfficialApplication: DocumentRelateToOneForCreateInput
   electionOfficialApplicationDeadline: DateTime
   candidates: DocumentRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
   propositions: DocumentRelateToManyForCreateInput
   electionBrochure: DocumentRelateToOneForCreateInput
   electionBallots: DocumentRelateToManyForCreateInput
@@ -957,6 +967,8 @@ type ElectionDraft {
   electionOfficialApplication: Document
   electionOfficialApplicationDeadline: DateTime
   candidates: Document
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
   propositions(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   propositionsCount(where: DocumentWhereInput! = {}): Int
   electionBrochure: Document
@@ -1002,6 +1014,7 @@ input ElectionDraftWhereInput {
   electionOfficialApplication: DocumentWhereInput
   electionOfficialApplicationDeadline: DateTimeNullableFilter
   candidates: DocumentWhereInput
+  documents: DocumentManyRelationFilter
   propositions: DocumentManyRelationFilter
   electionBrochure: DocumentWhereInput
   electionBallots: DocumentManyRelationFilter
@@ -1056,6 +1069,7 @@ input ElectionDraftUpdateInput {
   electionOfficialApplication: DocumentRelateToOneForUpdateInput
   electionOfficialApplicationDeadline: DateTime
   candidates: DocumentRelateToOneForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
   propositions: DocumentRelateToManyForUpdateInput
   electionBrochure: DocumentRelateToOneForUpdateInput
   electionBallots: DocumentRelateToManyForUpdateInput
@@ -1094,6 +1108,7 @@ input ElectionDraftCreateInput {
   electionOfficialApplication: DocumentRelateToOneForCreateInput
   electionOfficialApplicationDeadline: DateTime
   candidates: DocumentRelateToOneForCreateInput
+  documents: DocumentRelateToManyForCreateInput
   propositions: DocumentRelateToManyForCreateInput
   electionBrochure: DocumentRelateToOneForCreateInput
   electionBallots: DocumentRelateToManyForCreateInput

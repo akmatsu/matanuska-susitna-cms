@@ -87,6 +87,7 @@ model Election {
   electionOfficialApplicationDeadline DateTime?
   candidates                          Document?         @relation("Election_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?           @map("candidates")
+  documents                           Document[]        @relation("Election_documents")
   propositions                        Document[]        @relation("Election_propositions")
   electionBrochure                    Document?         @relation("Election_electionBrochure", fields: [electionBrochureId], references: [id])
   electionBrochureId                  String?           @map("electionBrochure")
@@ -139,6 +140,7 @@ model ElectionVersion {
   electionOfficialApplicationDeadline DateTime?
   candidates                          Document?       @relation("ElectionVersion_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?         @map("candidates")
+  documents                           Document[]      @relation("ElectionVersion_documents")
   propositions                        Document[]      @relation("ElectionVersion_propositions")
   electionBrochure                    Document?       @relation("ElectionVersion_electionBrochure", fields: [electionBrochureId], references: [id])
   electionBrochureId                  String?         @map("electionBrochure")
@@ -189,6 +191,7 @@ model ElectionDraft {
   electionOfficialApplicationDeadline DateTime?
   candidates                          Document?       @relation("ElectionDraft_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?         @map("candidates")
+  documents                           Document[]      @relation("ElectionDraft_documents")
   propositions                        Document[]      @relation("ElectionDraft_propositions")
   electionBrochure                    Document?       @relation("ElectionDraft_electionBrochure", fields: [electionBrochureId], references: [id])
   electionBrochureId                  String?         @map("electionBrochure")
@@ -2404,6 +2407,7 @@ model Document {
   from_Election_absenteeVotingApplication          Election[]                @relation("Election_absenteeVotingApplication")
   from_Election_electionOfficialApplication        Election[]                @relation("Election_electionOfficialApplication")
   from_Election_candidates                         Election[]                @relation("Election_candidates")
+  from_Election_documents                          Election[]                @relation("Election_documents")
   from_Election_propositions                       Election[]                @relation("Election_propositions")
   from_Election_electionBrochure                   Election[]                @relation("Election_electionBrochure")
   from_Election_electionBallots                    Election[]                @relation("Election_electionBallots")
@@ -2411,6 +2415,7 @@ model Document {
   from_ElectionVersion_absenteeVotingApplication   ElectionVersion[]         @relation("ElectionVersion_absenteeVotingApplication")
   from_ElectionVersion_electionOfficialApplication ElectionVersion[]         @relation("ElectionVersion_electionOfficialApplication")
   from_ElectionVersion_candidates                  ElectionVersion[]         @relation("ElectionVersion_candidates")
+  from_ElectionVersion_documents                   ElectionVersion[]         @relation("ElectionVersion_documents")
   from_ElectionVersion_propositions                ElectionVersion[]         @relation("ElectionVersion_propositions")
   from_ElectionVersion_electionBrochure            ElectionVersion[]         @relation("ElectionVersion_electionBrochure")
   from_ElectionVersion_electionBallots             ElectionVersion[]         @relation("ElectionVersion_electionBallots")
@@ -2418,6 +2423,7 @@ model Document {
   from_ElectionDraft_absenteeVotingApplication     ElectionDraft[]           @relation("ElectionDraft_absenteeVotingApplication")
   from_ElectionDraft_electionOfficialApplication   ElectionDraft[]           @relation("ElectionDraft_electionOfficialApplication")
   from_ElectionDraft_candidates                    ElectionDraft[]           @relation("ElectionDraft_candidates")
+  from_ElectionDraft_documents                     ElectionDraft[]           @relation("ElectionDraft_documents")
   from_ElectionDraft_propositions                  ElectionDraft[]           @relation("ElectionDraft_propositions")
   from_ElectionDraft_electionBrochure              ElectionDraft[]           @relation("ElectionDraft_electionBrochure")
   from_ElectionDraft_electionBallots               ElectionDraft[]           @relation("ElectionDraft_electionBallots")
