@@ -1,3 +1,11 @@
+# [0.38.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.37.0...v0.38.0) (2025-09-23)
+
+
+### Features
+
+* imeplemented propostions ([0834c47](https://github.com/akmatsu/matanuska-susitna-cms/commit/0834c47ec7bd778b8a047281559d8898500c48fc))
+* public notices now a type on pageViews ([66d5799](https://github.com/akmatsu/matanuska-susitna-cms/commit/66d5799056b72d8e129988d4de87f47f312d4eca))
+
 # [0.37.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.36.1...v0.37.0) (2025-09-22)
 
 
