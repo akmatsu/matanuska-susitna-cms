@@ -1,3 +1,10 @@
+# [0.39.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.38.0...v0.39.0) (2025-09-23)
+
+
+### Features
+
+* added support for iframes ([65a0b1e](https://github.com/akmatsu/matanuska-susitna-cms/commit/65a0b1e06a5377776f0f09441a32785b320dee30))
+
 # [0.38.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.37.0...v0.38.0) (2025-09-23)
 
 
