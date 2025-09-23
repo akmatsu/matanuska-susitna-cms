@@ -1,8 +1,14 @@
-import { relationship, timestamp } from '@keystone-6/core/fields';
+import {
+  integer,
+  relationship,
+  text,
+  timestamp,
+} from '@keystone-6/core/fields';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import {
   DraftAndVersionsFactory,
   mapRelationShip,
+  relationshipController,
 } from '../../DraftAndVersionsFactory';
 import {
   owner,
@@ -13,15 +19,62 @@ import {
   titleAndDescription,
   userGroups,
 } from '../../fieldUtils';
-import { group } from '@keystone-6/core';
+import { group, list } from '@keystone-6/core';
 import {
   filterByPubStatus,
+  generalOperationAccess,
   isElectionUser,
   isNotElectionUser,
 } from '../../access';
 import { customText } from '../../../components/customFields/Markdown';
 
 const listKey = 'Election';
+
+const Proposition = list({
+  access: {
+    operation: generalOperationAccess,
+  },
+  ui: {
+    isHidden: true,
+  },
+  fields: {
+    title: text(),
+    order: integer({
+      defaultValue: 0,
+      validation: { isRequired: true },
+      isOrderable: true,
+      isIndexed: true,
+    }),
+    document: relationship({
+      ref: 'Document',
+      many: false,
+      ui: {
+        displayMode: 'cards',
+        inlineConnect: true,
+        cardFields: ['title', 'description', 'file', 'tags'],
+        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
+        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+      },
+    }),
+    description: customText(),
+    election: relationship({
+      ref: 'Election.propositions',
+      many: false,
+      hooks: {
+        afterOperation: async ({ operation, item, context }) => {
+          if (operation === 'update') {
+            if (!item?.electionId) {
+              const sudo = context.sudo();
+              await sudo.db.Proposition.deleteOne({
+                where: { id: item.id.toString() },
+              });
+            }
+          }
+        },
+      },
+    }),
+  },
+});
 
 const {
   Main: Election,
@@ -183,16 +236,20 @@ const {
         },
       }),
 
-      propositions: relationship({
-        ref: 'Document',
+      propositions: relationshipController({
+        ref: 'Proposition',
+        listName: 'election',
         many: true,
         ui: {
           displayMode: 'cards',
           inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+          cardFields: ['order', 'title', 'description', 'document'],
+          inlineCreate: {
+            fields: ['order', 'title', 'description', 'document'],
+          },
+          inlineEdit: { fields: ['order', 'title', 'description', 'document'] },
         },
+        opts,
       }),
 
       electionBrochure: relationship({
@@ -270,4 +327,5 @@ export default {
   Election,
   ElectionVersion,
   ElectionDraft,
+  Proposition,
 };
