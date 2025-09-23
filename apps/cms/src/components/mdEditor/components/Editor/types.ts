@@ -74,6 +74,12 @@ export type MdEditorProps = {
    * @default true
    */
   images?: boolean;
+
+  /**
+   * Enables iframes
+   * @default true
+   */
+  iframes?: boolean;
 };
 
 export type PluginViewFactoryFn = (

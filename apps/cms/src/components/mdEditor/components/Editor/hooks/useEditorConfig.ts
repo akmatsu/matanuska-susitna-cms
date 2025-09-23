@@ -16,6 +16,7 @@ import {
   configureStepFeature,
   configureTableFeature,
   configureToolbarFeature,
+  configureIframeFeature,
 } from '../features';
 import { configureInternalLinksFeature } from '../features/internalLinks/config';
 import { configureRemarkDirectivesFeature } from '../features/remarkDirectives/config';
@@ -50,6 +51,7 @@ export function useEditorConfig({
   list = true,
   internalLinks = true,
   images = true,
+  iframes = true,
   ...props
 }: MdEditorProps) {
   const nodeViewFactory = useNodeViewFactory();
@@ -60,6 +62,10 @@ export function useEditorConfig({
   return useEditor((root) => {
     const editor = MilkEditor.make();
     configureBaseFeatures(editor, root, props);
+
+    if (iframes) {
+      configureIframeFeature(editor);
+    }
 
     if (block) {
       configureBlockFeature(editor, pluginViewFactory);
