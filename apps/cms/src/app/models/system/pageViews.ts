@@ -58,6 +58,7 @@ const PageView = list({
           ... on Plan { id title description slug __typename}
           ... on Board { id title slug description __typename}
           ... on ElectionsPage { id title __typename}
+          ... on PublicNotice { id title slug description __typename}
         }`,
         views: './src/components/customFields/polymorphicItem/views',
       },
