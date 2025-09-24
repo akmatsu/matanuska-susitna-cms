@@ -1,3 +1,15 @@
+# [0.41.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.40.0...v0.41.0) (2025-09-24)
+
+
+### Bug Fixes
+
+* fixed internal links not working on documents ([1510457](https://github.com/akmatsu/matanuska-susitna-cms/commit/1510457f15c622397b865d53af44979dc462f165))
+
+
+### Features
+
+* can now link to documents in rich editor ([d85f9f1](https://github.com/akmatsu/matanuska-susitna-cms/commit/d85f9f1d8a220ef4efd55007cf54be9a0dc9e4e3))
+
 # [0.40.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.39.0...v0.40.0) (2025-09-24)
 
 
