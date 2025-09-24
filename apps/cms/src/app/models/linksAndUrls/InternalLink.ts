@@ -38,6 +38,7 @@ export const InternalLink = list({
           ... on BoardPage { id title __typename}
           ... on ElectionsPage { id title __typename}
           ... on HomePage { id title __typename}
+          ... on Document { id title file { url }}
         }`,
         views: './src/components/customFields/polymorphicItem/views',
       },
@@ -60,6 +61,7 @@ export const InternalLink = list({
               lists.BoardPage.types.output,
               lists.ElectionsPage.types.output,
               lists.HomePage.types.output,
+              lists.Document.types.output,
             ],
             resolveType(item) {
               return item.__typename as string;
@@ -113,6 +115,7 @@ export const InternalLink = list({
                   ${capitalizedListKey === 'Board' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'BoardPage' ? 'id title' : ''}
                   ${capitalizedListKey === 'ElectionsPage' ? 'id title' : ''}
+                  ${capitalizedListKey === 'Document' ? 'id title file { url }' : ''}
                   ${capitalizedListKey === 'HomePage' ? 'id title' : ''}
                 `.trim(),
               });

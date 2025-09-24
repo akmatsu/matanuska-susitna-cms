@@ -182,6 +182,7 @@ export const controller = (
       { value: 'electionsPage', label: 'Elections Page' },
       { value: 'homePage', label: 'Home Page' },
       { value: 'url', label: 'Url' },
+      { value: 'document', label: 'Document' },
     ],
     path: config.path,
     label: config.label,

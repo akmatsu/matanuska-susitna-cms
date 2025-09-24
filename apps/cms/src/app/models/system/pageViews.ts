@@ -79,6 +79,7 @@ const PageView = list({
               lists.Plan.types.output,
               lists.Board.types.output,
               lists.ElectionsPage.types.output,
+              lists.PublicNotice.types.output,
             ],
             resolveType(item) {
               return item.__typename as string;
@@ -116,6 +117,7 @@ const PageView = list({
                   ${capitalizedListKey === 'Topic' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Plan' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Board' ? 'id title slug description' : ''}
+                  ${capitalizedListKey === 'PublicNotice' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'ElectionsPage' ? 'id title' : ''}
                 `.trim(),
               });

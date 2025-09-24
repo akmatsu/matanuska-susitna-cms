@@ -10465,7 +10465,7 @@ type InternalLink {
   item: LinkedItemUnion
 }
 
-union LinkedItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url | Topic | Plan | Board | BoardPage | ElectionsPage | HomePage
+union LinkedItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url | Topic | Plan | Board | BoardPage | ElectionsPage | HomePage | Document
 
 input InternalLinkWhereUniqueInput {
   id: ID
@@ -11181,7 +11181,7 @@ type PageView {
   item: PageViewItemUnion
 }
 
-union PageViewItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url | Topic | Plan | Board | ElectionsPage
+union PageViewItemUnion = Service | Park | Trail | Facility | Community | AssemblyDistrict | OrgUnit | Url | Topic | Plan | Board | ElectionsPage | PublicNotice
 
 input PageViewWhereUniqueInput {
   id: ID
