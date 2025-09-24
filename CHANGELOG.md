@@ -1,3 +1,10 @@
+# [0.40.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.39.0...v0.40.0) (2025-09-24)
+
+
+### Features
+
+* documents can now be linked in actions ([058a7b3](https://github.com/akmatsu/matanuska-susitna-cms/commit/058a7b35b223e6cf99e2050db4fb5996abfeea48))
+
 # [0.39.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.38.0...v0.39.0) (2025-09-23)
 
 
