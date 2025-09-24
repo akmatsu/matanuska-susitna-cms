@@ -78,6 +78,7 @@ export function liveUrl(
   function correctListKey(key: string) {
     if (key === 'org-units') return '/departments';
     if (key === 'topics') return '';
+    if (key === 'document-collections') return '/document-collection';
     return `/${key}`;
   }
   return virtual({
