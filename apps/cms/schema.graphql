@@ -11990,7 +11990,7 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
-union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url
+union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url | Document
 
 union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Plan
 

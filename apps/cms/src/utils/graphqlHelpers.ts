@@ -15,6 +15,7 @@ export const graphqlExtendTypeDefs = gql`
     | Trail
     | Topic
     | Url
+    | Document
 
   union Page =
     | Service

@@ -14,19 +14,11 @@ import { Button } from '@keystone-ui/button';
 import { useInternalSearchQuery } from './hooks/useInternalSearchQuery';
 import { useInternalTooltipProvider } from './hooks/useInternalTooltipProvider';
 import { Page, useSelectionHandler } from './hooks/useSelectedItem';
-import {
-  gql,
-  TypedDocumentNode,
-  useQuery,
-} from '@keystone-6/core/admin-ui/apollo';
+import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import v from 'voca';
 import { Mark } from '@milkdown/kit/prose/model';
 import { PluginViewContext } from '@prosemirror-adapter/react';
-import {
-  GetInternalLinkQuery,
-  GetInternalLinkQueryVariables,
-  LinkSearchQuery,
-} from '../../../../../../graphql/graphql';
+import { LinkSearchQuery } from '../../../../../../graphql/graphql';
 
 export function InternalLinkTooltip() {
   const { contentRef, view, linkInfo, isShowing } =
@@ -37,50 +29,64 @@ export function InternalLinkTooltip() {
     ? v.camelCase(singular(linkInfo.mark.attrs.list))
     : undefined;
 
-  const query: TypedDocumentNode<
-    GetInternalLinkQuery,
-    GetInternalLinkQueryVariables
-  > = gql`
+  const query = gql`
     query GetInternalLink($id: ID!, $type: String!) {
       getInternalLink(id: $id, type: $type) {
         __typename
         ... on AssemblyDistrict {
+          id
           title
         }
         ... on Board {
+          id
           title
         }
         ... on BoardPage {
+          id
           title
         }
         ... on Community {
+          id
           title
         }
         ... on Facility {
+          id
           title
         }
         ... on HomePage {
+          id
           title
         }
         ... on OrgUnit {
+          id
           title
         }
         ... on Park {
+          id
           title
         }
         ... on PublicNotice {
+          id
           title
         }
         ... on Service {
+          id
           title
         }
         ... on Trail {
+          id
           title
         }
         ... on Url {
+          id
           title
         }
         ... on Topic {
+          id
+          title
+        }
+        ... on Document {
+          id
           title
         }
       }
@@ -104,6 +110,7 @@ export function InternalLinkTooltip() {
 
   useEffect(() => {
     if (listType) {
+      console.log('listType', listType);
       setEditing(false);
     } else {
       setEditing(true);
@@ -256,9 +263,13 @@ function SearchInput({
 function Options({ data }: { data: LinkSearchQuery }) {
   return (
     <>
-      {data.internalSearch?.map(
-        (item) =>
-          item && (
+      {data.internalSearch?.map((item) => {
+        console.log(item);
+        return (
+          item &&
+          '__typename' in item &&
+          'id' in item &&
+          'title' in item && (
             <ComboboxOption
               key={item.id + item.__typename}
               value={item}
@@ -273,8 +284,9 @@ function Options({ data }: { data: LinkSearchQuery }) {
                 <span>{item.title}</span>
               </div>
             </ComboboxOption>
-          ),
-      )}
+          )
+        );
+      })}
     </>
   );
 }

@@ -64,6 +64,16 @@ export function useInternalSearchQuery() {
           id
           title
         }
+
+        ... on Topic {
+          id
+          title
+        }
+
+        ... on Document {
+          id
+          title
+        }
       }
     }
   `;

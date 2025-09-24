@@ -141,6 +141,7 @@ export default config<TypeInfo<Session>>({
               if ('memberName' in value) return 'AssemblyDistrict';
               if ('parkId' in value) return 'Facility';
               if ('addressId' in value) return 'Park';
+              if ('file_filename' in value) return 'Document';
               if ('communities' in value) return 'Topic';
               return 'Community';
             },
@@ -258,6 +259,8 @@ export default config<TypeInfo<Session>>({
                 plans,
                 events,
                 urls,
+                documents,
+                topics,
               ] = await Promise.all([
                 context.db.Service.findMany({
                   where: {
@@ -384,6 +387,23 @@ export default config<TypeInfo<Session>>({
                     ],
                   },
                 }),
+                context.db.Document.findMany({
+                  where: {
+                    OR: [
+                      { title: { contains: query, mode: 'insensitive' } },
+                      { description: { contains: query, mode: 'insensitive' } },
+                    ],
+                  },
+                }),
+                context.db.Topic.findMany({
+                  where: {
+                    OR: [
+                      { title: { contains: query, mode: 'insensitive' } },
+                      { description: { contains: query, mode: 'insensitive' } },
+                      { body: { contains: query, mode: 'insensitive' } },
+                    ],
+                  },
+                }),
               ]);
 
               // 5. Combine all arrays into one heterogeneous array
@@ -402,6 +422,8 @@ export default config<TypeInfo<Session>>({
                 ...plans,
                 ...events,
                 ...urls,
+                ...documents,
+                ...topics,
               ];
             },
             topPages: async (
