@@ -1,4 +1,3 @@
-import { type Lists } from '.keystone/types';
 import { ExternalLink } from './ExternalLink';
 import { InternalLink } from './InternalLink';
 import { Url } from './Url';
@@ -9,6 +8,6 @@ const lists = {
   InternalLink,
   Url,
   Highlight,
-} satisfies Lists;
+};
 
 export default lists;

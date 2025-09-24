@@ -95,35 +95,18 @@ export const InternalLink = list({
             const itemId = item.selectItem.itemId.value as string;
 
             const capitalizedListKey = capitalizeFirstLetter(listKey);
+
             try {
-              const linkedItem = await context.query[
-                capitalizedListKey
-              ].findOne({
-                where: { id: itemId },
-                query: `
-                  __typename 
-                  ${capitalizedListKey === 'Service' ? 'id title slug description' : ''}
-                  ${capitalizedListKey === 'Park' ? 'id title slug description' : ''}
-                  ${capitalizedListKey === 'Trail' ? 'id title slug description' : ''}
-                  ${capitalizedListKey === 'Facility' ? 'id title description' : ''}
-                  ${capitalizedListKey === 'Community' ? 'id title description' : ''}
-                  ${capitalizedListKey === 'AssemblyDistrict' ? 'id title slug description' : ''}
-                  ${capitalizedListKey === 'OrgUnit' ? 'id title slug description' : ''}
-                  ${capitalizedListKey === 'Url' ? 'id title description url' : ''}
-                  ${capitalizedListKey === 'Topic' ? 'id title description slug' : ''}
-                  ${capitalizedListKey === 'Plan' ? 'id title description slug' : ''}
-                  ${capitalizedListKey === 'Board' ? 'id title slug description' : ''}
-                  ${capitalizedListKey === 'BoardPage' ? 'id title' : ''}
-                  ${capitalizedListKey === 'ElectionsPage' ? 'id title' : ''}
-                  ${capitalizedListKey === 'Document' ? 'id title file { url }' : ''}
-                  ${capitalizedListKey === 'HomePage' ? 'id title' : ''}
-                `.trim(),
-              });
+              const linkedItem = await context
+                .sudo()
+                .db[capitalizedListKey].findOne({ where: { id: itemId } });
+
+              if (!linkedItem) throw new Error('Linked item not found');
 
               return {
                 ...linkedItem,
-                id: linkedItem.id,
-                __typename: linkedItem.__typename,
+                id: linkedItem?.id,
+                __typename: capitalizedListKey,
               };
             } catch (err) {
               logger.error(err, 'Error fetching linked item');

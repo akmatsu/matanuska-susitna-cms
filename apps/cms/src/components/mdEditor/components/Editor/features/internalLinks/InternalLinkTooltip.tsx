@@ -80,6 +80,9 @@ export function InternalLinkTooltip() {
         ... on Url {
           title
         }
+        ... on Topic {
+          title
+        }
       }
     }
   `;

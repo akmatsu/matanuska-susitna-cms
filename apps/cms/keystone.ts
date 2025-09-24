@@ -232,6 +232,8 @@ export default config<TypeInfo<Session>>({
                   return context.db.Plan.findOne({ where: { id } });
                 case 'Event':
                   return context.db.Event.findOne({ where: { id } });
+                case 'Document':
+                  return context.db.Document.findOne({ where: { id } });
                 default:
                   throw new Error(`Unknown type: ${type}`);
               }
