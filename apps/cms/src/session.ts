@@ -23,7 +23,6 @@ async function getKeystoneContext() {
 
 export const nextAuthOptions: AuthOptions = {
   secret: process.env.SESSION_SECRET as string,
-
   callbacks: {
     async signIn({ user }) {
       const sudoContext = (await getKeystoneContext()).sudo();
