@@ -1,3 +1,10 @@
+# [0.42.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.41.0...v0.42.0) (2025-09-25)
+
+
+### Features
+
+* doc collection live link is fixed ([e7fcb72](https://github.com/akmatsu/matanuska-susitna-cms/commit/e7fcb728cb0f8b993e7364f1f4b84417c0f83991))
+
 # [0.41.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.40.0...v0.41.0) (2025-09-24)
 
 
