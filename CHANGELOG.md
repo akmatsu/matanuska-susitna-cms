@@ -1,3 +1,10 @@
+## [0.42.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.1...v0.42.2) (2025-09-25)
+
+
+### Bug Fixes
+
+* fix expired keys ([c58c2ab](https://github.com/akmatsu/matanuska-susitna-cms/commit/c58c2abcfab8576d396a23c5448cd725aeda4884))
+
 ## [0.42.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.0...v0.42.1) (2025-09-25)
 
 
