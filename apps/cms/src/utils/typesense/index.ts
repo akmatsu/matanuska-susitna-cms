@@ -431,7 +431,7 @@ export function toSearchableObj(
 
   if (item.secondaryActions) {
     bodyParts.push(
-      ...item.actions.map((a: { label: string }) => a.label || ''),
+      ...item.secondaryActions.map((a: { label: string }) => a.label || ''),
     );
   }
 
