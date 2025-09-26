@@ -887,7 +887,9 @@ export const iconSelect = select({
     { label: 'Pier', value: 'icon-[mdi--pier-crane]' },
     { label: 'Microphone', value: 'icon-[mdi--microphone]' },
     { label: 'Road', value: 'icon-[mdi--road-variant]' },
-    { label: 'Cart', value: 'icon-[mdi--cart]' },
+    { label: 'Cart', value: 'icon-[mdi--cart-variant]' },
+    { label: 'Contract Outline', value: 'icon-[mdi--contract-outline]' },
+    { label: 'Account group', value: 'icon-[mdi--account-group]' },
   ],
   ui: {
     views: './src/components/customFields/IconSelection',
