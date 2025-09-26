@@ -84,7 +84,7 @@ const {
       async afterOperation(args) {
         await typesenseUpsert(
           'facility',
-          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title} communities {title}',
+          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title} communities {title} actions {label} documents {title} park {title} orgUnits {title} communities {title}',
           args,
         );
       },

@@ -3,7 +3,6 @@ import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import 'dotenv/config';
 import type { CommonContext } from '../../controllers/types';
 import { Prisma } from '@prisma/client';
-import { logger } from '../../configs/logger';
 
 export type TypeSensePageDocument = {
   id: string;
@@ -116,6 +115,21 @@ export const PAGE_TYPES = [
         select: {
           ...orgUnits,
           ...sharedFieldsWithCommunities,
+          primaryAction: {
+            select: {
+              label: true,
+            },
+          },
+          secondaryActions: {
+            select: {
+              label: true,
+            },
+          },
+          documents: {
+            select: {
+              title: true,
+            },
+          },
         },
       });
 
@@ -171,6 +185,31 @@ export const PAGE_TYPES = [
         },
         select: {
           ...sharedFieldsWithCommunities,
+          trails: {
+            select: {
+              title: true,
+            },
+          },
+          facilities: {
+            select: {
+              title: true,
+            },
+          },
+          orgUnits: {
+            select: {
+              title: true,
+            },
+          },
+          assemblyDistricts: {
+            select: {
+              title: true,
+            },
+          },
+          documents: {
+            select: {
+              title: true,
+            },
+          },
         },
       });
 
@@ -235,6 +274,25 @@ export const PAGE_TYPES = [
         },
         select: {
           ...sharedFieldsWithCommunities,
+          type: true,
+          services: {
+            select: { title: true },
+          },
+          orgUnits: {
+            select: {
+              title: true,
+            },
+          },
+          assemblyDistricts: {
+            select: {
+              title: true,
+            },
+          },
+          documents: {
+            select: {
+              title: true,
+            },
+          },
         },
       });
 
@@ -249,7 +307,7 @@ export const PAGE_TYPES = [
           status: 'published',
         },
         select: {
-          ...sharedFields,
+          ...sharedFieldsWithCommunities,
         },
       });
 
@@ -265,6 +323,51 @@ export const PAGE_TYPES = [
         },
         select: {
           ...sharedFieldsWithCommunities,
+          orgUnits: {
+            select: {
+              title: true,
+            },
+          },
+          assemblyDistricts: {
+            select: {
+              title: true,
+            },
+          },
+          services: {
+            select: {
+              title: true,
+            },
+          },
+          parks: {
+            select: {
+              title: true,
+            },
+          },
+          trails: {
+            select: {
+              title: true,
+            },
+          },
+          facilities: {
+            select: {
+              title: true,
+            },
+          },
+          contacts: {
+            select: {
+              name: true,
+            },
+          },
+          actions: {
+            select: {
+              label: true,
+            },
+          },
+          documents: {
+            select: {
+              title: true,
+            },
+          },
         },
       });
 

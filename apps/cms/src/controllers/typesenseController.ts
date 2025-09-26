@@ -95,14 +95,14 @@ export const reindexTypesense: RequestControllerWithContext =
   (context) => async (_, res) => {
     try {
       await _forEachCollection(async (collection) => {
-        console.log(`Starting reindex on ${collection.name}...`);
+        logger.info(`Starting reindex on ${collection.name}...`);
         await _coordinateCollectionReset(collection, { recreate: true });
-        console.log(`Successfully reset collection ${collection.name}...`);
+        logger.info(`Successfully reset collection ${collection.name}...`);
         await _indexAllPages(context);
-        console.log(`Successfully reindexed collection ${collection.name}...`);
+        logger.info(`Successfully reindexed collection ${collection.name}...`);
       });
 
-      console.log('Successfully reindexed all collections...');
+      logger.info('Successfully reindexed all collections...');
 
       return res
         .status(200)
