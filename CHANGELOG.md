@@ -1,3 +1,10 @@
+## [0.42.4](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.3...v0.42.4) (2025-09-26)
+
+
+### Bug Fixes
+
+* fixed typo in reindex function that was causing errors ([462f182](https://github.com/akmatsu/matanuska-susitna-cms/commit/462f182b3ed45d187fa01ae330a9e7a568c35f72))
+
 ## [0.42.3](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.2...v0.42.3) (2025-09-26)
 
 
