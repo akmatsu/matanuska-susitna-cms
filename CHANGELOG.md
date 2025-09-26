@@ -1,3 +1,10 @@
+## [0.42.3](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.2...v0.42.3) (2025-09-26)
+
+
+### Bug Fixes
+
+* ensure public notices are indexed and removed correctly ([89ce51a](https://github.com/akmatsu/matanuska-susitna-cms/commit/89ce51a2d1e119d319ab69bdf590e054d194c595))
+
 ## [0.42.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.1...v0.42.2) (2025-09-25)
 
 
