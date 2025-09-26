@@ -1,3 +1,15 @@
+# [0.43.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.4...v0.43.0) (2025-09-26)
+
+
+### Bug Fixes
+
+* added more icons ([611493f](https://github.com/akmatsu/matanuska-susitna-cms/commit/611493f6f17c2267a2e6bd2ef60dbe9404c704b6))
+
+
+### Features
+
+* added cart variant ([73ef2ab](https://github.com/akmatsu/matanuska-susitna-cms/commit/73ef2abe629f19ce4f47296c1d83d6a69188db95))
+
 ## [0.42.4](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.3...v0.42.4) (2025-09-26)
 
 
