@@ -1,3 +1,10 @@
+## [0.43.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.43.0...v0.43.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* fixed resolve type function on PageViewItemUnion ([68b0728](https://github.com/akmatsu/matanuska-susitna-cms/commit/68b0728cbffb79f684e176e03c276d57ea2b1063))
+
 # [0.43.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.42.4...v0.43.0) (2025-09-26)
 
 
