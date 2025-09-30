@@ -1,3 +1,10 @@
+# [0.44.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.43.1...v0.44.0) (2025-09-30)
+
+
+### Features
+
+* reverting previous change ([7300b83](https://github.com/akmatsu/matanuska-susitna-cms/commit/7300b837a4936cddb90b56b8710dfbb1acec562f))
+
 ## [0.43.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.43.0...v0.43.1) (2025-09-30)
 
 
