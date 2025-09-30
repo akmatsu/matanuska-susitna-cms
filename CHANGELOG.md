@@ -1,3 +1,11 @@
+## [0.44.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.0...v0.44.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* now grabbing correct type in PageViewItemUnion ([df8918f](https://github.com/akmatsu/matanuska-susitna-cms/commit/df8918ff95da0c1bce0ce83e8e1ba4b815dfe797))
+* triggering now build ([1766b27](https://github.com/akmatsu/matanuska-susitna-cms/commit/1766b277b57aed137eb034b07815e609ce7f5b7a))
+
 # [0.44.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.43.1...v0.44.0) (2025-09-30)
 
 
