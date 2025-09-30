@@ -7,6 +7,7 @@ const lists = {
   Alert,
   Tag,
   Redirect,
+
   ...pageViews,
 };
 
