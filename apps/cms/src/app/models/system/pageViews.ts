@@ -99,12 +99,13 @@ const PageView = list({
             const itemId = item.pageId;
 
             const capitalizedListKey = capitalizeFirstLetter(listKey);
+
             try {
-              const linkedItem = await context.query[
-                capitalizedListKey
-              ].findOne({
-                where: { id: itemId },
-                query: `
+              const linkedItem = await context
+                .sudo()
+                .query[capitalizedListKey].findOne({
+                  where: { id: itemId },
+                  query: `
                   __typename 
                   ${capitalizedListKey === 'Service' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'Park' ? 'id title slug description' : ''}
@@ -120,12 +121,11 @@ const PageView = list({
                   ${capitalizedListKey === 'PublicNotice' ? 'id title slug description' : ''}
                   ${capitalizedListKey === 'ElectionsPage' ? 'id title' : ''}
                 `.trim(),
-              });
+                });
 
               return {
                 ...linkedItem,
                 id: linkedItem.id,
-                __typename: linkedItem.__typename,
               };
             } catch (err) {
               logger.error(err, 'Error fetching linked item');

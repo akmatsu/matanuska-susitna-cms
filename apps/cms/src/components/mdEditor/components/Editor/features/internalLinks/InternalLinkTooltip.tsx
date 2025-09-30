@@ -110,7 +110,6 @@ export function InternalLinkTooltip() {
 
   useEffect(() => {
     if (listType) {
-      console.log('listType', listType);
       setEditing(false);
     } else {
       setEditing(true);
@@ -264,7 +263,6 @@ function Options({ data }: { data: LinkSearchQuery }) {
   return (
     <>
       {data.internalSearch?.map((item) => {
-        console.log(item);
         return (
           item &&
           '__typename' in item &&

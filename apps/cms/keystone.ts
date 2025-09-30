@@ -108,21 +108,7 @@ export default config<TypeInfo<Session>>({
         resolvers: {
           PageViewItemUnion: {
             __resolveType(value: any) {
-              if ('howElectionsWork' in value) return 'ElectionsPage';
-              if ('effort' in value) return 'Plan';
-              if ('startDate' in value) return 'Event';
-              if ('primaryActionId' in value) return 'Service';
-              if ('linkToAgendasId' in value) return 'Board';
-              if ('effectiveDate' in value) return 'PublicNotice';
-              if ('parentId' in value) return 'OrgUnit';
-              if ('memberName' in value) return 'OrgUnit';
-              if ('url' in value) return 'Url';
-              if ('elevationChange' in value) return 'Trail';
-              if ('districtNumber' in value) return 'AssemblyDistrict';
-              if ('parkId' in value) return 'Facility';
-              if ('addressId' in value) return 'Park';
-              if ('communities' in value) return 'Topic';
-              return 'Community';
+              return value.__typename as string;
             },
           },
           InternalLinkSearch: {

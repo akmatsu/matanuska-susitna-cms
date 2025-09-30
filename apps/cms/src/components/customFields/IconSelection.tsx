@@ -62,7 +62,6 @@ export function Field(props: FieldProps<typeof controller>) {
 export const CardValue: CardValueComponent = (
   props: ComponentProps<CardValueComponent>,
 ) => {
-  console.log(props);
   return (
     <FieldContainer>
       <FieldLabel>{props.field.label}</FieldLabel>

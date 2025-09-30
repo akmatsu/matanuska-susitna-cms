@@ -23,7 +23,6 @@ export const iframeNode = $node('iframe', () => ({
     },
   ],
   toDOM: (node: Node) => {
-    console.log('toDOM', node);
     // Only include height/width attributes when present
     const { src, height, width } = node.attrs as {
       src?: string | null;
@@ -41,7 +40,6 @@ export const iframeNode = $node('iframe', () => ({
   parseMarkdown: {
     match: (node) => node.type === 'leafDirective' && node.name === 'iframe',
     runner: (state, node, type) => {
-      console.log('ran');
       const attrs = node.attributes as {
         src?: string;
         height?: string;
@@ -73,7 +71,6 @@ export const iframeInputRule = $inputRule(
   (ctx) =>
     new InputRule(/::iframe\{([^}]+)\}/, (state, match, start, end) => {
       const [okay, attrsStr = ''] = match;
-      console.log('match', match);
       const { tr } = state;
       if (okay) {
         const srcMatch = attrsStr.match(/src="([^"]+)"/);
