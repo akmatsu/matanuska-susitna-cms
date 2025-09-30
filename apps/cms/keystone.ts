@@ -108,6 +108,7 @@ export default config<TypeInfo<Session>>({
         resolvers: {
           PageViewItemUnion: {
             __resolveType(value: any) {
+              if ('__typename' in value) return value.__typename as string;
               if ('howElectionsWork' in value) return 'ElectionsPage';
               if ('effort' in value) return 'Plan';
               if ('startDate' in value) return 'Event';
@@ -121,8 +122,8 @@ export default config<TypeInfo<Session>>({
               if ('districtNumber' in value) return 'AssemblyDistrict';
               if ('parkId' in value) return 'Facility';
               if ('addressId' in value) return 'Park';
-              if ('communities' in value) return 'Topic';
-              return 'Community';
+              if ('type' in value) return 'Community';
+              return 'Topic';
             },
           },
           InternalLinkSearch: {
@@ -142,8 +143,8 @@ export default config<TypeInfo<Session>>({
               if ('parkId' in value) return 'Facility';
               if ('addressId' in value) return 'Park';
               if ('file_filename' in value) return 'Document';
-              if ('communities' in value) return 'Topic';
-              return 'Community';
+              if ('type' in value) return 'Community';
+              return 'Topic';
             },
           },
           Page: {
