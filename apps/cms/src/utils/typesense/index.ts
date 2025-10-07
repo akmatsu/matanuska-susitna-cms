@@ -274,7 +274,6 @@ export const PAGE_TYPES = [
         },
         select: {
           ...sharedFieldsWithCommunities,
-          type: true,
           services: {
             select: { title: true },
           },

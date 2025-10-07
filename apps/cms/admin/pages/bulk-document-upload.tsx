@@ -1,18 +1,11 @@
-import { FieldContainer, FieldLabel } from '@keystone-ui/fields';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
-import {
-  Button,
-  Input,
-  Listbox,
-  ListboxButton,
-  ListboxOption,
-  ListboxOptions,
-} from '@headlessui/react';
+import { Button } from '@headlessui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import { useRef, useState } from 'react';
 import { useToasts } from '@keystone-ui/toast';
-import clsx from 'clsx';
+import { DropDownSearchField } from '../../src/components/DropDownSearch';
+import { FileDropInput } from '../../src/components/FileDropInput';
 
 type FormData = {
   files: FileList;
@@ -59,7 +52,6 @@ export default function BulkDocumentUpload() {
   const [uploadDocuments] = useMutation(CREATE_DOCUMENTS_MUTATION);
   const collections = useQuery(GET_DOCUMENT_COLLECTIONS_QUERY);
   const tags = useQuery(GET_TAGS_QUERY);
-  const [isDragging, setIsDragging] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const { addToast } = useToasts();
 
@@ -172,6 +164,43 @@ export default function BulkDocumentUpload() {
     trigger('files');
   }
 
+  function handleFileFieldClick(e: React.MouseEvent) {
+    if (formRef.current) {
+      e.preventDefault();
+      (
+        formRef.current.querySelector('input[name="files"]') as HTMLInputElement
+      )?.click();
+    }
+  }
+
+  function handleFileDrop(e: React.DragEvent) {
+    const data = new DataTransfer();
+    const f = Array.from(files);
+    const nf = Array.from(e.dataTransfer.files).filter(
+      (file) =>
+        !f.some((f) => {
+          const alreadyInFiles = f.name === file.name;
+          if (alreadyInFiles) {
+            addToast({
+              title: 'File already Selected',
+              message: `The file ${file.name} has already been selected`,
+              tone: 'warning',
+            });
+          }
+          return alreadyInFiles;
+        }),
+    );
+
+    f.forEach((file) => data.items.add(file));
+    nf.forEach((file) => data.items.add(file));
+
+    setValue('files', data.files, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+    trigger('files');
+  }
+
   return (
     <PageContainer header="Bulk Document Upload">
       <h1 className="text-4xl font-bold">Upload Documents</h1>
@@ -181,219 +210,32 @@ export default function BulkDocumentUpload() {
         className="flex flex-col items-start gap-4"
         ref={formRef}
       >
-        <FieldContainer>
-          <FieldLabel htmlFor="document_collection">
-            Document Collections
-          </FieldLabel>
+        <DropDownSearchField
+          label="Document Collections"
+          data={collections.data?.documentCollections}
+          onChange={setSelectedCollections}
+          value={selectedCollections}
+        />
+        <DropDownSearchField
+          label="Tags"
+          data={tags.data?.tags}
+          onChange={setSelectedTags}
+          value={selectedTags}
+        />
 
-          <Listbox
-            value={selectedCollections}
-            onChange={setSelectedCollections}
-            multiple
-            name="document_collection"
-          >
-            <ListboxButton
-              id="document_collection"
-              className={clsx(
-                'flex h-9 w-80 items-center justify-between border bg-gray-50 px-2 hover:cursor-pointer hover:bg-gray-100',
-              )}
-            >
-              <div className="flex gap-1 overflow-auto py-2">
-                {selectedCollections.map((c) => (
-                  <span
-                    className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap"
-                    key={c.id}
-                  >
-                    {c.title}
-                  </span>
-                ))}
-              </div>
-              <div className="border-l pl-2">
-                <span
-                  className={clsx(
-                    'icon-[mdi--chevron-down] size-5 leading-5 data-[open]:rotate-180',
-                  )}
-                ></span>
-              </div>
-            </ListboxButton>
+        <FileDropInput
+          invalid={!!errors.files}
+          errorMessage={errors.files?.message}
+          register={register('files', {
+            validate: validateFiles,
+            required: true,
+          })}
+          files={files}
+          onClick={handleFileFieldClick}
+          removeFile={removeFile}
+          onDrop={handleFileDrop}
+        />
 
-            <ListboxOptions
-              transition
-              className={clsx(
-                'mt-2 flex max-h-[250px] w-[var(--button-width)] flex-col gap-1 overflow-auto rounded border bg-gray-50 p-2 shadow',
-                'transition duration-100 ease-in data-[closed]:opacity-0',
-              )}
-              anchor="bottom"
-            >
-              {collections.data?.documentCollections.map((collection: any) => (
-                <ListboxOption
-                  key={collection.id}
-                  value={collection}
-                  className={clsx(
-                    'rounded p-1',
-                    'transition-colors duration-100 hover:cursor-pointer hover:bg-gray-100',
-                    'data-[selected]:bg-blue-100',
-                  )}
-                >
-                  {collection.title}
-                </ListboxOption>
-              ))}
-            </ListboxOptions>
-          </Listbox>
-        </FieldContainer>
-        <FieldContainer>
-          <FieldLabel htmlFor="tags">Tags</FieldLabel>
-          <Listbox
-            value={selectedTags}
-            onChange={setSelectedTags}
-            multiple
-            name="tags"
-          >
-            <ListboxButton
-              id="tags"
-              className={clsx(
-                'flex h-9 w-80 items-center justify-between border bg-gray-50 px-2 hover:cursor-pointer hover:bg-gray-100',
-              )}
-            >
-              <div className="flex gap-1 overflow-auto py-2">
-                {selectedTags.map((t) => (
-                  <span
-                    className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap"
-                    key={t.id}
-                  >
-                    {t.name}
-                  </span>
-                ))}
-              </div>
-              <div className="border-l pl-2">
-                <span
-                  className={clsx(
-                    'icon-[mdi--chevron-down] size-5 leading-5 data-[open]:rotate-180',
-                  )}
-                ></span>
-              </div>
-            </ListboxButton>
-
-            <ListboxOptions
-              transition
-              className={clsx(
-                'mt-2 flex max-h-[250px] w-[var(--button-width)] flex-col gap-1 overflow-auto rounded border bg-gray-50 p-2 shadow',
-                'transition duration-100 ease-in data-[closed]:opacity-0',
-              )}
-              anchor="bottom"
-            >
-              {tags.data?.tags.map((tag: { id: string; name: string }) => (
-                <ListboxOption
-                  key={tag.id}
-                  value={tag}
-                  className={clsx(
-                    'rounded p-1',
-                    'transition-colors duration-100 hover:cursor-pointer hover:bg-gray-100',
-                    'data-[selected]:bg-blue-100',
-                  )}
-                >
-                  {tag.name}
-                </ListboxOption>
-              ))}
-            </ListboxOptions>
-          </Listbox>
-        </FieldContainer>
-        <FieldContainer className="w-3xl max-w-full">
-          <Input
-            type="file"
-            accept=".pdf,.doc,docx,.xml,.txt,.xlsx,.ppt,.pptx"
-            invalid={!!errors.files}
-            multiple
-            required
-            {...register('files', {
-              validate: validateFiles,
-              required: true,
-            })}
-            className="hidden"
-          />
-          <div
-            onClick={(e) => {
-              if (formRef.current) {
-                e.preventDefault();
-                (
-                  formRef.current.querySelector(
-                    'input[name="files"]',
-                  ) as HTMLInputElement
-                )?.click();
-              }
-            }}
-            className={clsx(
-              'flex h-48 w-full flex-col items-center justify-center gap-4 border-4 border-dashed p-4 text-gray-400 transition-colors hover:cursor-pointer',
-              {
-                'bg-gray-50 hover:bg-gray-100 active:bg-gray-200': !isDragging,
-                'bg-gray-100': isDragging,
-              },
-            )}
-            onDrop={(e) => {
-              e.preventDefault();
-              const data = new DataTransfer();
-              const f = Array.from(files);
-              const nf = Array.from(e.dataTransfer.files).filter(
-                (file) =>
-                  !f.some((f) => {
-                    const alreadyInFiles = f.name === file.name;
-                    if (alreadyInFiles) {
-                      addToast({
-                        title: 'File already Selected',
-                        message: `The file ${file.name} has already been selected`,
-                        tone: 'warning',
-                      });
-                    }
-                    return alreadyInFiles;
-                  }),
-              );
-
-              f.forEach((file) => data.items.add(file));
-              nf.forEach((file) => data.items.add(file));
-
-              setValue('files', data.files, {
-                shouldValidate: true,
-                shouldDirty: true,
-              });
-              trigger('files');
-              setIsDragging(false);
-            }}
-            onDragOver={(e) => {
-              e.preventDefault();
-              setIsDragging(true);
-            }}
-            onDragLeave={(e) => {
-              e.preventDefault();
-              setIsDragging(false);
-            }}
-          >
-            <span className="icon-[mdi--file-plus] size-20"></span>
-            <p>Click or drop files to upload</p>
-          </div>
-          <p className="mt-4 font-bold">Selected Files</p>
-          <ul>
-            {files &&
-              Array.from(files).map((file) => (
-                <li key={file.name} className="flex items-center gap-2">
-                  <span>{file.name}</span>
-                  <span className="text-sm text-gray-500 italic">
-                    - {file.size} bytes
-                  </span>
-                  <button
-                    type="button"
-                    className="flex items-center justify-center rounded-full p-2 hover:cursor-pointer hover:bg-gray-100 active:bg-gray-200"
-                    onClick={() => removeFile(file.name)}
-                  >
-                    <span className="icon-[mdi--close]"></span>
-                  </button>
-                </li>
-              ))}
-          </ul>
-
-          {errors.files && (
-            <p className="text-red-500">{errors.files.message}</p>
-          )}
-        </FieldContainer>
         <Button
           type="submit"
           disabled={!isValid || isLoading}
