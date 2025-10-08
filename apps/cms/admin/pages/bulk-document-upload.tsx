@@ -1,74 +1,15 @@
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import { Button } from '@headlessui/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useToasts } from '@keystone-ui/toast';
 import { DropDownSearchField } from '../../src/components/DropDownSearch';
-import { FileDropInput } from '../../src/components/FileDropInput';
-
-type FormData = {
-  files: FileList;
-  document_collection?: string[];
-};
-
-const CREATE_DOCUMENTS_MUTATION = gql`
-  mutation CreateDocuments($data: [DocumentCreateInput!]!) {
-    createDocuments(data: $data) {
-      id
-      title
-      file {
-        filename
-        filesize
-        url
-      }
-      tags {
-        id
-        name
-      }
-    }
-  }
-`;
-
-const GET_TAGS_QUERY = gql`
-  query Tags {
-    tags {
-      id
-      name
-    }
-  }
-`;
-
-const GET_DOCUMENT_COLLECTIONS_QUERY = gql`
-  query Query {
-    documentCollections {
-      id
-      title
-    }
-  }
-`;
+import { FileDropInput } from '../../src/bulkDocumentUploads/components/FileDropInput';
+import { useBulkDocumentUpload } from '../../src/bulkDocumentUploads/hooks/useBulkDocumentUpload';
+import { validateFiles } from '../../src/bulkDocumentUploads/utils';
 
 export default function BulkDocumentUpload() {
-  const [uploadDocuments] = useMutation(CREATE_DOCUMENTS_MUTATION);
-  const collections = useQuery(GET_DOCUMENT_COLLECTIONS_QUERY);
-  const tags = useQuery(GET_TAGS_QUERY);
-  const formRef = useRef<HTMLFormElement>(null);
   const { addToast } = useToasts();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isLoading, isValid },
-    setValue,
-    watch,
-    reset,
-    trigger,
-  } = useForm<FormData>({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-  });
-
-  const files = watch('files');
   const [selectedCollections, setSelectedCollections] = useState<
     {
       title: string;
@@ -79,90 +20,18 @@ export default function BulkDocumentUpload() {
     { id: string; name: string }[]
   >([]);
 
-  const allowedMimeTypes = [
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'text/xml',
-    'text/plain',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'application/vnd.ms-powerpoint',
-    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-  ];
-
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    uploadFiles(
-      data.files,
-      selectedCollections.map((c) => c.id),
-      selectedTags.map((t) => t.id),
-    );
-  };
-
-  function validateFiles(files: FileList) {
-    if (!files || files.length === 0) {
-      return 'Please upload a file';
-    }
-    for (let i = 0; i < files.length; i++) {
-      if (!allowedMimeTypes.includes(files[i].type)) {
-        return 'Invalid file type';
-      }
-    }
-    return true;
-  }
-
-  async function uploadFiles(
-    files?: FileList,
-    collectionIds?: string[],
-    tags?: string[],
-  ) {
-    if (!files) return;
-
-    const uploads = Array.from(files).map((file) => ({
-      title: file.name,
-      file: {
-        upload: file,
-      },
-      collections: {
-        connect: collectionIds
-          ? collectionIds.map((c) => ({
-              id: c,
-            }))
-          : [],
-      },
-      tags: {
-        connect: tags ? tags.map((t) => ({ id: t })) : [],
-      },
-    }));
-
-    const res = await uploadDocuments({ variables: { data: uploads } });
-    if (res.errors) {
-      res.errors.forEach((error) => {
-        addToast({
-          title: 'Error',
-          message: error.message,
-          tone: 'negative',
-        });
-      });
-    } else if (res.data) {
-      addToast({
-        title: 'Documents Uploaded',
-        message: 'Documents uploaded successfully',
-        tone: 'positive',
-      });
-      reset();
-    }
-  }
-
-  function removeFile(name: string) {
-    const newFiles = Array.from(files).filter((file) => file.name !== name);
-    const data = new DataTransfer();
-    newFiles.forEach((file) => data.items.add(file));
-    setValue('files', data.files, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-    trigger('files');
-  }
+  const {
+    collections,
+    tags,
+    form: {
+      formState: { errors, isLoading, isValid },
+      ...form
+    },
+    formRef,
+    files,
+    onSubmit,
+    removeFile,
+  } = useBulkDocumentUpload(selectedTags);
 
   function handleFileFieldClick(e: React.MouseEvent) {
     if (formRef.current) {
@@ -194,11 +63,11 @@ export default function BulkDocumentUpload() {
     f.forEach((file) => data.items.add(file));
     nf.forEach((file) => data.items.add(file));
 
-    setValue('files', data.files, {
+    form.setValue('files', data.files, {
       shouldValidate: true,
       shouldDirty: true,
     });
-    trigger('files');
+    form.trigger('files');
   }
 
   return (
@@ -206,7 +75,7 @@ export default function BulkDocumentUpload() {
       <h1 className="text-4xl font-bold">Upload Documents</h1>
 
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={onSubmit}
         className="flex flex-col items-start gap-4"
         ref={formRef}
       >
@@ -226,7 +95,7 @@ export default function BulkDocumentUpload() {
         <FileDropInput
           invalid={!!errors.files}
           errorMessage={errors.files?.message}
-          register={register('files', {
+          register={form.register('files', {
             validate: validateFiles,
             required: true,
           })}
