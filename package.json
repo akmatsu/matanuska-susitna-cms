@@ -11,6 +11,7 @@
     "cms:migrate": "pnpm turbo run migrate --filter=cms",
     "cms:publish-worker": "pnpm turbo run start:publish-worker --filter=cms",
     "cms:process-page-views-worker": "pnpm turbo run start:process-page-views-worker --filter=cms",
+    "cms:seed": "pnpm turbo run db:seed --filter=cms",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

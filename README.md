@@ -7,71 +7,50 @@ A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuri
 - 🚀 Headless CMS powered by Keystone.js
 - 📱 GraphQL API for flexible content delivery
 - 🔍 Full-text search powered by TypeSense
-- 🔐 Azure AD authentication integration
+- 🔐 Entra AD authentication integration
 - 📦 S3 storage integration for media files
 - 🔄 Advanced content workflow with draft/publish system
 - 👥 Role-based access control
 - 📬 GovDelivery integration for notifications
 
-## Prerequisites
+## Dev Prerequisites
 
-- Node.js 20+
-- PostgreSQL database
-- TypeSense server
-- Azure AD account (for authentication)
-- AWS S3 bucket (for file storage)
-- pnpm package manager
+- [Node.js 20+](https://nodejs.org/en/download/)
+- [PostgreSQL database](https://www.postgresql.org/download/) - Follow instructions for your OS. If you're a borough employee using WSL, follow [Ubuntu instructions for PostgreSQL APT Repository](https://www.postgresql.org/download/linux/ubuntu/).
+- [TypeSense server](https://typesense.org/docs/guide/install-typesense.html#option-2-local-machine-self-hosting) - self-hosted, look for your OS instructions If you're a borough employee using WSL, follow [DEB package instructions](https://typesense.org/docs/guide/install-typesense.html#deb-package-on-ubuntu-debian).
+- [pnpm package manager](https://pnpm.io/installation#using-npm)
+- Entra AD account (for authentication) - contact Web Team for help.
 
-## Getting Started
+## Setting up Dev Environment
 
+1. Make sure you've installed all the [prerequisites](#dev-prerequisites).
 1. Clone the repository
-2. Install dependencies:
+1. Install dependencies:
 
    ```bash
    pnpm install
    ```
 
-3. Set up environment variables:
-   Create a `.env` file in the `apps/cms` directory with the following variables:
+1. Set up environment variables:
+   copy `apps/cms/.env.example` to `apps/cms/.env` and fill in the required values.
 
-   ```
-   DATABASE_NAME=your_db_name
-   DATABASE_USER=your_db_user
-   DATABASE_HOST=your_db_host
-   DATABASE_PASSWORD=your_db_password
-   DATABASE_PORT=5432
-   DATABASE_PROVIDER=postgresql
-   DATABASE_PROTOCOL=postgres
-
-   NEXTAUTH_URL=http://localhost:3000
-   SESSION_SECRET=your_session_secret
-
-   AD_TENANT_ID=your_azure_tenant_id
-   AD_CLIENT_ID=your_azure_client_id
-   AD_CLIENT_SECRET=your_azure_client_secret
-
-   S3_BUCKET_NAME=your_bucket_name
-   S3_REGION=your_region
-   S3_ACCESS_KEY_ID=your_access_key
-   S3_SECRET_ACCESS_KEY=your_secret_key
-
-   TYPESENSE_API_KEY=your_typesense_key
-   TYPESENSE_HOST=localhost
-   TYPESENSE_PORT=8108
-   TYPESENSE_PROTOCOL=http
-
-   GOV_DELIVERY_USERNAME=your_govdelivery_username
-   GOV_DELIVERY_PASSWORD=your_govdelivery_password
-   GOV_DELIVERY_SUB_DOMAIN=your_govdelivery_subdomain
+   ```bash
+   cp apps/cms/.env.example apps/cms/.env
    ```
 
-4. Run database migrations:
+1. Run database migrations:
 
    ```bash
    pnpm run cms:migrate
    ```
 
-5. Start the development server:
+1. Seed Data (optional):
+
+   ```bash
+   pnpm run cms:seed
+   ```
+
+1. Start the development server:
    ```bash
    pnpm run cms:dev
    ```
@@ -104,20 +83,13 @@ The project includes GitHub Actions workflows for automated deployment. The depl
 
 ## Available Scripts
 
-- `pnpm run cms:dev` - Start development server
-- `pnpm run cms:build` - Build for production
-- `pnpm run cms:start` - Start production server
-- `pnpm run cms:migrate` - Run database migrations
-- `pnpm run collections:create` - Create TypeSense collections
-- `pnpm run collections:remove` - Remove TypeSense collections
-- `pnpm run typesense:import:services` - Import services to TypeSense
-- `pnpm run typesense:import:communities` - Import communities to TypeSense
+Review root [package.json](./package.json).
 
 ## Contributing
 
 1. Create a new branch for your feature
 2. Make your changes
-3. Submit a pull request
+3. [Submit a pull request in GitHub](https://github.com/akmatsu/matanuska-susitna-cms/pulls)
 
 ## License
 
