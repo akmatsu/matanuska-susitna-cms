@@ -1,3 +1,10 @@
+## [0.44.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.1...v0.44.2) (2025-10-10)
+
+
+### Bug Fixes
+
+* fixed items still showing up in search after being deleted ([130656d](https://github.com/akmatsu/matanuska-susitna-cms/commit/130656dbf490b87ba53ec0122a6ed2f35e52bfed))
+
 ## [0.44.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.0...v0.44.1) (2025-09-30)
 
 
