@@ -12,6 +12,7 @@ import {
 import { relationship, select, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../../utils/emailUtils';
 import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import { logger } from '../../../configs/logger';
 
 const {
   Main: PublicNotice,

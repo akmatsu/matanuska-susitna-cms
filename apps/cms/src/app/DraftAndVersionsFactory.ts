@@ -174,10 +174,10 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
       hooks: {
         ...(opts.hooks && opts.hooks),
         ...(opts.mainHooks && opts.mainHooks),
-        async beforeOperation({ operation, item, context }) {
-          const it: BaseItem | undefined = item as BaseItem | undefined;
-          if (operation === 'delete' && it?.id) {
-            const sudoCtx = context.sudo();
+        async beforeOperation(args) {
+          const it: BaseItem | undefined = args.item as BaseItem | undefined;
+          if (args.operation === 'delete' && it?.id) {
+            const sudoCtx = args.context.sudo();
             const id = it.id.toString();
 
             const versions = await sudoCtx.db[listKey + 'Version'].findMany({
@@ -199,6 +199,16 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
             await sudoCtx.db[listKey + 'Draft'].deleteMany({
               where: drafts.map((v) => ({ id: v.id.toString() })),
             });
+
+            const userHook = opts.mainHooks?.beforeOperation;
+            if (typeof userHook === 'function') {
+              await userHook(args);
+            } else if (
+              typeof userHook === 'object' &&
+              userHook[args.operation]
+            ) {
+              await userHook[args.operation]!(args as any);
+            }
           }
         },
 
