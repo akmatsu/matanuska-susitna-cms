@@ -15,8 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n  mutation CreateDocuments($data: [DocumentCreateInput!]!) {\n    createDocuments(data: $data) {\n      id\n      title\n      file {\n        filename\n        filesize\n        url\n      }\n      tags {\n        id\n        name\n      }\n    }\n  }\n": typeof types.CreateDocumentsDocument,
-    "\n  query Tags {\n    tags {\n      id\n      name\n    }\n  }\n": typeof types.TagsDocument,
-    "\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n": typeof types.QueryDocument,
+    "\n  query Tags($query: String = \"\") {\n    tags(where: { name: { contains: $query, mode: insensitive } }) {\n      id\n      name\n    }\n  }\n": typeof types.TagsDocument,
+    "\n  query Query($query: String = \"\") {\n    documentCollections(\n      where: { title: { contains: $query, mode: insensitive } }\n    ) {\n      id\n      title\n    }\n  }\n": typeof types.QueryDocument,
     "\n      query GetServices($where: ServiceWhereInput!) {\n        services(where: $where) {\n          title\n          slug\n          id\n        }\n      }\n    ": typeof types.GetServicesDocument,
     "\n    query DocumentCollection($where: DocumentCollectionWhereUniqueInput!) {\n      documentCollection(where: $where) {\n        id\n        title\n        documents {\n          id\n          title\n          file {\n            filename\n            filesize\n            url\n          }\n        }\n      }\n    }\n  ": typeof types.DocumentCollectionDocument,
     "\n    query DocumentCollections($where: DocumentCollectionWhereInput!) {\n      documentCollections(where: $where) {\n        id\n        title\n      }\n    }\n  ": typeof types.DocumentCollectionsDocument,
@@ -26,8 +26,8 @@ type Documents = {
 };
 const documents: Documents = {
     "\n  mutation CreateDocuments($data: [DocumentCreateInput!]!) {\n    createDocuments(data: $data) {\n      id\n      title\n      file {\n        filename\n        filesize\n        url\n      }\n      tags {\n        id\n        name\n      }\n    }\n  }\n": types.CreateDocumentsDocument,
-    "\n  query Tags {\n    tags {\n      id\n      name\n    }\n  }\n": types.TagsDocument,
-    "\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n": types.QueryDocument,
+    "\n  query Tags($query: String = \"\") {\n    tags(where: { name: { contains: $query, mode: insensitive } }) {\n      id\n      name\n    }\n  }\n": types.TagsDocument,
+    "\n  query Query($query: String = \"\") {\n    documentCollections(\n      where: { title: { contains: $query, mode: insensitive } }\n    ) {\n      id\n      title\n    }\n  }\n": types.QueryDocument,
     "\n      query GetServices($where: ServiceWhereInput!) {\n        services(where: $where) {\n          title\n          slug\n          id\n        }\n      }\n    ": types.GetServicesDocument,
     "\n    query DocumentCollection($where: DocumentCollectionWhereUniqueInput!) {\n      documentCollection(where: $where) {\n        id\n        title\n        documents {\n          id\n          title\n          file {\n            filename\n            filesize\n            url\n          }\n        }\n      }\n    }\n  ": types.DocumentCollectionDocument,
     "\n    query DocumentCollections($where: DocumentCollectionWhereInput!) {\n      documentCollections(where: $where) {\n        id\n        title\n      }\n    }\n  ": types.DocumentCollectionsDocument,
@@ -57,11 +57,11 @@ export function gql(source: "\n  mutation CreateDocuments($data: [DocumentCreate
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query Tags {\n    tags {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query Tags {\n    tags {\n      id\n      name\n    }\n  }\n"];
+export function gql(source: "\n  query Tags($query: String = \"\") {\n    tags(where: { name: { contains: $query, mode: insensitive } }) {\n      id\n      name\n    }\n  }\n"): (typeof documents)["\n  query Tags($query: String = \"\") {\n    tags(where: { name: { contains: $query, mode: insensitive } }) {\n      id\n      name\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n"): (typeof documents)["\n  query Query {\n    documentCollections {\n      id\n      title\n    }\n  }\n"];
+export function gql(source: "\n  query Query($query: String = \"\") {\n    documentCollections(\n      where: { title: { contains: $query, mode: insensitive } }\n    ) {\n      id\n      title\n    }\n  }\n"): (typeof documents)["\n  query Query($query: String = \"\") {\n    documentCollections(\n      where: { title: { contains: $query, mode: insensitive } }\n    ) {\n      id\n      title\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
