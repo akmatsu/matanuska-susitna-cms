@@ -1,3 +1,10 @@
+## [0.44.3](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.2...v0.44.3) (2025-10-13)
+
+
+### Bug Fixes
+
+* removed type from bulk board typesense indexing ([2b5ba04](https://github.com/akmatsu/matanuska-susitna-cms/commit/2b5ba04054b4def460aae74903f28212c57d97c9))
+
 ## [0.44.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.1...v0.44.2) (2025-10-10)
 
 
