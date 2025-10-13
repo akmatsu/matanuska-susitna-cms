@@ -1,3 +1,10 @@
+## [0.44.5](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.4...v0.44.5) (2025-10-13)
+
+
+### Bug Fixes
+
+* fixed overflow issues in options dropdown ([a5ba379](https://github.com/akmatsu/matanuska-susitna-cms/commit/a5ba379f967f4705f24eb45ab672b80aa03fed82))
+
 ## [0.44.4](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.3...v0.44.4) (2025-10-13)
 
 
