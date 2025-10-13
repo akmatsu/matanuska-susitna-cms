@@ -47,7 +47,7 @@ A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuri
 1. Seed Data (optional):
 
    ```bash
-   pnpm run cms:seed
+   pnpm run db:seed --filter=cms
    ```
 
 1. Start the development server:
@@ -55,7 +55,7 @@ A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuri
    pnpm run cms:dev
    ```
 
-The CMS will be available at http://localhost:3000
+The CMS will be available at [`http://localhost:3333`](http://localhost:3333).
 
 ## Project Structure
 
