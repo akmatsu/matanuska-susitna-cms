@@ -90,7 +90,7 @@ export function DropDownSearchField(props: {
         <ComboboxOptions
           transition
           className={clsx(
-            'mt-2 flex max-h-[250px] w-[var(--input-width)] flex-col gap-1 overflow-auto rounded border bg-gray-50 p-2 shadow',
+            'mt-2 flex max-h-[250px] w-[var(--input-width)] flex-col gap-1 overflow-y-auto rounded border bg-gray-50 p-2 shadow',
             'transition duration-100 ease-in data-[closed]:opacity-0',
           )}
           anchor="bottom"
@@ -100,8 +100,8 @@ export function DropDownSearchField(props: {
               key={item.id}
               value={item}
               className={clsx(
-                'group truncate rounded p-1 whitespace-nowrap',
-                'transition-colors duration-100 hover:cursor-pointer hover:bg-gray-100',
+                'group rounded p-1',
+                'block overflow-clip text-ellipsis whitespace-nowrap transition-colors duration-100 hover:cursor-pointer hover:bg-gray-100',
                 'data-focus:bg-blue-100',
               )}
             >
