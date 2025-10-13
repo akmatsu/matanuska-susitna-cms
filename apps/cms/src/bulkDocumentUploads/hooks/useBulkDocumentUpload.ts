@@ -1,7 +1,9 @@
 import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import { useToasts } from '@keystone-ui/toast';
+import { traceGlobals } from 'next/dist/trace/shared';
 import { FormEvent, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { search } from 'voca';
 
 type FormData = {
   files: FileList;
@@ -27,8 +29,8 @@ const CREATE_DOCUMENTS_MUTATION = gql`
 `;
 
 const GET_TAGS_QUERY = gql`
-  query Tags {
-    tags {
+  query Tags($query: String = "") {
+    tags(where: { name: { contains: $query, mode: insensitive } }) {
       id
       name
     }
@@ -36,8 +38,10 @@ const GET_TAGS_QUERY = gql`
 `;
 
 const GET_DOCUMENT_COLLECTIONS_QUERY = gql`
-  query Query {
-    documentCollections {
+  query Query($query: String = "") {
+    documentCollections(
+      where: { title: { contains: $query, mode: insensitive } }
+    ) {
       id
       title
     }
@@ -133,5 +137,15 @@ export function useBulkDocumentUpload(
     files,
     onSubmit,
     removeFile,
+    searchCollections(query: string) {
+      collections.refetch({
+        query,
+      });
+    },
+    searchTags(query: string) {
+      tags.refetch({
+        query,
+      });
+    },
   };
 }

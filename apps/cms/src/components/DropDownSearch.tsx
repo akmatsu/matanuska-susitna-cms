@@ -1,8 +1,5 @@
+'use client';
 import {
-  // Listbox,
-  // ListboxButton,
-  // ListboxOption,
-  // ListboxOptions,
   Combobox,
   ComboboxButton,
   ComboboxInput,
@@ -17,40 +14,45 @@ export function DropDownSearchField(props: {
   onChange?: (value: any) => void;
   data?: any[];
   label?: string;
+  onQueryChange?: (query: string) => void;
 }) {
   return (
     <FieldContainer>
       {props.label && (
-        <FieldLabel htmlFor="document_collection">{props.label}</FieldLabel>
+        <FieldLabel htmlFor={props.label} className="hover:cursor-pointer">
+          {props.label}
+        </FieldLabel>
       )}
 
       <Combobox
         value={props.value}
         onChange={props.onChange}
         multiple
-        name="document_collection"
+        immediate
+        name={props.label}
       >
-        {/* <div className="flex gap-1 overflow-auto py-2">
-          {props.value?.map((c: any) => (
-            <span
-              className="rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap"
-              key={c.id}
-            >
-              {c.title || c.label || c.name}
-            </span>
-          ))}
-        </div> */}
         <div className="relative">
+          <div className="flex gap-1 overflow-auto">
+            {props.value?.map((c: any) => (
+              <span
+                className="h-full rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap"
+                key={c.id}
+              >
+                {c.title || c.label || c.name}
+              </span>
+            ))}
+          </div>
           <ComboboxInput
-            id="document_collection"
+            id={props.label}
             className={clsx(
-              'flex h-9 w-80 items-center justify-between border bg-gray-50 px-2 hover:cursor-pointer hover:bg-gray-100',
+              'flex h-9 w-80 items-center justify-between rounded border bg-gray-50 px-2 hover:bg-gray-100',
             )}
+            onChange={(e) => props.onQueryChange?.(e.target.value)}
           ></ComboboxInput>
-          <ComboboxButton>
+          <ComboboxButton className="group absolute inset-y-0 top-1/2 right-0 h-full -translate-y-1/2 rounded px-2.5 hover:cursor-pointer">
             <span
               className={clsx(
-                'icon-[mdi--chevron-down] size-5 leading-5 data-[open]:rotate-180',
+                'icon-[mdi--chevron-down] transitions-colors size-5 leading-5 text-gray-500 group-hover:text-gray-800',
               )}
             ></span>
           </ComboboxButton>
@@ -77,6 +79,9 @@ export function DropDownSearchField(props: {
               {item.title || item.name || item.label}
             </ComboboxOption>
           ))}
+          {props.data?.length === 0 && (
+            <div className="p-2 text-gray-500">No results found</div>
+          )}
         </ComboboxOptions>
       </Combobox>
     </FieldContainer>

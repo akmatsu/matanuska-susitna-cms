@@ -1,3 +1,4 @@
+'use client';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import { Button } from '@headlessui/react';
 import { useState } from 'react';
@@ -16,6 +17,7 @@ export default function BulkDocumentUpload() {
       id: string;
     }[]
   >([]);
+
   const [selectedTags, setSelectedTags] = useState<
     { id: string; name: string }[]
   >([]);
@@ -31,6 +33,8 @@ export default function BulkDocumentUpload() {
     files,
     onSubmit,
     removeFile,
+    searchCollections,
+    searchTags,
   } = useBulkDocumentUpload(selectedTags);
 
   function handleFileFieldClick(e: React.MouseEvent) {
@@ -83,12 +87,14 @@ export default function BulkDocumentUpload() {
           label="Document Collections"
           data={collections.data?.documentCollections}
           onChange={setSelectedCollections}
+          onQueryChange={searchCollections}
           value={selectedCollections}
         />
         <DropDownSearchField
           label="Tags"
           data={tags.data?.tags}
           onChange={setSelectedTags}
+          onQueryChange={searchTags}
           value={selectedTags}
         />
 
