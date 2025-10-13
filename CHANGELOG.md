@@ -1,3 +1,10 @@
+## [0.44.4](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.3...v0.44.4) (2025-10-13)
+
+
+### Bug Fixes
+
+* improved UI of dropdownsearch component ([4c10849](https://github.com/akmatsu/matanuska-susitna-cms/commit/4c108497e6bf1c2d45615e00e85102cb4c5ab48d))
+
 ## [0.44.3](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.2...v0.44.3) (2025-10-13)
 
 
