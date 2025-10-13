@@ -16,6 +16,10 @@ export function DropDownSearchField(props: {
   label?: string;
   onQueryChange?: (query: string) => void;
 }) {
+  function removeSelection(id: string) {
+    props.onChange?.(props.value.filter((v: any) => v.id !== id));
+  }
+
   return (
     <FieldContainer>
       {props.label && (
@@ -31,17 +35,32 @@ export function DropDownSearchField(props: {
         immediate
         name={props.label}
       >
-        <div className="relative">
-          <div className="flex gap-1 overflow-auto">
+        {props.value && (
+          <ul className="mb-2 flex gap-1 overflow-auto">
             {props.value?.map((c: any) => (
-              <span
-                className="h-full rounded-full bg-blue-100 px-2 py-1 text-xs whitespace-nowrap"
+              <li
+                className="flex h-full items-center gap-0.5 rounded-full bg-blue-100 text-xs whitespace-nowrap"
                 key={c.id}
               >
-                {c.title || c.label || c.name}
-              </span>
+                <div className="py-1 pl-2">
+                  <span>{c.title || c.label || c.name}</span>
+                </div>
+                <button
+                  className="rounded-full p-1 hover:cursor-pointer hover:bg-blue-200 focus:ring-2 focus:ring-blue-300 focus:outline-none"
+                  title="Remove"
+                  aria-label={`Remove selection: ${c.title || c.label || c.name}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    removeSelection(c.id);
+                  }}
+                >
+                  <span className="icon-[mdi--close]"></span>
+                </button>
+              </li>
             ))}
-          </div>
+          </ul>
+        )}
+        <div className="relative">
           <ComboboxInput
             id={props.label}
             className={clsx(
