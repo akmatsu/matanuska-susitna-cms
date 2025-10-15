@@ -1,3 +1,10 @@
+# [0.45.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.5...v0.45.0) (2025-10-15)
+
+
+### Features
+
+* added main building address to payment template ([684b5db](https://github.com/akmatsu/matanuska-susitna-cms/commit/684b5db412777c74e8869d91f291eace783f5c0e))
+
 ## [0.44.5](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.4...v0.44.5) (2025-10-13)
 
 
