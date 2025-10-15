@@ -4,7 +4,7 @@ export const MD_PAYMENTS_ALL_STEPS = `## Pay online (Card)
 :::step
 Go to the payment portal
 
-Navigate to our online [[PUT LINK HERE]](https://matanuskasusitnaboroughak.tylerportico.com/payments/billsearch/miscellaneous-payments/f0c39822-ad9c-4782-935f-ecaedabdd43d)
+Navigate to our online [[PUT LINK HERE]]
 :::
 ::::
 
@@ -66,7 +66,9 @@ There are two locations:
 
 **Station 6-1** 101 W Swanson, Wasilla, AK, 99654
 
-**Station 6-5** 680 N. Seward-Meridian Parkway, Wasilla, AK, 99654
+**Station 6-5** 680 N Seward-Meridian Parkway, Wasilla, AK, 99654
+
+**Main Building** 350 E Dahlia Ave, Palmer, AK, 99645
 :::
 
 :::step
