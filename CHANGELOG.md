@@ -1,3 +1,10 @@
+## [0.45.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.45.0...v0.45.1) (2025-10-16)
+
+
+### Bug Fixes
+
+* now correctly adding bulk uploaded files to selected collections ([c280c41](https://github.com/akmatsu/matanuska-susitna-cms/commit/c280c41a9b4e297c5470d50a9ebce9287069f0a4))
+
 # [0.45.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.44.5...v0.45.0) (2025-10-15)
 
 
