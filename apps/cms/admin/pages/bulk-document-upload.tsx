@@ -35,7 +35,7 @@ export default function BulkDocumentUpload() {
     removeFile,
     searchCollections,
     searchTags,
-  } = useBulkDocumentUpload(selectedTags);
+  } = useBulkDocumentUpload(selectedCollections, selectedTags);
 
   function handleFileFieldClick(e: React.MouseEvent) {
     if (formRef.current) {
@@ -89,6 +89,7 @@ export default function BulkDocumentUpload() {
           onChange={setSelectedCollections}
           onQueryChange={searchCollections}
           value={selectedCollections}
+          placeholder="Select document collections..."
         />
         <DropDownSearchField
           label="Tags"
@@ -96,6 +97,7 @@ export default function BulkDocumentUpload() {
           onChange={setSelectedTags}
           onQueryChange={searchTags}
           value={selectedTags}
+          placeholder="Select tags..."
         />
 
         <FileDropInput

@@ -12,9 +12,10 @@ import { clsx } from 'clsx';
 
 export function DropDownSearchField(props: {
   value?: any;
-  onChange?: (value: any) => void;
   data?: any[];
   label?: string;
+  placeholder?: string;
+  onChange?: (value: any) => void;
   onQueryChange?: (query: string) => void;
 }) {
   function removeSelection(id: string) {
@@ -48,6 +49,7 @@ export function DropDownSearchField(props: {
               'flex h-9 w-80 items-center justify-between rounded border bg-gray-50 px-2 hover:bg-gray-100',
             )}
             onChange={(e) => props.onQueryChange?.(e.target.value)}
+            placeholder={props.placeholder || 'Select...'}
           ></ComboboxInput>
           <ComboboxButton
             className="group absolute inset-y-0 top-1/2 right-0 h-full -translate-y-1/2 rounded px-2.5 hover:cursor-pointer"

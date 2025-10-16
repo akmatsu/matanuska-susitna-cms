@@ -49,6 +49,7 @@ const GET_DOCUMENT_COLLECTIONS_QUERY = gql`
 `;
 
 export function useBulkDocumentUpload(
+  selectedCollections: { title: string; id: string }[] = [],
   selectedTags: { id: string; name: string }[] = [],
 ) {
   const [uploadDocuments] = useMutation(CREATE_DOCUMENTS_MUTATION);
@@ -67,9 +68,10 @@ export function useBulkDocumentUpload(
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     form.handleSubmit(async (data) => {
+      console.log(data);
       uploadFiles(
         data.files,
-        data.document_collection || [],
+        selectedCollections.map((c) => c.id),
         selectedTags.map((t) => t.id),
       );
     })();
