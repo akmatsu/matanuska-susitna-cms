@@ -7672,6 +7672,7 @@ type Trail implements BasePageWithSlug & BasePage & BasePageWithActions {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -7739,6 +7740,7 @@ input TrailWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  maintainer: StringNullableFilter
   open: BooleanFilter
   summer: BooleanFilter
   fall: BooleanFilter
@@ -7790,6 +7792,7 @@ input TrailOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  maintainer: OrderDirection
   open: OrderDirection
   summer: OrderDirection
   fall: OrderDirection
@@ -7841,6 +7844,7 @@ input TrailUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -7921,6 +7925,7 @@ input TrailCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -8007,6 +8012,7 @@ type TrailVersion {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -8067,6 +8073,7 @@ input TrailVersionWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  maintainer: StringNullableFilter
   open: BooleanFilter
   summer: BooleanFilter
   fall: BooleanFilter
@@ -8102,6 +8109,7 @@ input TrailVersionOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  maintainer: OrderDirection
   open: OrderDirection
   summer: OrderDirection
   fall: OrderDirection
@@ -8152,6 +8160,7 @@ input TrailVersionUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -8215,6 +8224,7 @@ input TrailVersionCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -8288,6 +8298,7 @@ type TrailDraft {
   plansCount(where: PlanWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -8346,6 +8357,7 @@ input TrailDraftWhereInput {
   plans: PlanManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  maintainer: StringNullableFilter
   open: BooleanFilter
   summer: BooleanFilter
   fall: BooleanFilter
@@ -8380,6 +8392,7 @@ input TrailDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  maintainer: OrderDirection
   open: OrderDirection
   summer: OrderDirection
   fall: OrderDirection
@@ -8430,6 +8443,7 @@ input TrailDraftUpdateInput {
   plans: PlanRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean
@@ -8486,6 +8500,7 @@ input TrailDraftCreateInput {
   plans: PlanRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  maintainer: String
   open: Boolean
   summer: Boolean
   fall: Boolean

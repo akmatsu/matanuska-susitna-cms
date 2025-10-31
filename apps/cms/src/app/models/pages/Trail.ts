@@ -27,6 +27,23 @@ const {
         actions: true,
         documents: true,
       }),
+      maintainer: select({
+        options: [
+          'AURORA DOG MUSHERS CLUB',
+          'BIG LAKE TRAILS',
+          'CURRY RIDGE RIDERS',
+          'DENALI NORDIC SKI CLUB',
+          'LAKE LOUISE SNOWMACHINE CLUB',
+          'MAT-SU SKI CLUB',
+          'MID-VALLEY TRAIL CLUB',
+          'PETERSVILLE COMMUNITY NON-PROFIT CORP',
+          'SKEETAWK',
+          'SKWENTNA TRAIL GROOMING COMMITTEE',
+          'VALLEY MOUNTAIN BIKERS AND HIKERS',
+          'WILLOW TRAIL COMMITTEE',
+          'MAT-SU BOROUGH',
+        ],
+      }),
       open: checkbox({ defaultValue: false }),
       ...group({
         label: 'Seasons',
