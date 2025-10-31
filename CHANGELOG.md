@@ -1,3 +1,10 @@
+# [0.46.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.45.1...v0.46.0) (2025-10-31)
+
+
+### Features
+
+* added maintainer to trails CT ([643dbbd](https://github.com/akmatsu/matanuska-susitna-cms/commit/643dbbd76aeec640cb97476849c95515227e073f))
+
 ## [0.45.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.45.0...v0.45.1) (2025-10-16)
 
 
