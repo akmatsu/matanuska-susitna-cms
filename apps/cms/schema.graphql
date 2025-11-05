@@ -10696,6 +10696,8 @@ type Contact {
   name: String
   title: String
   phone: String
+  fax: String
+  website: ExternalLink
   email: String
   address: Location
 }
@@ -10712,6 +10714,8 @@ input ContactWhereInput {
   name: StringFilter
   title: StringNullableFilter
   phone: StringNullableFilter
+  fax: StringNullableFilter
+  website: ExternalLinkWhereInput
   email: StringNullableFilter
   address: LocationWhereInput
 }
@@ -10721,6 +10725,7 @@ input ContactOrderByInput {
   name: OrderDirection
   title: OrderDirection
   phone: OrderDirection
+  fax: OrderDirection
   email: OrderDirection
 }
 
@@ -10728,6 +10733,8 @@ input ContactUpdateInput {
   name: String
   title: String
   phone: String
+  fax: String
+  website: ExternalLinkRelateToOneForUpdateInput
   email: String
   address: LocationRelateToOneForUpdateInput
 }
@@ -10741,6 +10748,8 @@ input ContactCreateInput {
   name: String
   title: String
   phone: String
+  fax: String
+  website: ExternalLinkRelateToOneForCreateInput
   email: String
   address: LocationRelateToOneForCreateInput
 }

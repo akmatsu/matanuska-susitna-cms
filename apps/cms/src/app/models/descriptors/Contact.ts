@@ -85,6 +85,37 @@ export const Contact = list({
         isNullable: true,
       },
     }),
+    fax: text({
+      validation: {
+        match: {
+          regex: phoneNumberRegex,
+          explanation:
+            'You must input a valid phone number. Example: 123-456-7890',
+        },
+        isRequired: false,
+      },
+      db: {
+        isNullable: true,
+      },
+    }),
+    website: relationship({
+      ref: 'ExternalLink',
+      ui: {
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+        displayMode: 'cards',
+        cardFields: ['label', 'url'],
+        inlineCreate: {
+          fields: ['label', 'url'],
+        },
+        inlineConnect: true,
+        inlineEdit: {
+          fields: ['label', 'url'],
+        },
+      },
+      many: false,
+    }),
     email: text({
       validation: {
         match: {

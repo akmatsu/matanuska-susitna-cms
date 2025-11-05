@@ -2552,6 +2552,7 @@ model ExternalLink {
   from_Plan_effort                             Plan[]           @relation("Plan_effort")
   from_PlanVersion_effort                      PlanVersion[]    @relation("PlanVersion_effort")
   from_PlanDraft_effort                        PlanDraft[]      @relation("PlanDraft_effort")
+  from_Contact_website                         Contact[]        @relation("Contact_website")
 
   @@index([urlId])
 }
@@ -2643,6 +2644,9 @@ model Contact {
   name                                      String                    @default("")
   title                                     String?
   phone                                     String?
+  fax                                       String?
+  website                                   ExternalLink?             @relation("Contact_website", fields: [websiteId], references: [id])
+  websiteId                                 String?                   @map("website")
   email                                     String?
   address                                   Location?                 @relation("Contact_address", fields: [addressId], references: [id])
   addressId                                 String?                   @map("address")
@@ -2690,6 +2694,7 @@ model Contact {
   from_EventVersion_contacts                EventVersion[]            @relation("EventVersion_contacts")
   from_ContactListItem_contact              ContactListItem[]         @relation("ContactListItem_contact")
 
+  @@index([websiteId])
   @@index([addressId])
 }
 
