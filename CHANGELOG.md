@@ -1,3 +1,10 @@
+# [0.47.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.46.0...v0.47.0) (2025-11-05)
+
+
+### Features
+
+* added fax and website fields to contacts ([143458f](https://github.com/akmatsu/matanuska-susitna-cms/commit/143458fb6b3d4f0b2e757bdf7dbbd6d92ea9c5d0))
+
 # [0.46.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.45.1...v0.46.0) (2025-10-31)
 
 
