@@ -140,8 +140,8 @@ jobs:
             set -e
 
             # Create temp and backup directory if they don't exist
-            cd cms
-            mkdir -p ./active
+            mkdir -p ./cms/active
+            cd ./cms
 
             # Unzip the files in the temp folder
             unzip -q -o ./cms.zip -d ./temp
