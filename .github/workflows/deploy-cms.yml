@@ -130,6 +130,13 @@ jobs:
       - name: Zip the required files
         run: zip -rq --symlinks cms.zip ./apps/cms/ ./node_modules/ ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./turbo.json ./.npmrc
 
+      - name: SSH into the server and ensure cms directory exists
+        run: |
+          ssh -o ServerAliveInterval=60 ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }} << 'EOF'
+            mkdir -p ./cms
+            exit
+          EOF
+
       - name: Upload zipped repo to server
         run: |
           scp cms.zip ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }}:/home/${{ env.EC2_SERVER_USER }}/cms
@@ -167,6 +174,7 @@ jobs:
             # Remove temporary folders.
             rm -rf ../cms.zip
             rm -rf ../backup
+            exit
           EOF
       - name: Remove GitHub actions IP from security group
         run: |
