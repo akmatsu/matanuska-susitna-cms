@@ -146,6 +146,7 @@ jobs:
             set -e
 
             # Create temp and backup directory if they don't exist
+            nvm use 22.21.0
             mkdir -p ./cms/active
             cd ./cms
 
