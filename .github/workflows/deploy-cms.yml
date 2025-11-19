@@ -85,19 +85,19 @@ jobs:
           DATABASE_PROVIDER=postgresql
           DATABASE_PROTOCOL=postgres
           WEB_PORT=3333
-          ORIGIN_HOST=https://www.matsu.gov
-          NEXTAUTH_URL=https://cms.matsu.gov
+          ORIGIN_HOST=${{github.ref_name == 'stage' && 'https://stage.matsu.gov' || 'https://www.matsu.gov'}}
+          NEXTAUTH_URL=${{github.ref_name == 'stage' && 'https://cms.stage.matsu.gov' || 'https://cms.matsu.gov'}}
           SESSION_SECRET=${{env.SESSION_SECRET}}
           AD_TENANT_ID=${{secrets.AD_TENANT_ID}}
           AD_CLIENT_ID=${{secrets.AD_CLIENT_ID}}
           AD_CLIENT_SECRET=${{secrets.AD_CLIENT_SECRET}}
-          AD_REDIRECT_HOST=https://cms.matsu.gov
+          AD_REDIRECT_HOST=${{github.ref_name == 'stage' && 'https://cms.stage.matsu.gov' || 'https://cms.matsu.gov'}}
           S3_BUCKET_NAME=${{env.S3_BUCKET_NAME}}
           S3_REGION=${{env.S3_REGION}}
           S3_ACCESS_KEY_ID=${{env.S3_ACCESS_KEY_ID}}
           S3_SECRET_ACCESS_KEY=${{env.S3_SECRET_ACCESS_KEY}}
           TYPESENSE_API_KEY=${{env.TYPESENSE_API_KEY}}
-          TYPESENSE_HOST=search.matsu.gov
+          TYPESENSE_HOST=${{github.ref_name == 'stage' && 'search-internal.stage.matsu.gov' || 'search.matsu.gov'}}
           TYPESENSE_PORT=443
           TYPESENSE_PROTOCOL=https
           GOV_DELIVERY_USERNAME=${{env.GOV_DELIVERY_USERNAME}}
