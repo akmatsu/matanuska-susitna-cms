@@ -145,6 +145,7 @@ jobs:
           ssh -o ServerAliveInterval=60 ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }} << 'EOF'
             set -e
 
+            cat ~/.bashrc
             source ~/.bashrc
 
             # Create temp and backup directory if they don't exist
