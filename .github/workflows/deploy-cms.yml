@@ -144,9 +144,11 @@ jobs:
         run: |
           ssh -o ServerAliveInterval=60 ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }} << 'EOF'
             set -e
-
-            cat ~/.bashrc
-            source ~/.bashrc
+            
+            # Load nvm
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
             # Create temp and backup directory if they don't exist
             node -v
@@ -180,6 +182,7 @@ jobs:
             rm -rf ../backup
           EOF
       - name: Remove GitHub actions IP from security group
+        if: always()
         run: |
           aws ec2 revoke-security-group-ingress \
             --group-id $AWS_INSTANCE_SG_ID \
