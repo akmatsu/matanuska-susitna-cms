@@ -891,6 +891,7 @@ export const iconSelect = select({
     { label: 'Cart variant', value: 'icon-[mdi--cart-variant]' },
     { label: 'Contract Outline', value: 'icon-[mdi--contract-outline]' },
     { label: 'Account group', value: 'icon-[mdi--account-group]' },
+    { label: 'Account group', value: 'icon-[mdi--account-group]' },
   ],
   ui: {
     views: './src/components/customFields/IconSelection',

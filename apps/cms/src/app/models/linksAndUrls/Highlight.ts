@@ -7,7 +7,6 @@ import {
   isAdmin,
 } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
-import { relationshipController } from '../../DraftAndVersionsFactory';
 
 export const Highlight = list({
   access: {
