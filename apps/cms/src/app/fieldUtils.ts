@@ -891,6 +891,10 @@ export const iconSelect = select({
     { label: 'Cart variant', value: 'icon-[mdi--cart-variant]' },
     { label: 'Contract Outline', value: 'icon-[mdi--contract-outline]' },
     { label: 'Account group', value: 'icon-[mdi--account-group]' },
+    {
+      label: 'Magnifying Glass Dollar',
+      value: 'icon-[fa7-solid--magnifying-glass-dollar]',
+    },
   ],
   ui: {
     views: './src/components/customFields/IconSelection',
