@@ -18,7 +18,7 @@ A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuri
 - [Node.js 20+](https://nodejs.org/en/download/)
 - [PostgreSQL database](https://www.postgresql.org/download/) - Follow instructions for your OS. If you're a borough employee using WSL, follow [Ubuntu instructions for PostgreSQL APT Repository](https://www.postgresql.org/download/linux/ubuntu/).
 - [TypeSense server](https://typesense.org/docs/guide/install-typesense.html#option-2-local-machine-self-hosting) - self-hosted, look for your OS instructions If you're a borough employee using WSL, follow [DEB package instructions](https://typesense.org/docs/guide/install-typesense.html#deb-package-on-ubuntu-debian).
-- [Redos Server](https://redis.io/docs/latest/operate/oss_and_stack/install/install-stack/apt/)
+- [Redis Server](https://redis.io/docs/latest/operate/oss_and_stack/install/install-stack/apt/)
 - [pnpm package manager](https://pnpm.io/installation#using-npm)
 - Entra AD account (for authentication) - contact Web Team for help.
 
