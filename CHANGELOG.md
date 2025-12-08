@@ -1,3 +1,10 @@
+## [0.48.2](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.48.1...v0.48.2) (2025-12-08)
+
+
+### Bug Fixes
+
+* removed filename transform function that was causing file upload issues ([cc4e1cf](https://github.com/akmatsu/matanuska-susitna-cms/commit/cc4e1cfa696ca6cbbad1b408d6d29b883537180e))
+
 ## [0.48.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.48.0...v0.48.1) (2025-12-08)
 
 
