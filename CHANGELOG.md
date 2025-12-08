@@ -1,3 +1,10 @@
+## [0.48.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.48.0...v0.48.1) (2025-12-08)
+
+
+### Bug Fixes
+
+* patched dependencies ([fb0a9bb](https://github.com/akmatsu/matanuska-susitna-cms/commit/fb0a9bbbf5da65cdef87cb21021e92311d54e931))
+
 # [0.48.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.47.0...v0.48.0) (2025-11-25)
 
 
