@@ -109,6 +109,7 @@ export default config<TypeInfo<Session>>({
           PageViewItemUnion: {
             __resolveType(value: any) {
               if ('__typename' in value) return value.__typename as string;
+              if ('policies' in value) return 'Policy';
               if ('howElectionsWork' in value) return 'ElectionsPage';
               if ('effort' in value) return 'Plan';
               if ('startDate' in value) return 'Event';
@@ -128,6 +129,7 @@ export default config<TypeInfo<Session>>({
           },
           InternalLinkSearch: {
             __resolveType(value: any) {
+              if ('policies' in value) return 'Policy';
               if ('effort' in value) return 'Plan';
               if ('startDate' in value) return 'Event';
               if ('primaryActionId' in value) return 'Service';
