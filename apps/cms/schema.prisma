@@ -2411,6 +2411,94 @@ model LandingPage {
   highlights  Highlight[] @relation("Highlight_landingPages")
 }
 
+model Policy {
+  id                          String          @id @default(cuid())
+  heroImage                   String?
+  title                       String          @unique @default("")
+  description                 String          @default("")
+  publishAt                   DateTime?
+  unpublishAt                 DateTime?
+  reviewDate                  DateTime?
+  slug                        String          @unique @default("")
+  owner                       User?           @relation("Policy_owner", fields: [ownerId], references: [id])
+  ownerId                     String?         @map("owner")
+  body                        String?
+  tags                        Tag[]           @relation("Policy_tags")
+  userGroups                  UserGroup[]     @relation("Policy_userGroups")
+  actions                     InternalLink[]  @relation("Policy_actions")
+  documents                   Document[]      @relation("Policy_documents")
+  contacts                    Contact[]       @relation("Policy_contacts")
+  createdAt                   DateTime?       @default(now())
+  updatedAt                   DateTime?       @default(now()) @updatedAt
+  policies                    Policy[]        @relation("Policy_policies")
+  status                      String          @default("unpublished")
+  drafts                      PolicyDraft[]   @relation("PolicyDraft_original")
+  makeDrafts                  String?
+  versions                    PolicyVersion[] @relation("PolicyVersion_original")
+  currentVersion              PolicyVersion?  @relation("Policy_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId            String?         @unique @map("currentVersion")
+  from_Policy_policies        Policy[]        @relation("Policy_policies")
+  from_PolicyVersion_policies PolicyVersion[] @relation("PolicyVersion_policies")
+  from_PolicyDraft_policies   PolicyDraft[]   @relation("PolicyDraft_policies")
+
+  @@index([ownerId])
+}
+
+model PolicyVersion {
+  id          String         @id @default(cuid())
+  original    Policy?        @relation("PolicyVersion_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
+  heroImage   String?
+  title       String         @default("")
+  description String         @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  owner       User?          @relation("PolicyVersion_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
+  body        String?
+  tags        Tag[]          @relation("PolicyVersion_tags")
+  userGroups  UserGroup[]    @relation("PolicyVersion_userGroups")
+  actions     InternalLink[] @relation("PolicyVersion_actions")
+  documents   Document[]     @relation("PolicyVersion_documents")
+  contacts    Contact[]      @relation("PolicyVersion_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  policies    Policy[]       @relation("PolicyVersion_policies")
+  isLive      Policy?        @relation("Policy_currentVersion")
+  republish   String?
+
+  @@index([originalId])
+  @@index([ownerId])
+}
+
+model PolicyDraft {
+  id          String         @id @default(cuid())
+  original    Policy?        @relation("PolicyDraft_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
+  heroImage   String?
+  title       String         @default("")
+  description String         @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  owner       User?          @relation("PolicyDraft_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
+  body        String?
+  tags        Tag[]          @relation("PolicyDraft_tags")
+  userGroups  UserGroup[]    @relation("PolicyDraft_userGroups")
+  actions     InternalLink[] @relation("PolicyDraft_actions")
+  documents   Document[]     @relation("PolicyDraft_documents")
+  contacts    Contact[]      @relation("PolicyDraft_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  policies    Policy[]       @relation("PolicyDraft_policies")
+  publish     String?
+
+  @@index([originalId])
+  @@index([ownerId])
+}
+
 model Document {
   id                                               String                    @id @default(cuid())
   title                                            String                    @default("")
@@ -2487,6 +2575,9 @@ model Document {
   from_Event_documents                             Event[]                   @relation("Event_documents")
   from_EventDraft_documents                        EventDraft[]              @relation("EventDraft_documents")
   from_EventVersion_documents                      EventVersion[]            @relation("EventVersion_documents")
+  from_Policy_documents                            Policy[]                  @relation("Policy_documents")
+  from_PolicyVersion_documents                     PolicyVersion[]           @relation("PolicyVersion_documents")
+  from_PolicyDraft_documents                       PolicyDraft[]             @relation("PolicyDraft_documents")
   from_DocumentListItem_document                   DocumentListItem[]        @relation("DocumentListItem_document")
 
   @@index([title])
@@ -2596,6 +2687,9 @@ model InternalLink {
   from_Event_actions                   Event[]                   @relation("Event_actions")
   from_EventDraft_actions              EventDraft[]              @relation("EventDraft_actions")
   from_EventVersion_actions            EventVersion[]            @relation("EventVersion_actions")
+  from_Policy_actions                  Policy[]                  @relation("Policy_actions")
+  from_PolicyVersion_actions           PolicyVersion[]           @relation("PolicyVersion_actions")
+  from_PolicyDraft_actions             PolicyDraft[]             @relation("PolicyDraft_actions")
   from_Highlight_linkedItem            Highlight[]               @relation("Highlight_linkedItem")
   from_Redirect_to                     Redirect[]                @relation("Redirect_to")
 }
@@ -2692,6 +2786,9 @@ model Contact {
   from_Event_contacts                       Event[]                   @relation("Event_contacts")
   from_EventDraft_contacts                  EventDraft[]              @relation("EventDraft_contacts")
   from_EventVersion_contacts                EventVersion[]            @relation("EventVersion_contacts")
+  from_Policy_contacts                      Policy[]                  @relation("Policy_contacts")
+  from_PolicyVersion_contacts               PolicyVersion[]           @relation("PolicyVersion_contacts")
+  from_PolicyDraft_contacts                 PolicyDraft[]             @relation("PolicyDraft_contacts")
   from_ContactListItem_contact              ContactListItem[]         @relation("ContactListItem_contact")
 
   @@index([websiteId])
@@ -2798,6 +2895,9 @@ model User {
   from_Event_owner                   Event[]                   @relation("Event_owner")
   from_EventDraft_owner              EventDraft[]              @relation("EventDraft_owner")
   from_EventVersion_owner            EventVersion[]            @relation("EventVersion_owner")
+  from_Policy_owner                  Policy[]                  @relation("Policy_owner")
+  from_PolicyVersion_owner           PolicyVersion[]           @relation("PolicyVersion_owner")
+  from_PolicyDraft_owner             PolicyDraft[]             @relation("PolicyDraft_owner")
   from_DocumentCollection_owner      DocumentCollection[]      @relation("DocumentCollection_owner")
   from_Url_owner                     Url[]                     @relation("Url_owner")
   from_Highlight_owner               Highlight[]               @relation("Highlight_owner")
@@ -2851,6 +2951,9 @@ model UserGroup {
   from_Event_userGroups                   Event[]                   @relation("Event_userGroups")
   from_EventDraft_userGroups              EventDraft[]              @relation("EventDraft_userGroups")
   from_EventVersion_userGroups            EventVersion[]            @relation("EventVersion_userGroups")
+  from_Policy_userGroups                  Policy[]                  @relation("Policy_userGroups")
+  from_PolicyVersion_userGroups           PolicyVersion[]           @relation("PolicyVersion_userGroups")
+  from_PolicyDraft_userGroups             PolicyDraft[]             @relation("PolicyDraft_userGroups")
   from_DocumentCollection_userGroups      DocumentCollection[]      @relation("DocumentCollection_userGroups")
   from_Highlight_userGroups               Highlight[]               @relation("Highlight_userGroups")
 
@@ -2909,6 +3012,9 @@ model Tag {
   from_Event_tags                   Event[]                   @relation("Event_tags")
   from_EventDraft_tags              EventDraft[]              @relation("EventDraft_tags")
   from_EventVersion_tags            EventVersion[]            @relation("EventVersion_tags")
+  from_Policy_tags                  Policy[]                  @relation("Policy_tags")
+  from_PolicyVersion_tags           PolicyVersion[]           @relation("PolicyVersion_tags")
+  from_PolicyDraft_tags             PolicyDraft[]             @relation("PolicyDraft_tags")
   from_Document_tags                Document[]                @relation("Document_tags")
   from_DocumentCollection_tags      DocumentCollection[]      @relation("DocumentCollection_tags")
   from_Image_tags                   Image[]                   @relation("Image_tags")

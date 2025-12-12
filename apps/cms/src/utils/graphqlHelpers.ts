@@ -16,6 +16,8 @@ export const graphqlExtendTypeDefs = gql`
     | Topic
     | Url
     | Document
+    | Policy
+    | ElectionsPage
 
   union Page =
     | Service
@@ -29,6 +31,7 @@ export const graphqlExtendTypeDefs = gql`
     | Trail
     | Topic
     | Plan
+    | Policy
 
   extend type Query {
     getPage(slug: String!, type: String!): Page
