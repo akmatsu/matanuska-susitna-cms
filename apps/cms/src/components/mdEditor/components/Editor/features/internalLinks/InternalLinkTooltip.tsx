@@ -33,23 +33,7 @@ export function InternalLinkTooltip() {
     query GetInternalLink($id: ID!, $type: String!) {
       getInternalLink(id: $id, type: $type) {
         __typename
-        ... on AssemblyDistrict {
-          id
-          title
-        }
-        ... on Board {
-          id
-          title
-        }
-        ... on BoardPage {
-          id
-          title
-        }
-        ... on Community {
-          id
-          title
-        }
-        ... on Facility {
+        ... on BasePage {
           id
           title
         }
@@ -57,31 +41,7 @@ export function InternalLinkTooltip() {
           id
           title
         }
-        ... on OrgUnit {
-          id
-          title
-        }
-        ... on Park {
-          id
-          title
-        }
-        ... on PublicNotice {
-          id
-          title
-        }
-        ... on Service {
-          id
-          title
-        }
-        ... on Trail {
-          id
-          title
-        }
         ... on Url {
-          id
-          title
-        }
-        ... on Topic {
           id
           title
         }
