@@ -1,10 +1,5 @@
 import { relationship, text } from '@keystone-6/core/fields';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -13,7 +8,8 @@ import {
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { basePage, basePageQuery } from '../basePage';
 
 /**
  * Creates a relationship with the {@link Service} model.

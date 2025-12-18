@@ -3,16 +3,12 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
+import { basePage, basePageQuery } from '../basePage';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 
 const listName = 'Park';
 

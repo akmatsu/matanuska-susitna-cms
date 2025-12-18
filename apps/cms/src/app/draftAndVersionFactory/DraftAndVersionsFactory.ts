@@ -1,5 +1,5 @@
 import { BaseFields, list, ListConfig } from '@keystone-6/core';
-import { generalOperationAccess } from './access';
+import { generalOperationAccess } from '../access';
 import {
   relationship,
   RelationshipFieldConfig,
@@ -12,14 +12,14 @@ import {
   ListAccessControl,
   ListHooks,
 } from '@keystone-6/core/types';
-import { mapDataFields } from '../utils/draftUtils';
-import { publishDraft } from '../components/customFields/publishDraft';
-import { BasePageOptions } from './fieldUtils';
+import { mapDataFields } from '../../utils/draftUtils';
+import { publishDraft } from '../../components/customFields/publishDraft';
+import { BasePageOptions } from '../fieldUtils';
 import { isPlural, plural, singular } from 'pluralize';
-import { deepMerge, lowercaseFirstLetter } from '../utils';
-import { getPublishQueue } from '../redis';
-import { createDrafts } from '../components/customFields/drafts';
-import { logger } from '../configs/logger';
+import { deepMerge, lowercaseFirstLetter } from '../../utils';
+import { getPublishQueue } from '../../redis';
+import { createDrafts } from '../../components/customFields/drafts';
+import { logger } from '../../configs/logger';
 import v from 'voca';
 
 interface Options {

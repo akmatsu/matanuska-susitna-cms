@@ -4,15 +4,11 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { integer, relationship } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { list } from '@keystone-6/core';
+import { basePage, basePageQuery } from '../basePage';
 
 export const FacilityListItem = list({
   access: {

@@ -2,10 +2,8 @@ import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
-  basePage,
-  basePageQuery,
   cardsUi,
   documentRelationshipSingle,
   sidebar,
@@ -13,6 +11,7 @@ import {
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
+import { basePage, basePageQuery } from '../basePage';
 import { group, list } from '@keystone-6/core';
 import {
   filterByPubStatus,
