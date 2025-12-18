@@ -1433,7 +1433,7 @@ input EarlyVotingLocationRelateToManyForCreateInput {
   connect: [EarlyVotingLocationWhereUniqueInput!]
 }
 
-type AssemblyDistrict implements BasePageWithSlug & BasePage & BasePageWithActions {
+type AssemblyDistrict implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -2417,7 +2417,7 @@ input AssemblyDistrictDraftCreateInput {
   publish: String
 }
 
-type Board implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Board implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -3082,7 +3082,7 @@ input BoardDraftCreateInput {
   publish: String
 }
 
-type Community implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Community implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -3714,7 +3714,7 @@ input CommunityDraftCreateInput {
   publish: String
 }
 
-type Facility implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Facility implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -4321,7 +4321,7 @@ input FacilityDraftCreateInput {
   publish: String
 }
 
-type OrgUnit implements BasePageWithSlug & BasePage & BasePageWithActions {
+type OrgUnit implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -5025,7 +5025,7 @@ input OrgUnitDraftCreateInput {
   publish: String
 }
 
-type Park implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Park implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -5628,7 +5628,7 @@ input ParkDraftCreateInput {
   publish: String
 }
 
-type PublicNotice implements BasePageWithSlug & BasePage & BasePageWithActions {
+type PublicNotice implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -6305,7 +6305,7 @@ input PublicNoticeDraftCreateInput {
   publish: String
 }
 
-type Service implements BasePageWithSlug & BasePage {
+type Service implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage {
   id: ID!
   canEdit: String
   heroImage: String
@@ -6979,7 +6979,7 @@ input ServiceDraftCreateInput {
   publish: String
 }
 
-type Topic implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Topic implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -7629,7 +7629,7 @@ input TopicDraftCreateInput {
   publish: String
 }
 
-type Trail implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Trail implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -8525,7 +8525,7 @@ input TrailDraftCreateInput {
   publish: String
 }
 
-type Plan implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Plan implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -9412,7 +9412,7 @@ input PlanDocumentCreateInput {
   document: DocumentRelateToOneForCreateInput
 }
 
-type Event implements BasePageWithSlug & BasePage & BasePageWithActions {
+type Event implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions {
   id: ID!
   canEdit: String
   heroImage: String
@@ -10151,6 +10151,464 @@ input LandingPageCreateInput {
   description: String
   body: String
   highlights: HighlightRelateToManyForCreateInput
+}
+
+type Policy implements BasePageWithSlug & BasePage & BasePageWithActions {
+  id: ID!
+  canEdit: String
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  slug: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
+  policiesCount(where: PolicyWhereInput! = {}): Int
+  status: String
+  drafts(where: PolicyDraftWhereInput! = {}, orderBy: [PolicyDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyDraftWhereUniqueInput): [PolicyDraft!]
+  draftsCount(where: PolicyDraftWhereInput! = {}): Int
+  makeDrafts: String
+  versions(where: PolicyVersionWhereInput! = {}, orderBy: [PolicyVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyVersionWhereUniqueInput): [PolicyVersion!]
+  versionsCount(where: PolicyVersionWhereInput! = {}): Int
+  currentVersion: PolicyVersion
+}
+
+input PolicyWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+  currentVersion: PolicyVersionWhereUniqueInput
+}
+
+input PolicyWhereInput {
+  AND: [PolicyWhereInput!]
+  OR: [PolicyWhereInput!]
+  NOT: [PolicyWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  slug: StringFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  policies: PolicyManyRelationFilter
+  status: StringFilter
+  drafts: PolicyDraftManyRelationFilter
+  versions: PolicyVersionManyRelationFilter
+  currentVersion: PolicyVersionWhereInput
+}
+
+input PolicyManyRelationFilter {
+  every: PolicyWhereInput
+  some: PolicyWhereInput
+  none: PolicyWhereInput
+}
+
+input PolicyDraftManyRelationFilter {
+  every: PolicyDraftWhereInput
+  some: PolicyDraftWhereInput
+  none: PolicyDraftWhereInput
+}
+
+input PolicyVersionManyRelationFilter {
+  every: PolicyVersionWhereInput
+  some: PolicyVersionWhereInput
+  none: PolicyVersionWhereInput
+}
+
+input PolicyOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  slug: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  status: OrderDirection
+  makeDrafts: OrderDirection
+}
+
+input PolicyUpdateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies: PolicyRelateToManyForUpdateInput
+  status: String
+  drafts: PolicyDraftRelateToManyForUpdateInput
+  makeDrafts: String
+  versions: PolicyVersionRelateToManyForUpdateInput
+  currentVersion: PolicyVersionRelateToOneForUpdateInput
+}
+
+input PolicyRelateToManyForUpdateInput {
+  disconnect: [PolicyWhereUniqueInput!]
+  set: [PolicyWhereUniqueInput!]
+  create: [PolicyCreateInput!]
+  connect: [PolicyWhereUniqueInput!]
+}
+
+input PolicyDraftRelateToManyForUpdateInput {
+  disconnect: [PolicyDraftWhereUniqueInput!]
+  set: [PolicyDraftWhereUniqueInput!]
+  create: [PolicyDraftCreateInput!]
+  connect: [PolicyDraftWhereUniqueInput!]
+}
+
+input PolicyVersionRelateToManyForUpdateInput {
+  disconnect: [PolicyVersionWhereUniqueInput!]
+  set: [PolicyVersionWhereUniqueInput!]
+  create: [PolicyVersionCreateInput!]
+  connect: [PolicyVersionWhereUniqueInput!]
+}
+
+input PolicyVersionRelateToOneForUpdateInput {
+  create: PolicyVersionCreateInput
+  connect: PolicyVersionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PolicyUpdateArgs {
+  where: PolicyWhereUniqueInput!
+  data: PolicyUpdateInput!
+}
+
+input PolicyCreateInput {
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  slug: String
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies: PolicyRelateToManyForCreateInput
+  status: String
+  drafts: PolicyDraftRelateToManyForCreateInput
+  makeDrafts: String
+  versions: PolicyVersionRelateToManyForCreateInput
+  currentVersion: PolicyVersionRelateToOneForCreateInput
+}
+
+input PolicyRelateToManyForCreateInput {
+  create: [PolicyCreateInput!]
+  connect: [PolicyWhereUniqueInput!]
+}
+
+input PolicyDraftRelateToManyForCreateInput {
+  create: [PolicyDraftCreateInput!]
+  connect: [PolicyDraftWhereUniqueInput!]
+}
+
+input PolicyVersionRelateToManyForCreateInput {
+  create: [PolicyVersionCreateInput!]
+  connect: [PolicyVersionWhereUniqueInput!]
+}
+
+input PolicyVersionRelateToOneForCreateInput {
+  create: PolicyVersionCreateInput
+  connect: PolicyVersionWhereUniqueInput
+}
+
+type PolicyVersion {
+  id: ID!
+  original: Policy
+  canEdit: String
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
+  policiesCount(where: PolicyWhereInput! = {}): Int
+  isLive: Policy
+  republish: String
+}
+
+input PolicyVersionWhereUniqueInput {
+  id: ID
+  isLive: PolicyWhereUniqueInput
+}
+
+input PolicyVersionWhereInput {
+  AND: [PolicyVersionWhereInput!]
+  OR: [PolicyVersionWhereInput!]
+  NOT: [PolicyVersionWhereInput!]
+  id: IDFilter
+  original: PolicyWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  policies: PolicyManyRelationFilter
+  isLive: PolicyWhereInput
+}
+
+input PolicyVersionOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  republish: OrderDirection
+}
+
+input PolicyVersionUpdateInput {
+  original: PolicyRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies: PolicyRelateToManyForUpdateInput
+  isLive: PolicyRelateToOneForUpdateInput
+  republish: String
+}
+
+input PolicyRelateToOneForUpdateInput {
+  create: PolicyCreateInput
+  connect: PolicyWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PolicyVersionUpdateArgs {
+  where: PolicyVersionWhereUniqueInput!
+  data: PolicyVersionUpdateInput!
+}
+
+input PolicyVersionCreateInput {
+  original: PolicyRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies: PolicyRelateToManyForCreateInput
+  isLive: PolicyRelateToOneForCreateInput
+  republish: String
+}
+
+input PolicyRelateToOneForCreateInput {
+  create: PolicyCreateInput
+  connect: PolicyWhereUniqueInput
+}
+
+type PolicyDraft {
+  id: ID!
+  original: Policy
+  canEdit: String
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  liveUrl: String
+  owner: User
+  body: String
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
+  actionsCount(where: InternalLinkWhereInput! = {}): Int
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
+  policiesCount(where: PolicyWhereInput! = {}): Int
+  publish: String
+}
+
+input PolicyDraftWhereUniqueInput {
+  id: ID
+}
+
+input PolicyDraftWhereInput {
+  AND: [PolicyDraftWhereInput!]
+  OR: [PolicyDraftWhereInput!]
+  NOT: [PolicyDraftWhereInput!]
+  id: IDFilter
+  original: PolicyWhereInput
+  title: StringFilter
+  description: StringFilter
+  publishAt: DateTimeNullableFilter
+  unpublishAt: DateTimeNullableFilter
+  reviewDate: DateTimeNullableFilter
+  owner: UserWhereInput
+  body: MyStringFilter
+  tags: TagManyRelationFilter
+  userGroups: UserGroupManyRelationFilter
+  actions: InternalLinkManyRelationFilter
+  documents: DocumentManyRelationFilter
+  contacts: ContactManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+  policies: PolicyManyRelationFilter
+}
+
+input PolicyDraftOrderByInput {
+  id: OrderDirection
+  heroImage: BlueHarvestImageOrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  publishAt: OrderDirection
+  unpublishAt: OrderDirection
+  reviewDate: OrderDirection
+  body: MyOrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+  publish: OrderDirection
+}
+
+input PolicyDraftUpdateInput {
+  original: PolicyRelateToOneForUpdateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForUpdateInput
+  body: String
+  tags: TagRelateToManyForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
+  actions: InternalLinkRelateToManyForUpdateInput
+  documents: DocumentRelateToManyForUpdateInput
+  contacts: ContactRelateToManyForUpdateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies: PolicyRelateToManyForUpdateInput
+  publish: String
+}
+
+input PolicyDraftUpdateArgs {
+  where: PolicyDraftWhereUniqueInput!
+  data: PolicyDraftUpdateInput!
+}
+
+input PolicyDraftCreateInput {
+  original: PolicyRelateToOneForCreateInput
+  heroImage: String
+  title: String
+  description: String
+  publishAt: DateTime
+  unpublishAt: DateTime
+  reviewDate: DateTime
+  owner: UserRelateToOneForCreateInput
+  body: String
+  tags: TagRelateToManyForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
+  actions: InternalLinkRelateToManyForCreateInput
+  documents: DocumentRelateToManyForCreateInput
+  contacts: ContactRelateToManyForCreateInput
+  createdAt: DateTime
+  updatedAt: DateTime
+  policies: PolicyRelateToManyForCreateInput
+  publish: String
 }
 
 type Document {
@@ -11560,6 +12018,24 @@ type Mutation {
   updateLandingPages(data: [LandingPageUpdateArgs!]!): [LandingPage]
   deleteLandingPage(where: LandingPageWhereUniqueInput!): LandingPage
   deleteLandingPages(where: [LandingPageWhereUniqueInput!]!): [LandingPage]
+  createPolicy(data: PolicyCreateInput!): Policy
+  createPolicies(data: [PolicyCreateInput!]!): [Policy]
+  updatePolicy(where: PolicyWhereUniqueInput!, data: PolicyUpdateInput!): Policy
+  updatePolicies(data: [PolicyUpdateArgs!]!): [Policy]
+  deletePolicy(where: PolicyWhereUniqueInput!): Policy
+  deletePolicies(where: [PolicyWhereUniqueInput!]!): [Policy]
+  createPolicyVersion(data: PolicyVersionCreateInput!): PolicyVersion
+  createPolicyVersions(data: [PolicyVersionCreateInput!]!): [PolicyVersion]
+  updatePolicyVersion(where: PolicyVersionWhereUniqueInput!, data: PolicyVersionUpdateInput!): PolicyVersion
+  updatePolicyVersions(data: [PolicyVersionUpdateArgs!]!): [PolicyVersion]
+  deletePolicyVersion(where: PolicyVersionWhereUniqueInput!): PolicyVersion
+  deletePolicyVersions(where: [PolicyVersionWhereUniqueInput!]!): [PolicyVersion]
+  createPolicyDraft(data: PolicyDraftCreateInput!): PolicyDraft
+  createPolicyDrafts(data: [PolicyDraftCreateInput!]!): [PolicyDraft]
+  updatePolicyDraft(where: PolicyDraftWhereUniqueInput!, data: PolicyDraftUpdateInput!): PolicyDraft
+  updatePolicyDrafts(data: [PolicyDraftUpdateArgs!]!): [PolicyDraft]
+  deletePolicyDraft(where: PolicyDraftWhereUniqueInput!): PolicyDraft
+  deletePolicyDrafts(where: [PolicyDraftWhereUniqueInput!]!): [PolicyDraft]
   createDocument(data: DocumentCreateInput!): Document
   createDocuments(data: [DocumentCreateInput!]!): [Document]
   updateDocument(where: DocumentWhereUniqueInput!, data: DocumentUpdateInput!): Document
@@ -11822,6 +12298,15 @@ type Query {
   landingPage(where: LandingPageWhereUniqueInput!): LandingPage
   landingPages(where: LandingPageWhereInput! = {}, orderBy: [LandingPageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LandingPageWhereUniqueInput): [LandingPage!]
   landingPagesCount(where: LandingPageWhereInput! = {}): Int
+  policy(where: PolicyWhereUniqueInput!): Policy
+  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
+  policiesCount(where: PolicyWhereInput! = {}): Int
+  policyVersion(where: PolicyVersionWhereUniqueInput!): PolicyVersion
+  policyVersions(where: PolicyVersionWhereInput! = {}, orderBy: [PolicyVersionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyVersionWhereUniqueInput): [PolicyVersion!]
+  policyVersionsCount(where: PolicyVersionWhereInput! = {}): Int
+  policyDraft(where: PolicyDraftWhereUniqueInput!): PolicyDraft
+  policyDrafts(where: PolicyDraftWhereInput! = {}, orderBy: [PolicyDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyDraftWhereUniqueInput): [PolicyDraft!]
+  policyDraftsCount(where: PolicyDraftWhereInput! = {}): Int
   document(where: DocumentWhereUniqueInput!): Document
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
@@ -12014,9 +12499,9 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
-union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url | Document
+union InternalLinkSearch = Service | Facility | HomePage | Board | BoardPage | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Url | Document | Plan | Policy | ElectionsPage
 
-union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Plan
+union Page = Service | Facility | Board | PublicNotice | OrgUnit | AssemblyDistrict | Community | Park | Trail | Topic | Plan | Policy
 
 type TopPage {
   pageType: String!
@@ -12047,11 +12532,25 @@ interface BasePageWithSlug implements BasePage {
   description: String
   body: String
   heroImage: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
+  contactsCount(where: ContactWhereInput! = {}): Int
+  owner: User
+  documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
+  documentsCount(where: DocumentWhereInput! = {}): Int
+}
+
+interface BasePageWithDefaultRelationships implements BasePage {
+  slug: String
+  id: ID!
+  title: String
+  description: String
+  body: String
+  heroImage: String
   redirect: Redirect
   createdAt: DateTime
   updatedAt: DateTime
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
   publishAt: DateTime
@@ -12063,6 +12562,8 @@ interface BasePageWithSlug implements BasePage {
   status: String
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
+  eventsCount(where: EventWhereInput! = {}): Int
   topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
   publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
   publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
@@ -12085,36 +12586,13 @@ interface BasePageWithActions implements BasePage & BasePageWithSlug {
   description: String
   body: String
   heroImage: String
-  redirect: Redirect
   createdAt: DateTime
   updatedAt: DateTime
-  events(where: EventWhereInput! = {}, orderBy: [EventOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EventWhereUniqueInput): [Event!]
-  eventsCount(where: EventWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
-  publishAt: DateTime
-  unpublishAt: DateTime
-  reviewDate: DateTime
   owner: User
-  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
-  tagsCount(where: TagWhereInput! = {}): Int
-  status: String
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
   actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
   actionsCount(where: InternalLinkWhereInput! = {}): Int
-  topics(where: TopicWhereInput! = {}, orderBy: [TopicOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TopicWhereUniqueInput): [Topic!]
-  publicNotices(where: PublicNoticeWhereInput! = {}, orderBy: [PublicNoticeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PublicNoticeWhereUniqueInput): [PublicNotice!]
-  publicNoticesCount(where: PublicNoticeWhereInput! = {}): Int
-  topicsCount(where: TopicWhereInput! = {}): Int
-  assemblyDistricts(where: AssemblyDistrictWhereInput! = {}, orderBy: [AssemblyDistrictOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AssemblyDistrictWhereUniqueInput): [AssemblyDistrict!]
-  assemblyDistrictsCount(where: AssemblyDistrictWhereInput! = {}): Int
-  communities(where: CommunityWhereInput! = {}, orderBy: [CommunityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CommunityWhereUniqueInput): [Community!]
-  communitiesCount(where: CommunityWhereInput! = {}): Int
-  orgUnits(where: OrgUnitWhereInput! = {}, orderBy: [OrgUnitOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: OrgUnitWhereUniqueInput): [OrgUnit!]
-  orgUnitsCount(where: OrgUnitWhereInput! = {}): Int
-  services(where: ServiceWhereInput! = {}, orderBy: [ServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServiceWhereUniqueInput): [Service!]
-  servicesCount(where: ServiceWhereInput! = {}): Int
-  plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
-  plansCount(where: PlanWhereInput! = {}): Int
 }

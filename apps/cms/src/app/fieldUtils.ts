@@ -470,6 +470,7 @@ export type BasePageOptions = {
   noLiveUrl?: boolean;
   isDraft?: boolean;
   isVersion?: boolean;
+  disableDefaultRelationships?: boolean;
 };
 
 // GQL query for base page fields
@@ -633,119 +634,123 @@ export function basePage(
       }),
     }),
 
-    redirect: relationship({
-      ref: 'Redirect',
-      many: false,
-      ui: {
-        itemView: {
-          fieldPosition: 'sidebar',
+    ...(!opts?.disableDefaultRelationships && {
+      redirect: relationship({
+        ref: 'Redirect',
+        many: false,
+        ui: {
+          itemView: {
+            fieldPosition: 'sidebar',
+          },
+          labelField: 'from',
         },
-        labelField: 'from',
-      },
-    }),
+      }),
 
-    events: relationshipController({
-      ref: 'Event',
-      listName: listNamePlural,
-      opts,
-      many: true,
-      ui: {
-        itemView: {
-          fieldMode: listNamePlural === 'Events' ? 'hidden' : 'edit',
+      events: relationshipController({
+        ref: 'Event',
+        listName: listNamePlural,
+        opts,
+        many: true,
+        ui: {
+          itemView: {
+            fieldMode: listNamePlural === 'Events' ? 'hidden' : 'edit',
+          },
+          createView: {
+            fieldMode: listNamePlural === 'Events' ? 'hidden' : 'edit',
+          },
         },
-        createView: {
-          fieldMode: listNamePlural === 'Events' ? 'hidden' : 'edit',
-        },
-      },
-    }),
+      }),
 
-    topics: relationshipController({
-      ref: 'Topic',
-      listName: listNamePlural,
-      opts,
-      many: true,
-    }),
+      topics: relationshipController({
+        ref: 'Topic',
+        listName: listNamePlural,
+        opts,
+        many: true,
+      }),
 
-    publicNotices: relationshipController({
-      ref: 'PublicNotice',
-      many: true,
-      listName: listNamePlural,
-      opts,
-    }),
+      publicNotices: relationshipController({
+        ref: 'PublicNotice',
+        many: true,
+        listName: listNamePlural,
+        opts,
+      }),
 
-    communities: relationshipController({
-      ref: 'Community',
-      many: true,
-      listName: listNamePlural,
-      opts,
-      ui: {
-        itemView: {
-          fieldMode: listNamePlural === 'Communities' ? 'hidden' : 'edit',
+      communities: relationshipController({
+        ref: 'Community',
+        many: true,
+        listName: listNamePlural,
+        opts,
+        ui: {
+          itemView: {
+            fieldMode: listNamePlural === 'Communities' ? 'hidden' : 'edit',
+          },
+          createView: {
+            fieldMode: listNamePlural === 'Communities' ? 'hidden' : 'edit',
+          },
         },
-        createView: {
-          fieldMode: listNamePlural === 'Communities' ? 'hidden' : 'edit',
-        },
-      },
-    }),
+      }),
 
-    orgUnits: relationshipController({
-      ref: 'OrgUnit',
-      many: true,
-      listName: listNamePlural,
-      opts,
-      ui: {
-        itemView: {
-          fieldMode: listNamePlural === 'OrgUnits' ? 'hidden' : 'edit',
+      orgUnits: relationshipController({
+        ref: 'OrgUnit',
+        many: true,
+        listName: listNamePlural,
+        opts,
+        ui: {
+          itemView: {
+            fieldMode: listNamePlural === 'OrgUnits' ? 'hidden' : 'edit',
+          },
+          createView: {
+            fieldMode: listNamePlural === 'OrgUnits' ? 'hidden' : 'edit',
+          },
         },
-        createView: {
-          fieldMode: listNamePlural === 'OrgUnits' ? 'hidden' : 'edit',
-        },
-      },
-    }),
+      }),
 
-    assemblyDistricts: relationshipController({
-      ref: 'AssemblyDistrict',
-      many: true,
-      listName: listNamePlural,
-      opts,
-      ui: {
-        itemView: {
-          fieldMode: listNamePlural === 'AssemblyDistricts' ? 'hidden' : 'edit',
+      assemblyDistricts: relationshipController({
+        ref: 'AssemblyDistrict',
+        many: true,
+        listName: listNamePlural,
+        opts,
+        ui: {
+          itemView: {
+            fieldMode:
+              listNamePlural === 'AssemblyDistricts' ? 'hidden' : 'edit',
+          },
+          createView: {
+            fieldMode:
+              listNamePlural === 'AssemblyDistricts' ? 'hidden' : 'edit',
+          },
         },
-        createView: {
-          fieldMode: listNamePlural === 'AssemblyDistricts' ? 'hidden' : 'edit',
-        },
-      },
-    }),
+      }),
 
-    services: relationshipController({
-      ref: 'Service',
-      many: true,
-      listName: listNamePlural,
-      opts,
-      ui: {
-        itemView: {
-          fieldMode: listNamePlural === 'Services' ? 'hidden' : 'edit',
+      services: relationshipController({
+        ref: 'Service',
+        many: true,
+        listName: listNamePlural,
+        opts,
+        ui: {
+          itemView: {
+            fieldMode: listNamePlural === 'Services' ? 'hidden' : 'edit',
+          },
+          createView: {
+            fieldMode: listNamePlural === 'Services' ? 'hidden' : 'edit',
+          },
         },
-        createView: {
-          fieldMode: listNamePlural === 'Services' ? 'hidden' : 'edit',
-        },
-      },
-    }),
+      }),
 
-    plans: relationshipController({
-      ref: 'Plan',
-      many: true,
-      listName: listNamePlural,
-      opts,
-      ui: {
-        itemView: {
-          fieldMode: listNamePlural === 'Plans' ? 'hidden' : 'edit',
+      plans: relationshipController({
+        ref: 'Plan',
+        many: true,
+        listName: listNamePlural,
+        opts,
+        ui: {
+          itemView: {
+            fieldMode: listNamePlural === 'Plans' ? 'hidden' : 'edit',
+          },
+          createView: {
+            fieldMode: listNamePlural === 'Plans' ? 'hidden' : 'edit',
+          },
         },
-        createView: {
-          fieldMode: listNamePlural === 'Plans' ? 'hidden' : 'edit',
-        },
-      },
+      }),
     }),
 
     ...timestamps,
