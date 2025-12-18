@@ -9,7 +9,7 @@ import {
   DraftAndVersionsFactory,
   mapRelationShip,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
   owner,
   publishable,

@@ -1,7 +1,8 @@
 import { relationship } from '@keystone-6/core/fields';
 import { filterByPubStatus, generalOperationAccess } from '../../access';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import { basePage, basePageQuery, timestampField } from '../../fieldUtils';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { timestampField } from '../../fieldUtils';
+import { basePage, basePageQuery } from '../basePage';
 
 const Event = DraftAndVersionsFactory(
   'Event',

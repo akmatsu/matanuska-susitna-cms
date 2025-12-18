@@ -1,9 +1,4 @@
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -11,8 +6,8 @@ import {
 } from '../../access';
 import { relationship, select, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../../utils/emailUtils';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import { logger } from '../../../configs/logger';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { basePage, basePageQuery } from '../basePage';
 
 const {
   Main: PublicNotice,

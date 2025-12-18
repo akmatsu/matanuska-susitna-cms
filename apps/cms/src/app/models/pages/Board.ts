@@ -1,16 +1,12 @@
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import {
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
+import { basePage, basePageQuery } from '../basePage';
 
 const {
   Main: Board,

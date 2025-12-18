@@ -5,8 +5,6 @@ import {
   generalOperationAccess,
 } from '../../access';
 import {
-  basePage,
-  basePageQuery,
   emailRegex,
   phoneNumberRegex,
   typesenseDelete,
@@ -16,7 +14,8 @@ import { relationship, text, timestamp } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { basePage, basePageQuery } from '../basePage';
 
 const {
   Main: AssemblyDistrict,

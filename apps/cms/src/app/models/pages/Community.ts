@@ -3,15 +3,11 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { relationship, select } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
+import { basePage, basePageQuery } from '../basePage';
 
 const {
   Main: Community,

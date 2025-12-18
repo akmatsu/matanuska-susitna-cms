@@ -1,11 +1,10 @@
 import {
-  basePage,
-  basePageQuery,
   docDelete,
   iconSelect,
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
+import { basePage, basePageQuery } from '../basePage';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -15,7 +14,7 @@ import { relationship, select, text } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 
 const {
   Main: OrgUnit,

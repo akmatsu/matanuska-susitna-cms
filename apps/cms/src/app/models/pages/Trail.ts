@@ -4,14 +4,10 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
+import { basePage, basePageQuery } from '../basePage';
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 
 const {
   Main: Trail,

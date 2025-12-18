@@ -2,13 +2,9 @@ import { relationship } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
+import { basePage, basePageQuery } from '../basePage';
 import {
   filterByPubDates,
   generalItemAccess,
