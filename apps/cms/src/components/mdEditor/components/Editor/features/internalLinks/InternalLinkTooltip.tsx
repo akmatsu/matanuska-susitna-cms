@@ -33,19 +33,7 @@ export function InternalLinkTooltip() {
     query GetInternalLink($id: ID!, $type: String!) {
       getInternalLink(id: $id, type: $type) {
         __typename
-        ... on BasePage {
-          id
-          title
-        }
-        ... on HomePage {
-          id
-          title
-        }
-        ... on Url {
-          id
-          title
-        }
-        ... on Document {
+        ... on WithTitle {
           id
           title
         }

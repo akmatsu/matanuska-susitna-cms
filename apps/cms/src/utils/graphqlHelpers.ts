@@ -48,6 +48,11 @@ export const graphqlExtendTypeDefs = gql`
     item: PageViewItemUnion
   }
 
+  interface WithTitle {
+    title: String
+    id: ID!
+  }
+
   interface BasePage {
     id: ID!
     title: String
@@ -244,18 +249,22 @@ export const graphqlExtendTypeDefs = gql`
     actionsCount(where: InternalLinkWhereInput! = {}): Int
   }
 
-  extend type BoardPage implements BasePage
-  extend type Service implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage
-  extend type Topic implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type AssemblyDistrict implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Community implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Board implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type PublicNotice implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Park implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Trail implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Facility implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type OrgUnit implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Plan implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Event implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions
-  extend type Policy implements BasePageWithSlug & BasePage & BasePageWithActions
+  extend type BoardPage implements BasePage & WithTitle
+  extend type Service implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & WithTitle
+  extend type Topic implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type AssemblyDistrict implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Community implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Board implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type PublicNotice implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Park implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Trail implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Facility implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type OrgUnit implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Plan implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Event implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type Policy implements BasePageWithSlug & BasePage & BasePageWithActions & WithTitle
+  extend type Url implements WithTitle
+  extend type Document implements WithTitle
+  extend type HomePage implements WithTitle
+  extend type ElectionsPage implements WithTitle
 `;
