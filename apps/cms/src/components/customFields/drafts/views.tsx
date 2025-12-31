@@ -1,10 +1,5 @@
 'use client';
-import {
-  // Telling apollo and codegen to ignore the gql tag so it won't try to parse it since we're using a dynamic query
-  gql as ignoreGql,
-  useMutation,
-  useQuery,
-} from '@keystone-6/core/admin-ui/apollo';
+
 import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
@@ -15,81 +10,64 @@ import {
 import { Button } from '@keystone-ui/button';
 import { FieldContainer } from '@keystone-ui/fields';
 
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import { singular } from 'pluralize';
-import { mapDataFields } from '../../../utils/draftUtils';
+import { plural, singular } from 'pluralize';
 import { DraftFieldMeta } from '.';
-import { lowercaseFirstLetter } from '../../../utils';
-import { ComponentProps } from 'react';
+import { ComponentProps, useState } from 'react';
+import { useToasts } from '@keystone-ui/toast';
+import kebabCase from 'voca/kebab_case';
 
-export function Field({ field, value }: FieldProps<typeof controller>) {
+export function Field({ field }: FieldProps<typeof controller>) {
   const router = useRouter();
   const { id } = useParams();
-  const listKey = lowercaseFirstLetter(field.listName);
-  const listName = singular(router.pathname.split('/')[1]) + '-drafts';
+  const [loading, setLoading] = useState(false);
+  const { addToast } = useToasts();
 
-  if (typeof id === 'string' && typeof listName === 'string') {
-    const { data, loading, error } = useQuery(
-      ignoreGql`
-      query ${field.listName} ($where: ${field.listName}WhereUniqueInput!) {
-        ${listKey}(where: $where) {
-          ${field.query}
-        }
-      }
-    `,
-      {
-        variables: {
-          where: {
-            id,
-          },
-        },
-      },
-    );
+  const listSlug = plural(kebabCase(field.listName)).toLowerCase();
 
-    const [createDraft, { loading: creating }] = useMutation(ignoreGql`
-    mutation Create${field.listName}Draft($data: ${field.listName}DraftCreateInput!) {
-      create${field.listName}Draft(data: $data) {
-        id
-      }
-    }
-  `);
+  async function handleCreateDraft() {
+    if (loading) return;
 
-    async function handleCreateDraft() {
-      if (loading || creating || error) return;
+    try {
+      setLoading(true);
 
-      const { title, id, ...original } = data[listKey];
-      const draftInput = mapDataFields(
-        original,
+      const res = await fetch(
+        `/${listSlug}/${id}/drafts?query=${field.query}`,
         {
-          title: `${title} --- ${new Date().toLocaleString()}`,
-          original: { connect: { id } },
+          method: 'POST',
         },
-        'create',
       );
-      const result = await createDraft({
-        variables: {
-          data: draftInput,
-        },
-      });
-      const draftId = result.data[`create${field.listName}Draft`].id;
-      router.push('/' + listName + `/${draftId}`);
-    }
 
-    return (
-      <FieldContainer>
-        <div className="flex items-center gap-2">
-          <Button onClick={handleCreateDraft}>Create a new Draft</Button>
-          {value && typeof id === 'string' && typeof listName === 'string' && (
-            <Link href={`/${listName}?!original_matches=%22${id}%22`}>
-              View Existing Drafts
-            </Link>
-          )}
-        </div>
-      </FieldContainer>
-    );
+      if (!res.ok) {
+        throw new Error('Failed to create draft');
+      }
+      const result = await res.json();
+
+      if (!result.draftId) {
+        throw new Error('Draft could not be created');
+      }
+
+      router.push(`/${singular(listSlug)}-drafts/${result.draftId}`);
+    } catch (error: any) {
+      console.error('Error creating draft:', error);
+      addToast({
+        title: 'Error',
+        message: `Failed to create draft: ${error?.message}`,
+        tone: 'negative',
+      });
+    } finally {
+      setLoading(false);
+    }
   }
+
+  return (
+    <FieldContainer>
+      <div className="flex items-center gap-2">
+        <Button onClick={handleCreateDraft}>Create a new Draft</Button>
+      </div>
+    </FieldContainer>
+  );
 }
 
 export const Cell: CellComponent = ({

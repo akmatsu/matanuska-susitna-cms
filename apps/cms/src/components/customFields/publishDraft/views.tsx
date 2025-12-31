@@ -34,7 +34,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
       setLoading(true);
 
       const res = await fetch(
-        `/publish/${plural(kebabCase(field.listName)).toLowerCase()}/${id}?query=${field.query}`,
+        `/publish/${listSlug}/${id}?query=${field.query}`,
         {
           method: 'PATCH',
         },

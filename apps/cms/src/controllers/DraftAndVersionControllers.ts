@@ -5,6 +5,43 @@ import { singular } from 'pluralize';
 import { logger } from '../configs/logger';
 import { Prisma } from '@prisma/client';
 
+export const createDraft: RequestControllerWithContext =
+  (context) => async (req, res) => {
+    try {
+      const { id, list } = req.params;
+      const [modelKey, draftKey] = getModelKeys(list, 'draft');
+      const original = await getUpdatedData(modelKey, id, context);
+
+      if (!original) {
+        return res.status(404).json({ error: 'Original item not found' });
+      }
+
+      const newDraft = await createNewCopy(draftKey, original, context);
+
+      if (!newDraft) {
+        return res.status(500).json({ error: 'Failed to create draft' });
+      }
+
+      return res.status(201).json({
+        message: `Draft created successfully with id ${newDraft.id}`,
+        draftId: newDraft.id,
+      });
+    } catch (error: any) {
+      logger.error(error, 'Error creating draft');
+      return res.status(500).json({ error: 'Failed to create draft' });
+    }
+  };
+
+export const createVersion: RequestControllerWithContext =
+  (context) => async (req, res) => {
+    try {
+      return res.status(501).json({ error: 'Not implemented' });
+    } catch (error: any) {
+      logger.error(error, 'Error creating version');
+      return res.status(500).json({ error: 'Failed to create version' });
+    }
+  };
+
 export const publishDraft: RequestControllerWithContext =
   (context) => async (req, res) => {
     try {
@@ -12,6 +49,11 @@ export const publishDraft: RequestControllerWithContext =
       const [modelKey, draftKey] = getModelKeys(list, 'draft');
 
       const draft = await getUpdatedData(draftKey, id, context);
+
+      if (!draft) {
+        return res.status(404).json({ error: 'Draft not found' });
+      }
+
       const published = await publishUpdatedData(modelKey, draft, context);
 
       if (!published) {
@@ -75,11 +117,41 @@ function getUpdatedData(
   const delegate = ctx.sudo().prisma[
     modelKey
   ] as unknown as DelegateWithFindUnique;
-  const select = buildSelectObject(modelKey);
+
+  const select = buildSelectObject(modelKey, [
+    'createdAt',
+    'updatedAt',
+    'slug',
+    'status',
+    'drafts',
+    'versions',
+    'currentVersion',
+  ]);
 
   return delegate.findUnique({
     where: { id },
     select,
+  });
+}
+
+function createNewCopy(
+  modelKey: ModelDelegateKey,
+  { id, title, ...data }: any,
+  ctx: CommonContext,
+) {
+  const delegate = ctx.sudo().prisma[modelKey] as unknown as {
+    create: (args: { data: any }) => Promise<any>;
+  };
+
+  return delegate.create({
+    data: mapDataFields(
+      data,
+      {
+        title: `${title} --- ${new Date().toLocaleString()}`,
+        original: { connect: { id } },
+      },
+      'create',
+    ),
   });
 }
 
@@ -107,15 +179,19 @@ function publishUpdatedData(
   });
 }
 
-function buildSelectObject(key: string) {
-  const DraftModel = Prisma.dmmf.datamodel.models.find(
+function buildSelectObject(key: string, excludeFields: string[] = []) {
+  const model = Prisma.dmmf.datamodel.models.find(
     (m) => m.name === capitalizeFirstLetter(key),
   );
 
   const selectObj: Record<string, boolean | { select: { id: boolean } }> = {};
-  if (DraftModel) {
-    DraftModel.fields.forEach((field) => {
-      if (!field.dbName)
+  if (model) {
+    model.fields.forEach((field) => {
+      if (
+        !field.name.startsWith('from_') &&
+        !field.dbName &&
+        !excludeFields.includes(field.name)
+      )
         selectObj[field.name] = field.relationName
           ? { select: { id: true } }
           : true;
