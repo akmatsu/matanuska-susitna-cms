@@ -24,21 +24,74 @@ export const InternalLink = list({
       ui: {
         query: `{
           __typename
-          ... on Service { id title slug description __typename}
-          ... on Park { id title slug description __typename}
-          ... on Trail { id title slug description __typename}
-          ... on Facility { id title slug description __typename}
-          ... on Community { id title slug description __typename}
-          ... on AssemblyDistrict { id title slug description __typename}
-          ... on OrgUnit { id title slug description __typename}
-          ... on Url { id title description url __typename}
-          ... on Topic { id title description slug __typename}
-          ... on Plan { id title description slug __typename}
-          ... on Board { id title slug description __typename}
-          ... on BoardPage { id title __typename}
-          ... on ElectionsPage { id title __typename}
-          ... on HomePage { id title __typename}
-          ... on Document { id title file { url }}
+          ... on AssemblyDistrict {
+            id
+            title
+          }
+          ... on Board {
+            id
+            title
+          }
+          ... on BoardPage {
+            id
+            title
+          }
+          ... on Community {
+            id
+            title
+          }
+          ... on Document {
+            id
+            title
+          }
+          ... on ElectionsPage {
+            id
+            title
+          }
+          ... on Facility {
+            id
+            title
+          }
+          ... on HomePage {
+            id
+            title
+          }
+          ... on OrgUnit {
+            id
+            title
+          }
+          ... on Park {
+            id
+            title
+          }
+          ... on Plan {
+            id
+            title
+          }
+          ... on Policy {
+            id
+            title
+          }
+          ... on PublicNotice {
+            id
+            title
+          }
+          ... on Service {
+            id
+            title
+          }
+          ... on Topic {
+            id
+            title
+          }
+          ... on Trail {
+            id
+            title
+          }
+          ... on Url {
+            id
+            title
+          }
         }`,
         views: './src/components/customFields/polymorphicItem/views',
       },
@@ -62,6 +115,8 @@ export const InternalLink = list({
               lists.ElectionsPage.types.output,
               lists.HomePage.types.output,
               lists.Document.types.output,
+              lists.Policy.types.output,
+              lists.PublicNotice.types.output,
             ],
             resolveType(item) {
               return item.__typename as string;
