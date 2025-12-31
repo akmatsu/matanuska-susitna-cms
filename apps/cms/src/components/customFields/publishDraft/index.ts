@@ -8,7 +8,6 @@ import {
 } from '@keystone-6/core/types';
 
 export type PublishDraftFieldMeta = {
-  query: string;
   listName: string;
 };
 
@@ -37,7 +36,6 @@ export function publishDraft<ListTypeInfo extends BaseListTypeInfo>(
         config.ui?.views || './src/components/customFields/publishDraft/views',
       getAdminMeta(): PublishDraftFieldMeta {
         return {
-          query: config.ui?.query ?? '',
           listName: config.ui?.listName ?? '',
         };
       },

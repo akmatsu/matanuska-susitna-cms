@@ -8,7 +8,6 @@ import {
 } from '@keystone-6/core/types';
 
 export type DraftFieldMeta = {
-  query: string;
   listName: string;
 };
 
@@ -36,7 +35,6 @@ export function createDrafts<ListTypeInfo extends BaseListTypeInfo>(
       views: config.ui?.views || './src/components/customFields/drafts/views',
       getAdminMeta(): DraftFieldMeta {
         return {
-          query: config.ui?.query ?? '',
           listName: config.ui?.listName ?? '',
         };
       },

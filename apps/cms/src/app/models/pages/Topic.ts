@@ -4,7 +4,7 @@ import {
   relationshipController,
 } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 import {
   filterByPubDates,
   generalItemAccess,
@@ -57,7 +57,7 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} trails {id} parks {id} boards {id} facilities {id} highlights { id } actions { id } documents { id }`,
+
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Topic'),
