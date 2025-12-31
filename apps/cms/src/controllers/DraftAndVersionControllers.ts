@@ -1,102 +1,38 @@
-import { toPascalCase } from '../utils';
-import type { RequestControllerWithContext } from './types';
+import { capitalizeFirstLetter, toCamelCase, toPascalCase } from '../utils';
+import type { CommonContext, RequestControllerWithContext } from './types';
 import { mapDataFields } from '../utils/draftUtils';
 import { singular } from 'pluralize';
 import { logger } from '../configs/logger';
 import { Prisma } from '@prisma/client';
+
+type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
+
+type MinimalFindUnique = (args: { where: any; select?: any }) => Promise<any>;
+type MinimalUpdate = (args: { where: any; data: any }) => Promise<any>;
+type DelegateWithFindUnique = {
+  findUnique: MinimalFindUnique;
+  update: MinimalUpdate;
+};
 
 export const publishDraft: RequestControllerWithContext =
   (context) => async (req, res) => {
     try {
       const { id, list } = req.params;
       const sudoCtx = context.sudo();
+      const modelKey = toCamelCase(singular(list)) as ModelDelegateKey;
+      const draft = await getDraftData(modelKey, id, sudoCtx);
+      const published = await publishDraftData(modelKey, draft, sudoCtx);
 
-      const listKey = toPascalCase(singular(list)) as keyof typeof sudoCtx.db;
-      const listKeyDraft = `${listKey}Draft` as keyof typeof sudoCtx.db;
-
-      const DraftModel = Prisma.dmmf.datamodel.models.find(
-        (m) => m.name === listKeyDraft,
-      );
-
-      const selectObj: Record<string, boolean | { select: { id: boolean } }> =
-        {};
-
-      if (DraftModel) {
-        DraftModel.fields.forEach((field) => {
-          if (field.relationName) {
-            selectObj[field.name] = { select: { id: true } };
-          } else {
-            selectObj[field.name] = true;
-          }
-        });
+      if (!published) {
+        return res.status(404).json({ error: 'Could not find original item' });
       }
 
-      const myThing = await sudoCtx.prisma[listKeyDraft as any].findUnique({
-        where: { id },
-        select: selectObj,
+      await deleteDraft(id, modelKey, sudoCtx);
+
+      return res.status(200).json({
+        message: `Draft ${id} published successfully`,
+        publishedId: published.id,
       });
-
-      console.log(myThing);
-
-      // const p =
-      //   sudoCtx.prisma[
-      //     v.camelCase(listKeyDraft) as keyof typeof sudoCtx.prisma
-      //   ];
-      // let myThing;
-      // if ('aggregate' in p) {
-      //   myThing = await p.findUnique({
-      //     where: {
-      //       id,
-      //     },
-      //     includes:
-      //   });
-      // }
-
-      // const myOtherThing = await sudoCtx.query[listKeyDraft].findOne({
-      //   where: { id },
-      //   query: query as string,
-      // });
-
-      // console.log(myThing, myOtherThing);
-
-      // const {
-      //   title,
-      //   original,
-      //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      //   id: draftId,
-      //   ...draft
-      // } = await sudoCtx.query[listKeyDraft].findOne({
-      //   where: { id },
-      //   query: query as string,
-      // });
-
-      // const published = await sudoCtx.query[listKey].updateOne({
-      //   where: {
-      //     id: original.id,
-      //   },
-      //   data: mapDataFields(
-      //     draft,
-      //     {
-      //       title: title.split(' ---')[0],
-      //       status: 'published',
-      //       publishAt: new Date().toISOString(),
-      //     },
-      //     'update',
-      //   ),
-      // });
-
-      // if (!published) {
-      //   return res.status(404).json({ error: 'Draft not found' });
-      // }
-
-      // await sudoCtx.query[listKeyDraft].deleteOne({
-      //   where: { id },
-      // });
-
-      // return res.status(200).json({
-      //   message: `Draft ${id} published successfully`,
-      //   publishedId: original.id,
-      // });
     } catch (error: any) {
       logger.error(error, 'Error publishing draft');
       return res.status(500).json({ error: 'Failed to publish draft' });
@@ -159,3 +95,71 @@ export const republishVersion: RequestControllerWithContext =
       return res.status(500).json({ error: 'Failed to republish version' });
     }
   };
+
+function getDraftData(
+  modelKey: ModelDelegateKey,
+  id: string,
+  ctx: CommonContext,
+) {
+  const draftKey = `${modelKey}Draft` as ModelDelegateKey;
+  const delegate = ctx.prisma[draftKey] as unknown as DelegateWithFindUnique;
+  const select = buildSelectObject(draftKey);
+
+  return delegate.findUnique({
+    where: { id },
+    select,
+  });
+}
+
+function publishDraftData(
+  modelKey: ModelDelegateKey,
+  { title, original, ...data }: any,
+  ctx: CommonContext,
+) {
+  const delegate = ctx.prisma[modelKey] as unknown as DelegateWithFindUnique;
+  return delegate.update({
+    where: { id: original.id },
+    data: mapDataFields(
+      data,
+      {
+        title: title.split(' ---')[0],
+        status: 'published',
+        publishAt: new Date().toISOString(),
+      },
+      'update',
+    ),
+  });
+}
+
+function buildSelectObject(key: string) {
+  const DraftModel = Prisma.dmmf.datamodel.models.find(
+    (m) => m.name === capitalizeFirstLetter(key),
+  );
+
+  const selectObj: Record<string, boolean | { select: { id: boolean } }> = {};
+  if (DraftModel) {
+    DraftModel.fields.forEach((field) => {
+      if (!field.dbName)
+        selectObj[field.name] = field.relationName
+          ? { select: { id: true } }
+          : true;
+    });
+  }
+
+  return selectObj;
+}
+
+function deleteDraft(
+  id: string,
+  modelKey: ModelDelegateKey,
+  ctx: CommonContext,
+) {
+  const draftKey = `${modelKey}Draft` as ModelDelegateKey;
+  const delegate = ctx.prisma[draftKey] as unknown as {
+    delete: (args: { where: any }) => Promise<any>;
+  };
+
+  return delegate.delete({
+    where: { id },
+  });
+}

@@ -4,9 +4,11 @@
     "Codegen",
     "commonmark",
     "discriptors",
+    "dmmf",
     "Keymap",
     "milkdown",
     "prosemirror",
-    "reindexing"
+    "reindexing",
+    "Uncapitalize"
   ]
 }
