@@ -17,116 +17,13 @@ import {
   FieldDescription,
   Select,
 } from '@keystone-ui/fields';
-// Telling apollo and codegen to ignore the gql tag so it won't try to parse it since we're using a dynamic query
-import {
-  gql,
-  TypedDocumentNode,
-  useQuery,
-} from '@keystone-6/core/admin-ui/apollo';
+
 import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
 import { DrawerController } from '@keystone-ui/modals';
 
 import { useToasts } from '@keystone-ui/toast';
-
-import { GetPageQuery, GetPageQueryVariables } from '../../../graphql/graphql';
 import v from 'voca';
-
-type AvailableType = {
-  value: string;
-  label: string;
-};
-
-const q: TypedDocumentNode<GetPageQuery, GetPageQueryVariables> = gql`
-  query GetPage($query: String!) {
-    internalSearch(query: $query) {
-      __typename
-      ... on AssemblyDistrict {
-        id
-        title
-      }
-
-      ... on Board {
-        id
-        title
-      }
-
-      ... on BoardPage {
-        id
-        title
-      }
-
-      ... on Community {
-        id
-        title
-      }
-
-      ... on Document {
-        id
-        title
-      }
-
-      ... on ElectionsPage {
-        id
-        title
-      }
-
-      ... on Facility {
-        id
-        title
-      }
-
-      ... on HomePage {
-        id
-        title
-      }
-
-      ... on OrgUnit {
-        id
-        title
-      }
-
-      ... on Park {
-        id
-        title
-      }
-
-      ... on Plan {
-        id
-        title
-      }
-
-      ... on Policy {
-        id
-        title
-      }
-
-      ... on PublicNotice {
-        id
-        title
-      }
-
-      ... on Service {
-        id
-        title
-      }
-
-      ... on Topic {
-        id
-        title
-      }
-
-      ... on Trail {
-        id
-        title
-      }
-
-      ... on Url {
-        id
-        title
-      }
-    }
-  }
-`;
+import { useInternalSearchQuery } from '../../mdEditor/components/Editor/features/internalLinks/hooks/useInternalSearchQuery';
 
 export function Field({
   field,
@@ -136,13 +33,7 @@ export function Field({
   const toast = useToasts();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [query, setQuery] = useState<string>('');
-
-  const { data, error } = useQuery(q, {
-    variables: {
-      query,
-    },
-  });
+  const { query, setQuery, data, error } = useInternalSearchQuery();
 
   if (error) {
     toast.addToast({
@@ -210,27 +101,8 @@ export function Field({
 
 export const controller = (
   config: FieldControllerConfig<any>,
-): FieldController<PolymorphicValue | null, string> & {
-  availableTypes: AvailableType[];
-} => {
+): FieldController<PolymorphicValue | null, string> => {
   return {
-    availableTypes: [
-      { value: 'service', label: 'Service' },
-      { value: 'park', label: 'Park' },
-      { value: 'trail', label: 'Trail' },
-      { value: 'facility', label: 'Facility' },
-      { value: 'community', label: 'Community' },
-      { value: 'assemblyDistrict', label: 'Assembly District' },
-      { value: 'orgUnit', label: 'Org Unit' },
-      { value: 'topic', label: 'Topic' },
-      { value: 'plan', label: 'Plan' },
-      { value: 'board', label: 'Board' },
-      { value: 'boardPage', label: 'Board Page' },
-      { value: 'electionsPage', label: 'Elections Page' },
-      { value: 'homePage', label: 'Home Page' },
-      { value: 'url', label: 'Url' },
-      { value: 'document', label: 'Document' },
-    ],
     path: config.path,
     label: config.label,
     description: config.description,
