@@ -3,7 +3,7 @@ import config from '../../../keystone';
 import { Worker, Job } from 'bullmq';
 import { getContext } from '@keystone-6/core/context';
 import { REDIS_CONNECTION } from '../config';
-import { mapDataFields } from '../../utils/draftUtils';
+import { handleDraftPublish, mapDataFields } from '../../utils/draftUtils';
 import { logger } from '../../configs/logger';
 
 const publishWorker = async () => {
@@ -13,48 +13,23 @@ const publishWorker = async () => {
     'publish',
     async (job: Job) => {
       try {
-        const { originalId, itemId, operation, listKey, query } = job.data as {
+        const { originalId, itemId, operation, listKey } = job.data as {
           itemId: string;
           originalId: string;
           operation: 'publish' | 'unpublish';
-          query: string;
           listKey: keyof typeof keystoneContext.query;
         };
 
-        const sudoCtx = keystoneContext.sudo();
+        logger.info(`🔔 Processing ${operation} for ${originalId}...`);
+        const published = await handleDraftPublish(
+          listKey,
+          itemId,
+          keystoneContext,
+        );
 
-        logger.info(`🔔 Processing ${operation} for ${itemId}...`);
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { title, id, original, ...draft } = await sudoCtx.query[
-          `${listKey}Draft` as typeof listKey
-        ].findOne({
-          where: {
-            id: itemId,
-          },
-          query,
-        });
-
-        sudoCtx.query[listKey].updateOne({
-          where: {
-            id: originalId,
-          },
-
-          data: mapDataFields(
-            draft,
-            {
-              title: title.split(' ---')[0],
-              status: 'published',
-            },
-            'update',
-          ),
-        });
-
-        sudoCtx.query[`${listKey}Draft` as typeof listKey].deleteOne({
-          where: {
-            id: itemId,
-          },
-        });
+        logger.info(
+          `${operation} completed for ${originalId}, published ID: ${published.id}`,
+        );
       } catch (error) {
         logger.error(error, `Error processing job ${job.id}`);
       }
