@@ -12,7 +12,12 @@ import {
   ListAccessControl,
   ListHooks,
 } from '@keystone-6/core/types';
-import { mapDataFields } from '../../utils/draftUtils';
+import {
+  createNewCopy,
+  getModelKeys,
+  getUpdatedData,
+  mapDataFields,
+} from '../../utils/draftUtils';
 import { publishDraft } from '../../components/customFields/publishDraft';
 import { BasePageOptions } from '../fieldUtils';
 import { isPlural, plural, singular } from 'pluralize';
@@ -20,7 +25,8 @@ import { deepMerge, lowercaseFirstLetter } from '../../utils';
 import { getPublishQueue } from '../../redis';
 import { createDrafts } from '../../components/customFields/drafts';
 import { logger } from '../../configs/logger';
-import v from 'voca';
+import v, { version } from 'voca';
+import { CommonContext } from '../../controllers/types';
 
 interface Options {
   versionLimit?: number;
@@ -214,13 +220,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
         async afterOperation(args) {
           try {
-            await createVersion(
-              listKey,
-              query,
-              versionAgeDays,
-              versionLimit,
-              args,
-            );
+            await createVersion(listKey, versionAgeDays, versionLimit, args);
 
             const userHook = opts.mainHooks?.afterOperation;
             if (typeof userHook === 'function') {
@@ -368,7 +368,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
 async function createVersion(
   listKey: string,
-  query: string,
   versionAgeDays: number,
   versionLimit: number,
   {
@@ -396,51 +395,32 @@ async function createVersion(
     item &&
     item?.status === 'published'
   ) {
-    const sudoCtx = context.sudo();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { title, id, ...rest } = await sudoCtx.query[listKey].findOne({
-      where: { id: item.id.toString() },
-      query,
+    const id = item.id.toString();
+    const [modelKey, versionKey] = getModelKeys(listKey, 'version');
+    const original = await getUpdatedData(modelKey, id, context);
+
+    if (!original) {
+      throw new Error('Original item not found');
+    }
+
+    const newVersion = await createNewCopy(versionKey, original, context);
+
+    if (!newVersion) {
+      throw new Error('Failed to create version');
+    }
+
+    const count = await context.sudo().prisma[versionKey].count({
+      where: { original: { id: { equals: id } } },
     });
 
-    const now = new Date();
-
-    const baseData = mapDataFields(rest, {}, 'create');
-
-    const versionData = {
-      ...baseData,
-      title: `${title} --- ${now.toLocaleString()}`,
-      original: { connect: { id: item.id.toString() } },
-      isLive: { connect: { id: item.id.toString() } },
-    };
-
-    // Create a new version
-    await sudoCtx.prisma[lowercaseFirstLetter(listKey) + 'Version'].create({
-      data: versionData,
-    });
-
-    const count = await sudoCtx.query[listKey + 'Version'].count({
-      where: {
-        original: { id: { equals: item.id.toString() } },
-      },
-    });
-
-    // If more than max, delete all versions older maximum age
     if (count > versionLimit) {
-      const cutoff = new Date(
-        now.getTime() - versionAgeDays * 24 * 60 * 60 * 1000,
-      );
-
-      const oldVersions = await sudoCtx.query[listKey + 'Version'].findMany({
+      await context.sudo().prisma[versionKey].deleteMany({
         where: {
-          original: { id: { equals: item.id.toString() } },
-          createdAt: { lte: cutoff },
+          original: { id: { equals: id } },
+          createdAt: {
+            lt: new Date(Date.now() - versionAgeDays * 24 * 60 * 60 * 1000),
+          },
         },
-        query: 'id',
-      });
-
-      await sudoCtx.query[listKey + 'Version'].deleteMany({
-        where: oldVersions.map((v) => ({ id: v.id.toString() })),
       });
     }
   }

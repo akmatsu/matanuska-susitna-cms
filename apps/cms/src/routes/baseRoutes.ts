@@ -14,7 +14,7 @@ import {
 } from '../controllers/typesenseController';
 import {
   createDraft,
-  createVersion,
+  // createVersion,
   publishDraft,
   republishVersion,
 } from '../controllers/DraftAndVersionControllers';
@@ -35,7 +35,7 @@ export const routes: (
   app.post('/typesense/remove-collection', json(), removeCollection());
   app.post('/typesense/reindex', json(), reindexTypesense(commonContext));
   app.post('/:list/:id/drafts', json(), createDraft(commonContext));
-  app.post('/:list/:id/versions', json(), createVersion(commonContext));
+  // app.post('/:list/:id/versions', json(), createVersion(commonContext));
   app.patch('/publish/:list/:id', json(), publishDraft(commonContext));
   app.patch('/republish/:list/:id', json(), republishVersion(commonContext));
   app.patch('/api/page-views', json(), countPageView(commonContext));
