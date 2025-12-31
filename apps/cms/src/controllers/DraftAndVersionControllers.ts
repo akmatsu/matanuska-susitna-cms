@@ -1,33 +1,24 @@
-import { capitalizeFirstLetter, toCamelCase, toPascalCase } from '../utils';
+import { capitalizeFirstLetter, toCamelCase } from '../utils';
 import type { CommonContext, RequestControllerWithContext } from './types';
 import { mapDataFields } from '../utils/draftUtils';
 import { singular } from 'pluralize';
 import { logger } from '../configs/logger';
 import { Prisma } from '@prisma/client';
 
-type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
-
-type MinimalFindUnique = (args: { where: any; select?: any }) => Promise<any>;
-type MinimalUpdate = (args: { where: any; data: any }) => Promise<any>;
-type DelegateWithFindUnique = {
-  findUnique: MinimalFindUnique;
-  update: MinimalUpdate;
-};
-
 export const publishDraft: RequestControllerWithContext =
   (context) => async (req, res) => {
     try {
       const { id, list } = req.params;
-      const sudoCtx = context.sudo();
-      const modelKey = toCamelCase(singular(list)) as ModelDelegateKey;
-      const draft = await getDraftData(modelKey, id, sudoCtx);
-      const published = await publishDraftData(modelKey, draft, sudoCtx);
+      const [modelKey, draftKey] = getModelKeys(list, 'draft');
+
+      const draft = await getUpdatedData(draftKey, id, context);
+      const published = await publishUpdatedData(modelKey, draft, context);
 
       if (!published) {
         return res.status(404).json({ error: 'Could not find original item' });
       }
 
-      await deleteDraft(id, modelKey, sudoCtx);
+      await deleteItem(id, draftKey, context);
 
       return res.status(200).json({
         message: `Draft ${id} published successfully`,
@@ -43,52 +34,24 @@ export const republishVersion: RequestControllerWithContext =
   (context) => async (req, res) => {
     try {
       const { id, list } = req.params;
-      const { query } = req.query;
-      const sudoCtx = context.sudo();
+      const [modelKey, versionKey] = getModelKeys(list, 'version');
 
-      const listKey = toPascalCase(
-        singular(list),
-      ) as keyof typeof sudoCtx.query;
-      const listKeyVersion = `${listKey}Version` as keyof typeof sudoCtx.query;
-
-      const {
-        title,
-        original,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        id: versionId,
-        ...version
-      } = await sudoCtx.query[listKeyVersion].findOne({
-        where: { id },
-        query: query as string,
-      });
-
-      const published = await sudoCtx.query[listKey].updateOne({
-        where: {
-          id: original.id,
-        },
-        data: mapDataFields(
-          version,
-          {
-            title: title.split(' ---')[0],
-            status: 'published',
-            publishAt: new Date().toISOString(),
-            currentVersion: {
-              connect: {
-                id,
-              },
-            },
+      const version = await getUpdatedData(versionKey, id, context);
+      const published = await publishUpdatedData(modelKey, version, context, {
+        currentVersion: {
+          connect: {
+            id,
           },
-          'update',
-        ),
+        },
       });
 
       if (!published) {
-        return res.status(404).json({ error: 'Version not found' });
+        return res.status(404).json({ error: 'Could not find original item' });
       }
 
       return res.status(200).json({
         message: `Version ${id} republished successfully`,
-        publishedId: original.id,
+        publishedId: published.id,
       });
     } catch (error: any) {
       logger.error(error, 'Error republishing version');
@@ -96,14 +59,23 @@ export const republishVersion: RequestControllerWithContext =
     }
   };
 
-function getDraftData(
+type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
+type MinimalFindUnique = (args: { where: any; select?: any }) => Promise<any>;
+type MinimalUpdate = (args: { where: any; data: any }) => Promise<any>;
+type DelegateWithFindUnique = {
+  findUnique: MinimalFindUnique;
+  update: MinimalUpdate;
+};
+
+function getUpdatedData(
   modelKey: ModelDelegateKey,
   id: string,
   ctx: CommonContext,
 ) {
-  const draftKey = `${modelKey}Draft` as ModelDelegateKey;
-  const delegate = ctx.prisma[draftKey] as unknown as DelegateWithFindUnique;
-  const select = buildSelectObject(draftKey);
+  const delegate = ctx.sudo().prisma[
+    modelKey
+  ] as unknown as DelegateWithFindUnique;
+  const select = buildSelectObject(modelKey);
 
   return delegate.findUnique({
     where: { id },
@@ -111,12 +83,15 @@ function getDraftData(
   });
 }
 
-function publishDraftData(
+function publishUpdatedData(
   modelKey: ModelDelegateKey,
   { title, original, ...data }: any,
   ctx: CommonContext,
+  customData?: Record<string, any>,
 ) {
-  const delegate = ctx.prisma[modelKey] as unknown as DelegateWithFindUnique;
+  const delegate = ctx.sudo().prisma[
+    modelKey
+  ] as unknown as DelegateWithFindUnique;
   return delegate.update({
     where: { id: original.id },
     data: mapDataFields(
@@ -125,6 +100,7 @@ function publishDraftData(
         title: title.split(' ---')[0],
         status: 'published',
         publishAt: new Date().toISOString(),
+        ...customData,
       },
       'update',
     ),
@@ -149,17 +125,23 @@ function buildSelectObject(key: string) {
   return selectObj;
 }
 
-function deleteDraft(
+function deleteItem(
   id: string,
   modelKey: ModelDelegateKey,
   ctx: CommonContext,
 ) {
-  const draftKey = `${modelKey}Draft` as ModelDelegateKey;
-  const delegate = ctx.prisma[draftKey] as unknown as {
+  const delegate = ctx.sudo().prisma[modelKey] as unknown as {
     delete: (args: { where: any }) => Promise<any>;
   };
 
   return delegate.delete({
     where: { id },
   });
+}
+
+function getModelKeys(list: string, type: 'draft' | 'version') {
+  const modelKey = toCamelCase(singular(list)) as ModelDelegateKey;
+  const key = type === 'draft' ? `${modelKey}Draft` : `${modelKey}Version`;
+
+  return [modelKey, key as ModelDelegateKey];
 }
