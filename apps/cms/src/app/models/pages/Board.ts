@@ -6,7 +6,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 
 const {
   Main: Board,
@@ -111,7 +111,6 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} directory {id} calendarId calendarQueryString type isActive linkToAgendas {id} linkToResolutions {id} linkToPublicOpinionMessage {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Board'),

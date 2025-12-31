@@ -19,10 +19,6 @@ import { blueHarvestImage } from '../../components/customFields/blueHarvestImage
 import { customText } from '../../components/customFields/Markdown';
 import { relationshipController } from '../draftAndVersionFactory/DraftAndVersionsFactory';
 
-// GQL query for base page fields
-export const basePageQuery =
-  'id heroImage title description body tags { id } userGroups { id } owner { id } contacts { id } redirect { id } events { id } topics { id } publicNotices { id } communities { id } orgUnits { id } assemblyDistricts { id } services { id } plans { id }';
-
 export function basePage(
   listNamePlural: string,
   opts?: BasePageOptions,

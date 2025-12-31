@@ -11,7 +11,7 @@ import {
   typesenseDelete,
   typesenseUpsert,
 } from '../../fieldUtils';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 import { group, list } from '@keystone-6/core';
 import {
   filterByPubStatus,
@@ -182,7 +182,6 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} boards {id} facilities {id} parks {id} trails {id} type code {id} currentDocument {id} draftDocument {id} pastDocuments {id} autoRedirectToExternalWebsite effort { id } actions { id } documents { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Plan'),

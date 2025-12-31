@@ -4,7 +4,7 @@ import {
   generalOperationAccess,
 } from '../../access';
 import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 import {
   DraftAndVersionsFactory,
   relationshipController,
@@ -43,7 +43,6 @@ const {
     };
   },
   {
-    query: `${basePageQuery} trails {id} facilities {id} address {id} hours {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Park'),

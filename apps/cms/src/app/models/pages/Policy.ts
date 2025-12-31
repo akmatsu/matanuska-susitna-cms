@@ -31,7 +31,7 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `title description body heroImage {id} tags {id} userGroups {id} actions {id} documents {id} contacts {id}`,
+
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Policy'),

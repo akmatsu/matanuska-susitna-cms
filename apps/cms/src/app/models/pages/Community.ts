@@ -7,7 +7,7 @@ import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { relationship, select } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 
 const {
   Main: Community,
@@ -65,7 +65,6 @@ const {
     };
   },
   {
-    query: `${basePageQuery} boards {id} facilities {id} parks {id} trails {id} type actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),

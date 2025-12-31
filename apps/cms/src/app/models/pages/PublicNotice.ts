@@ -7,7 +7,7 @@ import {
 import { relationship, select, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../../utils/emailUtils';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 
 const {
   Main: PublicNotice,
@@ -98,7 +98,6 @@ const {
     };
   },
   {
-    query: `${basePageQuery} type urgency effectiveDate endDate parks { id } facilities { id } trails { id } boards { id } actions { id } documents { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('PublicNotice'),

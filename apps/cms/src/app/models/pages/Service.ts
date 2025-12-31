@@ -9,7 +9,7 @@ import {
   DraftAndVersionsFactory,
   relationshipController,
 } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 
 /**
  * Creates a relationship with the {@link Service} model.
@@ -100,7 +100,6 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} trails {id} parks {id} facilities {id} boards {id} editorNotes primaryAction {id} secondaryActions {id} primaryContact {id} documents {id}`,
 
     mainAccess: {
       operation: generalOperationAccess,

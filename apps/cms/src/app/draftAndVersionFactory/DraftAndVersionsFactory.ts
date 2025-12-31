@@ -16,22 +16,19 @@ import {
   createNewCopy,
   getModelKeys,
   getUpdatedData,
-  mapDataFields,
 } from '../../utils/draftUtils';
 import { publishDraft } from '../../components/customFields/publishDraft';
 import { BasePageOptions } from '../fieldUtils';
 import { isPlural, plural, singular } from 'pluralize';
-import { deepMerge, lowercaseFirstLetter } from '../../utils';
+import { deepMerge } from '../../utils';
 import { getPublishQueue } from '../../redis';
 import { createDrafts } from '../../components/customFields/drafts';
 import { logger } from '../../configs/logger';
-import v, { version } from 'voca';
-import { CommonContext } from '../../controllers/types';
+import v from 'voca';
 
 interface Options {
   versionLimit?: number;
   versionAgeDays?: number;
-  query?: string;
   mainBasePageOptions?: BasePageOptions;
   draftBasePageOptions?: BasePageOptions;
   versionBasePageOptions?: BasePageOptions;
@@ -77,9 +74,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
   coreFields: CoreFieldsFunction<TFields>,
   opts: Options = {},
 ): { Main: ListConfig<any>; Version: ListConfig<any>; Draft: ListConfig<any> } {
-  const { versionLimit = 10, versionAgeDays = 365, query = '' } = opts;
-
-  const publishQuery = `${query} original { id }`;
+  const { versionLimit = 10, versionAgeDays = 365 } = opts;
 
   const defaultDraftAndVersionOpts: BasePageOptions = {
     titleAndDescriptionOpts: {
@@ -144,7 +139,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
         makeDrafts: createDrafts({
           ui: {
-            query,
             listName: listKey,
             createView: {
               fieldMode: 'hidden',
@@ -266,7 +260,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         }),
         republish: publishDraft({
           ui: {
-            query: publishQuery,
             listName: listKey,
             views: './src/components/customFields/republishVersion/views',
           },
@@ -295,7 +288,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         ),
         publish: publishDraft({
           ui: {
-            query: publishQuery,
             listName: listKey,
           },
         }),
@@ -339,7 +331,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
                   itemId: args.item.id.toString(),
                   listKey: listKey,
                   originalId: args.item.originalId,
-                  query: publishQuery,
                   operation: 'publish',
                 },
                 {

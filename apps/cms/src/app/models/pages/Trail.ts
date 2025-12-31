@@ -5,7 +5,7 @@ import {
   generalOperationAccess,
 } from '../../access';
 import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
-import { basePage, basePageQuery } from '../basePage';
+import { basePage } from '../basePage';
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 
@@ -79,7 +79,6 @@ const {
     };
   },
   {
-    query: `${basePageQuery} address {id} actions {id} documents {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Trail'),
