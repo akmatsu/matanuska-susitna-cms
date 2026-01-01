@@ -6,9 +6,10 @@ import {
   BaseListTypeInfo,
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
+import { select } from '@keystone-6/core/fields';
 
 export type Mode = 'create' | 'update';
-type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
+export type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
 type MinimalFindUnique = (args: { where: any; select?: any }) => Promise<any>;
 type MinimalUpdate = (args: { where: any; data: any }) => Promise<any>;
 type DelegateWithFindUnique = {
@@ -96,20 +97,35 @@ export function getUpdatedData(
     modelKey
   ] as unknown as DelegateWithFindUnique;
 
-  const select = buildSelectObject(modelKey, [
-    'createdAt',
-    'updatedAt',
-    'slug',
-    'status',
-    'drafts',
-    'versions',
-    'currentVersion',
-  ]);
+  const select = buildSelectObject({
+    key: modelKey,
+    excludeFields: [
+      'createdAt',
+      'updatedAt',
+      'slug',
+      'status',
+      'drafts',
+      'versions',
+      'currentVersion',
+    ],
+  });
 
   return delegate.findUnique({
     where: { id },
     select,
   });
+}
+
+export function getSearchData(
+  modelKey: ModelDelegateKey,
+  id: string,
+  ctx: Context,
+) {
+  const delegate = ctx.sudo().prisma[
+    modelKey
+  ] as unknown as DelegateWithFindUnique;
+
+  const select = buildSelectObject({ key: modelKey });
 }
 
 /** Creates a new copy of an item (for drafts or versions) */
@@ -159,25 +175,83 @@ export function publishUpdatedData(
   });
 }
 
-/** Builds a select object for Prisma queries, excluding specified fields */
-export function buildSelectObject(key: string, excludeFields: string[] = []) {
-  const model = Prisma.dmmf.datamodel.models.find(
-    (m) => m.name === capitalizeFirstLetter(key),
-  );
+function getPrismaModel(modelName: string) {
+  return Prisma.dmmf.datamodel.models.find((m) => m.name === modelName);
+}
 
-  const selectObj: Record<string, boolean | { select: { id: boolean } }> = {};
-  if (model) {
-    model.fields.forEach((field) => {
-      if (
-        !field.name.startsWith('from_') &&
-        !field.dbName &&
-        !excludeFields.includes(field.name)
-      )
-        selectObj[field.name] = field.relationName
-          ? { select: { id: true } }
-          : true;
-    });
-  }
+function buildSelectObjectForRelationship(modelName: string) {
+  const targetModel = getPrismaModel(modelName);
+  if (!targetModel) return null;
+
+  const preferredDisplayFields = [
+    'name',
+    'title',
+    'label',
+    'slug',
+    'body',
+    'phone',
+    'email',
+    'description',
+  ];
+
+  const selectObj: Record<string, boolean> = {};
+  targetModel.fields.forEach((field) => {
+    if (preferredDisplayFields.includes(field.name)) {
+      selectObj[field.name] = true;
+    }
+  });
+
+  return selectObj;
+}
+
+/** Builds a select object for Prisma queries, excluding specified fields */
+export function buildSelectObject({
+  key,
+  excludeFields = [],
+  mode = 'ids',
+}: {
+  key: string;
+  excludeFields?: string[];
+
+  /**
+   * defaults to 'ids'
+   *
+   * 'names' mode grabs textual information from related items.
+   *
+   * 'ids' mode only grabs IDs from related items.
+   * */
+  mode?: 'names' | 'ids';
+}) {
+  const modelName = capitalizeFirstLetter(key);
+  const model = getPrismaModel(modelName);
+
+  const selectObj: Record<
+    string,
+    boolean | { select: Record<string, boolean> }
+  > = {};
+  if (!model) return null;
+
+  model.fields.forEach((field) => {
+    const isVirtualOrMapped = field.name.startsWith('from_') || field.dbName;
+    const isExcluded = excludeFields.includes(field.name);
+    if (isVirtualOrMapped || isExcluded) return;
+
+    // If field is not a relationship just select it.
+    if (!field.relationName) {
+      selectObj[field.name] = true;
+      return;
+    }
+
+    if (mode === 'ids') {
+      selectObj[field.name] = { select: { id: true } };
+      return;
+    }
+
+    const relationSelect = buildSelectObjectForRelationship(field.type);
+    if (!relationSelect) return;
+
+    selectObj[field.name] = { select: relationSelect };
+  });
 
   return selectObj;
 }
