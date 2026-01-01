@@ -28,6 +28,7 @@ import {
 import { logger } from '../configs/logger';
 import v from 'voca';
 import { plural } from 'pluralize';
+import { buildSelectObject } from '../utils/draftUtils';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -501,15 +502,32 @@ export async function typesenseUpsert(
       }
     } else {
       try {
-        const thing = v.capitalize(v.camelCase(listNameSingular));
-        const doc = await context.query[thing]?.findOne({
-          where: { id: item.id.toString() },
-          query,
+        const listName = v.capitalize(v.camelCase(listNameSingular));
+
+        const selectObject = buildSelectObject({
+          key: listName,
+          mode: 'names',
+          excludeFields: [
+            'redirect',
+            'heroImage',
+            'createdAt',
+            'updatedAt',
+            'owner',
+            'userGroups',
+            'reviewDate',
+          ],
         });
 
-        const document = toSearchableObj(doc, listNameSingular);
+        console.log(selectObject);
 
-        await docUpsert(document);
+        // const doc = await context.query[thing]?.findOne({
+        //   where: { id: item.id.toString() },
+        //   query,
+        // });
+
+        // const document = toSearchableObj(doc, listNameSingular);
+
+        // await docUpsert(document);
       } catch (error: any) {
         logger.error(error, 'Error updating Typesense document');
       }
