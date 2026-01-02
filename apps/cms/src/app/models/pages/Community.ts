@@ -70,15 +70,6 @@ const {
       item: generalItemAccess('Community'),
       filter: filterByPubStatus,
     },
-
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert('community', args);
-      },
-    },
   },
 );
 

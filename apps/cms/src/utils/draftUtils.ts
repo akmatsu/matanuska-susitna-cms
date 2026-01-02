@@ -149,7 +149,7 @@ export async function getSearchData(
     modelKey
   ] as unknown as DelegateWithFindUnique;
 
-  return delegate.findUnique({
+  return delegate?.findUnique({
     where: { id },
     select,
   });

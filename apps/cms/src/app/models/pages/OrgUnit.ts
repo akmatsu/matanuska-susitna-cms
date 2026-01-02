@@ -1,9 +1,4 @@
-import {
-  docDelete,
-  iconSelect,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { iconSelect, typesenseDelete } from '../../fieldUtils';
 import { basePage } from '../basePage';
 import {
   filterByPubStatus,
@@ -89,23 +84,8 @@ const {
       item: generalItemAccess('OrgUnit'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        if (args.item?.showPage === 'yes') {
-          await typesenseUpsert('orgUnit', args, 'Departments & Divisions');
-        } else if (args.operation === 'update') {
-          if (
-            args.originalItem.showPage !== args.item?.showPage &&
-            args.item?.showPage === 'no'
-          ) {
-            await docDelete(args.item.id.toString());
-          }
-        }
-      },
-    },
+
+    searchTypeOverride: 'Departments & Divisions',
   },
 );
 

@@ -68,7 +68,6 @@ export function useBulkDocumentUpload(
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     form.handleSubmit(async (data) => {
-      console.log(data);
       uploadFiles(
         data.files,
         selectedCollections.map((c) => c.id),

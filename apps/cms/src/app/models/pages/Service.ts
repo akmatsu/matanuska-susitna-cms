@@ -106,15 +106,6 @@ const {
       item: generalItemAccess('Service'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-
-      async afterOperation(args) {
-        await typesenseUpsert('service', args);
-      },
-    },
   },
 );
 

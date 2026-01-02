@@ -37,15 +37,6 @@ const {
       item: generalItemAccess('Policy'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-
-      async afterOperation(args) {
-        await typesenseUpsert('policy', args);
-      },
-    },
   },
 );
 

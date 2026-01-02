@@ -63,15 +63,6 @@ const {
       item: generalItemAccess('Topic'),
       filter: filterByPubDates,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-
-      async afterOperation(args) {
-        await typesenseUpsert('topic', args);
-      },
-    },
   },
 );
 

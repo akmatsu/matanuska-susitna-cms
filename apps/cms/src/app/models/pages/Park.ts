@@ -48,14 +48,6 @@ const {
       item: generalItemAccess('Park'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert('park', args);
-      },
-    },
   },
 );
 
