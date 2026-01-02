@@ -108,11 +108,7 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'public-notice',
-          'id title slug description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title} urgency',
-          args,
-        );
+        await typesenseUpsert('public-notice', args);
 
         if (args.operation === 'create' || args.operation === 'update') {
           const doTheThing = () => {

@@ -53,11 +53,7 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'park',
-          'id title description body slug liveUrl publishAt owner {name} tags {name} services {title} trails {title} facilities {title} communities {title}',
-          args,
-        );
+        await typesenseUpsert('park', args);
       },
     },
   },

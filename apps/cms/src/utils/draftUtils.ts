@@ -7,6 +7,7 @@ import {
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
 import { select } from '@keystone-6/core/fields';
+import { relationalDisplayFields } from './typesense';
 
 export type Mode = 'create' | 'update';
 export type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
@@ -116,16 +117,41 @@ export function getUpdatedData(
   });
 }
 
-export function getSearchData(
+export async function getSearchData(
   modelKey: ModelDelegateKey,
   id: string,
   ctx: Context,
 ) {
+  const select = buildSelectObject({
+    key: modelKey,
+    mode: 'names',
+    excludeFields: [
+      'redirect',
+      'heroImage',
+      'createdAt',
+      'updatedAt',
+      'owner',
+      'userGroups',
+      'reviewDate',
+      'currentVersion',
+      'versions',
+      'drafts',
+      'calendarId',
+      'calendarQueryString',
+      'makeDrafts',
+      'liveUrl',
+      'type',
+    ],
+  });
+
   const delegate = ctx.sudo().prisma[
     modelKey
   ] as unknown as DelegateWithFindUnique;
 
-  const select = buildSelectObject({ key: modelKey });
+  return delegate.findUnique({
+    where: { id },
+    select,
+  });
 }
 
 /** Creates a new copy of an item (for drafts or versions) */
@@ -183,16 +209,7 @@ function buildSelectObjectForRelationship(modelName: string) {
   const targetModel = getPrismaModel(modelName);
   if (!targetModel) return null;
 
-  const preferredDisplayFields = [
-    'name',
-    'title',
-    'label',
-    'slug',
-    'body',
-    'phone',
-    'email',
-    'description',
-  ];
+  const preferredDisplayFields = relationalDisplayFields;
 
   const selectObj: Record<string, boolean> = {};
   targetModel.fields.forEach((field) => {

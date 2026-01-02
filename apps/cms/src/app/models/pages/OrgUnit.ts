@@ -94,13 +94,9 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        if (args.item?.showPage === 'yes')
-          await typesenseUpsert(
-            'orgUnit',
-            'id title slug description body publishAt tags {name}',
-            args,
-          );
-        else if (args.operation === 'update') {
+        if (args.item?.showPage === 'yes') {
+          await typesenseUpsert('orgUnit', args, 'Departments & Divisions');
+        } else if (args.operation === 'update') {
           if (
             args.originalItem.showPage !== args.item?.showPage &&
             args.item?.showPage === 'no'

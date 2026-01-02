@@ -112,11 +112,7 @@ const {
       },
 
       async afterOperation(args) {
-        await typesenseUpsert(
-          'service',
-          `id title description body slug owner {name} publishAt tags {name} orgUnits {title} communities {title} documents {title} primaryAction {label} secondaryActions {label} primaryContact {name}`,
-          args,
-        );
+        await typesenseUpsert('service', args);
       },
     },
   },

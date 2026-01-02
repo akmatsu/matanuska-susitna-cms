@@ -122,11 +122,7 @@ const {
       },
 
       async afterOperation(args) {
-        await typesenseUpsert(
-          'board',
-          'id title description body slug publishAt tags {name} communities {title}',
-          args,
-        );
+        await typesenseUpsert('board', args);
       },
     },
   },

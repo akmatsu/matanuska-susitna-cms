@@ -89,11 +89,7 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'trail',
-          'id title description body slug liveUrl publishAt owner {name} tags {name} services {title} park {title}',
-          args,
-        );
+        await typesenseUpsert('trail', args);
       },
     },
   },
