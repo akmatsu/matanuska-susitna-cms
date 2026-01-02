@@ -113,6 +113,7 @@ export const relationalDisplayFields = [
   'phone',
   'email',
   'description',
+  'code',
 ];
 
 export const PAGE_TYPES = [
@@ -430,19 +431,8 @@ export function toSearchableObj(
 
   const bodyParts: string[] = [];
 
-  if (item.body) {
-    baseObj.body = item.body;
-    bodyParts.push(item.body);
-  }
-
   if (item.description) {
     baseObj.description = item.description;
-  }
-
-  if (item.secondaryActions) {
-    bodyParts.push(
-      ...item.secondaryActions.map((a: { label: string }) => a.label || ''),
-    );
   }
 
   if (item.publishAt)
@@ -450,48 +440,25 @@ export function toSearchableObj(
       new Date(item.publishAt).getTime() / 1000,
     );
 
-  if (item.tags) {
-    baseObj.tags = item.tags.map((tag: { name: string }) => tag.name || '');
-  }
-
-  if (item.orgUnits) {
-    baseObj.departments = item.orgUnits.map(
-      (d: { title: string }) => d.title || '',
-    );
-  }
-
-  if (item.districts) {
-    baseObj.districts = item.districts.map(
-      (d: { title: string }) => d.title || '',
-    );
-  }
-
-  if (item.assemblyDistricts) {
-    baseObj.districts = item.assemblyDistricts.map(
-      (d: { title: string }) => d.title || '',
-    );
-  }
-
-  if (item.communities) {
-    baseObj.communities = item.communities.map(
-      (c: { title: string }) => c.title || '',
-    );
-  }
-
   // Check for unmapped relevant keys.
-  const relevantKeys = relationalDisplayFields;
+  const relevantKeys = ['name', 'title', 'label', 'phone', 'email'];
+  const ignoreKeys = ['slug', 'id', 'description', 'title'];
   for (const [key, value] of Object.entries(item)) {
     // If there is any unmapped relevant keys in the root of the item add it to bodyParts
-    if (
-      !Object.keys(baseObj).includes(key) &&
-      relevantKeys.some((rk) => key.toLowerCase().includes(rk)) &&
-      typeof value === 'string'
-    ) {
-      bodyParts.push(value);
-    }
+    // if (
+    //   !Object.keys(baseObj).includes(key) &&
+    //   relevantKeys.some((rk) => key.toLowerCase().includes(rk)) &&
+    //   typeof value === 'string'
+    // ) {
+    //   bodyParts.push(value);
+    // }
 
-    // If the value is an array, check each item for relevant keys.
-    if (Array.isArray(value)) {
+    // If the value is a string, add it to bodyParts
+    if (typeof value === 'string' && !ignoreKeys.includes(key)) {
+      bodyParts.push(value);
+
+      // If the value is an array, check each item for relevant keys.
+    } else if (Array.isArray(value)) {
       value.forEach((v) => {
         if (typeof v === 'object') {
           relevantKeys.forEach((rk) => {
@@ -499,6 +466,7 @@ export function toSearchableObj(
           });
         }
       });
+
       // If the value is an object check the object for relevant keys
     } else if (typeof value === 'object' && value !== null) {
       relevantKeys.forEach((rk) => {

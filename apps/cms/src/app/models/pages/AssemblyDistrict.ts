@@ -166,7 +166,7 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert('assemblyDistrict', args);
+        await typesenseUpsert('assemblyDistrict', args, 'Assembly District');
       },
     },
   },
