@@ -1,9 +1,7 @@
 import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import { useToasts } from '@keystone-ui/toast';
-import { traceGlobals } from 'next/dist/trace/shared';
 import { FormEvent, useRef } from 'react';
 import { useForm } from 'react-hook-form';
-import { search } from 'voca';
 
 type FormData = {
   files: FileList;

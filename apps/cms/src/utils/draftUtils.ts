@@ -1,5 +1,5 @@
 import { singular } from 'pluralize';
-import { capitalizeFirstLetter, toCamelCase } from '.';
+import { capitalizeFirstLetter } from '.';
 import { CommonContext } from '../controllers/types';
 import { Prisma } from '@prisma/client';
 import {
@@ -8,6 +8,7 @@ import {
 } from '@keystone-6/core/types';
 import { select } from '@keystone-6/core/fields';
 import { relationalDisplayFields } from './typesense';
+import v from 'voca';
 
 export type Mode = 'create' | 'update';
 export type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
@@ -108,6 +109,7 @@ export function getUpdatedData(
       'drafts',
       'versions',
       'currentVersion',
+      'isLive',
     ],
   });
 
@@ -289,7 +291,7 @@ export function deleteItem(
 }
 
 export function getModelKeys(list: string, type: 'draft' | 'version') {
-  const modelKey = toCamelCase(singular(list)) as ModelDelegateKey;
+  const modelKey = v.camelCase(singular(list)) as ModelDelegateKey;
   const key = type === 'draft' ? `${modelKey}Draft` : `${modelKey}Version`;
 
   return [modelKey, key as ModelDelegateKey];
