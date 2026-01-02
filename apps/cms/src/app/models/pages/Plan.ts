@@ -192,11 +192,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'plan',
-          'id title slug description body publishAt tags {name} orgUnits {title} communities {title} contacts {name} actions {label} documents {title}',
-          args,
-        );
+        await typesenseUpsert('plan', args);
       },
     },
   },

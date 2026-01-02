@@ -166,11 +166,7 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'assemblyDistrict',
-          'id title description body slug liveUrl publishAt tags {name} communities {title}',
-          args,
-        );
+        await typesenseUpsert('assemblyDistrict', args);
       },
     },
   },

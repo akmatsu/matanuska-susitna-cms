@@ -69,11 +69,7 @@ const {
       },
 
       async afterOperation(args) {
-        await typesenseUpsert(
-          'topic',
-          'id title description body slug owner { name } publishAt tags { name } orgUnits { title } communities { title } services { title } assemblyDistricts {title} parks { title } trails { title } facilities { title } contacts {name} actions {label} documents { title }',
-          args,
-        );
+        await typesenseUpsert('topic', args);
       },
     },
   },

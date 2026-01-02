@@ -76,11 +76,7 @@ const {
         await typesenseDelete(args);
       },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'community',
-          'id title slug description publishAt tags {name} assemblyDistricts {title}',
-          args,
-        );
+        await typesenseUpsert('community', args);
       },
     },
   },

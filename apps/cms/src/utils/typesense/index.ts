@@ -104,6 +104,17 @@ const orgUnits = {
   },
 };
 
+export const relationalDisplayFields = [
+  'name',
+  'title',
+  'label',
+  'slug',
+  'body',
+  'phone',
+  'email',
+  'description',
+];
+
 export const PAGE_TYPES = [
   {
     type: 'service',
@@ -468,7 +479,7 @@ export function toSearchableObj(
   }
 
   // Check for unmapped relevant keys.
-  const relevantKeys = ['title', 'name', 'label', 'description'];
+  const relevantKeys = relationalDisplayFields;
   for (const [key, value] of Object.entries(item)) {
     // If there is any unmapped relevant keys in the root of the item add it to bodyParts
     if (

@@ -28,7 +28,12 @@ import {
 import { logger } from '../configs/logger';
 import v from 'voca';
 import { plural } from 'pluralize';
-import { buildSelectObject } from '../utils/draftUtils';
+import {
+  buildSelectObject,
+  getSearchData,
+  getUpdatedData,
+  ModelDelegateKey,
+} from '../utils/draftUtils';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -469,7 +474,6 @@ export type BasePageOptions = {
 
 export async function typesenseUpsert(
   listNameSingular: string,
-  query: string,
   {
     operation,
     context,
@@ -481,6 +485,7 @@ export async function typesenseUpsert(
     item?: BaseItem;
     originalItem?: BaseItem;
   },
+  typeOverride?: string,
 ) {
   if (
     (operation === 'update' || operation === 'create') &&
@@ -502,32 +507,19 @@ export async function typesenseUpsert(
       }
     } else {
       try {
-        const listName = v.capitalize(v.camelCase(listNameSingular));
+        const listName = v.camelCase(listNameSingular) as ModelDelegateKey;
 
-        const selectObject = buildSelectObject({
-          key: listName,
-          mode: 'names',
-          excludeFields: [
-            'redirect',
-            'heroImage',
-            'createdAt',
-            'updatedAt',
-            'owner',
-            'userGroups',
-            'reviewDate',
-          ],
-        });
+        const itemData = await getSearchData(
+          listName,
+          item.id.toString(),
+          context,
+        );
 
-        console.log(selectObject);
-
-        // const doc = await context.query[thing]?.findOne({
-        //   where: { id: item.id.toString() },
-        //   query,
-        // });
-
-        // const document = toSearchableObj(doc, listNameSingular);
-
-        // await docUpsert(document);
+        const document = toSearchableObj(
+          itemData,
+          typeOverride ?? listNameSingular,
+        );
+        await docUpsert(document);
       } catch (error: any) {
         logger.error(error, 'Error updating Typesense document');
       }

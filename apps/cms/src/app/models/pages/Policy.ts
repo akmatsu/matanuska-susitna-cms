@@ -43,11 +43,7 @@ const {
       },
 
       async afterOperation(args) {
-        await typesenseUpsert(
-          'policy',
-          `id title description body slug owner {name} publishAt tags {name} userGroups {name} actions {label} documents {title} contacts {name}`,
-          args,
-        );
+        await typesenseUpsert('policy', args);
       },
     },
   },
