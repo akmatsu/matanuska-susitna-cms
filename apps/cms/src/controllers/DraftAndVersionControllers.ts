@@ -1,7 +1,6 @@
 import type { RequestControllerWithContext } from './types';
 import {
   createNewCopy,
-  deleteItem,
   getModelKeys,
   getUpdatedData,
   handleDraftPublish,
