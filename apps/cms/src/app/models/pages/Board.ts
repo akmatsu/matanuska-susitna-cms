@@ -1,6 +1,5 @@
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
-import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import {
   filterByPubStatus,
   generalItemAccess,

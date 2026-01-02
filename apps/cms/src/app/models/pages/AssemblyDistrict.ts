@@ -4,12 +4,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  emailRegex,
-  phoneNumberRegex,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { emailRegex, phoneNumberRegex } from '../../fieldUtils';
 import { relationship, text, timestamp } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,

@@ -3,7 +3,6 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { basePage } from '../basePage';
 import {
   DraftAndVersionsFactory,

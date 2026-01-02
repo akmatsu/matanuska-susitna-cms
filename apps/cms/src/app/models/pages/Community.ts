@@ -3,7 +3,6 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { relationship, select } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
