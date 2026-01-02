@@ -420,12 +420,12 @@ export const PAGE_TYPES = [
 export function toSearchableObj(
   item: any,
   type: string,
-  prependId?: string,
+  appendId?: string,
 ): TypeSensePageDocument {
   const baseObj: TypeSensePageDocument = {
     type: item?.type?.replace(/_/gi, ' ') || type,
-    id: `${item.id}${prependId ?? ''}`,
-    slug: item.slug,
+    id: `${item.id}${appendId ?? ''}`,
+    slug: item.slug || appendId?.replace(/^-/, ''),
     title: item.title,
   };
 
@@ -444,15 +444,6 @@ export function toSearchableObj(
   const relevantKeys = ['name', 'title', 'label', 'phone', 'email'];
   const ignoreKeys = ['slug', 'id', 'description', 'title'];
   for (const [key, value] of Object.entries(item)) {
-    // If there is any unmapped relevant keys in the root of the item add it to bodyParts
-    // if (
-    //   !Object.keys(baseObj).includes(key) &&
-    //   relevantKeys.some((rk) => key.toLowerCase().includes(rk)) &&
-    //   typeof value === 'string'
-    // ) {
-    //   bodyParts.push(value);
-    // }
-
     // If the value is a string, add it to bodyParts
     if (typeof value === 'string' && !ignoreKeys.includes(key)) {
       bodyParts.push(value);

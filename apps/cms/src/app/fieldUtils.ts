@@ -467,48 +467,56 @@ export type BasePageOptions = {
   disableDefaultRelationships?: boolean;
 };
 
-export async function typesenseUpsert(
-  listNameSingular: string,
-  {
-    operation,
-    context,
-    item,
-    originalItem,
-  }: {
-    operation: 'create' | 'update' | 'delete';
-    context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
-    item?: BaseItem;
-    originalItem?: BaseItem;
-  },
-  typeOverride?: string,
-) {
+interface OpArgs {
+  operation: 'create' | 'update' | 'delete';
+  context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
+  item?: BaseItem;
+  originalItem?: BaseItem;
+}
+
+export async function typesenseUpsert({
+  listNameSingular,
+  opArgs: { operation, item, context, originalItem },
+  typeOverride,
+  appendId,
+  isSingleton,
+}: {
+  listNameSingular: string;
+  opArgs: OpArgs;
+  typeOverride?: string;
+  appendId?: string;
+  isSingleton?: boolean;
+}) {
   if ((operation === 'update' || operation === 'create') && item) {
     const unpublish =
       operation === 'update' &&
       item &&
       originalItem &&
-      item.status !== 'published' &&
+      item.status === 'unpublished' &&
       originalItem.status === 'published';
 
     if (unpublish) {
       try {
-        await docDelete(item.id.toString());
+        await docDelete(
+          appendId ? item.id.toString() + appendId : item.id.toString(),
+        );
       } catch (error: any) {
         logger.error(error, 'Error deleting Typesense document');
       }
-    } else if (item.status === 'published') {
+    } else if (item.status === 'published' || item.status === undefined) {
       try {
         const listName = v.camelCase(listNameSingular) as ModelDelegateKey;
 
         const itemData = await getSearchData(
           listName,
-          item.id.toString(),
+          isSingleton ? parseInt(item.id.toString()) : item.id.toString(),
           context,
         );
 
         const document = toSearchableObj(
           itemData,
           typeOverride ?? listNameSingular,
+          appendId,
         );
 
         await docUpsert(document);

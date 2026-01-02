@@ -3,13 +3,15 @@ import { elevatedOperationAccess, isContentManager } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import {
   contacts,
+  docDelete,
   owner,
   timestamps,
   titleAndDescription,
+  typesenseUpsert,
 } from '../../fieldUtils';
 import { customText } from '../../../components/customFields/Markdown';
 import { relationship } from '@keystone-6/core/fields';
-import { boardsPageHooks } from './boardPageHooks';
+import { logger } from '../../../configs/logger';
 
 const BoardPage = list({
   isSingleton: true,
@@ -88,11 +90,28 @@ const BoardPage = list({
       },
     }),
     contacts: contacts(),
-    // newContacts: contactRelationshipMany(),
 
     ...timestamps,
   },
-  hooks: boardsPageHooks,
+  hooks: {
+    async beforeOperation(args) {
+      try {
+        docDelete(`${args.item?.id.toString()}-boards`);
+      } catch (err) {
+        logger.error(err, 'Error deleting boards page typesense document');
+      }
+    },
+
+    async afterOperation(args) {
+      typesenseUpsert({
+        listNameSingular: 'boardPage',
+        opArgs: args,
+        typeOverride: 'Topic',
+        appendId: '-boards',
+        isSingleton: true,
+      });
+    },
+  },
 });
 
 export default BoardPage;

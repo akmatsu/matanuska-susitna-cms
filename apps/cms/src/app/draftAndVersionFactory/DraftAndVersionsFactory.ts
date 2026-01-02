@@ -24,7 +24,7 @@ import {
   typesenseUpsert,
 } from '../fieldUtils';
 import { isPlural, plural, singular } from 'pluralize';
-import { deepMerge, lowercaseFirstLetter } from '../../utils';
+import { deepMerge } from '../../utils';
 import { getPublishQueue } from '../../redis';
 import { createDrafts } from '../../components/customFields/drafts';
 import { logger } from '../../configs/logger';
@@ -226,7 +226,11 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           try {
             createVersion(listKey, versionAgeDays, versionLimit, args);
             if (!opts.doNotIndex)
-              typesenseUpsert(listKey, args, opts.searchTypeOverride);
+              typesenseUpsert({
+                listNameSingular: listKey,
+                opArgs: args,
+                typeOverride: opts.searchTypeOverride,
+              });
 
             const userHook = opts.mainHooks?.afterOperation;
             if (typeof userHook === 'function') {

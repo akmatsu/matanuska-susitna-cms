@@ -121,7 +121,7 @@ export function getUpdatedData(
 
 export async function getSearchData(
   modelKey: ModelDelegateKey,
-  id: string,
+  id: string | number,
   ctx: Context,
 ) {
   const select = buildSelectObject({
