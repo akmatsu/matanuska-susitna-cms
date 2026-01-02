@@ -161,14 +161,7 @@ const {
       item: generalItemAccess('AssemblyDistrict'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert('assemblyDistrict', args, 'Assembly District');
-      },
-    },
+    searchTypeOverride: 'Assembly District',
   },
 );
 

@@ -18,9 +18,13 @@ import {
   getUpdatedData,
 } from '../../utils/draftUtils';
 import { publishDraft } from '../../components/customFields/publishDraft';
-import { BasePageOptions } from '../fieldUtils';
+import {
+  BasePageOptions,
+  typesenseDelete,
+  typesenseUpsert,
+} from '../fieldUtils';
 import { isPlural, plural, singular } from 'pluralize';
-import { deepMerge } from '../../utils';
+import { deepMerge, lowercaseFirstLetter } from '../../utils';
 import { getPublishQueue } from '../../redis';
 import { createDrafts } from '../../components/customFields/drafts';
 import { logger } from '../../configs/logger';
@@ -39,6 +43,10 @@ interface Options {
   hooks?: ListHooks<BaseListTypeInfo>;
   mainGraphqlOptions?: ListConfig<any>['graphql'];
   mainUI?: ListConfig<any>['ui'];
+  /** Disable search engine indexing of this model */
+  doNotIndex?: boolean;
+  /** Override the search type for this model */
+  searchTypeOverride?: string;
 }
 
 export type CoreFieldsFunction<TFields extends BaseFields<any>> = (
@@ -175,6 +183,8 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         ...(opts.hooks && opts.hooks),
         ...(opts.mainHooks && opts.mainHooks),
         async beforeOperation(args) {
+          if (!opts.doNotIndex) typesenseDelete(args);
+
           const it: BaseItem | undefined = args.item as BaseItem | undefined;
           if (args.operation === 'delete' && it?.id) {
             const sudoCtx = args.context.sudo();
@@ -214,7 +224,9 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
         async afterOperation(args) {
           try {
-            // await createVersion(listKey, versionAgeDays, versionLimit, args);
+            // createVersion(listKey, versionAgeDays, versionLimit, args);
+            if (!opts.doNotIndex)
+              typesenseUpsert(listKey, args, opts.searchTypeOverride);
 
             const userHook = opts.mainHooks?.afterOperation;
             if (typeof userHook === 'function') {

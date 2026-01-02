@@ -488,11 +488,7 @@ export async function typesenseUpsert(
   },
   typeOverride?: string,
 ) {
-  if (
-    (operation === 'update' || operation === 'create') &&
-    item &&
-    item.status === 'published'
-  ) {
+  if ((operation === 'update' || operation === 'create') && item) {
     const unpublish =
       operation === 'update' &&
       item &&
@@ -500,13 +496,15 @@ export async function typesenseUpsert(
       item.status !== 'published' &&
       originalItem.status === 'published';
 
+    console.log(unpublish);
+
     if (unpublish) {
       try {
         await docDelete(item.id.toString());
       } catch (error: any) {
         logger.error(error, 'Error deleting Typesense document');
       }
-    } else {
+    } else if (item.status === 'published') {
       try {
         const listName = v.camelCase(listNameSingular) as ModelDelegateKey;
 
@@ -520,8 +518,6 @@ export async function typesenseUpsert(
           itemData,
           typeOverride ?? listNameSingular,
         );
-
-        console.log(document);
 
         await docUpsert(document);
       } catch (error: any) {

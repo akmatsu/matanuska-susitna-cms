@@ -104,12 +104,7 @@ const {
       filter: filterByPubStatus,
     },
     mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
       async afterOperation(args) {
-        await typesenseUpsert('public-notice', args);
-
         if (args.operation === 'create' || args.operation === 'update') {
           const doTheThing = () => {
             return createAndSendBulletin(

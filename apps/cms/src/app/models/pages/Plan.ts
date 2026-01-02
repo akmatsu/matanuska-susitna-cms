@@ -187,14 +187,6 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
       item: generalItemAccess('Plan'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert('plan', args);
-      },
-    },
   },
 );
 

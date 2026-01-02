@@ -72,14 +72,6 @@ const {
       item: generalItemAccess('Facility'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert('facility', args);
-      },
-    },
   },
 );
 
