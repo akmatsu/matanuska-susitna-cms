@@ -224,7 +224,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
         async afterOperation(args) {
           try {
-            // createVersion(listKey, versionAgeDays, versionLimit, args);
+            createVersion(listKey, versionAgeDays, versionLimit, args);
             if (!opts.doNotIndex)
               typesenseUpsert(listKey, args, opts.searchTypeOverride);
 
@@ -398,33 +398,38 @@ async function createVersion(
     item &&
     item?.status === 'published'
   ) {
-    const id = item.id.toString();
-    const [modelKey, versionKey] = getModelKeys(listKey, 'version');
-    const original = await getUpdatedData(modelKey, id, context);
+    try {
+      const id = item.id.toString();
+      const [modelKey, versionKey] = getModelKeys(listKey, 'version');
 
-    if (!original) {
-      throw new Error('Original item not found');
-    }
+      const original = await getUpdatedData(modelKey, id, context);
 
-    const newVersion = await createNewCopy(versionKey, original, context);
+      if (!original) {
+        throw new Error('Original item not found');
+      }
 
-    if (!newVersion) {
-      throw new Error('Failed to create version');
-    }
+      const newVersion = await createNewCopy(versionKey, original, context);
 
-    const count = await context.sudo().prisma[versionKey].count({
-      where: { original: { id: { equals: id } } },
-    });
+      if (!newVersion) {
+        throw new Error('Failed to create version');
+      }
 
-    if (count > versionLimit) {
-      await context.sudo().prisma[versionKey].deleteMany({
-        where: {
-          original: { id: { equals: id } },
-          createdAt: {
-            lt: new Date(Date.now() - versionAgeDays * 24 * 60 * 60 * 1000),
-          },
-        },
+      const count = await context.sudo().prisma[versionKey].count({
+        where: { original: { id: { equals: id } } },
       });
+
+      if (count > versionLimit) {
+        await context.sudo().prisma[versionKey].deleteMany({
+          where: {
+            original: { id: { equals: id } },
+            createdAt: {
+              lt: new Date(Date.now() - versionAgeDays * 24 * 60 * 60 * 1000),
+            },
+          },
+        });
+      }
+    } catch (error) {
+      logger.error(error, 'Error creating version');
     }
   }
 }

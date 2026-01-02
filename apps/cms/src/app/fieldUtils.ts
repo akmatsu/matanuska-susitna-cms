@@ -28,13 +28,7 @@ import {
 import { logger } from '../configs/logger';
 import v from 'voca';
 import { plural } from 'pluralize';
-import {
-  buildSelectObject,
-  getSearchData,
-  getUpdatedData,
-  ModelDelegateKey,
-} from '../utils/draftUtils';
-import ConversationModel from 'typesense/lib/Typesense/ConversationModel';
+import { getSearchData, ModelDelegateKey } from '../utils/draftUtils';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -495,8 +489,6 @@ export async function typesenseUpsert(
       originalItem &&
       item.status !== 'published' &&
       originalItem.status === 'published';
-
-    console.log(unpublish);
 
     if (unpublish) {
       try {
