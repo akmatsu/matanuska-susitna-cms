@@ -1,4 +1,3 @@
-import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import {
   filterByPubStatus,
   generalItemAccess,

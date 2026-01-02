@@ -8,8 +8,6 @@ import {
   documentRelationshipSingle,
   sidebar,
   switchField,
-  typesenseDelete,
-  typesenseUpsert,
 } from '../../fieldUtils';
 import { basePage } from '../basePage';
 import { group, list } from '@keystone-6/core';

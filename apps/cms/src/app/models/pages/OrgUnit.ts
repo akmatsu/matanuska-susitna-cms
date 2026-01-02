@@ -1,4 +1,4 @@
-import { iconSelect, typesenseDelete } from '../../fieldUtils';
+import { iconSelect } from '../../fieldUtils';
 import { basePage } from '../basePage';
 import {
   filterByPubStatus,

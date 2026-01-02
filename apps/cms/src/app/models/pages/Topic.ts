@@ -3,7 +3,6 @@ import {
   DraftAndVersionsFactory,
   relationshipController,
 } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
-import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { basePage } from '../basePage';
 import {
   filterByPubDates,

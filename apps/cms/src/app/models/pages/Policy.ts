@@ -1,6 +1,5 @@
 import { relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
-import { typesenseDelete, typesenseUpsert } from '../../fieldUtils';
 import { basePage } from '../basePage';
 import {
   filterByPubStatus,
