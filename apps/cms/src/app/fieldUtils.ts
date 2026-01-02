@@ -34,6 +34,7 @@ import {
   getUpdatedData,
   ModelDelegateKey,
 } from '../utils/draftUtils';
+import ConversationModel from 'typesense/lib/Typesense/ConversationModel';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -519,6 +520,9 @@ export async function typesenseUpsert(
           itemData,
           typeOverride ?? listNameSingular,
         );
+
+        console.log(document);
+
         await docUpsert(document);
       } catch (error: any) {
         logger.error(error, 'Error updating Typesense document');

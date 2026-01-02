@@ -214,7 +214,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
         async afterOperation(args) {
           try {
-            await createVersion(listKey, versionAgeDays, versionLimit, args);
+            // await createVersion(listKey, versionAgeDays, versionLimit, args);
 
             const userHook = opts.mainHooks?.afterOperation;
             if (typeof userHook === 'function') {

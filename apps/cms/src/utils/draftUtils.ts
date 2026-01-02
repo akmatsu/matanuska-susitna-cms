@@ -141,6 +141,7 @@ export async function getSearchData(
       'makeDrafts',
       'liveUrl',
       'type',
+      'hours',
     ],
   });
 
