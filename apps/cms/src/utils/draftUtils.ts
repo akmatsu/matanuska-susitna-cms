@@ -17,6 +17,7 @@ type MinimalUpdate = (args: { where: any; data: any }) => Promise<any>;
 type DelegateWithFindUnique = {
   findUnique: MinimalFindUnique;
   update: MinimalUpdate;
+  findMany: (args: { where?: any; select?: any }) => Promise<any[]>;
 };
 
 type Context =
@@ -116,6 +117,45 @@ export function getUpdatedData(
   return delegate.findUnique({
     where: { id },
     select,
+  });
+}
+
+export async function getSearchDataMany(
+  modelKey: ModelDelegateKey,
+  ctx: Context,
+) {
+  const select = buildSelectObject({
+    key: modelKey,
+    mode: 'names',
+    excludeFields: [
+      'redirect',
+      'heroImage',
+      'createdAt',
+      'updatedAt',
+      'owner',
+      'userGroups',
+      'reviewDate',
+      'currentVersion',
+      'versions',
+      'drafts',
+      'calendarId',
+      'calendarQueryString',
+      'makeDrafts',
+      'liveUrl',
+      'type',
+      'hours',
+    ],
+  });
+
+  const delegate = ctx.sudo().prisma[
+    modelKey
+  ] as unknown as DelegateWithFindUnique;
+
+  if (!delegate) console.log('No delegate!');
+
+  return delegate.findMany({
+    select,
+    ...(select?.status ? { where: { status: 'published' } } : {}),
   });
 }
 
