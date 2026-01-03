@@ -6,12 +6,14 @@ import type {
 import {
   COLLECTIONS,
   PAGE_TYPES,
-  PageType,
+  toSearchableObj,
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
 } from '../utils/typesense';
 import { logger } from '../configs/logger';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
+import { getSearchDataMany, ModelDelegateKey } from '../utils/draftUtils';
+import v from 'voca';
 
 /** Create all registered typesense collections */
 export const createTypesenseCollections: RequestController =
@@ -143,10 +145,21 @@ async function _coordinateCollectionReset(
 /** Indexes all registered page types in the typesense search engine */
 async function _indexAllPages(context: CommonContext) {
   return _forEachPageType(async (pageType) => {
-    const items = await pageType.getItems(context);
+    const listName = v.camelCase(pageType) as ModelDelegateKey;
+
+    const items = await getSearchDataMany(listName, context);
     if (!items || items?.length === 0) return;
 
-    await _addDocsToCollection(TYPESENSE_COLLECTIONS.PAGES, items);
+    const appendId =
+      pageType === 'ElectionsPage'
+        ? '-election'
+        : pageType === 'BoardPage'
+          ? '-board'
+          : undefined;
+
+    const docs = items.map((item) => toSearchableObj(item, pageType, appendId));
+
+    await _addDocsToCollection(TYPESENSE_COLLECTIONS.PAGES, docs);
   });
 }
 
@@ -178,6 +191,6 @@ function _forEachCollection(
   return Promise.all(COLLECTIONS.map(cb));
 }
 
-async function _forEachPageType(cb: (pageType: PageType) => Promise<any>) {
+async function _forEachPageType(cb: (pageType: string) => Promise<any>) {
   return Promise.all(PAGE_TYPES.map(cb));
 }

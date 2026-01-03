@@ -527,6 +527,38 @@ export async function typesenseUpsert({
   }
 }
 
+export async function indexItem({
+  listNameSingular,
+  item,
+  context,
+  typeOverride,
+  appendId,
+  isSingleton,
+}: {
+  listNameSingular: string;
+  item: BaseItem;
+  context: KeystoneContextFromListTypeInfo<BaseListTypeInfo>;
+  typeOverride?: string;
+  appendId?: string;
+  isSingleton?: boolean;
+}) {
+  const listName = v.camelCase(listNameSingular) as ModelDelegateKey;
+
+  const itemData = await getSearchData(
+    listName,
+    isSingleton ? parseInt(item.id.toString()) : item.id.toString(),
+    context,
+  );
+
+  const document = toSearchableObj(
+    itemData,
+    typeOverride ?? listNameSingular,
+    appendId,
+  );
+
+  await docUpsert(document);
+}
+
 export async function typesenseDelete({
   operation,
   item,
