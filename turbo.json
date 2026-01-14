@@ -8,6 +8,7 @@
     },
     "migrate": {},
     "migrations": {},
+    "generate": {},
     "dev": {
       "cache": false,
       "persistent": true

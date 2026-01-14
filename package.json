@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "cms:dev": "pnpm turbo run dev --filter=cms",
+    "cms:generate": "pnpm turbo run generate --filter=cms",
     "cms:build": "pnpm turbo run build --filter=cms",
     "cms:start": "pnpm turbo run start --filter=cms",
     "cms:fix": "pnpm turbo run fix --filter=cms",

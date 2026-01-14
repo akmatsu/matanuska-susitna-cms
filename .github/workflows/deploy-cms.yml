@@ -124,6 +124,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --filter cms --workspace-root
 
+      - name: Generate CMS Prisma Client
+        run: pnpm run cms:generate
+
       - name: Build CMS
         run: pnpm run cms:build
 
