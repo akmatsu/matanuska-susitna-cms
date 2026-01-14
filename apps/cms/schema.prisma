@@ -2499,6 +2499,127 @@ model PolicyDraft {
   @@index([ownerId])
 }
 
+model Post {
+  id               String         @id @default(cuid())
+  heroImage        String?
+  title            String         @unique @default("")
+  description      String         @default("")
+  publishAt        DateTime?
+  unpublishAt      DateTime?
+  reviewDate       DateTime?
+  slug             String         @unique @default("")
+  owner            User?          @relation("Post_owner", fields: [ownerId], references: [id])
+  ownerId          String?        @map("owner")
+  body             String?
+  tags             Tag[]          @relation("Post_tags")
+  userGroups       UserGroup[]    @relation("Post_userGroups")
+  actions          InternalLink[] @relation("Post_actions")
+  documents        Document[]     @relation("Post_documents")
+  contacts         Contact[]      @relation("Post_contacts")
+  createdAt        DateTime?      @default(now())
+  updatedAt        DateTime?      @default(now()) @updatedAt
+  author           User?          @relation("Post_author", fields: [authorId], references: [id])
+  authorId         String?        @map("author")
+  images           PostImage[]    @relation("PostImage_post")
+  categories       PostCategory[] @relation("Post_categories")
+  status           String         @default("unpublished")
+  drafts           PostDraft[]    @relation("PostDraft_original")
+  makeDrafts       String?
+  versions         PostVersion[]  @relation("PostVersion_original")
+  currentVersion   PostVersion?   @relation("Post_currentVersion", fields: [currentVersionId], references: [id])
+  currentVersionId String?        @unique @map("currentVersion")
+
+  @@index([ownerId])
+  @@index([authorId])
+}
+
+model PostVersion {
+  id          String         @id @default(cuid())
+  original    Post?          @relation("PostVersion_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
+  heroImage   String?
+  title       String         @default("")
+  description String         @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  owner       User?          @relation("PostVersion_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
+  body        String?
+  tags        Tag[]          @relation("PostVersion_tags")
+  userGroups  UserGroup[]    @relation("PostVersion_userGroups")
+  actions     InternalLink[] @relation("PostVersion_actions")
+  documents   Document[]     @relation("PostVersion_documents")
+  contacts    Contact[]      @relation("PostVersion_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  author      User?          @relation("PostVersion_author", fields: [authorId], references: [id])
+  authorId    String?        @map("author")
+  images      PostImage[]    @relation("PostVersion_images")
+  categories  PostCategory[] @relation("PostVersion_categories")
+  isLive      Post?          @relation("Post_currentVersion")
+  republish   String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([authorId])
+}
+
+model PostDraft {
+  id          String         @id @default(cuid())
+  original    Post?          @relation("PostDraft_original", fields: [originalId], references: [id])
+  originalId  String?        @map("original")
+  heroImage   String?
+  title       String         @default("")
+  description String         @default("")
+  publishAt   DateTime?
+  unpublishAt DateTime?
+  reviewDate  DateTime?
+  owner       User?          @relation("PostDraft_owner", fields: [ownerId], references: [id])
+  ownerId     String?        @map("owner")
+  body        String?
+  tags        Tag[]          @relation("PostDraft_tags")
+  userGroups  UserGroup[]    @relation("PostDraft_userGroups")
+  actions     InternalLink[] @relation("PostDraft_actions")
+  documents   Document[]     @relation("PostDraft_documents")
+  contacts    Contact[]      @relation("PostDraft_contacts")
+  createdAt   DateTime?      @default(now())
+  updatedAt   DateTime?      @default(now()) @updatedAt
+  author      User?          @relation("PostDraft_author", fields: [authorId], references: [id])
+  authorId    String?        @map("author")
+  images      PostImage[]    @relation("PostDraft_images")
+  categories  PostCategory[] @relation("PostDraft_categories")
+  publish     String?
+
+  @@index([originalId])
+  @@index([ownerId])
+  @@index([authorId])
+}
+
+model PostCategory {
+  id                          String        @id @default(cuid())
+  title                       String        @unique @default("")
+  description                 String        @default("")
+  from_Post_categories        Post[]        @relation("Post_categories")
+  from_PostVersion_categories PostVersion[] @relation("PostVersion_categories")
+  from_PostDraft_categories   PostDraft[]   @relation("PostDraft_categories")
+}
+
+model PostImage {
+  id                      String        @id @default(cuid())
+  label                   String        @default("")
+  post                    Post?         @relation("PostImage_post", fields: [postId], references: [id])
+  postId                  String?       @map("post")
+  image                   Image?        @relation("PostImage_image", fields: [imageId], references: [id])
+  imageId                 String?       @map("image")
+  order                   Int?          @default(0)
+  from_PostVersion_images PostVersion[] @relation("PostVersion_images")
+  from_PostDraft_images   PostDraft[]   @relation("PostDraft_images")
+
+  @@index([postId])
+  @@index([imageId])
+}
+
 model Document {
   id                                               String                    @id @default(cuid())
   title                                            String                    @default("")
@@ -2578,6 +2699,9 @@ model Document {
   from_Policy_documents                            Policy[]                  @relation("Policy_documents")
   from_PolicyVersion_documents                     PolicyVersion[]           @relation("PolicyVersion_documents")
   from_PolicyDraft_documents                       PolicyDraft[]             @relation("PolicyDraft_documents")
+  from_Post_documents                              Post[]                    @relation("Post_documents")
+  from_PostVersion_documents                       PostVersion[]             @relation("PostVersion_documents")
+  from_PostDraft_documents                         PostDraft[]               @relation("PostDraft_documents")
   from_DocumentListItem_document                   DocumentListItem[]        @relation("DocumentListItem_document")
 
   @@index([title])
@@ -2617,6 +2741,7 @@ model Image {
   from_AssemblyDistrict_photo        AssemblyDistrict[]        @relation("AssemblyDistrict_photo")
   from_AssemblyDistrictVersion_photo AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_photo")
   from_AssemblyDistrictDraft_photo   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_photo")
+  from_PostImage_image               PostImage[]               @relation("PostImage_image")
 }
 
 model ExternalLink {
@@ -2690,6 +2815,9 @@ model InternalLink {
   from_Policy_actions                  Policy[]                  @relation("Policy_actions")
   from_PolicyVersion_actions           PolicyVersion[]           @relation("PolicyVersion_actions")
   from_PolicyDraft_actions             PolicyDraft[]             @relation("PolicyDraft_actions")
+  from_Post_actions                    Post[]                    @relation("Post_actions")
+  from_PostVersion_actions             PostVersion[]             @relation("PostVersion_actions")
+  from_PostDraft_actions               PostDraft[]               @relation("PostDraft_actions")
   from_Highlight_linkedItem            Highlight[]               @relation("Highlight_linkedItem")
   from_Redirect_to                     Redirect[]                @relation("Redirect_to")
 }
@@ -2789,6 +2917,9 @@ model Contact {
   from_Policy_contacts                      Policy[]                  @relation("Policy_contacts")
   from_PolicyVersion_contacts               PolicyVersion[]           @relation("PolicyVersion_contacts")
   from_PolicyDraft_contacts                 PolicyDraft[]             @relation("PolicyDraft_contacts")
+  from_Post_contacts                        Post[]                    @relation("Post_contacts")
+  from_PostVersion_contacts                 PostVersion[]             @relation("PostVersion_contacts")
+  from_PostDraft_contacts                   PostDraft[]               @relation("PostDraft_contacts")
   from_ContactListItem_contact              ContactListItem[]         @relation("ContactListItem_contact")
 
   @@index([websiteId])
@@ -2898,6 +3029,12 @@ model User {
   from_Policy_owner                  Policy[]                  @relation("Policy_owner")
   from_PolicyVersion_owner           PolicyVersion[]           @relation("PolicyVersion_owner")
   from_PolicyDraft_owner             PolicyDraft[]             @relation("PolicyDraft_owner")
+  from_Post_owner                    Post[]                    @relation("Post_owner")
+  from_Post_author                   Post[]                    @relation("Post_author")
+  from_PostVersion_owner             PostVersion[]             @relation("PostVersion_owner")
+  from_PostVersion_author            PostVersion[]             @relation("PostVersion_author")
+  from_PostDraft_owner               PostDraft[]               @relation("PostDraft_owner")
+  from_PostDraft_author              PostDraft[]               @relation("PostDraft_author")
   from_DocumentCollection_owner      DocumentCollection[]      @relation("DocumentCollection_owner")
   from_Url_owner                     Url[]                     @relation("Url_owner")
   from_Highlight_owner               Highlight[]               @relation("Highlight_owner")
@@ -2954,6 +3091,9 @@ model UserGroup {
   from_Policy_userGroups                  Policy[]                  @relation("Policy_userGroups")
   from_PolicyVersion_userGroups           PolicyVersion[]           @relation("PolicyVersion_userGroups")
   from_PolicyDraft_userGroups             PolicyDraft[]             @relation("PolicyDraft_userGroups")
+  from_Post_userGroups                    Post[]                    @relation("Post_userGroups")
+  from_PostVersion_userGroups             PostVersion[]             @relation("PostVersion_userGroups")
+  from_PostDraft_userGroups               PostDraft[]               @relation("PostDraft_userGroups")
   from_DocumentCollection_userGroups      DocumentCollection[]      @relation("DocumentCollection_userGroups")
   from_Highlight_userGroups               Highlight[]               @relation("Highlight_userGroups")
 
@@ -3015,6 +3155,9 @@ model Tag {
   from_Policy_tags                  Policy[]                  @relation("Policy_tags")
   from_PolicyVersion_tags           PolicyVersion[]           @relation("PolicyVersion_tags")
   from_PolicyDraft_tags             PolicyDraft[]             @relation("PolicyDraft_tags")
+  from_Post_tags                    Post[]                    @relation("Post_tags")
+  from_PostVersion_tags             PostVersion[]             @relation("PostVersion_tags")
+  from_PostDraft_tags               PostDraft[]               @relation("PostDraft_tags")
   from_Document_tags                Document[]                @relation("Document_tags")
   from_DocumentCollection_tags      DocumentCollection[]      @relation("DocumentCollection_tags")
   from_Image_tags                   Image[]                   @relation("Image_tags")
