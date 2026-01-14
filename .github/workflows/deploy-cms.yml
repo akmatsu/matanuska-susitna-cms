@@ -131,7 +131,7 @@ jobs:
             unzip -q -o ./cms.zip -d ./temp
 
             # Stop the pm2 server
-            pm2 stop cms
+            pm2 stop all || true
 
             # Move the active folder to backup
             mv ./active ./backup
