@@ -115,9 +115,17 @@ jobs:
           ssh -o ServerAliveInterval=60 ${{secrets.EC2_SERVER_USER}}@${{secrets.EC2_SERVER_HOST}} << 'EOF'
             set -e
 
+            # Load nvm
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+            # Use Node.js
+            nvm use 22.21.0
+            
             # Create temp and backup directory if they don't exist
-            cd cms
-            mkdir -p ./active
+            mkdir -p ./cms/active
+            cd ./cms
 
             # Unzip the files in the temp folder
             unzip -q -o ./cms.zip -d ./temp
