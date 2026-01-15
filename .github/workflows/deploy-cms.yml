@@ -152,6 +152,7 @@ jobs:
             rm -rf ../cms.zip
             rm -rf ../backup
           EOF
+
       - name: Remove GitHub actions IP from security group
         run: |
           aws ec2 revoke-security-group-ingress \
