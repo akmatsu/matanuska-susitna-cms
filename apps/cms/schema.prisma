@@ -8,7 +8,7 @@ datasource postgresql {
 }
 
 generator client {
-  binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
   provider      = "prisma-client-js"
 }
 
@@ -2522,6 +2522,7 @@ model Post {
   authorId         String?        @map("author")
   images           PostImage[]    @relation("PostImage_post")
   categories       PostCategory[] @relation("Post_categories")
+  location         String         @default("Matsu")
   status           String         @default("unpublished")
   drafts           PostDraft[]    @relation("PostDraft_original")
   makeDrafts       String?
@@ -2557,6 +2558,7 @@ model PostVersion {
   authorId    String?        @map("author")
   images      PostImage[]    @relation("PostVersion_images")
   categories  PostCategory[] @relation("PostVersion_categories")
+  location    String         @default("Matsu")
   isLive      Post?          @relation("Post_currentVersion")
   republish   String?
 
@@ -2589,6 +2591,7 @@ model PostDraft {
   authorId    String?        @map("author")
   images      PostImage[]    @relation("PostDraft_images")
   categories  PostCategory[] @relation("PostDraft_categories")
+  location    String         @default("Matsu")
   publish     String?
 
   @@index([originalId])

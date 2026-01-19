@@ -22,7 +22,8 @@
     "start:process-page-views-worker": "tsx ./src/redis/processPageViews/worker.ts",
     "db:seed": "tsx ./seed-data.ts",
     "codegen": "pnpm exec graphql-codegen --config ./codegen.ts",
-    "codegen:watch": "pnpm exec graphql-codegen --config ./codegen.ts --watch"
+    "codegen:watch": "pnpm exec graphql-codegen --config ./codegen.ts --watch",
+    "postinstall": "prisma generate && keystone postinstall"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.30",

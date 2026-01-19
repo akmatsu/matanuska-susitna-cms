@@ -10641,6 +10641,7 @@ type Post {
   imagesCount(where: PostImageWhereInput! = {}): Int
   categories(where: PostCategoryWhereInput! = {}, orderBy: [PostCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostCategoryWhereUniqueInput): [PostCategory!]
   categoriesCount(where: PostCategoryWhereInput! = {}): Int
+  location: String
   status: String
   drafts(where: PostDraftWhereInput! = {}, orderBy: [PostDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostDraftWhereUniqueInput): [PostDraft!]
   draftsCount(where: PostDraftWhereInput! = {}): Int
@@ -10680,6 +10681,7 @@ input PostWhereInput {
   author: UserWhereInput
   images: PostImageManyRelationFilter
   categories: PostCategoryManyRelationFilter
+  location: StringFilter
   status: StringFilter
   drafts: PostDraftManyRelationFilter
   versions: PostVersionManyRelationFilter
@@ -10722,6 +10724,7 @@ input PostOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  location: OrderDirection
   status: OrderDirection
   makeDrafts: OrderDirection
 }
@@ -10746,6 +10749,7 @@ input PostUpdateInput {
   author: UserRelateToOneForUpdateInput
   images: PostImageRelateToManyForUpdateInput
   categories: PostCategoryRelateToManyForUpdateInput
+  location: String
   status: String
   drafts: PostDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -10812,6 +10816,7 @@ input PostCreateInput {
   author: UserRelateToOneForCreateInput
   images: PostImageRelateToManyForCreateInput
   categories: PostCategoryRelateToManyForCreateInput
+  location: String
   status: String
   drafts: PostDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -10874,6 +10879,7 @@ type PostVersion {
   imagesCount(where: PostImageWhereInput! = {}): Int
   categories(where: PostCategoryWhereInput! = {}, orderBy: [PostCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostCategoryWhereUniqueInput): [PostCategory!]
   categoriesCount(where: PostCategoryWhereInput! = {}): Int
+  location: String
   isLive: Post
   republish: String
 }
@@ -10906,6 +10912,7 @@ input PostVersionWhereInput {
   author: UserWhereInput
   images: PostImageManyRelationFilter
   categories: PostCategoryManyRelationFilter
+  location: StringFilter
   isLive: PostWhereInput
 }
 
@@ -10920,6 +10927,7 @@ input PostVersionOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  location: OrderDirection
   republish: OrderDirection
 }
 
@@ -10943,6 +10951,7 @@ input PostVersionUpdateInput {
   author: UserRelateToOneForUpdateInput
   images: PostImageRelateToManyForUpdateInput
   categories: PostCategoryRelateToManyForUpdateInput
+  location: String
   isLive: PostRelateToOneForUpdateInput
   republish: String
 }
@@ -10978,6 +10987,7 @@ input PostVersionCreateInput {
   author: UserRelateToOneForCreateInput
   images: PostImageRelateToManyForCreateInput
   categories: PostCategoryRelateToManyForCreateInput
+  location: String
   isLive: PostRelateToOneForCreateInput
   republish: String
 }
@@ -11017,6 +11027,7 @@ type PostDraft {
   imagesCount(where: PostImageWhereInput! = {}): Int
   categories(where: PostCategoryWhereInput! = {}, orderBy: [PostCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostCategoryWhereUniqueInput): [PostCategory!]
   categoriesCount(where: PostCategoryWhereInput! = {}): Int
+  location: String
   publish: String
 }
 
@@ -11047,6 +11058,7 @@ input PostDraftWhereInput {
   author: UserWhereInput
   images: PostImageManyRelationFilter
   categories: PostCategoryManyRelationFilter
+  location: StringFilter
 }
 
 input PostDraftOrderByInput {
@@ -11060,6 +11072,7 @@ input PostDraftOrderByInput {
   body: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  location: OrderDirection
   publish: OrderDirection
 }
 
@@ -11083,6 +11096,7 @@ input PostDraftUpdateInput {
   author: UserRelateToOneForUpdateInput
   images: PostImageRelateToManyForUpdateInput
   categories: PostCategoryRelateToManyForUpdateInput
+  location: String
   publish: String
 }
 
@@ -11111,6 +11125,7 @@ input PostDraftCreateInput {
   author: UserRelateToOneForCreateInput
   images: PostImageRelateToManyForCreateInput
   categories: PostCategoryRelateToManyForCreateInput
+  location: String
   publish: String
 }
 
