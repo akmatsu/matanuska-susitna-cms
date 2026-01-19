@@ -118,6 +118,8 @@ const {
         },
       }),
 
+      voterInfoBody: customText(),
+
       ...group({
         label: 'Candidate Filing Information',
         fields: {
@@ -156,6 +158,7 @@ const {
             },
           }),
           officesToBeFilled: customText(),
+          candidateBody: customText(),
         },
       }),
 
@@ -182,6 +185,7 @@ const {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
+          absenteeVotingBody: customText(),
         },
       }),
 
@@ -209,6 +213,7 @@ const {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
+          electionOfficialBody: customText(),
         },
       }),
 

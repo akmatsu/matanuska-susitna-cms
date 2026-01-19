@@ -8,7 +8,7 @@ datasource postgresql {
 }
 
 generator client {
-  binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
   provider      = "prisma-client-js"
 }
 
@@ -74,17 +74,21 @@ model Election {
   electionDate                        DateTime
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
+  voterInfoBody                       String?
   candidateFilingDocuments            Document[]        @relation("Election_candidateFilingDocuments")
   candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
   officesToBeFilled                   String?
+  candidateBody                       String?
   absenteeVotingApplication           Document?         @relation("Election_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
   absenteeVotingApplicationId         String?           @map("absenteeVotingApplication")
   absenteeApplicationDeadline         DateTime?
+  absenteeVotingBody                  String?
   electionOfficialApplication         Document?         @relation("Election_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
   electionOfficialApplicationId       String?           @map("electionOfficialApplication")
   electionOfficialApplicationDeadline DateTime?
+  electionOfficialBody                String?
   candidates                          Document?         @relation("Election_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?           @map("candidates")
   documents                           Document[]        @relation("Election_documents")
@@ -127,17 +131,21 @@ model ElectionVersion {
   electionDate                        DateTime
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
+  voterInfoBody                       String?
   candidateFilingDocuments            Document[]      @relation("ElectionVersion_candidateFilingDocuments")
   candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
   officesToBeFilled                   String?
+  candidateBody                       String?
   absenteeVotingApplication           Document?       @relation("ElectionVersion_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
   absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
   absenteeApplicationDeadline         DateTime?
+  absenteeVotingBody                  String?
   electionOfficialApplication         Document?       @relation("ElectionVersion_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
   electionOfficialApplicationId       String?         @map("electionOfficialApplication")
   electionOfficialApplicationDeadline DateTime?
+  electionOfficialBody                String?
   candidates                          Document?       @relation("ElectionVersion_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?         @map("candidates")
   documents                           Document[]      @relation("ElectionVersion_documents")
@@ -178,17 +186,21 @@ model ElectionDraft {
   electionDate                        DateTime
   earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
+  voterInfoBody                       String?
   candidateFilingDocuments            Document[]      @relation("ElectionDraft_candidateFilingDocuments")
   candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
   officesToBeFilled                   String?
+  candidateBody                       String?
   absenteeVotingApplication           Document?       @relation("ElectionDraft_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
   absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
   absenteeApplicationDeadline         DateTime?
+  absenteeVotingBody                  String?
   electionOfficialApplication         Document?       @relation("ElectionDraft_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
   electionOfficialApplicationId       String?         @map("electionOfficialApplication")
   electionOfficialApplicationDeadline DateTime?
+  electionOfficialBody                String?
   candidates                          Document?       @relation("ElectionDraft_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?         @map("candidates")
   documents                           Document[]      @relation("ElectionDraft_documents")
