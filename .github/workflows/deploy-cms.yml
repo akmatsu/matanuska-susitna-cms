@@ -20,7 +20,7 @@ jobs:
     concurrency:
       group: ci-${{github.ref}}
       cancel-in-progress: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     env:
       AWS_INSTANCE_SG_ID: ${{ github.ref_name == 'stage' && secrets.STAGE_AWS_INSTANCE_SG_ID || secrets.AWS_INSTANCE_SG_ID }}
       EC2_DEPLOY_ROLE_ARN: ${{ secrets.EC2_DEPLOY_ROLE_ARN }}
@@ -150,9 +150,15 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-            # Create temp and backup directory if they don't exist
-            node -v
+            # Load nvm
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+            # Use Node.js
             nvm use 22.21.0
+            
+            # Create temp and backup directory if they don't exist
             mkdir -p ./cms/active
             cd ./cms
 
@@ -181,6 +187,7 @@ jobs:
             rm -rf ../cms.zip
             rm -rf ../backup
           EOF
+
       - name: Remove GitHub actions IP from security group
         if: always()
         run: |
