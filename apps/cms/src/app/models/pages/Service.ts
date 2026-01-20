@@ -1,11 +1,5 @@
 import { relationship, text } from '@keystone-6/core/fields';
 import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
-import {
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
@@ -13,7 +7,8 @@ import {
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { basePage } from '../basePage';
 
 /**
  * Creates a relationship with the {@link Service} model.
@@ -104,25 +99,11 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} trails {id} parks {id} facilities {id} boards {id} editorNotes primaryAction {id} secondaryActions {id} primaryContact {id} documents {id}`,
 
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Service'),
       filter: filterByPubStatus,
-    },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'service',
-          `id title description body slug owner {name} publishAt tags {name} orgUnits {title} communities {title} documents {title} primaryAction {label} secondaryActions {label} primaryContact {name}`,
-          args,
-        );
-      },
     },
   },
 );

@@ -1,11 +1,5 @@
-import {
-  basePage,
-  basePageQuery,
-  docDelete,
-  iconSelect,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { iconSelect } from '../../fieldUtils';
+import { basePage } from '../basePage';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -15,7 +9,7 @@ import { relationship, select, text } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 
 const {
   Main: OrgUnit,
@@ -85,33 +79,13 @@ const {
     };
   },
   {
-    query: `${basePageQuery} parent {id} children {id} showPage actions {id} documents {id} icon type childrenLabel boards {id} facilities {id} parks {id} trails {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('OrgUnit'),
       filter: filterByPubStatus,
     },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        if (args.item?.showPage === 'yes')
-          await typesenseUpsert(
-            'orgUnit',
-            'id title slug description body publishAt tags {name}',
-            args,
-          );
-        else if (args.operation === 'update') {
-          if (
-            args.originalItem.showPage !== args.item?.showPage &&
-            args.item?.showPage === 'no'
-          ) {
-            await docDelete(args.item.id.toString());
-          }
-        }
-      },
-    },
+
+    searchTypeOverride: 'Departments & Divisions',
   },
 );
 

@@ -1,18 +1,12 @@
 import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
-import {
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
 import { relationship, select, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../../utils/emailUtils';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import { logger } from '../../../configs/logger';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { basePage } from '../basePage';
 
 const {
   Main: PublicNotice,
@@ -103,23 +97,13 @@ const {
     };
   },
   {
-    query: `${basePageQuery} type urgency effectiveDate endDate parks { id } facilities { id } trails { id } boards { id } actions { id } documents { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('PublicNotice'),
       filter: filterByPubStatus,
     },
     mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
       async afterOperation(args) {
-        await typesenseUpsert(
-          'public-notice',
-          'id title slug description body publishAt tags {name} services {title} parks {title} orgUnits {title} facilities {title} trails {title} communities {title} assemblyDistricts {title} urgency',
-          args,
-        );
-
         if (args.operation === 'create' || args.operation === 'update') {
           const doTheThing = () => {
             return createAndSendBulletin(

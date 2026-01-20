@@ -3,15 +3,10 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
 import { relationship, select } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { lowercaseFirstLetter } from '../../../utils';
+import { basePage } from '../basePage';
 
 const {
   Main: Community,
@@ -69,24 +64,10 @@ const {
     };
   },
   {
-    query: `${basePageQuery} boards {id} facilities {id} parks {id} trails {id} type actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Community'),
       filter: filterByPubStatus,
-    },
-
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'community',
-          'id title slug description publishAt tags {name} assemblyDistricts {title}',
-          args,
-        );
-      },
     },
   },
 );

@@ -129,6 +129,8 @@ export default config<TypeInfo<Session>>({
           },
           InternalLinkSearch: {
             __resolveType(value: any) {
+              if ('__typename' in value) return value.__typename as string;
+              if ('howElectionsWork' in value) return 'ElectionsPage';
               if ('policies' in value) return 'Policy';
               if ('effort' in value) return 'Plan';
               if ('startDate' in value) return 'Event';
@@ -138,7 +140,6 @@ export default config<TypeInfo<Session>>({
               if ('vacancyReportId' in value) return 'BoardPage';
               if ('effectiveDate' in value) return 'PublicNotice';
               if ('parentId' in value) return 'OrgUnit';
-              if ('memberName' in value) return 'OrgUnit';
               if ('url' in value) return 'Url';
               if ('elevationChange' in value) return 'Trail';
               if ('memberName' in value) return 'AssemblyDistrict';
@@ -247,6 +248,15 @@ export default config<TypeInfo<Session>>({
               { query }: { query?: string },
               context: KeystoneContext<TypeInfo<Session>>,
             ) => {
+              const baseWhere: any = {
+                where: {
+                  OR: [
+                    { title: { contains: query, mode: 'insensitive' } },
+                    { description: { contains: query, mode: 'insensitive' } },
+                    { body: { contains: query, mode: 'insensitive' } },
+                  ],
+                },
+              };
               const [
                 services,
                 facilities,
@@ -265,24 +275,8 @@ export default config<TypeInfo<Session>>({
                 documents,
                 topics,
               ] = await Promise.all([
-                context.db.Service.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.Facility.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
+                context.db.Service.findMany(baseWhere),
+                context.db.Facility.findMany(baseWhere),
                 context.db.HomePage.findMany({
                   where: {
                     OR: [
@@ -291,96 +285,16 @@ export default config<TypeInfo<Session>>({
                     ],
                   },
                 }),
-                context.db.Board.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.BoardPage.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.PublicNotice.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.OrgUnit.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.AssemblyDistrict.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.Community.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.Park.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.Trail.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.Plan.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
-                context.db.Event.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
+                context.db.Board.findMany(baseWhere),
+                context.db.BoardPage.findMany(baseWhere),
+                context.db.PublicNotice.findMany(baseWhere),
+                context.db.OrgUnit.findMany(baseWhere),
+                context.db.AssemblyDistrict.findMany(baseWhere),
+                context.db.Community.findMany(baseWhere),
+                context.db.Park.findMany(baseWhere),
+                context.db.Trail.findMany(baseWhere),
+                context.db.Plan.findMany(baseWhere),
+                context.db.Event.findMany(baseWhere),
                 context.db.Url.findMany({
                   where: {
                     OR: [
@@ -398,15 +312,7 @@ export default config<TypeInfo<Session>>({
                     ],
                   },
                 }),
-                context.db.Topic.findMany({
-                  where: {
-                    OR: [
-                      { title: { contains: query, mode: 'insensitive' } },
-                      { description: { contains: query, mode: 'insensitive' } },
-                      { body: { contains: query, mode: 'insensitive' } },
-                    ],
-                  },
-                }),
+                context.db.Topic.findMany(baseWhere),
               ]);
 
               // 5. Combine all arrays into one heterogeneous array
@@ -429,6 +335,7 @@ export default config<TypeInfo<Session>>({
                 ...topics,
               ];
             },
+
             topPages: async (
               root,
               args: { after?: string; before?: string; take?: number },

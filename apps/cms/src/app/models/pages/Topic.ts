@@ -2,13 +2,8 @@ import { relationship } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { basePage } from '../basePage';
 import {
   filterByPubDates,
   generalItemAccess,
@@ -61,24 +56,11 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} trails {id} parks {id} boards {id} facilities {id} highlights { id } actions { id } documents { id }`,
+
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Topic'),
       filter: filterByPubDates,
-    },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'topic',
-          'id title description body slug owner { name } publishAt tags { name } orgUnits { title } communities { title } services { title } assemblyDistricts {title} parks { title } trails { title } facilities { title } contacts {name} actions {label} documents { title }',
-          args,
-        );
-      },
     },
   },
 );

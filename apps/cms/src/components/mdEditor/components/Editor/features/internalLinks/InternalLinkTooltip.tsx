@@ -1,3 +1,4 @@
+'use client';
 import {
   Combobox,
   ComboboxInput,
@@ -14,11 +15,11 @@ import { Button } from '@keystone-ui/button';
 import { useInternalSearchQuery } from './hooks/useInternalSearchQuery';
 import { useInternalTooltipProvider } from './hooks/useInternalTooltipProvider';
 import { Page, useSelectionHandler } from './hooks/useSelectedItem';
-import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
 import v from 'voca';
 import { Mark } from '@milkdown/kit/prose/model';
 import { PluginViewContext } from '@prosemirror-adapter/react';
 import { LinkSearchQuery } from '../../../../../../graphql/graphql';
+import { useGetLinkInfo } from './hooks/useGetLinkInfo';
 
 export function InternalLinkTooltip() {
   const { contentRef, view, linkInfo, isShowing } =
@@ -29,77 +30,10 @@ export function InternalLinkTooltip() {
     ? v.camelCase(singular(linkInfo.mark.attrs.list))
     : undefined;
 
-  const query = gql`
-    query GetInternalLink($id: ID!, $type: String!) {
-      getInternalLink(id: $id, type: $type) {
-        __typename
-        ... on AssemblyDistrict {
-          id
-          title
-        }
-        ... on Board {
-          id
-          title
-        }
-        ... on BoardPage {
-          id
-          title
-        }
-        ... on Community {
-          id
-          title
-        }
-        ... on Facility {
-          id
-          title
-        }
-        ... on HomePage {
-          id
-          title
-        }
-        ... on OrgUnit {
-          id
-          title
-        }
-        ... on Park {
-          id
-          title
-        }
-        ... on PublicNotice {
-          id
-          title
-        }
-        ... on Service {
-          id
-          title
-        }
-        ... on Trail {
-          id
-          title
-        }
-        ... on Url {
-          id
-          title
-        }
-        ... on Topic {
-          id
-          title
-        }
-        ... on Document {
-          id
-          title
-        }
-      }
-    }
-  `;
-
-  const { data: linkData, loading } = useQuery(query, {
-    variables: {
-      id: linkInfo?.mark?.attrs?.itemId,
-      type: v.capitalize(listType),
-    },
-    skip: !listType,
-  });
+  const { data: linkData, loading } = useGetLinkInfo(
+    linkInfo?.mark?.attrs?.itemId,
+    v.capitalize(listType),
+  );
 
   function removeLink() {
     const { tr } = view.state;
@@ -225,7 +159,7 @@ function SearchInput({
           anchor="bottom"
           transition
           className={clsx(
-            'card w-[var(--input-width)] rounded-sm border bg-white p-1 [--anchor-gap:var(--spacing-1)]',
+            'card w-(--input-width) rounded-sm border bg-white p-1 [--anchor-gap:var(--spacing-1)]',
             'transition duration-100 ease-in',
           )}
         >

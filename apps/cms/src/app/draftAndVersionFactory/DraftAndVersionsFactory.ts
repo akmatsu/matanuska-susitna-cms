@@ -1,5 +1,5 @@
 import { BaseFields, list, ListConfig } from '@keystone-6/core';
-import { generalOperationAccess } from './access';
+import { generalOperationAccess } from '../access';
 import {
   relationship,
   RelationshipFieldConfig,
@@ -12,20 +12,27 @@ import {
   ListAccessControl,
   ListHooks,
 } from '@keystone-6/core/types';
-import { mapDataFields } from '../utils/draftUtils';
-import { publishDraft } from '../components/customFields/publishDraft';
-import { BasePageOptions } from './fieldUtils';
+import {
+  createNewCopy,
+  getModelKeys,
+  getUpdatedData,
+} from '../../utils/draftUtils';
+import { publishDraft } from '../../components/customFields/publishDraft';
+import {
+  BasePageOptions,
+  typesenseDelete,
+  typesenseUpsert,
+} from '../fieldUtils';
 import { isPlural, plural, singular } from 'pluralize';
-import { deepMerge, lowercaseFirstLetter } from '../utils';
-import { getPublishQueue } from '../redis';
-import { createDrafts } from '../components/customFields/drafts';
-import { logger } from '../configs/logger';
+import { deepMerge } from '../../utils';
+import { getPublishQueue } from '../../redis';
+import { createDrafts } from '../../components/customFields/drafts';
+import { logger } from '../../configs/logger';
 import v from 'voca';
 
 interface Options {
   versionLimit?: number;
   versionAgeDays?: number;
-  query?: string;
   mainBasePageOptions?: BasePageOptions;
   draftBasePageOptions?: BasePageOptions;
   versionBasePageOptions?: BasePageOptions;
@@ -36,6 +43,10 @@ interface Options {
   hooks?: ListHooks<BaseListTypeInfo>;
   mainGraphqlOptions?: ListConfig<any>['graphql'];
   mainUI?: ListConfig<any>['ui'];
+  /** Disable search engine indexing of this model */
+  doNotIndex?: boolean;
+  /** Override the search type for this model */
+  searchTypeOverride?: string;
 }
 
 export type CoreFieldsFunction<TFields extends BaseFields<any>> = (
@@ -71,9 +82,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
   coreFields: CoreFieldsFunction<TFields>,
   opts: Options = {},
 ): { Main: ListConfig<any>; Version: ListConfig<any>; Draft: ListConfig<any> } {
-  const { versionLimit = 10, versionAgeDays = 365, query = '' } = opts;
-
-  const publishQuery = `${query} original { id }`;
+  const { versionLimit = 10, versionAgeDays = 365 } = opts;
 
   const defaultDraftAndVersionOpts: BasePageOptions = {
     titleAndDescriptionOpts: {
@@ -138,7 +147,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
         makeDrafts: createDrafts({
           ui: {
-            query,
             listName: listKey,
             createView: {
               fieldMode: 'hidden',
@@ -175,6 +183,8 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         ...(opts.hooks && opts.hooks),
         ...(opts.mainHooks && opts.mainHooks),
         async beforeOperation(args) {
+          if (!opts.doNotIndex) typesenseDelete(args);
+
           const it: BaseItem | undefined = args.item as BaseItem | undefined;
           if (args.operation === 'delete' && it?.id) {
             const sudoCtx = args.context.sudo();
@@ -214,13 +224,13 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
         async afterOperation(args) {
           try {
-            await createVersion(
-              listKey,
-              query,
-              versionAgeDays,
-              versionLimit,
-              args,
-            );
+            createVersion(listKey, versionAgeDays, versionLimit, args);
+            if (!opts.doNotIndex)
+              typesenseUpsert({
+                listNameSingular: listKey,
+                opArgs: args,
+                typeOverride: opts.searchTypeOverride,
+              });
 
             const userHook = opts.mainHooks?.afterOperation;
             if (typeof userHook === 'function') {
@@ -266,7 +276,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         }),
         republish: publishDraft({
           ui: {
-            query: publishQuery,
             listName: listKey,
             views: './src/components/customFields/republishVersion/views',
           },
@@ -295,7 +304,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         ),
         publish: publishDraft({
           ui: {
-            query: publishQuery,
             listName: listKey,
           },
         }),
@@ -339,7 +347,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
                   itemId: args.item.id.toString(),
                   listKey: listKey,
                   originalId: args.item.originalId,
-                  query: publishQuery,
                   operation: 'publish',
                 },
                 {
@@ -368,7 +375,6 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
 
 async function createVersion(
   listKey: string,
-  query: string,
   versionAgeDays: number,
   versionLimit: number,
   {
@@ -396,52 +402,38 @@ async function createVersion(
     item &&
     item?.status === 'published'
   ) {
-    const sudoCtx = context.sudo();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { title, id, ...rest } = await sudoCtx.query[listKey].findOne({
-      where: { id: item.id.toString() },
-      query,
-    });
+    try {
+      const id = item.id.toString();
+      const [modelKey, versionKey] = getModelKeys(listKey, 'version');
 
-    const now = new Date();
+      const original = await getUpdatedData(modelKey, id, context);
 
-    const baseData = mapDataFields(rest, {}, 'create');
+      if (!original) {
+        throw new Error('Original item not found');
+      }
 
-    const versionData = {
-      ...baseData,
-      title: `${title} --- ${now.toLocaleString()}`,
-      original: { connect: { id: item.id.toString() } },
-      isLive: { connect: { id: item.id.toString() } },
-    };
+      const newVersion = await createNewCopy(versionKey, original, context);
 
-    // Create a new version
-    await sudoCtx.prisma[lowercaseFirstLetter(listKey) + 'Version'].create({
-      data: versionData,
-    });
+      if (!newVersion) {
+        throw new Error('Failed to create version');
+      }
 
-    const count = await sudoCtx.query[listKey + 'Version'].count({
-      where: {
-        original: { id: { equals: item.id.toString() } },
-      },
-    });
-
-    // If more than max, delete all versions older maximum age
-    if (count > versionLimit) {
-      const cutoff = new Date(
-        now.getTime() - versionAgeDays * 24 * 60 * 60 * 1000,
-      );
-
-      const oldVersions = await sudoCtx.query[listKey + 'Version'].findMany({
-        where: {
-          original: { id: { equals: item.id.toString() } },
-          createdAt: { lte: cutoff },
-        },
-        query: 'id',
+      const count = await context.sudo().prisma[versionKey].count({
+        where: { original: { id: { equals: id } } },
       });
 
-      await sudoCtx.query[listKey + 'Version'].deleteMany({
-        where: oldVersions.map((v) => ({ id: v.id.toString() })),
-      });
+      if (count > versionLimit) {
+        await context.sudo().prisma[versionKey].deleteMany({
+          where: {
+            original: { id: { equals: id } },
+            createdAt: {
+              lt: new Date(Date.now() - versionAgeDays * 24 * 60 * 60 * 1000),
+            },
+          },
+        });
+      }
+    } catch (error) {
+      logger.error(error, 'Error creating version');
     }
   }
 }

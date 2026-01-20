@@ -1,16 +1,11 @@
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
   filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
+import { basePage } from '../basePage';
 
 const {
   Main: Board,
@@ -115,24 +110,10 @@ const {
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} directory {id} calendarId calendarQueryString type isActive linkToAgendas {id} linkToResolutions {id} linkToPublicOpinionMessage {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Board'),
       filter: filterByPubStatus,
-    },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'board',
-          'id title description body slug publishAt tags {name} communities {title}',
-          args,
-        );
-      },
     },
   },
 );
