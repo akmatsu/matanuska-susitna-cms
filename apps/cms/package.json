@@ -23,7 +23,7 @@
     "db:seed": "tsx ./seed-data.ts",
     "codegen": "pnpm exec graphql-codegen --config ./codegen.ts",
     "codegen:watch": "pnpm exec graphql-codegen --config ./codegen.ts --watch",
-    "postinstall": "keystone postinstall"
+    "postinstall": "prisma generate && keystone postinstall"
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.30",

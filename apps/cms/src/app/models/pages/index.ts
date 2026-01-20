@@ -12,6 +12,7 @@ import Plan from './Plan';
 import Event from './Event';
 import LandingPages from './LandingPages';
 import Policy from './Policy';
+import Post from './Post';
 
 const lists = {
   ...AssemblyDistrict,
@@ -29,6 +30,7 @@ const lists = {
   FacilityListItem,
   ...LandingPages,
   ...Policy,
+  ...Post,
 };
 
 export default lists;

@@ -118,7 +118,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install Dependencies
@@ -187,6 +187,7 @@ jobs:
             rm -rf ../cms.zip
             rm -rf ../backup
           EOF
+
       - name: Remove GitHub actions IP from security group
         if: always()
         run: |

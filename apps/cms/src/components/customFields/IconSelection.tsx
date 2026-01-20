@@ -159,10 +159,8 @@ export const controller = (
       Filter(props) {
         return (
           <MultiSelect
-            // eslint-disable-next-line react/prop-types
             onChange={props.onChange}
             options={optionsWithStringValues}
-            // eslint-disable-next-line react/prop-types
             value={props.value}
             autoFocus
           />
