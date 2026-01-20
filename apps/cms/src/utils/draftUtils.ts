@@ -6,9 +6,9 @@ import {
   BaseListTypeInfo,
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
-import { select } from '@keystone-6/core/fields';
 import { relationalDisplayFields } from './typesense';
 import v from 'voca';
+import build from 'next/dist/build';
 
 export type Mode = 'create' | 'update';
 export type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
@@ -37,7 +37,7 @@ export async function handleDraftPublish(
     throw new Error('Draft not found');
   }
 
-  const published = await publishUpdatedData(modelKey, draft, context);
+  const published = await publishUpdatedDataDB(modelKey, draft, context);
 
   if (!published) {
     throw new Error('Could not find original item');
@@ -219,17 +219,25 @@ export function createNewCopy(
   });
 }
 
-/** Publishes the updated data by updating the original item with data from a draft/version */
-export function publishUpdatedData(
+interface PublishUpdateArgs {
+  modelKey: ModelDelegateKey;
+  data: any;
+  ctx: Context;
+  customData?: Record<string, any>;
+}
+
+type PublishUpdateFn = (
   modelKey: ModelDelegateKey,
   { title, original, ...data }: any,
   ctx: Context,
   customData?: Record<string, any>,
+) => Promise<any>;
+
+function buildPublishPayload(
+  { title, original, ...data }: PublishUpdateArgs['data'],
+  customData?: PublishUpdateArgs['customData'],
 ) {
-  const delegate = ctx.sudo().prisma[
-    modelKey
-  ] as unknown as DelegateWithFindUnique;
-  return delegate.update({
+  return {
     where: { id: original.id },
     data: mapDataFields(
       data,
@@ -241,8 +249,38 @@ export function publishUpdatedData(
       },
       'update',
     ),
-  });
+  } as const;
 }
+
+/**
+ * Publishes updated data using the {@link https://keystonejs.com/docs/context/db-items | KeystoneJS DB Context API}.
+ * This means it will execute any hooks defined on the list.
+ */
+export const publishUpdatedDataDB: PublishUpdateFn = (
+  modelKey,
+  data,
+  ctx: Context,
+  customData,
+) => {
+  const mk = capitalizeFirstLetter(modelKey) as keyof Context['db'];
+  return ctx.sudo().db[mk].updateOne(buildPublishPayload(data, customData));
+};
+
+/**
+ * Publishes the updated data by updating the original item with data from a draft/version.
+ * Does not trigger hooks defined on the list
+ */
+export const publishUpdatedData: PublishUpdateFn = (
+  modelKey,
+  data,
+  ctx,
+  customData,
+) => {
+  const delegate = ctx.sudo().prisma[
+    modelKey
+  ] as unknown as DelegateWithFindUnique;
+  return delegate.update(buildPublishPayload(data, customData));
+};
 
 function getPrismaModel(modelName: string) {
   return Prisma.dmmf.datamodel.models.find((m) => m.name === modelName);

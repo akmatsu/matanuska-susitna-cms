@@ -3,7 +3,7 @@ import config from '../../../keystone';
 import { Worker, Job } from 'bullmq';
 import { getContext } from '@keystone-6/core/context';
 import { REDIS_CONNECTION } from '../config';
-import { handleDraftPublish, mapDataFields } from '../../utils/draftUtils';
+import { handleDraftPublish } from '../../utils/draftUtils';
 import { logger } from '../../configs/logger';
 
 const publishWorker = async () => {
