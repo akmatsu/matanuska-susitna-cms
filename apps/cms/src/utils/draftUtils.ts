@@ -8,7 +8,6 @@ import {
 } from '@keystone-6/core/types';
 import { relationalDisplayFields } from './typesense';
 import v from 'voca';
-import build from 'next/dist/build';
 
 export type Mode = 'create' | 'update';
 export type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
