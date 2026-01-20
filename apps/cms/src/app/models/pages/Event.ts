@@ -1,7 +1,8 @@
 import { relationship } from '@keystone-6/core/fields';
 import { filterByPubStatus, generalOperationAccess } from '../../access';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
-import { basePage, basePageQuery, timestampField } from '../../fieldUtils';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { timestampField } from '../../fieldUtils';
+import { basePage } from '../basePage';
 
 const Event = DraftAndVersionsFactory(
   'Event',
@@ -37,7 +38,6 @@ const Event = DraftAndVersionsFactory(
     };
   },
   {
-    query: `${basePageQuery} startDate endDate boards {id} communities {id} parks {id} trails {id} facilities {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       filter: filterByPubStatus,

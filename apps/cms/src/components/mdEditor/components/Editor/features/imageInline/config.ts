@@ -47,7 +47,7 @@ export function configureImageBlockFeature(
             },
           });
 
-          return 'url';
+          return data?.data?.createImage?.file?.url || 'Image failed to upload';
         },
         imageIcon: '🖼️',
         uploadButton: 'Upload',

@@ -6,14 +6,16 @@ import {
 } from '../../access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import {
+  docDelete,
   owner,
   timestamps,
   titleAndDescription,
+  typesenseUpsert,
   userGroups,
 } from '../../fieldUtils';
 import { customText } from '../../../components/customFields/Markdown';
 import { integer, relationship, text } from '@keystone-6/core/fields';
-import { electionsPageHooks } from './electionsPageHooks';
+import { logger } from '../../../configs/logger';
 
 export const EarlyVotingLocation = list({
   access: {
@@ -156,7 +158,24 @@ const ElectionsPage = list({
 
     ...timestamps,
   },
-  hooks: electionsPageHooks,
+  hooks: {
+    async beforeOperation(args) {
+      try {
+        docDelete(`${args.item?.id.toString()}-elections`);
+      } catch (error) {
+        logger.error(error, 'Error deleting elections page typesense document');
+      }
+    },
+    async afterOperation(args) {
+      typesenseUpsert({
+        listNameSingular: 'electionsPage',
+        opArgs: args,
+        typeOverride: 'Topic',
+        appendId: '-elections',
+        isSingleton: true,
+      });
+    },
+  },
 });
 
 export default ElectionsPage;

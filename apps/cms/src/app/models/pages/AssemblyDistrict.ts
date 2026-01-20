@@ -4,19 +4,13 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  emailRegex,
-  phoneNumberRegex,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { emailRegex, phoneNumberRegex } from '../../fieldUtils';
 import { relationship, text, timestamp } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
+import { basePage } from '../basePage';
 
 const {
   Main: AssemblyDistrict,
@@ -162,19 +156,7 @@ const {
       item: generalItemAccess('AssemblyDistrict'),
       filter: filterByPubStatus,
     },
-    query: `${basePageQuery} photo { id } memberName bio email phone fax termStart termEnd boards {id} facilities {id} parks {id} trails {id} actions {id} documents {id} address { id }`,
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'assemblyDistrict',
-          'id title description body slug liveUrl publishAt tags {name} communities {title}',
-          args,
-        );
-      },
-    },
+    searchTypeOverride: 'Assembly District',
   },
 );
 

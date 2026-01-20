@@ -4,14 +4,9 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
+import { basePage } from '../basePage';
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 
 const {
   Main: Trail,
@@ -83,23 +78,10 @@ const {
     };
   },
   {
-    query: `${basePageQuery} address {id} actions {id} documents {id} park {id} address {id} hiking biking horsebackRiding crossCountrySkiing snowshoeing frisbeeGolf dogWalking running snowMachining atv dirtBiking mushing open summer fall winter spring difficulty length elevationChange`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Trail'),
       filter: filterByPubStatus,
-    },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'trail',
-          'id title description body slug liveUrl publishAt owner {name} tags {name} services {title} park {title}',
-          args,
-        );
-      },
     },
   },
 );

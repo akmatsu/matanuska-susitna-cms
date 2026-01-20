@@ -4,15 +4,10 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import {
-  basePage,
-  basePageQuery,
-  typesenseDelete,
-  typesenseUpsert,
-} from '../../fieldUtils';
 import { integer, relationship } from '@keystone-6/core/fields';
-import { DraftAndVersionsFactory } from '../../DraftAndVersionsFactory';
+import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { list } from '@keystone-6/core';
+import { basePage } from '../basePage';
 
 export const FacilityListItem = list({
   access: {
@@ -71,23 +66,10 @@ const {
     };
   },
   {
-    query: `${basePageQuery} park {id} address {id} hours {id} actions {id} documents {id}`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Facility'),
       filter: filterByPubStatus,
-    },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'facility',
-          'id title description body slug liveUrl publishAt tags {name} owner {name} services {title} communities {title} actions {label} documents {title} park {title} orgUnits {title} communities {title}',
-          args,
-        );
-      },
     },
   },
 );

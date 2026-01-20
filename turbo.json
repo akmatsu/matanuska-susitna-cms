@@ -3,7 +3,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**", "!.next/cache/**", ".keystone/**"]
+      "outputs": [".next/**", "dist/**", "!.next/cache/**", ".keystone/**"],
+      "cache": true
     },
     "migrate": {},
     "migrations": {},

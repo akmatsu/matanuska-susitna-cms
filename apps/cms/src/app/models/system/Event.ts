@@ -5,7 +5,8 @@
 
 import { list } from '@keystone-6/core';
 import { generalItemAccess, generalOperationAccess } from '../../access';
-import { basePage, timestampField } from '../../fieldUtils';
+import { timestampField } from '../../fieldUtils';
+import { basePage } from '../basePage';
 import { relationship, select } from '@keystone-6/core/fields';
 
 /**

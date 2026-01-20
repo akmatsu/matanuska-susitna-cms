@@ -2,17 +2,14 @@ import { integer, relationship, select, text } from '@keystone-6/core/fields';
 import {
   DraftAndVersionsFactory,
   relationshipController,
-} from '../../DraftAndVersionsFactory';
+} from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
-  basePage,
-  basePageQuery,
   cardsUi,
   documentRelationshipSingle,
   sidebar,
   switchField,
-  typesenseDelete,
-  typesenseUpsert,
 } from '../../fieldUtils';
+import { basePage } from '../basePage';
 import { group, list } from '@keystone-6/core';
 import {
   filterByPubStatus,
@@ -183,23 +180,10 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
   {
     versionLimit: 20,
     versionAgeDays: 365,
-    query: `${basePageQuery} boards {id} facilities {id} parks {id} trails {id} type code {id} currentDocument {id} draftDocument {id} pastDocuments {id} autoRedirectToExternalWebsite effort { id } actions { id } documents { id }`,
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Plan'),
       filter: filterByPubStatus,
-    },
-    mainHooks: {
-      async beforeOperation(args) {
-        await typesenseDelete(args);
-      },
-      async afterOperation(args) {
-        await typesenseUpsert(
-          'plan',
-          'id title slug description body publishAt tags {name} orgUnits {title} communities {title} contacts {name} actions {label} documents {title}',
-          args,
-        );
-      },
     },
   },
 );
