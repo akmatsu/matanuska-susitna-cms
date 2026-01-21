@@ -1,3 +1,10 @@
+# [0.50.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.49.0...v0.50.0) (2026-01-21)
+
+
+### Features
+
+* press releases ([#42](https://github.com/akmatsu/matanuska-susitna-cms/issues/42)) ([a3cb6dc](https://github.com/akmatsu/matanuska-susitna-cms/commit/a3cb6dc5dd681fe1d5e260a41fa586c1c259ad7e))
+
 # [0.49.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.48.2...v0.49.0) (2025-12-13)
 
 
