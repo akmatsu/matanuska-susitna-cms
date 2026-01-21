@@ -456,18 +456,22 @@ type Election {
   reviewDate: DateTime
   owner: User
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: Document
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   candidateFilingDocumentsCount(where: DocumentWhereInput! = {}): Int
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: Document
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: Document
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: Document
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
@@ -513,17 +517,21 @@ input ElectionWhereInput {
   reviewDate: DateTimeNullableFilter
   owner: UserWhereInput
   electionDate: DateTimeFilter
-  earlyVotingStartDate: DateTimeNullableFilter
   voterRegistrationDeadline: DateTimeNullableFilter
+  voterInfoBody: MyStringFilter
+  absenteeVotingApplication: DocumentWhereInput
+  earlyVotingStartDate: DateTimeNullableFilter
+  absenteeApplicationDeadline: DateTimeNullableFilter
+  absenteeVotingBody: MyStringFilter
   candidateFilingDocuments: DocumentManyRelationFilter
   candidatePacketAvailability: DateTimeNullableFilter
   candidateFilingStartDate: DateTimeNullableFilter
   candidateFilingDeadline: DateTimeNullableFilter
   officesToBeFilled: MyStringFilter
-  absenteeVotingApplication: DocumentWhereInput
-  absenteeApplicationDeadline: DateTimeNullableFilter
+  candidateBody: MyStringFilter
   electionOfficialApplication: DocumentWhereInput
   electionOfficialApplicationDeadline: DateTimeNullableFilter
+  electionOfficialBody: MyStringFilter
   candidates: DocumentWhereInput
   documents: DocumentManyRelationFilter
   propositions: PropositionManyRelationFilter
@@ -591,14 +599,18 @@ input ElectionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   electionDate: OrderDirection
-  earlyVotingStartDate: OrderDirection
   voterRegistrationDeadline: OrderDirection
+  voterInfoBody: MyOrderDirection
+  earlyVotingStartDate: OrderDirection
+  absenteeApplicationDeadline: OrderDirection
+  absenteeVotingBody: MyOrderDirection
   candidatePacketAvailability: OrderDirection
   candidateFilingStartDate: OrderDirection
   candidateFilingDeadline: OrderDirection
   officesToBeFilled: MyOrderDirection
-  absenteeApplicationDeadline: OrderDirection
+  candidateBody: MyOrderDirection
   electionOfficialApplicationDeadline: OrderDirection
+  electionOfficialBody: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   status: OrderDirection
@@ -615,17 +627,21 @@ input ElectionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments: DocumentRelateToManyForUpdateInput
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: DocumentRelateToOneForUpdateInput
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: DocumentRelateToOneForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   propositions: PropositionRelateToManyForUpdateInput
@@ -705,17 +721,21 @@ input ElectionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: DocumentRelateToOneForCreateInput
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments: DocumentRelateToManyForCreateInput
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: DocumentRelateToOneForCreateInput
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: DocumentRelateToOneForCreateInput
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: DocumentRelateToOneForCreateInput
   documents: DocumentRelateToManyForCreateInput
   propositions: PropositionRelateToManyForCreateInput
@@ -779,18 +799,22 @@ type ElectionVersion {
   reviewDate: DateTime
   owner: User
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: Document
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   candidateFilingDocumentsCount(where: DocumentWhereInput! = {}): Int
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: Document
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: Document
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: Document
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
@@ -829,17 +853,21 @@ input ElectionVersionWhereInput {
   reviewDate: DateTimeNullableFilter
   owner: UserWhereInput
   electionDate: DateTimeFilter
-  earlyVotingStartDate: DateTimeNullableFilter
   voterRegistrationDeadline: DateTimeNullableFilter
+  voterInfoBody: MyStringFilter
+  absenteeVotingApplication: DocumentWhereInput
+  earlyVotingStartDate: DateTimeNullableFilter
+  absenteeApplicationDeadline: DateTimeNullableFilter
+  absenteeVotingBody: MyStringFilter
   candidateFilingDocuments: DocumentManyRelationFilter
   candidatePacketAvailability: DateTimeNullableFilter
   candidateFilingStartDate: DateTimeNullableFilter
   candidateFilingDeadline: DateTimeNullableFilter
   officesToBeFilled: MyStringFilter
-  absenteeVotingApplication: DocumentWhereInput
-  absenteeApplicationDeadline: DateTimeNullableFilter
+  candidateBody: MyStringFilter
   electionOfficialApplication: DocumentWhereInput
   electionOfficialApplicationDeadline: DateTimeNullableFilter
+  electionOfficialBody: MyStringFilter
   candidates: DocumentWhereInput
   documents: DocumentManyRelationFilter
   propositions: PropositionManyRelationFilter
@@ -862,14 +890,18 @@ input ElectionVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   electionDate: OrderDirection
-  earlyVotingStartDate: OrderDirection
   voterRegistrationDeadline: OrderDirection
+  voterInfoBody: MyOrderDirection
+  earlyVotingStartDate: OrderDirection
+  absenteeApplicationDeadline: OrderDirection
+  absenteeVotingBody: MyOrderDirection
   candidatePacketAvailability: OrderDirection
   candidateFilingStartDate: OrderDirection
   candidateFilingDeadline: OrderDirection
   officesToBeFilled: MyOrderDirection
-  absenteeApplicationDeadline: OrderDirection
+  candidateBody: MyOrderDirection
   electionOfficialApplicationDeadline: OrderDirection
+  electionOfficialBody: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   republish: OrderDirection
@@ -885,17 +917,21 @@ input ElectionVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments: DocumentRelateToManyForUpdateInput
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: DocumentRelateToOneForUpdateInput
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: DocumentRelateToOneForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   propositions: PropositionRelateToManyForUpdateInput
@@ -931,17 +967,21 @@ input ElectionVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: DocumentRelateToOneForCreateInput
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments: DocumentRelateToManyForCreateInput
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: DocumentRelateToOneForCreateInput
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: DocumentRelateToOneForCreateInput
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: DocumentRelateToOneForCreateInput
   documents: DocumentRelateToManyForCreateInput
   propositions: PropositionRelateToManyForCreateInput
@@ -972,18 +1012,22 @@ type ElectionDraft {
   reviewDate: DateTime
   owner: User
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: Document
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   candidateFilingDocumentsCount(where: DocumentWhereInput! = {}): Int
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: Document
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: Document
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: Document
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
@@ -1020,17 +1064,21 @@ input ElectionDraftWhereInput {
   reviewDate: DateTimeNullableFilter
   owner: UserWhereInput
   electionDate: DateTimeFilter
-  earlyVotingStartDate: DateTimeNullableFilter
   voterRegistrationDeadline: DateTimeNullableFilter
+  voterInfoBody: MyStringFilter
+  absenteeVotingApplication: DocumentWhereInput
+  earlyVotingStartDate: DateTimeNullableFilter
+  absenteeApplicationDeadline: DateTimeNullableFilter
+  absenteeVotingBody: MyStringFilter
   candidateFilingDocuments: DocumentManyRelationFilter
   candidatePacketAvailability: DateTimeNullableFilter
   candidateFilingStartDate: DateTimeNullableFilter
   candidateFilingDeadline: DateTimeNullableFilter
   officesToBeFilled: MyStringFilter
-  absenteeVotingApplication: DocumentWhereInput
-  absenteeApplicationDeadline: DateTimeNullableFilter
+  candidateBody: MyStringFilter
   electionOfficialApplication: DocumentWhereInput
   electionOfficialApplicationDeadline: DateTimeNullableFilter
+  electionOfficialBody: MyStringFilter
   candidates: DocumentWhereInput
   documents: DocumentManyRelationFilter
   propositions: PropositionManyRelationFilter
@@ -1052,14 +1100,18 @@ input ElectionDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   electionDate: OrderDirection
-  earlyVotingStartDate: OrderDirection
   voterRegistrationDeadline: OrderDirection
+  voterInfoBody: MyOrderDirection
+  earlyVotingStartDate: OrderDirection
+  absenteeApplicationDeadline: OrderDirection
+  absenteeVotingBody: MyOrderDirection
   candidatePacketAvailability: OrderDirection
   candidateFilingStartDate: OrderDirection
   candidateFilingDeadline: OrderDirection
   officesToBeFilled: MyOrderDirection
-  absenteeApplicationDeadline: OrderDirection
+  candidateBody: MyOrderDirection
   electionOfficialApplicationDeadline: OrderDirection
+  electionOfficialBody: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   publish: OrderDirection
@@ -1075,17 +1127,21 @@ input ElectionDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments: DocumentRelateToManyForUpdateInput
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: DocumentRelateToOneForUpdateInput
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: DocumentRelateToOneForUpdateInput
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: DocumentRelateToOneForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   propositions: PropositionRelateToManyForUpdateInput
@@ -1114,17 +1170,21 @@ input ElectionDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   electionDate: DateTime
-  earlyVotingStartDate: DateTime
   voterRegistrationDeadline: DateTime
+  voterInfoBody: String
+  absenteeVotingApplication: DocumentRelateToOneForCreateInput
+  earlyVotingStartDate: DateTime
+  absenteeApplicationDeadline: DateTime
+  absenteeVotingBody: String
   candidateFilingDocuments: DocumentRelateToManyForCreateInput
   candidatePacketAvailability: DateTime
   candidateFilingStartDate: DateTime
   candidateFilingDeadline: DateTime
   officesToBeFilled: String
-  absenteeVotingApplication: DocumentRelateToOneForCreateInput
-  absenteeApplicationDeadline: DateTime
+  candidateBody: String
   electionOfficialApplication: DocumentRelateToOneForCreateInput
   electionOfficialApplicationDeadline: DateTime
+  electionOfficialBody: String
   candidates: DocumentRelateToOneForCreateInput
   documents: DocumentRelateToManyForCreateInput
   propositions: PropositionRelateToManyForCreateInput
@@ -1327,6 +1387,8 @@ type ElectionsPage implements WithTitle {
   owner: User
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  pollingPlacesLink: InternalLink
+  pollingPlaceBody: String
   stateElectionContact: Contact
   boroughElectionContact: Contact
   referendumProcessDocument: Document
@@ -1351,6 +1413,8 @@ input ElectionsPageWhereInput {
   howElectionsWork: MyStringFilter
   owner: UserWhereInput
   userGroups: UserGroupManyRelationFilter
+  pollingPlacesLink: InternalLinkWhereInput
+  pollingPlaceBody: MyStringFilter
   stateElectionContact: ContactWhereInput
   boroughElectionContact: ContactWhereInput
   referendumProcessDocument: DocumentWhereInput
@@ -1371,6 +1435,7 @@ input ElectionsPageOrderByInput {
   title: OrderDirection
   description: OrderDirection
   howElectionsWork: MyOrderDirection
+  pollingPlaceBody: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -1382,6 +1447,8 @@ input ElectionsPageUpdateInput {
   howElectionsWork: String
   owner: UserRelateToOneForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
+  pollingPlacesLink: InternalLinkRelateToOneForUpdateInput
+  pollingPlaceBody: String
   stateElectionContact: ContactRelateToOneForUpdateInput
   boroughElectionContact: ContactRelateToOneForUpdateInput
   referendumProcessDocument: DocumentRelateToOneForUpdateInput
@@ -1415,6 +1482,8 @@ input ElectionsPageCreateInput {
   howElectionsWork: String
   owner: UserRelateToOneForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
+  pollingPlacesLink: InternalLinkRelateToOneForCreateInput
+  pollingPlaceBody: String
   stateElectionContact: ContactRelateToOneForCreateInput
   boroughElectionContact: ContactRelateToOneForCreateInput
   referendumProcessDocument: DocumentRelateToOneForCreateInput

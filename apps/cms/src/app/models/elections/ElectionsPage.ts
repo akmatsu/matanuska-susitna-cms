@@ -1,4 +1,4 @@
-import { list } from '@keystone-6/core';
+import { group, list } from '@keystone-6/core';
 import {
   generalOperationAccess,
   isElectionUser,
@@ -100,6 +100,24 @@ const ElectionsPage = list({
     howElectionsWork: customText(),
     owner,
     userGroups: userGroups(),
+
+    ...group({
+      label: 'Polling Places & Precincts',
+      fields: {
+        pollingPlacesLink: relationship({
+          ref: 'InternalLink',
+          ui: {
+            displayMode: 'cards',
+            cardFields: ['label', 'item'],
+            inlineCreate: { fields: ['label', 'selectItem'] },
+            inlineEdit: { fields: ['label', 'selectItem'] },
+          },
+          many: false,
+        }),
+        pollingPlaceBody: customText(),
+      },
+    }),
+
     stateElectionContact: relationship({
       ref: 'Contact',
       many: false,

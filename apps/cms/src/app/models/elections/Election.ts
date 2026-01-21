@@ -102,19 +102,51 @@ const {
         },
       }),
 
-      earlyVotingStartDate: timestamp({
-        isFilterable: true,
-        isOrderable: true,
-        ui: {
-          views: './src/components/customFields/datetime/views.tsx',
+      ...group({
+        label: 'Voter Information',
+        fields: {
+          voterRegistrationDeadline: timestamp({
+            isFilterable: true,
+            isOrderable: true,
+            ui: {
+              views: './src/components/customFields/datetime/views.tsx',
+            },
+          }),
+          voterInfoBody: customText(),
         },
       }),
 
-      voterRegistrationDeadline: timestamp({
-        isFilterable: true,
-        isOrderable: true,
-        ui: {
-          views: './src/components/customFields/datetime/views.tsx',
+      ...group({
+        label: 'Early & Absentee Voting Information',
+        fields: {
+          absenteeVotingApplication: relationship({
+            ref: 'Document',
+            many: false,
+            ui: {
+              displayMode: 'cards',
+              inlineConnect: true,
+              cardFields: ['title', 'description', 'file', 'tags'],
+              inlineCreate: {
+                fields: ['title', 'description', 'file', 'tags'],
+              },
+              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+            },
+          }),
+          earlyVotingStartDate: timestamp({
+            isFilterable: true,
+            isOrderable: true,
+            ui: {
+              views: './src/components/customFields/datetime/views.tsx',
+            },
+          }),
+          absenteeApplicationDeadline: timestamp({
+            isFilterable: true,
+            isOrderable: true,
+            ui: {
+              views: './src/components/customFields/datetime/views.tsx',
+            },
+          }),
+          absenteeVotingBody: customText(),
         },
       }),
 
@@ -156,32 +188,7 @@ const {
             },
           }),
           officesToBeFilled: customText(),
-        },
-      }),
-
-      ...group({
-        label: 'Absentee Voting Information',
-        fields: {
-          absenteeVotingApplication: relationship({
-            ref: 'Document',
-            many: false,
-            ui: {
-              displayMode: 'cards',
-              inlineConnect: true,
-              cardFields: ['title', 'description', 'file', 'tags'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-            },
-          }),
-          absenteeApplicationDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
-            ui: {
-              views: './src/components/customFields/datetime/views.tsx',
-            },
-          }),
+          candidateBody: customText(),
         },
       }),
 
@@ -209,6 +216,7 @@ const {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
+          electionOfficialBody: customText(),
         },
       }),
 
@@ -318,8 +326,6 @@ const {
     },
     versionLimit: 20,
     versionAgeDays: 365,
-    query:
-      'id heroImage title description tags {id} userGroups {id} candidateFilingDocuments {id} candidateFilingStartDate candidateFilingDeadline absenteeVotingDocuments {id} absenteeApplicationDeadline electionOfficialDocuments {id} electionOfficialApplicationDeadline candidates {id} propositions {id} electionBrochure {id} electionBallots {id} result {id}',
   },
 );
 

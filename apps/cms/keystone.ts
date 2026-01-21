@@ -133,7 +133,6 @@ export default config<TypeInfo<Session>>({
               if ('howElectionsWork' in value) return 'ElectionsPage';
               if ('policies' in value) return 'Policy';
               if ('effort' in value) return 'Plan';
-              if ('startDate' in value) return 'Event';
               if ('primaryActionId' in value) return 'Service';
               if ('highlightThreeId' in value) return 'HomePage';
               if ('linkToAgendasId' in value) return 'Board';
@@ -153,7 +152,6 @@ export default config<TypeInfo<Session>>({
           Page: {
             __resolveType(value: any) {
               if ('effort' in value) return 'Plan';
-              if ('startDate' in value) return 'Event';
               if ('primaryActionId' in value) return 'Service';
               if ('linkToAgendasId' in value) return 'Board';
               if ('effectiveDate' in value) return 'PublicNotice';

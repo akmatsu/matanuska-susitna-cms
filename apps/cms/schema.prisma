@@ -72,19 +72,23 @@ model Election {
   owner                               User?             @relation("Election_owner", fields: [ownerId], references: [id])
   ownerId                             String?           @map("owner")
   electionDate                        DateTime
-  earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
+  voterInfoBody                       String?
+  absenteeVotingApplication           Document?         @relation("Election_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
+  absenteeVotingApplicationId         String?           @map("absenteeVotingApplication")
+  earlyVotingStartDate                DateTime?
+  absenteeApplicationDeadline         DateTime?
+  absenteeVotingBody                  String?
   candidateFilingDocuments            Document[]        @relation("Election_candidateFilingDocuments")
   candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
   officesToBeFilled                   String?
-  absenteeVotingApplication           Document?         @relation("Election_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
-  absenteeVotingApplicationId         String?           @map("absenteeVotingApplication")
-  absenteeApplicationDeadline         DateTime?
+  candidateBody                       String?
   electionOfficialApplication         Document?         @relation("Election_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
   electionOfficialApplicationId       String?           @map("electionOfficialApplication")
   electionOfficialApplicationDeadline DateTime?
+  electionOfficialBody                String?
   candidates                          Document?         @relation("Election_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?           @map("candidates")
   documents                           Document[]        @relation("Election_documents")
@@ -125,19 +129,23 @@ model ElectionVersion {
   owner                               User?           @relation("ElectionVersion_owner", fields: [ownerId], references: [id])
   ownerId                             String?         @map("owner")
   electionDate                        DateTime
-  earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
+  voterInfoBody                       String?
+  absenteeVotingApplication           Document?       @relation("ElectionVersion_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
+  absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
+  earlyVotingStartDate                DateTime?
+  absenteeApplicationDeadline         DateTime?
+  absenteeVotingBody                  String?
   candidateFilingDocuments            Document[]      @relation("ElectionVersion_candidateFilingDocuments")
   candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
   officesToBeFilled                   String?
-  absenteeVotingApplication           Document?       @relation("ElectionVersion_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
-  absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
-  absenteeApplicationDeadline         DateTime?
+  candidateBody                       String?
   electionOfficialApplication         Document?       @relation("ElectionVersion_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
   electionOfficialApplicationId       String?         @map("electionOfficialApplication")
   electionOfficialApplicationDeadline DateTime?
+  electionOfficialBody                String?
   candidates                          Document?       @relation("ElectionVersion_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?         @map("candidates")
   documents                           Document[]      @relation("ElectionVersion_documents")
@@ -176,19 +184,23 @@ model ElectionDraft {
   owner                               User?           @relation("ElectionDraft_owner", fields: [ownerId], references: [id])
   ownerId                             String?         @map("owner")
   electionDate                        DateTime
-  earlyVotingStartDate                DateTime?
   voterRegistrationDeadline           DateTime?
+  voterInfoBody                       String?
+  absenteeVotingApplication           Document?       @relation("ElectionDraft_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
+  absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
+  earlyVotingStartDate                DateTime?
+  absenteeApplicationDeadline         DateTime?
+  absenteeVotingBody                  String?
   candidateFilingDocuments            Document[]      @relation("ElectionDraft_candidateFilingDocuments")
   candidatePacketAvailability         DateTime?
   candidateFilingStartDate            DateTime?
   candidateFilingDeadline             DateTime?
   officesToBeFilled                   String?
-  absenteeVotingApplication           Document?       @relation("ElectionDraft_absenteeVotingApplication", fields: [absenteeVotingApplicationId], references: [id])
-  absenteeVotingApplicationId         String?         @map("absenteeVotingApplication")
-  absenteeApplicationDeadline         DateTime?
+  candidateBody                       String?
   electionOfficialApplication         Document?       @relation("ElectionDraft_electionOfficialApplication", fields: [electionOfficialApplicationId], references: [id])
   electionOfficialApplicationId       String?         @map("electionOfficialApplication")
   electionOfficialApplicationDeadline DateTime?
+  electionOfficialBody                String?
   candidates                          Document?       @relation("ElectionDraft_candidates", fields: [candidatesId], references: [id])
   candidatesId                        String?         @map("candidates")
   documents                           Document[]      @relation("ElectionDraft_documents")
@@ -263,6 +275,9 @@ model ElectionsPage {
   owner                       User?                 @relation("ElectionsPage_owner", fields: [ownerId], references: [id])
   ownerId                     String?               @map("owner")
   userGroups                  UserGroup[]           @relation("ElectionsPage_userGroups")
+  pollingPlacesLink           InternalLink?         @relation("ElectionsPage_pollingPlacesLink", fields: [pollingPlacesLinkId], references: [id])
+  pollingPlacesLinkId         String?               @map("pollingPlacesLink")
+  pollingPlaceBody            String?
   stateElectionContact        Contact?              @relation("ElectionsPage_stateElectionContact", fields: [stateElectionContactId], references: [id])
   stateElectionContactId      String?               @map("stateElectionContact")
   boroughElectionContact      Contact?              @relation("ElectionsPage_boroughElectionContact", fields: [boroughElectionContactId], references: [id])
@@ -274,6 +289,7 @@ model ElectionsPage {
   updatedAt                   DateTime?             @default(now()) @updatedAt
 
   @@index([ownerId])
+  @@index([pollingPlacesLinkId])
   @@index([stateElectionContactId])
   @@index([boroughElectionContactId])
   @@index([referendumProcessDocumentId])
@@ -2635,22 +2651,22 @@ model Document {
   from_BoardPage_documents                         BoardPage[]               @relation("BoardPage_documents")
   from_BoardPage_vacancyReport                     BoardPage[]               @relation("BoardPage_vacancyReport")
   from_BoardPage_applicationForm                   BoardPage[]               @relation("BoardPage_applicationForm")
-  from_Election_candidateFilingDocuments           Election[]                @relation("Election_candidateFilingDocuments")
   from_Election_absenteeVotingApplication          Election[]                @relation("Election_absenteeVotingApplication")
+  from_Election_candidateFilingDocuments           Election[]                @relation("Election_candidateFilingDocuments")
   from_Election_electionOfficialApplication        Election[]                @relation("Election_electionOfficialApplication")
   from_Election_candidates                         Election[]                @relation("Election_candidates")
   from_Election_documents                          Election[]                @relation("Election_documents")
   from_Election_electionBrochure                   Election[]                @relation("Election_electionBrochure")
   from_Election_electionBallots                    Election[]                @relation("Election_electionBallots")
-  from_ElectionVersion_candidateFilingDocuments    ElectionVersion[]         @relation("ElectionVersion_candidateFilingDocuments")
   from_ElectionVersion_absenteeVotingApplication   ElectionVersion[]         @relation("ElectionVersion_absenteeVotingApplication")
+  from_ElectionVersion_candidateFilingDocuments    ElectionVersion[]         @relation("ElectionVersion_candidateFilingDocuments")
   from_ElectionVersion_electionOfficialApplication ElectionVersion[]         @relation("ElectionVersion_electionOfficialApplication")
   from_ElectionVersion_candidates                  ElectionVersion[]         @relation("ElectionVersion_candidates")
   from_ElectionVersion_documents                   ElectionVersion[]         @relation("ElectionVersion_documents")
   from_ElectionVersion_electionBrochure            ElectionVersion[]         @relation("ElectionVersion_electionBrochure")
   from_ElectionVersion_electionBallots             ElectionVersion[]         @relation("ElectionVersion_electionBallots")
-  from_ElectionDraft_candidateFilingDocuments      ElectionDraft[]           @relation("ElectionDraft_candidateFilingDocuments")
   from_ElectionDraft_absenteeVotingApplication     ElectionDraft[]           @relation("ElectionDraft_absenteeVotingApplication")
+  from_ElectionDraft_candidateFilingDocuments      ElectionDraft[]           @relation("ElectionDraft_candidateFilingDocuments")
   from_ElectionDraft_electionOfficialApplication   ElectionDraft[]           @relation("ElectionDraft_electionOfficialApplication")
   from_ElectionDraft_candidates                    ElectionDraft[]           @relation("ElectionDraft_candidates")
   from_ElectionDraft_documents                     ElectionDraft[]           @relation("ElectionDraft_documents")
@@ -2782,6 +2798,7 @@ model InternalLink {
   selectItem                           Json?
   from_BoardPage_actions               BoardPage[]               @relation("BoardPage_actions")
   from_featuredItem_linkedItem         featuredItem[]            @relation("featuredItem_linkedItem")
+  from_ElectionsPage_pollingPlacesLink ElectionsPage[]           @relation("ElectionsPage_pollingPlacesLink")
   from_AssemblyDistrict_actions        AssemblyDistrict[]        @relation("AssemblyDistrict_actions")
   from_AssemblyDistrictVersion_actions AssemblyDistrictVersion[] @relation("AssemblyDistrictVersion_actions")
   from_AssemblyDistrictDraft_actions   AssemblyDistrictDraft[]   @relation("AssemblyDistrictDraft_actions")
