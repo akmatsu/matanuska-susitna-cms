@@ -1,3 +1,11 @@
+# [0.51.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.50.0...v0.51.0) (2026-01-22)
+
+
+### Features
+
+* added text override fields for various sections of the elections page. ([#45](https://github.com/akmatsu/matanuska-susitna-cms/issues/45)) ([52b7667](https://github.com/akmatsu/matanuska-susitna-cms/commit/52b7667254710ca0fc49204a873740a56b3e6135))
+* when updating or creating an election result that is not attached to an election it will search for an election with a matching date or create a new election with the matching date ([c856864](https://github.com/akmatsu/matanuska-susitna-cms/commit/c856864309ed1f1cf7c08ebae59cdf6de7d4da23))
+
 # [0.50.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.49.0...v0.50.0) (2026-01-21)
 
 
