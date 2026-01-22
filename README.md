@@ -25,11 +25,21 @@ A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuri
 ## Setting up Dev Environment
 
 1. Make sure you've installed all the [prerequisites](#dev-prerequisites).
+1. Create a PostgreSQL database for the CMS:
+
+   ```bash
+   sudo -u postgres psql
+   # In psql shell, run:
+   CREATE DATABASE msb_cms;
+   CREATE USER msb_cms_user WITH PASSWORD 'your_password';
+   ALTER DATABASE msb_cms OWNER TO msb_cms_user;
+   ```
+
 1. Clone the repository
 1. Install dependencies:
 
    ```bash
-   pnpm install
+   pnpm install --ignore-scripts
    ```
 
 1. Set up environment variables:
@@ -39,7 +49,18 @@ A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuri
    cp apps/cms/.env.example apps/cms/.env
    ```
 
+   Please note that for local development your typesense API key can be found in your typesense server ini file. Usually located at `/etc/typesense/typesense-server.ini` on Linux systems.
+
+   to find it run `cat /etc/typesense/typesense-server.ini | grep api-key`
+
+1. Run database migrations
+
+   ```bash
+   pnpm run cms:migrate
+   ```
+
 1. Run dev so keystone can run it's inital setup:
+
    ```bash
    pnpm run cms:dev
    ```
@@ -53,7 +74,7 @@ A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuri
 1. Seed Data (optional):
 
    ```bash
-   pnpm run db:seed --filter=cms
+   pnpm run cms:seed --filter=cms
    ```
 
 1. Start the development server:
