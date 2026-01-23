@@ -49,7 +49,7 @@ export const ElectionResult = list({
   },
 
   hooks: {
-    async resolveInput({ operation, item, resolvedData, listKey, context }) {
+    async resolveInput({ operation, item, resolvedData, context }) {
       if (operation === 'create' || operation === 'update') {
         const ctx = (context as any as CommonContext).sudo();
         console.log('Resolved Data: ', resolvedData);
