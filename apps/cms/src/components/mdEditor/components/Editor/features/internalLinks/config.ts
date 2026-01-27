@@ -1,5 +1,5 @@
 import { Editor } from '@milkdown/kit/core';
-import { PluginViewFactoryFn } from '../../types';
+import { NodeViewFactoryFn, PluginViewFactoryFn } from '../../types';
 import {
   InternalLinkInputRule,
   internalLinkKeymap,
@@ -12,6 +12,7 @@ import { InternalLinkTooltip } from './InternalLinkTooltip';
 export function configureInternalLinksFeature(
   editor: Editor,
   pluginViewFactory: PluginViewFactoryFn,
+  nodeViewFactory: NodeViewFactoryFn,
 ) {
   editor
     .config((ctx) => {

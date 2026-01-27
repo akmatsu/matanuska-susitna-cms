@@ -85,7 +85,7 @@ export const SLASH_COMMANDS = [
     },
   },
   {
-    label: 'Quote',
+    label: 'Callout / Blockquote',
     action: (ctx) => {
       return runCommand(
         ctx,

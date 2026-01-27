@@ -95,7 +95,7 @@ export function useEditorConfig({
       configureDocCollectionFeature(editor, pluginViewFactory, nodeViewFactory);
     }
     if (internalLinks) {
-      configureInternalLinksFeature(editor, pluginViewFactory);
+      configureInternalLinksFeature(editor, pluginViewFactory, nodeViewFactory);
     }
     if (steps) {
       configureStepFeature(editor);

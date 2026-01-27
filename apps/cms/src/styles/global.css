@@ -22,6 +22,16 @@
   }
 }
 
+/* @layer components {
+  .milkdown a.internal-link {
+    @apply text-blue-600;
+  }
+
+  .milkdown a.internal-link.data-[style='button'] {
+    @apply rounded-sm bg-red-500 px-2 py-1 text-white no-underline hover:bg-red-700!;
+  }
+} */
+
 .milkdown * {
   padding: unset;
   margin: unset;

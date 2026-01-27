@@ -20,15 +20,27 @@ import { Mark } from '@milkdown/kit/prose/model';
 import { PluginViewContext } from '@prosemirror-adapter/react';
 import { LinkSearchQuery } from '../../../../../../graphql/graphql';
 import { useGetLinkInfo } from './hooks/useGetLinkInfo';
+import { Checkbox, Select } from '@keystone-ui/fields';
+import { PropsValue } from 'react-select';
 
 export function InternalLinkTooltip() {
   const { contentRef, view, linkInfo, isShowing } =
     useInternalTooltipProvider();
   const [isEditing, setEditing] = useState(false);
+  const [selectedColor, setSelectedColor] = useState(
+    linkInfo?.mark?.attrs?.color?.length
+      ? {
+          value: linkInfo.mark.attrs.color as string,
+          label: v.capitalize(linkInfo.mark.attrs.color as string),
+        }
+      : { value: 'default', label: 'Default' },
+  );
 
   const listType = linkInfo?.mark?.attrs?.list
     ? v.camelCase(singular(linkInfo.mark.attrs.list))
     : undefined;
+
+  const isButton = linkInfo?.mark?.attrs?.style === 'button';
 
   const { data: linkData, loading } = useGetLinkInfo(
     linkInfo?.mark?.attrs?.itemId,
@@ -39,6 +51,38 @@ export function InternalLinkTooltip() {
     const { tr } = view.state;
     if (!linkInfo) return;
     tr.removeMark(linkInfo.from, linkInfo.to, linkInfo.mark);
+    view.dispatch(tr);
+  }
+
+  function setIsButton(value: boolean) {
+    console.log('ran');
+    if (!linkInfo) return;
+    console.log('here');
+    const { tr } = view.state;
+    const newStyle = value ? 'button' : '';
+    tr.addMark(
+      linkInfo.from,
+      linkInfo.to,
+      linkInfo.mark.type.create({
+        ...linkInfo.mark.attrs,
+        style: newStyle,
+      }),
+    );
+    view.dispatch(tr);
+  }
+
+  function setColor(value: { value: string; label: string } | null) {
+    if (!linkInfo) return;
+    if (value) setSelectedColor(value);
+    const { tr } = view.state;
+    tr.addMark(
+      linkInfo.from,
+      linkInfo.to,
+      linkInfo.mark.type.create({
+        ...linkInfo.mark.attrs,
+        color: value?.value || 'default',
+      }),
+    );
     view.dispatch(tr);
   }
 
@@ -55,46 +99,75 @@ export function InternalLinkTooltip() {
       ref={contentRef}
       className="absolute z-20 -mt-2 rounded-sm border border-gray-300 bg-white p-2 shadow-md data-[show=false]:hidden"
     >
-      {isEditing ? (
-        <SearchInput
-          view={view}
-          linkInfo={linkInfo}
-          onSelection={() => setEditing(false)}
-        />
-      ) : (
-        <div className="flex items-center justify-between gap-2">
-          {!!linkInfo &&
-            !!listType &&
-            !!linkInfo.mark?.attrs?.itemId &&
-            (loading ? (
-              <span className="icon-[mdi--loading] animate-spin" />
-            ) : (
-              <Link
-                href={`/${listType === 'homePage' ? 'home-page' : listType === 'boardPage' ? 'board-page' : plural(v.slugify(listType))}/${linkInfo.mark?.attrs?.itemId}`}
-                target="_blank"
+      <div className="flex flex-col gap-2">
+        {isEditing ? (
+          <SearchInput
+            view={view}
+            linkInfo={linkInfo}
+            onSelection={() => setEditing(false)}
+          />
+        ) : (
+          <div className="flex flex-col gap-2">
+            {isButton && (
+              <div className="flex gap-2">
+                <Select
+                  controlShouldRenderValue
+                  options={[
+                    { value: 'default', label: 'Default' },
+                    { value: 'primary', label: 'Primary' },
+                    { value: 'success', label: 'Success' },
+                    { value: 'danger', label: 'Danger' },
+                  ]}
+                  defaultValue={selectedColor}
+                  value={selectedColor}
+                  width="large"
+                  onChange={setColor}
+                ></Select>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              {!!linkInfo &&
+                !!listType &&
+                !!linkInfo.mark?.attrs?.itemId &&
+                (loading ? (
+                  <span className="icon-[mdi--loading] animate-spin" />
+                ) : (
+                  <Link
+                    href={`/${listType === 'homePage' ? 'home-page' : listType === 'boardPage' ? 'board-page' : plural(v.slugify(listType))}/${linkInfo.mark?.attrs?.itemId}`}
+                    target="_blank"
+                  >
+                    {linkData?.getInternalLink?.title || ''}{' '}
+                    <span className="icon-[mdi--external-link] -mb-0.5 size-4"></span>
+                  </Link>
+                ))}
+              <Button
+                size="small"
+                onClick={() => setEditing(true)}
+                name="Edit Link"
+                aria-label="Edit Link"
               >
-                {linkData?.getInternalLink?.title || ''}{' '}
-                <span className="icon-[mdi--external-link] -mb-0.5 size-4"></span>
-              </Link>
-            ))}
-          <Button
-            size="small"
-            onClick={() => setEditing(true)}
-            name="Edit Link"
-            aria-label="Edit Link"
-          >
-            <span className="icon-[mdi--pencil]"></span>
-          </Button>
-          <Button
-            size="small"
-            onClick={removeLink}
-            name="Remove Link"
-            aria-label="Remove Link"
-          >
-            <span className="icon-[mdi--delete]"></span>
-          </Button>
-        </div>
-      )}
+                <span className="icon-[mdi--pencil]"></span>
+              </Button>
+              <Button
+                size="small"
+                onClick={removeLink}
+                name="Remove Link"
+                aria-label="Remove Link"
+              >
+                <span className="icon-[mdi--delete]"></span>
+              </Button>
+
+              <Checkbox
+                checked={isButton}
+                onChange={() => setIsButton(!isButton)}
+                size="small"
+              >
+                Toggle Button Style
+              </Checkbox>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

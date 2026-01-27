@@ -10,6 +10,7 @@ import {
 import { InputRule } from '@milkdown/kit/prose/inputrules';
 import { toggleMark } from '@milkdown/kit/prose/commands';
 import { commandsCtx } from '@milkdown/kit/core';
+import clsx from 'clsx';
 
 export const internalLinkTooltip = tooltipFactory('internalLinkTooltip');
 export const internalLinkDirective = $remark(
@@ -29,6 +30,8 @@ export const InternalLinkMark = $mark('internal-link', () => ({
     label: { default: '' },
     itemId: { default: '' },
     list: { default: '' },
+    style: { default: 'button' },
+    color: { default: '' },
   },
   parseDOM: [
     {
@@ -38,6 +41,8 @@ export const InternalLinkMark = $mark('internal-link', () => ({
           label: dom.textContent,
           itemId: dom.getAttribute('data-item-id'),
           list: dom.getAttribute('data-list'),
+          style: dom.getAttribute('data-style') || '',
+          color: dom.getAttribute('data-color') || '',
         };
       },
     },
@@ -47,9 +52,23 @@ export const InternalLinkMark = $mark('internal-link', () => ({
       'a',
       {
         'data-internal-link': '',
-        class: 'internal-link',
+        class: clsx(
+          node.attrs.style === 'button' && [
+            'inline-block  px-4 py-2 rounded shadow-sm no-underline cursor-pointer',
+
+            node.attrs.color === 'primary' &&
+              'bg-blue-600 hover:bg-blue-700 text-white',
+            node.attrs.color === 'success' && 'bg-green-600 hover:bg-green-700',
+            node.attrs.color === 'danger' &&
+              'bg-red-600 hover:bg-red-700 text-white',
+            (!node.attrs.color || node.attrs.color === 'default') &&
+              'bg-gray-600 hover:bg-gray-700 text-white',
+          ],
+        ),
         'data-item-id': node.attrs.itemId,
         'data-list': node.attrs.list,
+        'data-style': node.attrs.style,
+        'data-color': node.attrs.color,
       },
       node.attrs.label,
     ];
@@ -62,6 +81,8 @@ export const InternalLinkMark = $mark('internal-link', () => ({
         attributes: {
           list: mark.attrs.list,
           itemId: mark.attrs.itemId,
+          style: mark.attrs.style,
+          color: mark.attrs.color,
         },
       });
     },
@@ -70,15 +91,19 @@ export const InternalLinkMark = $mark('internal-link', () => ({
     match: (node) =>
       node.type === 'textDirective' && node.name === 'internal-link',
     runner: (state, node, type) => {
-      const { list, itemId } = node.attributes as {
+      const { list, itemId, style, color } = node.attributes as {
         list: string;
         itemId: string;
+        style: string;
+        color: string;
       };
       const label = (node.children?.[0]?.value as string) || '';
       state.openMark(type, {
         list,
         label,
         itemId,
+        style,
+        color,
       });
       state.next(node.children);
       state.closeMark(type);
@@ -97,6 +122,8 @@ export const InternalLinkInputRule = $inputRule(
         label,
         itemId: '',
         list: '',
+        style: '',
+        color: '',
       });
 
       const textWithMark = state.schema.text(label, [mark]);
