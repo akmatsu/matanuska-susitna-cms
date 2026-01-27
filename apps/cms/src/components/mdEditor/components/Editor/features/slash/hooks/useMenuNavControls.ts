@@ -33,7 +33,8 @@ export function useMenuNavControls(
       if (isVisible) {
         if (e.key === 'Escape') {
           e.preventDefault();
-          const ctx = get().ctx;
+          const ctx = get()?.ctx;
+          if (!ctx) return;
           ctx.get(slash.key).hide();
         }
         if (e.key === 'ArrowDown') {
@@ -49,7 +50,8 @@ export function useMenuNavControls(
         } else if (e.key === 'Enter') {
           e.preventDefault();
           runAction(e, items[selectedIndex].action);
-          const ctx = get().ctx;
+          const ctx = get()?.ctx;
+          if (!ctx) return;
           ctx.get(slash.key).hide();
         }
       }
