@@ -21,7 +21,6 @@ import { PluginViewContext } from '@prosemirror-adapter/react';
 import { LinkSearchQuery } from '../../../../../../graphql/graphql';
 import { useGetLinkInfo } from './hooks/useGetLinkInfo';
 import { Checkbox, Select } from '@keystone-ui/fields';
-import { PropsValue } from 'react-select';
 
 export function InternalLinkTooltip() {
   const { contentRef, view, linkInfo, isShowing } =
@@ -113,10 +112,11 @@ export function InternalLinkTooltip() {
                 <Select
                   controlShouldRenderValue
                   options={[
-                    { value: 'default', label: 'Default' },
+                    { value: 'base', label: 'Base' },
                     { value: 'primary', label: 'Primary' },
                     { value: 'success', label: 'Success' },
-                    { value: 'danger', label: 'Danger' },
+                    { value: 'error', label: 'Error' },
+                    { value: 'warning', label: 'Warning' },
                   ]}
                   defaultValue={selectedColor}
                   value={selectedColor}

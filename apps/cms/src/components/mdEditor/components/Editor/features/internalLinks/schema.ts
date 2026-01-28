@@ -30,7 +30,7 @@ export const InternalLinkMark = $mark('internal-link', () => ({
     label: { default: '' },
     itemId: { default: '' },
     list: { default: '' },
-    style: { default: 'button' },
+    style: { default: '' },
     color: { default: '' },
   },
   parseDOM: [
@@ -59,9 +59,11 @@ export const InternalLinkMark = $mark('internal-link', () => ({
             node.attrs.color === 'primary' &&
               'bg-blue-600 hover:bg-blue-700 text-white',
             node.attrs.color === 'success' && 'bg-green-600 hover:bg-green-700',
-            node.attrs.color === 'danger' &&
+            node.attrs.color === 'error' &&
               'bg-red-600 hover:bg-red-700 text-white',
-            (!node.attrs.color || node.attrs.color === 'default') &&
+            node.attrs.color === 'warning' &&
+              'bg-yellow-600 hover:bg-yellow-700 text-white',
+            (!node.attrs.color || node.attrs.color === 'base') &&
               'bg-gray-600 hover:bg-gray-700 text-white',
           ],
         ),

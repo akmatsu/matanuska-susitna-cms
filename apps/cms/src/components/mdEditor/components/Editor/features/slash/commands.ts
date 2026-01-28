@@ -23,6 +23,7 @@ import {
 import { NodeSelection } from '@milkdown/kit/prose/state';
 import { PrimaryActionButtonNode } from '../PrimaryAction';
 import { DocCollectionNode } from '../DocCollection/schema';
+import { calloutSchema } from '../calloutBlock';
 
 type SlashCommand = {
   label: string;
@@ -85,11 +86,11 @@ export const SLASH_COMMANDS = [
     },
   },
   {
-    label: 'Callout / Blockquote',
+    label: 'Callout',
     action: (ctx) => {
       return runCommand(
         ctx,
-        clearContentAndWrapInBlockType(blockquoteSchema.type(ctx)),
+        clearContentAndWrapInBlockType(calloutSchema.type(ctx)),
       );
     },
   },

@@ -72,19 +72,19 @@ export const iframeInputRule = $inputRule(
     new InputRule(/::iframe\{([^}]+)\}/, (state, match, start, end) => {
       const [okay, attrsStr = ''] = match;
       const { tr } = state;
-      if (okay) {
-        const srcMatch = attrsStr.match(/src="([^"]+)"/);
-        const heightMatch = attrsStr.match(/height="([^"]+)"/);
-        const widthMatch = attrsStr.match(/width="([^"]+)"/);
-        const src = srcMatch ? srcMatch[1] : '';
-        const height = heightMatch ? heightMatch[1] : undefined;
-        const width = widthMatch ? widthMatch[1] : undefined;
-        tr.replaceWith(
-          start - 1,
-          end,
-          iframeNode.type(ctx).create({ src, height, width }),
-        );
-      }
+      if (!okay) return tr;
+
+      const srcMatch = attrsStr.match(/src="([^"]+)"/);
+      const heightMatch = attrsStr.match(/height="([^"]+)"/);
+      const widthMatch = attrsStr.match(/width="([^"]+)"/);
+      const src = srcMatch ? srcMatch[1] : '';
+      const height = heightMatch ? heightMatch[1] : undefined;
+      const width = widthMatch ? widthMatch[1] : undefined;
+      tr.replaceWith(
+        start - 1,
+        end,
+        iframeNode.type(ctx).create({ src, height, width }),
+      );
       return tr;
     }),
 );

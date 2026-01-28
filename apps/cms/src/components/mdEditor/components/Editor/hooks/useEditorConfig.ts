@@ -23,7 +23,7 @@ import { configureRemarkDirectivesFeature } from '../features/remarkDirectives/c
 import { configureImageBlockFeature } from '../features/imageInline/config';
 import { gql } from '../../../../../graphql';
 import { useMutation } from '@keystone-6/core/admin-ui/apollo';
-import { configureBlockquoteFeature } from '../features/Blockquote/config';
+import { configureBlockquoteFeature } from '../features/calloutBlock/config';
 
 const uploadImageQuery = gql(`
   mutation UploadImage($upload: Upload!, $title: String!) {

@@ -6,7 +6,7 @@ export const acceptedNames = [
   'step',
   'process',
   'doc-collection',
-  'blockquote',
+  'calloutBlock',
 ];
 
 export const attributesToString = (
