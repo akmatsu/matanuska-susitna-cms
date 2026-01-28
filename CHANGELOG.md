@@ -1,3 +1,15 @@
+# [0.53.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.52.0...v0.53.0) (2026-01-28)
+
+
+### Bug Fixes
+
+* fixed issue that was throwing error when viewing a page if wasn't assigned to any groups ([90981ed](https://github.com/akmatsu/matanuska-susitna-cms/commit/90981edbcfe0b8e9e750dd2b9b219c7dc0bfd64c))
+
+
+### Features
+
+* blockquotes have been changed to callouts ([c9a0883](https://github.com/akmatsu/matanuska-susitna-cms/commit/c9a0883d9c5f2047438bc04407cf9bbebd41ebe4))
+
 # [0.52.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.51.0...v0.52.0) (2026-01-28)
 
 
