@@ -25,6 +25,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
   const { addToast } = useToasts();
 
   const listSlug = plural(kebabCase(field.listName)).toLowerCase();
+  const queryParam = encodeURIComponent(field.query ?? '');
 
   async function handleCreateDraft() {
     if (loading) return;
@@ -33,7 +34,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
       setLoading(true);
 
       const res = await fetch(
-        `/${listSlug}/${id}/drafts?query=${field.query}`,
+        `/${listSlug}/${id}/drafts?query=${queryParam}`,
         {
           method: 'POST',
         },
@@ -92,7 +93,7 @@ export const controller = (
   config: FieldControllerConfig<DraftFieldMeta>,
 ): FieldController<string[] | null, string> & DraftFieldMeta => {
   return {
-    query: config.fieldMeta.query,
+    query: config.fieldMeta.query ?? '',
     listName: config.fieldMeta.listName,
     path: config.path,
     label: config.label,

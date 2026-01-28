@@ -1,11 +1,10 @@
 import {
-  AccessOperation,
-  ListFilterAccessControl,
-  ListItemAccessControl,
-} from '@keystone-6/core/dist/declarations/src/types/config/access-control';
-import {
   BaseListTypeInfo,
+  CreateListItemAccessControl,
+  DeleteListItemAccessControl,
+  ListFilterAccessControl,
   ListOperationAccessControl,
+  UpdateListItemAccessControl,
 } from '@keystone-6/core/types';
 import {
   BaseAccessArgs,
@@ -25,10 +24,12 @@ type Operation =
       delete: ListOperationAccessControl<'delete', BaseListTypeInfo>;
     };
 
+type AccessOperation = 'create' | 'query' | 'update' | 'delete';
+
 type Item = {
-  create?: ListItemAccessControl<'create', BaseListTypeInfo>;
-  update?: ListItemAccessControl<'update', BaseListTypeInfo>;
-  delete?: ListItemAccessControl<'delete', BaseListTypeInfo>;
+  create?: CreateListItemAccessControl<BaseListTypeInfo>;
+  update?: UpdateListItemAccessControl<BaseListTypeInfo>;
+  delete?: DeleteListItemAccessControl<BaseListTypeInfo>;
 };
 
 type Filter = {

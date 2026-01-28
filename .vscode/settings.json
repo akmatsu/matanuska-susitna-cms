@@ -11,5 +11,21 @@
     "reindexing",
     "Uncapitalize",
     "voca"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsserver.excludeDirectories": [
+    "apps/cms/.keystone",
+    "apps/cms/.turbo",
+    "apps/cms/logs",
+    "apps/cms/migrations",
+    "apps/cms/public",
+    "**/dist",
+    "**/coverage",
+    "**/build"
+  ],
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "**/.keystone/**",
+    "**/.next/**"
+  ],
+  "typescript.tsserver.maxTsServerMemory": 3072
 }

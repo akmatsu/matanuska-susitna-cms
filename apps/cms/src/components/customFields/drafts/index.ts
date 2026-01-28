@@ -9,6 +9,7 @@ import {
 
 export type DraftFieldMeta = {
   listName: string;
+  query?: string;
 };
 
 export type DraftFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
@@ -36,6 +37,7 @@ export function createDrafts<ListTypeInfo extends BaseListTypeInfo>(
       getAdminMeta(): DraftFieldMeta {
         return {
           listName: config.ui?.listName ?? '',
+          query: config.ui?.query ?? '',
         };
       },
     });

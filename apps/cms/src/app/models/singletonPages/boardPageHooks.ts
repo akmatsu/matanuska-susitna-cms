@@ -1,8 +1,6 @@
 import { ListHooks } from '@keystone-6/core/types';
-import { Lists } from '.keystone/types';
-import { docDelete, docUpsert } from '../../fieldUtils';
+import { docDelete, typesenseUpsert } from '../../fieldUtils';
 import { logger } from '../../../configs/logger';
-import { parseBoardPage } from '../../../utils/typesense';
 
 export const boardsPageHooks = {
   async beforeOperation(args) {
@@ -13,8 +11,13 @@ export const boardsPageHooks = {
     }
   },
 
-  async afterOperation({ context }) {
-    const doc = await parseBoardPage(context, false);
-    docUpsert(doc);
+  async afterOperation(args) {
+    await typesenseUpsert({
+      listNameSingular: 'boardPage',
+      opArgs: args,
+      typeOverride: 'Topic',
+      appendId: '-boards',
+      isSingleton: true,
+    });
   },
-} satisfies ListHooks<Lists.BoardPage.TypeInfo>;
+} satisfies ListHooks<any>;

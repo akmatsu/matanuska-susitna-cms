@@ -1,4 +1,3 @@
-import { type Lists } from '.keystone/types';
 import {
   filterByPubStatus,
   generalItemAccess,
@@ -78,4 +77,4 @@ export default {
   Facility,
   FacilityVersion,
   FacilityDraft,
-} satisfies Lists;
+};

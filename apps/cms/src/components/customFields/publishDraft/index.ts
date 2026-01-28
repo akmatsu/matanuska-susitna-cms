@@ -9,6 +9,7 @@ import {
 
 export type PublishDraftFieldMeta = {
   listName: string;
+  query?: string;
 };
 
 export type PublishDraftFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
@@ -37,6 +38,7 @@ export function publishDraft<ListTypeInfo extends BaseListTypeInfo>(
       getAdminMeta(): PublishDraftFieldMeta {
         return {
           listName: config.ui?.listName ?? '',
+          query: config.ui?.query ?? '',
         };
       },
     });

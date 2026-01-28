@@ -7,14 +7,36 @@
     "noEmit": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["./node_modules/@types", "./node_modules/.keystone/types"]
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/.keystone/types"
+    ]
+  },
+  "watchOptions": {
+    "watchFile": "useFsEventsOnParentDirectory",
+    "watchDirectory": "useFsEvents",
+    "fallbackPolling": "dynamicPriority",
+    "synchronousWatchDirectory": false
   },
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./admin/**/*.ts",
-    "./seed-data.ts",
+    "./src",
+    "./admin",
     "./keystone.ts",
+    "./seed-data.ts",
+    "./codegen.ts",
     "./src/components/customFields/publishDraft"
+  ],
+  "exclude": [
+    "./.keystone",
+    "./.turbo",
+    "./node_modules",
+    "./logs",
+    "./migrations",
+    "./public",
+    "./coverage",
+    "./dist",
+    "./build"
   ]
 }

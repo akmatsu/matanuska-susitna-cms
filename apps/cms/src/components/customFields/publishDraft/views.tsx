@@ -26,6 +26,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
 
   const listSlug = plural(kebabCase(field.listName)).toLowerCase();
   const { addToast } = useToasts();
+  const queryParam = encodeURIComponent(field.query ?? '');
 
   async function handlePublishDraft() {
     if (loading) return;
@@ -33,12 +34,9 @@ export function Field({ field }: FieldProps<typeof controller>) {
     try {
       setLoading(true);
 
-      const res = await fetch(
-        `/publish/${listSlug}/${id}?query=${field.query}`,
-        {
-          method: 'PATCH',
-        },
-      );
+      const res = await fetch(`/publish/${listSlug}/${id}?query=${queryParam}`, {
+        method: 'PATCH',
+      });
 
       if (!res.ok) {
         throw new Error('Failed to publish draft');
@@ -82,7 +80,7 @@ export const controller = (
 ): FieldController<string | undefined | null, string> &
   PublishDraftFieldMeta => {
   return {
-    query: config.fieldMeta.query,
+    query: config.fieldMeta.query ?? '',
     listName: config.fieldMeta.listName,
     path: config.path,
     label: config.label,

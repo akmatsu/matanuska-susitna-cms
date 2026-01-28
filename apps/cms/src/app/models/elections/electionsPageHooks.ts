@@ -1,7 +1,6 @@
 import { ListHooks } from '@keystone-6/core/types';
 import { logger } from '../../../configs/logger';
-import { parseElectionsPage } from '../../../utils/typesense';
-import { docDelete, docUpsert } from '../../fieldUtils';
+import { docDelete, typesenseUpsert } from '../../fieldUtils';
 
 export const electionsPageHooks = {
   async beforeOperation(args) {
@@ -11,10 +10,15 @@ export const electionsPageHooks = {
       logger.error(error, 'Error deleting elections page typesense document');
     }
   },
-  async afterOperation({ context }) {
+  async afterOperation(args) {
     try {
-      const doc = await parseElectionsPage(context, false);
-      docUpsert(doc);
+      await typesenseUpsert({
+        listNameSingular: 'electionsPage',
+        opArgs: args,
+        typeOverride: 'Topic',
+        appendId: '-elections',
+        isSingleton: true,
+      });
     } catch (error) {
       logger.error(error, 'Error updating elections page typesense document');
     }

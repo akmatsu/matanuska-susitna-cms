@@ -65,29 +65,26 @@ export function addBlockType(
 
 export function clearContentAndInsert(ctx: Ctx, value: string): Command {
   return (state, dispatch) => {
-    if (dispatch) {
-      let { tr } = state;
-      const { from } = tr.selection;
-      const nodeStart = from - state.selection.$from.parentOffset;
-      const nodeEnd = nodeStart + state.selection.$from.parent.content.size;
-      tr = tr.deleteRange(nodeStart, nodeEnd);
+    if (!dispatch) return false;
 
-      const parser = ctx.get(parserCtx);
-      const doc = parser(value);
-      if (!doc) return;
-      const contentSlice = state.selection.content();
-      dispatch(
-        tr
-          .replaceSelection(
-            new Slice(
-              doc.content,
-              contentSlice.openStart,
-              contentSlice.openEnd,
-            ),
-          )
-          .scrollIntoView(),
-      );
-    }
+    let { tr } = state;
+    const { from } = tr.selection;
+    const nodeStart = from - state.selection.$from.parentOffset;
+    const nodeEnd = nodeStart + state.selection.$from.parent.content.size;
+    tr = tr.deleteRange(nodeStart, nodeEnd);
+
+    const parser = ctx.get(parserCtx);
+    const doc = parser(value);
+    if (!doc) return false;
+
+    const contentSlice = state.selection.content();
+    dispatch(
+      tr
+        .replaceSelection(
+          new Slice(doc.content, contentSlice.openStart, contentSlice.openEnd),
+        )
+        .scrollIntoView(),
+    );
     return true;
   };
 }
