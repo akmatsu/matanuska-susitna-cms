@@ -2,7 +2,7 @@ import { list } from '@keystone-6/core';
 import { file, integer, relationship, text } from '@keystone-6/core/fields';
 import { appConfig } from '../../../configs/appConfig';
 import { generalOperationAccess } from '../../access';
-import { documentRelationship } from '../../fieldUtils';
+import { documentRelationship, owner } from '../../fieldUtils';
 
 export const DocumentListItem = list({
   access: {
@@ -42,7 +42,10 @@ export const Document = list({
   },
   fields: {
     title: text({ validation: { isRequired: true }, isIndexed: true }),
-    description: text({ validation: { isRequired: false } }),
+    description: text({
+      validation: { isRequired: false },
+      db: { isNullable: true },
+    }),
     tags: relationship({
       ref: 'Tag',
       many: true,
@@ -54,6 +57,7 @@ export const Document = list({
         },
       },
     }),
+    owner,
     file: file({
       storage:
         appConfig.nodeEnv === 'production' ? 's3Documents' : 'localDocuments',
@@ -67,6 +71,17 @@ export const Document = list({
       },
     }),
     editorNotes: text({
+      db: {
+        isNullable: true,
+      },
+      ui: {
+        displayMode: 'textarea',
+      },
+    }),
+    accessibilityNotes: text({
+      db: {
+        isNullable: true,
+      },
       ui: {
         displayMode: 'textarea',
       },

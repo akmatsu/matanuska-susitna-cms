@@ -2642,12 +2642,15 @@ model PostImage {
 model Document {
   id                                               String                    @id @default(cuid())
   title                                            String                    @default("")
-  description                                      String                    @default("")
+  description                                      String?
   tags                                             Tag[]                     @relation("Document_tags")
+  owner                                            User?                     @relation("Document_owner", fields: [ownerId], references: [id])
+  ownerId                                          String?                   @map("owner")
   file_filesize                                    Int?
   file_filename                                    String?
   collections                                      DocumentCollection[]      @relation("Document_collections")
-  editorNotes                                      String                    @default("")
+  editorNotes                                      String?
+  accessibilityNotes                               String?
   from_BoardPage_documents                         BoardPage[]               @relation("BoardPage_documents")
   from_BoardPage_vacancyReport                     BoardPage[]               @relation("BoardPage_vacancyReport")
   from_BoardPage_applicationForm                   BoardPage[]               @relation("BoardPage_applicationForm")
@@ -2724,6 +2727,7 @@ model Document {
   from_DocumentListItem_document                   DocumentListItem[]        @relation("DocumentListItem_document")
 
   @@index([title])
+  @@index([ownerId])
 }
 
 model DocumentCollection {
@@ -3055,6 +3059,7 @@ model User {
   from_PostVersion_author            PostVersion[]             @relation("PostVersion_author")
   from_PostDraft_owner               PostDraft[]               @relation("PostDraft_owner")
   from_PostDraft_author              PostDraft[]               @relation("PostDraft_author")
+  from_Document_owner                Document[]                @relation("Document_owner")
   from_DocumentCollection_owner      DocumentCollection[]      @relation("DocumentCollection_owner")
   from_Url_owner                     Url[]                     @relation("Url_owner")
   from_Highlight_owner               Highlight[]               @relation("Highlight_owner")

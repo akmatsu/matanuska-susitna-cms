@@ -11293,10 +11293,12 @@ type Document implements WithTitle {
   description: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
+  owner: User
   file: FileFieldOutput
   collections(where: DocumentCollectionWhereInput! = {}, orderBy: [DocumentCollectionOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentCollectionWhereUniqueInput): [DocumentCollection!]
   collectionsCount(where: DocumentCollectionWhereInput! = {}): Int
   editorNotes: String
+  accessibilityNotes: String
 }
 
 type FileFieldOutput {
@@ -11315,10 +11317,12 @@ input DocumentWhereInput {
   NOT: [DocumentWhereInput!]
   id: IDFilter
   title: StringFilter
-  description: StringFilter
+  description: StringNullableFilter
   tags: TagManyRelationFilter
+  owner: UserWhereInput
   collections: DocumentCollectionManyRelationFilter
-  editorNotes: StringFilter
+  editorNotes: StringNullableFilter
+  accessibilityNotes: StringNullableFilter
 }
 
 input DocumentCollectionManyRelationFilter {
@@ -11332,15 +11336,18 @@ input DocumentOrderByInput {
   title: OrderDirection
   description: OrderDirection
   editorNotes: OrderDirection
+  accessibilityNotes: OrderDirection
 }
 
 input DocumentUpdateInput {
   title: String
   description: String
   tags: TagRelateToManyForUpdateInput
+  owner: UserRelateToOneForUpdateInput
   file: FileFieldInput
   collections: DocumentCollectionRelateToManyForUpdateInput
   editorNotes: String
+  accessibilityNotes: String
 }
 
 input FileFieldInput {
@@ -11366,9 +11373,11 @@ input DocumentCreateInput {
   title: String
   description: String
   tags: TagRelateToManyForCreateInput
+  owner: UserRelateToOneForCreateInput
   file: FileFieldInput
   collections: DocumentCollectionRelateToManyForCreateInput
   editorNotes: String
+  accessibilityNotes: String
 }
 
 input DocumentCollectionRelateToManyForCreateInput {
