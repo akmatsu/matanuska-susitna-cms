@@ -1,3 +1,11 @@
+# [0.52.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.51.0...v0.52.0) (2026-01-28)
+
+
+### Features
+
+* added colored quote blocks to rich editor ([c8d81f0](https://github.com/akmatsu/matanuska-susitna-cms/commit/c8d81f065455d0027d45eb66d365423ea5a2ba9a))
+* links can now be styled as buttons ([6f141ed](https://github.com/akmatsu/matanuska-susitna-cms/commit/6f141ed14f9488a3b9ee364813014258e0d4d702))
+
 # [0.51.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.50.0...v0.51.0) (2026-01-22)
 
 
