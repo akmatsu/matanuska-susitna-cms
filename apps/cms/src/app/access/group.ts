@@ -84,6 +84,10 @@ async function getActiveUserGroups(id: string, ctx: KeystoneContext) {
     query: 'groups { id }',
   });
 
+  if (!res) {
+    return [];
+  }
+
   return res.groups as { id: string }[];
 }
 
