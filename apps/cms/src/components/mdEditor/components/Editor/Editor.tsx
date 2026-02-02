@@ -6,6 +6,7 @@ import { MdEditorProps } from './types';
 import { useEditorConfig } from './hooks';
 
 export function Editor(props: MdEditorProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { get } = useEditorConfig(props);
   return <Milkdown />;
 }
