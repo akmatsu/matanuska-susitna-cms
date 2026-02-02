@@ -303,6 +303,7 @@ const {
       userGroups: userGroups(),
 
       ...timestamps,
+      body: customText(),
     };
   },
   {

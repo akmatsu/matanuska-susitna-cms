@@ -487,6 +487,7 @@ type Election {
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   status: String
   drafts(where: ElectionDraftWhereInput! = {}, orderBy: [ElectionDraftOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ElectionDraftWhereUniqueInput): [ElectionDraft!]
   draftsCount(where: ElectionDraftWhereInput! = {}): Int
@@ -542,6 +543,7 @@ input ElectionWhereInput {
   userGroups: UserGroupManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  body: MyStringFilter
   status: StringFilter
   drafts: ElectionDraftManyRelationFilter
   versions: ElectionVersionManyRelationFilter
@@ -613,6 +615,7 @@ input ElectionOrderByInput {
   electionOfficialBody: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  body: MyOrderDirection
   status: OrderDirection
   makeDrafts: OrderDirection
 }
@@ -652,6 +655,7 @@ input ElectionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   status: String
   drafts: ElectionDraftRelateToManyForUpdateInput
   makeDrafts: String
@@ -746,6 +750,7 @@ input ElectionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   status: String
   drafts: ElectionDraftRelateToManyForCreateInput
   makeDrafts: String
@@ -830,6 +835,7 @@ type ElectionVersion {
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   isLive: Election
   republish: String
 }
@@ -878,6 +884,7 @@ input ElectionVersionWhereInput {
   userGroups: UserGroupManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  body: MyStringFilter
   isLive: ElectionWhereInput
 }
 
@@ -904,6 +911,7 @@ input ElectionVersionOrderByInput {
   electionOfficialBody: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  body: MyOrderDirection
   republish: OrderDirection
 }
 
@@ -942,6 +950,7 @@ input ElectionVersionUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   isLive: ElectionRelateToOneForUpdateInput
   republish: String
 }
@@ -992,6 +1001,7 @@ input ElectionVersionCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   isLive: ElectionRelateToOneForCreateInput
   republish: String
 }
@@ -1043,6 +1053,7 @@ type ElectionDraft {
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   publish: String
 }
 
@@ -1089,6 +1100,7 @@ input ElectionDraftWhereInput {
   userGroups: UserGroupManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
+  body: MyStringFilter
 }
 
 input ElectionDraftOrderByInput {
@@ -1114,6 +1126,7 @@ input ElectionDraftOrderByInput {
   electionOfficialBody: MyOrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  body: MyOrderDirection
   publish: OrderDirection
 }
 
@@ -1152,6 +1165,7 @@ input ElectionDraftUpdateInput {
   userGroups: UserGroupRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   publish: String
 }
 
@@ -1195,6 +1209,7 @@ input ElectionDraftCreateInput {
   userGroups: UserGroupRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
+  body: String
   publish: String
 }
 
