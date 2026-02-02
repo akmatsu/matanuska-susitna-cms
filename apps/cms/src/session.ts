@@ -33,7 +33,7 @@ export const nextAuthOptions: AuthOptions = {
 
       if (!u) {
         const tu = await sudoContext.db.User.findOne({
-          where: { email: user.email },
+          where: { email: user.email?.toLowerCase() },
         });
 
         if (tu) {

@@ -102,6 +102,7 @@ model Election {
   userGroups                          UserGroup[]       @relation("Election_userGroups")
   createdAt                           DateTime?         @default(now())
   updatedAt                           DateTime?         @default(now()) @updatedAt
+  body                                String?
   status                              String            @default("unpublished")
   drafts                              ElectionDraft[]   @relation("ElectionDraft_original")
   makeDrafts                          String?
@@ -159,6 +160,7 @@ model ElectionVersion {
   userGroups                          UserGroup[]     @relation("ElectionVersion_userGroups")
   createdAt                           DateTime?       @default(now())
   updatedAt                           DateTime?       @default(now()) @updatedAt
+  body                                String?
   isLive                              Election?       @relation("Election_currentVersion")
   republish                           String?
 
@@ -214,6 +216,7 @@ model ElectionDraft {
   userGroups                          UserGroup[]     @relation("ElectionDraft_userGroups")
   createdAt                           DateTime?       @default(now())
   updatedAt                           DateTime?       @default(now()) @updatedAt
+  body                                String?
   publish                             String?
 
   @@index([originalId])
