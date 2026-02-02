@@ -12,6 +12,7 @@ import {
   configureLinkTooltipFeature,
   configureListsFeature,
   configurePrimaryActionButtonFeature,
+  configureColumnsFeature,
   configureSlashFeature,
   configureStepFeature,
   configureTableFeature,
@@ -54,6 +55,7 @@ export function useEditorConfig({
   internalLinks = true,
   images = true,
   iframes = true,
+  columns = true,
   ...props
 }: MdEditorProps) {
   const nodeViewFactory = useNodeViewFactory();
@@ -90,7 +92,13 @@ export function useEditorConfig({
     if (list) {
       configureListsFeature(editor);
     }
-    if (documentCollections || primaryActionButton || internalLinks || steps) {
+    if (
+      documentCollections ||
+      primaryActionButton ||
+      internalLinks ||
+      steps ||
+      columns
+    ) {
       configureRemarkDirectivesFeature(editor);
     }
     if (documentCollections) {
@@ -101,6 +109,9 @@ export function useEditorConfig({
     }
     if (steps) {
       configureStepFeature(editor);
+    }
+    if (columns) {
+      configureColumnsFeature(editor);
     }
     if (primaryActionButton) {
       configurePrimaryActionButtonFeature(editor, nodeViewFactory);

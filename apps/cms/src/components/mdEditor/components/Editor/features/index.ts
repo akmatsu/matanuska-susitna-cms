@@ -10,3 +10,4 @@ export * from './table';
 export * from './toolbar';
 export * from './iframe';
 export * from './textAlignment';
+export * from './columns';
