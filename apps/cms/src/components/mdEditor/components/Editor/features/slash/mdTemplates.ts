@@ -84,3 +84,27 @@ export const MD_STEP_TEMPLATE = `::::process
 
 :::
 ::::`;
+
+export const MD_TWO_COLUMN_TEMPLATE = `::::columns{count=2}
+:::column
+
+:::
+
+:::column
+
+:::
+::::`;
+
+export const MD_THREE_COLUMN_TEMPLATE = `::::columns{count=3}
+:::column
+
+:::
+
+:::column
+
+:::
+
+:::column
+
+:::
+::::`;

@@ -10,10 +10,14 @@ import {
 import { imageBlockSchema } from '@milkdown/kit/component/image-block';
 import { commandsCtx, editorViewCtx } from '@milkdown/kit/core';
 import { createTable } from '@milkdown/kit/preset/gfm';
-import { MD_PAYMENTS_ALL_STEPS, MD_STEP_TEMPLATE } from './mdTemplates';
+import {
+  MD_PAYMENTS_ALL_STEPS,
+  MD_STEP_TEMPLATE,
+  MD_THREE_COLUMN_TEMPLATE,
+  MD_TWO_COLUMN_TEMPLATE,
+} from './mdTemplates';
 import {
   addBlockTypeCommand,
-  blockquoteSchema,
   bulletListSchema,
   clearTextInCurrentBlockCommand,
   headingSchema,
@@ -153,6 +157,24 @@ export const SLASH_COMMANDS = [
       return runCommand(
         ctx,
         clearContentAndAddBlockType(DocCollectionNode.type(ctx), { id: '' }),
+      );
+    },
+  },
+  {
+    label: 'Columns (2)',
+    action: (ctx) => {
+      return runCommand(
+        ctx,
+        clearContentAndInsert(ctx, MD_TWO_COLUMN_TEMPLATE),
+      );
+    },
+  },
+  {
+    label: 'Columns (3)',
+    action: (ctx) => {
+      return runCommand(
+        ctx,
+        clearContentAndInsert(ctx, MD_THREE_COLUMN_TEMPLATE),
       );
     },
   },

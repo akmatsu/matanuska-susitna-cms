@@ -80,6 +80,12 @@ export type MdEditorProps = {
    * @default true
    */
   iframes?: boolean;
+
+  /**
+   * Enables 2- or 3-column layouts
+   * @default true
+   */
+  columns?: boolean;
 };
 
 export type PluginViewFactoryFn = (

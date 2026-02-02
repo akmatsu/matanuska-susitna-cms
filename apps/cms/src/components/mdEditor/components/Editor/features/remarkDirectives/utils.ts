@@ -8,6 +8,8 @@ export const acceptedNames = [
   'doc-collection',
   'calloutBlock',
   'textAlign',
+  'columns',
+  'column',
 ];
 
 export const attributesToString = (
