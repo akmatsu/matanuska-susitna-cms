@@ -11,6 +11,7 @@ import { Command } from '@milkdown/kit/prose/state';
 import { $command, callCommand } from '@milkdown/kit/utils';
 import { PluginViewContext } from '@prosemirror-adapter/react';
 import { toggleInternalLinkCommand } from '../internalLinks/schema';
+import { setTextAlignmentCommand } from '../textAlignment/commands';
 
 export const toggleHeaderCommand = $command(
   'ToggleHeaderCmd',
@@ -113,5 +114,26 @@ export const TOOLBAR_COMMANDS: {
     label: 'Internal Link',
     icon: 'icon-[bi--link]',
     action: () => callCommand(toggleInternalLinkCommand.key),
+  },
+  {
+    label: 'Alignment',
+    icon: 'icon-[bi--text-center]',
+    children: [
+      {
+        label: 'Align Left',
+        icon: 'icon-[bi--text-left]',
+        action: () => callCommand(setTextAlignmentCommand.key, 'left'),
+      },
+      {
+        label: 'Align Center',
+        icon: 'icon-[bi--text-center]',
+        action: () => callCommand(setTextAlignmentCommand.key, 'center'),
+      },
+      {
+        label: 'Align Right',
+        icon: 'icon-[bi--text-right]',
+        action: () => callCommand(setTextAlignmentCommand.key, 'right'),
+      },
+    ],
   },
 ];

@@ -7,6 +7,7 @@ export const acceptedNames = [
   'process',
   'doc-collection',
   'calloutBlock',
+  'textAlign',
 ];
 
 export const attributesToString = (

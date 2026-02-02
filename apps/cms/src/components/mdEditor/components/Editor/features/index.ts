@@ -9,3 +9,4 @@ export * from './step';
 export * from './table';
 export * from './toolbar';
 export * from './iframe';
+export * from './textAlignment';

@@ -17,6 +17,7 @@ import {
   configureTableFeature,
   configureToolbarFeature,
   configureIframeFeature,
+  configureTextAlignmentFeature,
 } from '../features';
 import { configureInternalLinksFeature } from '../features/internalLinks/config';
 import { configureRemarkDirectivesFeature } from '../features/remarkDirectives/config';
@@ -63,6 +64,7 @@ export function useEditorConfig({
   return useEditor((root) => {
     const editor = MilkEditor.make();
     configureBaseFeatures(editor, root, props);
+    configureTextAlignmentFeature(editor);
 
     if (iframes) {
       configureIframeFeature(editor);
