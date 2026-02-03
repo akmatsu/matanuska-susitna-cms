@@ -1,3 +1,12 @@
+# [0.54.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.53.0...v0.54.0) (2026-02-03)
+
+
+### Features
+
+* added a text alignment directive to rich editor ([a3c0d26](https://github.com/akmatsu/matanuska-susitna-cms/commit/a3c0d26a2124512c0acf6b3a82dd84a2be7fa354))
+* added body field to elections ([e7bddfc](https://github.com/akmatsu/matanuska-susitna-cms/commit/e7bddfced91cb2af6a23d9a73574f8d6567a19ab))
+* added columns to rich editor; ([d55da1e](https://github.com/akmatsu/matanuska-susitna-cms/commit/d55da1e84f3b5ba4a6495127b90e4d70646f25e5))
+
 # [0.53.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.52.0...v0.53.0) (2026-01-28)
 
 
