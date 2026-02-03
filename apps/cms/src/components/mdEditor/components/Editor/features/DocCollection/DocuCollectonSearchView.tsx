@@ -172,7 +172,7 @@ export function DocCollectionSearchView() {
           anchor="bottom"
           transition
           className={clsx(
-            'card w-[var(--input-width)] rounded-xl border border-white/5 bg-white p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
+            'card w-(--input-width) rounded-xl border border-white/5 bg-white p-1 [--anchor-gap:var(--spacing-1)] empty:invisible',
             'transition duration-100 ease-in',
           )}
         >
