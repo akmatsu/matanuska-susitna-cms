@@ -327,6 +327,7 @@ model AssemblyDistrict {
   assemblyDistricts                              AssemblyDistrict[]        @relation("AssemblyDistrict_assemblyDistricts")
   services                                       Service[]                 @relation("AssemblyDistrict_services")
   plans                                          Plan[]                    @relation("AssemblyDistrict_plans")
+  hideSideNav                                    Boolean                   @default(false)
   createdAt                                      DateTime?                 @default(now())
   updatedAt                                      DateTime?                 @default(now()) @updatedAt
   photo                                          Image?                    @relation("AssemblyDistrict_photo", fields: [photoId], references: [id])
@@ -410,6 +411,7 @@ model AssemblyDistrictVersion {
   assemblyDistricts AssemblyDistrict[] @relation("AssemblyDistrictVersion_assemblyDistricts")
   services          Service[]          @relation("AssemblyDistrictVersion_services")
   plans             Plan[]             @relation("AssemblyDistrictVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   photo             Image?             @relation("AssemblyDistrictVersion_photo", fields: [photoId], references: [id])
@@ -465,6 +467,7 @@ model AssemblyDistrictDraft {
   assemblyDistricts AssemblyDistrict[] @relation("AssemblyDistrictDraft_assemblyDistricts")
   services          Service[]          @relation("AssemblyDistrictDraft_services")
   plans             Plan[]             @relation("AssemblyDistrictDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   photo             Image?             @relation("AssemblyDistrictDraft_photo", fields: [photoId], references: [id])
@@ -516,6 +519,7 @@ model Board {
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_boards")
   services                            Service[]                 @relation("Board_services")
   plans                               Plan[]                    @relation("Board_plans")
+  hideSideNav                         Boolean                   @default(false)
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   directory                           Document?                 @relation("Board_directory", fields: [directoryId], references: [id])
@@ -589,6 +593,7 @@ model BoardVersion {
   assemblyDistricts            AssemblyDistrict[] @relation("BoardVersion_assemblyDistricts")
   services                     Service[]          @relation("BoardVersion_services")
   plans                        Plan[]             @relation("BoardVersion_plans")
+  hideSideNav                  Boolean            @default(false)
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardVersion_directory", fields: [directoryId], references: [id])
@@ -643,6 +648,7 @@ model BoardDraft {
   assemblyDistricts            AssemblyDistrict[] @relation("BoardDraft_assemblyDistricts")
   services                     Service[]          @relation("BoardDraft_services")
   plans                        Plan[]             @relation("BoardDraft_plans")
+  hideSideNav                  Boolean            @default(false)
   createdAt                    DateTime?          @default(now())
   updatedAt                    DateTime?          @default(now()) @updatedAt
   directory                    Document?          @relation("BoardDraft_directory", fields: [directoryId], references: [id])
@@ -695,6 +701,7 @@ model Community {
   assemblyDistricts                        AssemblyDistrict[]        @relation("AssemblyDistrict_communities")
   services                                 Service[]                 @relation("Community_services")
   plans                                    Plan[]                    @relation("Community_plans")
+  hideSideNav                              Boolean                   @default(false)
   createdAt                                DateTime?                 @default(now())
   updatedAt                                DateTime?                 @default(now()) @updatedAt
   boards                                   Board[]                   @relation("Board_communities")
@@ -766,6 +773,7 @@ model CommunityVersion {
   assemblyDistricts AssemblyDistrict[] @relation("CommunityVersion_assemblyDistricts")
   services          Service[]          @relation("CommunityVersion_services")
   plans             Plan[]             @relation("CommunityVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   boards            Board[]            @relation("CommunityVersion_boards")
@@ -809,6 +817,7 @@ model CommunityDraft {
   assemblyDistricts AssemblyDistrict[] @relation("CommunityDraft_assemblyDistricts")
   services          Service[]          @relation("CommunityDraft_services")
   plans             Plan[]             @relation("CommunityDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   boards            Board[]            @relation("CommunityDraft_boards")
@@ -853,6 +862,7 @@ model Facility {
   assemblyDistricts                       AssemblyDistrict[]        @relation("AssemblyDistrict_facilities")
   services                                Service[]                 @relation("Facility_services")
   plans                                   Plan[]                    @relation("Facility_plans")
+  hideSideNav                             Boolean                   @default(false)
   createdAt                               DateTime?                 @default(now())
   updatedAt                               DateTime?                 @default(now()) @updatedAt
   park                                    Park?                     @relation("Facility_park", fields: [parkId], references: [id])
@@ -920,6 +930,7 @@ model FacilityVersion {
   assemblyDistricts AssemblyDistrict[] @relation("FacilityVersion_assemblyDistricts")
   services          Service[]          @relation("FacilityVersion_services")
   plans             Plan[]             @relation("FacilityVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   park              Park?              @relation("FacilityVersion_park", fields: [parkId], references: [id])
@@ -965,6 +976,7 @@ model FacilityDraft {
   assemblyDistricts AssemblyDistrict[] @relation("FacilityDraft_assemblyDistricts")
   services          Service[]          @relation("FacilityDraft_services")
   plans             Plan[]             @relation("FacilityDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   park              Park?              @relation("FacilityDraft_park", fields: [parkId], references: [id])
@@ -1005,6 +1017,7 @@ model OrgUnit {
   assemblyDistricts                     AssemblyDistrict[]        @relation("AssemblyDistrict_orgUnits")
   services                              Service[]                 @relation("OrgUnit_services")
   plans                                 Plan[]                    @relation("OrgUnit_plans")
+  hideSideNav                           Boolean                   @default(false)
   createdAt                             DateTime?                 @default(now())
   updatedAt                             DateTime?                 @default(now()) @updatedAt
   icon                                  String?
@@ -1087,6 +1100,7 @@ model OrgUnitVersion {
   assemblyDistricts AssemblyDistrict[] @relation("OrgUnitVersion_assemblyDistricts")
   services          Service[]          @relation("OrgUnitVersion_services")
   plans             Plan[]             @relation("OrgUnitVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
@@ -1137,6 +1151,7 @@ model OrgUnitDraft {
   assemblyDistricts AssemblyDistrict[] @relation("OrgUnitDraft_assemblyDistricts")
   services          Service[]          @relation("OrgUnitDraft_services")
   plans             Plan[]             @relation("OrgUnitDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   icon              String?
@@ -1188,6 +1203,7 @@ model Park {
   assemblyDistricts                  AssemblyDistrict[]        @relation("AssemblyDistrict_parks")
   services                           Service[]                 @relation("Park_services")
   plans                              Plan[]                    @relation("Park_plans")
+  hideSideNav                        Boolean                   @default(false)
   createdAt                          DateTime?                 @default(now())
   updatedAt                          DateTime?                 @default(now()) @updatedAt
   trails                             Trail[]                   @relation("Trail_park")
@@ -1255,6 +1271,7 @@ model ParkVersion {
   assemblyDistricts AssemblyDistrict[] @relation("ParkVersion_assemblyDistricts")
   services          Service[]          @relation("ParkVersion_services")
   plans             Plan[]             @relation("ParkVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ParkVersion_trails")
@@ -1299,6 +1316,7 @@ model ParkDraft {
   assemblyDistricts AssemblyDistrict[] @relation("ParkDraft_assemblyDistricts")
   services          Service[]          @relation("ParkDraft_services")
   plans             Plan[]             @relation("ParkDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ParkDraft_trails")
@@ -1338,6 +1356,7 @@ model PublicNotice {
   assemblyDistricts                          AssemblyDistrict[]        @relation("AssemblyDistrict_publicNotices")
   services                                   Service[]                 @relation("PublicNotice_services")
   plans                                      Plan[]                    @relation("Plan_publicNotices")
+  hideSideNav                                Boolean                   @default(false)
   createdAt                                  DateTime?                 @default(now())
   updatedAt                                  DateTime?                 @default(now()) @updatedAt
   type                                       String?                   @default("AKMATSUGOV_PublicNotice")
@@ -1412,6 +1431,7 @@ model PublicNoticeVersion {
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeVersion_assemblyDistricts")
   services          Service[]          @relation("PublicNoticeVersion_services")
   plans             Plan[]             @relation("PublicNoticeVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   type              String?            @default("AKMATSUGOV_PublicNotice")
@@ -1458,6 +1478,7 @@ model PublicNoticeDraft {
   assemblyDistricts AssemblyDistrict[] @relation("PublicNoticeDraft_assemblyDistricts")
   services          Service[]          @relation("PublicNoticeDraft_services")
   plans             Plan[]             @relation("PublicNoticeDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   type              String?            @default("AKMATSUGOV_PublicNotice")
@@ -1506,6 +1527,7 @@ model Service {
   assemblyDistricts                     AssemblyDistrict[]        @relation("AssemblyDistrict_services")
   services                              Service[]                 @relation("Service_services")
   plans                                 Plan[]                    @relation("Plan_services")
+  hideSideNav                           Boolean                   @default(false)
   createdAt                             DateTime?                 @default(now())
   updatedAt                             DateTime?                 @default(now()) @updatedAt
   trails                                Trail[]                   @relation("Service_trails")
@@ -1583,6 +1605,7 @@ model ServiceVersion {
   assemblyDistricts AssemblyDistrict[] @relation("ServiceVersion_assemblyDistricts")
   services          Service[]          @relation("ServiceVersion_services")
   plans             Plan[]             @relation("ServiceVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ServiceVersion_trails")
@@ -1632,6 +1655,7 @@ model ServiceDraft {
   assemblyDistricts AssemblyDistrict[] @relation("ServiceDraft_assemblyDistricts")
   services          Service[]          @relation("ServiceDraft_services")
   plans             Plan[]             @relation("ServiceDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ServiceDraft_trails")
@@ -1675,6 +1699,7 @@ model Topic {
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_topics")
   services                            Service[]                 @relation("Service_topics")
   plans                               Plan[]                    @relation("Plan_topics")
+  hideSideNav                         Boolean                   @default(false)
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   boards                              Board[]                   @relation("Board_topics")
@@ -1746,6 +1771,7 @@ model TopicVersion {
   assemblyDistricts AssemblyDistrict[] @relation("TopicVersion_assemblyDistricts")
   services          Service[]          @relation("TopicVersion_services")
   plans             Plan[]             @relation("TopicVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   boards            Board[]            @relation("TopicVersion_boards")
@@ -1789,6 +1815,7 @@ model TopicDraft {
   assemblyDistricts AssemblyDistrict[] @relation("TopicDraft_assemblyDistricts")
   services          Service[]          @relation("TopicDraft_services")
   plans             Plan[]             @relation("TopicDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   boards            Board[]            @relation("TopicDraft_boards")
@@ -1832,6 +1859,7 @@ model Trail {
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_trails")
   services                            Service[]                 @relation("Service_trails")
   plans                               Plan[]                    @relation("Plan_trails")
+  hideSideNav                         Boolean                   @default(false)
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   maintainer                          String?
@@ -1918,6 +1946,7 @@ model TrailVersion {
   assemblyDistricts  AssemblyDistrict[] @relation("TrailVersion_assemblyDistricts")
   services           Service[]          @relation("TrailVersion_services")
   plans              Plan[]             @relation("TrailVersion_plans")
+  hideSideNav        Boolean            @default(false)
   createdAt          DateTime?          @default(now())
   updatedAt          DateTime?          @default(now()) @updatedAt
   maintainer         String?
@@ -1983,6 +2012,7 @@ model TrailDraft {
   assemblyDistricts  AssemblyDistrict[] @relation("TrailDraft_assemblyDistricts")
   services           Service[]          @relation("TrailDraft_services")
   plans              Plan[]             @relation("TrailDraft_plans")
+  hideSideNav        Boolean            @default(false)
   createdAt          DateTime?          @default(now())
   updatedAt          DateTime?          @default(now()) @updatedAt
   maintainer         String?
@@ -2044,6 +2074,7 @@ model Plan {
   assemblyDistricts                  AssemblyDistrict[]        @relation("AssemblyDistrict_plans")
   services                           Service[]                 @relation("Plan_services")
   plans                              Plan[]                    @relation("Plan_plans")
+  hideSideNav                        Boolean                   @default(false)
   createdAt                          DateTime?                 @default(now())
   updatedAt                          DateTime?                 @default(now()) @updatedAt
   effort                             ExternalLink?             @relation("Plan_effort", fields: [effortId], references: [id])
@@ -2135,6 +2166,7 @@ model PlanVersion {
   assemblyDistricts             AssemblyDistrict[] @relation("PlanVersion_assemblyDistricts")
   services                      Service[]          @relation("PlanVersion_services")
   plans                         Plan[]             @relation("PlanVersion_plans")
+  hideSideNav                   Boolean            @default(false)
   createdAt                     DateTime?          @default(now())
   updatedAt                     DateTime?          @default(now()) @updatedAt
   effort                        ExternalLink?      @relation("PlanVersion_effort", fields: [effortId], references: [id])
@@ -2194,6 +2226,7 @@ model PlanDraft {
   assemblyDistricts             AssemblyDistrict[] @relation("PlanDraft_assemblyDistricts")
   services                      Service[]          @relation("PlanDraft_services")
   plans                         Plan[]             @relation("PlanDraft_plans")
+  hideSideNav                   Boolean            @default(false)
   createdAt                     DateTime?          @default(now())
   updatedAt                     DateTime?          @default(now()) @updatedAt
   effort                        ExternalLink?      @relation("PlanDraft_effort", fields: [effortId], references: [id])
@@ -2281,6 +2314,7 @@ model Event {
   assemblyDistricts                   AssemblyDistrict[]        @relation("AssemblyDistrict_events")
   services                            Service[]                 @relation("Event_services")
   plans                               Plan[]                    @relation("Event_plans")
+  hideSideNav                         Boolean                   @default(false)
   createdAt                           DateTime?                 @default(now())
   updatedAt                           DateTime?                 @default(now()) @updatedAt
   startDate                           DateTime?
@@ -2353,6 +2387,7 @@ model EventDraft {
   assemblyDistricts AssemblyDistrict[] @relation("EventDraft_assemblyDistricts")
   services          Service[]          @relation("EventDraft_services")
   plans             Plan[]             @relation("EventDraft_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   startDate         DateTime?
@@ -2396,6 +2431,7 @@ model EventVersion {
   assemblyDistricts AssemblyDistrict[] @relation("EventVersion_assemblyDistricts")
   services          Service[]          @relation("EventVersion_services")
   plans             Plan[]             @relation("EventVersion_plans")
+  hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
   startDate         DateTime?
@@ -2447,6 +2483,7 @@ model Policy {
   actions                     InternalLink[]  @relation("Policy_actions")
   documents                   Document[]      @relation("Policy_documents")
   contacts                    Contact[]       @relation("Policy_contacts")
+  hideSideNav                 Boolean         @default(false)
   createdAt                   DateTime?       @default(now())
   updatedAt                   DateTime?       @default(now()) @updatedAt
   policies                    Policy[]        @relation("Policy_policies")
@@ -2481,6 +2518,7 @@ model PolicyVersion {
   actions     InternalLink[] @relation("PolicyVersion_actions")
   documents   Document[]     @relation("PolicyVersion_documents")
   contacts    Contact[]      @relation("PolicyVersion_contacts")
+  hideSideNav Boolean        @default(false)
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   policies    Policy[]       @relation("PolicyVersion_policies")
@@ -2509,6 +2547,7 @@ model PolicyDraft {
   actions     InternalLink[] @relation("PolicyDraft_actions")
   documents   Document[]     @relation("PolicyDraft_documents")
   contacts    Contact[]      @relation("PolicyDraft_contacts")
+  hideSideNav Boolean        @default(false)
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   policies    Policy[]       @relation("PolicyDraft_policies")
@@ -2535,6 +2574,7 @@ model Post {
   actions          InternalLink[] @relation("Post_actions")
   documents        Document[]     @relation("Post_documents")
   contacts         Contact[]      @relation("Post_contacts")
+  hideSideNav      Boolean        @default(false)
   createdAt        DateTime?      @default(now())
   updatedAt        DateTime?      @default(now()) @updatedAt
   author           User?          @relation("Post_author", fields: [authorId], references: [id])
@@ -2571,6 +2611,7 @@ model PostVersion {
   actions     InternalLink[] @relation("PostVersion_actions")
   documents   Document[]     @relation("PostVersion_documents")
   contacts    Contact[]      @relation("PostVersion_contacts")
+  hideSideNav Boolean        @default(false)
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   author      User?          @relation("PostVersion_author", fields: [authorId], references: [id])
@@ -2604,6 +2645,7 @@ model PostDraft {
   actions     InternalLink[] @relation("PostDraft_actions")
   documents   Document[]     @relation("PostDraft_documents")
   contacts    Contact[]      @relation("PostDraft_contacts")
+  hideSideNav Boolean        @default(false)
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   author      User?          @relation("PostDraft_author", fields: [authorId], references: [id])

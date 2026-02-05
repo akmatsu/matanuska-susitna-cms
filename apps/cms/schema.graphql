@@ -1558,6 +1558,7 @@ type AssemblyDistrict implements BasePageWithSlug & BasePageWithDefaultRelations
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -1620,6 +1621,7 @@ input AssemblyDistrictWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -1734,6 +1736,7 @@ input AssemblyDistrictOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   memberName: OrderDirection
@@ -1772,6 +1775,7 @@ input AssemblyDistrictUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -1939,6 +1943,7 @@ input AssemblyDistrictCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -2086,6 +2091,7 @@ type AssemblyDistrictVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -2141,6 +2147,7 @@ input AssemblyDistrictVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -2167,6 +2174,7 @@ input AssemblyDistrictVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   memberName: OrderDirection
@@ -2204,6 +2212,7 @@ input AssemblyDistrictVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -2258,6 +2267,7 @@ input AssemblyDistrictVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -2322,6 +2332,7 @@ type AssemblyDistrictDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: Image
@@ -2375,6 +2386,7 @@ input AssemblyDistrictDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   photo: ImageWhereInput
@@ -2400,6 +2412,7 @@ input AssemblyDistrictDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   memberName: OrderDirection
@@ -2437,6 +2450,7 @@ input AssemblyDistrictDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForUpdateInput
@@ -2484,6 +2498,7 @@ input AssemblyDistrictDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   photo: ImageRelateToOneForCreateInput
@@ -2541,6 +2556,7 @@ type Board implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2594,6 +2610,7 @@ input BoardWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2632,6 +2649,7 @@ input BoardOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   calendarId: OrderDirection
@@ -2666,6 +2684,7 @@ input BoardUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2732,6 +2751,7 @@ input BoardCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -2804,6 +2824,7 @@ type BoardVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -2850,6 +2871,7 @@ input BoardVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -2872,6 +2894,7 @@ input BoardVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   calendarId: OrderDirection
@@ -2905,6 +2928,7 @@ input BoardVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -2954,6 +2978,7 @@ input BoardVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -3013,6 +3038,7 @@ type BoardDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
@@ -3057,6 +3083,7 @@ input BoardDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   directory: DocumentWhereInput
@@ -3078,6 +3105,7 @@ input BoardDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   calendarId: OrderDirection
@@ -3111,6 +3139,7 @@ input BoardDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
@@ -3153,6 +3182,7 @@ input BoardDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
@@ -3206,6 +3236,7 @@ type Community implements BasePageWithSlug & BasePageWithDefaultRelationships & 
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -3260,6 +3291,7 @@ input CommunityWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
@@ -3295,6 +3327,7 @@ input CommunityOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   type: OrderDirection
@@ -3326,6 +3359,7 @@ input CommunityUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
@@ -3389,6 +3423,7 @@ input CommunityCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
@@ -3458,6 +3493,7 @@ type CommunityVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -3505,6 +3541,7 @@ input CommunityVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
@@ -3524,6 +3561,7 @@ input CommunityVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   type: OrderDirection
@@ -3554,6 +3592,7 @@ input CommunityVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
@@ -3600,6 +3639,7 @@ input CommunityVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
@@ -3656,6 +3696,7 @@ type CommunityDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -3701,6 +3742,7 @@ input CommunityDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
@@ -3719,6 +3761,7 @@ input CommunityDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   type: OrderDirection
@@ -3749,6 +3792,7 @@ input CommunityDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
@@ -3788,6 +3832,7 @@ input CommunityDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
@@ -3841,6 +3886,7 @@ type Facility implements BasePageWithSlug & BasePageWithDefaultRelationships & B
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: Park
@@ -3889,6 +3935,7 @@ input FacilityWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   park: ParkWhereInput
@@ -3920,6 +3967,7 @@ input FacilityOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   status: OrderDirection
@@ -3952,6 +4000,7 @@ input FacilityUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForUpdateInput
@@ -4019,6 +4068,7 @@ input FacilityCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForCreateInput
@@ -4092,6 +4142,7 @@ type FacilityVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: Park
@@ -4133,6 +4184,7 @@ input FacilityVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   park: ParkWhereInput
@@ -4148,6 +4200,7 @@ input FacilityVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   republish: OrderDirection
@@ -4179,6 +4232,7 @@ input FacilityVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForUpdateInput
@@ -4223,6 +4277,7 @@ input FacilityVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForCreateInput
@@ -4278,6 +4333,7 @@ type FacilityDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: Park
@@ -4317,6 +4373,7 @@ input FacilityDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   park: ParkWhereInput
@@ -4331,6 +4388,7 @@ input FacilityDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   publish: OrderDirection
@@ -4362,6 +4420,7 @@ input FacilityDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForUpdateInput
@@ -4399,6 +4458,7 @@ input FacilityDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForCreateInput
@@ -4445,6 +4505,7 @@ type OrgUnit implements BasePageWithSlug & BasePageWithDefaultRelationships & Ba
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4505,6 +4566,7 @@ input OrgUnitWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
@@ -4545,6 +4607,7 @@ input OrgUnitOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   icon: OrderDirection
@@ -4579,6 +4642,7 @@ input OrgUnitUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4653,6 +4717,7 @@ input OrgUnitCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4732,6 +4797,7 @@ type OrgUnitVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4785,6 +4851,7 @@ input OrgUnitVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
@@ -4809,6 +4876,7 @@ input OrgUnitVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   icon: OrderDirection
@@ -4842,6 +4910,7 @@ input OrgUnitVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4887,6 +4956,7 @@ input OrgUnitVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4943,6 +5013,7 @@ type OrgUnitDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -4994,6 +5065,7 @@ input OrgUnitDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   icon: StringNullableFilter
@@ -5017,6 +5089,7 @@ input OrgUnitDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   icon: OrderDirection
@@ -5050,6 +5123,7 @@ input OrgUnitDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -5094,6 +5168,7 @@ input OrgUnitDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   icon: String
@@ -5152,6 +5227,7 @@ type Park implements BasePageWithSlug & BasePageWithDefaultRelationships & BaseP
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -5203,6 +5279,7 @@ input ParkWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -5235,6 +5312,7 @@ input ParkOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   status: OrderDirection
@@ -5267,6 +5345,7 @@ input ParkUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -5329,6 +5408,7 @@ input ParkCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -5398,6 +5478,7 @@ type ParkVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -5442,6 +5523,7 @@ input ParkVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -5458,6 +5540,7 @@ input ParkVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   republish: OrderDirection
@@ -5489,6 +5572,7 @@ input ParkVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -5528,6 +5612,7 @@ input ParkVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -5579,6 +5664,7 @@ type ParkDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -5621,6 +5707,7 @@ input ParkDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -5636,6 +5723,7 @@ input ParkDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   publish: OrderDirection
@@ -5667,6 +5755,7 @@ input ParkDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -5705,6 +5794,7 @@ input ParkDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -5752,6 +5842,7 @@ type PublicNotice implements BasePageWithSlug & BasePageWithDefaultRelationships
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -5809,6 +5900,7 @@ input PublicNoticeWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   type: StringNullableFilter
@@ -5847,6 +5939,7 @@ input PublicNoticeOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   type: OrderDirection
@@ -5881,6 +5974,7 @@ input PublicNoticeUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -5947,6 +6041,7 @@ input PublicNoticeCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -6019,6 +6114,7 @@ type PublicNoticeVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -6069,6 +6165,7 @@ input PublicNoticeVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   type: StringNullableFilter
@@ -6091,6 +6188,7 @@ input PublicNoticeVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   type: OrderDirection
@@ -6124,6 +6222,7 @@ input PublicNoticeVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -6173,6 +6272,7 @@ input PublicNoticeVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -6232,6 +6332,7 @@ type PublicNoticeDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -6280,6 +6381,7 @@ input PublicNoticeDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   type: StringNullableFilter
@@ -6301,6 +6403,7 @@ input PublicNoticeDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   type: OrderDirection
@@ -6334,6 +6437,7 @@ input PublicNoticeDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -6376,6 +6480,7 @@ input PublicNoticeDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   type: String
@@ -6431,6 +6536,7 @@ type Service implements BasePageWithSlug & BasePageWithDefaultRelationships & Ba
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6487,6 +6593,7 @@ input ServiceWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -6528,6 +6635,7 @@ input ServiceOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   editorNotes: OrderDirection
@@ -6561,6 +6669,7 @@ input ServiceUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -6633,6 +6742,7 @@ input ServiceCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -6709,6 +6819,7 @@ type ServiceVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6758,6 +6869,7 @@ input ServiceVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -6777,6 +6889,7 @@ input ServiceVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   editorNotes: OrderDirection
@@ -6809,6 +6922,7 @@ input ServiceVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -6857,6 +6971,7 @@ input ServiceVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -6915,6 +7030,7 @@ type ServiceDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
@@ -6962,6 +7078,7 @@ input ServiceDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
@@ -6980,6 +7097,7 @@ input ServiceDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   editorNotes: OrderDirection
@@ -7012,6 +7130,7 @@ input ServiceDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
@@ -7053,6 +7172,7 @@ input ServiceDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
@@ -7103,6 +7223,7 @@ type Topic implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -7158,6 +7279,7 @@ input TopicWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
@@ -7199,6 +7321,7 @@ input TopicOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   status: OrderDirection
@@ -7229,6 +7352,7 @@ input TopicUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
@@ -7299,6 +7423,7 @@ input TopicCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
@@ -7373,6 +7498,7 @@ type TopicVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -7421,6 +7547,7 @@ input TopicVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
@@ -7440,6 +7567,7 @@ input TopicVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   republish: OrderDirection
@@ -7469,6 +7597,7 @@ input TopicVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
@@ -7515,6 +7644,7 @@ input TopicVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
@@ -7571,6 +7701,7 @@ type TopicDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
@@ -7617,6 +7748,7 @@ input TopicDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   boards: BoardManyRelationFilter
@@ -7635,6 +7767,7 @@ input TopicDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   publish: OrderDirection
@@ -7664,6 +7797,7 @@ input TopicDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForUpdateInput
@@ -7703,6 +7837,7 @@ input TopicDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   boards: BoardRelateToManyForCreateInput
@@ -7754,6 +7889,7 @@ type Trail implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -7822,6 +7958,7 @@ input TrailWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   maintainer: StringNullableFilter
@@ -7874,6 +8011,7 @@ input TrailOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   maintainer: OrderDirection
@@ -7926,6 +8064,7 @@ input TrailUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8007,6 +8146,7 @@ input TrailCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8094,6 +8234,7 @@ type TrailVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8155,6 +8296,7 @@ input TrailVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   maintainer: StringNullableFilter
@@ -8191,6 +8333,7 @@ input TrailVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   maintainer: OrderDirection
@@ -8242,6 +8385,7 @@ input TrailVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8306,6 +8450,7 @@ input TrailVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8380,6 +8525,7 @@ type TrailDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8439,6 +8585,7 @@ input TrailDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   maintainer: StringNullableFilter
@@ -8474,6 +8621,7 @@ input TrailDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   maintainer: OrderDirection
@@ -8525,6 +8673,7 @@ input TrailDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8582,6 +8731,7 @@ input TrailDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   maintainer: String
@@ -8649,6 +8799,7 @@ type Plan implements BasePageWithSlug & BasePageWithDefaultRelationships & BaseP
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -8714,6 +8865,7 @@ input PlanWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -8769,6 +8921,7 @@ input PlanOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   autoRedirectToExternalWebsite: OrderDirection
@@ -8801,6 +8954,7 @@ input PlanUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -8898,6 +9052,7 @@ input PlanCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -8995,6 +9150,7 @@ type PlanVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -9053,6 +9209,7 @@ input PlanVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -9080,6 +9237,7 @@ input PlanVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   autoRedirectToExternalWebsite: OrderDirection
@@ -9111,6 +9269,7 @@ input PlanVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -9159,6 +9318,7 @@ input PlanVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -9218,6 +9378,7 @@ type PlanDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLink
@@ -9274,6 +9435,7 @@ input PlanDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   effort: ExternalLinkWhereInput
@@ -9300,6 +9462,7 @@ input PlanDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   autoRedirectToExternalWebsite: OrderDirection
@@ -9331,6 +9494,7 @@ input PlanDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForUpdateInput
@@ -9378,6 +9542,7 @@ input PlanDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   effort: ExternalLinkRelateToOneForCreateInput
@@ -9536,6 +9701,7 @@ type Event implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9591,6 +9757,7 @@ input EventWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -9627,6 +9794,7 @@ input EventOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   startDate: OrderDirection
@@ -9659,6 +9827,7 @@ input EventUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9723,6 +9892,7 @@ input EventCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9793,6 +9963,7 @@ type EventDraft {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9839,6 +10010,7 @@ input EventDraftWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -9858,6 +10030,7 @@ input EventDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   startDate: OrderDirection
@@ -9889,6 +10062,7 @@ input EventDraftUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9935,6 +10109,7 @@ input EventDraftCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -9991,6 +10166,7 @@ type EventVersion {
   servicesCount(where: ServiceWhereInput! = {}): Int
   plans(where: PlanWhereInput! = {}, orderBy: [PlanOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PlanWhereUniqueInput): [Plan!]
   plansCount(where: PlanWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -10039,6 +10215,7 @@ input EventVersionWhereInput {
   assemblyDistricts: AssemblyDistrictManyRelationFilter
   services: ServiceManyRelationFilter
   plans: PlanManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   startDate: DateTimeNullableFilter
@@ -10059,6 +10236,7 @@ input EventVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   startDate: OrderDirection
@@ -10090,6 +10268,7 @@ input EventVersionUpdateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   plans: PlanRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -10131,6 +10310,7 @@ input EventVersionCreateInput {
   assemblyDistricts: AssemblyDistrictRelateToManyForCreateInput
   services: ServiceRelateToManyForCreateInput
   plans: PlanRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   startDate: DateTime
@@ -10260,6 +10440,7 @@ type Policy implements BasePageWithSlug & BasePage & BasePageWithActions & WithT
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
@@ -10298,6 +10479,7 @@ input PolicyWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   policies: PolicyManyRelationFilter
@@ -10335,6 +10517,7 @@ input PolicyOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   status: OrderDirection
@@ -10356,6 +10539,7 @@ input PolicyUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForUpdateInput
@@ -10413,6 +10597,7 @@ input PolicyCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForCreateInput
@@ -10466,6 +10651,7 @@ type PolicyVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
@@ -10497,6 +10683,7 @@ input PolicyVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   policies: PolicyManyRelationFilter
@@ -10512,6 +10699,7 @@ input PolicyVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   republish: OrderDirection
@@ -10532,6 +10720,7 @@ input PolicyVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForUpdateInput
@@ -10565,6 +10754,7 @@ input PolicyVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForCreateInput
@@ -10600,6 +10790,7 @@ type PolicyDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
@@ -10629,6 +10820,7 @@ input PolicyDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   policies: PolicyManyRelationFilter
@@ -10643,6 +10835,7 @@ input PolicyDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   publish: OrderDirection
@@ -10663,6 +10856,7 @@ input PolicyDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForUpdateInput
@@ -10689,6 +10883,7 @@ input PolicyDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForCreateInput
@@ -10718,6 +10913,7 @@ type Post {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: User
@@ -10760,6 +10956,7 @@ input PostWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   author: UserWhereInput
@@ -10806,6 +11003,7 @@ input PostOrderByInput {
   reviewDate: OrderDirection
   slug: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   location: OrderDirection
@@ -10828,6 +11026,7 @@ input PostUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: UserRelateToOneForUpdateInput
@@ -10895,6 +11094,7 @@ input PostCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: UserRelateToOneForCreateInput
@@ -10956,6 +11156,7 @@ type PostVersion {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: User
@@ -10991,6 +11192,7 @@ input PostVersionWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   author: UserWhereInput
@@ -11009,6 +11211,7 @@ input PostVersionOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   location: OrderDirection
@@ -11030,6 +11233,7 @@ input PostVersionUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: UserRelateToOneForUpdateInput
@@ -11066,6 +11270,7 @@ input PostVersionCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: UserRelateToOneForCreateInput
@@ -11104,6 +11309,7 @@ type PostDraft {
   documentsCount(where: DocumentWhereInput! = {}): Int
   contacts(where: ContactWhereInput! = {}, orderBy: [ContactOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: ContactWhereUniqueInput): [Contact!]
   contactsCount(where: ContactWhereInput! = {}): Int
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: User
@@ -11137,6 +11343,7 @@ input PostDraftWhereInput {
   actions: InternalLinkManyRelationFilter
   documents: DocumentManyRelationFilter
   contacts: ContactManyRelationFilter
+  hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   author: UserWhereInput
@@ -11154,6 +11361,7 @@ input PostDraftOrderByInput {
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
   body: MyOrderDirection
+  hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   location: OrderDirection
@@ -11175,6 +11383,7 @@ input PostDraftUpdateInput {
   actions: InternalLinkRelateToManyForUpdateInput
   documents: DocumentRelateToManyForUpdateInput
   contacts: ContactRelateToManyForUpdateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: UserRelateToOneForUpdateInput
@@ -11204,6 +11413,7 @@ input PostDraftCreateInput {
   actions: InternalLinkRelateToManyForCreateInput
   documents: DocumentRelateToManyForCreateInput
   contacts: ContactRelateToManyForCreateInput
+  hideSideNav: Boolean
   createdAt: DateTime
   updatedAt: DateTime
   author: UserRelateToOneForCreateInput
@@ -13289,6 +13499,7 @@ interface BasePageWithSlug implements BasePage {
   owner: User
   documents(where: DocumentWhereInput! = {}, orderBy: [DocumentOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentWhereUniqueInput): [Document!]
   documentsCount(where: DocumentWhereInput! = {}): Int
+  hideSideNav: Boolean
 }
 
 interface BasePageWithDefaultRelationships implements BasePage {
@@ -13307,6 +13518,7 @@ interface BasePageWithDefaultRelationships implements BasePage {
   unpublishAt: DateTime
   reviewDate: DateTime
   owner: User
+  hideSideNav: Boolean
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   status: String
@@ -13345,4 +13557,5 @@ interface BasePageWithActions implements BasePage & BasePageWithSlug {
   documentsCount(where: DocumentWhereInput! = {}): Int
   actions(where: InternalLinkWhereInput! = {}, orderBy: [InternalLinkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: InternalLinkWhereUniqueInput): [InternalLink!]
   actionsCount(where: InternalLinkWhereInput! = {}): Int
+  hideSideNav: Boolean
 }

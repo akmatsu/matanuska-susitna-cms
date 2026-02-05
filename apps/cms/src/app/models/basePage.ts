@@ -12,12 +12,13 @@ import {
   titleAndDescription,
   userGroups,
 } from '../fieldUtils';
-import { relationship, virtual } from '@keystone-6/core/fields';
+import { checkbox, relationship, virtual } from '@keystone-6/core/fields';
 import { belongsToGroup, isContentManager, isOwner } from '../access';
 import { singular } from 'pluralize';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import { customText } from '../../components/customFields/Markdown';
 import { relationshipController } from '../draftAndVersionFactory/DraftAndVersionsFactory';
+// import { Checkbox } from '@keystone-6/core/fields';
 
 export function basePage(
   listNamePlural: string,
@@ -294,6 +295,19 @@ export function basePage(
           },
         },
       }),
+    }),
+
+    hideSideNav: checkbox({
+      defaultValue: false,
+
+      label: 'Hide Side Navigation',
+      ui: {
+        description:
+          'If checked, the side navigation will be hidden on the front-end for this page.',
+        itemView: {
+          fieldPosition: 'sidebar',
+        },
+      },
     }),
 
     ...timestamps,

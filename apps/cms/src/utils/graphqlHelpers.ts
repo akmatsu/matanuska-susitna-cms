@@ -78,6 +78,7 @@ export const graphqlExtendTypeDefs = gql`
       cursor: DocumentWhereUniqueInput
     ): [Document!]
     documentsCount(where: DocumentWhereInput! = {}): Int
+    # hideSideNav: Boolean
   }
 
   interface BasePageWithSlug implements BasePage {
@@ -106,6 +107,7 @@ export const graphqlExtendTypeDefs = gql`
       cursor: DocumentWhereUniqueInput
     ): [Document!]
     documentsCount(where: DocumentWhereInput! = {}): Int
+    hideSideNav: Boolean
   }
 
   interface BasePageWithDefaultRelationships implements BasePage {
@@ -131,6 +133,7 @@ export const graphqlExtendTypeDefs = gql`
     unpublishAt: DateTime
     reviewDate: DateTime
     owner: User
+    hideSideNav: Boolean
     tags(
       where: TagWhereInput! = {}
       orderBy: [TagOrderByInput!]! = []
@@ -247,6 +250,7 @@ export const graphqlExtendTypeDefs = gql`
       cursor: InternalLinkWhereUniqueInput
     ): [InternalLink!]
     actionsCount(where: InternalLinkWhereInput! = {}): Int
+    hideSideNav: Boolean
   }
 
   extend type BoardPage implements BasePage & WithTitle
