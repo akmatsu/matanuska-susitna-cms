@@ -1,3 +1,10 @@
+# [0.55.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.54.0...v0.55.0) (2026-02-05)
+
+
+### Features
+
+* added the ability to hide side bar ([18697a3](https://github.com/akmatsu/matanuska-susitna-cms/commit/18697a3e5a2453864421356dfaeb054a194cd3c2))
+
 # [0.54.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.53.0...v0.54.0) (2026-02-03)
 
 
