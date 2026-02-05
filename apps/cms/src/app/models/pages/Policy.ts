@@ -1,4 +1,4 @@
-import { checkbox, relationship } from '@keystone-6/core/fields';
+import { relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { basePage } from '../basePage';
 import {
