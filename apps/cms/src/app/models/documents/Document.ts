@@ -13,7 +13,6 @@ import { documentRelationship, owner } from '../../fieldUtils';
 export const DocumentListItem = list({
   access: {
     operation: generalOperationAccess,
-    filter: filterByPubStatus,
   },
 
   ui: {
@@ -44,6 +43,7 @@ export const DocumentListItem = list({
 export const Document = list({
   access: {
     operation: generalOperationAccess,
+    filter: filterByPubStatus,
   },
   graphql: {
     maxTake: 100,
