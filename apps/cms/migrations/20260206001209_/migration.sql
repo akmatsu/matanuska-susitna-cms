@@ -1,0 +1,1 @@
+UPDATE "Document" SET "status" = 'published' WHERE "status" IS NULL;

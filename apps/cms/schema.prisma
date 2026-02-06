@@ -2696,6 +2696,7 @@ model Document {
   collections                                      DocumentCollection[]      @relation("Document_collections")
   editorNotes                                      String?
   accessibilityNotes                               String?
+  status                                           String                    @default("published")
   from_BoardPage_documents                         BoardPage[]               @relation("BoardPage_documents")
   from_BoardPage_vacancyReport                     BoardPage[]               @relation("BoardPage_vacancyReport")
   from_BoardPage_applicationForm                   BoardPage[]               @relation("BoardPage_applicationForm")

@@ -1,13 +1,21 @@
 import { list } from '@keystone-6/core';
-import { file, integer, relationship, text } from '@keystone-6/core/fields';
+import {
+  file,
+  integer,
+  relationship,
+  select,
+  text,
+} from '@keystone-6/core/fields';
 import { appConfig } from '../../../configs/appConfig';
-import { generalOperationAccess } from '../../access';
+import { filterByPubStatus, generalOperationAccess } from '../../access';
 import { documentRelationship, owner } from '../../fieldUtils';
 
 export const DocumentListItem = list({
   access: {
     operation: generalOperationAccess,
+    filter: filterByPubStatus,
   },
+
   ui: {
     isHidden: true,
     hideCreate: false,
@@ -84,6 +92,18 @@ export const Document = list({
       },
       ui: {
         displayMode: 'textarea',
+      },
+    }),
+    status: select({
+      validation: { isRequired: true },
+      db: { isNullable: false },
+      options: [
+        { label: 'Unpublished', value: 'unpublished' },
+        { label: 'Published', value: 'published' },
+      ],
+      defaultValue: 'published',
+      ui: {
+        displayMode: 'segmented-control',
       },
     }),
   },

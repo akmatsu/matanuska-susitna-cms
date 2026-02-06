@@ -11524,6 +11524,7 @@ type Document implements WithTitle {
   collectionsCount(where: DocumentCollectionWhereInput! = {}): Int
   editorNotes: String
   accessibilityNotes: String
+  status: String
 }
 
 type FileFieldOutput {
@@ -11548,6 +11549,7 @@ input DocumentWhereInput {
   collections: DocumentCollectionManyRelationFilter
   editorNotes: StringNullableFilter
   accessibilityNotes: StringNullableFilter
+  status: StringFilter
 }
 
 input DocumentCollectionManyRelationFilter {
@@ -11562,6 +11564,7 @@ input DocumentOrderByInput {
   description: OrderDirection
   editorNotes: OrderDirection
   accessibilityNotes: OrderDirection
+  status: OrderDirection
 }
 
 input DocumentUpdateInput {
@@ -11573,6 +11576,7 @@ input DocumentUpdateInput {
   collections: DocumentCollectionRelateToManyForUpdateInput
   editorNotes: String
   accessibilityNotes: String
+  status: String
 }
 
 input FileFieldInput {
@@ -11603,6 +11607,7 @@ input DocumentCreateInput {
   collections: DocumentCollectionRelateToManyForCreateInput
   editorNotes: String
   accessibilityNotes: String
+  status: String
 }
 
 input DocumentCollectionRelateToManyForCreateInput {
