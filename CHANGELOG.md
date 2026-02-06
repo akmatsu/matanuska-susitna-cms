@@ -1,3 +1,11 @@
+# [0.56.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.55.0...v0.56.0) (2026-02-06)
+
+
+### Features
+
+* added status field to documents ([339a4da](https://github.com/akmatsu/matanuska-susitna-cms/commit/339a4daf0bb40e4d414f5bda386429839222f38c))
+* ensuring only published documents are sent to frontend ([689a9e5](https://github.com/akmatsu/matanuska-susitna-cms/commit/689a9e51249ba3e85b270e516d3eb7bb28ab4121))
+
 # [0.55.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.54.0...v0.55.0) (2026-02-05)
 
 
