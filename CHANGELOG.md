@@ -1,3 +1,10 @@
+# [0.57.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.56.0...v0.57.0) (2026-02-07)
+
+
+### Features
+
+* added user groups to documents ([974d717](https://github.com/akmatsu/matanuska-susitna-cms/commit/974d717d289a4ea03fc2635a98792255834351eb))
+
 # [0.56.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.55.0...v0.56.0) (2026-02-06)
 
 
