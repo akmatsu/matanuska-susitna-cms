@@ -8,7 +8,7 @@ import {
 } from '@keystone-6/core/fields';
 import { appConfig } from '../../../configs/appConfig';
 import { filterByPubStatus, generalOperationAccess } from '../../access';
-import { documentRelationship, owner } from '../../fieldUtils';
+import { documentRelationship, owner, userGroups } from '../../fieldUtils';
 
 export const DocumentListItem = list({
   access: {
@@ -66,6 +66,7 @@ export const Document = list({
       },
     }),
     owner,
+    userGroups: userGroups(),
     file: file({
       storage:
         appConfig.nodeEnv === 'production' ? 's3Documents' : 'localDocuments',

@@ -2691,6 +2691,7 @@ model Document {
   tags                                             Tag[]                     @relation("Document_tags")
   owner                                            User?                     @relation("Document_owner", fields: [ownerId], references: [id])
   ownerId                                          String?                   @map("owner")
+  userGroups                                       UserGroup[]               @relation("Document_userGroups")
   file_filesize                                    Int?
   file_filename                                    String?
   collections                                      DocumentCollection[]      @relation("Document_collections")
@@ -3165,6 +3166,7 @@ model UserGroup {
   from_Post_userGroups                    Post[]                    @relation("Post_userGroups")
   from_PostVersion_userGroups             PostVersion[]             @relation("PostVersion_userGroups")
   from_PostDraft_userGroups               PostDraft[]               @relation("PostDraft_userGroups")
+  from_Document_userGroups                Document[]                @relation("Document_userGroups")
   from_DocumentCollection_userGroups      DocumentCollection[]      @relation("DocumentCollection_userGroups")
   from_Highlight_userGroups               Highlight[]               @relation("Highlight_userGroups")
 

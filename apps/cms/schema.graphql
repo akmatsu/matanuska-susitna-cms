@@ -11519,6 +11519,8 @@ type Document implements WithTitle {
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   owner: User
+  userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
+  userGroupsCount(where: UserGroupWhereInput! = {}): Int
   file: FileFieldOutput
   collections(where: DocumentCollectionWhereInput! = {}, orderBy: [DocumentCollectionOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: DocumentCollectionWhereUniqueInput): [DocumentCollection!]
   collectionsCount(where: DocumentCollectionWhereInput! = {}): Int
@@ -11546,6 +11548,7 @@ input DocumentWhereInput {
   description: StringNullableFilter
   tags: TagManyRelationFilter
   owner: UserWhereInput
+  userGroups: UserGroupManyRelationFilter
   collections: DocumentCollectionManyRelationFilter
   editorNotes: StringNullableFilter
   accessibilityNotes: StringNullableFilter
@@ -11572,6 +11575,7 @@ input DocumentUpdateInput {
   description: String
   tags: TagRelateToManyForUpdateInput
   owner: UserRelateToOneForUpdateInput
+  userGroups: UserGroupRelateToManyForUpdateInput
   file: FileFieldInput
   collections: DocumentCollectionRelateToManyForUpdateInput
   editorNotes: String
@@ -11603,6 +11607,7 @@ input DocumentCreateInput {
   description: String
   tags: TagRelateToManyForCreateInput
   owner: UserRelateToOneForCreateInput
+  userGroups: UserGroupRelateToManyForCreateInput
   file: FileFieldInput
   collections: DocumentCollectionRelateToManyForCreateInput
   editorNotes: String
