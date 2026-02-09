@@ -14,7 +14,7 @@ import {
   userGroups,
 } from '../../fieldUtils';
 import { customText } from '../../../components/customFields/Markdown';
-import { integer, relationship, text } from '@keystone-6/core/fields';
+import { checkbox, integer, relationship, text } from '@keystone-6/core/fields';
 import { logger } from '../../../configs/logger';
 
 export const EarlyVotingLocation = list({
@@ -155,6 +155,15 @@ const ElectionsPage = list({
           fields: ['title', 'description', 'file', 'tags'],
         },
         inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
+      },
+    }),
+
+    hideEarlyVotingLocations: checkbox({
+      defaultValue: false,
+
+      ui: {
+        description:
+          'Toggle to hide or show the early voting locations on the frontend',
       },
     }),
 

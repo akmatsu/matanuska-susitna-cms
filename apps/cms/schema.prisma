@@ -287,6 +287,7 @@ model ElectionsPage {
   boroughElectionContactId    String?               @map("boroughElectionContact")
   referendumProcessDocument   Document?             @relation("ElectionsPage_referendumProcessDocument", fields: [referendumProcessDocumentId], references: [id])
   referendumProcessDocumentId String?               @map("referendumProcessDocument")
+  hideEarlyVotingLocations    Boolean               @default(false)
   earlyVotingLocations        EarlyVotingLocation[] @relation("ElectionsPage_earlyVotingLocations")
   createdAt                   DateTime?             @default(now())
   updatedAt                   DateTime?             @default(now()) @updatedAt

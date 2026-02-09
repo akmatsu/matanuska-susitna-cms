@@ -1407,6 +1407,7 @@ type ElectionsPage implements WithTitle {
   stateElectionContact: Contact
   boroughElectionContact: Contact
   referendumProcessDocument: Document
+  hideEarlyVotingLocations: Boolean
   earlyVotingLocations(where: EarlyVotingLocationWhereInput! = {}, orderBy: [EarlyVotingLocationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: EarlyVotingLocationWhereUniqueInput): [EarlyVotingLocation!]
   earlyVotingLocationsCount(where: EarlyVotingLocationWhereInput! = {}): Int
   createdAt: DateTime
@@ -1433,6 +1434,7 @@ input ElectionsPageWhereInput {
   stateElectionContact: ContactWhereInput
   boroughElectionContact: ContactWhereInput
   referendumProcessDocument: DocumentWhereInput
+  hideEarlyVotingLocations: BooleanFilter
   earlyVotingLocations: EarlyVotingLocationManyRelationFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -1451,6 +1453,7 @@ input ElectionsPageOrderByInput {
   description: OrderDirection
   howElectionsWork: MyOrderDirection
   pollingPlaceBody: MyOrderDirection
+  hideEarlyVotingLocations: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -1467,6 +1470,7 @@ input ElectionsPageUpdateInput {
   stateElectionContact: ContactRelateToOneForUpdateInput
   boroughElectionContact: ContactRelateToOneForUpdateInput
   referendumProcessDocument: DocumentRelateToOneForUpdateInput
+  hideEarlyVotingLocations: Boolean
   earlyVotingLocations: EarlyVotingLocationRelateToManyForUpdateInput
   createdAt: DateTime
   updatedAt: DateTime
@@ -1502,6 +1506,7 @@ input ElectionsPageCreateInput {
   stateElectionContact: ContactRelateToOneForCreateInput
   boroughElectionContact: ContactRelateToOneForCreateInput
   referendumProcessDocument: DocumentRelateToOneForCreateInput
+  hideEarlyVotingLocations: Boolean
   earlyVotingLocations: EarlyVotingLocationRelateToManyForCreateInput
   createdAt: DateTime
   updatedAt: DateTime
