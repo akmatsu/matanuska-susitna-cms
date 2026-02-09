@@ -1,3 +1,10 @@
+# [0.58.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.57.0...v0.58.0) (2026-02-09)
+
+
+### Features
+
+* added an option to hide early voting locations ([6116e2d](https://github.com/akmatsu/matanuska-susitna-cms/commit/6116e2d6cc87f3372bd6563326b524f9951ff84a))
+
 # [0.57.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.56.0...v0.57.0) (2026-02-07)
 
 
