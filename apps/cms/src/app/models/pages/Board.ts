@@ -1,4 +1,10 @@
-import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
+import {
+  checkbox,
+  json,
+  relationship,
+  select,
+  text,
+} from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
   filterByPubStatus,
@@ -6,6 +12,7 @@ import {
   generalOperationAccess,
 } from '../../access';
 import { basePage } from '../basePage';
+import { excelUpload } from '../../../components/customFields/excelUpload';
 
 const {
   Main: Board,
@@ -32,6 +39,14 @@ const {
           },
           inlineEdit: {
             fields: ['title', 'description', 'file', 'tags'],
+          },
+        },
+      }),
+
+      directoryExcel: excelUpload({
+        ui: {
+          itemView: {
+            fieldPosition: 'form',
           },
         },
       }),
