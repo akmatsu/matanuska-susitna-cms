@@ -2565,6 +2565,7 @@ type Board implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLink
@@ -2693,6 +2694,7 @@ input BoardUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
@@ -2760,6 +2762,7 @@ input BoardCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
@@ -2833,6 +2836,7 @@ type BoardVersion {
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLink
@@ -2937,6 +2941,7 @@ input BoardVersionUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
@@ -2987,6 +2992,7 @@ input BoardVersionCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
@@ -3047,6 +3053,7 @@ type BoardDraft {
   createdAt: DateTime
   updatedAt: DateTime
   directory: Document
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLink
@@ -3148,6 +3155,7 @@ input BoardDraftUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForUpdateInput
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForUpdateInput
@@ -3191,6 +3199,7 @@ input BoardDraftCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   directory: DocumentRelateToOneForCreateInput
+  directoryExcel: JSON
   calendarId: String
   calendarQueryString: String
   linkToAgendas: ExternalLinkRelateToOneForCreateInput
