@@ -206,7 +206,7 @@ export const controller = (
 };
 
 export const CardValue: CardValueComponent<typeof controller> = ({ field }) => {
-  const value = field.value;
+  const value = field.sheetName;
   return (
     <div>
       {value && Array.isArray(value) ? `${value.length} rows` : 'No data'}
