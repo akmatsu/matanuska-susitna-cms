@@ -5,7 +5,7 @@ import {
 } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { basePage } from '../basePage';
 import {
-  filterByPubDates,
+  filterByPubStatus,
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
@@ -60,7 +60,7 @@ const {
     mainAccess: {
       operation: generalOperationAccess,
       item: generalItemAccess('Topic'),
-      filter: filterByPubDates,
+      filter: filterByPubStatus,
     },
   },
 );
