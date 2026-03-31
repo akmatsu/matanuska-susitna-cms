@@ -1,10 +1,4 @@
-import {
-  checkbox,
-  json,
-  relationship,
-  select,
-  text,
-} from '@keystone-6/core/fields';
+import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
   filterByPubStatus,
