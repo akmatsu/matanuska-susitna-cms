@@ -152,7 +152,7 @@ export function Field({
                   Preview data
                 </summary>
                 <div className="mt-2 max-h-48 overflow-auto rounded border border-green-200 bg-white p-2">
-                  <pre className="text-xs break-words whitespace-pre-wrap text-gray-700">
+                  <pre className="text-xs wrap-break-word whitespace-pre-wrap text-gray-700">
                     {JSON.stringify(value.slice(0, 3), null, 2)}
                     {value.length > 3 &&
                       '\n... and ' + (value.length - 3) + ' more rows'}
