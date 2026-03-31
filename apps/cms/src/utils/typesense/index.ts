@@ -117,7 +117,20 @@ export function toSearchableObj(
     );
 
   // Check for unmapped relevant keys.
-  const relevantKeys = ['name', 'title', 'label', 'phone', 'email'];
+  const relevantKeys = [
+    'name',
+    'title',
+    'label',
+    'phone',
+    'email',
+    'FirstName',
+    'LastName',
+    'City',
+    'State',
+    'Address',
+    'BoardPosition',
+    'MemberTitle',
+  ];
   const ignoreKeys = ['slug', 'id', 'description', 'title'];
   for (const [key, value] of Object.entries(item)) {
     // If the value is a string, add it to bodyParts

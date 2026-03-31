@@ -519,6 +519,8 @@ export async function typesenseUpsert({
           appendId,
         );
 
+        console.log(document);
+
         await docUpsert(document);
       } catch (error: any) {
         logger.error(error, 'Error updating Typesense document');
