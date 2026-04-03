@@ -1,3 +1,17 @@
+# [0.59.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.58.0...v0.59.0) (2026-04-03)
+
+
+### Bug Fixes
+
+* fixed type error ([7b4302d](https://github.com/akmatsu/matanuska-susitna-cms/commit/7b4302dae14f8bffd5c26be3eb168e8b2c440ca0))
+* topics now filter by pub status ([d0c6653](https://github.com/akmatsu/matanuska-susitna-cms/commit/d0c6653bb9fe9b965176d8f57f0f1f1d7f52f4bd))
+
+
+### Features
+
+* added excel upload to boards ([86b347e](https://github.com/akmatsu/matanuska-susitna-cms/commit/86b347e7b724ff36e23733bf93596496b7bce965))
+* directory information is now searchable ([e425b38](https://github.com/akmatsu/matanuska-susitna-cms/commit/e425b38d3a49aeb695eff1e16f2eb2d1787d281b))
+
 # [0.58.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.57.0...v0.58.0) (2026-02-09)
 
 
