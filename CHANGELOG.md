@@ -1,3 +1,10 @@
+## [0.59.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.59.0...v0.59.1) (2026-04-21)
+
+
+### Bug Fixes
+
+* topics, policies, and electionsPage now included in resolvers ([749a87f](https://github.com/akmatsu/matanuska-susitna-cms/commit/749a87fa834b2884e7b1b9da446a6e2df7060376))
+
 # [0.59.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.58.0...v0.59.0) (2026-04-03)
 
 
