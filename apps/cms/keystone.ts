@@ -233,6 +233,12 @@ export default config<TypeInfo<Session>>({
                   return context.db.Url.findOne({ where: { id } });
                 case 'Plan':
                   return context.db.Plan.findOne({ where: { id } });
+                case 'Policy':
+                  return context.db.Policy.findOne({ where: { id } });
+                case 'ElectionsPage':
+                  return context.db.ElectionsPage.findOne({ where: { id } });
+                case 'Topic':
+                  return context.db.Topic.findOne({ where: { id } });
                 case 'Event':
                   return context.db.Event.findOne({ where: { id } });
                 case 'Document':
