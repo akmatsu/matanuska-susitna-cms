@@ -1,3 +1,10 @@
+# [0.60.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.59.1...v0.60.0) (2026-04-21)
+
+
+### Features
+
+* added election official application url to elections page ([dcdf7af](https://github.com/akmatsu/matanuska-susitna-cms/commit/dcdf7af51cdbb2d14c2d1115b43115d1a3212612))
+
 ## [0.59.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.59.0...v0.59.1) (2026-04-21)
 
 
