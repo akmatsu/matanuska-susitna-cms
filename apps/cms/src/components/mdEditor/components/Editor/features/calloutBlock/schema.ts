@@ -33,7 +33,6 @@ export const calloutSchema = $node(nodeName, () => ({
   ],
   parseMarkdown: {
     match: ({ type, name }) => {
-      console.log(type, name);
       return type === 'containerDirective' && name === nodeName;
     },
     runner: (state, node, type) => {

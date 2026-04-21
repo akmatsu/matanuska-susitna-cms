@@ -101,6 +101,23 @@ const ElectionsPage = list({
     owner,
     userGroups: userGroups(),
 
+    electionOfficialApplicationUrl: relationship({
+      ref: 'ExternalLink',
+      ui: {
+        description: 'Link to web based election official application',
+        displayMode: 'cards',
+        cardFields: ['label', 'url'],
+        inlineCreate: {
+          fields: ['label', 'url'],
+        },
+        inlineConnect: true,
+        inlineEdit: {
+          fields: ['label', 'url'],
+        },
+      },
+      many: false,
+    }),
+
     ...group({
       label: 'Polling Places & Precincts',
       fields: {

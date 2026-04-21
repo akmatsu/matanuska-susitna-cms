@@ -54,9 +54,8 @@ export function InternalLinkTooltip() {
   }
 
   function setIsButton(value: boolean) {
-    console.log('ran');
     if (!linkInfo) return;
-    console.log('here');
+
     const { tr } = view.state;
     const newStyle = value ? 'button' : '';
     tr.addMark(
