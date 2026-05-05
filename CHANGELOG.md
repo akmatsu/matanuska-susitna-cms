@@ -1,3 +1,10 @@
+## [0.61.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.61.0...v0.61.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* fixed reindexing accidentally duplicating the elections and boards pages ([0ede978](https://github.com/akmatsu/matanuska-susitna-cms/commit/0ede97850833e4cbc22861d1be8a52e97e7eac96))
+
 # [0.61.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.60.0...v0.61.0) (2026-05-05)
 
 
