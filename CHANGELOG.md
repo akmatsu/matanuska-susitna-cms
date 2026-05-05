@@ -1,3 +1,10 @@
+# [0.61.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.60.0...v0.61.0) (2026-05-05)
+
+
+### Features
+
+* added tags to electionsPage model; ([6aa6efe](https://github.com/akmatsu/matanuska-susitna-cms/commit/6aa6efec41b812627b39afd039ce1fc96fb2d691))
+
 # [0.60.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.59.1...v0.60.0) (2026-04-21)
 
 
