@@ -150,14 +150,19 @@ async function _indexAllPages(context: CommonContext) {
     const items = await getSearchDataMany(listName, context);
     if (!items || items?.length === 0) return;
 
+    const type =
+      pageType === 'ElectionsPage' || pageType === 'BoardPage'
+        ? 'Topic'
+        : pageType;
+
     const appendId =
       pageType === 'ElectionsPage'
-        ? '-election'
+        ? '-elections'
         : pageType === 'BoardPage'
-          ? '-board'
+          ? '-boards'
           : undefined;
 
-    const docs = items.map((item) => toSearchableObj(item, pageType, appendId));
+    const docs = items.map((item) => toSearchableObj(item, type, appendId));
 
     await _addDocsToCollection(TYPESENSE_COLLECTIONS.PAGES, docs);
   });
