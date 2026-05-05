@@ -1402,6 +1402,8 @@ type ElectionsPage implements WithTitle {
   owner: User
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
   userGroupsCount(where: UserGroupWhereInput! = {}): Int
+  tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
   electionOfficialApplicationUrl: ExternalLink
   pollingPlacesLink: InternalLink
   pollingPlaceBody: String
@@ -1430,6 +1432,7 @@ input ElectionsPageWhereInput {
   howElectionsWork: MyStringFilter
   owner: UserWhereInput
   userGroups: UserGroupManyRelationFilter
+  tags: TagManyRelationFilter
   electionOfficialApplicationUrl: ExternalLinkWhereInput
   pollingPlacesLink: InternalLinkWhereInput
   pollingPlaceBody: MyStringFilter
@@ -1467,6 +1470,7 @@ input ElectionsPageUpdateInput {
   howElectionsWork: String
   owner: UserRelateToOneForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
+  tags: TagRelateToManyForUpdateInput
   electionOfficialApplicationUrl: ExternalLinkRelateToOneForUpdateInput
   pollingPlacesLink: InternalLinkRelateToOneForUpdateInput
   pollingPlaceBody: String
@@ -1504,6 +1508,7 @@ input ElectionsPageCreateInput {
   howElectionsWork: String
   owner: UserRelateToOneForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
+  tags: TagRelateToManyForCreateInput
   electionOfficialApplicationUrl: ExternalLinkRelateToOneForCreateInput
   pollingPlacesLink: InternalLinkRelateToOneForCreateInput
   pollingPlaceBody: String

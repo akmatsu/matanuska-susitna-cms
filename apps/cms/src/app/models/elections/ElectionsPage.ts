@@ -8,6 +8,7 @@ import { blueHarvestImage } from '../../../components/customFields/blueHarvestIm
 import {
   docDelete,
   owner,
+  tags,
   timestamps,
   titleAndDescription,
   typesenseUpsert,
@@ -100,6 +101,7 @@ const ElectionsPage = list({
     howElectionsWork: customText(),
     owner,
     userGroups: userGroups(),
+    tags: tags(),
 
     electionOfficialApplicationUrl: relationship({
       ref: 'ExternalLink',
