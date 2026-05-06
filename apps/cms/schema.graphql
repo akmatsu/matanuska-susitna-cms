@@ -1544,6 +1544,7 @@ type AssemblyDistrict implements BasePageWithSlug & BasePageWithDefaultRelations
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -1774,6 +1775,7 @@ input AssemblyDistrictUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -1942,6 +1944,7 @@ input AssemblyDistrictCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -2077,6 +2080,7 @@ type AssemblyDistrictVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -2211,6 +2215,7 @@ input AssemblyDistrictVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -2266,6 +2271,7 @@ input AssemblyDistrictVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -2318,6 +2324,7 @@ type AssemblyDistrictDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -2449,6 +2456,7 @@ input AssemblyDistrictDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -2497,6 +2505,7 @@ input AssemblyDistrictDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -2543,6 +2552,7 @@ type Board implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -2685,6 +2695,7 @@ input BoardUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -2753,6 +2764,7 @@ input BoardCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -2814,6 +2826,7 @@ type BoardVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -2932,6 +2945,7 @@ input BoardVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -2983,6 +2997,7 @@ input BoardVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -3031,6 +3046,7 @@ type BoardDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -3146,6 +3162,7 @@ input BoardDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -3190,6 +3207,7 @@ input BoardDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -3232,6 +3250,7 @@ type Community implements BasePageWithSlug & BasePageWithDefaultRelationships & 
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -3368,6 +3387,7 @@ input CommunityUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -3432,6 +3452,7 @@ input CommunityCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -3489,6 +3510,7 @@ type CommunityVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -3601,6 +3623,7 @@ input CommunityVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -3648,6 +3671,7 @@ input CommunityVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -3692,6 +3716,7 @@ type CommunityDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -3801,6 +3826,7 @@ input CommunityDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -3841,6 +3867,7 @@ input CommunityDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -3879,6 +3906,7 @@ type Facility implements BasePageWithSlug & BasePageWithDefaultRelationships & B
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -4007,6 +4035,7 @@ input FacilityUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -4075,6 +4104,7 @@ input FacilityCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -4135,6 +4165,7 @@ type FacilityVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -4239,6 +4270,7 @@ input FacilityVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -4284,6 +4316,7 @@ input FacilityVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -4326,6 +4359,7 @@ type FacilityDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -4427,6 +4461,7 @@ input FacilityDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -4465,6 +4500,7 @@ input FacilityDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -4501,6 +4537,7 @@ type OrgUnit implements BasePageWithSlug & BasePageWithDefaultRelationships & Ba
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -4651,6 +4688,7 @@ input OrgUnitUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -4726,6 +4764,7 @@ input OrgUnitCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -4793,6 +4832,7 @@ type OrgUnitVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -4919,6 +4959,7 @@ input OrgUnitVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -4965,6 +5006,7 @@ input OrgUnitVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -5009,6 +5051,7 @@ type OrgUnitDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -5132,6 +5175,7 @@ input OrgUnitDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -5177,6 +5221,7 @@ input OrgUnitDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -5220,6 +5265,7 @@ type Park implements BasePageWithSlug & BasePageWithDefaultRelationships & BaseP
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -5352,6 +5398,7 @@ input ParkUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -5415,6 +5462,7 @@ input ParkCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -5471,6 +5519,7 @@ type ParkVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -5579,6 +5628,7 @@ input ParkVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -5619,6 +5669,7 @@ input ParkVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -5657,6 +5708,7 @@ type ParkDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -5762,6 +5814,7 @@ input ParkDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -5801,6 +5854,7 @@ input ParkDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -5838,6 +5892,7 @@ type PublicNotice implements BasePageWithSlug & BasePageWithDefaultRelationships
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -5983,6 +6038,7 @@ input PublicNoticeUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -6050,6 +6106,7 @@ input PublicNoticeCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -6110,6 +6167,7 @@ type PublicNoticeVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -6231,6 +6289,7 @@ input PublicNoticeVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -6281,6 +6340,7 @@ input PublicNoticeVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -6328,6 +6388,7 @@ type PublicNoticeDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -6446,6 +6507,7 @@ input PublicNoticeDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -6489,6 +6551,7 @@ input PublicNoticeDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -6530,6 +6593,7 @@ type Service implements BasePageWithSlug & BasePageWithDefaultRelationships & Ba
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -6676,6 +6740,7 @@ input ServiceUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   primaryAction: ExternalLinkRelateToOneForUpdateInput
@@ -6749,6 +6814,7 @@ input ServiceCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   primaryAction: ExternalLinkRelateToOneForCreateInput
@@ -6813,6 +6879,7 @@ type ServiceVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -6929,6 +6996,7 @@ input ServiceVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   primaryAction: ExternalLinkRelateToOneForUpdateInput
@@ -6978,6 +7046,7 @@ input ServiceVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   primaryAction: ExternalLinkRelateToOneForCreateInput
@@ -7024,6 +7093,7 @@ type ServiceDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -7137,6 +7207,7 @@ input ServiceDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   primaryAction: ExternalLinkRelateToOneForUpdateInput
@@ -7179,6 +7250,7 @@ input ServiceDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   primaryAction: ExternalLinkRelateToOneForCreateInput
@@ -7219,6 +7291,7 @@ type Topic implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -7361,6 +7434,7 @@ input TopicUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -7432,6 +7506,7 @@ input TopicCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -7494,6 +7569,7 @@ type TopicVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -7606,6 +7682,7 @@ input TopicVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -7653,6 +7730,7 @@ input TopicVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -7697,6 +7775,7 @@ type TopicDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -7806,6 +7885,7 @@ input TopicDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -7846,6 +7926,7 @@ input TopicDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -7884,6 +7965,7 @@ type Trail implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -8072,6 +8154,7 @@ input TrailUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -8154,6 +8237,7 @@ input TrailCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -8229,6 +8313,7 @@ type TrailVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -8393,6 +8478,7 @@ input TrailVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -8458,6 +8544,7 @@ input TrailVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -8520,6 +8607,7 @@ type TrailDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -8681,6 +8769,7 @@ input TrailDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -8739,6 +8828,7 @@ input TrailDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -8795,6 +8885,7 @@ type Plan implements BasePageWithSlug & BasePageWithDefaultRelationships & BaseP
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -8963,6 +9054,7 @@ input PlanUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -9061,6 +9153,7 @@ input PlanCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -9146,6 +9239,7 @@ type PlanVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -9278,6 +9372,7 @@ input PlanVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -9327,6 +9422,7 @@ input PlanVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -9374,6 +9470,7 @@ type PlanDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -9503,6 +9600,7 @@ input PlanDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -9551,6 +9649,7 @@ input PlanDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -9697,6 +9796,7 @@ type Event implements BasePageWithSlug & BasePageWithDefaultRelationships & Base
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -9836,6 +9936,7 @@ input EventUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -9901,6 +10002,7 @@ input EventCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -9959,6 +10061,7 @@ type EventDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -10071,6 +10174,7 @@ input EventDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -10118,6 +10222,7 @@ input EventDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -10162,6 +10267,7 @@ type EventVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -10277,6 +10383,7 @@ input EventVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -10319,6 +10426,7 @@ input EventVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -10453,6 +10561,7 @@ type Policy implements BasePageWithSlug & BasePage & BasePageWithActions & WithT
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -10557,6 +10666,7 @@ input PolicyUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -10615,6 +10725,7 @@ input PolicyCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -10664,6 +10775,7 @@ type PolicyVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -10738,6 +10850,7 @@ input PolicyVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -10772,6 +10885,7 @@ input PolicyVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -10803,6 +10917,7 @@ type PolicyDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -10874,6 +10989,7 @@ input PolicyDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -10901,6 +11017,7 @@ input PolicyDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -10926,6 +11043,7 @@ type Post {
   slug: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -11044,6 +11162,7 @@ input PostUpdateInput {
   slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -11112,6 +11231,7 @@ input PostCreateInput {
   slug: String
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -11169,6 +11289,7 @@ type PostVersion {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -11251,6 +11372,7 @@ input PostVersionUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -11288,6 +11410,7 @@ input PostVersionCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
@@ -11322,6 +11445,7 @@ type PostDraft {
   liveUrl: String
   owner: User
   body: String
+  content: JSON
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   userGroups(where: UserGroupWhereInput! = {}, orderBy: [UserGroupOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserGroupWhereUniqueInput): [UserGroup!]
@@ -11401,6 +11525,7 @@ input PostDraftUpdateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForUpdateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForUpdateInput
   userGroups: UserGroupRelateToManyForUpdateInput
   actions: InternalLinkRelateToManyForUpdateInput
@@ -11431,6 +11556,7 @@ input PostDraftCreateInput {
   reviewDate: DateTime
   owner: UserRelateToOneForCreateInput
   body: String
+  content: JSON
   tags: TagRelateToManyForCreateInput
   userGroups: UserGroupRelateToManyForCreateInput
   actions: InternalLinkRelateToManyForCreateInput
