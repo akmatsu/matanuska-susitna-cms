@@ -18,7 +18,7 @@ import { singular } from 'pluralize';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import { customText } from '../../components/customFields/Markdown';
 import { relationshipController } from '../draftAndVersionFactory/DraftAndVersionsFactory';
-import { markdownToTipTapJson } from '../../utils/markdownToTipTapJson';
+import { markdownToTipTapJson } from '../../utils/toTipTap/markdownToTipTapJson';
 
 export function basePage(
   listNamePlural: string,
@@ -82,7 +82,7 @@ export function basePage(
     content: json({
       ui: {
         itemView: {
-          fieldMode: 'hidden',
+          fieldMode: 'read',
         },
         createView: {
           fieldMode: 'hidden',
