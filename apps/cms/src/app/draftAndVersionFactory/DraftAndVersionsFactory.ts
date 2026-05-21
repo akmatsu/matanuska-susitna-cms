@@ -302,6 +302,22 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           `${listKey}Drafts`,
           deepMerge(defaultDraftOpts, opts.draftBasePageOptions),
         ),
+        status: select({
+          options: [
+            { label: 'Unpublished', value: 'unpublished' },
+            { label: 'Published', value: 'published' },
+          ],
+          defaultValue: 'unpublished',
+          ui: {
+            displayMode: 'segmented-control',
+            itemView: {
+              fieldMode: 'read',
+            },
+            createView: {
+              fieldMode: 'hidden',
+            },
+          },
+        }),
         publish: publishDraft({
           ui: {
             listName: listKey,

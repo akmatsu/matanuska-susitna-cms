@@ -12,7 +12,7 @@ import {
   titleAndDescription,
   userGroups,
 } from '../fieldUtils';
-import { checkbox, relationship, virtual } from '@keystone-6/core/fields';
+import { checkbox, relationship, text, virtual } from '@keystone-6/core/fields';
 import { belongsToGroup, isContentManager, isOwner } from '../access';
 import { singular } from 'pluralize';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
@@ -58,6 +58,20 @@ export function basePage(
     ...publishable({ isDraft: opts?.isDraft, isVersion: opts?.isVersion }),
     liveUrl: liveUrl(listNamePlural),
     ...(!opts?.noSlug && !opts?.isVersion && !opts?.isDraft && { slug }),
+    ...((opts?.isVersion || opts?.isDraft) && {
+      slug: text({
+        ui: {
+          createView: {
+            fieldMode: 'hidden',
+          },
+          itemView: {
+            fieldMode: opts.isDraft ? 'edit' : 'read',
+            fieldPosition: 'sidebar',
+          },
+        },
+      }),
+    }),
+
     owner,
     body: customText(opts?.customTextOpts),
     tags: tags(listNamePlural),

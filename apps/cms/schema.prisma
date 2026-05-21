@@ -217,6 +217,7 @@ model ElectionDraft {
   createdAt                           DateTime?       @default(now())
   updatedAt                           DateTime?       @default(now()) @updatedAt
   body                                String?
+  status                              String?         @default("unpublished")
   publish                             String?
 
   @@index([originalId])
@@ -396,6 +397,7 @@ model AssemblyDistrictVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("AssemblyDistrictVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -452,6 +454,7 @@ model AssemblyDistrictDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("AssemblyDistrictDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -488,6 +491,7 @@ model AssemblyDistrictDraft {
   facilities        Facility[]         @relation("AssemblyDistrictDraft_facilities")
   parks             Park[]             @relation("AssemblyDistrictDraft_parks")
   trails            Trail[]            @relation("AssemblyDistrictDraft_trails")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -581,6 +585,7 @@ model BoardVersion {
   publishAt                    DateTime?
   unpublishAt                  DateTime?
   reviewDate                   DateTime?
+  slug                         String             @default("")
   owner                        User?              @relation("BoardVersion_owner", fields: [ownerId], references: [id])
   ownerId                      String?            @map("owner")
   body                         String?
@@ -637,6 +642,7 @@ model BoardDraft {
   publishAt                    DateTime?
   unpublishAt                  DateTime?
   reviewDate                   DateTime?
+  slug                         String             @default("")
   owner                        User?              @relation("BoardDraft_owner", fields: [ownerId], references: [id])
   ownerId                      String?            @map("owner")
   body                         String?
@@ -671,6 +677,7 @@ model BoardDraft {
   linkToPublicOpinionMessageId String?            @map("linkToPublicOpinionMessage")
   type                         String             @default("board")
   isActive                     Boolean            @default(true)
+  status                       String?            @default("unpublished")
   publish                      String?
 
   @@index([originalId])
@@ -763,6 +770,7 @@ model CommunityVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("CommunityVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -807,6 +815,7 @@ model CommunityDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("CommunityDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -833,6 +842,7 @@ model CommunityDraft {
   parks             Park[]             @relation("CommunityDraft_parks")
   trails            Trail[]            @relation("CommunityDraft_trails")
   type              String?
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -917,6 +927,7 @@ model FacilityVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("FacilityVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -963,6 +974,7 @@ model FacilityDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("FacilityDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -989,6 +1001,7 @@ model FacilityDraft {
   updatedAt         DateTime?          @default(now()) @updatedAt
   park              Park?              @relation("FacilityDraft_park", fields: [parkId], references: [id])
   parkId            String?            @map("park")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -1090,6 +1103,7 @@ model OrgUnitVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("OrgUnitVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1141,6 +1155,7 @@ model OrgUnitDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("OrgUnitDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1173,6 +1188,7 @@ model OrgUnitDraft {
   facilities        Facility[]         @relation("OrgUnitDraft_facilities")
   parks             Park[]             @relation("OrgUnitDraft_parks")
   trails            Trail[]            @relation("OrgUnitDraft_trails")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -1258,6 +1274,7 @@ model ParkVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("ParkVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1303,6 +1320,7 @@ model ParkDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("ParkDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1329,6 +1347,7 @@ model ParkDraft {
   updatedAt         DateTime?          @default(now()) @updatedAt
   trails            Trail[]            @relation("ParkDraft_trails")
   facilities        Facility[]         @relation("ParkDraft_facilities")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -1421,6 +1440,7 @@ model PublicNoticeVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("PublicNoticeVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1468,6 +1488,7 @@ model PublicNoticeDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("PublicNoticeDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1497,6 +1518,7 @@ model PublicNoticeDraft {
   facilities        Facility[]         @relation("PublicNoticeDraft_facilities")
   trails            Trail[]            @relation("PublicNoticeDraft_trails")
   boards            Board[]            @relation("PublicNoticeDraft_boards")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -1591,6 +1613,7 @@ model ServiceVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("ServiceVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1641,6 +1664,7 @@ model ServiceDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("ServiceDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1671,6 +1695,7 @@ model ServiceDraft {
   facilities        Facility[]         @relation("ServiceDraft_facilities")
   boards            Board[]            @relation("ServiceDraft_boards")
   editorNotes       String             @default("")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -1761,6 +1786,7 @@ model TopicVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("TopicVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1805,6 +1831,7 @@ model TopicDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("TopicDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -1831,6 +1858,7 @@ model TopicDraft {
   trails            Trail[]            @relation("TopicDraft_trails")
   facilities        Facility[]         @relation("TopicDraft_facilities")
   highlights        Highlight[]        @relation("TopicDraft_highlights")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -1934,6 +1962,7 @@ model TrailVersion {
   publishAt          DateTime?
   unpublishAt        DateTime?
   reviewDate         DateTime?
+  slug               String             @default("")
   owner              User?              @relation("TrailVersion_owner", fields: [ownerId], references: [id])
   ownerId            String?            @map("owner")
   body               String?
@@ -2000,6 +2029,7 @@ model TrailDraft {
   publishAt          DateTime?
   unpublishAt        DateTime?
   reviewDate         DateTime?
+  slug               String             @default("")
   owner              User?              @relation("TrailDraft_owner", fields: [ownerId], references: [id])
   ownerId            String?            @map("owner")
   body               String?
@@ -2046,6 +2076,7 @@ model TrailDraft {
   elevationChange    String             @default("")
   park               Park?              @relation("TrailDraft_park", fields: [parkId], references: [id])
   parkId             String?            @map("park")
+  status             String?            @default("unpublished")
   publish            String?
 
   @@index([originalId])
@@ -2156,6 +2187,7 @@ model PlanVersion {
   publishAt                     DateTime?
   unpublishAt                   DateTime?
   reviewDate                    DateTime?
+  slug                          String             @default("")
   owner                         User?              @relation("PlanVersion_owner", fields: [ownerId], references: [id])
   ownerId                       String?            @map("owner")
   body                          String?
@@ -2216,6 +2248,7 @@ model PlanDraft {
   publishAt                     DateTime?
   unpublishAt                   DateTime?
   reviewDate                    DateTime?
+  slug                          String             @default("")
   owner                         User?              @relation("PlanDraft_owner", fields: [ownerId], references: [id])
   ownerId                       String?            @map("owner")
   body                          String?
@@ -2254,6 +2287,7 @@ model PlanDraft {
   facilities                    Facility[]         @relation("PlanDraft_facilities")
   parks                         Park[]             @relation("PlanDraft_parks")
   trails                        Trail[]            @relation("PlanDraft_trails")
+  status                        String?            @default("unpublished")
   publish                       String?
 
   @@index([originalId])
@@ -2377,6 +2411,7 @@ model EventDraft {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("EventDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -2404,6 +2439,7 @@ model EventDraft {
   parks             Park[]             @relation("EventDraft_parks")
   trails            Trail[]            @relation("EventDraft_trails")
   facilities        Facility[]         @relation("EventDraft_facilities")
+  status            String?            @default("unpublished")
   publish           String?
 
   @@index([originalId])
@@ -2421,6 +2457,7 @@ model EventVersion {
   publishAt         DateTime?
   unpublishAt       DateTime?
   reviewDate        DateTime?
+  slug              String             @default("")
   owner             User?              @relation("EventVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
@@ -2518,6 +2555,7 @@ model PolicyVersion {
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
+  slug        String         @default("")
   owner       User?          @relation("PolicyVersion_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
@@ -2547,6 +2585,7 @@ model PolicyDraft {
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
+  slug        String         @default("")
   owner       User?          @relation("PolicyDraft_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
@@ -2559,6 +2598,7 @@ model PolicyDraft {
   createdAt   DateTime?      @default(now())
   updatedAt   DateTime?      @default(now()) @updatedAt
   policies    Policy[]       @relation("PolicyDraft_policies")
+  status      String?        @default("unpublished")
   publish     String?
 
   @@index([originalId])
@@ -2611,6 +2651,7 @@ model PostVersion {
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
+  slug        String         @default("")
   owner       User?          @relation("PostVersion_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
@@ -2645,6 +2686,7 @@ model PostDraft {
   publishAt   DateTime?
   unpublishAt DateTime?
   reviewDate  DateTime?
+  slug        String         @default("")
   owner       User?          @relation("PostDraft_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
@@ -2661,6 +2703,7 @@ model PostDraft {
   images      PostImage[]    @relation("PostDraft_images")
   categories  PostCategory[] @relation("PostDraft_categories")
   location    String         @default("Matsu")
+  status      String?        @default("unpublished")
   publish     String?
 
   @@index([originalId])

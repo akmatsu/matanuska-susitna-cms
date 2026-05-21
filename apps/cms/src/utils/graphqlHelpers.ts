@@ -256,6 +256,7 @@ export const graphqlExtendTypeDefs = gql`
   extend type BoardPage implements BasePage & WithTitle
   extend type Service implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & WithTitle
   extend type Topic implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
+  extend type TopicDraft implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
   extend type AssemblyDistrict implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
   extend type Community implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle
   extend type Board implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle

@@ -60,7 +60,8 @@ export function mapDataFields(
       k.endsWith('Count') ||
       k === 'createdAt' ||
       k === 'updatedAt' ||
-      k === '__typename'
+      k === '__typename' ||
+      k === 'id'
     ) {
       return;
     }

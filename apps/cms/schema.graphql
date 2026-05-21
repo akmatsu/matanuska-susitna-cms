@@ -1054,6 +1054,7 @@ type ElectionDraft {
   createdAt: DateTime
   updatedAt: DateTime
   body: String
+  status: String
   publish: String
 }
 
@@ -1101,6 +1102,7 @@ input ElectionDraftWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   body: MyStringFilter
+  status: StringNullableFilter
 }
 
 input ElectionDraftOrderByInput {
@@ -1127,6 +1129,7 @@ input ElectionDraftOrderByInput {
   createdAt: OrderDirection
   updatedAt: OrderDirection
   body: MyOrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -1166,6 +1169,7 @@ input ElectionDraftUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   body: String
+  status: String
   publish: String
 }
 
@@ -1210,6 +1214,7 @@ input ElectionDraftCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   body: String
+  status: String
   publish: String
 }
 
@@ -2075,6 +2080,7 @@ type AssemblyDistrictVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -2144,6 +2150,7 @@ input AssemblyDistrictVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -2187,6 +2194,7 @@ input AssemblyDistrictVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -2209,6 +2217,7 @@ input AssemblyDistrictVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -2264,6 +2273,7 @@ input AssemblyDistrictVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -2316,6 +2326,7 @@ type AssemblyDistrictDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -2365,6 +2376,7 @@ type AssemblyDistrictDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -2383,6 +2395,7 @@ input AssemblyDistrictDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -2415,6 +2428,7 @@ input AssemblyDistrictDraftWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  status: StringNullableFilter
 }
 
 input AssemblyDistrictDraftOrderByInput {
@@ -2425,6 +2439,7 @@ input AssemblyDistrictDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -2436,6 +2451,7 @@ input AssemblyDistrictDraftOrderByInput {
   fax: OrderDirection
   termStart: OrderDirection
   termEnd: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -2447,6 +2463,7 @@ input AssemblyDistrictDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -2479,6 +2496,7 @@ input AssemblyDistrictDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -2495,6 +2513,7 @@ input AssemblyDistrictDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -2527,6 +2546,7 @@ input AssemblyDistrictDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -2812,6 +2832,7 @@ type BoardVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -2873,6 +2894,7 @@ input BoardVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -2911,6 +2933,7 @@ input BoardVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -2930,6 +2953,7 @@ input BoardVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -2981,6 +3005,7 @@ input BoardVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -3029,6 +3054,7 @@ type BoardDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -3070,6 +3096,7 @@ type BoardDraft {
   linkToPublicOpinionMessage: ExternalLink
   type: String
   isActive: Boolean
+  status: String
   publish: String
 }
 
@@ -3088,6 +3115,7 @@ input BoardDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -3115,6 +3143,7 @@ input BoardDraftWhereInput {
   linkToPublicOpinionMessage: ExternalLinkWhereInput
   type: StringFilter
   isActive: BooleanFilter
+  status: StringNullableFilter
 }
 
 input BoardDraftOrderByInput {
@@ -3125,6 +3154,7 @@ input BoardDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -3133,6 +3163,7 @@ input BoardDraftOrderByInput {
   calendarQueryString: OrderDirection
   type: OrderDirection
   isActive: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -3144,6 +3175,7 @@ input BoardDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -3172,6 +3204,7 @@ input BoardDraftUpdateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForUpdateInput
   type: String
   isActive: Boolean
+  status: String
   publish: String
 }
 
@@ -3188,6 +3221,7 @@ input BoardDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -3216,6 +3250,7 @@ input BoardDraftCreateInput {
   linkToPublicOpinionMessage: ExternalLinkRelateToOneForCreateInput
   type: String
   isActive: Boolean
+  status: String
   publish: String
 }
 
@@ -3487,6 +3522,7 @@ type CommunityVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -3548,6 +3584,7 @@ input CommunityVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -3583,6 +3620,7 @@ input CommunityVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -3599,6 +3637,7 @@ input CommunityVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -3646,6 +3685,7 @@ input CommunityVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -3690,6 +3730,7 @@ type CommunityDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -3731,6 +3772,7 @@ type CommunityDraft {
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
   type: String
+  status: String
   publish: String
 }
 
@@ -3749,6 +3791,7 @@ input CommunityDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -3773,6 +3816,7 @@ input CommunityDraftWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   type: StringNullableFilter
+  status: StringNullableFilter
 }
 
 input CommunityDraftOrderByInput {
@@ -3783,11 +3827,13 @@ input CommunityDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   type: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -3799,6 +3845,7 @@ input CommunityDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -3823,6 +3870,7 @@ input CommunityDraftUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   type: String
+  status: String
   publish: String
 }
 
@@ -3839,6 +3887,7 @@ input CommunityDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -3863,6 +3912,7 @@ input CommunityDraftCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   type: String
+  status: String
   publish: String
 }
 
@@ -4133,6 +4183,7 @@ type FacilityVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -4189,6 +4240,7 @@ input FacilityVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -4222,6 +4274,7 @@ input FacilityVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -4237,6 +4290,7 @@ input FacilityVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -4282,6 +4336,7 @@ input FacilityVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -4324,6 +4379,7 @@ type FacilityDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -4360,6 +4416,7 @@ type FacilityDraft {
   createdAt: DateTime
   updatedAt: DateTime
   park: Park
+  status: String
   publish: String
 }
 
@@ -4378,6 +4435,7 @@ input FacilityDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -4400,6 +4458,7 @@ input FacilityDraftWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   park: ParkWhereInput
+  status: StringNullableFilter
 }
 
 input FacilityDraftOrderByInput {
@@ -4410,10 +4469,12 @@ input FacilityDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -4425,6 +4486,7 @@ input FacilityDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -4447,6 +4509,7 @@ input FacilityDraftUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForUpdateInput
+  status: String
   publish: String
 }
 
@@ -4463,6 +4526,7 @@ input FacilityDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -4485,6 +4549,7 @@ input FacilityDraftCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   park: ParkRelateToOneForCreateInput
+  status: String
   publish: String
 }
 
@@ -4791,6 +4856,7 @@ type OrgUnitVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -4858,6 +4924,7 @@ input OrgUnitVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -4898,6 +4965,7 @@ input OrgUnitVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -4917,6 +4985,7 @@ input OrgUnitVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -4963,6 +5032,7 @@ input OrgUnitVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -5007,6 +5077,7 @@ type OrgUnitDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -5054,6 +5125,7 @@ type OrgUnitDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -5072,6 +5144,7 @@ input OrgUnitDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -5101,6 +5174,7 @@ input OrgUnitDraftWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  status: StringNullableFilter
 }
 
 input OrgUnitDraftOrderByInput {
@@ -5111,6 +5185,7 @@ input OrgUnitDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -5119,6 +5194,7 @@ input OrgUnitDraftOrderByInput {
   type: OrderDirection
   showPage: OrderDirection
   childrenLabel: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -5130,6 +5206,7 @@ input OrgUnitDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -5159,6 +5236,7 @@ input OrgUnitDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -5175,6 +5253,7 @@ input OrgUnitDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -5204,6 +5283,7 @@ input OrgUnitDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -5469,6 +5549,7 @@ type ParkVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -5528,6 +5609,7 @@ input ParkVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -5562,6 +5644,7 @@ input ParkVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -5577,6 +5660,7 @@ input ParkVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -5617,6 +5701,7 @@ input ParkVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -5655,6 +5740,7 @@ type ParkDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -5694,6 +5780,7 @@ type ParkDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -5712,6 +5799,7 @@ input ParkDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -5735,6 +5823,7 @@ input ParkDraftWhereInput {
   updatedAt: DateTimeNullableFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  status: StringNullableFilter
 }
 
 input ParkDraftOrderByInput {
@@ -5745,10 +5834,12 @@ input ParkDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -5760,6 +5851,7 @@ input ParkDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -5783,6 +5875,7 @@ input ParkDraftUpdateInput {
   updatedAt: DateTime
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -5799,6 +5892,7 @@ input ParkDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -5822,6 +5916,7 @@ input ParkDraftCreateInput {
   updatedAt: DateTime
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -6108,6 +6203,7 @@ type PublicNoticeVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -6172,6 +6268,7 @@ input PublicNoticeVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -6210,6 +6307,7 @@ input PublicNoticeVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -6229,6 +6327,7 @@ input PublicNoticeVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -6279,6 +6378,7 @@ input PublicNoticeVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -6326,6 +6426,7 @@ type PublicNoticeDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -6370,6 +6471,7 @@ type PublicNoticeDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -6388,6 +6490,7 @@ input PublicNoticeDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -6415,6 +6518,7 @@ input PublicNoticeDraftWhereInput {
   facilities: FacilityManyRelationFilter
   trails: TrailManyRelationFilter
   boards: BoardManyRelationFilter
+  status: StringNullableFilter
 }
 
 input PublicNoticeDraftOrderByInput {
@@ -6425,6 +6529,7 @@ input PublicNoticeDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -6433,6 +6538,7 @@ input PublicNoticeDraftOrderByInput {
   urgency: OrderDirection
   effectiveDate: OrderDirection
   endDate: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -6444,6 +6550,7 @@ input PublicNoticeDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -6471,6 +6578,7 @@ input PublicNoticeDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -6487,6 +6595,7 @@ input PublicNoticeDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -6514,6 +6623,7 @@ input PublicNoticeDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -6811,6 +6921,7 @@ type ServiceVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -6874,6 +6985,7 @@ input ServiceVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -6911,6 +7023,7 @@ input ServiceVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -6927,6 +7040,7 @@ input ServiceVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -6976,6 +7090,7 @@ input ServiceVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -7022,6 +7137,7 @@ type ServiceDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -7065,6 +7181,7 @@ type ServiceDraft {
   boards(where: BoardWhereInput! = {}, orderBy: [BoardOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BoardWhereUniqueInput): [Board!]
   boardsCount(where: BoardWhereInput! = {}): Int
   editorNotes: String
+  status: String
   publish: String
 }
 
@@ -7083,6 +7200,7 @@ input ServiceDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -7109,6 +7227,7 @@ input ServiceDraftWhereInput {
   facilities: FacilityManyRelationFilter
   boards: BoardManyRelationFilter
   editorNotes: StringFilter
+  status: StringNullableFilter
 }
 
 input ServiceDraftOrderByInput {
@@ -7119,11 +7238,13 @@ input ServiceDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   editorNotes: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -7135,6 +7256,7 @@ input ServiceDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -7161,6 +7283,7 @@ input ServiceDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   boards: BoardRelateToManyForUpdateInput
   editorNotes: String
+  status: String
   publish: String
 }
 
@@ -7177,6 +7300,7 @@ input ServiceDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -7203,6 +7327,7 @@ input ServiceDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   boards: BoardRelateToManyForCreateInput
   editorNotes: String
+  status: String
   publish: String
 }
 
@@ -7492,6 +7617,7 @@ type TopicVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -7554,6 +7680,7 @@ input TopicVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -7589,6 +7716,7 @@ input TopicVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -7604,6 +7732,7 @@ input TopicVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -7651,6 +7780,7 @@ input TopicVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -7684,7 +7814,7 @@ input TopicRelateToOneForCreateInput {
   connect: TopicWhereUniqueInput
 }
 
-type TopicDraft {
+type TopicDraft implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle {
   id: ID!
   original: Topic
   canEdit: String
@@ -7695,6 +7825,7 @@ type TopicDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -7737,6 +7868,7 @@ type TopicDraft {
   facilitiesCount(where: FacilityWhereInput! = {}): Int
   highlights(where: HighlightWhereInput! = {}, orderBy: [HighlightOrderByInput!]! = [], take: Int! = 100, skip: Int! = 0, cursor: HighlightWhereUniqueInput): [Highlight!]
   highlightsCount(where: HighlightWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -7755,6 +7887,7 @@ input TopicDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -7779,6 +7912,7 @@ input TopicDraftWhereInput {
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
   highlights: HighlightManyRelationFilter
+  status: StringNullableFilter
 }
 
 input TopicDraftOrderByInput {
@@ -7789,10 +7923,12 @@ input TopicDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -7804,6 +7940,7 @@ input TopicDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -7828,6 +7965,7 @@ input TopicDraftUpdateInput {
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
   highlights: HighlightRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -7844,6 +7982,7 @@ input TopicDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -7868,6 +8007,7 @@ input TopicDraftCreateInput {
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
   highlights: HighlightRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -8227,6 +8367,7 @@ type TrailVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -8302,6 +8443,7 @@ input TrailVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -8355,6 +8497,7 @@ input TrailVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -8391,6 +8534,7 @@ input TrailVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -8456,6 +8600,7 @@ input TrailVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -8518,6 +8663,7 @@ type TrailDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -8573,6 +8719,7 @@ type TrailDraft {
   length: String
   elevationChange: String
   park: Park
+  status: String
   publish: String
 }
 
@@ -8591,6 +8738,7 @@ input TrailDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -8633,6 +8781,7 @@ input TrailDraftWhereInput {
   length: StringFilter
   elevationChange: StringFilter
   park: ParkWhereInput
+  status: StringNullableFilter
 }
 
 input TrailDraftOrderByInput {
@@ -8643,6 +8792,7 @@ input TrailDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -8668,6 +8818,7 @@ input TrailDraftOrderByInput {
   difficulty: OrderDirection
   length: OrderDirection
   elevationChange: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -8679,6 +8830,7 @@ input TrailDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -8721,6 +8873,7 @@ input TrailDraftUpdateInput {
   length: String
   elevationChange: String
   park: ParkRelateToOneForUpdateInput
+  status: String
   publish: String
 }
 
@@ -8737,6 +8890,7 @@ input TrailDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -8779,6 +8933,7 @@ input TrailDraftCreateInput {
   length: String
   elevationChange: String
   park: ParkRelateToOneForCreateInput
+  status: String
   publish: String
 }
 
@@ -9144,6 +9299,7 @@ type PlanVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -9216,6 +9372,7 @@ input PlanVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -9259,6 +9416,7 @@ input PlanVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -9276,6 +9434,7 @@ input PlanVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -9325,6 +9484,7 @@ input PlanVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -9372,6 +9532,7 @@ type PlanDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -9424,6 +9585,7 @@ type PlanDraft {
   parksCount(where: ParkWhereInput! = {}): Int
   trails(where: TrailWhereInput! = {}, orderBy: [TrailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TrailWhereUniqueInput): [Trail!]
   trailsCount(where: TrailWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -9442,6 +9604,7 @@ input PlanDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -9474,6 +9637,7 @@ input PlanDraftWhereInput {
   facilities: FacilityManyRelationFilter
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
+  status: StringNullableFilter
 }
 
 input PlanDraftOrderByInput {
@@ -9484,12 +9648,14 @@ input PlanDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   autoRedirectToExternalWebsite: OrderDirection
   type: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -9501,6 +9667,7 @@ input PlanDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -9533,6 +9700,7 @@ input PlanDraftUpdateInput {
   facilities: FacilityRelateToManyForUpdateInput
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -9549,6 +9717,7 @@ input PlanDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -9581,6 +9750,7 @@ input PlanDraftCreateInput {
   facilities: FacilityRelateToManyForCreateInput
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -9957,6 +10127,7 @@ type EventDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -9999,6 +10170,7 @@ type EventDraft {
   trailsCount(where: TrailWhereInput! = {}): Int
   facilities(where: FacilityWhereInput! = {}, orderBy: [FacilityOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FacilityWhereUniqueInput): [Facility!]
   facilitiesCount(where: FacilityWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -10017,6 +10189,7 @@ input EventDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -10042,6 +10215,7 @@ input EventDraftWhereInput {
   parks: ParkManyRelationFilter
   trails: TrailManyRelationFilter
   facilities: FacilityManyRelationFilter
+  status: StringNullableFilter
 }
 
 input EventDraftOrderByInput {
@@ -10052,12 +10226,14 @@ input EventDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   startDate: OrderDirection
   endDate: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -10069,6 +10245,7 @@ input EventDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -10094,6 +10271,7 @@ input EventDraftUpdateInput {
   parks: ParkRelateToManyForUpdateInput
   trails: TrailRelateToManyForUpdateInput
   facilities: FacilityRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -10116,6 +10294,7 @@ input EventDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -10141,6 +10320,7 @@ input EventDraftCreateInput {
   parks: ParkRelateToManyForCreateInput
   trails: TrailRelateToManyForCreateInput
   facilities: FacilityRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -10160,6 +10340,7 @@ type EventVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -10222,6 +10403,7 @@ input EventVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -10258,6 +10440,7 @@ input EventVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -10275,6 +10458,7 @@ input EventVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -10317,6 +10501,7 @@ input EventVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -10662,6 +10847,7 @@ type PolicyVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -10699,6 +10885,7 @@ input PolicyVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -10721,6 +10908,7 @@ input PolicyVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -10736,6 +10924,7 @@ input PolicyVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -10770,6 +10959,7 @@ input PolicyVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -10801,6 +10991,7 @@ type PolicyDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -10818,6 +11009,7 @@ type PolicyDraft {
   updatedAt: DateTime
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policiesCount(where: PolicyWhereInput! = {}): Int
+  status: String
   publish: String
 }
 
@@ -10836,6 +11028,7 @@ input PolicyDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -10847,6 +11040,7 @@ input PolicyDraftWhereInput {
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
   policies: PolicyManyRelationFilter
+  status: StringNullableFilter
 }
 
 input PolicyDraftOrderByInput {
@@ -10857,10 +11051,12 @@ input PolicyDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -10872,6 +11068,7 @@ input PolicyDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -10883,6 +11080,7 @@ input PolicyDraftUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForUpdateInput
+  status: String
   publish: String
 }
 
@@ -10899,6 +11097,7 @@ input PolicyDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -10910,6 +11109,7 @@ input PolicyDraftCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   policies: PolicyRelateToManyForCreateInput
+  status: String
   publish: String
 }
 
@@ -11167,6 +11367,7 @@ type PostVersion {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -11208,6 +11409,7 @@ input PostVersionWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -11233,6 +11435,7 @@ input PostVersionOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
@@ -11249,6 +11452,7 @@ input PostVersionUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -11286,6 +11490,7 @@ input PostVersionCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -11320,6 +11525,7 @@ type PostDraft {
   unpublishAt: DateTime
   reviewDate: DateTime
   liveUrl: String
+  slug: String
   owner: User
   body: String
   tags(where: TagWhereInput! = {}, orderBy: [TagOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TagWhereUniqueInput): [Tag!]
@@ -11341,6 +11547,7 @@ type PostDraft {
   categories(where: PostCategoryWhereInput! = {}, orderBy: [PostCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PostCategoryWhereUniqueInput): [PostCategory!]
   categoriesCount(where: PostCategoryWhereInput! = {}): Int
   location: String
+  status: String
   publish: String
 }
 
@@ -11359,6 +11566,7 @@ input PostDraftWhereInput {
   publishAt: DateTimeNullableFilter
   unpublishAt: DateTimeNullableFilter
   reviewDate: DateTimeNullableFilter
+  slug: StringFilter
   owner: UserWhereInput
   body: MyStringFilter
   tags: TagManyRelationFilter
@@ -11373,6 +11581,7 @@ input PostDraftWhereInput {
   images: PostImageManyRelationFilter
   categories: PostCategoryManyRelationFilter
   location: StringFilter
+  status: StringNullableFilter
 }
 
 input PostDraftOrderByInput {
@@ -11383,11 +11592,13 @@ input PostDraftOrderByInput {
   publishAt: OrderDirection
   unpublishAt: OrderDirection
   reviewDate: OrderDirection
+  slug: OrderDirection
   body: MyOrderDirection
   hideSideNav: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
   location: OrderDirection
+  status: OrderDirection
   publish: OrderDirection
 }
 
@@ -11399,6 +11610,7 @@ input PostDraftUpdateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForUpdateInput
   body: String
   tags: TagRelateToManyForUpdateInput
@@ -11413,6 +11625,7 @@ input PostDraftUpdateInput {
   images: PostImageRelateToManyForUpdateInput
   categories: PostCategoryRelateToManyForUpdateInput
   location: String
+  status: String
   publish: String
 }
 
@@ -11429,6 +11642,7 @@ input PostDraftCreateInput {
   publishAt: DateTime
   unpublishAt: DateTime
   reviewDate: DateTime
+  slug: String
   owner: UserRelateToOneForCreateInput
   body: String
   tags: TagRelateToManyForCreateInput
@@ -11443,6 +11657,7 @@ input PostDraftCreateInput {
   images: PostImageRelateToManyForCreateInput
   categories: PostCategoryRelateToManyForCreateInput
   location: String
+  status: String
   publish: String
 }
 
