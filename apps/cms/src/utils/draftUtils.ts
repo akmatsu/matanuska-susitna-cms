@@ -213,6 +213,8 @@ export function createNewCopy(
       {
         title: `${title} --- ${new Date().toLocaleString()}`,
         original: { connect: { id } },
+        publishAt: null,
+        unpublishAt: null,
       },
       'create',
     ),
