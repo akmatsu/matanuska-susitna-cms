@@ -1,3 +1,10 @@
+# [0.62.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.61.1...v0.62.0) (2026-05-21)
+
+
+### Features
+
+* set topicDrafts as page types ([c608eb6](https://github.com/akmatsu/matanuska-susitna-cms/commit/c608eb6ec0b279263fa33cc17704e45ff3d5cd67))
+
 ## [0.61.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.61.0...v0.61.1) (2026-05-05)
 
 
