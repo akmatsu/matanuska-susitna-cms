@@ -1,3 +1,10 @@
+# [0.63.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.62.0...v0.63.0) (2026-05-21)
+
+
+### Features
+
+* fixed drafts being published unexpectedly ([f547b3c](https://github.com/akmatsu/matanuska-susitna-cms/commit/f547b3c7ea28ea55efa16e6603933528536e1fe1))
+
 # [0.62.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.61.1...v0.62.0) (2026-05-21)
 
 
