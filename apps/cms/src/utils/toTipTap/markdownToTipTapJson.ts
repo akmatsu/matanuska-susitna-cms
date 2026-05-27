@@ -9,6 +9,12 @@ import StarterKit from '@tiptap/starter-kit';
 import { Table, TableCell, TableHeader, TableRow } from '@tiptap/extension-table';
 import { CalloutBlock, remarkCalloutDirective } from './calloutBlock';
 import {
+  Column,
+  ColumnWrapper,
+  remarkColumnDirective,
+  remarkColumnsDirective,
+} from './column';
+import {
   remarkStepItemDirective,
   remarkStepListDirective,
   Step,
@@ -21,6 +27,8 @@ export async function markdownToTipTapJson(markdown: string) {
     .use(remarkGfm)
     .use(remarkDirective)
     .use(remarkCalloutDirective)
+    .use(remarkColumnsDirective)
+    .use(remarkColumnDirective)
     .use(remarkStepListDirective)
     .use(remarkStepItemDirective)
     .use(remarkRehype, { allowDangerousHtml: true })
@@ -31,6 +39,8 @@ export async function markdownToTipTapJson(markdown: string) {
     CalloutBlock,
     StepList,
     Step,
+    ColumnWrapper,
+    Column,
     StarterKit,
     Table,
     TableRow,
