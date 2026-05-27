@@ -12,7 +12,13 @@ import {
   titleAndDescription,
   userGroups,
 } from '../fieldUtils';
-import { checkbox, json, relationship, virtual } from '@keystone-6/core/fields';
+import {
+  checkbox,
+  json,
+  relationship,
+  text,
+  virtual,
+} from '@keystone-6/core/fields';
 import { belongsToGroup, isContentManager, isOwner } from '../access';
 import { singular } from 'pluralize';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
