@@ -6,7 +6,13 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import { generateJSON } from '@tiptap/html/server';
 import StarterKit from '@tiptap/starter-kit';
-import { Table, TableCell, TableHeader, TableRow } from '@tiptap/extension-table';
+import TextAlign from '@tiptap/extension-text-align';
+import {
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from '@tiptap/extension-table';
 import { CalloutBlock, remarkCalloutDirective } from './calloutBlock';
 import {
   Column,
@@ -20,6 +26,7 @@ import {
   Step,
   StepList,
 } from './steps';
+import { remarkTextAlignmentDirective } from './textAlignment';
 
 export async function markdownToTipTapJson(markdown: string) {
   const html = await unified()
@@ -31,6 +38,7 @@ export async function markdownToTipTapJson(markdown: string) {
     .use(remarkColumnDirective)
     .use(remarkStepListDirective)
     .use(remarkStepItemDirective)
+    .use(remarkTextAlignmentDirective)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);
@@ -42,6 +50,7 @@ export async function markdownToTipTapJson(markdown: string) {
     ColumnWrapper,
     Column,
     StarterKit,
+    TextAlign.configure({ types: ['heading', 'paragraph'] }),
     Table,
     TableRow,
     TableHeader,
