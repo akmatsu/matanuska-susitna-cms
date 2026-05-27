@@ -302,6 +302,22 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
           `${listKey}Drafts`,
           deepMerge(defaultDraftOpts, opts.draftBasePageOptions),
         ),
+        status: select({
+          options: [
+            { label: 'Unpublished', value: 'unpublished' },
+            { label: 'Published', value: 'published' },
+          ],
+          defaultValue: 'unpublished',
+          ui: {
+            displayMode: 'segmented-control',
+            itemView: {
+              fieldMode: 'hidden',
+            },
+            createView: {
+              fieldMode: 'hidden',
+            },
+          },
+        }),
         publish: publishDraft({
           ui: {
             listName: listKey,
@@ -323,11 +339,16 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         },
         async afterOperation(args) {
           if (args.operation === 'update') {
-            // If a new publishAt date is set, schedule a publish job
+            const og = await args.context.sudo().db[listKey].findOne({
+              where: { id: args.item.originalId },
+            });
+
             if (
+              og &&
               args.item.publishAt &&
-              args.item.publishAt !== args.originalItem.publishAt
+              args.item.publishAt.toString() !== og.publishAt.toString()
             ) {
+              logger.info('Will schedule publish job for', args.item.publishAt);
               const publishQueue = getPublishQueue();
               // Determine the delay until the publishAt date
               const publishAtDate = new Date(args.item.publishAt);

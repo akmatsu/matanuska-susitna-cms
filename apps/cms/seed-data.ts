@@ -276,31 +276,29 @@ async function insertSeedData() {
   const homePageCount = await sudoContextDB.HomePage.count();
 
   if (homePageCount < 1) {
-    await sudoContextDB.Url.deleteMany({
-      where: [
-        {
-          title: 'Animal Care',
+    // Find existing URLs before attempting to delete
+    const urlsToDelete = await sudoContextDB.Url.findMany({
+      where: {
+        title: {
+          in: [
+            'Animal Care',
+            'Problem Reporter',
+            'MyProperty Lookup',
+            'Parcel Viewer',
+            'Career Opportunities',
+            'Legislation',
+            'Projects',
+          ],
         },
-        {
-          title: 'Problem Reporter',
-        },
-        {
-          title: 'MyProperty Lookup',
-        },
-        {
-          title: 'Parcel Viewer',
-        },
-        {
-          title: 'Career Opportunities',
-        },
-        {
-          title: 'Legislation',
-        },
-        {
-          title: 'Projects',
-        },
-      ],
+      },
     });
+
+    // Only delete URLs that actually exist
+    if (urlsToDelete.length > 0) {
+      await sudoContextDB.Url.deleteMany({
+        where: urlsToDelete.map((url) => ({ id: url.id })),
+      });
+    }
 
     await sudoContextDB.HomePage.createOne({
       data: {

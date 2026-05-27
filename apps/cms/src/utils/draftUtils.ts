@@ -60,7 +60,8 @@ export function mapDataFields(
       k.endsWith('Count') ||
       k === 'createdAt' ||
       k === 'updatedAt' ||
-      k === '__typename'
+      k === '__typename' ||
+      k === 'id'
     ) {
       return;
     }
@@ -212,6 +213,8 @@ export function createNewCopy(
       {
         title: `${title} --- ${new Date().toLocaleString()}`,
         original: { connect: { id } },
+        publishAt: null,
+        unpublishAt: null,
       },
       'create',
     ),
