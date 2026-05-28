@@ -27,6 +27,7 @@ import {
   StepList,
 } from './steps';
 import { remarkTextAlignmentDirective } from './textAlignment';
+import { DocCollection, remarkDocCollectionDirective } from './docCollection';
 
 export async function markdownToTipTapJson(markdown: string) {
   const html = await unified()
@@ -38,6 +39,7 @@ export async function markdownToTipTapJson(markdown: string) {
     .use(remarkColumnDirective)
     .use(remarkStepListDirective)
     .use(remarkStepItemDirective)
+    .use(remarkDocCollectionDirective)
     .use(remarkTextAlignmentDirective)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
@@ -49,6 +51,7 @@ export async function markdownToTipTapJson(markdown: string) {
     Step,
     ColumnWrapper,
     Column,
+    DocCollection,
     StarterKit,
     TextAlign.configure({ types: ['heading', 'paragraph'] }),
     Table,
