@@ -28,6 +28,7 @@ import {
 } from './steps';
 import { remarkTextAlignmentDirective } from './textAlignment';
 import { DocCollection, remarkDocCollectionDirective } from './docCollection';
+import { IframeExtension, remarkIframeDirective } from './iframe';
 
 export async function markdownToTipTapJson(markdown: string) {
   const html = await unified()
@@ -40,6 +41,7 @@ export async function markdownToTipTapJson(markdown: string) {
     .use(remarkStepListDirective)
     .use(remarkStepItemDirective)
     .use(remarkDocCollectionDirective)
+    .use(remarkIframeDirective)
     .use(remarkTextAlignmentDirective)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
@@ -52,6 +54,7 @@ export async function markdownToTipTapJson(markdown: string) {
     ColumnWrapper,
     Column,
     DocCollection,
+    IframeExtension,
     StarterKit,
     TextAlign.configure({ types: ['heading', 'paragraph'] }),
     Table,
