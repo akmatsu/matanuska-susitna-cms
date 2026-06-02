@@ -82,8 +82,7 @@ export const IframeExtension = Node.create<IframeOptions>({
       },
       allowfullscreen: {
         default: true,
-        parseHTML: (el: HTMLElement) =>
-          el.hasAttribute('allowfullscreen'),
+        parseHTML: (el: HTMLElement) => el.hasAttribute('allowfullscreen'),
         renderHTML: (attrs: { allowfullscreen?: boolean }) =>
           attrs.allowfullscreen === false
             ? {}
@@ -102,7 +101,8 @@ export const IframeExtension = Node.create<IframeOptions>({
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
         loading: 'lazy',
         referrerpolicy: 'strict-origin-when-cross-origin',
-        class: 'w-full aspect-video rounded-lg border border-gray-300 dark:border-gray-700',
+        class:
+          'w-full aspect-video rounded-lg border border-gray-300 dark:border-gray-700',
       }),
     ];
   },
@@ -249,8 +249,7 @@ export function remarkIframeDirective() {
           width: attrs.width || null,
           height: attrs.height || null,
           allow: attrs.allow || null,
-          allowfullscreen:
-            attrs.allowfullscreen === 'false' ? false : true,
+          allowfullscreen: attrs.allowfullscreen === 'false' ? false : true,
         },
       };
     });
