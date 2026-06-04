@@ -130,15 +130,26 @@ export default function CustomPage() {
       const res = await fetch('/typesense/import-pages', {
         method: 'POST',
       });
+
+      if (res.status === 409) {
+        toasts.addToast({
+          tone: 'warning',
+          title: 'Import already running',
+          message: 'A pages import is already running in the background.',
+        });
+        return;
+      }
+
       if (!res.ok) {
         throw new Error(
           `Failed to import pages, ${res.status}: ${res.statusText}`,
         );
       }
+
       toasts.addToast({
         tone: 'positive',
-        title: 'Pages imported successfully',
-        message: 'Pages imported successfully',
+        title: 'Pages import started',
+        message: 'Pages are importing in the background.',
       });
     } catch (err) {
       logger.error(err, 'Error importing pages:');
@@ -155,19 +166,29 @@ export default function CustomPage() {
   async function reindexPages() {
     try {
       setCreateLoading(true);
-      const res = await fetch('typesense/reindex', {
+      const res = await fetch('/typesense/reindex', {
         method: 'POST',
       });
+
+      if (res.status === 409) {
+        toasts.addToast({
+          tone: 'warning',
+          title: 'Reindex already running',
+          message: 'A reindex is already running in the background.',
+        });
+        return;
+      }
 
       if (!res.ok) {
         throw new Error(
           `Failed to reindex pages, ${res.status}: ${res.statusText}`,
         );
       }
+
       toasts.addToast({
         tone: 'positive',
-        title: 'Reindexing pages successful',
-        message: 'Reindexing pages successful',
+        title: 'Reindex started',
+        message: 'Reindexing is running in the background.',
       });
     } catch (err) {
       toasts.addToast({

@@ -15,6 +15,9 @@ import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import { getSearchDataMany, ModelDelegateKey } from '../utils/draftUtils';
 import v from 'voca';
 
+const TYPESENSE_BATCH_SIZE = 250;
+const _runningTasks = new Set<string>();
+
 /** Create all registered typesense collections */
 export const createTypesenseCollections: RequestController =
   () => async (_, res) => {
@@ -55,8 +58,16 @@ export const updateTypesenseSchema: RequestController =
 export const importPages: RequestControllerWithContext =
   (context) => async (_, res) => {
     try {
-      await _indexAllPages(context);
-      return res.status(200).json({ message: 'Pages imported.' });
+      const started = _runAsyncTask('typesense-import-pages', async () => {
+        await _indexAllPages(context);
+      });
+
+      if (!started)
+        return res
+          .status(409)
+          .json({ message: 'A typesense page import is already running.' });
+
+      return res.status(202).json({ message: 'Page import started.' });
     } catch (error: any) {
       logger.error(error, 'Error importing typesense pages collection');
       return res.status(500).json(error);
@@ -96,19 +107,26 @@ export const removeCollection: RequestController = () => async (req, res) => {
 export const reindexTypesense: RequestControllerWithContext =
   (context) => async (_, res) => {
     try {
-      await _forEachCollection(async (collection) => {
-        logger.info(`Starting reindex on ${collection.name}...`);
-        await _coordinateCollectionReset(collection, { recreate: true });
-        logger.info(`Successfully reset collection ${collection.name}...`);
-        await _indexAllPages(context);
-        logger.info(`Successfully reindexed collection ${collection.name}...`);
+      const started = _runAsyncTask('typesense-reindex', async () => {
+        await _forEachCollection(async (collection) => {
+          logger.info(`Starting reindex on ${collection.name}...`);
+          await _coordinateCollectionReset(collection, { recreate: true });
+          logger.info(`Successfully reset collection ${collection.name}...`);
+          await _indexAllPages(context);
+          logger.info(
+            `Successfully reindexed collection ${collection.name}...`,
+          );
+        });
+
+        logger.info('Successfully reindexed all collections...');
       });
 
-      logger.info('Successfully reindexed all collections...');
+      if (!started)
+        return res
+          .status(409)
+          .json({ message: 'A typesense reindex is already running.' });
 
-      return res
-        .status(200)
-        .json({ message: 'Successfully reindexed all collections.' });
+      return res.status(202).json({ message: 'Typesense reindex started.' });
     } catch (error: any) {
       logger.error(error, 'Error reindexing Typesense');
       return res.status(500).json({ error: 'Failed to reindex Typesense' });
@@ -164,7 +182,7 @@ async function _indexAllPages(context: CommonContext) {
 
     const docs = items.map((item) => toSearchableObj(item, type, appendId));
 
-    await _addDocsToCollection(TYPESENSE_COLLECTIONS.PAGES, docs);
+    await _addDocsToCollectionInBatches(TYPESENSE_COLLECTIONS.PAGES, docs);
   });
 }
 
@@ -184,6 +202,33 @@ function _addDocsToCollection(name: string, docs: any) {
   return TYPESENSE_CLIENT.collections(name)
     .documents()
     .import(docs, { action: 'upsert' });
+}
+
+async function _addDocsToCollectionInBatches(
+  name: string,
+  docs: unknown[],
+  batchSize = TYPESENSE_BATCH_SIZE,
+) {
+  for (let i = 0; i < docs.length; i += batchSize) {
+    const batch = docs.slice(i, i + batchSize);
+    await _addDocsToCollection(name, batch);
+  }
+}
+
+function _runAsyncTask(taskName: string, task: () => Promise<void>) {
+  if (_runningTasks.has(taskName)) return false;
+
+  _runningTasks.add(taskName);
+  void Promise.resolve()
+    .then(task)
+    .catch((error) => {
+      logger.error(error, `Error while running async task ${taskName}`);
+    })
+    .finally(() => {
+      _runningTasks.delete(taskName);
+    });
+
+  return true;
 }
 
 function _deleteCollection(name: string) {
