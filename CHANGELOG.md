@@ -1,3 +1,10 @@
+# [0.64.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.63.0...v0.64.0) (2026-06-04)
+
+
+### Features
+
+* added autoembedding fields to typesense ([71360ba](https://github.com/akmatsu/matanuska-susitna-cms/commit/71360ba33f2dc789c1d27941031aa21c8daaef0d))
+
 # [0.63.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.62.0...v0.63.0) (2026-05-21)
 
 
