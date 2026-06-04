@@ -1,3 +1,10 @@
+## [0.64.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.64.0...v0.64.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* now importing to typesense in batches ([f88aafc](https://github.com/akmatsu/matanuska-susitna-cms/commit/f88aafc95767b9a3475accdf769cf51bdd6c2593))
+
 # [0.64.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.63.0...v0.64.0) (2026-06-04)
 
 
