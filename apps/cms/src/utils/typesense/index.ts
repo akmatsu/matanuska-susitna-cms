@@ -61,6 +61,16 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
         facet: true,
       },
       { name: 'type', type: 'string', optional: true, facet: true },
+      {
+        name: 'embedding',
+        type: 'float[]',
+        embed: {
+          from: ['title', 'description', 'body'],
+          model_config: {
+            model_name: 'ts/all-MiniLM-L12-v2',
+          },
+        },
+      },
     ],
   },
 ];
