@@ -1,3 +1,10 @@
+# [0.65.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.64.1...v0.65.0) (2026-06-05)
+
+
+### Features
+
+* added nl search capabilities and additional analytics rules ([aa6fa07](https://github.com/akmatsu/matanuska-susitna-cms/commit/aa6fa073e77ec2ece5ee8d4ae1678986fa5e6eec))
+
 ## [0.64.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.64.0...v0.64.1) (2026-06-04)
 
 
