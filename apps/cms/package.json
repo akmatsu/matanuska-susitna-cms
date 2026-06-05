@@ -60,7 +60,7 @@
     "react-hook-form": "^7.68.0",
     "react-select": "^5.10.2",
     "remark-directive": "^4.0.0",
-    "typesense": "^2.1.0",
+    "typesense": "^3.0.6",
     "voca": "^1.4.1",
     "xlsx": "^0.18.5"
   },

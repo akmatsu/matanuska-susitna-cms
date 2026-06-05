@@ -6,7 +6,10 @@ import type { Session } from '../session';
 import { json, type Express } from 'express';
 
 import {
+  createNaturalLanguageSearchModel,
   createTypesenseCollections,
+  getNoHitSearches,
+  getPopularSearches,
   importPages,
   reindexTypesense,
   removeCollection,
@@ -33,6 +36,13 @@ export const routes: (
   app.post('/typesense/import-pages', json(), importPages(commonContext));
   app.post('/typesense/remove-collection', json(), removeCollection());
   app.post('/typesense/reindex', json(), reindexTypesense(commonContext));
+  app.post(
+    '/typesense/create-nl-model',
+    json(),
+    createNaturalLanguageSearchModel(),
+  );
+  app.get('/typesense/popular-searches', json(), getPopularSearches());
+  app.get('/typesense/no-hit-searches', json(), getNoHitSearches());
   app.post('/:list/:id/drafts', json(), createDraft(commonContext));
   app.patch('/publish/:list/:id', json(), publishDraft(commonContext));
   app.patch('/republish/:list/:id', json(), republishVersion(commonContext));

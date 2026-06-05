@@ -9,12 +9,31 @@ export default function CustomPage() {
   const [loading, setLoading] = useState(true);
   const [health, setHealth] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
+  const [nlModelLoading, setNlModelLoading] = useState(false);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [popularSearches, setPopularSearches] = useState<
+    { query: string; count: number }[]
+  >([]);
+  const [noHitSearches, setNoHitSearches] = useState<
+    { query: string; count: number }[]
+  >([]);
 
   const toasts = useToasts();
 
   useEffect(() => {
     getHealth();
+    refreshAnalytics();
   }, []);
+
+  function normalizeSearches(data: any) {
+    const searches = Array.isArray(data?.searches) ? data.searches : [];
+    return searches
+      .map((item: { query?: string; count?: number }) => ({
+        query: item?.query ?? '',
+        count: Number(item?.count ?? 0),
+      }))
+      .sort((a: { count: number }, b: { count: number }) => b.count - a.count);
+  }
 
   async function getHealth() {
     try {
@@ -201,6 +220,95 @@ export default function CustomPage() {
     }
   }
 
+  async function getPopularSearches() {
+    try {
+      const res = await fetch('/typesense/popular-searches?limit=100');
+
+      if (!res.ok) {
+        throw new Error(
+          `Failed to load popular searches, ${res.status}: ${res.statusText}`,
+        );
+      }
+
+      const data = await res.json();
+      const normalized = normalizeSearches(data);
+
+      setPopularSearches(normalized);
+    } catch (err) {
+      logger.error(err, 'Error retrieving popular searches');
+      setPopularSearches([]);
+    }
+  }
+
+  async function getNoHitSearches() {
+    try {
+      const res = await fetch('/typesense/no-hit-searches?limit=100');
+
+      if (!res.ok) {
+        throw new Error(
+          `Failed to load no-hit searches, ${res.status}: ${res.statusText}`,
+        );
+      }
+
+      const data = await res.json();
+      const normalized = normalizeSearches(data);
+      setNoHitSearches(normalized);
+    } catch (err) {
+      logger.error(err, 'Error retrieving no-hit searches');
+      setNoHitSearches([]);
+    }
+  }
+
+  async function refreshAnalytics() {
+    try {
+      setAnalyticsLoading(true);
+      await Promise.all([getPopularSearches(), getNoHitSearches()]);
+    } catch (err) {
+      toasts.addToast({
+        tone: 'negative',
+        title: 'Failed to load search analytics',
+        message: `Failed to load search analytics, ${err}`,
+      });
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  }
+
+  async function createNaturalLanguageModel() {
+    try {
+      setNlModelLoading(true);
+      const res = await fetch('/typesense/create-nl-model', {
+        method: 'POST',
+      });
+
+      const payload = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(
+          payload?.message ||
+            `Failed to create NL model, ${res.status}: ${res.statusText}`,
+        );
+      }
+
+      toasts.addToast({
+        tone: 'positive',
+        title: 'Natural language model synced',
+        message:
+          payload?.message ||
+          'Natural language model was created or updated successfully.',
+      });
+    } catch (err) {
+      logger.error(err, 'Error creating/updating natural language model');
+      toasts.addToast({
+        tone: 'negative',
+        title: 'Failed to sync natural language model',
+        message: `Failed to sync natural language model, ${err}`,
+      });
+    } finally {
+      setNlModelLoading(false);
+    }
+  }
+
   return (
     <PageContainer header="Typesense">
       <h1 className="text-4xl font-bold">Typesense</h1>
@@ -244,6 +352,74 @@ export default function CustomPage() {
         <Button onClick={reindexPages} isLoading={createLoading}>
           Reindex Pages
         </Button>
+
+        <Button onClick={createNaturalLanguageModel} isLoading={nlModelLoading}>
+          Create/Update NL Model
+        </Button>
+
+        <Button onClick={refreshAnalytics} isLoading={analyticsLoading}>
+          Refresh Search Analytics
+        </Button>
+      </div>
+
+      <div className="mt-6">
+        <h2 className="mb-2 text-2xl font-bold">Top Searches</h2>
+
+        {analyticsLoading ? (
+          <p className="flex items-center gap-2">
+            <span>Loading popular searches</span>
+            <span className="icon-[mdi--loading] animate-spin"></span>
+          </p>
+        ) : popularSearches.length === 0 ? (
+          <p>No popular searches found yet.</p>
+        ) : (
+          <table className="min-w-[480px] border-collapse">
+            <thead>
+              <tr className="border-b border-slate-300 text-left">
+                <th className="px-2 py-2">Search Query</th>
+                <th className="px-2 py-2">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {popularSearches.map((item) => (
+                <tr key={item.query} className="border-b border-slate-200">
+                  <td className="px-2 py-2">{item.query || '(empty query)'}</td>
+                  <td className="px-2 py-2">{item.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      <div className="mt-6">
+        <h2 className="mb-2 text-2xl font-bold">No Hit Searches</h2>
+
+        {analyticsLoading ? (
+          <p className="flex items-center gap-2">
+            <span>Loading no-hit searches</span>
+            <span className="icon-[mdi--loading] animate-spin"></span>
+          </p>
+        ) : noHitSearches.length === 0 ? (
+          <p>No no-hit searches found yet.</p>
+        ) : (
+          <table className="min-w-[480px] border-collapse">
+            <thead>
+              <tr className="border-b border-slate-300 text-left">
+                <th className="px-2 py-2">Search Query</th>
+                <th className="px-2 py-2">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              {noHitSearches.map((item) => (
+                <tr key={item.query} className="border-b border-slate-200">
+                  <td className="px-2 py-2">{item.query || '(empty query)'}</td>
+                  <td className="px-2 py-2">{item.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </PageContainer>
   );
