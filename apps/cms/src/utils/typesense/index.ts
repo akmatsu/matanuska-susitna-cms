@@ -156,6 +156,7 @@ export const PAGE_TYPES = [
   'PublicNotice',
   'ElectionsPage',
   'BoardPage',
+  'Policy',
 ];
 
 export function toSearchableObj(
