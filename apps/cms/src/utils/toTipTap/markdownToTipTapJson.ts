@@ -30,6 +30,7 @@ import { remarkTextAlignmentDirective } from './textAlignment';
 import { DocCollection, remarkDocCollectionDirective } from './docCollection';
 import { IframeExtension, remarkIframeDirective } from './iframe';
 import { DynamicLinkMark, remarkDynamicLinkDirective } from './dynamicLink';
+import { ImageInline, remarkImagePlugin } from './imageInline';
 
 export async function markdownToTipTapJson(markdown: string) {
   const html = await unified()
@@ -45,6 +46,7 @@ export async function markdownToTipTapJson(markdown: string) {
     .use(remarkIframeDirective)
     .use(remarkDynamicLinkDirective)
     .use(remarkTextAlignmentDirective)
+    .use(remarkImagePlugin)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
     .process(markdown);
@@ -53,6 +55,7 @@ export async function markdownToTipTapJson(markdown: string) {
     CalloutBlock,
     StepList,
     Step,
+    ImageInline,
     ColumnWrapper,
     Column,
     DocCollection,
