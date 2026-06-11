@@ -29,6 +29,7 @@ import {
 import { remarkTextAlignmentDirective } from './textAlignment';
 import { DocCollection, remarkDocCollectionDirective } from './docCollection';
 import { IframeExtension, remarkIframeDirective } from './iframe';
+import { DynamicLinkMark, remarkDynamicLinkDirective } from './dynamicLink';
 
 export async function markdownToTipTapJson(markdown: string) {
   const html = await unified()
@@ -42,6 +43,7 @@ export async function markdownToTipTapJson(markdown: string) {
     .use(remarkStepItemDirective)
     .use(remarkDocCollectionDirective)
     .use(remarkIframeDirective)
+    .use(remarkDynamicLinkDirective)
     .use(remarkTextAlignmentDirective)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeStringify, { allowDangerousHtml: true })
@@ -55,6 +57,7 @@ export async function markdownToTipTapJson(markdown: string) {
     Column,
     DocCollection,
     IframeExtension,
+    DynamicLinkMark,
     StarterKit,
     TextAlign.configure({ types: ['heading', 'paragraph'] }),
     Table,
