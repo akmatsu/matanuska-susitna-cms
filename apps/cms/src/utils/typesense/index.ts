@@ -1,6 +1,7 @@
 import Typesense from 'typesense';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
-import 'dotenv/config';
+import { AnalyticsRuleUpsertSchema } from 'typesense/lib/Typesense/AnalyticsRule';
+import { NLSearchModelCreateSchema } from 'typesense/lib/Typesense/NLSearchModels';
 
 export type TypeSensePageDocument = {
   id: string;
@@ -22,6 +23,18 @@ export type TypeSensePageDocument = {
 export const TYPESENSE_COLLECTIONS = {
   PAGES: 'pages',
 };
+
+// Keep non-sensitive NL model settings in code.
+// Keep only secret credentials in env variables.
+export const TYPESENSE_NL_SEARCH_MODEL_CONFIGURATION: NLSearchModelCreateSchema =
+  {
+    id: 'cms-nl-search-model',
+    model_name: 'openai/gpt-4.1-mini',
+    max_bytes: 16000,
+    temperature: 0.0,
+    api_key: process.env.TYPESENSE_NL_SEARCH_MODEL_API_KEY,
+    api_url: process.env.TYPESENSE_NL_SEARCH_MODEL_API_URL,
+  };
 
 export const TYPESENSE_CLIENT = new Typesense.Client({
   nodes: [
@@ -61,9 +74,61 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
         facet: true,
       },
       { name: 'type', type: 'string', optional: true, facet: true },
+      {
+        name: 'embedding',
+        type: 'float[]',
+        embed: {
+          from: ['title', 'description', 'body'],
+          model_config: {
+            model_name: 'ts/all-MiniLM-L12-v2',
+          },
+        },
+      },
+    ],
+  },
+  {
+    name: 'popular_queries',
+    fields: [
+      { name: 'q', type: 'string' },
+      { name: 'count', type: 'int32' },
+    ],
+  },
+  {
+    name: 'no_hits_queries',
+    fields: [
+      { name: 'q', type: 'string' },
+      { name: 'count', type: 'int32' },
     ],
   },
 ];
+
+export const popularSearchRuleName = 'popular_page_queries_aggregation';
+export const popularSearchConfiguration = {
+  name: popularSearchRuleName,
+  type: 'popular_queries',
+  collection: 'pages',
+  event_type: 'search',
+  params: {
+    destination_collection: 'popular_queries',
+    expand_query: false,
+    limit: 1000,
+    capture_search_requests: true,
+  },
+} as AnalyticsRuleUpsertSchema;
+
+export const noHitSearchRuleName = 'no_hit_page_queries_aggregation';
+export const noHitSearchConfiguration = {
+  name: noHitSearchRuleName,
+  type: 'nohits_queries',
+  collection: 'pages',
+  event_type: 'search',
+  params: {
+    destination_collection: 'no_hits_queries',
+    expand_query: false,
+    limit: 1000,
+    capture_search_requests: true,
+  },
+} as AnalyticsRuleUpsertSchema;
 
 export const relationalDisplayFields = [
   'name',
@@ -91,6 +156,7 @@ export const PAGE_TYPES = [
   'PublicNotice',
   'ElectionsPage',
   'BoardPage',
+  'Policy',
 ];
 
 export function toSearchableObj(

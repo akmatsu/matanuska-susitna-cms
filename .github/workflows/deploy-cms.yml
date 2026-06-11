@@ -45,6 +45,8 @@ jobs:
       REDIS_HOST: ${{ github.ref_name == 'stage' && secrets.STAGE_REDIS_HOST || secrets.REDIS_HOST }}
       REDIS_PORT: ${{ github.ref_name == 'stage' && secrets.STAGE_REDIS_PORT || secrets.REDIS_PORT }}
       REDIS_PASSWORD: ${{ github.ref_name == 'stage' && secrets.STAGE_REDIS_PASSWORD || secrets.REDIS_PASSWORD }}
+      TYPESENSE_NL_SEARCH_MODEL_API_KEY: ${{ github.ref_name == 'stage' && secrets.STAGE_TYPESENSE_NL_SEARCH_MODEL_API_KEY || secrets.TYPESENSE_NL_SEARCH_MODEL_API_KEY }}
+      TYPESENSE_NL_SEARCH_MODEL_API_URL: ${{ github.ref_name == 'stage' && secrets.STAGE_TYPESENSE_NL_SEARCH_MODEL_API_URL || secrets.TYPESENSE_NL_SEARCH_MODEL_API_URL }}
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -108,6 +110,8 @@ jobs:
           REDIS_HOST=${{env.REDIS_HOST}}
           REDIS_PORT=${{env.REDIS_PORT}}
           REDIS_PASSWORD=${{env.REDIS_PASSWORD}}
+          TYPESENSE_NL_SEARCH_MODEL_API_KEY=${{env.TYPESENSE_NL_SEARCH_MODEL_API_KEY}}
+          TYPESENSE_NL_SEARCH_MODEL_API_URL=${{env.TYPESENSE_NL_SEARCH_MODEL_API_URL}}
           EOT
 
       - uses: pnpm/action-setup@v4

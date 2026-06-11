@@ -5,15 +5,23 @@ import type {
 } from './types';
 import {
   COLLECTIONS,
+  noHitSearchConfiguration,
+  noHitSearchRuleName,
   PAGE_TYPES,
+  popularSearchConfiguration,
+  popularSearchRuleName,
   toSearchableObj,
   TYPESENSE_CLIENT,
   TYPESENSE_COLLECTIONS,
+  TYPESENSE_NL_SEARCH_MODEL_CONFIGURATION,
 } from '../utils/typesense';
 import { logger } from '../configs/logger';
 import { CollectionCreateSchema } from 'typesense/lib/Typesense/Collections';
 import { getSearchDataMany, ModelDelegateKey } from '../utils/draftUtils';
 import v from 'voca';
+
+const TYPESENSE_BATCH_SIZE = 250;
+const _runningTasks = new Set<string>();
 
 /** Create all registered typesense collections */
 export const createTypesenseCollections: RequestController =
@@ -28,6 +36,31 @@ export const createTypesenseCollections: RequestController =
         await _createCollection(collection);
         logger.info(`Collection ${collection.name} created successfully`);
       });
+
+      logger.info('Checking Analytics rules...');
+      const popularQueryRule = await TYPESENSE_CLIENT.analytics
+        .rules()
+        .retrieve(popularSearchRuleName);
+      if (!popularQueryRule.length) {
+        await TYPESENSE_CLIENT.analytics
+          .rules()
+          .upsert(popularSearchRuleName, popularSearchConfiguration);
+        logger.info('Rules for popular searches created successfully');
+      } else {
+        logger.info('Rules for popular searches already exist. Skipping...');
+      }
+
+      const noHitQueryRule = await TYPESENSE_CLIENT.analytics
+        .rules()
+        .retrieve(noHitSearchRuleName);
+      if (!noHitQueryRule.length) {
+        await TYPESENSE_CLIENT.analytics
+          .rules()
+          .upsert(noHitSearchRuleName, noHitSearchConfiguration);
+        logger.info('Rules for no-hit searches created successfully');
+      } else {
+        logger.info('Rules for no-hit searches already exist. Skipping...');
+      }
 
       return res.status(200).json({ message: 'Collections created.' });
     } catch (error: any) {
@@ -55,8 +88,16 @@ export const updateTypesenseSchema: RequestController =
 export const importPages: RequestControllerWithContext =
   (context) => async (_, res) => {
     try {
-      await _indexAllPages(context);
-      return res.status(200).json({ message: 'Pages imported.' });
+      const started = _runAsyncTask('typesense-import-pages', async () => {
+        await _indexAllPages(context);
+      });
+
+      if (!started)
+        return res
+          .status(409)
+          .json({ message: 'A typesense page import is already running.' });
+
+      return res.status(202).json({ message: 'Page import started.' });
     } catch (error: any) {
       logger.error(error, 'Error importing typesense pages collection');
       return res.status(500).json(error);
@@ -96,22 +137,142 @@ export const removeCollection: RequestController = () => async (req, res) => {
 export const reindexTypesense: RequestControllerWithContext =
   (context) => async (_, res) => {
     try {
-      await _forEachCollection(async (collection) => {
-        logger.info(`Starting reindex on ${collection.name}...`);
-        await _coordinateCollectionReset(collection, { recreate: true });
-        logger.info(`Successfully reset collection ${collection.name}...`);
-        await _indexAllPages(context);
-        logger.info(`Successfully reindexed collection ${collection.name}...`);
+      const started = _runAsyncTask('typesense-reindex', async () => {
+        await _forEachCollection(async (collection) => {
+          logger.info(`Starting reindex on ${collection.name}...`);
+          await _coordinateCollectionReset(collection, { recreate: true });
+          logger.info(`Successfully reset collection ${collection.name}...`);
+          await _indexAllPages(context);
+          logger.info(
+            `Successfully reindexed collection ${collection.name}...`,
+          );
+        });
+
+        logger.info('Successfully reindexed all collections...');
       });
 
-      logger.info('Successfully reindexed all collections...');
+      if (!started)
+        return res
+          .status(409)
+          .json({ message: 'A typesense reindex is already running.' });
 
-      return res
-        .status(200)
-        .json({ message: 'Successfully reindexed all collections.' });
+      return res.status(202).json({ message: 'Typesense reindex started.' });
     } catch (error: any) {
       logger.error(error, 'Error reindexing Typesense');
       return res.status(500).json({ error: 'Failed to reindex Typesense' });
+    }
+  };
+
+/**
+ * Retrieves popular search queries from Typesense analytics collection.
+ */
+export const getPopularSearches: RequestController = () => async (req, res) => {
+  logger.info('Retrieving popular searches from Typesense...');
+  try {
+    const limit = Number(req.query.limit ?? 50);
+    const perPage = Number.isFinite(limit)
+      ? Math.min(Math.max(limit, 1), 250)
+      : 50;
+
+    const results = await TYPESENSE_CLIENT.collections('popular_queries')
+      .documents()
+      .search({
+        q: '',
+        query_by: 'q',
+        sort_by: 'count:desc',
+        per_page: perPage,
+        page: 1,
+      });
+
+    logger.info(results, 'Raw results from Typesense for popular searches');
+
+    const searches = (results.hits ?? []).map((hit: any) => ({
+      query: hit?.document?.q ?? '',
+      count: Number(hit?.document?.count ?? 0),
+    }));
+
+    return res.status(200).json({ searches });
+  } catch (error: any) {
+    logger.error(error, 'Error retrieving popular searches');
+    return res
+      .status(500)
+      .json({ message: 'Failed to retrieve popular searches' });
+  }
+};
+
+/**
+ * Retrieves no-hit search queries from Typesense analytics collection.
+ */
+export const getNoHitSearches: RequestController = () => async (req, res) => {
+  logger.info('Retrieving no-hit searches from Typesense...');
+  try {
+    const limit = Number(req.query.limit ?? 50);
+    const perPage = Number.isFinite(limit)
+      ? Math.min(Math.max(limit, 1), 250)
+      : 50;
+
+    const results = await TYPESENSE_CLIENT.collections('no_hits_queries')
+      .documents()
+      .search({
+        q: '',
+        query_by: 'q',
+        sort_by: 'count:desc',
+        per_page: perPage,
+        page: 1,
+      });
+
+    logger.info(results, 'Raw results from Typesense for no-hit searches');
+
+    const searches = (results.hits ?? []).map((hit: any) => ({
+      query: hit?.document?.q ?? '',
+      count: Number(hit?.document?.count ?? 0),
+    }));
+
+    return res.status(200).json({ searches });
+  } catch (error: any) {
+    logger.error(error, 'Error retrieving no-hit searches');
+    return res
+      .status(500)
+      .json({ message: 'Failed to retrieve no-hit searches' });
+  }
+};
+
+/**
+ * Creates or updates a Typesense natural language search model using environment variables.
+ */
+export const createNaturalLanguageSearchModel: RequestController =
+  () => async (_, res) => {
+    try {
+      const modelConfig = TYPESENSE_NL_SEARCH_MODEL_CONFIGURATION;
+
+      if (!modelConfig?.id)
+        return res.status(400).json({
+          message:
+            'Missing Typesense NL model config. Set id/model_name in src/utils/typesense/index.ts.',
+        });
+
+      const { id, ...updateSchema } = modelConfig;
+
+      const exists = await TYPESENSE_CLIENT.nlSearchModels(id)
+        .retrieve()
+        .then(() => true)
+        .catch((error: any) => {
+          if (error?.httpStatus === 404) return false;
+          throw error;
+        });
+
+      if (exists) {
+        await TYPESENSE_CLIENT.nlSearchModels(id).update(updateSchema);
+        logger.info(`Updated Typesense NL search model ${id}`);
+        return res.status(200).json({ message: `Model ${id} updated.` });
+      }
+
+      await TYPESENSE_CLIENT.nlSearchModels().create(modelConfig);
+      logger.info(`Created Typesense NL search model ${id}`);
+      return res.status(201).json({ message: `Model ${id} created.` });
+    } catch (error: any) {
+      logger.error(error, 'Error creating/updating Typesense NL search model');
+      return res.status(500).json(error);
     }
   };
 
@@ -164,7 +325,7 @@ async function _indexAllPages(context: CommonContext) {
 
     const docs = items.map((item) => toSearchableObj(item, type, appendId));
 
-    await _addDocsToCollection(TYPESENSE_COLLECTIONS.PAGES, docs);
+    await _addDocsToCollectionInBatches(TYPESENSE_COLLECTIONS.PAGES, docs);
   });
 }
 
@@ -184,6 +345,35 @@ function _addDocsToCollection(name: string, docs: any) {
   return TYPESENSE_CLIENT.collections(name)
     .documents()
     .import(docs, { action: 'upsert' });
+}
+
+async function _addDocsToCollectionInBatches(
+  name: string,
+  docs: unknown[],
+  batchSize = TYPESENSE_BATCH_SIZE,
+) {
+  for (let i = 0; i < docs.length; i += batchSize) {
+    const batch = docs.slice(i, i + batchSize);
+    await _addDocsToCollection(name, batch);
+  }
+}
+
+function _runAsyncTask(taskName: string, task: () => Promise<void>) {
+  if (_runningTasks.has(taskName)) return false;
+
+  // TYPESENSE_CLIENT.analytics.rules().upsert(popularSearchRuleName,);
+
+  _runningTasks.add(taskName);
+  void Promise.resolve()
+    .then(task)
+    .catch((error) => {
+      logger.error(error, `Error while running async task ${taskName}`);
+    })
+    .finally(() => {
+      _runningTasks.delete(taskName);
+    });
+
+  return true;
 }
 
 function _deleteCollection(name: string) {

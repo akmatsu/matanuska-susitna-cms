@@ -1,3 +1,24 @@
+# [0.65.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.64.1...v0.65.0) (2026-06-05)
+
+
+### Features
+
+* added nl search capabilities and additional analytics rules ([aa6fa07](https://github.com/akmatsu/matanuska-susitna-cms/commit/aa6fa073e77ec2ece5ee8d4ae1678986fa5e6eec))
+
+## [0.64.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.64.0...v0.64.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* now importing to typesense in batches ([f88aafc](https://github.com/akmatsu/matanuska-susitna-cms/commit/f88aafc95767b9a3475accdf769cf51bdd6c2593))
+
+# [0.64.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.63.0...v0.64.0) (2026-06-04)
+
+
+### Features
+
+* added autoembedding fields to typesense ([71360ba](https://github.com/akmatsu/matanuska-susitna-cms/commit/71360ba33f2dc789c1d27941031aa21c8daaef0d))
+
 # [0.63.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.62.0...v0.63.0) (2026-05-21)
 
 
