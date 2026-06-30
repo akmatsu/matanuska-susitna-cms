@@ -316,6 +316,7 @@ model AssemblyDistrict {
   owner                                          User?                     @relation("AssemblyDistrict_owner", fields: [ownerId], references: [id])
   ownerId                                        String?                   @map("owner")
   body                                           String?
+  content                                        Json?
   tags                                           Tag[]                     @relation("AssemblyDistrict_tags")
   userGroups                                     UserGroup[]               @relation("AssemblyDistrict_userGroups")
   actions                                        InternalLink[]            @relation("AssemblyDistrict_actions")
@@ -401,6 +402,7 @@ model AssemblyDistrictVersion {
   owner             User?              @relation("AssemblyDistrictVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("AssemblyDistrictVersion_tags")
   userGroups        UserGroup[]        @relation("AssemblyDistrictVersion_userGroups")
   actions           InternalLink[]     @relation("AssemblyDistrictVersion_actions")
@@ -458,6 +460,7 @@ model AssemblyDistrictDraft {
   owner             User?              @relation("AssemblyDistrictDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("AssemblyDistrictDraft_tags")
   userGroups        UserGroup[]        @relation("AssemblyDistrictDraft_userGroups")
   actions           InternalLink[]     @relation("AssemblyDistrictDraft_actions")
@@ -513,6 +516,7 @@ model Board {
   owner                               User?                     @relation("Board_owner", fields: [ownerId], references: [id])
   ownerId                             String?                   @map("owner")
   body                                String?
+  content                             Json?
   tags                                Tag[]                     @relation("Board_tags")
   userGroups                          UserGroup[]               @relation("Board_userGroups")
   actions                             InternalLink[]            @relation("Board_actions")
@@ -589,6 +593,7 @@ model BoardVersion {
   owner                        User?              @relation("BoardVersion_owner", fields: [ownerId], references: [id])
   ownerId                      String?            @map("owner")
   body                         String?
+  content                      Json?
   tags                         Tag[]              @relation("BoardVersion_tags")
   userGroups                   UserGroup[]        @relation("BoardVersion_userGroups")
   actions                      InternalLink[]     @relation("BoardVersion_actions")
@@ -646,6 +651,7 @@ model BoardDraft {
   owner                        User?              @relation("BoardDraft_owner", fields: [ownerId], references: [id])
   ownerId                      String?            @map("owner")
   body                         String?
+  content                      Json?
   tags                         Tag[]              @relation("BoardDraft_tags")
   userGroups                   UserGroup[]        @relation("BoardDraft_userGroups")
   actions                      InternalLink[]     @relation("BoardDraft_actions")
@@ -701,6 +707,7 @@ model Community {
   owner                                    User?                     @relation("Community_owner", fields: [ownerId], references: [id])
   ownerId                                  String?                   @map("owner")
   body                                     String?
+  content                                  Json?
   tags                                     Tag[]                     @relation("Community_tags")
   userGroups                               UserGroup[]               @relation("Community_userGroups")
   actions                                  InternalLink[]            @relation("Community_actions")
@@ -774,6 +781,7 @@ model CommunityVersion {
   owner             User?              @relation("CommunityVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("CommunityVersion_tags")
   userGroups        UserGroup[]        @relation("CommunityVersion_userGroups")
   actions           InternalLink[]     @relation("CommunityVersion_actions")
@@ -819,6 +827,7 @@ model CommunityDraft {
   owner             User?              @relation("CommunityDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("CommunityDraft_tags")
   userGroups        UserGroup[]        @relation("CommunityDraft_userGroups")
   actions           InternalLink[]     @relation("CommunityDraft_actions")
@@ -862,6 +871,7 @@ model Facility {
   owner                                   User?                     @relation("Facility_owner", fields: [ownerId], references: [id])
   ownerId                                 String?                   @map("owner")
   body                                    String?
+  content                                 Json?
   tags                                    Tag[]                     @relation("Facility_tags")
   userGroups                              UserGroup[]               @relation("Facility_userGroups")
   actions                                 InternalLink[]            @relation("Facility_actions")
@@ -931,6 +941,7 @@ model FacilityVersion {
   owner             User?              @relation("FacilityVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("FacilityVersion_tags")
   userGroups        UserGroup[]        @relation("FacilityVersion_userGroups")
   actions           InternalLink[]     @relation("FacilityVersion_actions")
@@ -978,6 +989,7 @@ model FacilityDraft {
   owner             User?              @relation("FacilityDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("FacilityDraft_tags")
   userGroups        UserGroup[]        @relation("FacilityDraft_userGroups")
   actions           InternalLink[]     @relation("FacilityDraft_actions")
@@ -1023,6 +1035,7 @@ model OrgUnit {
   owner                                 User?                     @relation("OrgUnit_owner", fields: [ownerId], references: [id])
   ownerId                               String?                   @map("owner")
   body                                  String?
+  content                               Json?
   tags                                  Tag[]                     @relation("OrgUnit_tags")
   userGroups                            UserGroup[]               @relation("OrgUnit_userGroups")
   actions                               InternalLink[]            @relation("OrgUnit_actions")
@@ -1107,6 +1120,7 @@ model OrgUnitVersion {
   owner             User?              @relation("OrgUnitVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("OrgUnitVersion_tags")
   userGroups        UserGroup[]        @relation("OrgUnitVersion_userGroups")
   actions           InternalLink[]     @relation("OrgUnitVersion_actions")
@@ -1159,6 +1173,7 @@ model OrgUnitDraft {
   owner             User?              @relation("OrgUnitDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("OrgUnitDraft_tags")
   userGroups        UserGroup[]        @relation("OrgUnitDraft_userGroups")
   actions           InternalLink[]     @relation("OrgUnitDraft_actions")
@@ -1209,6 +1224,7 @@ model Park {
   owner                              User?                     @relation("Park_owner", fields: [ownerId], references: [id])
   ownerId                            String?                   @map("owner")
   body                               String?
+  content                            Json?
   tags                               Tag[]                     @relation("Park_tags")
   userGroups                         UserGroup[]               @relation("Park_userGroups")
   actions                            InternalLink[]            @relation("Park_actions")
@@ -1278,6 +1294,7 @@ model ParkVersion {
   owner             User?              @relation("ParkVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("ParkVersion_tags")
   userGroups        UserGroup[]        @relation("ParkVersion_userGroups")
   actions           InternalLink[]     @relation("ParkVersion_actions")
@@ -1324,6 +1341,7 @@ model ParkDraft {
   owner             User?              @relation("ParkDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("ParkDraft_tags")
   userGroups        UserGroup[]        @relation("ParkDraft_userGroups")
   actions           InternalLink[]     @relation("ParkDraft_actions")
@@ -1368,6 +1386,7 @@ model PublicNotice {
   owner                                      User?                     @relation("PublicNotice_owner", fields: [ownerId], references: [id])
   ownerId                                    String?                   @map("owner")
   body                                       String?
+  content                                    Json?
   tags                                       Tag[]                     @relation("PublicNotice_tags")
   userGroups                                 UserGroup[]               @relation("PublicNotice_userGroups")
   actions                                    InternalLink[]            @relation("PublicNotice_actions")
@@ -1444,6 +1463,7 @@ model PublicNoticeVersion {
   owner             User?              @relation("PublicNoticeVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("PublicNoticeVersion_tags")
   userGroups        UserGroup[]        @relation("PublicNoticeVersion_userGroups")
   actions           InternalLink[]     @relation("PublicNoticeVersion_actions")
@@ -1492,6 +1512,7 @@ model PublicNoticeDraft {
   owner             User?              @relation("PublicNoticeDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("PublicNoticeDraft_tags")
   userGroups        UserGroup[]        @relation("PublicNoticeDraft_userGroups")
   actions           InternalLink[]     @relation("PublicNoticeDraft_actions")
@@ -1538,6 +1559,7 @@ model Service {
   owner                                 User?                     @relation("Service_owner", fields: [ownerId], references: [id])
   ownerId                               String?                   @map("owner")
   body                                  String?
+  content                               Json?
   tags                                  Tag[]                     @relation("Service_tags")
   userGroups                            UserGroup[]               @relation("Service_userGroups")
   primaryAction                         ExternalLink?             @relation("Service_primaryAction", fields: [primaryActionId], references: [id])
@@ -1617,6 +1639,7 @@ model ServiceVersion {
   owner             User?              @relation("ServiceVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("ServiceVersion_tags")
   userGroups        UserGroup[]        @relation("ServiceVersion_userGroups")
   primaryAction     ExternalLink?      @relation("ServiceVersion_primaryAction", fields: [primaryActionId], references: [id])
@@ -1668,6 +1691,7 @@ model ServiceDraft {
   owner             User?              @relation("ServiceDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("ServiceDraft_tags")
   userGroups        UserGroup[]        @relation("ServiceDraft_userGroups")
   primaryAction     ExternalLink?      @relation("ServiceDraft_primaryAction", fields: [primaryActionId], references: [id])
@@ -1717,6 +1741,7 @@ model Topic {
   owner                               User?                     @relation("Topic_owner", fields: [ownerId], references: [id])
   ownerId                             String?                   @map("owner")
   body                                String?
+  content                             Json?
   tags                                Tag[]                     @relation("Topic_tags")
   userGroups                          UserGroup[]               @relation("Topic_userGroups")
   actions                             InternalLink[]            @relation("Topic_actions")
@@ -1790,6 +1815,7 @@ model TopicVersion {
   owner             User?              @relation("TopicVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("TopicVersion_tags")
   userGroups        UserGroup[]        @relation("TopicVersion_userGroups")
   actions           InternalLink[]     @relation("TopicVersion_actions")
@@ -1835,6 +1861,7 @@ model TopicDraft {
   owner             User?              @relation("TopicDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("TopicDraft_tags")
   userGroups        UserGroup[]        @relation("TopicDraft_userGroups")
   actions           InternalLink[]     @relation("TopicDraft_actions")
@@ -1878,6 +1905,7 @@ model Trail {
   owner                               User?                     @relation("Trail_owner", fields: [ownerId], references: [id])
   ownerId                             String?                   @map("owner")
   body                                String?
+  content                             Json?
   tags                                Tag[]                     @relation("Trail_tags")
   userGroups                          UserGroup[]               @relation("Trail_userGroups")
   actions                             InternalLink[]            @relation("Trail_actions")
@@ -1966,6 +1994,7 @@ model TrailVersion {
   owner              User?              @relation("TrailVersion_owner", fields: [ownerId], references: [id])
   ownerId            String?            @map("owner")
   body               String?
+  content            Json?
   tags               Tag[]              @relation("TrailVersion_tags")
   userGroups         UserGroup[]        @relation("TrailVersion_userGroups")
   actions            InternalLink[]     @relation("TrailVersion_actions")
@@ -2033,6 +2062,7 @@ model TrailDraft {
   owner              User?              @relation("TrailDraft_owner", fields: [ownerId], references: [id])
   ownerId            String?            @map("owner")
   body               String?
+  content            Json?
   tags               Tag[]              @relation("TrailDraft_tags")
   userGroups         UserGroup[]        @relation("TrailDraft_userGroups")
   actions            InternalLink[]     @relation("TrailDraft_actions")
@@ -2098,6 +2128,7 @@ model Plan {
   owner                              User?                     @relation("Plan_owner", fields: [ownerId], references: [id])
   ownerId                            String?                   @map("owner")
   body                               String?
+  content                            Json?
   tags                               Tag[]                     @relation("Plan_tags")
   userGroups                         UserGroup[]               @relation("Plan_userGroups")
   actions                            InternalLink[]            @relation("Plan_actions")
@@ -2191,6 +2222,7 @@ model PlanVersion {
   owner                         User?              @relation("PlanVersion_owner", fields: [ownerId], references: [id])
   ownerId                       String?            @map("owner")
   body                          String?
+  content                       Json?
   tags                          Tag[]              @relation("PlanVersion_tags")
   userGroups                    UserGroup[]        @relation("PlanVersion_userGroups")
   actions                       InternalLink[]     @relation("PlanVersion_actions")
@@ -2252,6 +2284,7 @@ model PlanDraft {
   owner                         User?              @relation("PlanDraft_owner", fields: [ownerId], references: [id])
   ownerId                       String?            @map("owner")
   body                          String?
+  content                       Json?
   tags                          Tag[]              @relation("PlanDraft_tags")
   userGroups                    UserGroup[]        @relation("PlanDraft_userGroups")
   actions                       InternalLink[]     @relation("PlanDraft_actions")
@@ -2341,6 +2374,7 @@ model Event {
   owner                               User?                     @relation("Event_owner", fields: [ownerId], references: [id])
   ownerId                             String?                   @map("owner")
   body                                String?
+  content                             Json?
   tags                                Tag[]                     @relation("Event_tags")
   userGroups                          UserGroup[]               @relation("Event_userGroups")
   actions                             InternalLink[]            @relation("Event_actions")
@@ -2415,6 +2449,7 @@ model EventDraft {
   owner             User?              @relation("EventDraft_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("EventDraft_tags")
   userGroups        UserGroup[]        @relation("EventDraft_userGroups")
   actions           InternalLink[]     @relation("EventDraft_actions")
@@ -2461,6 +2496,7 @@ model EventVersion {
   owner             User?              @relation("EventVersion_owner", fields: [ownerId], references: [id])
   ownerId           String?            @map("owner")
   body              String?
+  content           Json?
   tags              Tag[]              @relation("EventVersion_tags")
   userGroups        UserGroup[]        @relation("EventVersion_userGroups")
   actions           InternalLink[]     @relation("EventVersion_actions")
@@ -2523,6 +2559,7 @@ model Policy {
   owner                       User?           @relation("Policy_owner", fields: [ownerId], references: [id])
   ownerId                     String?         @map("owner")
   body                        String?
+  content                     Json?
   tags                        Tag[]           @relation("Policy_tags")
   userGroups                  UserGroup[]     @relation("Policy_userGroups")
   actions                     InternalLink[]  @relation("Policy_actions")
@@ -2559,6 +2596,7 @@ model PolicyVersion {
   owner       User?          @relation("PolicyVersion_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
+  content     Json?
   tags        Tag[]          @relation("PolicyVersion_tags")
   userGroups  UserGroup[]    @relation("PolicyVersion_userGroups")
   actions     InternalLink[] @relation("PolicyVersion_actions")
@@ -2589,6 +2627,7 @@ model PolicyDraft {
   owner       User?          @relation("PolicyDraft_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
+  content     Json?
   tags        Tag[]          @relation("PolicyDraft_tags")
   userGroups  UserGroup[]    @relation("PolicyDraft_userGroups")
   actions     InternalLink[] @relation("PolicyDraft_actions")
@@ -2617,6 +2656,7 @@ model Post {
   owner            User?          @relation("Post_owner", fields: [ownerId], references: [id])
   ownerId          String?        @map("owner")
   body             String?
+  content          Json?
   tags             Tag[]          @relation("Post_tags")
   userGroups       UserGroup[]    @relation("Post_userGroups")
   actions          InternalLink[] @relation("Post_actions")
@@ -2655,6 +2695,7 @@ model PostVersion {
   owner       User?          @relation("PostVersion_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
+  content     Json?
   tags        Tag[]          @relation("PostVersion_tags")
   userGroups  UserGroup[]    @relation("PostVersion_userGroups")
   actions     InternalLink[] @relation("PostVersion_actions")
@@ -2690,6 +2731,7 @@ model PostDraft {
   owner       User?          @relation("PostDraft_owner", fields: [ownerId], references: [id])
   ownerId     String?        @map("owner")
   body        String?
+  content     Json?
   tags        Tag[]          @relation("PostDraft_tags")
   userGroups  UserGroup[]    @relation("PostDraft_userGroups")
   actions     InternalLink[] @relation("PostDraft_actions")

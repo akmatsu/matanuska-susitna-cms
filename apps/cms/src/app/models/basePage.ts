@@ -12,13 +12,19 @@ import {
   titleAndDescription,
   userGroups,
 } from '../fieldUtils';
-import { checkbox, relationship, text, virtual } from '@keystone-6/core/fields';
+import {
+  checkbox,
+  json,
+  relationship,
+  text,
+  virtual,
+} from '@keystone-6/core/fields';
 import { belongsToGroup, isContentManager, isOwner } from '../access';
 import { singular } from 'pluralize';
 import { blueHarvestImage } from '../../components/customFields/blueHarvestImage';
 import { customText } from '../../components/customFields/Markdown';
 import { relationshipController } from '../draftAndVersionFactory/DraftAndVersionsFactory';
-// import { Checkbox } from '@keystone-6/core/fields';
+import { markdownToTipTapJson } from '../../utils/toTipTap/markdownToTipTapJson';
 
 export function basePage(
   listNamePlural: string,
@@ -73,7 +79,39 @@ export function basePage(
     }),
 
     owner,
-    body: customText(opts?.customTextOpts),
+    // body: customText(opts?.customTextOpts),
+    body: customText({
+      ...opts?.customTextOpts,
+      hooks: {
+        ...opts?.customTextOpts?.hooks,
+        afterOperation: async (args) => {
+          await opts?.customTextOpts?.hooks?.afterOperation?.(args);
+          const markdown = args.item?.body as string | undefined | null;
+          if (!markdown) return;
+          const json = await markdownToTipTapJson(markdown as string);
+
+          await args.context.sudo().db[args.listKey].updateOne({
+            where: { id: args.item?.id.toString() },
+            data: {
+              content: json,
+            },
+          });
+        },
+      },
+    }),
+    content: json({
+      ui: {
+        itemView: {
+          fieldMode: 'read',
+        },
+        createView: {
+          fieldMode: 'hidden',
+        },
+        listView: {
+          fieldMode: 'hidden',
+        },
+      },
+    }),
     tags: tags(listNamePlural),
     userGroups: userGroups(),
 

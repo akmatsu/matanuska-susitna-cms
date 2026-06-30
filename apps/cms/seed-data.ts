@@ -82,10 +82,10 @@ async function insertSeedData() {
     );
 
     try {
-      fakeServices.forEach(async (data) => {
+      for (const data of fakeServices) {
         logger.info(data);
-        return service.createOne({ data });
-      });
+        await service.createOne({ data });
+      }
     } catch (error) {
       logger.error(error, 'Error creating services');
     }
@@ -169,10 +169,10 @@ async function insertSeedData() {
     );
 
     try {
-      fakeBoards.forEach(async (data) => {
+      for (const data of fakeBoards) {
         logger.info(data);
-        return board.createOne({ data });
-      });
+        await board.createOne({ data });
+      }
     } catch (error) {
       logger.error(error, 'Error creating boards');
     }
