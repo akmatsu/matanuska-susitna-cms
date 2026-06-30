@@ -1,3 +1,10 @@
+## [0.65.1](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.65.0...v0.65.1) (2026-06-08)
+
+
+### Bug Fixes
+
+* fixed policy page indexing ([e88d9aa](https://github.com/akmatsu/matanuska-susitna-cms/commit/e88d9aa87f10c4241ab612d76bd93d5bd68be73f))
+
 # [0.65.0](https://github.com/akmatsu/matanuska-susitna-cms/compare/v0.64.1...v0.65.0) (2026-06-05)
 
 
