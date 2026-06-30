@@ -1,5 +1,5 @@
 import { Node, mergeAttributes } from '@tiptap/core';
-import type { Directive } from 'remark-directive';
+import { visit } from 'unist-util-visit';
 
 export interface IframeOptions {
   HTMLAttributes: Record<string, any>;
@@ -233,9 +233,7 @@ export const IframeExtension = Node.create<IframeOptions>({
  */
 export function remarkIframeDirective() {
   return (tree: any) => {
-    const { visit } = require('unist-util-visit');
-
-    visit(tree, 'leafDirective', (node: Directive) => {
+    visit(tree, 'leafDirective', (node) => {
       if (node.name !== 'iframe') return;
 
       const attrs = node.attributes as Record<string, any>;

@@ -80,7 +80,7 @@ async function insertSeedData() {
         count: 20,
       },
     );
-    ``;
+
     try {
       for (const data of fakeServices) {
         logger.info(data);
