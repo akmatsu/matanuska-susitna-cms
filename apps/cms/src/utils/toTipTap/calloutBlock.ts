@@ -22,14 +22,12 @@ export const CalloutBlock = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    logger.info(HTMLAttributes, 'Rendering CalloutBlock with attributes:');
     return ['div', { ...HTMLAttributes, 'data-callout-block': '' }, 0];
   },
 });
 
 // src/utils/remarkHandlers/calloutDirective.ts
 import { visit } from 'unist-util-visit';
-import { logger } from '../../configs/logger';
 
 export function remarkCalloutDirective() {
   return (tree: any) => {

@@ -1,36 +1,16 @@
 import { mergeAttributes, Node } from '@tiptap/core';
 import { visit } from 'unist-util-visit';
-import { logger } from '../../configs/logger';
 
 export const StepList = Node.create({
   name: 'stepList',
   group: 'block',
   content: 'step+',
 
-  // addAttributes() {
-  //   return {
-  //     order: {
-  //       default: 1,
-  //       parseHTML: (el) => el.getAttribute('start') || 1,
-  //       renderHTML: (attrs) =>
-  //         attrs.order === 1 ? {} : { start: attrs.order },
-  //     },
-  //     spread: {
-  //       default: false,
-  //       parseHTML: (el) => el.getAttribute('data-spread') === 'true',
-  //       renderHTML: (attrs) => ({
-  //         'data-spread': attrs.spread ? 'true' : 'false',
-  //       }),
-  //     },
-  //   };
-  // },
-
   parseHTML() {
     return [{ tag: 'ol.process' }];
   },
 
   renderHTML({ HTMLAttributes }) {
-    logger.info(HTMLAttributes, 'Rendering StepList with attributes:');
     return [
       'ol',
       mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, {
