@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
-import { TYPESENSE_CLIENT } from '../../src/utils/typesense';
 import { Button } from '@keystone-ui/button';
 import { useToasts } from '@keystone-ui/toast';
-import { logger } from '../../src/configs/logger';
 
 export default function CustomPage() {
   const [loading, setLoading] = useState(true);
@@ -38,12 +36,12 @@ export default function CustomPage() {
   async function getHealth() {
     try {
       setLoading(true);
-      const res = await TYPESENSE_CLIENT.health.retrieve();
-      if (res) {
-        setHealth(true);
+      const res = await fetch('/typesense/health');
+      if (res.ok) {
+        const data = await res.json();
+        setHealth(data?.healthy ?? false);
       }
     } catch (err) {
-      logger.error(err, 'Error getting Typesense health');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to get Typesense health',
@@ -72,7 +70,6 @@ export default function CustomPage() {
         message: 'Collections created successfully',
       });
     } catch (err) {
-      logger.error(err, 'Error creating collections:');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to create collections',
@@ -104,7 +101,6 @@ export default function CustomPage() {
         message: 'Collection removed successfully',
       });
     } catch (err) {
-      logger.error(err, 'Error removing collection:');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to remove collection',
@@ -132,7 +128,6 @@ export default function CustomPage() {
         message: 'Schema updated successfully',
       });
     } catch (err) {
-      logger.error(err, 'Error updating schema');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to update schema',
@@ -171,7 +166,6 @@ export default function CustomPage() {
         message: 'Pages are importing in the background.',
       });
     } catch (err) {
-      logger.error(err, 'Error importing pages:');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to import pages',
@@ -235,7 +229,6 @@ export default function CustomPage() {
 
       setPopularSearches(normalized);
     } catch (err) {
-      logger.error(err, 'Error retrieving popular searches');
       setPopularSearches([]);
     }
   }
@@ -254,7 +247,6 @@ export default function CustomPage() {
       const normalized = normalizeSearches(data);
       setNoHitSearches(normalized);
     } catch (err) {
-      logger.error(err, 'Error retrieving no-hit searches');
       setNoHitSearches([]);
     }
   }
@@ -298,7 +290,6 @@ export default function CustomPage() {
           'Natural language model was created or updated successfully.',
       });
     } catch (err) {
-      logger.error(err, 'Error creating/updating natural language model');
       toasts.addToast({
         tone: 'negative',
         title: 'Failed to sync natural language model',

@@ -200,6 +200,20 @@ export const getPopularSearches: RequestController = () => async (req, res) => {
   }
 };
 
+export const getHealth: RequestController = () => async (_, res) => {
+  try {
+    const health = await TYPESENSE_CLIENT.health.retrieve();
+    return res.status(200).json({ healthy: !!health });
+  } catch (error: any) {
+    return res
+      .status(500)
+      .json({
+        healthy: false,
+        error: error?.message ?? 'Failed to get health',
+      });
+  }
+};
+
 /**
  * Retrieves no-hit search queries from Typesense analytics collection.
  */

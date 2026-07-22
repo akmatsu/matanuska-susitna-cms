@@ -8,6 +8,7 @@ import { json, type Express } from 'express';
 import {
   createNaturalLanguageSearchModel,
   createTypesenseCollections,
+  getHealth,
   getNoHitSearches,
   getPopularSearches,
   importPages,
@@ -43,6 +44,7 @@ export const routes: (
   );
   app.get('/typesense/popular-searches', json(), getPopularSearches());
   app.get('/typesense/no-hit-searches', json(), getNoHitSearches());
+  app.get('/typesense/health', json(), getHealth());
   app.post('/:list/:id/drafts', json(), createDraft(commonContext));
   app.patch('/publish/:list/:id', json(), publishDraft(commonContext));
   app.patch('/republish/:list/:id', json(), republishVersion(commonContext));
