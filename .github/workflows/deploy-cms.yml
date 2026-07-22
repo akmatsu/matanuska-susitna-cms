@@ -122,7 +122,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: 'pnpm'
 
       - name: Install Dependencies
@@ -154,13 +154,8 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-            # Load nvm
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
             # Use Node.js
-            nvm use 22.21.0
+            nvm use 24.18.0
             
             # Create temp and backup directory if they don't exist
             mkdir -p ./cms/active
