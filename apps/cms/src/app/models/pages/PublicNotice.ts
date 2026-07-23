@@ -33,6 +33,7 @@ const {
           itemView: {
             fieldPosition: 'sidebar',
           },
+          views: './src/components/customFields/publicNoticeType/views.tsx',
         },
       }),
       urgency: select({
