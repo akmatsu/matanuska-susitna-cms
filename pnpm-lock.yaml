@@ -80,9 +80,15 @@ importers:
       '@keystone-ui/button':
         specifier: ^7.0.2
         version: 7.0.2(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))
+      '@keystone-ui/core':
+        specifier: ^6.0.0
+        version: 6.0.0(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@keystone-ui/fields':
         specifier: ^7.2.0
         version: 7.2.0(@types/react@18.3.27)
+      '@keystone-ui/segmented-control':
+        specifier: ^8.0.0
+        version: 8.0.0(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@milkdown/kit':
         specifier: ^7.17.3
         version: 7.17.3(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.8)(typescript@5.9.3)
@@ -1595,6 +1601,12 @@ packages:
       react: ^18.1.0
       react-dom: ^18.1.0
 
+  '@keystone-ui/core@6.0.0':
+    resolution: {integrity: sha512-bqPYTIwhxLy+ghVnm4CUVN+F7XjW6EZWJ8pD5i5E2MULb115HM1D3hppek1TMXhi6upeygSx03seGt0AtdTlzg==}
+    peerDependencies:
+      react: ^19.2.5
+      react-dom: ^19.2.5
+
   '@keystone-ui/fields@7.2.0':
     resolution: {integrity: sha512-9SXKzuHeuyxwJeGhl01oC8f9IzF5SFOFTIHTDEATMgbM/HFAKC8ygR74ZcRcwyr8rlnmmCMB2nQx1CGDUuEBVQ==}
 
@@ -1632,6 +1644,11 @@ packages:
     resolution: {integrity: sha512-3ty1Civv9tw2e0hLEOMUWgc+el2Jy85PigPn9BcudIF/WFcr9RS+Y8QrCqYSzulY6/G2nOYYAGWWL1fa6jOGcQ==}
     peerDependencies:
       react: ^18.2.0
+
+  '@keystone-ui/segmented-control@8.0.0':
+    resolution: {integrity: sha512-KctMaMiXGXLyQoO569rgvNqTjIbf9a60UOA51u1bQQ05IhiPUXYrfRdlgjjL6hN24CdSRULGIByLOWwNzVZCiw==}
+    peerDependencies:
+      react: ^19.2.5
 
   '@keystone-ui/toast@6.0.2':
     resolution: {integrity: sha512-Q/0UNO58SgnIwmDDsVVjDmPAuM+xWEvXJSx/46FPAKNgHbPZYNewhuW+AHn8iCcP5xScByAIcqql5FRXKBxidA==}
@@ -9494,6 +9511,18 @@ snapshots:
       - '@types/react'
       - supports-color
 
+  '@keystone-ui/core@6.0.0(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@emotion/react': 11.14.0(@types/react@18.3.27)(react@18.3.1)
+      '@types/facepaint': 1.2.5
+      facepaint: 1.2.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
+
   '@keystone-ui/fields@7.2.0(@types/react@18.3.27)':
     dependencies:
       '@babel/runtime': 7.28.4
@@ -9597,6 +9626,16 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.28.4
       '@keystone-ui/core': 5.0.2(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - react-dom
+      - supports-color
+
+  '@keystone-ui/segmented-control@8.0.0(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      '@keystone-ui/core': 6.0.0(@types/react@18.3.27)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
     transitivePeerDependencies:
       - '@types/react'
