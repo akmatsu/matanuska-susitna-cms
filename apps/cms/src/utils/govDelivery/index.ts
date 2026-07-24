@@ -2,7 +2,20 @@ import axios from 'axios';
 import { logger } from '../../configs/logger';
 import { XMLParser } from 'fast-xml-parser';
 
-export async function getGovDeliveryTopics() {
+export interface GovDeliveryTopic {
+  name: string;
+  'short-name': string;
+  code: string;
+  description?: string | null;
+  'wireless-enabled': boolean;
+  visibility: string;
+  link?: string | null;
+  'topic-uri': string;
+}
+
+export async function getGovDeliveryTopics(): Promise<
+  GovDeliveryTopic[] | undefined
+> {
   try {
     // Fetch GovDelivery topics here
     const govDeliveryUrl = new URL(
