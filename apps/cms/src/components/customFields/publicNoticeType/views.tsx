@@ -20,6 +20,7 @@ import {
   Select,
 } from '@keystone-ui/fields';
 import { SegmentedControl } from '@keystone-ui/segmented-control';
+import { GovDeliveryTopic } from '../../../utils/govDelivery';
 
 export const Field = ({
   field,
@@ -32,20 +33,16 @@ export const Field = ({
   const [options, setOptions] = useState<Option[]>([]);
 
   async function getOptions() {
-    const options = [
-      {
-        label: 'Option 1',
-        value: 'option-1',
-      },
-      {
-        label: 'Option 2',
-        value: 'option-2',
-      },
-      {
-        label: 'Option 3',
-        value: 'option-3',
-      },
-    ];
+    const res = await fetch('/api/emails/topics');
+    if (!res.ok) throw new Error('Failed to fetch options');
+    const data = (await res.json()) as { topics: GovDeliveryTopic[] };
+
+    const options = data.topics.map((topic) => ({
+      label: topic.name,
+      value: topic.code,
+    }));
+
+    console.log(options);
 
     setOptions(options);
   }
