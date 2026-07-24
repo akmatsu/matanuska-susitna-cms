@@ -21,6 +21,7 @@ import {
   republishVersion,
 } from '../controllers/DraftAndVersionControllers';
 import { countPageView } from '../controllers/pageViewsController';
+import { getGovDeliveryTopics } from '../utils/govDelivery';
 
 export const routes: (
   app: Express,
@@ -47,4 +48,9 @@ export const routes: (
   app.patch('/publish/:list/:id', json(), publishDraft(commonContext));
   app.patch('/republish/:list/:id', json(), republishVersion(commonContext));
   app.patch('/api/page-views', json(), countPageView(commonContext));
+  app.get('/api/emails/topics', json(), async (req, res) => {
+    const topics = await getGovDeliveryTopics();
+
+    res.json({ topics });
+  });
 };
