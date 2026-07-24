@@ -6076,7 +6076,7 @@ input PublicNoticeWhereInput {
   hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  type: StringNullableFilter
+  type: StringFilter
   urgency: IntFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
@@ -6346,7 +6346,7 @@ input PublicNoticeVersionWhereInput {
   hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  type: StringNullableFilter
+  type: StringFilter
   urgency: IntFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
@@ -6571,7 +6571,7 @@ input PublicNoticeDraftWhereInput {
   hideSideNav: BooleanFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
-  type: StringNullableFilter
+  type: StringFilter
   urgency: IntFilter
   effectiveDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter

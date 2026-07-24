@@ -3,7 +3,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
-import { relationship, select, timestamp } from '@keystone-6/core/fields';
+import { relationship, select, text, timestamp } from '@keystone-6/core/fields';
 import { createAndSendBulletin } from '../../../utils/emailUtils';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { basePage } from '../basePage';
@@ -17,18 +17,11 @@ const {
   (listNamePlural, opts) => {
     return {
       ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
-      type: select({
-        type: 'string',
+      type: text({
         defaultValue: 'AKMATSUGOV_PublicNotice',
-        options: [
-          { label: 'General', value: 'AKMATSUGOV_PublicNotice' },
-          { label: 'Air Quality Alerts', value: 'MSB_AirQuality' },
-          { label: 'Land Sales', value: 'AKMATSUGOV_CommunityDevelopment ' },
-          {
-            label: 'Road Construction & Closures',
-            value: 'MSB_RoadConstruction',
-          },
-        ],
+        validation: {
+          isRequired: true,
+        },
         ui: {
           itemView: {
             fieldPosition: 'sidebar',
