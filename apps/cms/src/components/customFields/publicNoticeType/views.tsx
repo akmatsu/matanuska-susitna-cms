@@ -9,18 +9,28 @@ import {
   FieldProps,
 } from '@keystone-6/core/types';
 import { Fragment, useEffect, useState } from 'react';
-import { Stack, Text } from '@keystone-ui/core';
-import { Button } from '@keystone-ui/button';
+import { Text } from '@keystone-ui/core';
 import {
   FieldContainer,
   FieldDescription,
   FieldLabel,
   MultiSelect,
-  Radio,
   Select,
 } from '@keystone-ui/fields';
-import { SegmentedControl } from '@keystone-ui/segmented-control';
 import { GovDeliveryTopic } from '../../../utils/govDelivery';
+
+async function fetchGovDeliveryOptions(): Promise<Option[]> {
+  const res = await fetch('/api/emails/topics');
+  if (!res.ok) {
+    throw new Error('Failed to fetch options');
+  }
+
+  const data = (await res.json()) as { topics: GovDeliveryTopic[] };
+  return data.topics.map((topic) => ({
+    label: topic.name,
+    value: topic.code,
+  }));
+}
 
 export const Field = ({
   field,
@@ -31,24 +41,25 @@ export const Field = ({
 }: FieldProps<typeof controller>) => {
   const [hasChanged, setHasChanged] = useState(false);
   const [options, setOptions] = useState<Option[]>([]);
-
-  async function getOptions() {
-    const res = await fetch('/api/emails/topics');
-    if (!res.ok) throw new Error('Failed to fetch options');
-    const data = (await res.json()) as { topics: GovDeliveryTopic[] };
-
-    const options = data.topics.map((topic) => ({
-      label: topic.name,
-      value: topic.code,
-    }));
-
-    console.log(options);
-
-    setOptions(options);
-  }
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
-    getOptions();
+    let mounted = true;
+
+    fetchGovDeliveryOptions()
+      .then((nextOptions) => {
+        if (!mounted) return;
+        setOptions(nextOptions);
+        setLoadError(null);
+      })
+      .catch((error: Error) => {
+        if (!mounted) return;
+        setLoadError(error.message);
+      });
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const validationMessage =
@@ -58,108 +69,35 @@ export const Field = ({
       </Text>
     ) : null;
   return (
-    <FieldContainer as={field.displayMode === 'select' ? 'div' : 'fieldset'}>
-      {field.displayMode === 'select' ? (
-        <Fragment>
-          <FieldLabel htmlFor={field.path}>{field.label}</FieldLabel>
-          <FieldDescription id={`${field.path}-description`}>
-            {field.description}
-          </FieldDescription>
-          <Select
-            id={field.path}
-            isClearable
-            autoFocus={autoFocus}
-            options={options}
-            isDisabled={onChange === undefined}
-            onChange={(newVal) => {
-              onChange?.({ ...value, value: newVal });
-              setHasChanged(true);
-            }}
-            value={value.value}
-            aria-describedby={
-              field.description === null
-                ? undefined
-                : `${field.path}-description`
-            }
-            portalMenu
-          />
-          {validationMessage}
-        </Fragment>
-      ) : field.displayMode === 'radio' ? (
-        <Fragment>
-          <FieldLabel as="legend">{field.label}</FieldLabel>
-          <FieldDescription id={`${field.path}-description`}>
-            {field.description}
-          </FieldDescription>
-          <Stack gap="small" marginTop={'small'}>
-            {options.map((option) => (
-              <Radio
-                // css={{ alignItems: 'center' }}
-                className="items-center"
-                key={option.value}
-                value={option.value}
-                checked={value.value?.value === option.value}
-                onChange={(event) => {
-                  if (event.target.checked) {
-                    onChange?.({ ...value, value: option });
-                    setHasChanged(true);
-                  }
-                }}
-              >
-                {option.label}
-              </Radio>
-            ))}
-            {value.value !== null &&
-              onChange !== undefined &&
-              !field.isRequired && (
-                <Button
-                  onClick={() => {
-                    onChange({ ...value, value: null });
-                    setHasChanged(true);
-                  }}
-                >
-                  Clear
-                </Button>
-              )}
-          </Stack>
-          {validationMessage}
-        </Fragment>
-      ) : (
-        <Fragment>
-          <FieldLabel as="legend">{field.label}</FieldLabel>
-          <FieldDescription id={`${field.path}-description`}>
-            {field.description}
-          </FieldDescription>
-          <Stack across gap="small" align="center">
-            <SegmentedControl
-              segments={options.map((x) => x.label)}
-              selectedIndex={
-                value.value
-                  ? options.findIndex((x) => x.value === value.value!.value)
-                  : undefined
-              }
-              isReadOnly={onChange === undefined}
-              onChange={(index) => {
-                onChange?.({ ...value, value: options[index] });
-                setHasChanged(true);
-              }}
-            />
-            {value.value !== null &&
-              onChange !== undefined &&
-              !field.isRequired && (
-                <Button
-                  onClick={() => {
-                    onChange({ ...value, value: null });
-                    setHasChanged(true);
-                  }}
-                >
-                  Clear
-                </Button>
-              )}
-          </Stack>
-          {validationMessage}
-        </Fragment>
-      )}
+    <FieldContainer>
+      <Fragment>
+        <FieldLabel htmlFor={field.path}>{field.label}</FieldLabel>
+        <FieldDescription id={`${field.path}-description`}>
+          {field.description}
+        </FieldDescription>
+        <Select
+          id={field.path}
+          isClearable
+          autoFocus={autoFocus}
+          options={options}
+          isDisabled={onChange === undefined}
+          onChange={(newVal) => {
+            onChange?.({ ...value, value: newVal });
+            setHasChanged(true);
+          }}
+          value={value.value}
+          aria-describedby={
+            field.description === null ? undefined : `${field.path}-description`
+          }
+          portalMenu
+        />
+        {loadError ? (
+          <Text color="red600" size="small">
+            {loadError}
+          </Text>
+        ) : null}
+        {validationMessage}
+      </Fragment>
     </FieldContainer>
   );
 };
@@ -193,15 +131,12 @@ export const CardValue: CardValueComponent<typeof controller> = ({
   );
 };
 
-export type AdminSelectFieldMeta = {
-  options: readonly { label: string; value: string | number }[];
-  type: 'string' | 'integer' | 'enum';
-  displayMode: 'select' | 'segmented-control' | 'radio';
+export type AdminTextFieldMeta = {
   isRequired: boolean;
-  defaultValue: string | number | null;
+  defaultValue: string;
 };
 
-type Config = FieldControllerConfig<AdminSelectFieldMeta>;
+type Config = FieldControllerConfig<AdminTextFieldMeta>;
 
 type Option = { label: string; value: string };
 
@@ -224,19 +159,8 @@ function validate(value: Value, isRequired: boolean) {
 export const controller = (
   config: Config,
 ): FieldController<Value, Option[]> & {
-  type: 'string' | 'integer' | 'enum';
-  displayMode: 'select' | 'segmented-control' | 'radio';
   isRequired: boolean;
 } => {
-  const optionsWithStringValues = config.fieldMeta.options.map((x) => ({
-    label: x.label,
-    value: x.value.toString(),
-  }));
-
-  // Transform from string value to type appropriate value
-  const t = (v: string | null) =>
-    v === null ? null : config.fieldMeta.type === 'integer' ? parseInt(v) : v;
-
   return {
     path: config.path,
     label: config.label,
@@ -246,34 +170,52 @@ export const controller = (
       kind: 'create',
       value: null,
     },
-    type: config.fieldMeta.type,
-    displayMode: config.fieldMeta.displayMode,
     isRequired: config.fieldMeta.isRequired,
 
     deserialize: (data) => {
-      for (const option of config.fieldMeta.options) {
-        if (option.value === data[config.path]) {
-          const stringifiedOption = {
-            label: option.label,
-            value: option.value.toString(),
-          };
-          return {
-            kind: 'update',
-            initial: stringifiedOption,
-            value: stringifiedOption,
-          };
-        }
+      const stringValue = data[config.path] as string | null;
+      if (stringValue !== null && stringValue !== undefined) {
+        const selectedOption = {
+          label: stringValue,
+          value: stringValue,
+        };
+        return {
+          kind: 'update',
+          initial: selectedOption,
+          value: selectedOption,
+        };
       }
+
       return { kind: 'update', initial: null, value: null };
     },
-    serialize: (value) => ({ [config.path]: t(value.value?.value ?? null) }),
+    serialize: (value) => ({ [config.path]: value.value?.value ?? null }),
     validate: (value) => validate(value, config.fieldMeta.isRequired),
     filter: {
       Filter(props) {
+        const [options, setOptions] = useState<Option[]>([]);
+
+        useEffect(() => {
+          let mounted = true;
+
+          fetchGovDeliveryOptions()
+            .then((nextOptions) => {
+              if (!mounted) return;
+              setOptions(nextOptions);
+            })
+            .catch(() => {
+              if (!mounted) return;
+              setOptions([]);
+            });
+
+          return () => {
+            mounted = false;
+          };
+        }, []);
+
         return (
           <MultiSelect
             onChange={props.onChange}
-            options={optionsWithStringValues}
+            options={options}
             value={props.value}
             autoFocus
           />
@@ -281,8 +223,8 @@ export const controller = (
       },
       graphql: ({ type, value: options }) => ({
         [config.path]: {
-          [type === 'not_matches' ? 'notIn' : 'in']: options.map((x) =>
-            t(x.value),
+          [type === 'not_matches' ? 'notIn' : 'in']: options.map(
+            (x) => x.value,
           ),
         },
       }),

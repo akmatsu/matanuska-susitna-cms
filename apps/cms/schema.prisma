@@ -1405,7 +1405,7 @@ model PublicNotice {
   hideSideNav                                Boolean                   @default(false)
   createdAt                                  DateTime?                 @default(now())
   updatedAt                                  DateTime?                 @default(now()) @updatedAt
-  type                                       String?                   @default("AKMATSUGOV_PublicNotice")
+  type                                       String                    @default("AKMATSUGOV_PublicNotice")
   urgency                                    Int                       @default(2)
   effectiveDate                              DateTime?
   endDate                                    DateTime?
@@ -1482,7 +1482,7 @@ model PublicNoticeVersion {
   hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
-  type              String?            @default("AKMATSUGOV_PublicNotice")
+  type              String             @default("AKMATSUGOV_PublicNotice")
   urgency           Int                @default(2)
   effectiveDate     DateTime?
   endDate           DateTime?
@@ -1531,7 +1531,7 @@ model PublicNoticeDraft {
   hideSideNav       Boolean            @default(false)
   createdAt         DateTime?          @default(now())
   updatedAt         DateTime?          @default(now()) @updatedAt
-  type              String?            @default("AKMATSUGOV_PublicNotice")
+  type              String             @default("AKMATSUGOV_PublicNotice")
   urgency           Int                @default(2)
   effectiveDate     DateTime?
   endDate           DateTime?
