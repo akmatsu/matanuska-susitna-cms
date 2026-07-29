@@ -26,10 +26,17 @@ async function fetchGovDeliveryOptions(): Promise<Option[]> {
   }
 
   const data = (await res.json()) as { topics: GovDeliveryTopic[] };
-  return data.topics.map((topic) => ({
-    label: topic.name,
-    value: topic.code,
-  }));
+
+  return data.topics.reduce(
+    (options: Option[], topic) => {
+      options.push({
+        label: topic.name,
+        value: topic.code,
+      });
+      return options;
+    },
+    [{ label: 'None', value: 'none' }],
+  );
 }
 
 export const Field = ({
