@@ -51,6 +51,11 @@ export const routes: (
   app.get('/api/emails/topics', json(), async (req, res) => {
     const topics = await getGovDeliveryTopics();
 
+    if (!topics || topics.length === 0) {
+      res.json({ topics: [{ label: 'None', value: 'none' }] });
+      return;
+    }
+
     res.json({ topics });
   });
 };
