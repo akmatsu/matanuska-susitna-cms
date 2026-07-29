@@ -175,7 +175,7 @@ export const controller = (
     graphqlSelection: config.path,
     defaultValue: {
       kind: 'create',
-      value: null,
+      value: { label: 'None', value: 'none' },
     },
     isRequired: config.fieldMeta.isRequired,
 
@@ -193,7 +193,11 @@ export const controller = (
         };
       }
 
-      return { kind: 'update', initial: null, value: null };
+      return {
+        kind: 'update',
+        initial: { label: 'None', value: 'none' },
+        value: { label: 'None', value: 'none' },
+      };
     },
     serialize: (value) => ({ [config.path]: value.value?.value ?? null }),
     validate: (value) => validate(value, config.fieldMeta.isRequired),
