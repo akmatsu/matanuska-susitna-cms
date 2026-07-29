@@ -21,11 +21,16 @@ import { GovDeliveryTopic } from '../../../utils/govDelivery';
 
 async function fetchGovDeliveryOptions(): Promise<Option[]> {
   const res = await fetch('/api/emails/topics');
+
   if (!res.ok) {
     throw new Error('Failed to fetch options');
   }
 
   const data = (await res.json()) as { topics: GovDeliveryTopic[] };
+
+  if (!data.topics || data.topics.length === 0) {
+    return [{ label: 'None', value: 'none' }];
+  }
 
   return data.topics.reduce(
     (options: Option[], topic) => {
@@ -61,6 +66,7 @@ export const Field = ({
       })
       .catch((error: Error) => {
         if (!mounted) return;
+        setOptions([{ label: 'None', value: 'none' }]);
         setLoadError(error.message);
       });
 
