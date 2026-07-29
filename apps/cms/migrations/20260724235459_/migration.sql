@@ -1,11 +1,7 @@
-/*
-  Warnings:
+UPDATE "PublicNotice" SET "type" = 'none' WHERE "type" IS NULL;
+UPDATE "PublicNoticeDraft" SET "type" = 'none' WHERE "type" IS NULL;
+UPDATE "PublicNoticeVersion" SET "type" = 'none' WHERE "type" IS NULL;
 
-  - Made the column `type` on table `PublicNotice` required. This step will fail if there are existing NULL values in that column.
-  - Made the column `type` on table `PublicNoticeDraft` required. This step will fail if there are existing NULL values in that column.
-  - Made the column `type` on table `PublicNoticeVersion` required. This step will fail if there are existing NULL values in that column.
-
-*/
 -- AlterTable
 ALTER TABLE "PublicNotice" ALTER COLUMN "type" SET NOT NULL;
 
