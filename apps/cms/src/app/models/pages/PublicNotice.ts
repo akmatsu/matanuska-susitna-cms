@@ -18,7 +18,7 @@ const {
     return {
       ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
       type: text({
-        defaultValue: 'AKMATSUGOV_PublicNotice',
+        defaultValue: 'none',
         validation: {
           isRequired: true,
         },
@@ -100,14 +100,15 @@ const {
       async afterOperation(args) {
         if (args.operation === 'create' || args.operation === 'update') {
           const doTheThing = () => {
-            return createAndSendBulletin(
-              args.item.title as string,
-              args.item.description as string,
-              'public-notices',
-              args.item.slug as string,
-              args.item.heroImage as string | undefined | null,
-              args.item.type as string,
-            );
+            if (args.item.type !== 'none')
+              return createAndSendBulletin(
+                args.item.title as string,
+                args.item.description as string,
+                'public-notices',
+                args.item.slug as string,
+                args.item.heroImage as string | undefined | null,
+                args.item.type as string,
+              );
           };
 
           if (args.item.status === 'published') {
