@@ -1,5 +1,5 @@
 import { list } from '@keystone-6/core';
-import { generalOperationAccess, isContentManager } from '../../access';
+import { generalOperationAccess } from '../../access';
 import {
   docDelete,
   owner,
@@ -15,9 +15,7 @@ export const Url = list({
   access: {
     operation: generalOperationAccess,
   },
-  ui: {
-    isHidden: async (args) => !(await isContentManager(args)),
-  },
+
   fields: {
     ...titleAndDescription(),
     url: text({
