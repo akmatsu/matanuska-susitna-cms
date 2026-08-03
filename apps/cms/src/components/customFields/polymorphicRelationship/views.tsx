@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   FieldController,
   FieldControllerConfig,
@@ -17,6 +17,7 @@ import {
   FieldDescription,
   Select,
 } from '@keystone-ui/fields';
+import { Button } from '@keystone-ui/button';
 
 import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
 import { DrawerController } from '@keystone-ui/modals';
@@ -33,7 +34,41 @@ export function Field({
   const toast = useToasts();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isTypePickerOpen, setIsTypePickerOpen] = useState(false);
+  const [drawerItemType, setDrawerItemType] = useState<{
+    label: string;
+    value: string;
+  } | null>(null);
+  const [createTypeOption, setCreateTypeOption] = useState<{
+    label: string;
+    value: string;
+  } | null>(null);
   const { query, setQuery, data, error } = useInternalSearchQuery();
+
+  const createTypeOptions = useMemo(() => {
+    const typeMap = new Map<string, { label: string; value: string }>();
+
+    data?.internalSearch?.forEach((item: any) => {
+      if (!item?.__typename) return;
+      typeMap.set(item.__typename, {
+        label: item.__typename,
+        value: v.camelCase(item.__typename),
+      });
+    });
+
+    if (!typeMap.has('Url')) {
+      typeMap.set('Url', { label: 'Url', value: v.camelCase('Url') });
+    }
+
+    return Array.from(typeMap.values()).sort((a, b) =>
+      a.label.localeCompare(b.label),
+    );
+  }, [data?.internalSearch]);
+
+  function openDrawerForItemType(itemType: { label: string; value: string }) {
+    setDrawerItemType(itemType);
+    setIsDrawerOpen(true);
+  }
 
   if (error) {
     toast.addToast({
@@ -76,16 +111,51 @@ export function Field({
             }}
           ></Select>
         </div>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            size="small"
+            onClick={() => setIsTypePickerOpen((open) => !open)}
+          >
+            {isTypePickerOpen ? 'Cancel' : 'Create New Item'}
+          </Button>
+          <Button
+            size="small"
+            onClick={() =>
+              openDrawerForItemType({ label: 'Url', value: v.camelCase('Url') })
+            }
+          >
+            Create new URL
+          </Button>
+        </div>
+        {isTypePickerOpen && (
+          <Select
+            className="w-full"
+            placeholder="Select item type to create..."
+            value={createTypeOption}
+            options={createTypeOptions}
+            onChange={(option) => {
+              const selectedType = option as {
+                label: string;
+                value: string;
+              } | null;
+              setCreateTypeOption(selectedType);
+              if (selectedType) {
+                openDrawerForItemType(selectedType);
+                setIsTypePickerOpen(false);
+              }
+            }}
+          ></Select>
+        )}
       </div>
-      {value?.itemType && (
+      {drawerItemType && (
         <DrawerController isOpen={isDrawerOpen}>
           <CreateItemDrawer
-            listKey={value?.itemType.label.replace(/\s+/g, '')}
+            listKey={drawerItemType.label.replace(/\s+/g, '')}
             onClose={() => setIsDrawerOpen(false)}
             onCreate={(val) => {
               setIsDrawerOpen(false);
               onChange?.({
-                itemType: value?.itemType,
+                itemType: drawerItemType,
                 itemId: {
                   label: val.label,
                   value: val.id,
