@@ -16,7 +16,12 @@ const {
   'PublicNotice',
   (listNamePlural, opts) => {
     return {
-      ...basePage(listNamePlural, { ...opts, actions: true, documents: true }),
+      ...basePage(listNamePlural, {
+        ...opts,
+        actions: true,
+        documents: true,
+        unPublishRequired: true,
+      }),
       type: text({
         defaultValue: 'none',
         validation: {
