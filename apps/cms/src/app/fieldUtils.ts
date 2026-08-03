@@ -29,6 +29,7 @@ import { logger } from '../configs/logger';
 import v from 'voca';
 import { plural } from 'pluralize';
 import { getSearchData, ModelDelegateKey } from '../utils/draftUtils';
+import { isDate } from 'date-fns';
 
 export const urlRegex = /^(https?:\/\/)[^\s/$.?#].[^\s]*$/;
 export const phoneNumberRegex =
@@ -166,6 +167,7 @@ export function timestampField(opts?: {
 }
 
 export function publishable(opts?: {
+  unPublishRequired?: boolean;
   isDraft?: boolean;
   isVersion?: boolean;
 }): BaseFields<any> {
@@ -176,6 +178,7 @@ export function publishable(opts?: {
       fields: {
         publishAt: timestampField({
           hideView: !opts?.isDraft,
+          hideCreateView: true,
           hooks: {
             async resolveInput({
               operation,
@@ -200,13 +203,67 @@ export function publishable(opts?: {
         }),
 
         unpublishAt: timestampField({
+          isRequired: opts?.unPublishRequired ?? false,
           hooks: {
+            resolveInput: ({
+              resolvedData: updatedData,
+              item: originalItem,
+              fieldKey,
+            }) => {
+              let muffins = null;
+              if (opts?.unPublishRequired) {
+                const newStatus = updatedData?.['status'];
+                const unpublishAt = updatedData?.['unpublishAt'];
+                const itemUnpublishAt = originalItem?.['unpublishAt'];
+
+                // When publishing a new item and unpublish is required,
+                if (newStatus === 'published') {
+                  // If unpublishAt is a valid date, return it.
+                  if (unpublishAt && isDate(unpublishAt)) {
+                    // If unpublishAt is in the past, return a default unpublishAt date of 14 days from now.
+                    if (unpublishAt < new Date()) {
+                      const defaultUnpublishAt = new Date();
+                      defaultUnpublishAt.setDate(
+                        defaultUnpublishAt.getDate() + 14,
+                      );
+                      muffins = defaultUnpublishAt;
+                    } else {
+                      muffins = unpublishAt;
+                    }
+                    // If unpublishAt is not a valid date, check if the original item has an unpublishAt date. If it does, return that. If it doesn't, return a default unpublishAt date of 14 days from now.
+                  } else if (itemUnpublishAt && isDate(itemUnpublishAt)) {
+                    // If itemUnpublishAt is in the past, return a default unpublishAt date of 14 days from now.
+                    if (itemUnpublishAt < new Date()) {
+                      const defaultUnpublishAt = new Date();
+                      defaultUnpublishAt.setDate(
+                        defaultUnpublishAt.getDate() + 14,
+                      );
+                      muffins = defaultUnpublishAt;
+                    } else {
+                      muffins = itemUnpublishAt;
+                    }
+                  } else {
+                    const defaultUnpublishAt = new Date();
+                    defaultUnpublishAt.setDate(
+                      defaultUnpublishAt.getDate() + 14,
+                    );
+
+                    muffins = defaultUnpublishAt;
+                  }
+                } else {
+                  muffins = updatedData?.[fieldKey] || originalItem?.[fieldKey];
+                }
+              }
+
+              return muffins;
+            },
             validate: ({ resolvedData, item, addValidationError }) => {
               const publishAt =
                 resolvedData?.['publishAt'] || item?.['publishAt'];
               const unpublishAt = resolvedData?.['unpublishAt'];
+              const status = resolvedData?.['status'] || item?.['status'];
 
-              if (!publishAt && unpublishAt) {
+              if (status === 'published' && !publishAt && unpublishAt) {
                 addValidationError(
                   'You have set an Unpublish date but no Publish date. Either remove the Unpublish date or add a Publish date.',
                 );
@@ -218,6 +275,20 @@ export function publishable(opts?: {
                 if (unPub <= pub) {
                   addValidationError(
                     'Invalid unpublish date. Please select an unpublish date that is after the publish date.',
+                  );
+                }
+              }
+
+              // prevent creation of unpublish date that is longer than a year and two weeks after the publish date
+              if (publishAt && unpublishAt) {
+                const pub = new Date(publishAt);
+                const unPub = new Date(unpublishAt);
+                const oneYearLater = new Date(pub);
+                oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+                oneYearLater.setDate(oneYearLater.getDate() + 14); // add two weeks
+                if (unPub > oneYearLater) {
+                  addValidationError(
+                    'Invalid unpublish date. Please select an unpublish date that is within a year and two weeks of the publish date.',
                   );
                 }
               }
@@ -465,6 +536,7 @@ export type BasePageOptions = {
   isDraft?: boolean;
   isVersion?: boolean;
   disableDefaultRelationships?: boolean;
+  unPublishRequired?: boolean;
 };
 
 interface OpArgs {

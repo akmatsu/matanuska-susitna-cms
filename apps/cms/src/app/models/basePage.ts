@@ -61,7 +61,11 @@ export function basePage(
     }),
     heroImage: blueHarvestImage(opts?.heroImageConfig),
     ...titleAndDescription(opts?.titleAndDescriptionOpts),
-    ...publishable({ isDraft: opts?.isDraft, isVersion: opts?.isVersion }),
+    ...publishable({
+      isDraft: opts?.isDraft,
+      isVersion: opts?.isVersion,
+      unPublishRequired: opts?.unPublishRequired,
+    }),
     liveUrl: liveUrl(listNamePlural),
     ...(!opts?.noSlug && !opts?.isVersion && !opts?.isDraft && { slug }),
     ...((opts?.isVersion || opts?.isDraft) && {
