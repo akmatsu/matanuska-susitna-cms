@@ -136,7 +136,9 @@ async function migrateUsers(
   const plannedLowerEmails = new Set<string>();
 
   for (const user of candidates) {
+    if (!user.email) continue;
     const newEmail = toNewEmail(user.email);
+    if (newEmail === user.email) continue;
     const newEmailLower = newEmail.toLowerCase();
 
     const existingOwnerId = existingIdByLowerEmail.get(newEmailLower);
@@ -244,10 +246,15 @@ function writeChangeLog(results: MigrationResult[]): string {
 async function verifyNoRemaining(sudo: SudoContext, listKeys: string[]) {
   console.log('Post-run verification:');
   for (const listKey of listKeys) {
-    const remaining = await getListDb(sudo, listKey).count({
+    const candidates = await getListDb(sudo, listKey).findMany({
       where: { email: { endsWith: OLD_DOMAIN, mode: 'insensitive' } },
     });
-    console.log(`  ${listKey}: ${remaining} remaining row(s) with @${OLD_DOMAIN}`);
+    // Count only rows that would actually be transformed by toNewEmail()
+    // (filters out lookalikes like person@notmatsugov.us that endsWith catches but regex doesn't match)
+    const actualRemaining = candidates.filter(
+      (row) => row.email && row.email !== toNewEmail(row.email),
+    ).length;
+    console.log(`  ${listKey}: ${actualRemaining} remaining row(s) with @${OLD_DOMAIN}`);
   }
 }
 
