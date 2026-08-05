@@ -143,3 +143,6 @@ dist
 keystone.db
 *.log
 
+# One-off migration script change logs (contain PII, not for source control)
+**/scripts/migration-logs/
+
