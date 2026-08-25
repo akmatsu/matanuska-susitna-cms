@@ -252,6 +252,7 @@ export default config<TypeInfo<Session>>({
               { query }: { query?: string },
               context: KeystoneContext<TypeInfo<Session>>,
             ) => {
+              const take = 5;
               const baseWhere: any = {
                 where: {
                   OR: [
@@ -260,6 +261,7 @@ export default config<TypeInfo<Session>>({
                     { body: { contains: query, mode: 'insensitive' } },
                   ],
                 },
+                take,
               };
               const [
                 services,
@@ -307,6 +309,7 @@ export default config<TypeInfo<Session>>({
                       { url: { contains: query, mode: 'insensitive' } },
                     ],
                   },
+                  take,
                 }),
                 context.db.Document.findMany({
                   where: {
@@ -315,6 +318,7 @@ export default config<TypeInfo<Session>>({
                       { description: { contains: query, mode: 'insensitive' } },
                     ],
                   },
+                  take,
                 }),
                 context.db.Topic.findMany(baseWhere),
               ]);
