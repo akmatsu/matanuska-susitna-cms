@@ -346,7 +346,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
             if (
               og &&
               args.item.publishAt &&
-              args.item.publishAt.toString() !== og.publishAt.toString()
+              args.item.publishAt.toString() !== og.publishAt?.toString()
             ) {
               logger.info('Will schedule publish job for', args.item.publishAt);
               const publishQueue = getPublishQueue();
