@@ -1,4 +1,4 @@
-import { graphql } from '@keystone-6/core';
+import { g } from '@keystone-6/core';
 import {
   BaseListTypeInfo,
   CommonFieldConfig,
@@ -28,11 +28,11 @@ export function publishDraft<ListTypeInfo extends BaseListTypeInfo>(
     })({
       ...config,
       input: {
-        create: { arg: graphql.arg({ type: graphql.String }) },
-        update: { arg: graphql.arg({ type: graphql.String }) },
-        orderBy: { arg: graphql.arg({ type: orderDirectionEnum }) },
+        create: { arg: g.arg({ type: g.String }) },
+        update: { arg: g.arg({ type: g.String }) },
+        orderBy: { arg: g.arg({ type: orderDirectionEnum }) },
       },
-      output: graphql.field({ type: graphql.String }),
+      output: g.field({ type: g.String }),
       views:
         config.ui?.views || './src/components/customFields/publishDraft/views',
       getAdminMeta(): PublishDraftFieldMeta {

@@ -4,6 +4,7 @@ import {
   text,
   timestamp,
 } from '@keystone-6/core/fields';
+import { allowAll } from '@keystone-6/core/access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import {
   DraftAndVersionsFactory,
@@ -42,7 +43,9 @@ const Proposition = list({
     order: integer({
       defaultValue: 0,
       validation: { isRequired: true },
-      isOrderable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
       isIndexed: true,
     }),
     document: relationship({
@@ -92,8 +95,9 @@ const {
       owner,
 
       electionDate: timestamp({
-        isFilterable: true,
-        isOrderable: true,
+        access: {
+          read: { item: allowAll, filter: allowAll, order: allowAll },
+        },
         validation: {
           isRequired: true,
         },
@@ -106,8 +110,9 @@ const {
         label: 'Voter Information',
         fields: {
           voterRegistrationDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
@@ -133,15 +138,17 @@ const {
             },
           }),
           earlyVotingStartDate: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
           absenteeApplicationDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
@@ -167,22 +174,25 @@ const {
             },
           }),
           candidatePacketAvailability: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
           candidateFilingStartDate: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
           candidateFilingDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
@@ -210,8 +220,9 @@ const {
           }),
 
           electionOfficialApplicationDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },

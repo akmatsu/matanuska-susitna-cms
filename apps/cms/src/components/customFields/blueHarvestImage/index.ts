@@ -1,4 +1,4 @@
-import { graphql } from '@keystone-6/core';
+import { g } from '@keystone-6/core';
 import {
   BaseListTypeInfo,
   CommonFieldConfig,
@@ -11,9 +11,9 @@ export type BlueHarvestImageConfig<ListTypeInfo extends BaseListTypeInfo> =
     notBanner?: boolean;
   };
 
-const BlueHarvestImageOrderDirectionEnum = graphql.enum({
+const BlueHarvestImageOrderDirectionEnum = g.enum({
   name: 'BlueHarvestImageOrderDirection',
-  values: graphql.enumValues(['asc', 'desc']),
+  values: g.enumValues(['asc', 'desc']),
 });
 
 export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
@@ -35,20 +35,20 @@ export function blueHarvestImage<ListTypeInfo extends BaseListTypeInfo>({
       },
       input: {
         create: {
-          arg: graphql.arg({ type: graphql.String }),
+          arg: g.arg({ type: g.String }),
           resolve(value) {
             return value;
           },
         },
         update: {
-          arg: graphql.arg({ type: graphql.String }),
+          arg: g.arg({ type: g.String }),
         },
         orderBy: {
-          arg: graphql.arg({ type: BlueHarvestImageOrderDirectionEnum }),
+          arg: g.arg({ type: BlueHarvestImageOrderDirectionEnum }),
         },
       },
-      output: graphql.field({
-        type: graphql.String,
+      output: g.field({
+        type: g.String,
         resolve({ value }) {
           return value;
         },

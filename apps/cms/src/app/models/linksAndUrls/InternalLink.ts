@@ -1,4 +1,4 @@
-import { graphql, list } from '@keystone-6/core';
+import { g, list } from '@keystone-6/core';
 import { generalOperationAccess, isContentManager } from '../../access';
 import { polymorphicRelationship } from '../../../components/customFields/polymorphicRelationship';
 import { text, virtual } from '@keystone-6/core/fields';
@@ -96,8 +96,8 @@ export const InternalLink = list({
         views: './src/components/customFields/polymorphicItem/views',
       },
       field: (lists) =>
-        graphql.field({
-          type: graphql.union({
+        g.field({
+          type: g.union({
             name: 'LinkedItemUnion',
             types: [
               lists.Service.types.output,

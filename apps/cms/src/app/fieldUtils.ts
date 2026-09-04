@@ -1,4 +1,5 @@
-import { BaseFields, graphql, group } from '@keystone-6/core';
+import { BaseFields, g, group } from '@keystone-6/core';
+import { allowAll, denyAll } from '@keystone-6/core/access';
 import {
   relationship,
   RelationshipFieldConfig,
@@ -39,8 +40,9 @@ export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const timestamps: BaseFields<any> = {
   createdAt: timestamp({
     defaultValue: { kind: 'now' },
-    isFilterable: true,
-    isOrderable: true,
+    access: {
+      read: { item: allowAll, filter: allowAll, order: allowAll },
+    },
     ui: {
       itemView: {
         fieldMode: 'hidden',
@@ -52,8 +54,9 @@ export const timestamps: BaseFields<any> = {
 
   updatedAt: timestamp({
     defaultValue: { kind: 'now' },
-    isFilterable: true,
-    isOrderable: true,
+    access: {
+      read: { item: allowAll, filter: allowAll, order: allowAll },
+    },
     db: { updatedAt: true },
     ui: {
       itemView: { fieldMode: 'hidden', fieldPosition: 'sidebar' },
@@ -77,8 +80,8 @@ export function liveUrl(
     return `/${key}`;
   }
   return virtual({
-    field: graphql.field({
-      type: graphql.String,
+    field: g.field({
+      type: g.String,
       resolve(baseItem: any) {
         baseItem = baseItem as { [key: string]: string };
         return `${baseUrl}${correctedListKey}/${baseItem[identifierKey]}`;
@@ -109,8 +112,8 @@ export function embed(
   baseUrl = appConfig.siteUrl,
 ) {
   return virtual({
-    field: graphql.field({
-      type: graphql.String,
+    field: g.field({
+      type: g.String,
       resolve(baseItem: any) {
         baseItem = baseItem as { [key: string]: string };
         return `${baseUrl}/${listKey}/${baseItem[identifierKey]}`;
@@ -137,9 +140,25 @@ export function timestampField(opts?: {
   hooks?: FieldHooks<any>;
   hideCreateView?: boolean;
 }) {
+  const isFilterable = opts?.isFilterable ?? true;
+  const isOrderable = opts?.isOrderable ?? true;
+
   return timestamp({
-    isFilterable: opts?.isFilterable ?? true,
-    isOrderable: opts?.isOrderable ?? true,
+    access: {
+      read: {
+        item: allowAll,
+        filter: isFilterable ? allowAll : denyAll,
+        order: isOrderable ? allowAll : denyAll,
+      },
+    },
+    graphql: {
+      omit: {
+        read: {
+          filter: !isFilterable,
+          order: !isOrderable,
+        },
+      },
+    },
     db: {
       isNullable: opts?.isNullable ?? true,
     },

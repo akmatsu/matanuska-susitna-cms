@@ -1,4 +1,4 @@
-import { graphql } from '@keystone-6/core';
+import { g } from '@keystone-6/core';
 import {
   BaseListTypeInfo,
   CommonFieldConfig,
@@ -30,17 +30,17 @@ export function excelUpload<ListTypeInfo extends BaseListTypeInfo>({
       },
       input: {
         create: {
-          arg: graphql.arg({ type: graphql.JSON }),
+          arg: g.arg({ type: g.JSON }),
           resolve(value) {
             return value;
           },
         },
         update: {
-          arg: graphql.arg({ type: graphql.JSON }),
+          arg: g.arg({ type: g.JSON }),
         },
       },
-      output: graphql.field({
-        type: graphql.JSON,
+      output: g.field({
+        type: g.JSON,
         resolve({ value }) {
           return value;
         },

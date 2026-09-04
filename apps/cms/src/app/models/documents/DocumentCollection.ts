@@ -1,4 +1,4 @@
-import { graphql, list } from '@keystone-6/core';
+import { g, list } from '@keystone-6/core';
 import { relationship, text, virtual } from '@keystone-6/core/fields';
 import { generalOperationAccess } from '../../access';
 import {
@@ -59,8 +59,8 @@ export const DocumentCollection = list({
 
     referencedBy: virtual({
       field: (lists) =>
-        graphql.field({
-          type: graphql.list(lists.Service.types.output),
+        g.field({
+          type: g.list(lists.Service.types.output),
           async resolve(item, args, context) {
             const res = await context.db.Service.findMany({
               where: {

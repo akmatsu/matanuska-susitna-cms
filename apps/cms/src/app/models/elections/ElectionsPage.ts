@@ -1,4 +1,5 @@
 import { group, list } from '@keystone-6/core';
+import { allowAll } from '@keystone-6/core/access';
 import {
   generalOperationAccess,
   isElectionUser,
@@ -29,8 +30,9 @@ export const EarlyVotingLocation = list({
     order: integer({
       defaultValue: 0,
       validation: { isRequired: true },
-      isOrderable: true,
-      isFilterable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
       ui: {
         description: 'Order of the early voting locations',
       },

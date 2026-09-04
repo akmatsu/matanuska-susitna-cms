@@ -1,4 +1,4 @@
-import { BaseFields, graphql } from '@keystone-6/core';
+import { BaseFields, g } from '@keystone-6/core';
 import {
   BasePageOptions,
   contactRelationship,
@@ -32,8 +32,8 @@ export function basePage(
 ): BaseFields<any> {
   return {
     canEdit: virtual({
-      label: 'Insufficient Access',
       ui: {
+        label: 'Insufficient Access',
         createView: {
           fieldMode: 'hidden',
         },
@@ -52,8 +52,8 @@ export function basePage(
         },
         views: './src/components/customFields/InsufficientAccessField.tsx',
       },
-      field: graphql.field({
-        type: graphql.String,
+      field: g.field({
+        type: g.String,
         resolve() {
           return 'You do not have permission to edit this page. Any changes you make will not be saved. Please contact support to get access to this page';
         },
@@ -356,8 +356,8 @@ export function basePage(
     hideSideNav: checkbox({
       defaultValue: false,
 
-      label: 'Hide Side Navigation',
       ui: {
+        label: 'Hide Side Navigation',
         description:
           'If checked, the side navigation will be hidden on the front-end for this page.',
         itemView: {

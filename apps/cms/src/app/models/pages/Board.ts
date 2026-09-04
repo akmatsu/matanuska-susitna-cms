@@ -1,4 +1,5 @@
 import { checkbox, relationship, select, text } from '@keystone-6/core/fields';
+import { allowAll } from '@keystone-6/core/access';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
   filterByPubStatus,
@@ -104,7 +105,9 @@ const {
 
       isActive: checkbox({
         defaultValue: true,
-        isFilterable: true,
+        access: {
+          read: { item: allowAll, filter: allowAll, order: allowAll },
+        },
         ui: {
           itemView: {
             fieldPosition: 'sidebar',

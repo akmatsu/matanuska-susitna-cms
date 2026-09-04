@@ -3,6 +3,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
+import { allowAll } from '@keystone-6/core/access';
 import { integer, relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { list } from '@keystone-6/core';
@@ -19,8 +20,9 @@ export const FacilityListItem = list({
     order: integer({
       defaultValue: 0,
       validation: { isRequired: true },
-      isOrderable: true,
-      isFilterable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
       ui: {
         description: 'Order of the early voting locations',
       },

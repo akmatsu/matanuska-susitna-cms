@@ -77,9 +77,9 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
         label: 'External Website',
         fields: {
           effort: relationship({
-            label: 'Link',
             ref: 'ExternalLink',
             ui: {
+              label: 'Link',
               description:
                 'A link to website for this plan or an effort to update this plan',
               ...cardsUi(['label', 'url']),
