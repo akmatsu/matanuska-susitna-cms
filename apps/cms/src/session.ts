@@ -12,7 +12,7 @@ async function getKeystoneContext() {
 
   _keystoneContext = getContext(
     (await import('../keystone')).default,
-    await import('@prisma/client'),
+    await import('../generated/prisma/client'),
   );
 
   if (process.env.NODE_ENV !== 'production') {

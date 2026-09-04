@@ -1,6 +1,6 @@
 // see https://keystonejs.com/docs/config/config#extend-express-app
 
-import { TypeInfo } from '.keystone/types';
+import { TypeInfo } from '../../generated/keystone/types';
 import type { KeystoneContext, MaybePromise } from '@keystone-6/core/types';
 import type { Session } from '../session';
 import { json, type Express } from 'express';

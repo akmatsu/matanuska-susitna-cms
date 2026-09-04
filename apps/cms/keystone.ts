@@ -1,7 +1,8 @@
 // Keystone config docs: https://keystonejs.com/docs/apis/config\
 import { config } from '@keystone-6/core';
+import { PrismaPg } from '@prisma/adapter-pg';
 import { lists } from './src/app';
-import { TypeInfo } from '.keystone/types';
+import { TypeInfo } from './generated/keystone/types';
 import { appConfig } from './src/configs/appConfig';
 import { type Session } from './src/session';
 import { nextAuthSessionStrategy } from './src/session';
@@ -21,12 +22,15 @@ export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/config#db
   db: {
     provider: appConfig.database.provider,
-    url: `${appConfig.database.protocol}://${appConfig.database.user}:${appConfig.database.password}@${appConfig.database.host}:${appConfig.database.port}/${appConfig.database.name}`,
+    prismaClientOptions: () => ({
+      adapter: new PrismaPg(appConfig.databaseUrl),
+    }),
     extendPrismaSchema(schema) {
       return schema.replace(
         `generator client {`,
         `generator client {
-            binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]`,
+            binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+            moduleFormat = "cjs"`,
       );
     },
     onConnect: async () => {

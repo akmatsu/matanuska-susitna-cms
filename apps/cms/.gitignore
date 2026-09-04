@@ -137,6 +137,7 @@ dist
 !.elasticbeanstalk/*.global.yml
 
 .keystone/
+generated/
 keystone.db
 *.log
 

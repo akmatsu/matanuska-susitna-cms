@@ -1,6 +1,6 @@
 import { FieldHooks } from '@keystone-6/core/types';
-import { Lists } from '.keystone/types';
-import { Prisma } from '@prisma/client';
+import { Lists } from '../../../../../generated/keystone/types';
+import { Prisma } from '../../../../../generated/prisma/client';
 
 // Types
 

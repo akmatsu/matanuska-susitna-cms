@@ -264,11 +264,13 @@ input UserRelateToOneForCreateInput {
 input InternalLinkRelateToManyForCreateInput {
   create: [InternalLinkCreateInput!]
   connect: [InternalLinkWhereUniqueInput!]
+  set: [InternalLinkWhereUniqueInput!]
 }
 
 input DocumentRelateToManyForCreateInput {
   create: [DocumentCreateInput!]
   connect: [DocumentWhereUniqueInput!]
+  set: [DocumentWhereUniqueInput!]
 }
 
 input DocumentRelateToOneForCreateInput {
@@ -284,6 +286,7 @@ input ExternalLinkRelateToOneForCreateInput {
 input ContactRelateToManyForCreateInput {
   create: [ContactCreateInput!]
   connect: [ContactWhereUniqueInput!]
+  set: [ContactWhereUniqueInput!]
 }
 
 type HomePage implements WithTitle {
@@ -362,6 +365,7 @@ input HomePageCreateInput {
 input featuredItemRelateToManyForCreateInput {
   create: [featuredItemCreateInput!]
   connect: [featuredItemWhereUniqueInput!]
+  set: [featuredItemWhereUniqueInput!]
 }
 
 type featuredItem {
@@ -761,6 +765,7 @@ input ElectionCreateInput {
 input PropositionRelateToManyForCreateInput {
   create: [PropositionCreateInput!]
   connect: [PropositionWhereUniqueInput!]
+  set: [PropositionWhereUniqueInput!]
 }
 
 input ElectionResultRelateToOneForCreateInput {
@@ -771,21 +776,25 @@ input ElectionResultRelateToOneForCreateInput {
 input TagRelateToManyForCreateInput {
   create: [TagCreateInput!]
   connect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
 }
 
 input UserGroupRelateToManyForCreateInput {
   create: [UserGroupCreateInput!]
   connect: [UserGroupWhereUniqueInput!]
+  set: [UserGroupWhereUniqueInput!]
 }
 
 input ElectionDraftRelateToManyForCreateInput {
   create: [ElectionDraftCreateInput!]
   connect: [ElectionDraftWhereUniqueInput!]
+  set: [ElectionDraftWhereUniqueInput!]
 }
 
 input ElectionVersionRelateToManyForCreateInput {
   create: [ElectionVersionCreateInput!]
   connect: [ElectionVersionWhereUniqueInput!]
+  set: [ElectionVersionWhereUniqueInput!]
 }
 
 input ElectionVersionRelateToOneForCreateInput {
@@ -1396,6 +1405,7 @@ input LocationRelateToOneForCreateInput {
 input OperatingHourRelateToManyForCreateInput {
   create: [OperatingHourCreateInput!]
   connect: [OperatingHourWhereUniqueInput!]
+  set: [OperatingHourWhereUniqueInput!]
 }
 
 type ElectionsPage implements WithTitle {
@@ -1534,6 +1544,7 @@ input ContactRelateToOneForCreateInput {
 input EarlyVotingLocationRelateToManyForCreateInput {
   create: [EarlyVotingLocationCreateInput!]
   connect: [EarlyVotingLocationWhereUniqueInput!]
+  set: [EarlyVotingLocationWhereUniqueInput!]
 }
 
 type AssemblyDistrict implements BasePageWithSlug & BasePageWithDefaultRelationships & BasePage & BasePageWithActions & WithTitle {
@@ -1995,41 +2006,49 @@ input RedirectRelateToOneForCreateInput {
 input EventRelateToManyForCreateInput {
   create: [EventCreateInput!]
   connect: [EventWhereUniqueInput!]
+  set: [EventWhereUniqueInput!]
 }
 
 input TopicRelateToManyForCreateInput {
   create: [TopicCreateInput!]
   connect: [TopicWhereUniqueInput!]
+  set: [TopicWhereUniqueInput!]
 }
 
 input PublicNoticeRelateToManyForCreateInput {
   create: [PublicNoticeCreateInput!]
   connect: [PublicNoticeWhereUniqueInput!]
+  set: [PublicNoticeWhereUniqueInput!]
 }
 
 input CommunityRelateToManyForCreateInput {
   create: [CommunityCreateInput!]
   connect: [CommunityWhereUniqueInput!]
+  set: [CommunityWhereUniqueInput!]
 }
 
 input OrgUnitRelateToManyForCreateInput {
   create: [OrgUnitCreateInput!]
   connect: [OrgUnitWhereUniqueInput!]
+  set: [OrgUnitWhereUniqueInput!]
 }
 
 input AssemblyDistrictRelateToManyForCreateInput {
   create: [AssemblyDistrictCreateInput!]
   connect: [AssemblyDistrictWhereUniqueInput!]
+  set: [AssemblyDistrictWhereUniqueInput!]
 }
 
 input ServiceRelateToManyForCreateInput {
   create: [ServiceCreateInput!]
   connect: [ServiceWhereUniqueInput!]
+  set: [ServiceWhereUniqueInput!]
 }
 
 input PlanRelateToManyForCreateInput {
   create: [PlanCreateInput!]
   connect: [PlanWhereUniqueInput!]
+  set: [PlanWhereUniqueInput!]
 }
 
 input ImageRelateToOneForCreateInput {
@@ -2040,31 +2059,37 @@ input ImageRelateToOneForCreateInput {
 input BoardRelateToManyForCreateInput {
   create: [BoardCreateInput!]
   connect: [BoardWhereUniqueInput!]
+  set: [BoardWhereUniqueInput!]
 }
 
 input FacilityRelateToManyForCreateInput {
   create: [FacilityCreateInput!]
   connect: [FacilityWhereUniqueInput!]
+  set: [FacilityWhereUniqueInput!]
 }
 
 input ParkRelateToManyForCreateInput {
   create: [ParkCreateInput!]
   connect: [ParkWhereUniqueInput!]
+  set: [ParkWhereUniqueInput!]
 }
 
 input TrailRelateToManyForCreateInput {
   create: [TrailCreateInput!]
   connect: [TrailWhereUniqueInput!]
+  set: [TrailWhereUniqueInput!]
 }
 
 input AssemblyDistrictDraftRelateToManyForCreateInput {
   create: [AssemblyDistrictDraftCreateInput!]
   connect: [AssemblyDistrictDraftWhereUniqueInput!]
+  set: [AssemblyDistrictDraftWhereUniqueInput!]
 }
 
 input AssemblyDistrictVersionRelateToManyForCreateInput {
   create: [AssemblyDistrictVersionCreateInput!]
   connect: [AssemblyDistrictVersionWhereUniqueInput!]
+  set: [AssemblyDistrictVersionWhereUniqueInput!]
 }
 
 input AssemblyDistrictVersionRelateToOneForCreateInput {
@@ -2821,11 +2846,13 @@ input BoardCreateInput {
 input BoardDraftRelateToManyForCreateInput {
   create: [BoardDraftCreateInput!]
   connect: [BoardDraftWhereUniqueInput!]
+  set: [BoardDraftWhereUniqueInput!]
 }
 
 input BoardVersionRelateToManyForCreateInput {
   create: [BoardVersionCreateInput!]
   connect: [BoardVersionWhereUniqueInput!]
+  set: [BoardVersionWhereUniqueInput!]
 }
 
 input BoardVersionRelateToOneForCreateInput {
@@ -3520,11 +3547,13 @@ input CommunityCreateInput {
 input CommunityDraftRelateToManyForCreateInput {
   create: [CommunityDraftCreateInput!]
   connect: [CommunityDraftWhereUniqueInput!]
+  set: [CommunityDraftWhereUniqueInput!]
 }
 
 input CommunityVersionRelateToManyForCreateInput {
   create: [CommunityVersionCreateInput!]
   connect: [CommunityVersionWhereUniqueInput!]
+  set: [CommunityVersionWhereUniqueInput!]
 }
 
 input CommunityVersionRelateToOneForCreateInput {
@@ -4190,11 +4219,13 @@ input ParkRelateToOneForCreateInput {
 input FacilityDraftRelateToManyForCreateInput {
   create: [FacilityDraftCreateInput!]
   connect: [FacilityDraftWhereUniqueInput!]
+  set: [FacilityDraftWhereUniqueInput!]
 }
 
 input FacilityVersionRelateToManyForCreateInput {
   create: [FacilityVersionCreateInput!]
   connect: [FacilityVersionWhereUniqueInput!]
+  set: [FacilityVersionWhereUniqueInput!]
 }
 
 input FacilityVersionRelateToOneForCreateInput {
@@ -4872,11 +4903,13 @@ input OrgUnitRelateToOneForCreateInput {
 input OrgUnitDraftRelateToManyForCreateInput {
   create: [OrgUnitDraftCreateInput!]
   connect: [OrgUnitDraftWhereUniqueInput!]
+  set: [OrgUnitDraftWhereUniqueInput!]
 }
 
 input OrgUnitVersionRelateToManyForCreateInput {
   create: [OrgUnitVersionCreateInput!]
   connect: [OrgUnitVersionWhereUniqueInput!]
+  set: [OrgUnitVersionWhereUniqueInput!]
 }
 
 input OrgUnitVersionRelateToOneForCreateInput {
@@ -5574,11 +5607,13 @@ input ParkCreateInput {
 input ParkDraftRelateToManyForCreateInput {
   create: [ParkDraftCreateInput!]
   connect: [ParkDraftWhereUniqueInput!]
+  set: [ParkDraftWhereUniqueInput!]
 }
 
 input ParkVersionRelateToManyForCreateInput {
   create: [ParkVersionCreateInput!]
   connect: [ParkVersionWhereUniqueInput!]
+  set: [ParkVersionWhereUniqueInput!]
 }
 
 input ParkVersionRelateToOneForCreateInput {
@@ -6237,11 +6272,13 @@ input PublicNoticeCreateInput {
 input PublicNoticeDraftRelateToManyForCreateInput {
   create: [PublicNoticeDraftCreateInput!]
   connect: [PublicNoticeDraftWhereUniqueInput!]
+  set: [PublicNoticeDraftWhereUniqueInput!]
 }
 
 input PublicNoticeVersionRelateToManyForCreateInput {
   create: [PublicNoticeVersionCreateInput!]
   connect: [PublicNoticeVersionWhereUniqueInput!]
+  set: [PublicNoticeVersionWhereUniqueInput!]
 }
 
 input PublicNoticeVersionRelateToOneForCreateInput {
@@ -6959,16 +6996,19 @@ input ServiceCreateInput {
 input ExternalLinkRelateToManyForCreateInput {
   create: [ExternalLinkCreateInput!]
   connect: [ExternalLinkWhereUniqueInput!]
+  set: [ExternalLinkWhereUniqueInput!]
 }
 
 input ServiceDraftRelateToManyForCreateInput {
   create: [ServiceDraftCreateInput!]
   connect: [ServiceDraftWhereUniqueInput!]
+  set: [ServiceDraftWhereUniqueInput!]
 }
 
 input ServiceVersionRelateToManyForCreateInput {
   create: [ServiceVersionCreateInput!]
   connect: [ServiceVersionWhereUniqueInput!]
+  set: [ServiceVersionWhereUniqueInput!]
 }
 
 input ServiceVersionRelateToOneForCreateInput {
@@ -7664,16 +7704,19 @@ input TopicCreateInput {
 input HighlightRelateToManyForCreateInput {
   create: [HighlightCreateInput!]
   connect: [HighlightWhereUniqueInput!]
+  set: [HighlightWhereUniqueInput!]
 }
 
 input TopicDraftRelateToManyForCreateInput {
   create: [TopicDraftCreateInput!]
   connect: [TopicDraftWhereUniqueInput!]
+  set: [TopicDraftWhereUniqueInput!]
 }
 
 input TopicVersionRelateToManyForCreateInput {
   create: [TopicVersionCreateInput!]
   connect: [TopicVersionWhereUniqueInput!]
+  set: [TopicVersionWhereUniqueInput!]
 }
 
 input TopicVersionRelateToOneForCreateInput {
@@ -8428,11 +8471,13 @@ input TrailCreateInput {
 input TrailDraftRelateToManyForCreateInput {
   create: [TrailDraftCreateInput!]
   connect: [TrailDraftWhereUniqueInput!]
+  set: [TrailDraftWhereUniqueInput!]
 }
 
 input TrailVersionRelateToManyForCreateInput {
   create: [TrailVersionCreateInput!]
   connect: [TrailVersionWhereUniqueInput!]
+  set: [TrailVersionWhereUniqueInput!]
 }
 
 input TrailVersionRelateToOneForCreateInput {
@@ -9354,6 +9399,7 @@ input PlanRelateToOneForCreateInput {
 input PlanCodeRelateToManyForCreateInput {
   create: [PlanCodeCreateInput!]
   connect: [PlanCodeWhereUniqueInput!]
+  set: [PlanCodeWhereUniqueInput!]
 }
 
 input PlanDocumentRelateToOneForCreateInput {
@@ -9364,16 +9410,19 @@ input PlanDocumentRelateToOneForCreateInput {
 input PlanDocumentRelateToManyForCreateInput {
   create: [PlanDocumentCreateInput!]
   connect: [PlanDocumentWhereUniqueInput!]
+  set: [PlanDocumentWhereUniqueInput!]
 }
 
 input PlanDraftRelateToManyForCreateInput {
   create: [PlanDraftCreateInput!]
   connect: [PlanDraftWhereUniqueInput!]
+  set: [PlanDraftWhereUniqueInput!]
 }
 
 input PlanVersionRelateToManyForCreateInput {
   create: [PlanVersionCreateInput!]
   connect: [PlanVersionWhereUniqueInput!]
+  set: [PlanVersionWhereUniqueInput!]
 }
 
 input PlanVersionRelateToOneForCreateInput {
@@ -10206,11 +10255,13 @@ input EventCreateInput {
 input EventDraftRelateToManyForCreateInput {
   create: [EventDraftCreateInput!]
   connect: [EventDraftWhereUniqueInput!]
+  set: [EventDraftWhereUniqueInput!]
 }
 
 input EventVersionRelateToManyForCreateInput {
   create: [EventVersionCreateInput!]
   connect: [EventVersionWhereUniqueInput!]
+  set: [EventVersionWhereUniqueInput!]
 }
 
 input EventVersionRelateToOneForCreateInput {
@@ -10930,16 +10981,19 @@ input PolicyCreateInput {
 input PolicyRelateToManyForCreateInput {
   create: [PolicyCreateInput!]
   connect: [PolicyWhereUniqueInput!]
+  set: [PolicyWhereUniqueInput!]
 }
 
 input PolicyDraftRelateToManyForCreateInput {
   create: [PolicyDraftCreateInput!]
   connect: [PolicyDraftWhereUniqueInput!]
+  set: [PolicyDraftWhereUniqueInput!]
 }
 
 input PolicyVersionRelateToManyForCreateInput {
   create: [PolicyVersionCreateInput!]
   connect: [PolicyVersionWhereUniqueInput!]
+  set: [PolicyVersionWhereUniqueInput!]
 }
 
 input PolicyVersionRelateToOneForCreateInput {
@@ -11454,21 +11508,25 @@ input PostCreateInput {
 input PostImageRelateToManyForCreateInput {
   create: [PostImageCreateInput!]
   connect: [PostImageWhereUniqueInput!]
+  set: [PostImageWhereUniqueInput!]
 }
 
 input PostCategoryRelateToManyForCreateInput {
   create: [PostCategoryCreateInput!]
   connect: [PostCategoryWhereUniqueInput!]
+  set: [PostCategoryWhereUniqueInput!]
 }
 
 input PostDraftRelateToManyForCreateInput {
   create: [PostDraftCreateInput!]
   connect: [PostDraftWhereUniqueInput!]
+  set: [PostDraftWhereUniqueInput!]
 }
 
 input PostVersionRelateToManyForCreateInput {
   create: [PostVersionCreateInput!]
   connect: [PostVersionWhereUniqueInput!]
+  set: [PostVersionWhereUniqueInput!]
 }
 
 input PostVersionRelateToOneForCreateInput {
@@ -11982,6 +12040,7 @@ input DocumentCreateInput {
 input DocumentCollectionRelateToManyForCreateInput {
   create: [DocumentCollectionCreateInput!]
   connect: [DocumentCollectionWhereUniqueInput!]
+  set: [DocumentCollectionWhereUniqueInput!]
 }
 
 type DocumentCollection {
@@ -12108,11 +12167,11 @@ type Image {
 
 type ImageFieldOutput {
   id: ID!
+  url: String!
+  extension: ImageExtension!
   filesize: Int!
   width: Int!
   height: Int!
-  extension: ImageExtension!
-  url: String!
 }
 
 enum ImageExtension {
@@ -12431,6 +12490,7 @@ input HighlightCreateInput {
 input LandingPageRelateToManyForCreateInput {
   create: [LandingPageCreateInput!]
   connect: [LandingPageWhereUniqueInput!]
+  set: [LandingPageWhereUniqueInput!]
 }
 
 type Contact {
@@ -12795,6 +12855,7 @@ input UserGroupCreateInput {
 input UserRelateToManyForCreateInput {
   create: [UserCreateInput!]
   connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
 }
 
 type Alert {
@@ -13015,11 +13076,11 @@ type Mutation {
   deleteHomePage(where: HomePageWhereUniqueInput! = {id: 1}): HomePage
   deleteHomePages(where: [HomePageWhereUniqueInput!]!): [HomePage]
   createfeaturedItem(data: featuredItemCreateInput!): featuredItem
-  createFeaturedItems(data: [featuredItemCreateInput!]!): [featuredItem]
+  createfeaturedItems(data: [featuredItemCreateInput!]!): [featuredItem]
   updatefeaturedItem(where: featuredItemWhereUniqueInput!, data: featuredItemUpdateInput!): featuredItem
-  updateFeaturedItems(data: [featuredItemUpdateArgs!]!): [featuredItem]
+  updatefeaturedItems(data: [featuredItemUpdateArgs!]!): [featuredItem]
   deletefeaturedItem(where: featuredItemWhereUniqueInput!): featuredItem
-  deleteFeaturedItems(where: [featuredItemWhereUniqueInput!]!): [featuredItem]
+  deletefeaturedItems(where: [featuredItemWhereUniqueInput!]!): [featuredItem]
   createElection(data: ElectionCreateInput!): Election
   createElections(data: [ElectionCreateInput!]!): [Election]
   updateElection(where: ElectionWhereUniqueInput!, data: ElectionUpdateInput!): Election
@@ -13458,7 +13519,6 @@ type Mutation {
   updatePageViews(data: [PageViewUpdateArgs!]!): [PageView]
   deletePageView(where: PageViewWhereUniqueInput!): PageView
   deletePageViews(where: [PageViewWhereUniqueInput!]!): [PageView]
-  endSession: Boolean!
 }
 
 type Query {
@@ -13703,34 +13763,34 @@ type KeystoneMeta {
 
 type KeystoneAdminMeta {
   lists: [KeystoneAdminUIListMeta!]!
-  list(key: String!): KeystoneAdminUIListMeta
+  list(key: String!, itemId: ID): KeystoneAdminUIListMeta
 }
 
 type KeystoneAdminUIListMeta {
   key: String!
-  path: String!
   label: String!
   singular: String!
   plural: String!
-  description: String
-  pageSize: Int!
+  path: String!
   labelField: String!
   fields: [KeystoneAdminUIFieldMeta!]!
   groups: [KeystoneAdminUIFieldGroupMeta!]!
+  actions: [KeystoneAdminUIActionMeta!]!
   graphql: KeystoneAdminUIGraphQL!
+  pageSize: Int!
   initialColumns: [String!]!
   initialSearchFields: [String!]!
   initialSort: KeystoneAdminUISort
+  initialFilter: JSON
+  hiddenFilter: JSON
   isSingleton: Boolean!
+  hideNavigation: Boolean!
   hideCreate: Boolean!
   hideDelete: Boolean!
-  isHidden: Boolean!
-  itemQueryName: String!
-  listQueryName: String!
 }
 
 type KeystoneAdminUIFieldMeta {
-  path: String!
+  key: String!
   label: String!
   description: String
   isOrderable: Boolean!
@@ -13740,8 +13800,8 @@ type KeystoneAdminUIFieldMeta {
   viewsIndex: Int!
   customViewsIndex: Int
   createView: KeystoneAdminUIFieldMetaCreateView!
+  itemView: KeystoneAdminUIFieldMetaItemView
   listView: KeystoneAdminUIFieldMetaListView!
-  itemView(id: ID): KeystoneAdminUIFieldMetaItemView
   search: QueryMode
 }
 
@@ -13752,12 +13812,19 @@ enum KeystoneAdminUIFieldMetaIsNonNull {
 }
 
 type KeystoneAdminUIFieldMetaCreateView {
-  fieldMode: KeystoneAdminUIFieldMetaCreateViewFieldMode!
+  fieldMode: JSON!
+  isRequired: JSON!
 }
 
-enum KeystoneAdminUIFieldMetaCreateViewFieldMode {
-  edit
-  hidden
+type KeystoneAdminUIFieldMetaItemView {
+  fieldMode: JSON!
+  fieldPosition: KeystoneAdminUIFieldMetaItemViewFieldPosition!
+  isRequired: JSON!
+}
+
+enum KeystoneAdminUIFieldMetaItemViewFieldPosition {
+  form
+  sidebar
 }
 
 type KeystoneAdminUIFieldMetaListView {
@@ -13769,26 +13836,66 @@ enum KeystoneAdminUIFieldMetaListViewFieldMode {
   hidden
 }
 
-type KeystoneAdminUIFieldMetaItemView {
-  fieldMode: KeystoneAdminUIFieldMetaItemViewFieldMode
-  fieldPosition: KeystoneAdminUIFieldMetaItemViewFieldPosition
-}
-
-enum KeystoneAdminUIFieldMetaItemViewFieldMode {
-  edit
-  read
-  hidden
-}
-
-enum KeystoneAdminUIFieldMetaItemViewFieldPosition {
-  form
-  sidebar
-}
-
 type KeystoneAdminUIFieldGroupMeta {
   label: String!
   description: String
   fields: [KeystoneAdminUIFieldMeta!]!
+}
+
+type KeystoneAdminUIActionMeta {
+  key: String!
+  label: String!
+  icon: String
+  messages: KeystoneAdminUIActionMetaMessages!
+  graphql: KeystoneAdminUIActionMetaGraphQL
+  itemView: KeystoneAdminUIActionMetaItemView
+  listView: KeystoneAdminUIActionMetaListView!
+}
+
+type KeystoneAdminUIActionMetaMessages {
+  promptTitle: String!
+  promptTitleMany: String
+  prompt: String!
+  promptMany: String
+  promptConfirmLabel: String!
+  promptConfirmLabelMany: String
+  fail: String!
+  failMany: String
+  success: String!
+  successMany: String
+}
+
+type KeystoneAdminUIActionMetaGraphQL {
+  arguments: [KeystoneAdminUIActionMetaGraphQLArgument!]!
+  names: KeystoneAdminUIActionMetaGraphQLNames!
+}
+
+type KeystoneAdminUIActionMetaGraphQLArgument {
+  name: String!
+  type: String!
+  source: JSON
+}
+
+type KeystoneAdminUIActionMetaGraphQLNames {
+  one: String!
+  many: String
+}
+
+type KeystoneAdminUIActionMetaItemView {
+  actionMode: JSON!
+  navigation: KeystoneAdminUIActionMetaItemViewNavigation!
+  hidePrompt: Boolean!
+  hideToast: Boolean!
+}
+
+enum KeystoneAdminUIActionMetaItemViewNavigation {
+  follow
+  refetch
+  return
+}
+
+type KeystoneAdminUIActionMetaListView {
+  actionMode: JSON!
 }
 
 type KeystoneAdminUIGraphQL {

@@ -1,7 +1,7 @@
 import { singular } from 'pluralize';
 import { capitalizeFirstLetter } from '.';
 import { CommonContext } from '../controllers/types';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '../../generated/prisma/client';
 import {
   BaseListTypeInfo,
   KeystoneContextFromListTypeInfo,
