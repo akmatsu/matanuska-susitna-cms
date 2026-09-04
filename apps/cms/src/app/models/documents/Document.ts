@@ -69,7 +69,9 @@ export const Document = list({
     userGroups: userGroups(),
     file: file({
       storage:
-        appConfig.nodeEnv === 'production' ? 's3Documents' : 'localDocuments',
+        appConfig.nodeEnv === 'production'
+          ? appConfig.storage.s3Documents
+          : appConfig.storage.localDocuments,
     }),
     collections: relationship({
       ref: 'DocumentCollection.documents',

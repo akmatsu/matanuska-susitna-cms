@@ -3,7 +3,7 @@
 import { TypeInfo } from '../../generated/keystone/types';
 import type { KeystoneContext, MaybePromise } from '@keystone-6/core/types';
 import type { Session } from '../session';
-import { json, type Express } from 'express';
+import { json, static as serveStatic, type Express } from 'express';
 
 import {
   createNaturalLanguageSearchModel,
@@ -22,11 +22,17 @@ import {
 } from '../controllers/DraftAndVersionControllers';
 import { countPageView } from '../controllers/pageViewsController';
 import { getGovDeliveryTopics } from '../utils/govDelivery';
+import { appConfig } from '../configs/appConfig';
 
 export const routes: (
   app: Express,
   context: KeystoneContext<TypeInfo<Session>>,
 ) => MaybePromise<void> = async (app, commonContext) => {
+  if (appConfig.nodeEnv !== 'production') {
+    app.use('/document-files', serveStatic('public/document-files'));
+    app.use('/image-files', serveStatic('public/image-files'));
+  }
+
   app.post(
     '/typesense/create-collections',
     json(),
