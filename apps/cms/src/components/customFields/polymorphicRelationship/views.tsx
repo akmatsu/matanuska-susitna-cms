@@ -11,18 +11,14 @@ type PolymorphicValue = {
   itemId?: { label: string; value: string } | null;
 };
 
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-  Select,
-} from '@keystone-ui/fields';
-import { Button } from '@keystone-ui/button';
+import { FieldContainer, FieldLabel, FieldDescription } from '@keystar/ui/field';
+import { Button } from '@keystar/ui/button';
+import { Combobox } from '@keystar/ui/combobox';
+import { Item, Picker } from '@keystar/ui/picker';
+import { toastQueue } from '@keystar/ui/toast';
 
-import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
-import { DrawerController } from '@keystone-ui/modals';
+import { CreateItemDialog } from '../../CreateItemDialog';
 
-import { useToasts } from '@keystone-ui/toast';
 import v from 'voca';
 import { useInternalSearchQuery } from '../../mdEditor/components/Editor/features/internalLinks/hooks/useInternalSearchQuery';
 
@@ -31,8 +27,6 @@ export function Field({
   value,
   onChange,
 }: FieldProps<typeof controller>) {
-  const toast = useToasts();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isTypePickerOpen, setIsTypePickerOpen] = useState(false);
   const [drawerItemType, setDrawerItemType] = useState<{
@@ -71,12 +65,18 @@ export function Field({
   }
 
   if (error) {
-    toast.addToast({
-      title: 'Error',
-      message: error.message,
-      tone: 'negative',
-    });
+    toastQueue.critical(`Error: ${error.message}`);
   }
+
+  const searchItems = useMemo(
+    () =>
+      data?.internalSearch?.map((item: any) => ({
+        label: `${item.title} (${item.__typename})`,
+        value: item.id,
+        type: item.__typename,
+      })) ?? [],
+    [data?.internalSearch],
+  );
 
   return (
     <FieldContainer>
@@ -86,41 +86,33 @@ export function Field({
       </FieldDescription>
       <div className="flex flex-col gap-2">
         <div className="flex flex-wrap gap-2">
-          <Select
-            className="w-full"
-            placeholder={`Select an item...`}
-            value={value?.itemId || null}
-            options={data?.internalSearch?.map((item: any) => {
-              return {
-                label: `${item.title} (${item.__typename})`,
-                value: item.id,
-                type: item.__typename,
-              };
-            })}
-            onInputChange={setQuery}
+          <Combobox
+            aria-label="Select an item..."
+            items={searchItems}
+            selectedKey={value?.itemId?.value ?? null}
             inputValue={query}
-            onChange={(item) => {
-              const i = item as { label: string; value: string; type: string };
+            onInputChange={setQuery}
+            onSelectionChange={(key) => {
+              const item = searchItems.find((i) => i.value === key);
+              if (!item) return;
               onChange?.({
                 itemType: {
-                  label: i?.type,
-                  value: v.camelCase(i?.type || ''),
+                  label: item.type,
+                  value: v.camelCase(item.type || ''),
                 },
-                itemId: item,
+                itemId: { label: item.label, value: item.value },
               });
             }}
-          ></Select>
+          >
+            {(item) => <Item key={item.value}>{item.label}</Item>}
+          </Combobox>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Button
-            size="small"
-            onClick={() => setIsTypePickerOpen((open) => !open)}
-          >
+          <Button onPress={() => setIsTypePickerOpen((open) => !open)}>
             {isTypePickerOpen ? 'Cancel' : 'Create New Item'}
           </Button>
           <Button
-            size="small"
-            onClick={() =>
+            onPress={() =>
               openDrawerForItemType({ label: 'Url', value: v.camelCase('Url') })
             }
           >
@@ -128,42 +120,41 @@ export function Field({
           </Button>
         </div>
         {isTypePickerOpen && (
-          <Select
-            className="w-full"
-            placeholder="Select item type to create..."
-            value={createTypeOption}
-            options={createTypeOptions}
-            onChange={(option) => {
-              const selectedType = option as {
-                label: string;
-                value: string;
-              } | null;
-              setCreateTypeOption(selectedType);
+          <Picker
+            aria-label="Select item type to create..."
+            items={createTypeOptions}
+            selectedKey={createTypeOption?.value ?? null}
+            onSelectionChange={(key) => {
+              const selectedType = createTypeOptions.find(
+                (o) => o.value === key,
+              );
+              setCreateTypeOption(selectedType ?? null);
               if (selectedType) {
                 openDrawerForItemType(selectedType);
                 setIsTypePickerOpen(false);
               }
             }}
-          ></Select>
+          >
+            {(item) => <Item key={item.value}>{item.label}</Item>}
+          </Picker>
         )}
       </div>
       {drawerItemType && (
-        <DrawerController isOpen={isDrawerOpen}>
-          <CreateItemDrawer
-            listKey={drawerItemType.label.replace(/\s+/g, '')}
-            onClose={() => setIsDrawerOpen(false)}
-            onCreate={(val) => {
-              setIsDrawerOpen(false);
-              onChange?.({
-                itemType: drawerItemType,
-                itemId: {
-                  label: val.label,
-                  value: val.id,
-                },
-              });
-            }}
-          />
-        </DrawerController>
+        <CreateItemDialog
+          listKey={drawerItemType.label.replace(/\s+/g, '')}
+          isOpen={isDrawerOpen}
+          onClose={() => setIsDrawerOpen(false)}
+          onCreate={(val) => {
+            setIsDrawerOpen(false);
+            onChange?.({
+              itemType: drawerItemType,
+              itemId: {
+                label: val.label ?? '',
+                value: val.id,
+              },
+            });
+          }}
+        />
       )}
     </FieldContainer>
   );

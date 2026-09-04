@@ -1,6 +1,6 @@
 'use client';
 
-import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import {
   CardValueComponent,
   CellComponent,
@@ -8,15 +8,11 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Fragment, useEffect, useState } from 'react';
-import { Text } from '@keystone-ui/core';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-  MultiSelect,
-  Select,
-} from '@keystone-ui/fields';
+import { useEffect, useState } from 'react';
+import { Text } from '@keystar/ui/typography';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
+import { ListView } from '@keystar/ui/list-view';
+import { Item, Picker } from '@keystar/ui/picker';
 import { GovDeliveryTopic } from '../../../utils/govDelivery';
 
 async function fetchGovDeliveryOptions(): Promise<Option[]> {
@@ -75,60 +71,44 @@ export const Field = ({
     };
   }, []);
 
-  const validationMessage =
-    (hasChanged || forceValidation) && !validate(value, field.isRequired) ? (
-      <Text color="red600" size="small">
-        {field.label} is required
-      </Text>
-    ) : null;
+  const isInvalid =
+    (hasChanged || forceValidation) && !validate(value, field.isRequired);
+  const errorMessage = isInvalid ? `${field.label} is required` : undefined;
+
+  const selectedKey = value.value?.value ?? null;
+
   return (
-    <FieldContainer>
-      <Fragment>
-        <FieldLabel htmlFor={field.path}>{field.label}</FieldLabel>
-        <FieldDescription id={`${field.path}-description`}>
-          {field.description}
-        </FieldDescription>
-        <Select
-          id={field.path}
-          isClearable
-          autoFocus={autoFocus}
-          options={options}
-          isDisabled={onChange === undefined}
-          onChange={(newVal) => {
-            onChange?.({ ...value, value: newVal });
-            setHasChanged(true);
-          }}
-          value={value.value}
-          aria-describedby={
-            field.description === null ? undefined : `${field.path}-description`
-          }
-          portalMenu
-        />
-        {loadError ? (
-          <Text color="red600" size="small">
-            {loadError}
-          </Text>
-        ) : null}
-        {validationMessage}
-      </Fragment>
-    </FieldContainer>
+    <div className="mb-4">
+      <Picker
+        label={field.label}
+        description={field.description}
+        autoFocus={autoFocus}
+        items={options}
+        isDisabled={onChange === undefined}
+        errorMessage={errorMessage}
+        selectedKey={selectedKey}
+        onSelectionChange={(key) => {
+          const newVal = options.find((o) => o.value === key) ?? null;
+          onChange?.({ ...value, value: newVal });
+          setHasChanged(true);
+        }}
+      >
+        {(item) => <Item key={item.value}>{item.label}</Item>}
+      </Picker>
+      {loadError ? (
+        <Text color="critical" size="small">
+          {loadError}
+        </Text>
+      ) : null}
+    </div>
   );
 };
 
-export const Cell: CellComponent<typeof controller> = ({
-  item,
-  field,
-  linkTo,
-}) => {
+export const Cell: CellComponent<typeof controller> = ({ item, field }) => {
   const value = item[field.path] + '';
 
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export const CardValue: CardValueComponent<typeof controller> = ({
   item,
@@ -137,10 +117,10 @@ export const CardValue: CardValueComponent<typeof controller> = ({
   const value = item[field.path] + '';
 
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{value}</FieldLabel>
       {value}
-    </FieldContainer>
+    </div>
   );
 };
 
@@ -230,12 +210,22 @@ export const controller = (
         }, []);
 
         return (
-          <MultiSelect
-            onChange={props.onChange}
-            options={options}
-            value={props.value}
+          <ListView
+            aria-label={config.label}
+            items={options}
+            selectionMode="multiple"
+            selectedKeys={props.value.map((x) => x.value)}
+            onSelectionChange={(selection) => {
+              if (selection === 'all') return;
+              const keys = [...selection].filter(
+                (x): x is string => typeof x === 'string',
+              );
+              props.onChange(options.filter((o) => keys.includes(o.value)));
+            }}
             autoFocus
-          />
+          >
+            {(item) => <Item key={item.value}>{item.label}</Item>}
+          </ListView>
         );
       },
       graphql: ({ type, value: options }) => ({

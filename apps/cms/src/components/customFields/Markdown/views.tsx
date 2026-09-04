@@ -1,11 +1,7 @@
 import React, { ComponentProps } from 'react';
 import { Suspense } from 'react';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
-import { CellLink, CellContainer } from '@keystone-6/core/admin-ui/components';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 
 import {
   type CardValueComponent,
@@ -22,7 +18,7 @@ export function Field({
   onChange,
 }: FieldProps<typeof controller>) {
   return (
-    <FieldContainer as="fieldset">
+    <fieldset className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
@@ -32,33 +28,27 @@ export function Field({
           <RichEditor initialValue={value || ''} onChange={onChange} />
         </Suspense>
       </div>
-    </FieldContainer>
+    </fieldset>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export const CardValue: CardValueComponent = ({
   item,
   field,
 }: ComponentProps<CardValueComponent>) => {
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       {item[field.path]}
-    </FieldContainer>
+    </div>
   );
 };
 

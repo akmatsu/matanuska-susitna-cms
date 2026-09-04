@@ -5,11 +5,7 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
 import { ComponentProps } from 'react';
@@ -19,7 +15,7 @@ type LiveUrlValue = string;
 export function Field({ field, value }: FieldProps<typeof controller>) {
   if (value?.length && typeof value === 'string')
     return (
-      <FieldContainer>
+      <div className="mb-4">
         <FieldLabel>{field.label}</FieldLabel>
         <FieldDescription id={`${field.path}-description`}>
           {field.description}
@@ -27,7 +23,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
         <Link href={value} target="_blank">
           {value}
         </Link>
-      </FieldContainer>
+      </div>
     );
 }
 
@@ -45,10 +41,10 @@ export const CardValue: CardValueComponent = ({
   field,
 }: ComponentProps<CardValueComponent>) => {
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       <p>I AM THE CARD YAYAYAY</p>
-    </FieldContainer>
+    </div>
   );
 };
 

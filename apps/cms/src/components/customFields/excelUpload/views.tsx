@@ -2,7 +2,7 @@
 'use client';
 
 import { ChangeEvent, useRef, useState } from 'react';
-import { FieldContainer, FieldLabel } from '@keystone-ui/fields';
+import { FieldLabel } from '@keystar/ui/field';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
@@ -12,7 +12,7 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Button } from '@keystone-ui/button';
+import { Button } from '@keystar/ui/button';
 
 export function Field({
   field,
@@ -89,7 +89,7 @@ export function Field({
   };
 
   return (
-    <FieldContainer as="fieldset">
+    <fieldset className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       {field.description && (
         <p className="mb-4 text-sm text-gray-600">{field.description}</p>
@@ -163,17 +163,15 @@ export function Field({
 
             <div className="mt-4 flex gap-2">
               <Button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={loading}
-                className="text-sm"
+                onPress={() => fileInputRef.current?.click()}
+                isDisabled={loading}
               >
                 Replace File
               </Button>
               <Button
-                onClick={handleClear}
-                disabled={loading}
-                tone="negative"
-                className="text-sm"
+                onPress={handleClear}
+                isDisabled={loading}
+                tone="critical"
               >
                 Clear Data
               </Button>
@@ -181,7 +179,7 @@ export function Field({
           </div>
         )}
       </div>
-    </FieldContainer>
+    </fieldset>
   );
 }
 

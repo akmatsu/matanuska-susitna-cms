@@ -1,5 +1,5 @@
 import React, { ComponentProps } from 'react';
-import { CellLink, CellContainer } from '@keystone-6/core/admin-ui/components';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
   FieldController,
@@ -7,11 +7,7 @@ import {
   FieldProps,
 } from '@keystone-6/core/types';
 
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 
 export function Field({
   field,
@@ -19,7 +15,7 @@ export function Field({
   onChange,
 }: FieldProps<typeof controller>) {
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
@@ -29,23 +25,17 @@ export function Field({
         value={value || ''}
         onChange={(e) => onChange?.(e.target.value)}
       />
-    </FieldContainer>
+    </div>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
   const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export const controller = (
   config: FieldControllerConfig<any>,

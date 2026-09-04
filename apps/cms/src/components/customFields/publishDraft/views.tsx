@@ -4,19 +4,15 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Button } from '@keystone-ui/button';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
+import { Button } from '@keystar/ui/button';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 import { PublishDraftFieldMeta } from '.';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import { useRouter } from 'next/router';
 import { useParams } from 'next/navigation';
 import { plural } from 'pluralize';
 import { useState } from 'react';
-import { useToasts } from '@keystone-ui/toast';
+import { toastQueue } from '@keystar/ui/toast';
 import kebabCase from 'voca/kebab_case';
 
 export function Field({ field }: FieldProps<typeof controller>) {
@@ -25,7 +21,6 @@ export function Field({ field }: FieldProps<typeof controller>) {
   const [loading, setLoading] = useState(false);
 
   const listSlug = plural(kebabCase(field.listName)).toLowerCase();
-  const { addToast } = useToasts();
   const queryParam = encodeURIComponent(field.query ?? '');
 
   async function handlePublishDraft() {
@@ -46,24 +41,22 @@ export function Field({ field }: FieldProps<typeof controller>) {
       router.push(`/${listSlug}/${result.publishedId}`);
     } catch (error: any) {
       console.error('Error publishing draft:', error);
-      addToast({
-        title: 'Error',
-        message: `Failed to publish draft: ${error?.message}`,
-        tone: 'negative',
-      });
+      toastQueue.critical(
+        `Error: Failed to publish draft: ${error?.message}`,
+      );
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
       </FieldDescription>
-      <Button onClick={handlePublishDraft}>Publish</Button>
-    </FieldContainer>
+      <Button onPress={handlePublishDraft}>Publish</Button>
+    </div>
   );
 }
 
@@ -72,7 +65,7 @@ export function Cell() {
 }
 
 export function CardValue() {
-  return <FieldContainer>Card</FieldContainer>;
+  return <div className="mb-4">Card</div>;
 }
 
 export const controller = (

@@ -1,8 +1,4 @@
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 
 import {
   CardValueComponent,
@@ -42,13 +38,13 @@ function PrettyData({ data }: { data?: ItemValue | undefined }) {
 }
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   return !value ? null : (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.path}</FieldLabel>
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
       </FieldDescription>
       <PrettyData data={value} />
-    </FieldContainer>
+    </div>
   );
 };
 
@@ -64,10 +60,10 @@ export const CardValue: CardValueComponent = ({
   field,
 }: ComponentProps<CardValueComponent>) => {
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       <PrettyData data={item[field.path]} />
-    </FieldContainer>
+    </div>
   );
 };
 

@@ -6,11 +6,7 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
 
@@ -23,7 +19,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   const val = value as ReferenceByValue;
 
   return (
-    <FieldContainer as="fieldset">
+    <fieldset className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       <FieldDescription id={`${field.path}-description`}>
         {field.description}
@@ -35,7 +31,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
           </li>
         ))}
       </ul>
-    </FieldContainer>
+    </fieldset>
   );
 }
 
@@ -51,10 +47,10 @@ export const CardValue: CardValueComponent = ({
   field,
 }: ComponentProps<CardValueComponent>) => {
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       <p>I AM THE CARD YAYAYAY</p>
-    </FieldContainer>
+    </div>
   );
 };
 

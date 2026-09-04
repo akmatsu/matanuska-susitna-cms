@@ -5,57 +5,36 @@ import {
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-  MultiSelect,
-  Select,
-} from '@keystone-ui/fields';
-import { ComponentProps, useState } from 'react';
-import { Text } from '@keystone-ui/core';
+import { ListView } from '@keystar/ui/list-view';
+import { Item, Picker } from '@keystar/ui/picker';
+import { ComponentProps } from 'react';
 
 export function Field(props: FieldProps<typeof controller>) {
-  const [hasChanged, setHasChanged] = useState(false);
-
-  const validationMessage =
-    (hasChanged || props.forceValidation) &&
-    !validate(props.value, props.field.isRequired) ? (
-      <Text color="red600" size="small">
-        {props.field.label} is required
-      </Text>
-    ) : null;
+  const selectedKey = props.value.value?.value ?? null;
+  const isRequired = props.field.isRequired;
+  const isInvalid = !validate(props.value, isRequired);
+  const errorMessage =
+    isInvalid && props.forceValidation
+      ? `${props.field.label} is required`
+      : undefined;
 
   return (
-    <FieldContainer>
-      <FieldLabel>{props.field.label}</FieldLabel>
-      <FieldDescription id={`${props.field.path}-description`}>
-        {props.field.description}
-      </FieldDescription>
-      <Select
-        id={props.field.path}
-        isClearable
-        autoFocus={props.autoFocus}
-        isDisabled={props.onChange === undefined}
-        options={props.field.options}
-        value={props.value.value}
-        aria-describedby={
-          props.field.description === null
-            ? undefined
-            : `${props.field.path}-description`
-        }
-        portalMenu
-        onChange={(newVal) => {
-          props.onChange?.({ ...props.value, value: newVal });
-          setHasChanged(true);
-        }}
-        classNames={{
-          option: (props) => props.data.value,
-          singleValue: (props) => props.data.value,
-        }}
-      />
-      {validationMessage}
-    </FieldContainer>
+    <Picker
+      label={props.field.label}
+      description={props.field.description}
+      autoFocus={props.autoFocus}
+      isDisabled={props.onChange === undefined}
+      isRequired={isRequired}
+      errorMessage={errorMessage}
+      items={props.field.options}
+      selectedKey={selectedKey}
+      onSelectionChange={(key) => {
+        const newVal = props.field.options.find((o) => o.value === key) ?? null;
+        props.onChange?.({ ...props.value, value: newVal });
+      }}
+    >
+      {(item) => <Item key={item.value}>{item.label}</Item>}
+    </Picker>
   );
 }
 
@@ -63,15 +42,11 @@ export const CardValue: CardValueComponent = (
   props: ComponentProps<CardValueComponent>,
 ) => {
   return (
-    <FieldContainer>
-      <FieldLabel>{props.field.label}</FieldLabel>
-      <FieldDescription id={`${props.field.path}-description`}>
-        {props.field.description}
-      </FieldDescription>
+    <div>
       <span className={props.item.icon}>
         {props.item.icon ? '' : 'No icon selected'}
       </span>
-    </FieldContainer>
+    </div>
   );
 };
 
@@ -158,12 +133,24 @@ export const controller = (
     filter: {
       Filter(props) {
         return (
-          <MultiSelect
-            onChange={props.onChange}
-            options={optionsWithStringValues}
-            value={props.value}
+          <ListView
+            aria-label={config.label}
+            items={optionsWithStringValues}
+            selectionMode="multiple"
+            selectedKeys={props.value.map((x) => x.value)}
+            onSelectionChange={(selection) => {
+              if (selection === 'all') return;
+              const keys = [...selection].filter(
+                (x): x is string => typeof x === 'string',
+              );
+              props.onChange(
+                optionsWithStringValues.filter((o) => keys.includes(o.value)),
+              );
+            }}
             autoFocus
-          />
+          >
+            {(item) => <Item key={item.value}>{item.label}</Item>}
+          </ListView>
         );
       },
       graphql: ({ type, value: options }) => ({

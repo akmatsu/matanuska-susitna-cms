@@ -2,15 +2,13 @@
 import { PageContainer } from '@keystone-6/core/admin-ui/components';
 import { Button } from '@headlessui/react';
 import { useState } from 'react';
-import { useToasts } from '@keystone-ui/toast';
+import { toastQueue } from '@keystar/ui/toast';
 import { DropDownSearchField } from '../../src/components/DropDownSearch';
 import { FileDropInput } from '../../src/bulkDocumentUploads/components/FileDropInput';
 import { useBulkDocumentUpload } from '../../src/bulkDocumentUploads/hooks/useBulkDocumentUpload';
 import { validateFiles } from '../../src/bulkDocumentUploads/utils';
 
 export default function BulkDocumentUpload() {
-  const { addToast } = useToasts();
-
   const [selectedCollections, setSelectedCollections] = useState<
     {
       title: string;
@@ -54,11 +52,9 @@ export default function BulkDocumentUpload() {
         !f.some((f) => {
           const alreadyInFiles = f.name === file.name;
           if (alreadyInFiles) {
-            addToast({
-              title: 'File already Selected',
-              message: `The file ${file.name} has already been selected`,
-              tone: 'warning',
-            });
+            toastQueue.info(
+              `File already Selected: The file ${file.name} has already been selected`,
+            );
           }
           return alreadyInFiles;
         }),

@@ -5,13 +5,12 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from '@headlessui/react';
-import { DrawerController } from '@keystone-ui/modals';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { plural, singular } from 'pluralize';
 import { useEffect, useState } from 'react';
-import { CreateItemDrawer } from '@keystone-6/core/admin-ui/components';
-import { Button } from '@keystone-ui/button';
+import { CreateItemDialog } from '../../../../../CreateItemDialog';
+import { Button } from '@keystar/ui/button';
 import { useInternalSearchQuery } from './hooks/useInternalSearchQuery';
 import { useInternalTooltipProvider } from './hooks/useInternalTooltipProvider';
 import { Page, useSelectionHandler } from './hooks/useSelectedItem';
@@ -20,7 +19,16 @@ import { Mark } from '@milkdown/kit/prose/model';
 import { PluginViewContext } from '@prosemirror-adapter/react';
 import { LinkSearchQuery } from '../../../../../../graphql/graphql';
 import { useGetLinkInfo } from './hooks/useGetLinkInfo';
-import { Checkbox, Select } from '@keystone-ui/fields';
+import { Checkbox } from '@keystar/ui/checkbox';
+import { Item, Picker } from '@keystar/ui/picker';
+
+const BUTTON_COLOR_OPTIONS = [
+  { value: 'base', label: 'Base' },
+  { value: 'primary', label: 'Primary' },
+  { value: 'success', label: 'Success' },
+  { value: 'error', label: 'Error' },
+  { value: 'warning', label: 'Warning' },
+];
 
 export function InternalLinkTooltip() {
   const { contentRef, view, linkInfo, isShowing } =
@@ -108,20 +116,19 @@ export function InternalLinkTooltip() {
           <div className="flex flex-col gap-2">
             {isButton && (
               <div className="flex gap-2">
-                <Select
-                  controlShouldRenderValue
-                  options={[
-                    { value: 'base', label: 'Base' },
-                    { value: 'primary', label: 'Primary' },
-                    { value: 'success', label: 'Success' },
-                    { value: 'error', label: 'Error' },
-                    { value: 'warning', label: 'Warning' },
-                  ]}
-                  defaultValue={selectedColor}
-                  value={selectedColor}
-                  width="large"
-                  onChange={setColor}
-                ></Select>
+                <Picker
+                  aria-label="Button color"
+                  items={BUTTON_COLOR_OPTIONS}
+                  selectedKey={selectedColor.value}
+                  onSelectionChange={(key) => {
+                    setColor(
+                      BUTTON_COLOR_OPTIONS.find((o) => o.value === key) ??
+                        null,
+                    );
+                  }}
+                >
+                  {(item) => <Item key={item.value}>{item.label}</Item>}
+                </Picker>
               </div>
             )}
             <div className="flex items-center gap-2">
@@ -139,27 +146,16 @@ export function InternalLinkTooltip() {
                     <span className="icon-[mdi--external-link] -mb-0.5 size-4"></span>
                   </Link>
                 ))}
-              <Button
-                size="small"
-                onClick={() => setEditing(true)}
-                name="Edit Link"
-                aria-label="Edit Link"
-              >
+              <Button onPress={() => setEditing(true)} aria-label="Edit Link">
                 <span className="icon-[mdi--pencil]"></span>
               </Button>
-              <Button
-                size="small"
-                onClick={removeLink}
-                name="Remove Link"
-                aria-label="Remove Link"
-              >
+              <Button onPress={removeLink} aria-label="Remove Link">
                 <span className="icon-[mdi--delete]"></span>
               </Button>
 
               <Checkbox
-                checked={isButton}
+                isSelected={isButton}
                 onChange={() => setIsButton(!isButton)}
-                size="small"
               >
                 Toggle Button Style
               </Checkbox>
@@ -215,14 +211,10 @@ function SearchInput({
             )}
           />
           <div className="flex items-center gap-1">
-            <Button size="small" onClick={() => setIsDrawerOpen(true)}>
+            <Button onPress={() => setIsDrawerOpen(true)}>
               Create new URL
             </Button>
-            <Button
-              size="small"
-              onClick={onSelection}
-              className="flex items-center justify-center"
-            >
+            <Button onPress={onSelection}>
               <span className="icon-[mdi--cancel]"></span>
             </Button>
           </div>
@@ -247,20 +239,19 @@ function SearchInput({
           )}
         </ComboboxOptions>
       </Combobox>
-      <DrawerController isOpen={isDrawerOpen}>
-        <CreateItemDrawer
-          listKey={'Url'}
-          onClose={() => setIsDrawerOpen(false)}
-          onCreate={(val) => {
-            setIsDrawerOpen(false);
-            handleSelection({
-              __typename: 'Url',
-              id: val.id,
-              title: val.label,
-            });
-          }}
-        />
-      </DrawerController>
+      <CreateItemDialog
+        listKey="Url"
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        onCreate={(val) => {
+          setIsDrawerOpen(false);
+          handleSelection({
+            __typename: 'Url',
+            id: val.id,
+            title: val.label ?? '',
+          });
+        }}
+      />
     </>
   );
 }

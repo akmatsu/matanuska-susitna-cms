@@ -1,5 +1,5 @@
 import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
-import { useToasts } from '@keystone-ui/toast';
+import { toastQueue } from '@keystar/ui/toast';
 import { FormEvent, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -54,7 +54,6 @@ export function useBulkDocumentUpload(
   const collections = useQuery(GET_DOCUMENT_COLLECTIONS_QUERY);
   const tags = useQuery(GET_TAGS_QUERY);
   const formRef = useRef<HTMLFormElement>(null);
-  const { addToast } = useToasts();
 
   const form = useForm<FormData>({
     mode: 'onChange',
@@ -101,18 +100,10 @@ export function useBulkDocumentUpload(
     const res = await uploadDocuments({ variables: { data: uploads } });
     if (res.errors) {
       res.errors.forEach((error) => {
-        addToast({
-          title: 'Error',
-          message: error.message,
-          tone: 'negative',
-        });
+        toastQueue.critical(`Error: ${error.message}`);
       });
     } else if (res.data) {
-      addToast({
-        title: 'Documents Uploaded',
-        message: 'Documents uploaded successfully',
-        tone: 'positive',
-      });
+      toastQueue.positive('Documents Uploaded: Documents uploaded successfully');
       form.reset();
     }
   }
