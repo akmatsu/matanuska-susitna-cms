@@ -7,7 +7,26 @@ import {
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
+import { lookup } from 'mime-types';
 import type { StorageStrategy } from '@keystone-6/core/types';
+
+/**
+ * Keystone's built-in `file()` field always reports `application/octet-stream`
+ * as the content type, regardless of the actual file - see @keystone-6/core's
+ * fields.js inputResolver for file fields. (`image()` fields sniff the real
+ * file bytes and aren't affected.) Historically this meant documents landed in
+ * S3 with the wrong Content-Type metadata, so browsers would offer them as a
+ * generic download instead of rendering them inline, requiring a manual fix in
+ * the S3 console. Since transformName keeps the original extension for file
+ * fields, look up the real MIME type from the key whenever we're handed that
+ * placeholder value instead of trusting it.
+ */
+function resolveContentType(key: string, reportedContentType: string) {
+  if (reportedContentType && reportedContentType !== 'application/octet-stream') {
+    return reportedContentType;
+  }
+  return lookup(key) || reportedContentType;
+}
 
 export function createS3Storage(config: {
   bucketName: string;
@@ -30,7 +49,7 @@ export function createS3Storage(config: {
           Bucket: config.bucketName,
           Key: key,
           Body: stream,
-          ContentType: meta.contentType,
+          ContentType: resolveContentType(key, meta.contentType),
         }),
       );
     },
