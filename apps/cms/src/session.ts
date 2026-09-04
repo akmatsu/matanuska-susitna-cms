@@ -1,5 +1,4 @@
-import { Context } from '@keystone-6/core/admin-ui/apollo';
-import { getContext } from '@keystone-6/core/context';
+import type { Context } from '@keystone-6/core/admin-ui/apollo';
 import { AuthOptions, DefaultSession, getServerSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';
 import AzureADProvider from 'next-auth/providers/azure-ad';
@@ -9,6 +8,8 @@ let _keystoneContext: Context = (globalThis as any)._keystoneContext;
 
 async function getKeystoneContext() {
   if (_keystoneContext) return _keystoneContext;
+
+  const { getContext } = await import('@keystone-6/core/context');
 
   _keystoneContext = getContext(
     (await import('../keystone')).default,
