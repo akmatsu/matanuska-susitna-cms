@@ -4,6 +4,7 @@ import { TypeInfo } from '../../generated/keystone/types';
 import type { KeystoneContext, MaybePromise } from '@keystone-6/core/types';
 import type { Session } from '../session';
 import { json, static as serveStatic, type Express } from 'express';
+import path from 'node:path';
 
 import {
   createNaturalLanguageSearchModel,
@@ -32,6 +33,14 @@ export const routes: (
     app.use('/document-files', serveStatic('public/document-files'));
     app.use('/image-files', serveStatic('public/image-files'));
   }
+
+  // Prebuilt admin Tailwind stylesheet, see scripts/buildAdminCss.mjs.
+  // Keystone's generated Next.js app serves static assets from its own
+  // .keystone/admin/public/ directory, not this one, so this can't be
+  // picked up by Next's built-in public folder handling.
+  app.get('/admin-global.css', (_req, res) => {
+    res.sendFile(path.resolve('public/admin-global.css'));
+  });
 
   app.post(
     '/typesense/create-collections',
