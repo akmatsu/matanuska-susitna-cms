@@ -11,7 +11,7 @@ const PageView = list({
     operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isAdmin(args)),
+    hideNavigation: async (args) => !(await isAdmin(args)),
   },
   fields: {
     pageKey: text({

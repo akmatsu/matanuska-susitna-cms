@@ -36,7 +36,7 @@ const Proposition = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     title: text(),
@@ -334,7 +334,7 @@ const {
     },
     mainUI: {
       hideCreate: isNotElectionUser,
-      isHidden: isNotElectionUser,
+      hideNavigation: isNotElectionUser,
     },
     versionLimit: 20,
     versionAgeDays: 365,

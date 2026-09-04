@@ -13,7 +13,7 @@ const featuredItem = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     order: integer({
@@ -64,7 +64,7 @@ const HomePage = list({
     operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isContentManager(args)),
+    hideNavigation: async (args) => !(await isContentManager(args)),
   },
   fields: {
     heroImage: blueHarvestImage(),

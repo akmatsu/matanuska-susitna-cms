@@ -27,7 +27,7 @@ export const EventSeries = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     frequency: select({

@@ -24,7 +24,7 @@ export const ElectionResult = list({
     },
   },
   ui: {
-    isHidden: isNotElectionUser,
+    hideNavigation: isNotElectionUser,
     hideCreate: isNotElectionUser,
   },
   fields: {

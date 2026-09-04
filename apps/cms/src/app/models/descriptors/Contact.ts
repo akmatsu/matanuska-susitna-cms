@@ -12,7 +12,7 @@ export const ContactListItem = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
     hideCreate: false,
   },
   fields: {

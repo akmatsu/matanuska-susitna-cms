@@ -7,7 +7,7 @@ export const ExternalLink = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isAdmin(args)),
+    hideNavigation: async (args) => !(await isAdmin(args)),
   },
   fields: {
     label: text({

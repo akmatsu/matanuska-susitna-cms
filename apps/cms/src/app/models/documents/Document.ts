@@ -16,7 +16,7 @@ export const DocumentListItem = list({
   },
 
   ui: {
-    isHidden: true,
+    hideNavigation: true,
     hideCreate: false,
   },
   fields: {

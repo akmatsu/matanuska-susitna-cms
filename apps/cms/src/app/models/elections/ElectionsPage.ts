@@ -24,7 +24,7 @@ export const EarlyVotingLocation = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     order: integer({
@@ -94,7 +94,7 @@ const ElectionsPage = list({
   },
   isSingleton: true,
   ui: {
-    isHidden: isNotElectionUser,
+    hideNavigation: isNotElectionUser,
     hideCreate: isNotElectionUser,
   },
   fields: {

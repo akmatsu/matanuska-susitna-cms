@@ -11,7 +11,7 @@ export const User = list({
 
   ui: {
     hideCreate: async (args) => !(await isAdmin(args)),
-    isHidden: async (args) => !(await isAdmin(args)),
+    hideNavigation: async (args) => !(await isAdmin(args)),
   },
   fields: {
     authId: text({

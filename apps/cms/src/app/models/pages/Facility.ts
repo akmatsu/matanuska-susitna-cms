@@ -14,7 +14,7 @@ export const FacilityListItem = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     order: integer({

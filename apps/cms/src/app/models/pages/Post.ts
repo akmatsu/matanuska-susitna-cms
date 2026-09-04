@@ -13,7 +13,7 @@ const PostCategory = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     ...titleAndDescription({
@@ -29,7 +29,7 @@ const PostImage = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     label: text({
