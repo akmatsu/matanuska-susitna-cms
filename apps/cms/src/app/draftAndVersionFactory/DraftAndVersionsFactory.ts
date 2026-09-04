@@ -54,7 +54,10 @@ export type CoreFieldsFunction<TFields extends BaseFields<any>> = (
   opts?: BasePageOptions,
 ) => TFields;
 
-export function relationshipController<ListTypeInfo extends BaseListTypeInfo>({
+export function relationshipController<
+  ListTypeInfo extends BaseListTypeInfo,
+  Ref extends `${keyof ListTypeInfo['all']['lists'] & string}${'' | `.${string}`}`,
+>({
   ref,
   listName,
   opts,
@@ -63,18 +66,17 @@ export function relationshipController<ListTypeInfo extends BaseListTypeInfo>({
   /** The name of the field on the model you are connect to */
   listName: string;
   opts?: BasePageOptions;
-} & RelationshipFieldConfig<ListTypeInfo>) {
+} & RelationshipFieldConfig<ListTypeInfo, Ref>) {
   const listNameSingular = isPlural(listName) ? singular(listName) : listName;
 
   return relationship({
-    ref:
-      ref !== listNameSingular
-        ? !opts?.isDraft && !opts?.isVersion
-          ? `${ref}.${v.camelCase(listName)}`
-          : ref
-        : ref,
+    ref: (ref !== listNameSingular
+      ? !opts?.isDraft && !opts?.isVersion
+        ? `${ref}.${v.camelCase(listName)}`
+        : ref
+      : ref) as Ref,
     ...config,
-  });
+  } as RelationshipFieldConfig<ListTypeInfo, Ref>);
 }
 
 export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
@@ -257,7 +259,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
       },
       ui: {
         hideCreate: true,
-        isHidden: true,
+        hideNavigation: true,
       },
       fields: {
         original: relationship({
@@ -289,7 +291,7 @@ export function DraftAndVersionsFactory<TFields extends BaseFields<any>>(
         operation: generalOperationAccess,
       },
       ui: {
-        isHidden: true,
+        hideNavigation: true,
         hideCreate: true,
       },
       fields: {
@@ -464,7 +466,7 @@ export function mapRelationShip<
 >(
   modelRef: string,
   currentModelName: string,
-  config: Omit<RelationshipFieldConfig<BaseListTypeInfo>, 'ref'>,
+  config: Omit<RelationshipFieldConfig<BaseListTypeInfo, string>, 'ref'>,
   opts?: T,
 ) {
   return relationship({
@@ -473,5 +475,5 @@ export function mapRelationShip<
         ? `${modelRef}.${v.camelCase(currentModelName)}`
         : modelRef,
     ...config,
-  } as RelationshipFieldConfig<BaseListTypeInfo>);
+  } as RelationshipFieldConfig<BaseListTypeInfo, string>);
 }

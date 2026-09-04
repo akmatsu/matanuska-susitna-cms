@@ -672,7 +672,7 @@ export function cardsUi<T extends BaseListTypeInfo>(fields: string[]) {
     cardFields: fields,
     inlineCreate: { fields },
     inlineEdit: { fields },
-  } satisfies RelationshipFieldConfig<T>['ui'];
+  } satisfies RelationshipFieldConfig<T, string>['ui'];
 }
 
 export const sidebar = {
