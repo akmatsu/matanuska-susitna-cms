@@ -98,10 +98,10 @@ export const controller = (
   const stringifiedDefault = config.fieldMeta.defaultValue?.toString();
 
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: {
       kind: 'create',
       value:
@@ -114,7 +114,7 @@ export const controller = (
     options: optionsWithStringValues,
     deserialize: (data) => {
       for (const option of config.fieldMeta.options) {
-        if (option.value === data[config.path]) {
+        if (option.value === data[config.fieldKey]) {
           const stringifiedOption = {
             label: option.label,
             value: option.value.toString(),
@@ -128,7 +128,7 @@ export const controller = (
       }
       return { kind: 'update', initial: null, value: null };
     },
-    serialize: (value) => ({ [config.path]: t(value.value?.value ?? null) }),
+    serialize: (value) => ({ [config.fieldKey]: t(value.value?.value ?? null) }),
     validate: (value) => validate(value, config.fieldMeta.isRequired),
     filter: {
       Filter(props) {
@@ -154,7 +154,7 @@ export const controller = (
         );
       },
       graphql: ({ type, value: options }) => ({
-        [config.path]: {
+        [config.fieldKey]: {
           [type === 'not_matches' ? 'notIn' : 'in']: options.map((x) =>
             t(x.value),
           ),

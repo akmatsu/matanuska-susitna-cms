@@ -33,13 +33,13 @@ export const controller = (
   config: FieldControllerConfig<{ query: string }>,
 ) => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: createViewValue,
     deserialize: (data: any) => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

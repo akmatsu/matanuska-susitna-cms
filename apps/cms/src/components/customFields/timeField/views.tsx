@@ -17,7 +17,7 @@ export function Field({
   return (
     <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <input
@@ -33,7 +33,7 @@ export const Cell: CellComponent = ({
   item,
   field,
 }: ComponentProps<CellComponent>) => {
-  const value = item[field.path] + '';
+  const value = item[field.fieldKey] + '';
   return <CellContainer>{value}</CellContainer>;
 };
 
@@ -41,12 +41,12 @@ export const controller = (
   config: FieldControllerConfig<any>,
 ): FieldController<string | null, string> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: '',
-    deserialize: (data) => data[config.path] || '',
-    serialize: (data) => ({ [config.path]: data }),
+    deserialize: (data) => data[config.fieldKey] || '',
+    serialize: (data) => ({ [config.fieldKey]: data }),
   };
 };

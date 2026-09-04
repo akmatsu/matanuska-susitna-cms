@@ -17,7 +17,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
     return (
       <div className="mb-4">
         <FieldLabel>{field.label}</FieldLabel>
-        <FieldDescription id={`${field.path}-description`}>
+        <FieldDescription id={`${field.fieldKey}-description`}>
           {field.description}
         </FieldDescription>
         <Link href={value} target="_blank">
@@ -54,13 +54,13 @@ export const controller = (
   config: FieldControllerConfig<{ query: string }>,
 ) => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: createViewValue,
     deserialize: (data: any): LiveUrlValue => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

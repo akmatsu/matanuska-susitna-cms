@@ -187,18 +187,18 @@ export const controller = (
   config: FieldControllerConfig<{ sheetName?: string }>,
 ): FieldController<any, any> & { sheetName?: string } => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     sheetName: config.fieldMeta?.sheetName,
     defaultValue: null,
     deserialize: (data) => {
-      const value = data[config.path];
+      const value = data[config.fieldKey];
       return Array.isArray(value) ? value : null;
     },
     serialize: (value) => ({
-      [config.path]: value,
+      [config.fieldKey]: value,
     }),
   };
 };
@@ -214,7 +214,7 @@ export const CardValue: CardValueComponent<typeof controller> = ({ field }) => {
 
 export const Cell: CellComponent<typeof controller> = (props) => {
   const { item, field } = props;
-  const value = item[field.path];
+  const value = item[field.fieldKey];
   return (
     <div>{value && Array.isArray(value) ? `${value.length} rows` : '-'}</div>
   );

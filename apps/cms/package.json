@@ -3,8 +3,10 @@
   "version": "1.0.3",
   "private": true,
   "scripts": {
+    "predev": "node scripts/buildAdminCss.mjs",
     "dev": "keystone dev --no-db-push",
     "start": "NODE_ENV=production keystone start",
+    "prebuild": "node scripts/buildAdminCss.mjs",
     "build": "NODE_ENV=production keystone build",
     "migrate": "prisma migrate deploy",
     "generate": "prisma generate",
@@ -26,6 +28,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1127.0",
+    "@graphql-ts/schema": "^1.0.2",
     "@graphql-tools/schema": "^10.0.30",
     "@headlessui/react": "^2.2.9",
     "@keystar/ui": "^0.10.0",

@@ -69,7 +69,7 @@ export const Cell: CellComponent = ({
   item,
   field,
 }: ComponentProps<CellComponent>) => {
-  const value = item[field.path] + '';
+  const value = item[field.fieldKey] + '';
   return <CellContainer>{value}</CellContainer>;
 };
 
@@ -83,15 +83,15 @@ export const controller = (
   return {
     query: config.fieldMeta.query ?? '',
     listName: config.fieldMeta.listName,
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: null,
     deserialize: (data) => {
-      const drafts = data[config.path];
+      const drafts = data[config.fieldKey];
       return Array.isArray(drafts) ? drafts.map((draft) => draft.id) : null;
     },
-    serialize: (value) => ({ [config.path]: value }),
+    serialize: (value) => ({ [config.fieldKey]: value }),
   };
 };

@@ -86,7 +86,7 @@ export function Field({
   return (
     <fieldset className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <AsyncSelect<Option | undefined>
@@ -107,7 +107,7 @@ export const Cell: CellComponent = ({
   item,
   field,
 }: ComponentProps<CellComponent>) => {
-  const value = item[field.path] + '';
+  const value = item[field.fieldKey] + '';
   return <CellContainer>{value}</CellContainer>;
 };
 
@@ -118,7 +118,7 @@ export const CardValue: CardValueComponent = ({
   return (
     <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      {item[field.path]}
+      {item[field.fieldKey]}
     </div>
   );
 };
@@ -127,15 +127,15 @@ export const controller = (
   config: FieldControllerConfig<any>,
 ): FieldController<string | null, string> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: null,
     deserialize: (data) => {
-      const value = data[config.path];
+      const value = data[config.fieldKey];
       return typeof value === 'string' ? value : null;
     },
-    serialize: (value) => ({ [config.path]: value }),
+    serialize: (value) => ({ [config.fieldKey]: value }),
   };
 };

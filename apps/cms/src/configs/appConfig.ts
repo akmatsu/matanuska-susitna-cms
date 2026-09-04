@@ -4,11 +4,6 @@ import { createLocalStorage, createS3Storage } from '../utils/storage';
 
 export const baseURL = 'http://localhost:3333';
 
-export const PAGES = {
-  BULK_DOCUMENT_UPLOAD: '/bulk-document-upload',
-  TYPESENSE: '/typesense',
-};
-
 export const appConfig = {
   nodeEnv: process.env.NODE_ENV,
   database: {

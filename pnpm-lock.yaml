@@ -68,6 +68,9 @@ importers:
       '@graphql-tools/schema':
         specifier: ^10.0.30
         version: 10.0.30(graphql@16.14.2)
+      '@graphql-ts/schema':
+        specifier: ^1.0.2
+        version: 1.0.2(graphql@16.14.2)
       '@headlessui/react':
         specifier: ^2.2.9
         version: 2.2.9(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

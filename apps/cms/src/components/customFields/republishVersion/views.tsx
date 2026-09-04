@@ -54,7 +54,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
   return (
     <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <Button onPress={handleRepublishVersion}>Republish Version</Button>
@@ -77,13 +77,13 @@ export const controller = (
   return {
     query: config.fieldMeta.query ?? '',
     listName: config.fieldMeta.listName,
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}`,
+    graphqlSelection: `${config.fieldKey}`,
     defaultValue: undefined,
     deserialize: (data: any): string | null => {
-      return data[config.path] ?? null;
+      return data[config.fieldKey] ?? null;
     },
     serialize: () => ({}),
   };

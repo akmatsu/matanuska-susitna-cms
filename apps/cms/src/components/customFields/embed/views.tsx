@@ -17,7 +17,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   return (
     <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <div className="flex w-full max-w-[382px] gap-4">
@@ -57,13 +57,13 @@ const createViewValue = Symbol('create view virtual field value');
 
 export function controller(config: FieldControllerConfig<{ query: string }>) {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: createViewValue,
     deserialize: (data: any): string => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

@@ -5,11 +5,26 @@ import {
   NavList,
 } from '@keystone-6/core/admin-ui/components';
 import { ListMeta, NavigationProps } from '@keystone-6/core/types';
-import { PAGES } from '../configs/appConfig';
+import { PAGES } from '../configs/constants';
 import { PropsWithChildren } from 'react';
 
-import '../styles/global.css';
+import Head from 'next/head';
 import Link from 'next/link';
+
+/**
+ * Next only allows a genuine global CSS `import` from the literal `_app.js`
+ * file, which Keystone regenerates on every run and doesn't expose a hook
+ * into. Tailwind's output is instead prebuilt to public/admin-global.css
+ * (see scripts/buildAdminCss.mjs, wired to predev/prebuild) and loaded as a
+ * plain stylesheet link here instead.
+ */
+function AdminGlobalStyles() {
+  return (
+    <Head>
+      <link rel="stylesheet" href="/admin-global.css" />
+    </Head>
+  );
+}
 
 function Divider() {
   return <div className="border-b border-gray-100"></div>;
@@ -78,6 +93,7 @@ export function CustomNavigation({ lists }: NavigationProps) {
 
   return (
     <NavContainer>
+      <AdminGlobalStyles />
       <NavList>
         <ListSection title="Home">
           <NavItem href="/">Dashboard</NavItem>

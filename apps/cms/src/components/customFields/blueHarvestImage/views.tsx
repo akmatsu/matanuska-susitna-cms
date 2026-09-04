@@ -131,15 +131,15 @@ export const controller = (
 } => {
   return {
     notBanner: config.fieldMeta.notBanner,
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: null,
     deserialize: (data) => {
-      const value = data[config.path];
+      const value = data[config.fieldKey];
       return typeof value === 'string' ? value : null;
     },
-    serialize: (value) => ({ [config.path]: value }),
+    serialize: (value) => ({ [config.fieldKey]: value }),
   };
 };

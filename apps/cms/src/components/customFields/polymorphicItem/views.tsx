@@ -39,8 +39,8 @@ function PrettyData({ data }: { data?: ItemValue | undefined }) {
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   return !value ? null : (
     <div className="mb-4">
-      <FieldLabel>{field.path}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldLabel>{field.fieldKey}</FieldLabel>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <PrettyData data={value} />
@@ -52,7 +52,7 @@ export const Cell: CellComponent = ({
   item,
   field,
 }: ComponentProps<CellComponent>) => {
-  return <PrettyData data={item[field.path]} />;
+  return <PrettyData data={item[field.fieldKey]} />;
 };
 
 export const CardValue: CardValueComponent = ({
@@ -62,7 +62,7 @@ export const CardValue: CardValueComponent = ({
   return (
     <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <PrettyData data={item[field.path]} />
+      <PrettyData data={item[field.fieldKey]} />
     </div>
   );
 };
@@ -71,13 +71,13 @@ export const controller = (
   config: FieldControllerConfig<{ query: string }>,
 ): FieldController<ItemValue | undefined | null> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: undefined,
     deserialize: (data) => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

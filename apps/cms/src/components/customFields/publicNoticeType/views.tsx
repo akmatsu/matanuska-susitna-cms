@@ -105,7 +105,7 @@ export const Field = ({
 };
 
 export const Cell: CellComponent<typeof controller> = ({ item, field }) => {
-  const value = item[field.path] + '';
+  const value = item[field.fieldKey] + '';
 
   return <CellContainer>{value}</CellContainer>;
 };
@@ -114,7 +114,7 @@ export const CardValue: CardValueComponent<typeof controller> = ({
   item,
   field,
 }) => {
-  const value = item[field.path] + '';
+  const value = item[field.fieldKey] + '';
 
   return (
     <div className="mb-4">
@@ -155,10 +155,10 @@ export const controller = (
   isRequired: boolean;
 } => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: {
       kind: 'create',
       value: { label: 'None', value: 'none' },
@@ -166,7 +166,7 @@ export const controller = (
     isRequired: config.fieldMeta.isRequired,
 
     deserialize: (data) => {
-      const stringValue = data[config.path] as string | null;
+      const stringValue = data[config.fieldKey] as string | null;
       if (stringValue !== null && stringValue !== undefined) {
         const selectedOption = {
           label: stringValue,
@@ -185,7 +185,7 @@ export const controller = (
         value: { label: 'None', value: 'none' },
       };
     },
-    serialize: (value) => ({ [config.path]: value.value?.value ?? null }),
+    serialize: (value) => ({ [config.fieldKey]: value.value?.value ?? null }),
     validate: (value) => validate(value, config.fieldMeta.isRequired),
     filter: {
       Filter(props) {
@@ -229,7 +229,7 @@ export const controller = (
         );
       },
       graphql: ({ type, value: options }) => ({
-        [config.path]: {
+        [config.fieldKey]: {
           [type === 'not_matches' ? 'notIn' : 'in']: options.map(
             (x) => x.value,
           ),

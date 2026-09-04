@@ -5,26 +5,25 @@ import {
   type CommonFieldConfig,
 } from '@keystone-6/core/types';
 import { g } from '@keystone-6/core';
+import type { GArg, GInputObjectType, GList, GNonNull } from '@graphql-ts/schema';
 
 type TextFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
   CommonFieldConfig<ListTypeInfo> & {
     isIndexed?: boolean | 'unique';
   };
 
-type NestedMyStringFilterType = g.InputObjectType<{
-  equals: g.Arg<typeof g.String>;
-  in: g.Arg<g.ListType<g.NonNullType<typeof g.String>>>;
-  notIn: g.Arg<
-    g.ListType<g.NonNullType<typeof g.String>>
-  >;
-  lt: g.Arg<typeof g.String>;
-  lte: g.Arg<typeof g.String>;
-  gt: g.Arg<typeof g.String>;
-  gte: g.Arg<typeof g.String>;
-  contains: g.Arg<typeof g.String>;
-  startsWith: g.Arg<typeof g.String>;
-  endsWith: g.Arg<typeof g.String>;
-  not: g.Arg<NestedMyStringFilterType>;
+type NestedMyStringFilterType = GInputObjectType<{
+  equals: GArg<typeof g.String>;
+  in: GArg<GList<GNonNull<typeof g.String>>>;
+  notIn: GArg<GList<GNonNull<typeof g.String>>>;
+  lt: GArg<typeof g.String>;
+  lte: GArg<typeof g.String>;
+  gt: GArg<typeof g.String>;
+  gte: GArg<typeof g.String>;
+  contains: GArg<typeof g.String>;
+  startsWith: GArg<typeof g.String>;
+  endsWith: GArg<typeof g.String>;
+  not: GArg<NestedMyStringFilterType>;
 }>;
 
 const NestedMyStringFilter: NestedMyStringFilterType = g.inputObject({

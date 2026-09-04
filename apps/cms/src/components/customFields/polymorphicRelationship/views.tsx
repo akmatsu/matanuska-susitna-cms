@@ -11,7 +11,7 @@ type PolymorphicValue = {
   itemId?: { label: string; value: string } | null;
 };
 
-import { FieldContainer, FieldLabel, FieldDescription } from '@keystar/ui/field';
+import { FieldLabel, FieldDescription } from '@keystar/ui/field';
 import { Button } from '@keystar/ui/button';
 import { Combobox } from '@keystar/ui/combobox';
 import { Item, Picker } from '@keystar/ui/picker';
@@ -79,9 +79,9 @@ export function Field({
   );
 
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <div className="flex flex-col gap-2">
@@ -156,7 +156,7 @@ export function Field({
           }}
         />
       )}
-    </FieldContainer>
+    </div>
   );
 }
 
@@ -164,17 +164,17 @@ export const controller = (
   config: FieldControllerConfig<any>,
 ): FieldController<PolymorphicValue | null, string> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}`,
+    graphqlSelection: `${config.fieldKey}`,
     defaultValue: null,
     deserialize: (data: any) => {
-      const value = data[config.path];
+      const value = data[config.fieldKey];
       return typeof value === 'object' ? value : null;
     },
     serialize: (value) => {
-      return { [config.path]: value };
+      return { [config.fieldKey]: value };
     },
   };
 };
