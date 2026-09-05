@@ -1,5 +1,6 @@
-import { graphql } from '@keystone-6/core';
+import { g } from '@keystone-6/core';
 import {
+  BaseFieldTypeInfo,
   BaseListTypeInfo,
   CommonFieldConfig,
   fieldType,
@@ -7,13 +8,13 @@ import {
 } from '@keystone-6/core/types';
 
 type LinkFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
-  CommonFieldConfig<ListTypeInfo> & {
+  CommonFieldConfig<ListTypeInfo, BaseFieldTypeInfo> & {
     isIndex?: boolean | 'unique';
   };
 
-const LinkOrderDirectionEnum = graphql.enum({
+const LinkOrderDirectionEnum = g.enum({
   name: 'LinkOrderDirection',
-  values: graphql.enumValues(['asc', 'desc']),
+  values: g.enumValues(['asc', 'desc']),
 });
 
 export function linkField<ListTypeInfo extends BaseListTypeInfo>({
@@ -30,16 +31,16 @@ export function linkField<ListTypeInfo extends BaseListTypeInfo>({
       ...config,
       input: {
         create: {
-          arg: graphql.arg({ type: graphql.String }),
+          arg: g.arg({ type: g.String }),
           resolve(value) {
             return value;
           },
         },
-        update: { arg: graphql.arg({ type: graphql.String }) },
-        orderBy: { arg: graphql.arg({ type: LinkOrderDirectionEnum }) },
+        update: { arg: g.arg({ type: g.String }) },
+        orderBy: { arg: g.arg({ type: LinkOrderDirectionEnum }) },
       },
-      output: graphql.field({
-        type: graphql.String,
+      output: g.field({
+        type: g.String,
         resolve({ value }) {
           return value;
         },

@@ -1,18 +1,22 @@
-import { Context } from '@keystone-6/core/admin-ui/apollo';
-import { getContext } from '@keystone-6/core/context';
+import type { KeystoneContext } from '@keystone-6/core/types';
+import type { TypeInfo } from '../generated/keystone/types';
 import { AuthOptions, DefaultSession, getServerSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';
 import AzureADProvider from 'next-auth/providers/azure-ad';
 import { logger } from './configs/logger';
+
+type Context = KeystoneContext<TypeInfo<Session>>;
 
 let _keystoneContext: Context = (globalThis as any)._keystoneContext;
 
 async function getKeystoneContext() {
   if (_keystoneContext) return _keystoneContext;
 
+  const { getContext } = await import('@keystone-6/core/context');
+
   _keystoneContext = getContext(
     (await import('../keystone')).default,
-    await import('@prisma/client'),
+    await import('../generated/prisma/client'),
   );
 
   if (process.env.NODE_ENV !== 'production') {

@@ -9,10 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/.keystone/types"
-    ]
+    "typeRoots": ["./node_modules/@types"]
   },
   "watchOptions": {
     "watchFile": "useFsEventsOnParentDirectory",

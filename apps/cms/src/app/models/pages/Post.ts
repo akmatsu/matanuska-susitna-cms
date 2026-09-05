@@ -13,7 +13,7 @@ const PostCategory = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     ...titleAndDescription({
@@ -29,7 +29,7 @@ const PostImage = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     label: text({
@@ -43,13 +43,6 @@ const PostImage = list({
     }),
     image: relationship({
       ref: 'Image',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['title', 'description', 'file'],
-        inlineCreate: { fields: ['title', 'description', 'file'] },
-        inlineEdit: { fields: ['title', 'description', 'file'] },
-        inlineConnect: true,
-      },
     }),
     order: integer({
       defaultValue: 0,
@@ -90,11 +83,6 @@ const {
     ref: 'PostImage',
     many: true,
     listName: 'post',
-    ui: {
-      displayMode: 'cards',
-      cardFields: ['label', 'image', 'order'],
-      inlineCreate: { fields: ['label', 'image', 'order'] },
-    },
     opts,
   }),
 

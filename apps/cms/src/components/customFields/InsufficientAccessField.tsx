@@ -1,10 +1,9 @@
 import { FieldControllerConfig, FieldProps } from '@keystone-6/core/types';
-import { FieldContainer } from '@keystone-ui/fields';
 import Link from 'next/link';
 
 export function Field({ field }: FieldProps<typeof controller>) {
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <div className="rounded border-l-4 border-yellow-500 bg-yellow-200 p-4">
         <div className="mb-2 flex items-center gap-2">
           <span className="icon-[mdi--warning] size-9" />
@@ -24,7 +23,7 @@ export function Field({ field }: FieldProps<typeof controller>) {
           .
         </p>
       </div>
-    </FieldContainer>
+    </div>
   );
 }
 
@@ -34,13 +33,13 @@ export const controller = (
   config: FieldControllerConfig<{ query: string }>,
 ) => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: createViewValue,
     deserialize: (data: any) => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

@@ -1,4 +1,5 @@
-import { graphql, list } from '@keystone-6/core';
+import { g, list } from '@keystone-6/core';
+import { allowAll } from '@keystone-6/core/access';
 import { elevatedOperationAccess, isAdmin } from '../../access';
 import { integer, text, timestamp, virtual } from '@keystone-6/core/fields';
 import { logger } from '../../../configs/logger';
@@ -10,38 +11,43 @@ const PageView = list({
     operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isAdmin(args)),
+    hideNavigation: async (args) => !(await isAdmin(args)),
   },
   fields: {
     pageKey: text({
       validation: { isRequired: true },
       isIndexed: 'unique',
-      isFilterable: true,
-      isOrderable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
     }),
     pageId: text({
       validation: { isRequired: true },
       isIndexed: true,
-      isFilterable: true,
-      isOrderable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
     }),
     pageType: text({
       validation: { isRequired: true },
       isIndexed: true,
-      isFilterable: true,
-      isOrderable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
     }),
     date: timestamp({
       validation: { isRequired: true },
       isIndexed: true,
-      isFilterable: true,
-      isOrderable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
     }),
     views: integer({
       validation: { isRequired: true, min: 0 },
       defaultValue: 0,
-      isFilterable: true,
-      isOrderable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
     }),
     item: virtual({
       ui: {
@@ -63,8 +69,8 @@ const PageView = list({
         views: './src/components/customFields/polymorphicItem/views',
       },
       field: (lists) =>
-        graphql.field({
-          type: graphql.union({
+        g.field({
+          type: g.union({
             name: 'PageViewItemUnion',
             types: [
               lists.Service.types.output,

@@ -1,15 +1,10 @@
 'use client';
 import {
-  CardValueComponent,
   CellComponent,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
 import { ComponentProps } from 'react';
@@ -19,36 +14,26 @@ type LiveUrlValue = string;
 export function Field({ field, value }: FieldProps<typeof controller>) {
   if (value?.length && typeof value === 'string')
     return (
-      <FieldContainer>
+      <div className="mb-4">
         <FieldLabel>{field.label}</FieldLabel>
-        <FieldDescription id={`${field.path}-description`}>
+        <FieldDescription id={`${field.fieldKey}-description`}>
           {field.description}
         </FieldDescription>
         <Link href={value} target="_blank">
           {value}
         </Link>
-      </FieldContainer>
+      </div>
     );
 }
 
 export const Cell: CellComponent = ({
   item,
 }: ComponentProps<CellComponent>) => {
+  const value = item.liveUrl as string;
   return (
     <CellContainer>
-      <Link href={item.liveUrl}>{item.liveUrl}</Link>
+      <Link href={value}>{value}</Link>
     </CellContainer>
-  );
-};
-
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <p>I AM THE CARD YAYAYAY</p>
-    </FieldContainer>
   );
 };
 
@@ -58,13 +43,13 @@ export const controller = (
   config: FieldControllerConfig<{ query: string }>,
 ) => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: createViewValue,
     deserialize: (data: any): LiveUrlValue => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

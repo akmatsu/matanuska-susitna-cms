@@ -2,22 +2,16 @@
 
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
+import { ComponentProps, useEffect, useState, type MouseEvent } from 'react';
 import {
-  ChangeEvent,
-  ComponentProps,
-  useEffect,
-  useState,
-  type MouseEvent,
-} from 'react';
-import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
 
-import { FieldContainer, FieldLabel, TextInput } from '@keystone-ui/fields';
+import { FieldLabel } from '@keystar/ui/field';
+import { TextField } from '@keystar/ui/text-field';
 
 export function Field({
   field,
@@ -64,14 +58,14 @@ export function Field({
     }
   }, [backgroundPosition]);
 
-  function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
-    value = e.target.value;
+  function handleImageChange(newValue: string) {
+    value = newValue;
     setImage(value);
     onChange?.(value);
   }
 
   return (
-    <FieldContainer as="fieldset">
+    <fieldset className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
 
       <p>
@@ -83,7 +77,7 @@ export function Field({
         and paste the URL in the input below.
       </p>
 
-      <TextInput value={value || ''} onChange={handleImageChange} />
+      <TextField value={value || ''} onChange={handleImageChange} />
       {value &&
         (field.notBanner ? (
           <img src={image}></img>
@@ -103,7 +97,7 @@ export function Field({
             }}
           />
         ))}
-    </FieldContainer>
+    </fieldset>
   );
 }
 
@@ -112,20 +106,8 @@ export const Cell: CellComponent = ({
 }: ComponentProps<CellComponent>) => {
   return (
     <CellContainer>
-      <p>{item.heroImage}</p>
+      <p>{item.heroImage as string}</p>
     </CellContainer>
-  );
-};
-
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-
-      <p>I AM THE CARD YAYAYAY</p>
-    </FieldContainer>
   );
 };
 
@@ -136,15 +118,15 @@ export const controller = (
 } => {
   return {
     notBanner: config.fieldMeta.notBanner,
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: null,
     deserialize: (data) => {
-      const value = data[config.path];
+      const value = data[config.fieldKey];
       return typeof value === 'string' ? value : null;
     },
-    serialize: (value) => ({ [config.path]: value }),
+    serialize: (value) => ({ [config.fieldKey]: value }),
   };
 };

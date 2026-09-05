@@ -1,4 +1,5 @@
 import { list } from '@keystone-6/core';
+import { allowAll } from '@keystone-6/core/access';
 import { elevatedOperationAccess } from '../../access';
 import { relationship, text } from '@keystone-6/core/fields';
 
@@ -9,21 +10,18 @@ export const Redirect = list({
   fields: {
     from: text({
       isIndexed: 'unique',
-      label: 'Redirect From Path. E.G. /example/path',
+      ui: {
+        label: 'Redirect From Path. E.G. /example/path',
+      },
       validation: {
         isRequired: true,
       },
     }),
     to: relationship({
       ref: 'InternalLink',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['label', 'item'],
-        inlineCreate: { fields: ['label', 'selectItem'] },
-        inlineEdit: { fields: ['label', 'selectItem'] },
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
       },
-      isFilterable: true,
-      isOrderable: true,
     }),
     redirectMessage: text({
       ui: {

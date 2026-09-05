@@ -17,10 +17,10 @@ export function serviceRelationship(opts?: {
   refField?: string;
   many?: boolean;
 }) {
-  return relationship({
-    ref: opts?.refField ? `Service.${opts.refField}` : 'Service',
-    many: opts?.many,
-  });
+  const ref = opts?.refField ? `Service.${opts.refField}` : 'Service';
+  return opts?.many
+    ? relationship({ ref, many: true })
+    : relationship({ ref, many: false });
 }
 
 const {

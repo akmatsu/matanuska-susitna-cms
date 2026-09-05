@@ -2,17 +2,16 @@
 'use client';
 
 import { ChangeEvent, useRef, useState } from 'react';
-import { FieldContainer, FieldLabel } from '@keystone-ui/fields';
+import { FieldLabel } from '@keystar/ui/field';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Button } from '@keystone-ui/button';
+import { Button } from '@keystar/ui/button';
 
 export function Field({
   field,
@@ -89,7 +88,7 @@ export function Field({
   };
 
   return (
-    <FieldContainer as="fieldset">
+    <fieldset className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
       {field.description && (
         <p className="mb-4 text-sm text-gray-600">{field.description}</p>
@@ -163,17 +162,15 @@ export function Field({
 
             <div className="mt-4 flex gap-2">
               <Button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={loading}
-                className="text-sm"
+                onPress={() => fileInputRef.current?.click()}
+                isDisabled={loading}
               >
                 Replace File
               </Button>
               <Button
-                onClick={handleClear}
-                disabled={loading}
-                tone="negative"
-                className="text-sm"
+                onPress={handleClear}
+                isDisabled={loading}
+                tone="critical"
               >
                 Clear Data
               </Button>
@@ -181,7 +178,7 @@ export function Field({
           </div>
         )}
       </div>
-    </FieldContainer>
+    </fieldset>
   );
 }
 
@@ -189,34 +186,25 @@ export const controller = (
   config: FieldControllerConfig<{ sheetName?: string }>,
 ): FieldController<any, any> & { sheetName?: string } => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     sheetName: config.fieldMeta?.sheetName,
     defaultValue: null,
     deserialize: (data) => {
-      const value = data[config.path];
+      const value = data[config.fieldKey];
       return Array.isArray(value) ? value : null;
     },
     serialize: (value) => ({
-      [config.path]: value,
+      [config.fieldKey]: value,
     }),
   };
 };
 
-export const CardValue: CardValueComponent<typeof controller> = ({ field }) => {
-  const value = field.sheetName;
-  return (
-    <div>
-      {value && Array.isArray(value) ? `${value.length} rows` : 'No data'}
-    </div>
-  );
-};
-
 export const Cell: CellComponent<typeof controller> = (props) => {
   const { item, field } = props;
-  const value = item[field.path];
+  const value = item[field.fieldKey];
   return (
     <div>{value && Array.isArray(value) ? `${value.length} rows` : '-'}</div>
   );

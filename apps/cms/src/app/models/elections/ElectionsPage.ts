@@ -1,4 +1,5 @@
 import { group, list } from '@keystone-6/core';
+import { allowAll } from '@keystone-6/core/access';
 import {
   generalOperationAccess,
   isElectionUser,
@@ -23,14 +24,15 @@ export const EarlyVotingLocation = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     order: integer({
       defaultValue: 0,
       validation: { isRequired: true },
-      isOrderable: true,
-      isFilterable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
       ui: {
         description: 'Order of the early voting locations',
       },
@@ -45,15 +47,6 @@ export const EarlyVotingLocation = list({
       ref: 'Location',
       many: false,
       ui: {
-        displayMode: 'cards',
-        cardFields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
-        inlineCreate: {
-          fields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
-        },
-        inlineEdit: {
-          fields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
-        },
-        inlineConnect: true,
         itemView: {
           fieldPosition: 'sidebar',
         },
@@ -62,16 +55,6 @@ export const EarlyVotingLocation = list({
     hours: relationship({
       ref: 'OperatingHour',
       many: true,
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['day', 'open', 'close'],
-        inlineCreate: {
-          fields: ['day', 'open', 'close'],
-        },
-        inlineEdit: {
-          fields: ['day', 'open', 'close'],
-        },
-      },
     }),
   },
 });
@@ -92,7 +75,7 @@ const ElectionsPage = list({
   },
   isSingleton: true,
   ui: {
-    isHidden: isNotElectionUser,
+    hideNavigation: isNotElectionUser,
     hideCreate: isNotElectionUser,
   },
   fields: {
@@ -107,15 +90,6 @@ const ElectionsPage = list({
       ref: 'ExternalLink',
       ui: {
         description: 'Link to web based election official application',
-        displayMode: 'cards',
-        cardFields: ['label', 'url'],
-        inlineCreate: {
-          fields: ['label', 'url'],
-        },
-        inlineConnect: true,
-        inlineEdit: {
-          fields: ['label', 'url'],
-        },
       },
       many: false,
     }),
@@ -125,12 +99,6 @@ const ElectionsPage = list({
       fields: {
         pollingPlacesLink: relationship({
           ref: 'InternalLink',
-          ui: {
-            displayMode: 'cards',
-            cardFields: ['label', 'item'],
-            inlineCreate: { fields: ['label', 'selectItem'] },
-            inlineEdit: { fields: ['label', 'selectItem'] },
-          },
           many: false,
         }),
         pollingPlaceBody: customText(),
@@ -140,41 +108,16 @@ const ElectionsPage = list({
     stateElectionContact: relationship({
       ref: 'Contact',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['name', 'title', 'phone', 'email'],
-        inlineConnect: true,
-        inlineCreate: {
-          fields: ['name', 'title', 'phone', 'email'],
-        },
-      },
     }),
 
     boroughElectionContact: relationship({
       ref: 'Contact',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['name', 'title', 'phone', 'email'],
-        inlineConnect: true,
-        inlineCreate: {
-          fields: ['name', 'title', 'phone', 'email'],
-        },
-      },
     }),
 
     referendumProcessDocument: relationship({
       ref: 'Document',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title', 'description', 'file', 'tags'],
-        inlineCreate: {
-          fields: ['title', 'description', 'file', 'tags'],
-        },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
 
     hideEarlyVotingLocations: checkbox({
@@ -189,17 +132,6 @@ const ElectionsPage = list({
     earlyVotingLocations: relationship({
       ref: 'EarlyVotingLocation',
       many: true,
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['order', 'title', 'address', 'hours'],
-        inlineConnect: false,
-        inlineEdit: {
-          fields: ['order', 'title', 'address', 'hours'],
-        },
-        inlineCreate: {
-          fields: ['order', 'title', 'address', 'hours'],
-        },
-      },
     }),
 
     ...timestamps,

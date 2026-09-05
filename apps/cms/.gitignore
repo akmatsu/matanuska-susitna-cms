@@ -137,6 +137,11 @@ dist
 !.elasticbeanstalk/*.global.yml
 
 .keystone/
+generated/
 keystone.db
 *.log
+
+# Prebuilt admin Tailwind stylesheet (see scripts/buildAdminCss.mjs)
+public/admin-global.css
+public/admin-global.css.map
 

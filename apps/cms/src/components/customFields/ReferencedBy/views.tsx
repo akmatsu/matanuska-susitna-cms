@@ -1,16 +1,11 @@
 import React, { ComponentProps } from 'react';
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import {
-  FieldContainer,
-  FieldLabel,
-  FieldDescription,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
 
@@ -23,9 +18,9 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   const val = value as ReferenceByValue;
 
   return (
-    <FieldContainer as="fieldset">
+    <fieldset className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <ul>
@@ -35,7 +30,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
           </li>
         ))}
       </ul>
-    </FieldContainer>
+    </fieldset>
   );
 }
 
@@ -47,30 +42,19 @@ export const Cell: CellComponent = () => {
   );
 };
 
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <p>I AM THE CARD YAYAYAY</p>
-    </FieldContainer>
-  );
-};
-
 const createViewValue = Symbol('create view virtual field value');
 
 export const controller = (
   config: FieldControllerConfig<{ query: string }>,
 ): FieldController<any> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: createViewValue,
     deserialize: (data): ReferenceByValue => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

@@ -1,69 +1,69 @@
 import {
+  type BaseFieldTypeInfo,
   type BaseListTypeInfo,
   fieldType,
   type FieldTypeFunc,
   type CommonFieldConfig,
 } from '@keystone-6/core/types';
-import { graphql } from '@keystone-6/core';
+import { g } from '@keystone-6/core';
+import type { GArg, GInputObjectType, GList, GNonNull } from '@graphql-ts/schema';
 
 type TextFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
-  CommonFieldConfig<ListTypeInfo> & {
+  CommonFieldConfig<ListTypeInfo, BaseFieldTypeInfo> & {
     isIndexed?: boolean | 'unique';
   };
 
-type NestedMyStringFilterType = graphql.InputObjectType<{
-  equals: graphql.Arg<typeof graphql.String>;
-  in: graphql.Arg<graphql.ListType<graphql.NonNullType<typeof graphql.String>>>;
-  notIn: graphql.Arg<
-    graphql.ListType<graphql.NonNullType<typeof graphql.String>>
-  >;
-  lt: graphql.Arg<typeof graphql.String>;
-  lte: graphql.Arg<typeof graphql.String>;
-  gt: graphql.Arg<typeof graphql.String>;
-  gte: graphql.Arg<typeof graphql.String>;
-  contains: graphql.Arg<typeof graphql.String>;
-  startsWith: graphql.Arg<typeof graphql.String>;
-  endsWith: graphql.Arg<typeof graphql.String>;
-  not: graphql.Arg<NestedMyStringFilterType>;
+type NestedMyStringFilterType = GInputObjectType<{
+  equals: GArg<typeof g.String>;
+  in: GArg<GList<GNonNull<typeof g.String>>>;
+  notIn: GArg<GList<GNonNull<typeof g.String>>>;
+  lt: GArg<typeof g.String>;
+  lte: GArg<typeof g.String>;
+  gt: GArg<typeof g.String>;
+  gte: GArg<typeof g.String>;
+  contains: GArg<typeof g.String>;
+  startsWith: GArg<typeof g.String>;
+  endsWith: GArg<typeof g.String>;
+  not: GArg<NestedMyStringFilterType>;
 }>;
 
-const NestedMyStringFilter: NestedMyStringFilterType = graphql.inputObject({
+const NestedMyStringFilter: NestedMyStringFilterType = g.inputObject({
   name: 'NestedMyStringFilter',
   fields: () => ({
-    equals: graphql.arg({ type: graphql.String }),
-    in: graphql.arg({ type: graphql.list(graphql.nonNull(graphql.String)) }),
-    notIn: graphql.arg({ type: graphql.list(graphql.nonNull(graphql.String)) }),
-    lt: graphql.arg({ type: graphql.String }),
-    lte: graphql.arg({ type: graphql.String }),
-    gt: graphql.arg({ type: graphql.String }),
-    gte: graphql.arg({ type: graphql.String }),
-    contains: graphql.arg({ type: graphql.String }),
-    startsWith: graphql.arg({ type: graphql.String }),
-    endsWith: graphql.arg({ type: graphql.String }),
-    not: graphql.arg({ type: NestedMyStringFilter }),
+    equals: g.arg({ type: g.String }),
+    in: g.arg({ type: g.list(g.nonNull(g.String)) }),
+    notIn: g.arg({ type: g.list(g.nonNull(g.String)) }),
+    lt: g.arg({ type: g.String }),
+    lte: g.arg({ type: g.String }),
+    gt: g.arg({ type: g.String }),
+    gte: g.arg({ type: g.String }),
+    contains: g.arg({ type: g.String }),
+    startsWith: g.arg({ type: g.String }),
+    endsWith: g.arg({ type: g.String }),
+    not: g.arg({ type: NestedMyStringFilter }),
   }),
 });
 
-const MyQueryMode = graphql.enum({
+const MyQueryMode = g.enum({
   name: 'MyQueryMode',
-  values: graphql.enumValues(['default', 'insensitive']),
+  values: g.enumValues(['default', 'insensitive']),
 });
 
-const MyStringFilter = graphql.inputObject({
+const MyStringFilter = g.inputObject({
   name: 'MyStringFilter',
   fields: () => ({
-    equals: graphql.arg({ type: graphql.String }),
-    in: graphql.arg({ type: graphql.list(graphql.nonNull(graphql.String)) }),
-    notIn: graphql.arg({ type: graphql.list(graphql.nonNull(graphql.String)) }),
-    lt: graphql.arg({ type: graphql.String }),
-    lte: graphql.arg({ type: graphql.String }),
-    gt: graphql.arg({ type: graphql.String }),
-    gte: graphql.arg({ type: graphql.String }),
-    contains: graphql.arg({ type: graphql.String }),
-    startsWith: graphql.arg({ type: graphql.String }),
-    endsWith: graphql.arg({ type: graphql.String }),
-    mode: graphql.arg({ type: MyQueryMode }),
-    not: graphql.arg({ type: NestedMyStringFilter }),
+    equals: g.arg({ type: g.String }),
+    in: g.arg({ type: g.list(g.nonNull(g.String)) }),
+    notIn: g.arg({ type: g.list(g.nonNull(g.String)) }),
+    lt: g.arg({ type: g.String }),
+    lte: g.arg({ type: g.String }),
+    gt: g.arg({ type: g.String }),
+    gte: g.arg({ type: g.String }),
+    contains: g.arg({ type: g.String }),
+    startsWith: g.arg({ type: g.String }),
+    endsWith: g.arg({ type: g.String }),
+    mode: g.arg({ type: MyQueryMode }),
+    not: g.arg({ type: NestedMyStringFilter }),
   }),
 });
 
@@ -166,9 +166,9 @@ function resolveString(
   );
 }
 
-const MyOrderDirectionEnum = graphql.enum({
+const MyOrderDirectionEnum = g.enum({
   name: 'MyOrderDirection',
-  values: graphql.enumValues(['asc', 'desc']),
+  values: g.enumValues(['asc', 'desc']),
 });
 
 export type CustomTextOpts<ListTypeInfo extends BaseListTypeInfo> =
@@ -188,22 +188,22 @@ export function customText<ListTypeInfo extends BaseListTypeInfo>({
       ...config,
       input: {
         create: {
-          arg: graphql.arg({ type: graphql.String }),
+          arg: g.arg({ type: g.String }),
           resolve(value) {
             return value;
           },
         },
-        update: { arg: graphql.arg({ type: graphql.String }) },
-        orderBy: { arg: graphql.arg({ type: MyOrderDirectionEnum }) },
+        update: { arg: g.arg({ type: g.String }) },
+        orderBy: { arg: g.arg({ type: MyOrderDirectionEnum }) },
         where: {
-          arg: graphql.arg({
+          arg: g.arg({
             type: MyStringFilter,
           }),
           resolve: resolveString,
         },
       },
-      output: graphql.field({
-        type: graphql.String,
+      output: g.field({
+        type: g.String,
         resolve({ value }) {
           return value;
         },

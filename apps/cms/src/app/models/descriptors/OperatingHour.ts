@@ -8,7 +8,7 @@ export const OperatingHour = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     day: select({

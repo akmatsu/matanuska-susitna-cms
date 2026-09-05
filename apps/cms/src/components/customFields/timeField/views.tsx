@@ -1,5 +1,5 @@
 import React, { ComponentProps } from 'react';
-import { CellLink, CellContainer } from '@keystone-6/core/admin-ui/components';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
   FieldController,
@@ -7,11 +7,7 @@ import {
   FieldProps,
 } from '@keystone-6/core/types';
 
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 
 export function Field({
   field,
@@ -19,9 +15,9 @@ export function Field({
   onChange,
 }: FieldProps<typeof controller>) {
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <input
@@ -29,34 +25,28 @@ export function Field({
         value={value || ''}
         onChange={(e) => onChange?.(e.target.value)}
       />
-    </FieldContainer>
+    </div>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
-  const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  const value = item[field.fieldKey] + '';
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export const controller = (
   config: FieldControllerConfig<any>,
 ): FieldController<string | null, string> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: '',
-    deserialize: (data) => data[config.path] || '',
-    serialize: (data) => ({ [config.path]: data }),
+    deserialize: (data) => data[config.fieldKey] || '',
+    serialize: (data) => ({ [config.fieldKey]: data }),
   };
 };

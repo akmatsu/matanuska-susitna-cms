@@ -7,7 +7,7 @@ export const ExternalLink = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isAdmin(args)),
+    hideNavigation: async (args) => !(await isAdmin(args)),
   },
   fields: {
     label: text({
@@ -18,14 +18,6 @@ export const ExternalLink = list({
     }),
     url: relationship({
       ref: 'Url',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['title', 'url', 'owner'],
-        inlineCreate: {
-          fields: ['title', 'url'],
-        },
-        inlineConnect: true,
-      },
     }),
   },
 });

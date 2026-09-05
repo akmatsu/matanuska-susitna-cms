@@ -4,7 +4,6 @@ import {
   relationshipController,
 } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import {
-  cardsUi,
   documentRelationshipSingle,
   sidebar,
   switchField,
@@ -77,12 +76,11 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
         label: 'External Website',
         fields: {
           effort: relationship({
-            label: 'Link',
             ref: 'ExternalLink',
             ui: {
+              label: 'Link',
               description:
                 'A link to website for this plan or an effort to update this plan',
-              ...cardsUi(['label', 'url']),
             },
           }),
           autoRedirectToExternalWebsite: switchField(),
@@ -118,7 +116,7 @@ const { Main, Version, Draft } = DraftAndVersionsFactory(
       code: relationship({
         ref: 'PlanCode',
         many: true,
-        ui: { ...cardsUi(['code']), ...sidebar },
+        ui: { ...sidebar },
       }),
 
       ...group({

@@ -1,14 +1,30 @@
 import {
-  ListNavItems,
-  NavigationContainer,
+  getHrefFromList,
+  NavContainer,
   NavItem,
+  NavList,
 } from '@keystone-6/core/admin-ui/components';
 import { ListMeta, NavigationProps } from '@keystone-6/core/types';
-import { PAGES } from '../configs/appConfig';
+import { PAGES } from '../configs/constants';
 import { PropsWithChildren } from 'react';
 
-import '../styles/global.css';
+import Head from 'next/head';
 import Link from 'next/link';
+
+/**
+ * Next only allows a genuine global CSS `import` from the literal `_app.js`
+ * file, which Keystone regenerates on every run and doesn't expose a hook
+ * into. Tailwind's output is instead prebuilt to public/admin-global.css
+ * (see scripts/buildAdminCss.mjs, wired to predev/prebuild) and loaded as a
+ * plain stylesheet link here instead.
+ */
+function AdminGlobalStyles() {
+  return (
+    <Head>
+      <link rel="stylesheet" href="/admin-global.css" />
+    </Head>
+  );
+}
 
 function Divider() {
   return <div className="border-b border-gray-100"></div>;
@@ -31,7 +47,11 @@ function ListSection({
     return (
       <>
         <Header>{title}</Header>
-        <ListNavItems lists={lists as ListMeta[]} />
+        {(lists as ListMeta[] | undefined)?.map((list) => (
+          <NavItem key={list.key} href={getHrefFromList(list)}>
+            {list.label}
+          </NavItem>
+        ))}
         {children}
         <Divider />
       </>
@@ -39,10 +59,7 @@ function ListSection({
   }
 }
 
-export function CustomNavigation({
-  lists,
-  authenticatedItem,
-}: NavigationProps) {
+export function CustomNavigation({ lists }: NavigationProps) {
   const documentLists = lists.filter(
     (list) =>
       list.key.includes('Document') ||
@@ -75,21 +92,24 @@ export function CustomNavigation({
   const otherLists = lists.filter((list) => !excludeKeys.has(list.key));
 
   return (
-    <NavigationContainer authenticatedItem={authenticatedItem}>
-      <ListSection title="Home">
-        <NavItem href="/">Dashboard</NavItem>
-      </ListSection>
+    <NavContainer>
+      <AdminGlobalStyles />
+      <NavList>
+        <ListSection title="Home">
+          <NavItem href="/">Dashboard</NavItem>
+        </ListSection>
 
-      <ListSection lists={specialPages} title="Special Pages" />
-      <ListSection lists={userLists} title="Users" />
-      <ListSection lists={pageLists} title="Pages" />
-      <ListSection lists={documentLists} title="Document Management">
-        <NavItem href="/bulk-document-upload">Bulk Document Upload</NavItem>
-      </ListSection>
-      <ListSection lists={systemLists} title="System">
-        <NavItem href={PAGES.TYPESENSE}>Manage Typesense</NavItem>
-      </ListSection>
-      <ListSection lists={otherLists} title="Other Items" />
+        <ListSection lists={specialPages} title="Special Pages" />
+        <ListSection lists={userLists} title="Users" />
+        <ListSection lists={pageLists} title="Pages" />
+        <ListSection lists={documentLists} title="Document Management">
+          <NavItem href="/bulk-document-upload">Bulk Document Upload</NavItem>
+        </ListSection>
+        <ListSection lists={systemLists} title="System">
+          <NavItem href={PAGES.TYPESENSE}>Manage Typesense</NavItem>
+        </ListSection>
+        <ListSection lists={otherLists} title="Other Items" />
+      </NavList>
       <p className="mx-6 mt-4 mb-8 text-xs text-gray-500">
         This system is the official CMS of the{' '}
         <Link href="https://matsu.gov" target="_blank">
@@ -105,6 +125,6 @@ export function CustomNavigation({
         </Link>
         .
       </p>
-    </NavigationContainer>
+    </NavContainer>
   );
 }

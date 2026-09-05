@@ -1,13 +1,11 @@
 'use client';
-import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-
-import { FieldContainer } from '@keystone-ui/fields';
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -22,7 +20,7 @@ export function Field({ value }: FieldProps<typeof controller>) {
   const listName = singular(router.pathname.split('/')[1]) + '-versions';
 
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <div className="flex items-center gap-2">
         {!!value?.length && (
           <Link href={`/${listName}?!original_matches=%22${id}%22`}>
@@ -30,37 +28,31 @@ export function Field({ value }: FieldProps<typeof controller>) {
           </Link>
         )}
       </div>
-    </FieldContainer>
+    </div>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
-  const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  const value = item[field.fieldKey] + '';
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export const controller = (
   config: FieldControllerConfig<any>,
 ): FieldController<string[] | null, string> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path} { id title }`,
+    graphqlSelection: `${config.fieldKey} { id title }`,
     defaultValue: null,
     deserialize: (data) => {
-      const drafts = data[config.path];
+      const drafts = data[config.fieldKey];
       return Array.isArray(drafts) ? drafts.map((draft) => draft.id) : null;
     },
-    serialize: (value) => ({ [config.path]: value }),
+    serialize: (value) => ({ [config.fieldKey]: value }),
   };
 };

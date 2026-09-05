@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { MdEditorProps } from './mdEditor/components/Editor/types';
-import { Button } from '@keystone-ui/button';
-import { TextArea } from '@keystone-ui/fields';
+import { Button } from '@keystar/ui/button';
 import clsx from 'clsx';
 
 const MdEditor = dynamic(
@@ -45,8 +44,8 @@ export function RichEditor(props: MdEditorProps) {
       >
         <div className="mb-2 flex gap-2">
           <Button
-            onClick={() => setShowCode(!showCode)}
-            title={showCode ? 'View Markdown' : 'View Rich Editor'}
+            onPress={() => setShowCode(!showCode)}
+            aria-label={showCode ? 'View Markdown' : 'View Rich Editor'}
           >
             <span className="flex items-center gap-1">
               <span
@@ -58,8 +57,8 @@ export function RichEditor(props: MdEditorProps) {
             </span>
           </Button>
           <Button
-            onClick={() => setIsFullscreen((v) => !v)}
-            title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+            onPress={() => setIsFullscreen((v) => !v)}
+            aria-label={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
           >
             <span className="flex items-center gap-1">
               <span
@@ -73,15 +72,14 @@ export function RichEditor(props: MdEditorProps) {
         </div>
         <div className="editors">
           {showCode ? (
-            <TextArea
+            <textarea
               value={props.initialValue}
               onChange={(e) => {
                 props.onChange?.(e.target.value);
+                adjustEditorHeight();
               }}
-              size="large"
-              className="markdown-editor-text-area"
+              className="markdown-editor-text-area w-full"
               id="markdown-editor-text-area"
-              onInput={adjustEditorHeight}
             />
           ) : (
             <MdEditor {...props} />

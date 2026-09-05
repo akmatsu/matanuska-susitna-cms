@@ -24,7 +24,7 @@ export const ElectionResult = list({
     },
   },
   ui: {
-    isHidden: isNotElectionUser,
+    hideNavigation: isNotElectionUser,
     hideCreate: isNotElectionUser,
   },
   fields: {
@@ -36,13 +36,6 @@ export const ElectionResult = list({
     document: relationship({
       ref: 'Document',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title', 'description', 'file', 'tags'],
-        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
 
     isOfficial: checkbox(),

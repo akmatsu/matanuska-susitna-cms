@@ -3,6 +3,7 @@ import {
   generalItemAccess,
   generalOperationAccess,
 } from '../../access';
+import { allowAll } from '@keystone-6/core/access';
 import { integer, relationship } from '@keystone-6/core/fields';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { list } from '@keystone-6/core';
@@ -13,32 +14,21 @@ export const FacilityListItem = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     order: integer({
       defaultValue: 0,
       validation: { isRequired: true },
-      isOrderable: true,
-      isFilterable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
       ui: {
         description: 'Order of the early voting locations',
       },
     }),
     facility: relationship({
       ref: 'Facility',
-
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        inlineEdit: {
-          fields: ['title', 'address', 'hours'],
-        },
-        inlineCreate: {
-          fields: ['title', 'address', 'hours'],
-        },
-        cardFields: ['title', 'address', 'hours'],
-      },
     }),
   },
 });

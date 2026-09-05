@@ -4,6 +4,7 @@ import {
   generalOperationAccess,
 } from '../../access';
 import { relationship, select, text, timestamp } from '@keystone-6/core/fields';
+import { allowAll } from '@keystone-6/core/access';
 import { createAndSendBulletin } from '../../../utils/emailUtils';
 import { DraftAndVersionsFactory } from '../../draftAndVersionFactory/DraftAndVersionsFactory';
 import { basePage } from '../basePage';
@@ -44,7 +45,9 @@ const {
           { label: 'Emergency', value: 5 },
         ],
         defaultValue: 2,
-        isOrderable: true,
+        access: {
+          read: { item: allowAll, filter: allowAll, order: allowAll },
+        },
         validation: {
           isRequired: true,
         },

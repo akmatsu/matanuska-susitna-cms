@@ -1,5 +1,4 @@
 import { Input } from '@headlessui/react';
-import { FieldContainer } from '@keystone-ui/fields';
 import clsx from 'clsx';
 import { DOMAttributes, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
@@ -41,7 +40,7 @@ export function FileDropInput(props: {
   }
 
   return (
-    <FieldContainer className="w-3xl max-w-full">
+    <div className="mb-4 w-3xl max-w-full">
       <Input
         type="file"
         accept=".pdf,.doc,docx,.xml,.txt,.xlsx,.ppt,.pptx"
@@ -90,6 +89,6 @@ export function FileDropInput(props: {
       {props.errorMessage && (
         <p className="text-red-500">{props.errorMessage}</p>
       )}
-    </FieldContainer>
+    </div>
   );
 }

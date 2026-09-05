@@ -1,7 +1,14 @@
 import { gql, useMutation, useQuery } from '@keystone-6/core/admin-ui/apollo';
-import { useToasts } from '@keystone-ui/toast';
+import { CombinedGraphQLErrors } from '@apollo/client/errors';
+import { toastQueue } from '@keystar/ui/toast';
 import { FormEvent, useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import {
+  QueryQuery,
+  QueryQueryVariables,
+  TagsQuery,
+  TagsQueryVariables,
+} from '../../graphql/graphql';
 
 type FormData = {
   files: FileList;
@@ -51,10 +58,11 @@ export function useBulkDocumentUpload(
   selectedTags: { id: string; name: string }[] = [],
 ) {
   const [uploadDocuments] = useMutation(CREATE_DOCUMENTS_MUTATION);
-  const collections = useQuery(GET_DOCUMENT_COLLECTIONS_QUERY);
-  const tags = useQuery(GET_TAGS_QUERY);
+  const collections = useQuery<QueryQuery, QueryQueryVariables>(
+    GET_DOCUMENT_COLLECTIONS_QUERY,
+  );
+  const tags = useQuery<TagsQuery, TagsQueryVariables>(GET_TAGS_QUERY);
   const formRef = useRef<HTMLFormElement>(null);
-  const { addToast } = useToasts();
 
   const form = useForm<FormData>({
     mode: 'onChange',
@@ -99,20 +107,16 @@ export function useBulkDocumentUpload(
     }));
 
     const res = await uploadDocuments({ variables: { data: uploads } });
-    if (res.errors) {
-      res.errors.forEach((error) => {
-        addToast({
-          title: 'Error',
-          message: error.message,
-          tone: 'negative',
+    if (res.error) {
+      if (CombinedGraphQLErrors.is(res.error)) {
+        res.error.errors.forEach((error) => {
+          toastQueue.critical(`Error: ${error.message}`);
         });
-      });
+      } else {
+        toastQueue.critical(`Error: ${res.error.message}`);
+      }
     } else if (res.data) {
-      addToast({
-        title: 'Documents Uploaded',
-        message: 'Documents uploaded successfully',
-        tone: 'positive',
-      });
+      toastQueue.positive('Documents Uploaded: Documents uploaded successfully');
       form.reset();
     }
   }

@@ -1,4 +1,4 @@
-import type { TypeInfo } from '.keystone/types';
+import type { TypeInfo } from '../../generated/keystone/types';
 import type { KeystoneContext } from '@keystone-6/core/types';
 import type { Session } from '../session';
 import { RequestHandler } from 'express';

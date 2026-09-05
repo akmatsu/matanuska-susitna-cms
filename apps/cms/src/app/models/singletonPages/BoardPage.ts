@@ -19,7 +19,7 @@ const BoardPage = list({
     operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isContentManager(args)),
+    hideNavigation: async (args) => !(await isContentManager(args)),
   },
   fields: {
     heroImage: blueHarvestImage(),
@@ -34,24 +34,12 @@ const BoardPage = list({
         itemView: {
           fieldPosition: 'sidebar',
         },
-        displayMode: 'cards',
-        cardFields: ['label', 'item'],
-        inlineCreate: { fields: ['label', 'selectItem'] },
-        inlineEdit: { fields: ['label', 'selectItem'] },
-        inlineConnect: false,
       },
     }),
 
     documents: relationship({
       ref: 'Document',
       many: true,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title', 'description', 'file', 'tags'],
-        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
 
     // newDocuments: documentRelationshipMany(),
@@ -59,35 +47,14 @@ const BoardPage = list({
     vacancyReport: relationship({
       ref: 'Document',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title', 'description', 'file', 'tags'],
-        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
 
     applicationForm: relationship({
       ref: 'Document',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title', 'description', 'file', 'tags'],
-        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
     ParliTrainingLink: relationship({
       ref: 'ExternalLink',
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['label', 'url'],
-        inlineCreate: { fields: ['label', 'url'] },
-        inlineEdit: { fields: ['label', 'url'] },
-      },
     }),
     contacts: contacts(),
 

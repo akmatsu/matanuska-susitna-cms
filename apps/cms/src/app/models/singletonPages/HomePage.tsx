@@ -13,7 +13,7 @@ const featuredItem = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     order: integer({
@@ -24,12 +24,6 @@ const featuredItem = list({
     icon: iconSelect,
     linkedItem: relationship({
       ref: 'InternalLink',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['label', 'item'],
-        inlineCreate: { fields: ['label', 'selectItem'] },
-        inlineEdit: { fields: ['label', 'selectItem'] },
-      },
     }),
   },
   hooks: {
@@ -64,7 +58,7 @@ const HomePage = list({
     operation: elevatedOperationAccess,
   },
   ui: {
-    isHidden: async (args) => !(await isContentManager(args)),
+    hideNavigation: async (args) => !(await isContentManager(args)),
   },
   fields: {
     heroImage: blueHarvestImage(),
@@ -72,12 +66,6 @@ const HomePage = list({
     featuredItems: relationship({
       ref: 'featuredItem',
       many: true,
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['linkedItem', 'order', 'icon'],
-        inlineEdit: { fields: ['linkedItem', 'order', 'icon'] },
-        inlineCreate: { fields: ['linkedItem', 'order', 'icon'] },
-      },
     }),
     ...timestamps,
   },

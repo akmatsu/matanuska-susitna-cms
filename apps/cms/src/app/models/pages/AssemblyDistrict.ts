@@ -31,17 +31,6 @@ const {
         fields: {
           photo: relationship({
             ref: 'Image',
-            ui: {
-              inlineConnect: true,
-              displayMode: 'cards',
-              cardFields: ['title', 'file'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-            },
           }),
           memberName: text(),
           bio: text({

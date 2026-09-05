@@ -4,12 +4,8 @@ import {
   FieldProps,
 } from '@keystone-6/core/types';
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
-import { Button } from '@keystone-ui/button';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
+import { Button } from '@keystar/ui/button';
 
 export function Field({ field, value }: FieldProps<typeof controller>) {
   const embedHTML = `<iframe src="${value}" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>`;
@@ -19,20 +15,16 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
   };
 
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <FieldLabel>{field.label}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <div className="flex w-full max-w-[382px] gap-4">
         <code className="block w-full overflow-x-auto rounded-sm border border-gray-200 bg-gray-100 p-2 whitespace-pre">
           {embedHTML}
         </code>
-        <Button
-          onClick={copyToClipboard}
-          aria-label="Copy embed code."
-          popover="auto"
-        >
+        <Button onPress={copyToClipboard} aria-label="Copy embed code.">
           <span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +41,7 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
           </span>
         </Button>
       </div>
-    </FieldContainer>
+    </div>
   );
 }
 
@@ -58,20 +50,20 @@ export const Cell: CellComponent = () => {
 };
 
 export const CardValue = () => {
-  return <FieldContainer>Empty</FieldContainer>;
+  return <div className="mb-4">Empty</div>;
 };
 
 const createViewValue = Symbol('create view virtual field value');
 
 export function controller(config: FieldControllerConfig<{ query: string }>) {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: createViewValue,
     deserialize: (data: any): string => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

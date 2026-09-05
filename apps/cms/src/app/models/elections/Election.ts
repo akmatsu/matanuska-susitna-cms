@@ -4,6 +4,7 @@ import {
   text,
   timestamp,
 } from '@keystone-6/core/fields';
+import { allowAll } from '@keystone-6/core/access';
 import { blueHarvestImage } from '../../../components/customFields/blueHarvestImage';
 import {
   DraftAndVersionsFactory,
@@ -35,26 +36,21 @@ const Proposition = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
   },
   fields: {
     title: text(),
     order: integer({
       defaultValue: 0,
       validation: { isRequired: true },
-      isOrderable: true,
+      access: {
+        read: { item: allowAll, filter: allowAll, order: allowAll },
+      },
       isIndexed: true,
     }),
     document: relationship({
       ref: 'Document',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title', 'description', 'file', 'tags'],
-        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
     description: customText(),
     election: relationship({
@@ -92,8 +88,9 @@ const {
       owner,
 
       electionDate: timestamp({
-        isFilterable: true,
-        isOrderable: true,
+        access: {
+          read: { item: allowAll, filter: allowAll, order: allowAll },
+        },
         validation: {
           isRequired: true,
         },
@@ -106,8 +103,9 @@ const {
         label: 'Voter Information',
         fields: {
           voterRegistrationDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
@@ -122,26 +120,19 @@ const {
           absenteeVotingApplication: relationship({
             ref: 'Document',
             many: false,
-            ui: {
-              displayMode: 'cards',
-              inlineConnect: true,
-              cardFields: ['title', 'description', 'file', 'tags'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-            },
           }),
           earlyVotingStartDate: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
           absenteeApplicationDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
@@ -156,33 +147,27 @@ const {
           candidateFilingDocuments: relationship({
             ref: 'Document',
             many: true,
-            ui: {
-              displayMode: 'cards',
-              inlineConnect: true,
-              cardFields: ['title', 'description', 'file', 'tags'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-            },
           }),
           candidatePacketAvailability: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
           candidateFilingStartDate: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
           }),
           candidateFilingDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
@@ -198,20 +183,12 @@ const {
           electionOfficialApplication: relationship({
             ref: 'Document',
             many: false,
-            ui: {
-              displayMode: 'cards',
-              inlineConnect: true,
-              cardFields: ['title', 'description', 'file', 'tags'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-            },
           }),
 
           electionOfficialApplicationDeadline: timestamp({
-            isFilterable: true,
-            isOrderable: true,
+            access: {
+              read: { item: allowAll, filter: allowAll, order: allowAll },
+            },
             ui: {
               views: './src/components/customFields/datetime/views.tsx',
             },
@@ -223,65 +200,28 @@ const {
       candidates: relationship({
         ref: 'Document',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       documents: relationship({
         ref: 'Document',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       propositions: relationshipController({
         ref: 'Proposition',
         listName: 'election',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['order', 'title', 'description', 'document'],
-          inlineCreate: {
-            fields: ['order', 'title', 'description', 'document'],
-          },
-          inlineEdit: { fields: ['order', 'title', 'description', 'document'] },
-        },
         opts,
       }),
 
       electionBrochure: relationship({
         ref: 'Document',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       electionBallots: relationship({
         ref: 'Document',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       result: mapRelationShip(
@@ -289,12 +229,6 @@ const {
         listKey,
         {
           many: false,
-          ui: {
-            displayMode: 'cards',
-            cardFields: ['document', 'isOfficial'],
-            inlineCreate: { fields: ['document', 'isOfficial'] },
-            inlineConnect: true,
-          },
         },
         opts,
       ),
@@ -323,7 +257,7 @@ const {
     },
     mainUI: {
       hideCreate: isNotElectionUser,
-      isHidden: isNotElectionUser,
+      hideNavigation: isNotElectionUser,
     },
     versionLimit: 20,
     versionAgeDays: 365,

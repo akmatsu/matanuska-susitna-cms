@@ -1,79 +1,40 @@
 /* eslint-disable react/prop-types */
 import {
-  CardValueComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-  MultiSelect,
-  Select,
-} from '@keystone-ui/fields';
-import { ComponentProps, useState } from 'react';
-import { Text } from '@keystone-ui/core';
+import { ListView } from '@keystar/ui/list-view';
+import { Item, Picker } from '@keystar/ui/picker';
 
 export function Field(props: FieldProps<typeof controller>) {
-  const [hasChanged, setHasChanged] = useState(false);
-
-  const validationMessage =
-    (hasChanged || props.forceValidation) &&
-    !validate(props.value, props.field.isRequired) ? (
-      <Text color="red600" size="small">
-        {props.field.label} is required
-      </Text>
-    ) : null;
+  const selectedKey = props.value.value?.value ?? null;
+  const isRequired = props.field.isRequired;
+  const isInvalid = !validate(props.value, isRequired);
+  const errorMessage =
+    isInvalid && props.forceValidation
+      ? `${props.field.label} is required`
+      : undefined;
 
   return (
-    <FieldContainer>
-      <FieldLabel>{props.field.label}</FieldLabel>
-      <FieldDescription id={`${props.field.path}-description`}>
-        {props.field.description}
-      </FieldDescription>
-      <Select
-        id={props.field.path}
-        isClearable
-        autoFocus={props.autoFocus}
-        isDisabled={props.onChange === undefined}
-        options={props.field.options}
-        value={props.value.value}
-        aria-describedby={
-          props.field.description === null
-            ? undefined
-            : `${props.field.path}-description`
-        }
-        portalMenu
-        onChange={(newVal) => {
-          props.onChange?.({ ...props.value, value: newVal });
-          setHasChanged(true);
-        }}
-        classNames={{
-          option: (props) => props.data.value,
-          singleValue: (props) => props.data.value,
-        }}
-      />
-      {validationMessage}
-    </FieldContainer>
+    <Picker
+      label={props.field.label}
+      description={props.field.description}
+      autoFocus={props.autoFocus}
+      isDisabled={props.onChange === undefined}
+      isRequired={isRequired}
+      errorMessage={errorMessage}
+      items={props.field.options}
+      selectedKey={selectedKey}
+      onSelectionChange={(key) => {
+        const newVal = props.field.options.find((o) => o.value === key) ?? null;
+        props.onChange?.({ ...props.value, value: newVal });
+      }}
+    >
+      {(item) => <Item key={item.value}>{item.label}</Item>}
+    </Picker>
   );
 }
-
-export const CardValue: CardValueComponent = (
-  props: ComponentProps<CardValueComponent>,
-) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{props.field.label}</FieldLabel>
-      <FieldDescription id={`${props.field.path}-description`}>
-        {props.field.description}
-      </FieldDescription>
-      <span className={props.item.icon}>
-        {props.item.icon ? '' : 'No icon selected'}
-      </span>
-    </FieldContainer>
-  );
-};
 
 export type AdminSelectFieldMeta = {
   options: readonly { label: string; value: string | number }[];
@@ -123,10 +84,10 @@ export const controller = (
   const stringifiedDefault = config.fieldMeta.defaultValue?.toString();
 
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: {
       kind: 'create',
       value:
@@ -139,7 +100,7 @@ export const controller = (
     options: optionsWithStringValues,
     deserialize: (data) => {
       for (const option of config.fieldMeta.options) {
-        if (option.value === data[config.path]) {
+        if (option.value === data[config.fieldKey]) {
           const stringifiedOption = {
             label: option.label,
             value: option.value.toString(),
@@ -153,26 +114,51 @@ export const controller = (
       }
       return { kind: 'update', initial: null, value: null };
     },
-    serialize: (value) => ({ [config.path]: t(value.value?.value ?? null) }),
+    serialize: (value) => ({ [config.fieldKey]: t(value.value?.value ?? null) }),
     validate: (value) => validate(value, config.fieldMeta.isRequired),
     filter: {
       Filter(props) {
         return (
-          <MultiSelect
-            onChange={props.onChange}
-            options={optionsWithStringValues}
-            value={props.value}
+          <ListView
+            aria-label={config.label}
+            items={optionsWithStringValues}
+            selectionMode="multiple"
+            selectedKeys={props.value.map((x) => x.value)}
+            onSelectionChange={(selection) => {
+              if (selection === 'all') return;
+              const keys = [...selection].filter(
+                (x): x is string => typeof x === 'string',
+              );
+              props.onChange(
+                optionsWithStringValues.filter((o) => keys.includes(o.value)),
+              );
+            }}
             autoFocus
-          />
+          >
+            {(item) => <Item key={item.value}>{item.label}</Item>}
+          </ListView>
         );
       },
       graphql: ({ type, value: options }) => ({
-        [config.path]: {
+        [config.fieldKey]: {
           [type === 'not_matches' ? 'notIn' : 'in']: options.map((x) =>
             t(x.value),
           ),
         },
       }),
+      parseGraphQL(value) {
+        return Object.entries(value ?? {}).flatMap(([type, val]) => {
+          if ((type === 'in' || type === 'notIn') && Array.isArray(val)) {
+            const matched = optionsWithStringValues.filter((o) =>
+              val.map(String).includes(o.value),
+            );
+            return [
+              { type: type === 'notIn' ? 'not_matches' : 'matches', value: matched },
+            ];
+          }
+          return [];
+        });
+      },
       Label({ type, value }) {
         if (!value.length) {
           return type === 'not_matches' ? `is set` : `has no value`;

@@ -12,7 +12,7 @@ export const ContactListItem = list({
     operation: generalOperationAccess,
   },
   ui: {
-    isHidden: true,
+    hideNavigation: true,
     hideCreate: false,
   },
   fields: {
@@ -103,15 +103,6 @@ export const Contact = list({
       ui: {
         itemView: {
           fieldPosition: 'sidebar',
-        },
-        displayMode: 'cards',
-        cardFields: ['label', 'url'],
-        inlineCreate: {
-          fields: ['label', 'url'],
-        },
-        inlineConnect: true,
-        inlineEdit: {
-          fields: ['label', 'url'],
         },
       },
       many: false,

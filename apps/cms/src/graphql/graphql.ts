@@ -2,23 +2,36 @@
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T,
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
+    };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  DateTime: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  DateTime: { input: any; output: any };
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: { input: any; output: any; }
+  JSON: { input: any; output: any };
   /** The `Upload` scalar type represents a file upload. */
-  Upload: { input: any; output: any; }
+  Upload: { input: any; output: any };
 };
 
 export type Alert = {
@@ -82,75 +95,78 @@ export type AlertWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type AssemblyDistrict = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'AssemblyDistrict';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  address?: Maybe<Location>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  bio?: Maybe<Scalars['String']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<AssemblyDistrictVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<AssemblyDistrictDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  email?: Maybe<Scalars['String']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  fax?: Maybe<Scalars['String']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  memberName?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  phone?: Maybe<Scalars['String']['output']>;
-  photo?: Maybe<Image>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  termEnd?: Maybe<Scalars['DateTime']['output']>;
-  termStart?: Maybe<Scalars['DateTime']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<AssemblyDistrictVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type AssemblyDistrict = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'AssemblyDistrict';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    address?: Maybe<Location>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    bio?: Maybe<Scalars['String']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<AssemblyDistrictVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<AssemblyDistrictDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    email?: Maybe<Scalars['String']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    fax?: Maybe<Scalars['String']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    memberName?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    phone?: Maybe<Scalars['String']['output']>;
+    photo?: Maybe<Image>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    termEnd?: Maybe<Scalars['DateTime']['output']>;
+    termStart?: Maybe<Scalars['DateTime']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<AssemblyDistrictVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type AssemblyDistrictActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -160,11 +176,9 @@ export type AssemblyDistrictActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type AssemblyDistrictActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type AssemblyDistrictAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -174,11 +188,9 @@ export type AssemblyDistrictAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type AssemblyDistrictAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type AssemblyDistrictBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -188,11 +200,9 @@ export type AssemblyDistrictBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type AssemblyDistrictBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type AssemblyDistrictCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -202,11 +212,9 @@ export type AssemblyDistrictCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type AssemblyDistrictCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type AssemblyDistrictContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -216,11 +224,9 @@ export type AssemblyDistrictContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type AssemblyDistrictContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type AssemblyDistrictDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -230,11 +236,9 @@ export type AssemblyDistrictDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type AssemblyDistrictDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type AssemblyDistrictDraftsArgs = {
   cursor?: InputMaybe<AssemblyDistrictDraftWhereUniqueInput>;
@@ -244,11 +248,9 @@ export type AssemblyDistrictDraftsArgs = {
   where?: AssemblyDistrictDraftWhereInput;
 };
 
-
 export type AssemblyDistrictDraftsCountArgs = {
   where?: AssemblyDistrictDraftWhereInput;
 };
-
 
 export type AssemblyDistrictEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -258,11 +260,9 @@ export type AssemblyDistrictEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type AssemblyDistrictEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type AssemblyDistrictFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -272,11 +272,9 @@ export type AssemblyDistrictFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type AssemblyDistrictFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type AssemblyDistrictOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -286,11 +284,9 @@ export type AssemblyDistrictOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type AssemblyDistrictOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type AssemblyDistrictParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -300,11 +296,9 @@ export type AssemblyDistrictParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type AssemblyDistrictParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type AssemblyDistrictPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -314,11 +308,9 @@ export type AssemblyDistrictPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type AssemblyDistrictPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type AssemblyDistrictPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -328,11 +320,9 @@ export type AssemblyDistrictPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type AssemblyDistrictPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type AssemblyDistrictServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -342,11 +332,9 @@ export type AssemblyDistrictServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type AssemblyDistrictServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type AssemblyDistrictTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -356,11 +344,9 @@ export type AssemblyDistrictTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type AssemblyDistrictTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type AssemblyDistrictTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -370,11 +356,9 @@ export type AssemblyDistrictTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type AssemblyDistrictTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type AssemblyDistrictTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -384,11 +368,9 @@ export type AssemblyDistrictTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type AssemblyDistrictTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type AssemblyDistrictUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -398,11 +380,9 @@ export type AssemblyDistrictUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type AssemblyDistrictUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type AssemblyDistrictVersionsArgs = {
   cursor?: InputMaybe<AssemblyDistrictVersionWhereUniqueInput>;
@@ -411,7 +391,6 @@ export type AssemblyDistrictVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: AssemblyDistrictVersionWhereInput;
 };
-
 
 export type AssemblyDistrictVersionsCountArgs = {
   where?: AssemblyDistrictVersionWhereInput;
@@ -526,7 +505,6 @@ export type AssemblyDistrictDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type AssemblyDistrictDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -535,11 +513,9 @@ export type AssemblyDistrictDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type AssemblyDistrictDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type AssemblyDistrictDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -549,11 +525,9 @@ export type AssemblyDistrictDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type AssemblyDistrictDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type AssemblyDistrictDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -563,11 +537,9 @@ export type AssemblyDistrictDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type AssemblyDistrictDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type AssemblyDistrictDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -577,11 +549,9 @@ export type AssemblyDistrictDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type AssemblyDistrictDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type AssemblyDistrictDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -591,11 +561,9 @@ export type AssemblyDistrictDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type AssemblyDistrictDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type AssemblyDistrictDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -605,11 +573,9 @@ export type AssemblyDistrictDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type AssemblyDistrictDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type AssemblyDistrictDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -619,11 +585,9 @@ export type AssemblyDistrictDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type AssemblyDistrictDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type AssemblyDistrictDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -633,11 +597,9 @@ export type AssemblyDistrictDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type AssemblyDistrictDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type AssemblyDistrictDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -647,11 +609,9 @@ export type AssemblyDistrictDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type AssemblyDistrictDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type AssemblyDistrictDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -661,11 +621,9 @@ export type AssemblyDistrictDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type AssemblyDistrictDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type AssemblyDistrictDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -675,11 +633,9 @@ export type AssemblyDistrictDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type AssemblyDistrictDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type AssemblyDistrictDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -689,11 +645,9 @@ export type AssemblyDistrictDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type AssemblyDistrictDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type AssemblyDistrictDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -703,11 +657,9 @@ export type AssemblyDistrictDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type AssemblyDistrictDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type AssemblyDistrictDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -717,11 +669,9 @@ export type AssemblyDistrictDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type AssemblyDistrictDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type AssemblyDistrictDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -731,11 +681,9 @@ export type AssemblyDistrictDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type AssemblyDistrictDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type AssemblyDistrictDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -745,11 +693,9 @@ export type AssemblyDistrictDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type AssemblyDistrictDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type AssemblyDistrictDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -758,7 +704,6 @@ export type AssemblyDistrictDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type AssemblyDistrictDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -1107,7 +1052,6 @@ export type AssemblyDistrictVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type AssemblyDistrictVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -1116,11 +1060,9 @@ export type AssemblyDistrictVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type AssemblyDistrictVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type AssemblyDistrictVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -1130,11 +1072,9 @@ export type AssemblyDistrictVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type AssemblyDistrictVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type AssemblyDistrictVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -1144,11 +1084,9 @@ export type AssemblyDistrictVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type AssemblyDistrictVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type AssemblyDistrictVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -1158,11 +1096,9 @@ export type AssemblyDistrictVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type AssemblyDistrictVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type AssemblyDistrictVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -1172,11 +1108,9 @@ export type AssemblyDistrictVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type AssemblyDistrictVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type AssemblyDistrictVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -1186,11 +1120,9 @@ export type AssemblyDistrictVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type AssemblyDistrictVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type AssemblyDistrictVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -1200,11 +1132,9 @@ export type AssemblyDistrictVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type AssemblyDistrictVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type AssemblyDistrictVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -1214,11 +1144,9 @@ export type AssemblyDistrictVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type AssemblyDistrictVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type AssemblyDistrictVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -1228,11 +1156,9 @@ export type AssemblyDistrictVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type AssemblyDistrictVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type AssemblyDistrictVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -1242,11 +1168,9 @@ export type AssemblyDistrictVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type AssemblyDistrictVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type AssemblyDistrictVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -1256,11 +1180,9 @@ export type AssemblyDistrictVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type AssemblyDistrictVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type AssemblyDistrictVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -1270,11 +1192,9 @@ export type AssemblyDistrictVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type AssemblyDistrictVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type AssemblyDistrictVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -1284,11 +1204,9 @@ export type AssemblyDistrictVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type AssemblyDistrictVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type AssemblyDistrictVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -1298,11 +1216,9 @@ export type AssemblyDistrictVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type AssemblyDistrictVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type AssemblyDistrictVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -1312,11 +1228,9 @@ export type AssemblyDistrictVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type AssemblyDistrictVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type AssemblyDistrictVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -1326,11 +1240,9 @@ export type AssemblyDistrictVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type AssemblyDistrictVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type AssemblyDistrictVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -1339,7 +1251,6 @@ export type AssemblyDistrictVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type AssemblyDistrictVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -1606,7 +1517,6 @@ export type BasePage = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type BasePageContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
   orderBy?: Array<ContactOrderByInput>;
@@ -1615,11 +1525,9 @@ export type BasePageContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BasePageContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BasePageDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -1628,7 +1536,6 @@ export type BasePageDocumentsArgs = {
   take?: Scalars['Int']['input'];
   where?: DocumentWhereInput;
 };
-
 
 export type BasePageDocumentsCountArgs = {
   where?: DocumentWhereInput;
@@ -1652,7 +1559,6 @@ export type BasePageWithActions = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type BasePageWithActionsActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -1661,11 +1567,9 @@ export type BasePageWithActionsActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type BasePageWithActionsActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type BasePageWithActionsContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -1675,11 +1579,9 @@ export type BasePageWithActionsContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BasePageWithActionsContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BasePageWithActionsDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -1688,7 +1590,6 @@ export type BasePageWithActionsDocumentsArgs = {
   take?: Scalars['Int']['input'];
   where?: DocumentWhereInput;
 };
-
 
 export type BasePageWithActionsDocumentsCountArgs = {
   where?: DocumentWhereInput;
@@ -1732,7 +1633,6 @@ export type BasePageWithDefaultRelationships = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type BasePageWithDefaultRelationshipsAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
   orderBy?: Array<AssemblyDistrictOrderByInput>;
@@ -1741,11 +1641,9 @@ export type BasePageWithDefaultRelationshipsAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -1755,11 +1653,9 @@ export type BasePageWithDefaultRelationshipsCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -1769,11 +1665,9 @@ export type BasePageWithDefaultRelationshipsContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -1783,11 +1677,9 @@ export type BasePageWithDefaultRelationshipsDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -1797,11 +1689,9 @@ export type BasePageWithDefaultRelationshipsEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -1811,11 +1701,9 @@ export type BasePageWithDefaultRelationshipsOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -1825,11 +1713,9 @@ export type BasePageWithDefaultRelationshipsPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -1839,11 +1725,9 @@ export type BasePageWithDefaultRelationshipsPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -1853,11 +1737,9 @@ export type BasePageWithDefaultRelationshipsServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -1867,11 +1749,9 @@ export type BasePageWithDefaultRelationshipsTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type BasePageWithDefaultRelationshipsTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type BasePageWithDefaultRelationshipsTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -1897,7 +1777,6 @@ export type BasePageWithSlug = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type BasePageWithSlugContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
   orderBy?: Array<ContactOrderByInput>;
@@ -1906,11 +1785,9 @@ export type BasePageWithSlugContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BasePageWithSlugContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BasePageWithSlugDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -1920,76 +1797,78 @@ export type BasePageWithSlugDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type BasePageWithSlugDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
 
 export enum BlueHarvestImageOrderDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
-export type Board = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Board';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  calendarId?: Maybe<Scalars['String']['output']>;
-  calendarQueryString?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<BoardVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  directory?: Maybe<Document>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<BoardDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  isActive?: Maybe<Scalars['Boolean']['output']>;
-  linkToAgendas?: Maybe<ExternalLink>;
-  linkToPublicOpinionMessage?: Maybe<ExternalLink>;
-  linkToResolutions?: Maybe<ExternalLink>;
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<BoardVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Board = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Board';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    calendarId?: Maybe<Scalars['String']['output']>;
+    calendarQueryString?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<BoardVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    directory?: Maybe<Document>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<BoardDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    isActive?: Maybe<Scalars['Boolean']['output']>;
+    linkToAgendas?: Maybe<ExternalLink>;
+    linkToPublicOpinionMessage?: Maybe<ExternalLink>;
+    linkToResolutions?: Maybe<ExternalLink>;
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    type?: Maybe<Scalars['String']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<BoardVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type BoardActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -1999,11 +1878,9 @@ export type BoardActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type BoardActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type BoardAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -2013,11 +1890,9 @@ export type BoardAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type BoardAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type BoardCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -2027,11 +1902,9 @@ export type BoardCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type BoardCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type BoardContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -2041,11 +1914,9 @@ export type BoardContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BoardContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BoardDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -2055,11 +1926,9 @@ export type BoardDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type BoardDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type BoardDraftsArgs = {
   cursor?: InputMaybe<BoardDraftWhereUniqueInput>;
@@ -2069,11 +1938,9 @@ export type BoardDraftsArgs = {
   where?: BoardDraftWhereInput;
 };
 
-
 export type BoardDraftsCountArgs = {
   where?: BoardDraftWhereInput;
 };
-
 
 export type BoardEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -2083,11 +1950,9 @@ export type BoardEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type BoardEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type BoardOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -2097,11 +1962,9 @@ export type BoardOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type BoardOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type BoardPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -2111,11 +1974,9 @@ export type BoardPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type BoardPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type BoardPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -2125,11 +1986,9 @@ export type BoardPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type BoardPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type BoardServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -2139,11 +1998,9 @@ export type BoardServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type BoardServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type BoardTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -2153,11 +2010,9 @@ export type BoardTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type BoardTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type BoardTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -2167,11 +2022,9 @@ export type BoardTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type BoardTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type BoardUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -2181,11 +2034,9 @@ export type BoardUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type BoardUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type BoardVersionsArgs = {
   cursor?: InputMaybe<BoardVersionWhereUniqueInput>;
@@ -2194,7 +2045,6 @@ export type BoardVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: BoardVersionWhereInput;
 };
-
 
 export type BoardVersionsCountArgs = {
   where?: BoardVersionWhereInput;
@@ -2295,7 +2145,6 @@ export type BoardDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type BoardDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -2304,11 +2153,9 @@ export type BoardDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type BoardDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type BoardDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -2318,11 +2165,9 @@ export type BoardDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type BoardDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type BoardDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -2332,11 +2177,9 @@ export type BoardDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type BoardDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type BoardDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -2346,11 +2189,9 @@ export type BoardDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BoardDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BoardDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -2360,11 +2201,9 @@ export type BoardDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type BoardDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type BoardDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -2374,11 +2213,9 @@ export type BoardDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type BoardDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type BoardDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -2388,11 +2225,9 @@ export type BoardDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type BoardDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type BoardDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -2402,11 +2237,9 @@ export type BoardDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type BoardDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type BoardDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -2416,11 +2249,9 @@ export type BoardDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type BoardDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type BoardDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -2430,11 +2261,9 @@ export type BoardDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type BoardDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type BoardDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -2444,11 +2273,9 @@ export type BoardDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type BoardDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type BoardDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -2458,11 +2285,9 @@ export type BoardDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type BoardDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type BoardDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -2471,7 +2296,6 @@ export type BoardDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type BoardDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -2661,27 +2485,27 @@ export type BoardOrderByInput = {
   updatedAt?: InputMaybe<OrderDirection>;
 };
 
-export type BoardPage = BasePage & WithTitle & {
-  __typename?: 'BoardPage';
-  ParliTrainingLink?: Maybe<ExternalLink>;
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  applicationForm?: Maybe<Document>;
-  body?: Maybe<Scalars['String']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  owner?: Maybe<User>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  vacancyReport?: Maybe<Document>;
-};
-
+export type BoardPage = BasePage &
+  WithTitle & {
+    __typename?: 'BoardPage';
+    ParliTrainingLink?: Maybe<ExternalLink>;
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    applicationForm?: Maybe<Document>;
+    body?: Maybe<Scalars['String']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    owner?: Maybe<User>;
+    title?: Maybe<Scalars['String']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    vacancyReport?: Maybe<Document>;
+  };
 
 export type BoardPageActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -2691,11 +2515,9 @@ export type BoardPageActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type BoardPageActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type BoardPageContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -2705,11 +2527,9 @@ export type BoardPageContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BoardPageContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BoardPageDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -2718,7 +2538,6 @@ export type BoardPageDocumentsArgs = {
   take?: Scalars['Int']['input'];
   where?: DocumentWhereInput;
 };
-
 
 export type BoardPageDocumentsCountArgs = {
   where?: DocumentWhereInput;
@@ -2919,7 +2738,6 @@ export type BoardVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type BoardVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -2928,11 +2746,9 @@ export type BoardVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type BoardVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type BoardVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -2942,11 +2758,9 @@ export type BoardVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type BoardVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type BoardVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -2956,11 +2770,9 @@ export type BoardVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type BoardVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type BoardVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -2970,11 +2782,9 @@ export type BoardVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type BoardVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type BoardVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -2984,11 +2794,9 @@ export type BoardVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type BoardVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type BoardVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -2998,11 +2806,9 @@ export type BoardVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type BoardVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type BoardVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -3012,11 +2818,9 @@ export type BoardVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type BoardVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type BoardVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -3026,11 +2830,9 @@ export type BoardVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type BoardVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type BoardVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -3040,11 +2842,9 @@ export type BoardVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type BoardVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type BoardVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -3054,11 +2854,9 @@ export type BoardVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type BoardVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type BoardVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -3068,11 +2866,9 @@ export type BoardVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type BoardVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type BoardVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -3082,11 +2878,9 @@ export type BoardVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type BoardVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type BoardVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -3095,7 +2889,6 @@ export type BoardVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type BoardVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -3329,67 +3122,70 @@ export type BooleanFilter = {
   not?: InputMaybe<BooleanFilter>;
 };
 
-export type Community = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Community';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<CommunityVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<CommunityDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<CommunityVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Community = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Community';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<CommunityVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<CommunityDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    type?: Maybe<Scalars['String']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<CommunityVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type CommunityActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -3399,11 +3195,9 @@ export type CommunityActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type CommunityActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type CommunityAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -3413,11 +3207,9 @@ export type CommunityAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type CommunityAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type CommunityBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -3427,11 +3219,9 @@ export type CommunityBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type CommunityBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type CommunityCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -3441,11 +3231,9 @@ export type CommunityCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type CommunityCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type CommunityContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -3455,11 +3243,9 @@ export type CommunityContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type CommunityContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type CommunityDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -3469,11 +3255,9 @@ export type CommunityDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type CommunityDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type CommunityDraftsArgs = {
   cursor?: InputMaybe<CommunityDraftWhereUniqueInput>;
@@ -3483,11 +3267,9 @@ export type CommunityDraftsArgs = {
   where?: CommunityDraftWhereInput;
 };
 
-
 export type CommunityDraftsCountArgs = {
   where?: CommunityDraftWhereInput;
 };
-
 
 export type CommunityEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -3497,11 +3279,9 @@ export type CommunityEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type CommunityEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type CommunityFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -3511,11 +3291,9 @@ export type CommunityFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type CommunityFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type CommunityOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -3525,11 +3303,9 @@ export type CommunityOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type CommunityOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type CommunityParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -3539,11 +3315,9 @@ export type CommunityParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type CommunityParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type CommunityPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -3553,11 +3327,9 @@ export type CommunityPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type CommunityPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type CommunityPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -3567,11 +3339,9 @@ export type CommunityPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type CommunityPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type CommunityServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -3581,11 +3351,9 @@ export type CommunityServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type CommunityServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type CommunityTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -3595,11 +3363,9 @@ export type CommunityTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type CommunityTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type CommunityTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -3609,11 +3375,9 @@ export type CommunityTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type CommunityTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type CommunityTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -3623,11 +3387,9 @@ export type CommunityTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type CommunityTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type CommunityUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -3637,11 +3399,9 @@ export type CommunityUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type CommunityUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type CommunityVersionsArgs = {
   cursor?: InputMaybe<CommunityVersionWhereUniqueInput>;
@@ -3650,7 +3410,6 @@ export type CommunityVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: CommunityVersionWhereInput;
 };
-
 
 export type CommunityVersionsCountArgs = {
   where?: CommunityVersionWhereInput;
@@ -3749,7 +3508,6 @@ export type CommunityDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type CommunityDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -3758,11 +3516,9 @@ export type CommunityDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type CommunityDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type CommunityDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -3772,11 +3528,9 @@ export type CommunityDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type CommunityDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type CommunityDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -3786,11 +3540,9 @@ export type CommunityDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type CommunityDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type CommunityDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -3800,11 +3552,9 @@ export type CommunityDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type CommunityDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type CommunityDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -3814,11 +3564,9 @@ export type CommunityDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type CommunityDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type CommunityDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -3828,11 +3576,9 @@ export type CommunityDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type CommunityDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type CommunityDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -3842,11 +3588,9 @@ export type CommunityDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type CommunityDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type CommunityDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -3856,11 +3600,9 @@ export type CommunityDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type CommunityDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type CommunityDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -3870,11 +3612,9 @@ export type CommunityDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type CommunityDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type CommunityDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -3884,11 +3624,9 @@ export type CommunityDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type CommunityDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type CommunityDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -3898,11 +3636,9 @@ export type CommunityDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type CommunityDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type CommunityDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -3912,11 +3648,9 @@ export type CommunityDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type CommunityDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type CommunityDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -3926,11 +3660,9 @@ export type CommunityDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type CommunityDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type CommunityDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -3940,11 +3672,9 @@ export type CommunityDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type CommunityDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type CommunityDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -3954,11 +3684,9 @@ export type CommunityDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type CommunityDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type CommunityDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -3968,11 +3696,9 @@ export type CommunityDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type CommunityDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type CommunityDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -3981,7 +3707,6 @@ export type CommunityDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type CommunityDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -4278,7 +4003,6 @@ export type CommunityVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type CommunityVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -4287,11 +4011,9 @@ export type CommunityVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type CommunityVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type CommunityVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -4301,11 +4023,9 @@ export type CommunityVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type CommunityVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type CommunityVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -4315,11 +4035,9 @@ export type CommunityVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type CommunityVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type CommunityVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -4329,11 +4047,9 @@ export type CommunityVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type CommunityVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type CommunityVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -4343,11 +4059,9 @@ export type CommunityVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type CommunityVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type CommunityVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -4357,11 +4071,9 @@ export type CommunityVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type CommunityVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type CommunityVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -4371,11 +4083,9 @@ export type CommunityVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type CommunityVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type CommunityVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -4385,11 +4095,9 @@ export type CommunityVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type CommunityVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type CommunityVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -4399,11 +4107,9 @@ export type CommunityVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type CommunityVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type CommunityVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -4413,11 +4119,9 @@ export type CommunityVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type CommunityVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type CommunityVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -4427,11 +4131,9 @@ export type CommunityVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type CommunityVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type CommunityVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -4441,11 +4143,9 @@ export type CommunityVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type CommunityVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type CommunityVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -4455,11 +4155,9 @@ export type CommunityVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type CommunityVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type CommunityVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -4469,11 +4167,9 @@ export type CommunityVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type CommunityVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type CommunityVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -4483,11 +4179,9 @@ export type CommunityVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type CommunityVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type CommunityVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -4497,11 +4191,9 @@ export type CommunityVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type CommunityVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type CommunityVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -4510,7 +4202,6 @@ export type CommunityVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type CommunityVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -4897,7 +4588,6 @@ export type Document = WithTitle & {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-
 export type DocumentCollectionsArgs = {
   cursor?: InputMaybe<DocumentCollectionWhereUniqueInput>;
   orderBy?: Array<DocumentCollectionOrderByInput>;
@@ -4906,11 +4596,9 @@ export type DocumentCollectionsArgs = {
   where?: DocumentCollectionWhereInput;
 };
 
-
 export type DocumentCollectionsCountArgs = {
   where?: DocumentCollectionWhereInput;
 };
-
 
 export type DocumentTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -4919,7 +4607,6 @@ export type DocumentTagsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: TagWhereInput;
 };
-
 
 export type DocumentTagsCountArgs = {
   where?: TagWhereInput;
@@ -4943,7 +4630,6 @@ export type DocumentCollection = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type DocumentCollectionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -4952,11 +4638,9 @@ export type DocumentCollectionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type DocumentCollectionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type DocumentCollectionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -4966,11 +4650,9 @@ export type DocumentCollectionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type DocumentCollectionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type DocumentCollectionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -4979,7 +4661,6 @@ export type DocumentCollectionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type DocumentCollectionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -5072,7 +4753,6 @@ export type DocumentListItem = {
   order?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type DocumentListItemDocumentArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -5080,7 +4760,6 @@ export type DocumentListItemDocumentArgs = {
   take?: Scalars['Int']['input'];
   where?: DocumentWhereInput;
 };
-
 
 export type DocumentListItemDocumentCountArgs = {
   where?: DocumentWhereInput;
@@ -5199,7 +4878,6 @@ export type EarlyVotingLocation = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-
 export type EarlyVotingLocationHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
   orderBy?: Array<OperatingHourOrderByInput>;
@@ -5207,7 +4885,6 @@ export type EarlyVotingLocationHoursArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: OperatingHourWhereInput;
 };
-
 
 export type EarlyVotingLocationHoursCountArgs = {
   where?: OperatingHourWhereInput;
@@ -5319,7 +4996,6 @@ export type Election = {
   voterRegistrationDeadline?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type ElectionCandidateFilingDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -5328,11 +5004,9 @@ export type ElectionCandidateFilingDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionCandidateFilingDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -5342,11 +5016,9 @@ export type ElectionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionDraftsArgs = {
   cursor?: InputMaybe<ElectionDraftWhereUniqueInput>;
@@ -5356,11 +5028,9 @@ export type ElectionDraftsArgs = {
   where?: ElectionDraftWhereInput;
 };
 
-
 export type ElectionDraftsCountArgs = {
   where?: ElectionDraftWhereInput;
 };
-
 
 export type ElectionElectionBallotsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -5370,11 +5040,9 @@ export type ElectionElectionBallotsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionElectionBallotsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionPropositionsArgs = {
   cursor?: InputMaybe<PropositionWhereUniqueInput>;
@@ -5384,11 +5052,9 @@ export type ElectionPropositionsArgs = {
   where?: PropositionWhereInput;
 };
 
-
 export type ElectionPropositionsCountArgs = {
   where?: PropositionWhereInput;
 };
-
 
 export type ElectionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -5398,11 +5064,9 @@ export type ElectionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ElectionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ElectionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -5412,11 +5076,9 @@ export type ElectionUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type ElectionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type ElectionVersionsArgs = {
   cursor?: InputMaybe<ElectionVersionWhereUniqueInput>;
@@ -5425,7 +5087,6 @@ export type ElectionVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: ElectionVersionWhereInput;
 };
-
 
 export type ElectionVersionsCountArgs = {
   where?: ElectionVersionWhereInput;
@@ -5449,7 +5110,9 @@ export type ElectionCreateInput = {
   electionBrochure?: InputMaybe<DocumentRelateToOneForCreateInput>;
   electionDate?: InputMaybe<Scalars['DateTime']['input']>;
   electionOfficialApplication?: InputMaybe<DocumentRelateToOneForCreateInput>;
-  electionOfficialApplicationDeadline?: InputMaybe<Scalars['DateTime']['input']>;
+  electionOfficialApplicationDeadline?: InputMaybe<
+    Scalars['DateTime']['input']
+  >;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
   officesToBeFilled?: InputMaybe<Scalars['String']['input']>;
@@ -5511,7 +5174,6 @@ export type ElectionDraft = {
   voterRegistrationDeadline?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type ElectionDraftCandidateFilingDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -5520,11 +5182,9 @@ export type ElectionDraftCandidateFilingDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionDraftCandidateFilingDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -5534,11 +5194,9 @@ export type ElectionDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionDraftElectionBallotsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -5548,11 +5206,9 @@ export type ElectionDraftElectionBallotsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionDraftElectionBallotsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionDraftPropositionsArgs = {
   cursor?: InputMaybe<PropositionWhereUniqueInput>;
@@ -5562,11 +5218,9 @@ export type ElectionDraftPropositionsArgs = {
   where?: PropositionWhereInput;
 };
 
-
 export type ElectionDraftPropositionsCountArgs = {
   where?: PropositionWhereInput;
 };
-
 
 export type ElectionDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -5576,11 +5230,9 @@ export type ElectionDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ElectionDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ElectionDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -5589,7 +5241,6 @@ export type ElectionDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type ElectionDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -5611,7 +5262,9 @@ export type ElectionDraftCreateInput = {
   electionBrochure?: InputMaybe<DocumentRelateToOneForCreateInput>;
   electionDate?: InputMaybe<Scalars['DateTime']['input']>;
   electionOfficialApplication?: InputMaybe<DocumentRelateToOneForCreateInput>;
-  electionOfficialApplicationDeadline?: InputMaybe<Scalars['DateTime']['input']>;
+  electionOfficialApplicationDeadline?: InputMaybe<
+    Scalars['DateTime']['input']
+  >;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   officesToBeFilled?: InputMaybe<Scalars['String']['input']>;
   original?: InputMaybe<ElectionRelateToOneForCreateInput>;
@@ -5690,7 +5343,9 @@ export type ElectionDraftUpdateInput = {
   electionBrochure?: InputMaybe<DocumentRelateToOneForUpdateInput>;
   electionDate?: InputMaybe<Scalars['DateTime']['input']>;
   electionOfficialApplication?: InputMaybe<DocumentRelateToOneForUpdateInput>;
-  electionOfficialApplicationDeadline?: InputMaybe<Scalars['DateTime']['input']>;
+  electionOfficialApplicationDeadline?: InputMaybe<
+    Scalars['DateTime']['input']
+  >;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   officesToBeFilled?: InputMaybe<Scalars['String']['input']>;
   original?: InputMaybe<ElectionRelateToOneForUpdateInput>;
@@ -5863,7 +5518,9 @@ export type ElectionUpdateInput = {
   electionBrochure?: InputMaybe<DocumentRelateToOneForUpdateInput>;
   electionDate?: InputMaybe<Scalars['DateTime']['input']>;
   electionOfficialApplication?: InputMaybe<DocumentRelateToOneForUpdateInput>;
-  electionOfficialApplicationDeadline?: InputMaybe<Scalars['DateTime']['input']>;
+  electionOfficialApplicationDeadline?: InputMaybe<
+    Scalars['DateTime']['input']
+  >;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   makeDrafts?: InputMaybe<Scalars['String']['input']>;
   officesToBeFilled?: InputMaybe<Scalars['String']['input']>;
@@ -5926,7 +5583,6 @@ export type ElectionVersion = {
   voterRegistrationDeadline?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type ElectionVersionCandidateFilingDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
   orderBy?: Array<DocumentOrderByInput>;
@@ -5935,11 +5591,9 @@ export type ElectionVersionCandidateFilingDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionVersionCandidateFilingDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -5949,11 +5603,9 @@ export type ElectionVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionVersionElectionBallotsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -5963,11 +5615,9 @@ export type ElectionVersionElectionBallotsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ElectionVersionElectionBallotsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ElectionVersionPropositionsArgs = {
   cursor?: InputMaybe<PropositionWhereUniqueInput>;
@@ -5977,11 +5627,9 @@ export type ElectionVersionPropositionsArgs = {
   where?: PropositionWhereInput;
 };
 
-
 export type ElectionVersionPropositionsCountArgs = {
   where?: PropositionWhereInput;
 };
-
 
 export type ElectionVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -5991,11 +5639,9 @@ export type ElectionVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ElectionVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ElectionVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -6004,7 +5650,6 @@ export type ElectionVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type ElectionVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -6026,7 +5671,9 @@ export type ElectionVersionCreateInput = {
   electionBrochure?: InputMaybe<DocumentRelateToOneForCreateInput>;
   electionDate?: InputMaybe<Scalars['DateTime']['input']>;
   electionOfficialApplication?: InputMaybe<DocumentRelateToOneForCreateInput>;
-  electionOfficialApplicationDeadline?: InputMaybe<Scalars['DateTime']['input']>;
+  electionOfficialApplicationDeadline?: InputMaybe<
+    Scalars['DateTime']['input']
+  >;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<ElectionRelateToOneForCreateInput>;
   officesToBeFilled?: InputMaybe<Scalars['String']['input']>;
@@ -6117,7 +5764,9 @@ export type ElectionVersionUpdateInput = {
   electionBrochure?: InputMaybe<DocumentRelateToOneForUpdateInput>;
   electionDate?: InputMaybe<Scalars['DateTime']['input']>;
   electionOfficialApplication?: InputMaybe<DocumentRelateToOneForUpdateInput>;
-  electionOfficialApplicationDeadline?: InputMaybe<Scalars['DateTime']['input']>;
+  electionOfficialApplicationDeadline?: InputMaybe<
+    Scalars['DateTime']['input']
+  >;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   isLive?: InputMaybe<ElectionRelateToOneForUpdateInput>;
   officesToBeFilled?: InputMaybe<Scalars['String']['input']>;
@@ -6227,25 +5876,25 @@ export type ElectionWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ElectionsPage = BasePage & WithTitle & {
-  __typename?: 'ElectionsPage';
-  boroughElectionContact?: Maybe<Contact>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  earlyVotingLocations?: Maybe<Array<EarlyVotingLocation>>;
-  earlyVotingLocationsCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  howElectionsWork?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  owner?: Maybe<User>;
-  referendumProcessDocument?: Maybe<Document>;
-  stateElectionContact?: Maybe<Contact>;
-  title?: Maybe<Scalars['String']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type ElectionsPage = BasePage &
+  WithTitle & {
+    __typename?: 'ElectionsPage';
+    boroughElectionContact?: Maybe<Contact>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    description?: Maybe<Scalars['String']['output']>;
+    earlyVotingLocations?: Maybe<Array<EarlyVotingLocation>>;
+    earlyVotingLocationsCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    howElectionsWork?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    owner?: Maybe<User>;
+    referendumProcessDocument?: Maybe<Document>;
+    stateElectionContact?: Maybe<Contact>;
+    title?: Maybe<Scalars['String']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type ElectionsPageEarlyVotingLocationsArgs = {
   cursor?: InputMaybe<EarlyVotingLocationWhereUniqueInput>;
@@ -6255,11 +5904,9 @@ export type ElectionsPageEarlyVotingLocationsArgs = {
   where?: EarlyVotingLocationWhereInput;
 };
 
-
 export type ElectionsPageEarlyVotingLocationsCountArgs = {
   where?: EarlyVotingLocationWhereInput;
 };
-
 
 export type ElectionsPageUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -6268,7 +5915,6 @@ export type ElectionsPageUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type ElectionsPageUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -6342,68 +5988,71 @@ export type ElectionsPageWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Event = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Event';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<EventVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<EventDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  endDate?: Maybe<Scalars['DateTime']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  startDate?: Maybe<Scalars['DateTime']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<EventVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Event = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Event';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<EventVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<EventDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    endDate?: Maybe<Scalars['DateTime']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    startDate?: Maybe<Scalars['DateTime']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<EventVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type EventActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -6413,11 +6062,9 @@ export type EventActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type EventActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type EventAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -6427,11 +6074,9 @@ export type EventAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type EventAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type EventBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -6441,11 +6086,9 @@ export type EventBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type EventBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type EventCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -6455,11 +6098,9 @@ export type EventCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type EventCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type EventContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -6469,11 +6110,9 @@ export type EventContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type EventContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type EventDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -6483,11 +6122,9 @@ export type EventDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type EventDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type EventDraftsArgs = {
   cursor?: InputMaybe<EventDraftWhereUniqueInput>;
@@ -6497,11 +6134,9 @@ export type EventDraftsArgs = {
   where?: EventDraftWhereInput;
 };
 
-
 export type EventDraftsCountArgs = {
   where?: EventDraftWhereInput;
 };
-
 
 export type EventEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -6511,11 +6146,9 @@ export type EventEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type EventEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type EventFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -6525,11 +6158,9 @@ export type EventFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type EventFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type EventOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -6539,11 +6170,9 @@ export type EventOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type EventOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type EventParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -6553,11 +6182,9 @@ export type EventParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type EventParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type EventPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -6567,11 +6194,9 @@ export type EventPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type EventPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type EventPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -6581,11 +6206,9 @@ export type EventPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type EventPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type EventServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -6595,11 +6218,9 @@ export type EventServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type EventServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type EventTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -6609,11 +6230,9 @@ export type EventTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type EventTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type EventTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -6623,11 +6242,9 @@ export type EventTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type EventTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type EventTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -6637,11 +6254,9 @@ export type EventTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type EventTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type EventUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -6651,11 +6266,9 @@ export type EventUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type EventUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type EventVersionsArgs = {
   cursor?: InputMaybe<EventVersionWhereUniqueInput>;
@@ -6664,7 +6277,6 @@ export type EventVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: EventVersionWhereInput;
 };
-
 
 export type EventVersionsCountArgs = {
   where?: EventVersionWhereInput;
@@ -6765,7 +6377,6 @@ export type EventDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type EventDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -6774,11 +6385,9 @@ export type EventDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type EventDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type EventDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -6788,11 +6397,9 @@ export type EventDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type EventDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type EventDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -6802,11 +6409,9 @@ export type EventDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type EventDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type EventDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -6816,11 +6421,9 @@ export type EventDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type EventDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type EventDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -6830,11 +6433,9 @@ export type EventDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type EventDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type EventDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -6844,11 +6445,9 @@ export type EventDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type EventDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type EventDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -6858,11 +6457,9 @@ export type EventDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type EventDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type EventDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -6872,11 +6469,9 @@ export type EventDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type EventDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type EventDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -6886,11 +6481,9 @@ export type EventDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type EventDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type EventDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -6900,11 +6493,9 @@ export type EventDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type EventDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type EventDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -6914,11 +6505,9 @@ export type EventDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type EventDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type EventDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -6928,11 +6517,9 @@ export type EventDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type EventDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type EventDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -6942,11 +6529,9 @@ export type EventDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type EventDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type EventDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -6956,11 +6541,9 @@ export type EventDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type EventDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type EventDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -6970,11 +6553,9 @@ export type EventDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type EventDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type EventDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -6984,11 +6565,9 @@ export type EventDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type EventDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type EventDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -6997,7 +6576,6 @@ export type EventDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type EventDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -7301,7 +6879,6 @@ export type EventVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type EventVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -7310,11 +6887,9 @@ export type EventVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type EventVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type EventVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -7324,11 +6899,9 @@ export type EventVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type EventVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type EventVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -7338,11 +6911,9 @@ export type EventVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type EventVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type EventVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -7352,11 +6923,9 @@ export type EventVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type EventVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type EventVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -7366,11 +6935,9 @@ export type EventVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type EventVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type EventVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -7380,11 +6947,9 @@ export type EventVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type EventVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type EventVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -7394,11 +6959,9 @@ export type EventVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type EventVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type EventVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -7408,11 +6971,9 @@ export type EventVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type EventVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type EventVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -7422,11 +6983,9 @@ export type EventVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type EventVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type EventVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -7436,11 +6995,9 @@ export type EventVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type EventVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type EventVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -7450,11 +7007,9 @@ export type EventVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type EventVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type EventVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -7464,11 +7019,9 @@ export type EventVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type EventVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type EventVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -7478,11 +7031,9 @@ export type EventVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type EventVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type EventVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -7492,11 +7043,9 @@ export type EventVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type EventVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type EventVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -7506,11 +7055,9 @@ export type EventVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type EventVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type EventVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -7520,11 +7067,9 @@ export type EventVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type EventVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type EventVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -7533,7 +7078,6 @@ export type EventVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type EventVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -7821,62 +7365,65 @@ export type ExternalLinkWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Facility = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Facility';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  address?: Maybe<Location>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<FacilityVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<FacilityDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  hours?: Maybe<Array<OperatingHour>>;
-  hoursCount?: Maybe<Scalars['Int']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  park?: Maybe<Park>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<FacilityVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Facility = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Facility';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    address?: Maybe<Location>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<FacilityVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<FacilityDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    hours?: Maybe<Array<OperatingHour>>;
+    hoursCount?: Maybe<Scalars['Int']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    park?: Maybe<Park>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<FacilityVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type FacilityActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -7886,11 +7433,9 @@ export type FacilityActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type FacilityActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type FacilityAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -7900,11 +7445,9 @@ export type FacilityAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type FacilityAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type FacilityCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -7914,11 +7457,9 @@ export type FacilityCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type FacilityCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type FacilityContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -7928,11 +7469,9 @@ export type FacilityContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type FacilityContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type FacilityDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -7942,11 +7481,9 @@ export type FacilityDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type FacilityDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type FacilityDraftsArgs = {
   cursor?: InputMaybe<FacilityDraftWhereUniqueInput>;
@@ -7956,11 +7493,9 @@ export type FacilityDraftsArgs = {
   where?: FacilityDraftWhereInput;
 };
 
-
 export type FacilityDraftsCountArgs = {
   where?: FacilityDraftWhereInput;
 };
-
 
 export type FacilityEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -7970,11 +7505,9 @@ export type FacilityEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type FacilityEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type FacilityHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
@@ -7984,11 +7517,9 @@ export type FacilityHoursArgs = {
   where?: OperatingHourWhereInput;
 };
 
-
 export type FacilityHoursCountArgs = {
   where?: OperatingHourWhereInput;
 };
-
 
 export type FacilityOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -7998,11 +7529,9 @@ export type FacilityOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type FacilityOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type FacilityPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -8012,11 +7541,9 @@ export type FacilityPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type FacilityPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type FacilityPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -8026,11 +7553,9 @@ export type FacilityPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type FacilityPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type FacilityServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -8040,11 +7565,9 @@ export type FacilityServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type FacilityServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type FacilityTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -8054,11 +7577,9 @@ export type FacilityTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type FacilityTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type FacilityTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -8068,11 +7589,9 @@ export type FacilityTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type FacilityTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type FacilityUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -8082,11 +7601,9 @@ export type FacilityUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type FacilityUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type FacilityVersionsArgs = {
   cursor?: InputMaybe<FacilityVersionWhereUniqueInput>;
@@ -8095,7 +7612,6 @@ export type FacilityVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: FacilityVersionWhereInput;
 };
-
 
 export type FacilityVersionsCountArgs = {
   where?: FacilityVersionWhereInput;
@@ -8187,7 +7703,6 @@ export type FacilityDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type FacilityDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -8196,11 +7711,9 @@ export type FacilityDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type FacilityDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type FacilityDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -8210,11 +7723,9 @@ export type FacilityDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type FacilityDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type FacilityDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -8224,11 +7735,9 @@ export type FacilityDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type FacilityDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type FacilityDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -8238,11 +7747,9 @@ export type FacilityDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type FacilityDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type FacilityDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -8252,11 +7759,9 @@ export type FacilityDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type FacilityDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type FacilityDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -8266,11 +7771,9 @@ export type FacilityDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type FacilityDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type FacilityDraftHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
@@ -8280,11 +7783,9 @@ export type FacilityDraftHoursArgs = {
   where?: OperatingHourWhereInput;
 };
 
-
 export type FacilityDraftHoursCountArgs = {
   where?: OperatingHourWhereInput;
 };
-
 
 export type FacilityDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -8294,11 +7795,9 @@ export type FacilityDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type FacilityDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type FacilityDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -8308,11 +7807,9 @@ export type FacilityDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type FacilityDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type FacilityDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -8322,11 +7819,9 @@ export type FacilityDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type FacilityDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type FacilityDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -8336,11 +7831,9 @@ export type FacilityDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type FacilityDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type FacilityDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -8350,11 +7843,9 @@ export type FacilityDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type FacilityDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type FacilityDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -8364,11 +7855,9 @@ export type FacilityDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type FacilityDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type FacilityDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -8377,7 +7866,6 @@ export type FacilityDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type FacilityDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -8699,7 +8187,6 @@ export type FacilityVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type FacilityVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -8708,11 +8195,9 @@ export type FacilityVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type FacilityVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type FacilityVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -8722,11 +8207,9 @@ export type FacilityVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type FacilityVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type FacilityVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -8736,11 +8219,9 @@ export type FacilityVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type FacilityVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type FacilityVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -8750,11 +8231,9 @@ export type FacilityVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type FacilityVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type FacilityVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -8764,11 +8243,9 @@ export type FacilityVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type FacilityVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type FacilityVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -8778,11 +8255,9 @@ export type FacilityVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type FacilityVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type FacilityVersionHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
@@ -8792,11 +8267,9 @@ export type FacilityVersionHoursArgs = {
   where?: OperatingHourWhereInput;
 };
 
-
 export type FacilityVersionHoursCountArgs = {
   where?: OperatingHourWhereInput;
 };
-
 
 export type FacilityVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -8806,11 +8279,9 @@ export type FacilityVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type FacilityVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type FacilityVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -8820,11 +8291,9 @@ export type FacilityVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type FacilityVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type FacilityVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -8834,11 +8303,9 @@ export type FacilityVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type FacilityVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type FacilityVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -8848,11 +8315,9 @@ export type FacilityVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type FacilityVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type FacilityVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -8862,11 +8327,9 @@ export type FacilityVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type FacilityVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type FacilityVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -8876,11 +8339,9 @@ export type FacilityVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type FacilityVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type FacilityVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -8889,7 +8350,6 @@ export type FacilityVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type FacilityVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -9125,7 +8585,6 @@ export type Highlight = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type HighlightLandingPagesArgs = {
   cursor?: InputMaybe<LandingPageWhereUniqueInput>;
   orderBy?: Array<LandingPageOrderByInput>;
@@ -9134,11 +8593,9 @@ export type HighlightLandingPagesArgs = {
   where?: LandingPageWhereInput;
 };
 
-
 export type HighlightLandingPagesCountArgs = {
   where?: LandingPageWhereInput;
 };
-
 
 export type HighlightTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -9148,11 +8605,9 @@ export type HighlightTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type HighlightTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type HighlightUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -9161,7 +8616,6 @@ export type HighlightUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type HighlightUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -9266,7 +8720,6 @@ export type HomePage = WithTitle & {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type HomePageFeaturedItemsArgs = {
   cursor?: InputMaybe<FeaturedItemWhereUniqueInput>;
   orderBy?: Array<FeaturedItemOrderByInput>;
@@ -9274,7 +8727,6 @@ export type HomePageFeaturedItemsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: FeaturedItemWhereInput;
 };
-
 
 export type HomePageFeaturedItemsCountArgs = {
   where?: FeaturedItemWhereInput;
@@ -9350,7 +8802,6 @@ export type Image = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-
 export type ImageTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
@@ -9358,7 +8809,6 @@ export type ImageTagsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: TagWhereInput;
 };
-
 
 export type ImageTagsCountArgs = {
   where?: TagWhereInput;
@@ -9375,7 +8825,7 @@ export enum ImageExtension {
   Gif = 'gif',
   Jpg = 'jpg',
   Png = 'png',
-  Webp = 'webp'
+  Webp = 'webp',
 }
 
 export type ImageFieldInput = {
@@ -9504,7 +8954,24 @@ export type InternalLinkRelateToOneForUpdateInput = {
   disconnect?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type InternalLinkSearch = AssemblyDistrict | Board | BoardPage | Community | Document | ElectionsPage | Facility | HomePage | OrgUnit | Park | Plan | Policy | PublicNotice | Service | Topic | Trail | Url;
+export type InternalLinkSearch =
+  | AssemblyDistrict
+  | Board
+  | BoardPage
+  | Community
+  | Document
+  | ElectionsPage
+  | Facility
+  | HomePage
+  | OrgUnit
+  | Park
+  | Plan
+  | Policy
+  | PublicNotice
+  | Service
+  | Topic
+  | Trail
+  | Url;
 
 export type InternalLinkUpdateArgs = {
   data: InternalLinkUpdateInput;
@@ -9534,7 +9001,6 @@ export type KeystoneAdminMeta = {
   lists: Array<KeystoneAdminUiListMeta>;
 };
 
-
 export type KeystoneAdminMetaListArgs = {
   key: Scalars['String']['input'];
 };
@@ -9563,7 +9029,6 @@ export type KeystoneAdminUiFieldMeta = {
   viewsIndex: Scalars['Int']['output'];
 };
 
-
 export type KeystoneAdminUiFieldMetaItemViewArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -9575,13 +9040,13 @@ export type KeystoneAdminUiFieldMetaCreateView = {
 
 export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
   Edit = 'edit',
-  Hidden = 'hidden'
+  Hidden = 'hidden',
 }
 
 export enum KeystoneAdminUiFieldMetaIsNonNull {
   Create = 'create',
   Read = 'read',
-  Update = 'update'
+  Update = 'update',
 }
 
 export type KeystoneAdminUiFieldMetaItemView = {
@@ -9593,12 +9058,12 @@ export type KeystoneAdminUiFieldMetaItemView = {
 export enum KeystoneAdminUiFieldMetaItemViewFieldMode {
   Edit = 'edit',
   Hidden = 'hidden',
-  Read = 'read'
+  Read = 'read',
 }
 
 export enum KeystoneAdminUiFieldMetaItemViewFieldPosition {
   Form = 'form',
-  Sidebar = 'sidebar'
+  Sidebar = 'sidebar',
 }
 
 export type KeystoneAdminUiFieldMetaListView = {
@@ -9608,7 +9073,7 @@ export type KeystoneAdminUiFieldMetaListView = {
 
 export enum KeystoneAdminUiFieldMetaListViewFieldMode {
   Hidden = 'hidden',
-  Read = 'read'
+  Read = 'read',
 }
 
 export type KeystoneAdminUiGraphQl = {
@@ -9651,7 +9116,7 @@ export type KeystoneAdminUiListMeta = {
   initialColumns: Array<Scalars['String']['output']>;
   initialSearchFields: Array<Scalars['String']['output']>;
   initialSort?: Maybe<KeystoneAdminUiSort>;
-  isHidden: Scalars['Boolean']['output'];
+  hideNavigation: Scalars['Boolean']['output'];
   isSingleton: Scalars['Boolean']['output'];
   itemQueryName: Scalars['String']['output'];
   key: Scalars['String']['output'];
@@ -9672,7 +9137,7 @@ export type KeystoneAdminUiSort = {
 
 export enum KeystoneAdminUiSortDirection {
   Asc = 'ASC',
-  Desc = 'DESC'
+  Desc = 'DESC',
 }
 
 export type KeystoneMeta = {
@@ -9691,7 +9156,6 @@ export type LandingPage = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-
 export type LandingPageHighlightsArgs = {
   cursor?: InputMaybe<HighlightWhereUniqueInput>;
   orderBy?: Array<HighlightOrderByInput>;
@@ -9699,7 +9163,6 @@ export type LandingPageHighlightsArgs = {
   take?: Scalars['Int']['input'];
   where?: HighlightWhereInput;
 };
-
 
 export type LandingPageHighlightsCountArgs = {
   where?: HighlightWhereInput;
@@ -9768,7 +9231,22 @@ export type LandingPageWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type LinkedItemUnion = AssemblyDistrict | Board | BoardPage | Community | Document | ElectionsPage | Facility | HomePage | OrgUnit | Park | Plan | Service | Topic | Trail | Url;
+export type LinkedItemUnion =
+  | AssemblyDistrict
+  | Board
+  | BoardPage
+  | Community
+  | Document
+  | ElectionsPage
+  | Facility
+  | HomePage
+  | OrgUnit
+  | Park
+  | Plan
+  | Service
+  | Topic
+  | Trail
+  | Url;
 
 export type Location = {
   __typename?: 'Location';
@@ -10279,2201 +9757,1775 @@ export type Mutation = {
   updatefeaturedItem?: Maybe<FeaturedItem>;
 };
 
-
 export type MutationCreateAlertArgs = {
   data: AlertCreateInput;
 };
-
 
 export type MutationCreateAlertsArgs = {
   data: Array<AlertCreateInput>;
 };
 
-
 export type MutationCreateAssemblyDistrictArgs = {
   data: AssemblyDistrictCreateInput;
 };
-
 
 export type MutationCreateAssemblyDistrictDraftArgs = {
   data: AssemblyDistrictDraftCreateInput;
 };
 
-
 export type MutationCreateAssemblyDistrictDraftsArgs = {
   data: Array<AssemblyDistrictDraftCreateInput>;
 };
-
 
 export type MutationCreateAssemblyDistrictVersionArgs = {
   data: AssemblyDistrictVersionCreateInput;
 };
 
-
 export type MutationCreateAssemblyDistrictVersionsArgs = {
   data: Array<AssemblyDistrictVersionCreateInput>;
 };
-
 
 export type MutationCreateAssemblyDistrictsArgs = {
   data: Array<AssemblyDistrictCreateInput>;
 };
 
-
 export type MutationCreateBoardArgs = {
   data: BoardCreateInput;
 };
-
 
 export type MutationCreateBoardDraftArgs = {
   data: BoardDraftCreateInput;
 };
 
-
 export type MutationCreateBoardDraftsArgs = {
   data: Array<BoardDraftCreateInput>;
 };
-
 
 export type MutationCreateBoardPageArgs = {
   data: BoardPageCreateInput;
 };
 
-
 export type MutationCreateBoardPagesArgs = {
   data: Array<BoardPageCreateInput>;
 };
-
 
 export type MutationCreateBoardVersionArgs = {
   data: BoardVersionCreateInput;
 };
 
-
 export type MutationCreateBoardVersionsArgs = {
   data: Array<BoardVersionCreateInput>;
 };
-
 
 export type MutationCreateBoardsArgs = {
   data: Array<BoardCreateInput>;
 };
 
-
 export type MutationCreateCommunitiesArgs = {
   data: Array<CommunityCreateInput>;
 };
-
 
 export type MutationCreateCommunityArgs = {
   data: CommunityCreateInput;
 };
 
-
 export type MutationCreateCommunityDraftArgs = {
   data: CommunityDraftCreateInput;
 };
-
 
 export type MutationCreateCommunityDraftsArgs = {
   data: Array<CommunityDraftCreateInput>;
 };
 
-
 export type MutationCreateCommunityVersionArgs = {
   data: CommunityVersionCreateInput;
 };
-
 
 export type MutationCreateCommunityVersionsArgs = {
   data: Array<CommunityVersionCreateInput>;
 };
 
-
 export type MutationCreateContactArgs = {
   data: ContactCreateInput;
 };
-
 
 export type MutationCreateContactListItemArgs = {
   data: ContactListItemCreateInput;
 };
 
-
 export type MutationCreateContactListItemsArgs = {
   data: Array<ContactListItemCreateInput>;
 };
-
 
 export type MutationCreateContactsArgs = {
   data: Array<ContactCreateInput>;
 };
 
-
 export type MutationCreateDocumentArgs = {
   data: DocumentCreateInput;
 };
-
 
 export type MutationCreateDocumentCollectionArgs = {
   data: DocumentCollectionCreateInput;
 };
 
-
 export type MutationCreateDocumentCollectionsArgs = {
   data: Array<DocumentCollectionCreateInput>;
 };
-
 
 export type MutationCreateDocumentListItemArgs = {
   data: DocumentListItemCreateInput;
 };
 
-
 export type MutationCreateDocumentListItemsArgs = {
   data: Array<DocumentListItemCreateInput>;
 };
-
 
 export type MutationCreateDocumentsArgs = {
   data: Array<DocumentCreateInput>;
 };
 
-
 export type MutationCreateEarlyVotingLocationArgs = {
   data: EarlyVotingLocationCreateInput;
 };
-
 
 export type MutationCreateEarlyVotingLocationsArgs = {
   data: Array<EarlyVotingLocationCreateInput>;
 };
 
-
 export type MutationCreateElectionArgs = {
   data: ElectionCreateInput;
 };
-
 
 export type MutationCreateElectionDraftArgs = {
   data: ElectionDraftCreateInput;
 };
 
-
 export type MutationCreateElectionDraftsArgs = {
   data: Array<ElectionDraftCreateInput>;
 };
-
 
 export type MutationCreateElectionResultArgs = {
   data: ElectionResultCreateInput;
 };
 
-
 export type MutationCreateElectionResultsArgs = {
   data: Array<ElectionResultCreateInput>;
 };
-
 
 export type MutationCreateElectionVersionArgs = {
   data: ElectionVersionCreateInput;
 };
 
-
 export type MutationCreateElectionVersionsArgs = {
   data: Array<ElectionVersionCreateInput>;
 };
-
 
 export type MutationCreateElectionsArgs = {
   data: Array<ElectionCreateInput>;
 };
 
-
 export type MutationCreateElectionsPageArgs = {
   data: ElectionsPageCreateInput;
 };
-
 
 export type MutationCreateElectionsPagesArgs = {
   data: Array<ElectionsPageCreateInput>;
 };
 
-
 export type MutationCreateEventArgs = {
   data: EventCreateInput;
 };
-
 
 export type MutationCreateEventDraftArgs = {
   data: EventDraftCreateInput;
 };
 
-
 export type MutationCreateEventDraftsArgs = {
   data: Array<EventDraftCreateInput>;
 };
-
 
 export type MutationCreateEventVersionArgs = {
   data: EventVersionCreateInput;
 };
 
-
 export type MutationCreateEventVersionsArgs = {
   data: Array<EventVersionCreateInput>;
 };
-
 
 export type MutationCreateEventsArgs = {
   data: Array<EventCreateInput>;
 };
 
-
 export type MutationCreateExternalLinkArgs = {
   data: ExternalLinkCreateInput;
 };
-
 
 export type MutationCreateExternalLinksArgs = {
   data: Array<ExternalLinkCreateInput>;
 };
 
-
 export type MutationCreateFacilitiesArgs = {
   data: Array<FacilityCreateInput>;
 };
-
 
 export type MutationCreateFacilityArgs = {
   data: FacilityCreateInput;
 };
 
-
 export type MutationCreateFacilityDraftArgs = {
   data: FacilityDraftCreateInput;
 };
-
 
 export type MutationCreateFacilityDraftsArgs = {
   data: Array<FacilityDraftCreateInput>;
 };
 
-
 export type MutationCreateFacilityListItemArgs = {
   data: FacilityListItemCreateInput;
 };
-
 
 export type MutationCreateFacilityListItemsArgs = {
   data: Array<FacilityListItemCreateInput>;
 };
 
-
 export type MutationCreateFacilityVersionArgs = {
   data: FacilityVersionCreateInput;
 };
-
 
 export type MutationCreateFacilityVersionsArgs = {
   data: Array<FacilityVersionCreateInput>;
 };
 
-
 export type MutationCreateFeaturedItemsArgs = {
   data: Array<FeaturedItemCreateInput>;
 };
-
 
 export type MutationCreateHighlightArgs = {
   data: HighlightCreateInput;
 };
 
-
 export type MutationCreateHighlightsArgs = {
   data: Array<HighlightCreateInput>;
 };
-
 
 export type MutationCreateHomePageArgs = {
   data: HomePageCreateInput;
 };
 
-
 export type MutationCreateHomePagesArgs = {
   data: Array<HomePageCreateInput>;
 };
-
 
 export type MutationCreateImageArgs = {
   data: ImageCreateInput;
 };
 
-
 export type MutationCreateImagesArgs = {
   data: Array<ImageCreateInput>;
 };
-
 
 export type MutationCreateInternalLinkArgs = {
   data: InternalLinkCreateInput;
 };
 
-
 export type MutationCreateInternalLinksArgs = {
   data: Array<InternalLinkCreateInput>;
 };
-
 
 export type MutationCreateLandingPageArgs = {
   data: LandingPageCreateInput;
 };
 
-
 export type MutationCreateLandingPagesArgs = {
   data: Array<LandingPageCreateInput>;
 };
-
 
 export type MutationCreateLocationArgs = {
   data: LocationCreateInput;
 };
 
-
 export type MutationCreateLocationsArgs = {
   data: Array<LocationCreateInput>;
 };
-
 
 export type MutationCreateOperatingHourArgs = {
   data: OperatingHourCreateInput;
 };
 
-
 export type MutationCreateOperatingHoursArgs = {
   data: Array<OperatingHourCreateInput>;
 };
-
 
 export type MutationCreateOrgUnitArgs = {
   data: OrgUnitCreateInput;
 };
 
-
 export type MutationCreateOrgUnitDraftArgs = {
   data: OrgUnitDraftCreateInput;
 };
-
 
 export type MutationCreateOrgUnitDraftsArgs = {
   data: Array<OrgUnitDraftCreateInput>;
 };
 
-
 export type MutationCreateOrgUnitVersionArgs = {
   data: OrgUnitVersionCreateInput;
 };
-
 
 export type MutationCreateOrgUnitVersionsArgs = {
   data: Array<OrgUnitVersionCreateInput>;
 };
 
-
 export type MutationCreateOrgUnitsArgs = {
   data: Array<OrgUnitCreateInput>;
 };
-
 
 export type MutationCreatePageViewArgs = {
   data: PageViewCreateInput;
 };
 
-
 export type MutationCreatePageViewsArgs = {
   data: Array<PageViewCreateInput>;
 };
-
 
 export type MutationCreateParkArgs = {
   data: ParkCreateInput;
 };
 
-
 export type MutationCreateParkDraftArgs = {
   data: ParkDraftCreateInput;
 };
-
 
 export type MutationCreateParkDraftsArgs = {
   data: Array<ParkDraftCreateInput>;
 };
 
-
 export type MutationCreateParkVersionArgs = {
   data: ParkVersionCreateInput;
 };
-
 
 export type MutationCreateParkVersionsArgs = {
   data: Array<ParkVersionCreateInput>;
 };
 
-
 export type MutationCreateParksArgs = {
   data: Array<ParkCreateInput>;
 };
-
 
 export type MutationCreatePlanArgs = {
   data: PlanCreateInput;
 };
 
-
 export type MutationCreatePlanCodeArgs = {
   data: PlanCodeCreateInput;
 };
-
 
 export type MutationCreatePlanCodesArgs = {
   data: Array<PlanCodeCreateInput>;
 };
 
-
 export type MutationCreatePlanDocumentArgs = {
   data: PlanDocumentCreateInput;
 };
-
 
 export type MutationCreatePlanDocumentsArgs = {
   data: Array<PlanDocumentCreateInput>;
 };
 
-
 export type MutationCreatePlanDraftArgs = {
   data: PlanDraftCreateInput;
 };
-
 
 export type MutationCreatePlanDraftsArgs = {
   data: Array<PlanDraftCreateInput>;
 };
 
-
 export type MutationCreatePlanVersionArgs = {
   data: PlanVersionCreateInput;
 };
-
 
 export type MutationCreatePlanVersionsArgs = {
   data: Array<PlanVersionCreateInput>;
 };
 
-
 export type MutationCreatePlansArgs = {
   data: Array<PlanCreateInput>;
 };
-
 
 export type MutationCreatePoliciesArgs = {
   data: Array<PolicyCreateInput>;
 };
 
-
 export type MutationCreatePolicyArgs = {
   data: PolicyCreateInput;
 };
-
 
 export type MutationCreatePolicyDraftArgs = {
   data: PolicyDraftCreateInput;
 };
 
-
 export type MutationCreatePolicyDraftsArgs = {
   data: Array<PolicyDraftCreateInput>;
 };
-
 
 export type MutationCreatePolicyVersionArgs = {
   data: PolicyVersionCreateInput;
 };
 
-
 export type MutationCreatePolicyVersionsArgs = {
   data: Array<PolicyVersionCreateInput>;
 };
-
 
 export type MutationCreatePropositionArgs = {
   data: PropositionCreateInput;
 };
 
-
 export type MutationCreatePropositionsArgs = {
   data: Array<PropositionCreateInput>;
 };
-
 
 export type MutationCreatePublicNoticeArgs = {
   data: PublicNoticeCreateInput;
 };
 
-
 export type MutationCreatePublicNoticeDraftArgs = {
   data: PublicNoticeDraftCreateInput;
 };
-
 
 export type MutationCreatePublicNoticeDraftsArgs = {
   data: Array<PublicNoticeDraftCreateInput>;
 };
 
-
 export type MutationCreatePublicNoticeVersionArgs = {
   data: PublicNoticeVersionCreateInput;
 };
-
 
 export type MutationCreatePublicNoticeVersionsArgs = {
   data: Array<PublicNoticeVersionCreateInput>;
 };
 
-
 export type MutationCreatePublicNoticesArgs = {
   data: Array<PublicNoticeCreateInput>;
 };
-
 
 export type MutationCreateRedirectArgs = {
   data: RedirectCreateInput;
 };
 
-
 export type MutationCreateRedirectsArgs = {
   data: Array<RedirectCreateInput>;
 };
-
 
 export type MutationCreateServiceArgs = {
   data: ServiceCreateInput;
 };
 
-
 export type MutationCreateServiceDraftArgs = {
   data: ServiceDraftCreateInput;
 };
-
 
 export type MutationCreateServiceDraftsArgs = {
   data: Array<ServiceDraftCreateInput>;
 };
 
-
 export type MutationCreateServiceVersionArgs = {
   data: ServiceVersionCreateInput;
 };
-
 
 export type MutationCreateServiceVersionsArgs = {
   data: Array<ServiceVersionCreateInput>;
 };
 
-
 export type MutationCreateServicesArgs = {
   data: Array<ServiceCreateInput>;
 };
-
 
 export type MutationCreateTagArgs = {
   data: TagCreateInput;
 };
 
-
 export type MutationCreateTagsArgs = {
   data: Array<TagCreateInput>;
 };
-
 
 export type MutationCreateTopicArgs = {
   data: TopicCreateInput;
 };
 
-
 export type MutationCreateTopicDraftArgs = {
   data: TopicDraftCreateInput;
 };
-
 
 export type MutationCreateTopicDraftsArgs = {
   data: Array<TopicDraftCreateInput>;
 };
 
-
 export type MutationCreateTopicVersionArgs = {
   data: TopicVersionCreateInput;
 };
-
 
 export type MutationCreateTopicVersionsArgs = {
   data: Array<TopicVersionCreateInput>;
 };
 
-
 export type MutationCreateTopicsArgs = {
   data: Array<TopicCreateInput>;
 };
-
 
 export type MutationCreateTrailArgs = {
   data: TrailCreateInput;
 };
 
-
 export type MutationCreateTrailDraftArgs = {
   data: TrailDraftCreateInput;
 };
-
 
 export type MutationCreateTrailDraftsArgs = {
   data: Array<TrailDraftCreateInput>;
 };
 
-
 export type MutationCreateTrailVersionArgs = {
   data: TrailVersionCreateInput;
 };
-
 
 export type MutationCreateTrailVersionsArgs = {
   data: Array<TrailVersionCreateInput>;
 };
 
-
 export type MutationCreateTrailsArgs = {
   data: Array<TrailCreateInput>;
 };
-
 
 export type MutationCreateUrlArgs = {
   data: UrlCreateInput;
 };
 
-
 export type MutationCreateUrlsArgs = {
   data: Array<UrlCreateInput>;
 };
-
 
 export type MutationCreateUserArgs = {
   data: UserCreateInput;
 };
 
-
 export type MutationCreateUserGroupArgs = {
   data: UserGroupCreateInput;
 };
-
 
 export type MutationCreateUserGroupsArgs = {
   data: Array<UserGroupCreateInput>;
 };
 
-
 export type MutationCreateUsersArgs = {
   data: Array<UserCreateInput>;
 };
-
 
 export type MutationCreatefeaturedItemArgs = {
   data: FeaturedItemCreateInput;
 };
 
-
 export type MutationDeleteAlertArgs = {
   where: AlertWhereUniqueInput;
 };
-
 
 export type MutationDeleteAlertsArgs = {
   where: Array<AlertWhereUniqueInput>;
 };
 
-
 export type MutationDeleteAssemblyDistrictArgs = {
   where: AssemblyDistrictWhereUniqueInput;
 };
-
 
 export type MutationDeleteAssemblyDistrictDraftArgs = {
   where: AssemblyDistrictDraftWhereUniqueInput;
 };
 
-
 export type MutationDeleteAssemblyDistrictDraftsArgs = {
   where: Array<AssemblyDistrictDraftWhereUniqueInput>;
 };
-
 
 export type MutationDeleteAssemblyDistrictVersionArgs = {
   where: AssemblyDistrictVersionWhereUniqueInput;
 };
 
-
 export type MutationDeleteAssemblyDistrictVersionsArgs = {
   where: Array<AssemblyDistrictVersionWhereUniqueInput>;
 };
-
 
 export type MutationDeleteAssemblyDistrictsArgs = {
   where: Array<AssemblyDistrictWhereUniqueInput>;
 };
 
-
 export type MutationDeleteBoardArgs = {
   where: BoardWhereUniqueInput;
 };
-
 
 export type MutationDeleteBoardDraftArgs = {
   where: BoardDraftWhereUniqueInput;
 };
 
-
 export type MutationDeleteBoardDraftsArgs = {
   where: Array<BoardDraftWhereUniqueInput>;
 };
-
 
 export type MutationDeleteBoardPageArgs = {
   where?: BoardPageWhereUniqueInput;
 };
 
-
 export type MutationDeleteBoardPagesArgs = {
   where: Array<BoardPageWhereUniqueInput>;
 };
-
 
 export type MutationDeleteBoardVersionArgs = {
   where: BoardVersionWhereUniqueInput;
 };
 
-
 export type MutationDeleteBoardVersionsArgs = {
   where: Array<BoardVersionWhereUniqueInput>;
 };
-
 
 export type MutationDeleteBoardsArgs = {
   where: Array<BoardWhereUniqueInput>;
 };
 
-
 export type MutationDeleteCommunitiesArgs = {
   where: Array<CommunityWhereUniqueInput>;
 };
-
 
 export type MutationDeleteCommunityArgs = {
   where: CommunityWhereUniqueInput;
 };
 
-
 export type MutationDeleteCommunityDraftArgs = {
   where: CommunityDraftWhereUniqueInput;
 };
-
 
 export type MutationDeleteCommunityDraftsArgs = {
   where: Array<CommunityDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeleteCommunityVersionArgs = {
   where: CommunityVersionWhereUniqueInput;
 };
-
 
 export type MutationDeleteCommunityVersionsArgs = {
   where: Array<CommunityVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteContactArgs = {
   where: ContactWhereUniqueInput;
 };
-
 
 export type MutationDeleteContactListItemArgs = {
   where: ContactListItemWhereUniqueInput;
 };
 
-
 export type MutationDeleteContactListItemsArgs = {
   where: Array<ContactListItemWhereUniqueInput>;
 };
-
 
 export type MutationDeleteContactsArgs = {
   where: Array<ContactWhereUniqueInput>;
 };
 
-
 export type MutationDeleteDocumentArgs = {
   where: DocumentWhereUniqueInput;
 };
-
 
 export type MutationDeleteDocumentCollectionArgs = {
   where: DocumentCollectionWhereUniqueInput;
 };
 
-
 export type MutationDeleteDocumentCollectionsArgs = {
   where: Array<DocumentCollectionWhereUniqueInput>;
 };
-
 
 export type MutationDeleteDocumentListItemArgs = {
   where: DocumentListItemWhereUniqueInput;
 };
 
-
 export type MutationDeleteDocumentListItemsArgs = {
   where: Array<DocumentListItemWhereUniqueInput>;
 };
-
 
 export type MutationDeleteDocumentsArgs = {
   where: Array<DocumentWhereUniqueInput>;
 };
 
-
 export type MutationDeleteEarlyVotingLocationArgs = {
   where: EarlyVotingLocationWhereUniqueInput;
 };
-
 
 export type MutationDeleteEarlyVotingLocationsArgs = {
   where: Array<EarlyVotingLocationWhereUniqueInput>;
 };
 
-
 export type MutationDeleteElectionArgs = {
   where: ElectionWhereUniqueInput;
 };
-
 
 export type MutationDeleteElectionDraftArgs = {
   where: ElectionDraftWhereUniqueInput;
 };
 
-
 export type MutationDeleteElectionDraftsArgs = {
   where: Array<ElectionDraftWhereUniqueInput>;
 };
-
 
 export type MutationDeleteElectionResultArgs = {
   where: ElectionResultWhereUniqueInput;
 };
 
-
 export type MutationDeleteElectionResultsArgs = {
   where: Array<ElectionResultWhereUniqueInput>;
 };
-
 
 export type MutationDeleteElectionVersionArgs = {
   where: ElectionVersionWhereUniqueInput;
 };
 
-
 export type MutationDeleteElectionVersionsArgs = {
   where: Array<ElectionVersionWhereUniqueInput>;
 };
-
 
 export type MutationDeleteElectionsArgs = {
   where: Array<ElectionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteElectionsPageArgs = {
   where?: ElectionsPageWhereUniqueInput;
 };
-
 
 export type MutationDeleteElectionsPagesArgs = {
   where: Array<ElectionsPageWhereUniqueInput>;
 };
 
-
 export type MutationDeleteEventArgs = {
   where: EventWhereUniqueInput;
 };
-
 
 export type MutationDeleteEventDraftArgs = {
   where: EventDraftWhereUniqueInput;
 };
 
-
 export type MutationDeleteEventDraftsArgs = {
   where: Array<EventDraftWhereUniqueInput>;
 };
-
 
 export type MutationDeleteEventVersionArgs = {
   where: EventVersionWhereUniqueInput;
 };
 
-
 export type MutationDeleteEventVersionsArgs = {
   where: Array<EventVersionWhereUniqueInput>;
 };
-
 
 export type MutationDeleteEventsArgs = {
   where: Array<EventWhereUniqueInput>;
 };
 
-
 export type MutationDeleteExternalLinkArgs = {
   where: ExternalLinkWhereUniqueInput;
 };
-
 
 export type MutationDeleteExternalLinksArgs = {
   where: Array<ExternalLinkWhereUniqueInput>;
 };
 
-
 export type MutationDeleteFacilitiesArgs = {
   where: Array<FacilityWhereUniqueInput>;
 };
-
 
 export type MutationDeleteFacilityArgs = {
   where: FacilityWhereUniqueInput;
 };
 
-
 export type MutationDeleteFacilityDraftArgs = {
   where: FacilityDraftWhereUniqueInput;
 };
-
 
 export type MutationDeleteFacilityDraftsArgs = {
   where: Array<FacilityDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeleteFacilityListItemArgs = {
   where: FacilityListItemWhereUniqueInput;
 };
-
 
 export type MutationDeleteFacilityListItemsArgs = {
   where: Array<FacilityListItemWhereUniqueInput>;
 };
 
-
 export type MutationDeleteFacilityVersionArgs = {
   where: FacilityVersionWhereUniqueInput;
 };
-
 
 export type MutationDeleteFacilityVersionsArgs = {
   where: Array<FacilityVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteFeaturedItemsArgs = {
   where: Array<FeaturedItemWhereUniqueInput>;
 };
-
 
 export type MutationDeleteHighlightArgs = {
   where: HighlightWhereUniqueInput;
 };
 
-
 export type MutationDeleteHighlightsArgs = {
   where: Array<HighlightWhereUniqueInput>;
 };
-
 
 export type MutationDeleteHomePageArgs = {
   where?: HomePageWhereUniqueInput;
 };
 
-
 export type MutationDeleteHomePagesArgs = {
   where: Array<HomePageWhereUniqueInput>;
 };
-
 
 export type MutationDeleteImageArgs = {
   where: ImageWhereUniqueInput;
 };
 
-
 export type MutationDeleteImagesArgs = {
   where: Array<ImageWhereUniqueInput>;
 };
-
 
 export type MutationDeleteInternalLinkArgs = {
   where: InternalLinkWhereUniqueInput;
 };
 
-
 export type MutationDeleteInternalLinksArgs = {
   where: Array<InternalLinkWhereUniqueInput>;
 };
-
 
 export type MutationDeleteLandingPageArgs = {
   where: LandingPageWhereUniqueInput;
 };
 
-
 export type MutationDeleteLandingPagesArgs = {
   where: Array<LandingPageWhereUniqueInput>;
 };
-
 
 export type MutationDeleteLocationArgs = {
   where: LocationWhereUniqueInput;
 };
 
-
 export type MutationDeleteLocationsArgs = {
   where: Array<LocationWhereUniqueInput>;
 };
-
 
 export type MutationDeleteOperatingHourArgs = {
   where: OperatingHourWhereUniqueInput;
 };
 
-
 export type MutationDeleteOperatingHoursArgs = {
   where: Array<OperatingHourWhereUniqueInput>;
 };
-
 
 export type MutationDeleteOrgUnitArgs = {
   where: OrgUnitWhereUniqueInput;
 };
 
-
 export type MutationDeleteOrgUnitDraftArgs = {
   where: OrgUnitDraftWhereUniqueInput;
 };
-
 
 export type MutationDeleteOrgUnitDraftsArgs = {
   where: Array<OrgUnitDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeleteOrgUnitVersionArgs = {
   where: OrgUnitVersionWhereUniqueInput;
 };
-
 
 export type MutationDeleteOrgUnitVersionsArgs = {
   where: Array<OrgUnitVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteOrgUnitsArgs = {
   where: Array<OrgUnitWhereUniqueInput>;
 };
-
 
 export type MutationDeletePageViewArgs = {
   where: PageViewWhereUniqueInput;
 };
 
-
 export type MutationDeletePageViewsArgs = {
   where: Array<PageViewWhereUniqueInput>;
 };
-
 
 export type MutationDeleteParkArgs = {
   where: ParkWhereUniqueInput;
 };
 
-
 export type MutationDeleteParkDraftArgs = {
   where: ParkDraftWhereUniqueInput;
 };
-
 
 export type MutationDeleteParkDraftsArgs = {
   where: Array<ParkDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeleteParkVersionArgs = {
   where: ParkVersionWhereUniqueInput;
 };
-
 
 export type MutationDeleteParkVersionsArgs = {
   where: Array<ParkVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteParksArgs = {
   where: Array<ParkWhereUniqueInput>;
 };
-
 
 export type MutationDeletePlanArgs = {
   where: PlanWhereUniqueInput;
 };
 
-
 export type MutationDeletePlanCodeArgs = {
   where: PlanCodeWhereUniqueInput;
 };
-
 
 export type MutationDeletePlanCodesArgs = {
   where: Array<PlanCodeWhereUniqueInput>;
 };
 
-
 export type MutationDeletePlanDocumentArgs = {
   where: PlanDocumentWhereUniqueInput;
 };
-
 
 export type MutationDeletePlanDocumentsArgs = {
   where: Array<PlanDocumentWhereUniqueInput>;
 };
 
-
 export type MutationDeletePlanDraftArgs = {
   where: PlanDraftWhereUniqueInput;
 };
-
 
 export type MutationDeletePlanDraftsArgs = {
   where: Array<PlanDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeletePlanVersionArgs = {
   where: PlanVersionWhereUniqueInput;
 };
-
 
 export type MutationDeletePlanVersionsArgs = {
   where: Array<PlanVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeletePlansArgs = {
   where: Array<PlanWhereUniqueInput>;
 };
-
 
 export type MutationDeletePoliciesArgs = {
   where: Array<PolicyWhereUniqueInput>;
 };
 
-
 export type MutationDeletePolicyArgs = {
   where: PolicyWhereUniqueInput;
 };
-
 
 export type MutationDeletePolicyDraftArgs = {
   where: PolicyDraftWhereUniqueInput;
 };
 
-
 export type MutationDeletePolicyDraftsArgs = {
   where: Array<PolicyDraftWhereUniqueInput>;
 };
-
 
 export type MutationDeletePolicyVersionArgs = {
   where: PolicyVersionWhereUniqueInput;
 };
 
-
 export type MutationDeletePolicyVersionsArgs = {
   where: Array<PolicyVersionWhereUniqueInput>;
 };
-
 
 export type MutationDeletePropositionArgs = {
   where: PropositionWhereUniqueInput;
 };
 
-
 export type MutationDeletePropositionsArgs = {
   where: Array<PropositionWhereUniqueInput>;
 };
-
 
 export type MutationDeletePublicNoticeArgs = {
   where: PublicNoticeWhereUniqueInput;
 };
 
-
 export type MutationDeletePublicNoticeDraftArgs = {
   where: PublicNoticeDraftWhereUniqueInput;
 };
-
 
 export type MutationDeletePublicNoticeDraftsArgs = {
   where: Array<PublicNoticeDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeletePublicNoticeVersionArgs = {
   where: PublicNoticeVersionWhereUniqueInput;
 };
-
 
 export type MutationDeletePublicNoticeVersionsArgs = {
   where: Array<PublicNoticeVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeletePublicNoticesArgs = {
   where: Array<PublicNoticeWhereUniqueInput>;
 };
-
 
 export type MutationDeleteRedirectArgs = {
   where: RedirectWhereUniqueInput;
 };
 
-
 export type MutationDeleteRedirectsArgs = {
   where: Array<RedirectWhereUniqueInput>;
 };
-
 
 export type MutationDeleteServiceArgs = {
   where: ServiceWhereUniqueInput;
 };
 
-
 export type MutationDeleteServiceDraftArgs = {
   where: ServiceDraftWhereUniqueInput;
 };
-
 
 export type MutationDeleteServiceDraftsArgs = {
   where: Array<ServiceDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeleteServiceVersionArgs = {
   where: ServiceVersionWhereUniqueInput;
 };
-
 
 export type MutationDeleteServiceVersionsArgs = {
   where: Array<ServiceVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteServicesArgs = {
   where: Array<ServiceWhereUniqueInput>;
 };
-
 
 export type MutationDeleteTagArgs = {
   where: TagWhereUniqueInput;
 };
 
-
 export type MutationDeleteTagsArgs = {
   where: Array<TagWhereUniqueInput>;
 };
-
 
 export type MutationDeleteTopicArgs = {
   where: TopicWhereUniqueInput;
 };
 
-
 export type MutationDeleteTopicDraftArgs = {
   where: TopicDraftWhereUniqueInput;
 };
-
 
 export type MutationDeleteTopicDraftsArgs = {
   where: Array<TopicDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeleteTopicVersionArgs = {
   where: TopicVersionWhereUniqueInput;
 };
-
 
 export type MutationDeleteTopicVersionsArgs = {
   where: Array<TopicVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteTopicsArgs = {
   where: Array<TopicWhereUniqueInput>;
 };
-
 
 export type MutationDeleteTrailArgs = {
   where: TrailWhereUniqueInput;
 };
 
-
 export type MutationDeleteTrailDraftArgs = {
   where: TrailDraftWhereUniqueInput;
 };
-
 
 export type MutationDeleteTrailDraftsArgs = {
   where: Array<TrailDraftWhereUniqueInput>;
 };
 
-
 export type MutationDeleteTrailVersionArgs = {
   where: TrailVersionWhereUniqueInput;
 };
-
 
 export type MutationDeleteTrailVersionsArgs = {
   where: Array<TrailVersionWhereUniqueInput>;
 };
 
-
 export type MutationDeleteTrailsArgs = {
   where: Array<TrailWhereUniqueInput>;
 };
-
 
 export type MutationDeleteUrlArgs = {
   where: UrlWhereUniqueInput;
 };
 
-
 export type MutationDeleteUrlsArgs = {
   where: Array<UrlWhereUniqueInput>;
 };
-
 
 export type MutationDeleteUserArgs = {
   where: UserWhereUniqueInput;
 };
 
-
 export type MutationDeleteUserGroupArgs = {
   where: UserGroupWhereUniqueInput;
 };
-
 
 export type MutationDeleteUserGroupsArgs = {
   where: Array<UserGroupWhereUniqueInput>;
 };
 
-
 export type MutationDeleteUsersArgs = {
   where: Array<UserWhereUniqueInput>;
 };
 
-
 export type MutationDeletefeaturedItemArgs = {
   where: FeaturedItemWhereUniqueInput;
 };
-
 
 export type MutationUpdateAlertArgs = {
   data: AlertUpdateInput;
   where: AlertWhereUniqueInput;
 };
 
-
 export type MutationUpdateAlertsArgs = {
   data: Array<AlertUpdateArgs>;
 };
-
 
 export type MutationUpdateAssemblyDistrictArgs = {
   data: AssemblyDistrictUpdateInput;
   where: AssemblyDistrictWhereUniqueInput;
 };
 
-
 export type MutationUpdateAssemblyDistrictDraftArgs = {
   data: AssemblyDistrictDraftUpdateInput;
   where: AssemblyDistrictDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateAssemblyDistrictDraftsArgs = {
   data: Array<AssemblyDistrictDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateAssemblyDistrictVersionArgs = {
   data: AssemblyDistrictVersionUpdateInput;
   where: AssemblyDistrictVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateAssemblyDistrictVersionsArgs = {
   data: Array<AssemblyDistrictVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateAssemblyDistrictsArgs = {
   data: Array<AssemblyDistrictUpdateArgs>;
 };
-
 
 export type MutationUpdateBoardArgs = {
   data: BoardUpdateInput;
   where: BoardWhereUniqueInput;
 };
 
-
 export type MutationUpdateBoardDraftArgs = {
   data: BoardDraftUpdateInput;
   where: BoardDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateBoardDraftsArgs = {
   data: Array<BoardDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateBoardPageArgs = {
   data: BoardPageUpdateInput;
   where?: BoardPageWhereUniqueInput;
 };
 
-
 export type MutationUpdateBoardPagesArgs = {
   data: Array<BoardPageUpdateArgs>;
 };
-
 
 export type MutationUpdateBoardVersionArgs = {
   data: BoardVersionUpdateInput;
   where: BoardVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateBoardVersionsArgs = {
   data: Array<BoardVersionUpdateArgs>;
 };
-
 
 export type MutationUpdateBoardsArgs = {
   data: Array<BoardUpdateArgs>;
 };
 
-
 export type MutationUpdateCommunitiesArgs = {
   data: Array<CommunityUpdateArgs>;
 };
-
 
 export type MutationUpdateCommunityArgs = {
   data: CommunityUpdateInput;
   where: CommunityWhereUniqueInput;
 };
 
-
 export type MutationUpdateCommunityDraftArgs = {
   data: CommunityDraftUpdateInput;
   where: CommunityDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateCommunityDraftsArgs = {
   data: Array<CommunityDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateCommunityVersionArgs = {
   data: CommunityVersionUpdateInput;
   where: CommunityVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateCommunityVersionsArgs = {
   data: Array<CommunityVersionUpdateArgs>;
 };
-
 
 export type MutationUpdateContactArgs = {
   data: ContactUpdateInput;
   where: ContactWhereUniqueInput;
 };
 
-
 export type MutationUpdateContactListItemArgs = {
   data: ContactListItemUpdateInput;
   where: ContactListItemWhereUniqueInput;
 };
 
-
 export type MutationUpdateContactListItemsArgs = {
   data: Array<ContactListItemUpdateArgs>;
 };
 
-
 export type MutationUpdateContactsArgs = {
   data: Array<ContactUpdateArgs>;
 };
-
 
 export type MutationUpdateDocumentArgs = {
   data: DocumentUpdateInput;
   where: DocumentWhereUniqueInput;
 };
 
-
 export type MutationUpdateDocumentCollectionArgs = {
   data: DocumentCollectionUpdateInput;
   where: DocumentCollectionWhereUniqueInput;
 };
 
-
 export type MutationUpdateDocumentCollectionsArgs = {
   data: Array<DocumentCollectionUpdateArgs>;
 };
-
 
 export type MutationUpdateDocumentListItemArgs = {
   data: DocumentListItemUpdateInput;
   where: DocumentListItemWhereUniqueInput;
 };
 
-
 export type MutationUpdateDocumentListItemsArgs = {
   data: Array<DocumentListItemUpdateArgs>;
 };
 
-
 export type MutationUpdateDocumentsArgs = {
   data: Array<DocumentUpdateArgs>;
 };
-
 
 export type MutationUpdateEarlyVotingLocationArgs = {
   data: EarlyVotingLocationUpdateInput;
   where: EarlyVotingLocationWhereUniqueInput;
 };
 
-
 export type MutationUpdateEarlyVotingLocationsArgs = {
   data: Array<EarlyVotingLocationUpdateArgs>;
 };
-
 
 export type MutationUpdateElectionArgs = {
   data: ElectionUpdateInput;
   where: ElectionWhereUniqueInput;
 };
 
-
 export type MutationUpdateElectionDraftArgs = {
   data: ElectionDraftUpdateInput;
   where: ElectionDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateElectionDraftsArgs = {
   data: Array<ElectionDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateElectionResultArgs = {
   data: ElectionResultUpdateInput;
   where: ElectionResultWhereUniqueInput;
 };
 
-
 export type MutationUpdateElectionResultsArgs = {
   data: Array<ElectionResultUpdateArgs>;
 };
-
 
 export type MutationUpdateElectionVersionArgs = {
   data: ElectionVersionUpdateInput;
   where: ElectionVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateElectionVersionsArgs = {
   data: Array<ElectionVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateElectionsArgs = {
   data: Array<ElectionUpdateArgs>;
 };
-
 
 export type MutationUpdateElectionsPageArgs = {
   data: ElectionsPageUpdateInput;
   where?: ElectionsPageWhereUniqueInput;
 };
 
-
 export type MutationUpdateElectionsPagesArgs = {
   data: Array<ElectionsPageUpdateArgs>;
 };
-
 
 export type MutationUpdateEventArgs = {
   data: EventUpdateInput;
   where: EventWhereUniqueInput;
 };
 
-
 export type MutationUpdateEventDraftArgs = {
   data: EventDraftUpdateInput;
   where: EventDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateEventDraftsArgs = {
   data: Array<EventDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateEventVersionArgs = {
   data: EventVersionUpdateInput;
   where: EventVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateEventVersionsArgs = {
   data: Array<EventVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateEventsArgs = {
   data: Array<EventUpdateArgs>;
 };
-
 
 export type MutationUpdateExternalLinkArgs = {
   data: ExternalLinkUpdateInput;
   where: ExternalLinkWhereUniqueInput;
 };
 
-
 export type MutationUpdateExternalLinksArgs = {
   data: Array<ExternalLinkUpdateArgs>;
 };
 
-
 export type MutationUpdateFacilitiesArgs = {
   data: Array<FacilityUpdateArgs>;
 };
-
 
 export type MutationUpdateFacilityArgs = {
   data: FacilityUpdateInput;
   where: FacilityWhereUniqueInput;
 };
 
-
 export type MutationUpdateFacilityDraftArgs = {
   data: FacilityDraftUpdateInput;
   where: FacilityDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateFacilityDraftsArgs = {
   data: Array<FacilityDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateFacilityListItemArgs = {
   data: FacilityListItemUpdateInput;
   where: FacilityListItemWhereUniqueInput;
 };
 
-
 export type MutationUpdateFacilityListItemsArgs = {
   data: Array<FacilityListItemUpdateArgs>;
 };
-
 
 export type MutationUpdateFacilityVersionArgs = {
   data: FacilityVersionUpdateInput;
   where: FacilityVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateFacilityVersionsArgs = {
   data: Array<FacilityVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateFeaturedItemsArgs = {
   data: Array<FeaturedItemUpdateArgs>;
 };
-
 
 export type MutationUpdateHighlightArgs = {
   data: HighlightUpdateInput;
   where: HighlightWhereUniqueInput;
 };
 
-
 export type MutationUpdateHighlightsArgs = {
   data: Array<HighlightUpdateArgs>;
 };
-
 
 export type MutationUpdateHomePageArgs = {
   data: HomePageUpdateInput;
   where?: HomePageWhereUniqueInput;
 };
 
-
 export type MutationUpdateHomePagesArgs = {
   data: Array<HomePageUpdateArgs>;
 };
-
 
 export type MutationUpdateImageArgs = {
   data: ImageUpdateInput;
   where: ImageWhereUniqueInput;
 };
 
-
 export type MutationUpdateImagesArgs = {
   data: Array<ImageUpdateArgs>;
 };
-
 
 export type MutationUpdateInternalLinkArgs = {
   data: InternalLinkUpdateInput;
   where: InternalLinkWhereUniqueInput;
 };
 
-
 export type MutationUpdateInternalLinksArgs = {
   data: Array<InternalLinkUpdateArgs>;
 };
-
 
 export type MutationUpdateLandingPageArgs = {
   data: LandingPageUpdateInput;
   where: LandingPageWhereUniqueInput;
 };
 
-
 export type MutationUpdateLandingPagesArgs = {
   data: Array<LandingPageUpdateArgs>;
 };
-
 
 export type MutationUpdateLocationArgs = {
   data: LocationUpdateInput;
   where: LocationWhereUniqueInput;
 };
 
-
 export type MutationUpdateLocationsArgs = {
   data: Array<LocationUpdateArgs>;
 };
-
 
 export type MutationUpdateOperatingHourArgs = {
   data: OperatingHourUpdateInput;
   where: OperatingHourWhereUniqueInput;
 };
 
-
 export type MutationUpdateOperatingHoursArgs = {
   data: Array<OperatingHourUpdateArgs>;
 };
-
 
 export type MutationUpdateOrgUnitArgs = {
   data: OrgUnitUpdateInput;
   where: OrgUnitWhereUniqueInput;
 };
 
-
 export type MutationUpdateOrgUnitDraftArgs = {
   data: OrgUnitDraftUpdateInput;
   where: OrgUnitDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateOrgUnitDraftsArgs = {
   data: Array<OrgUnitDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateOrgUnitVersionArgs = {
   data: OrgUnitVersionUpdateInput;
   where: OrgUnitVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateOrgUnitVersionsArgs = {
   data: Array<OrgUnitVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateOrgUnitsArgs = {
   data: Array<OrgUnitUpdateArgs>;
 };
-
 
 export type MutationUpdatePageViewArgs = {
   data: PageViewUpdateInput;
   where: PageViewWhereUniqueInput;
 };
 
-
 export type MutationUpdatePageViewsArgs = {
   data: Array<PageViewUpdateArgs>;
 };
-
 
 export type MutationUpdateParkArgs = {
   data: ParkUpdateInput;
   where: ParkWhereUniqueInput;
 };
 
-
 export type MutationUpdateParkDraftArgs = {
   data: ParkDraftUpdateInput;
   where: ParkDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateParkDraftsArgs = {
   data: Array<ParkDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateParkVersionArgs = {
   data: ParkVersionUpdateInput;
   where: ParkVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateParkVersionsArgs = {
   data: Array<ParkVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateParksArgs = {
   data: Array<ParkUpdateArgs>;
 };
-
 
 export type MutationUpdatePlanArgs = {
   data: PlanUpdateInput;
   where: PlanWhereUniqueInput;
 };
 
-
 export type MutationUpdatePlanCodeArgs = {
   data: PlanCodeUpdateInput;
   where: PlanCodeWhereUniqueInput;
 };
 
-
 export type MutationUpdatePlanCodesArgs = {
   data: Array<PlanCodeUpdateArgs>;
 };
-
 
 export type MutationUpdatePlanDocumentArgs = {
   data: PlanDocumentUpdateInput;
   where: PlanDocumentWhereUniqueInput;
 };
 
-
 export type MutationUpdatePlanDocumentsArgs = {
   data: Array<PlanDocumentUpdateArgs>;
 };
-
 
 export type MutationUpdatePlanDraftArgs = {
   data: PlanDraftUpdateInput;
   where: PlanDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdatePlanDraftsArgs = {
   data: Array<PlanDraftUpdateArgs>;
 };
-
 
 export type MutationUpdatePlanVersionArgs = {
   data: PlanVersionUpdateInput;
   where: PlanVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdatePlanVersionsArgs = {
   data: Array<PlanVersionUpdateArgs>;
 };
-
 
 export type MutationUpdatePlansArgs = {
   data: Array<PlanUpdateArgs>;
 };
 
-
 export type MutationUpdatePoliciesArgs = {
   data: Array<PolicyUpdateArgs>;
 };
-
 
 export type MutationUpdatePolicyArgs = {
   data: PolicyUpdateInput;
   where: PolicyWhereUniqueInput;
 };
 
-
 export type MutationUpdatePolicyDraftArgs = {
   data: PolicyDraftUpdateInput;
   where: PolicyDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdatePolicyDraftsArgs = {
   data: Array<PolicyDraftUpdateArgs>;
 };
-
 
 export type MutationUpdatePolicyVersionArgs = {
   data: PolicyVersionUpdateInput;
   where: PolicyVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdatePolicyVersionsArgs = {
   data: Array<PolicyVersionUpdateArgs>;
 };
-
 
 export type MutationUpdatePropositionArgs = {
   data: PropositionUpdateInput;
   where: PropositionWhereUniqueInput;
 };
 
-
 export type MutationUpdatePropositionsArgs = {
   data: Array<PropositionUpdateArgs>;
 };
-
 
 export type MutationUpdatePublicNoticeArgs = {
   data: PublicNoticeUpdateInput;
   where: PublicNoticeWhereUniqueInput;
 };
 
-
 export type MutationUpdatePublicNoticeDraftArgs = {
   data: PublicNoticeDraftUpdateInput;
   where: PublicNoticeDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdatePublicNoticeDraftsArgs = {
   data: Array<PublicNoticeDraftUpdateArgs>;
 };
-
 
 export type MutationUpdatePublicNoticeVersionArgs = {
   data: PublicNoticeVersionUpdateInput;
   where: PublicNoticeVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdatePublicNoticeVersionsArgs = {
   data: Array<PublicNoticeVersionUpdateArgs>;
 };
 
-
 export type MutationUpdatePublicNoticesArgs = {
   data: Array<PublicNoticeUpdateArgs>;
 };
-
 
 export type MutationUpdateRedirectArgs = {
   data: RedirectUpdateInput;
   where: RedirectWhereUniqueInput;
 };
 
-
 export type MutationUpdateRedirectsArgs = {
   data: Array<RedirectUpdateArgs>;
 };
-
 
 export type MutationUpdateServiceArgs = {
   data: ServiceUpdateInput;
   where: ServiceWhereUniqueInput;
 };
 
-
 export type MutationUpdateServiceDraftArgs = {
   data: ServiceDraftUpdateInput;
   where: ServiceDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateServiceDraftsArgs = {
   data: Array<ServiceDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateServiceVersionArgs = {
   data: ServiceVersionUpdateInput;
   where: ServiceVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateServiceVersionsArgs = {
   data: Array<ServiceVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateServicesArgs = {
   data: Array<ServiceUpdateArgs>;
 };
-
 
 export type MutationUpdateTagArgs = {
   data: TagUpdateInput;
   where: TagWhereUniqueInput;
 };
 
-
 export type MutationUpdateTagsArgs = {
   data: Array<TagUpdateArgs>;
 };
-
 
 export type MutationUpdateTopicArgs = {
   data: TopicUpdateInput;
   where: TopicWhereUniqueInput;
 };
 
-
 export type MutationUpdateTopicDraftArgs = {
   data: TopicDraftUpdateInput;
   where: TopicDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateTopicDraftsArgs = {
   data: Array<TopicDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateTopicVersionArgs = {
   data: TopicVersionUpdateInput;
   where: TopicVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateTopicVersionsArgs = {
   data: Array<TopicVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateTopicsArgs = {
   data: Array<TopicUpdateArgs>;
 };
-
 
 export type MutationUpdateTrailArgs = {
   data: TrailUpdateInput;
   where: TrailWhereUniqueInput;
 };
 
-
 export type MutationUpdateTrailDraftArgs = {
   data: TrailDraftUpdateInput;
   where: TrailDraftWhereUniqueInput;
 };
 
-
 export type MutationUpdateTrailDraftsArgs = {
   data: Array<TrailDraftUpdateArgs>;
 };
-
 
 export type MutationUpdateTrailVersionArgs = {
   data: TrailVersionUpdateInput;
   where: TrailVersionWhereUniqueInput;
 };
 
-
 export type MutationUpdateTrailVersionsArgs = {
   data: Array<TrailVersionUpdateArgs>;
 };
 
-
 export type MutationUpdateTrailsArgs = {
   data: Array<TrailUpdateArgs>;
 };
-
 
 export type MutationUpdateUrlArgs = {
   data: UrlUpdateInput;
   where: UrlWhereUniqueInput;
 };
 
-
 export type MutationUpdateUrlsArgs = {
   data: Array<UrlUpdateArgs>;
 };
-
 
 export type MutationUpdateUserArgs = {
   data: UserUpdateInput;
   where: UserWhereUniqueInput;
 };
 
-
 export type MutationUpdateUserGroupArgs = {
   data: UserGroupUpdateInput;
   where: UserGroupWhereUniqueInput;
 };
 
-
 export type MutationUpdateUserGroupsArgs = {
   data: Array<UserGroupUpdateArgs>;
 };
 
-
 export type MutationUpdateUsersArgs = {
   data: Array<UserUpdateArgs>;
 };
-
 
 export type MutationUpdatefeaturedItemArgs = {
   data: FeaturedItemUpdateInput;
@@ -12482,12 +11534,12 @@ export type MutationUpdatefeaturedItemArgs = {
 
 export enum MyOrderDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export enum MyQueryMode {
   Default = 'default',
-  Insensitive = 'insensitive'
+  Insensitive = 'insensitive',
 }
 
 export type MyStringFilter = {
@@ -12599,76 +11651,79 @@ export type OperatingHourWhereUniqueInput = {
 
 export enum OrderDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
-export type OrgUnit = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'OrgUnit';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  children?: Maybe<Array<OrgUnit>>;
-  childrenCount?: Maybe<Scalars['Int']['output']>;
-  childrenLabel?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<OrgUnitVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<OrgUnitDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  icon?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parent?: Maybe<OrgUnit>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  showPage?: Maybe<Scalars['String']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<OrgUnitVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type OrgUnit = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'OrgUnit';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    children?: Maybe<Array<OrgUnit>>;
+    childrenCount?: Maybe<Scalars['Int']['output']>;
+    childrenLabel?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<OrgUnitVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<OrgUnitDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    icon?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parent?: Maybe<OrgUnit>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    showPage?: Maybe<Scalars['String']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    type?: Maybe<Scalars['String']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<OrgUnitVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type OrgUnitActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -12678,11 +11733,9 @@ export type OrgUnitActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type OrgUnitActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type OrgUnitAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -12692,11 +11745,9 @@ export type OrgUnitAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type OrgUnitAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type OrgUnitBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -12706,11 +11757,9 @@ export type OrgUnitBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type OrgUnitBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type OrgUnitChildrenArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -12720,11 +11769,9 @@ export type OrgUnitChildrenArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type OrgUnitChildrenCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type OrgUnitCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -12734,11 +11781,9 @@ export type OrgUnitCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type OrgUnitCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type OrgUnitContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -12748,11 +11793,9 @@ export type OrgUnitContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type OrgUnitContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type OrgUnitDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -12762,11 +11805,9 @@ export type OrgUnitDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type OrgUnitDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type OrgUnitDraftsArgs = {
   cursor?: InputMaybe<OrgUnitDraftWhereUniqueInput>;
@@ -12776,11 +11817,9 @@ export type OrgUnitDraftsArgs = {
   where?: OrgUnitDraftWhereInput;
 };
 
-
 export type OrgUnitDraftsCountArgs = {
   where?: OrgUnitDraftWhereInput;
 };
-
 
 export type OrgUnitEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -12790,11 +11829,9 @@ export type OrgUnitEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type OrgUnitEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type OrgUnitFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -12804,11 +11841,9 @@ export type OrgUnitFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type OrgUnitFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type OrgUnitOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -12818,11 +11853,9 @@ export type OrgUnitOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type OrgUnitOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type OrgUnitParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -12832,11 +11865,9 @@ export type OrgUnitParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type OrgUnitParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type OrgUnitPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -12846,11 +11877,9 @@ export type OrgUnitPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type OrgUnitPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type OrgUnitPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -12860,11 +11889,9 @@ export type OrgUnitPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type OrgUnitPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type OrgUnitServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -12874,11 +11901,9 @@ export type OrgUnitServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type OrgUnitServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type OrgUnitTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -12888,11 +11913,9 @@ export type OrgUnitTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type OrgUnitTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type OrgUnitTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -12902,11 +11925,9 @@ export type OrgUnitTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type OrgUnitTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type OrgUnitTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -12916,11 +11937,9 @@ export type OrgUnitTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type OrgUnitTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type OrgUnitUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -12930,11 +11949,9 @@ export type OrgUnitUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type OrgUnitUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type OrgUnitVersionsArgs = {
   cursor?: InputMaybe<OrgUnitVersionWhereUniqueInput>;
@@ -12943,7 +11960,6 @@ export type OrgUnitVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: OrgUnitVersionWhereInput;
 };
-
 
 export type OrgUnitVersionsCountArgs = {
   where?: OrgUnitVersionWhereInput;
@@ -13053,7 +12069,6 @@ export type OrgUnitDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type OrgUnitDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -13062,11 +12077,9 @@ export type OrgUnitDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type OrgUnitDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type OrgUnitDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -13076,11 +12089,9 @@ export type OrgUnitDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type OrgUnitDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type OrgUnitDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -13090,11 +12101,9 @@ export type OrgUnitDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type OrgUnitDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type OrgUnitDraftChildrenArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -13104,11 +12113,9 @@ export type OrgUnitDraftChildrenArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type OrgUnitDraftChildrenCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type OrgUnitDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -13118,11 +12125,9 @@ export type OrgUnitDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type OrgUnitDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type OrgUnitDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -13132,11 +12137,9 @@ export type OrgUnitDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type OrgUnitDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type OrgUnitDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -13146,11 +12149,9 @@ export type OrgUnitDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type OrgUnitDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type OrgUnitDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -13160,11 +12161,9 @@ export type OrgUnitDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type OrgUnitDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type OrgUnitDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -13174,11 +12173,9 @@ export type OrgUnitDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type OrgUnitDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type OrgUnitDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -13188,11 +12185,9 @@ export type OrgUnitDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type OrgUnitDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type OrgUnitDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -13202,11 +12197,9 @@ export type OrgUnitDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type OrgUnitDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type OrgUnitDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -13216,11 +12209,9 @@ export type OrgUnitDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type OrgUnitDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type OrgUnitDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -13230,11 +12221,9 @@ export type OrgUnitDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type OrgUnitDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type OrgUnitDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -13244,11 +12233,9 @@ export type OrgUnitDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type OrgUnitDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type OrgUnitDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -13258,11 +12245,9 @@ export type OrgUnitDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type OrgUnitDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type OrgUnitDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -13272,11 +12257,9 @@ export type OrgUnitDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type OrgUnitDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type OrgUnitDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -13286,11 +12269,9 @@ export type OrgUnitDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type OrgUnitDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type OrgUnitDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -13299,7 +12280,6 @@ export type OrgUnitDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type OrgUnitDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -13628,7 +12608,6 @@ export type OrgUnitVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type OrgUnitVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -13637,11 +12616,9 @@ export type OrgUnitVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type OrgUnitVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type OrgUnitVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -13651,11 +12628,9 @@ export type OrgUnitVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type OrgUnitVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type OrgUnitVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -13665,11 +12640,9 @@ export type OrgUnitVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type OrgUnitVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type OrgUnitVersionChildrenArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -13679,11 +12652,9 @@ export type OrgUnitVersionChildrenArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type OrgUnitVersionChildrenCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type OrgUnitVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -13693,11 +12664,9 @@ export type OrgUnitVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type OrgUnitVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type OrgUnitVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -13707,11 +12676,9 @@ export type OrgUnitVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type OrgUnitVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type OrgUnitVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -13721,11 +12688,9 @@ export type OrgUnitVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type OrgUnitVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type OrgUnitVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -13735,11 +12700,9 @@ export type OrgUnitVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type OrgUnitVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type OrgUnitVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -13749,11 +12712,9 @@ export type OrgUnitVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type OrgUnitVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type OrgUnitVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -13763,11 +12724,9 @@ export type OrgUnitVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type OrgUnitVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type OrgUnitVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -13777,11 +12736,9 @@ export type OrgUnitVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type OrgUnitVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type OrgUnitVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -13791,11 +12748,9 @@ export type OrgUnitVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type OrgUnitVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type OrgUnitVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -13805,11 +12760,9 @@ export type OrgUnitVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type OrgUnitVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type OrgUnitVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -13819,11 +12772,9 @@ export type OrgUnitVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type OrgUnitVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type OrgUnitVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -13833,11 +12784,9 @@ export type OrgUnitVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type OrgUnitVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type OrgUnitVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -13847,11 +12796,9 @@ export type OrgUnitVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type OrgUnitVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type OrgUnitVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -13861,11 +12808,9 @@ export type OrgUnitVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type OrgUnitVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type OrgUnitVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -13874,7 +12819,6 @@ export type OrgUnitVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type OrgUnitVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -14111,7 +13055,19 @@ export type OrgUnitWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Page = AssemblyDistrict | Board | Community | Facility | OrgUnit | Park | Plan | Policy | PublicNotice | Service | Topic | Trail;
+export type Page =
+  | AssemblyDistrict
+  | Board
+  | Community
+  | Facility
+  | OrgUnit
+  | Park
+  | Plan
+  | Policy
+  | PublicNotice
+  | Service
+  | Topic
+  | Trail;
 
 export type PageView = {
   __typename?: 'PageView';
@@ -14132,7 +13088,20 @@ export type PageViewCreateInput = {
   views?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type PageViewItemUnion = AssemblyDistrict | Board | Community | ElectionsPage | Facility | OrgUnit | Park | Plan | PublicNotice | Service | Topic | Trail | Url;
+export type PageViewItemUnion =
+  | AssemblyDistrict
+  | Board
+  | Community
+  | ElectionsPage
+  | Facility
+  | OrgUnit
+  | Park
+  | Plan
+  | PublicNotice
+  | Service
+  | Topic
+  | Trail
+  | Url;
 
 export type PageViewOrderByInput = {
   date?: InputMaybe<OrderDirection>;
@@ -14173,65 +13142,68 @@ export type PageViewWhereUniqueInput = {
   pageKey?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Park = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Park';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  address?: Maybe<Location>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<ParkVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<ParkDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  hours?: Maybe<Array<OperatingHour>>;
-  hoursCount?: Maybe<Scalars['Int']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<ParkVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Park = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Park';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    address?: Maybe<Location>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<ParkVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<ParkDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    hours?: Maybe<Array<OperatingHour>>;
+    hoursCount?: Maybe<Scalars['Int']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<ParkVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type ParkActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -14241,11 +13213,9 @@ export type ParkActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type ParkActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type ParkAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -14255,11 +13225,9 @@ export type ParkAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type ParkAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type ParkCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -14269,11 +13237,9 @@ export type ParkCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type ParkCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type ParkContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -14283,11 +13249,9 @@ export type ParkContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type ParkContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type ParkDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -14297,11 +13261,9 @@ export type ParkDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ParkDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ParkDraftsArgs = {
   cursor?: InputMaybe<ParkDraftWhereUniqueInput>;
@@ -14311,11 +13273,9 @@ export type ParkDraftsArgs = {
   where?: ParkDraftWhereInput;
 };
 
-
 export type ParkDraftsCountArgs = {
   where?: ParkDraftWhereInput;
 };
-
 
 export type ParkEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -14325,11 +13285,9 @@ export type ParkEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type ParkEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type ParkFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -14339,11 +13297,9 @@ export type ParkFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type ParkFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type ParkHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
@@ -14353,11 +13309,9 @@ export type ParkHoursArgs = {
   where?: OperatingHourWhereInput;
 };
 
-
 export type ParkHoursCountArgs = {
   where?: OperatingHourWhereInput;
 };
-
 
 export type ParkOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -14367,11 +13321,9 @@ export type ParkOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type ParkOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type ParkPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -14381,11 +13333,9 @@ export type ParkPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type ParkPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type ParkPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -14395,11 +13345,9 @@ export type ParkPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type ParkPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type ParkServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -14409,11 +13357,9 @@ export type ParkServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type ParkServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type ParkTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -14423,11 +13369,9 @@ export type ParkTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ParkTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ParkTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -14437,11 +13381,9 @@ export type ParkTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type ParkTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type ParkTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -14451,11 +13393,9 @@ export type ParkTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type ParkTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type ParkUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -14465,11 +13405,9 @@ export type ParkUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type ParkUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type ParkVersionsArgs = {
   cursor?: InputMaybe<ParkVersionWhereUniqueInput>;
@@ -14478,7 +13416,6 @@ export type ParkVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: ParkVersionWhereInput;
 };
-
 
 export type ParkVersionsCountArgs = {
   where?: ParkVersionWhereInput;
@@ -14574,7 +13511,6 @@ export type ParkDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type ParkDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -14583,11 +13519,9 @@ export type ParkDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type ParkDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type ParkDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -14597,11 +13531,9 @@ export type ParkDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type ParkDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type ParkDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -14611,11 +13543,9 @@ export type ParkDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type ParkDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type ParkDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -14625,11 +13555,9 @@ export type ParkDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type ParkDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type ParkDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -14639,11 +13567,9 @@ export type ParkDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ParkDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ParkDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -14653,11 +13579,9 @@ export type ParkDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type ParkDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type ParkDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -14667,11 +13591,9 @@ export type ParkDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type ParkDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type ParkDraftHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
@@ -14681,11 +13603,9 @@ export type ParkDraftHoursArgs = {
   where?: OperatingHourWhereInput;
 };
 
-
 export type ParkDraftHoursCountArgs = {
   where?: OperatingHourWhereInput;
 };
-
 
 export type ParkDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -14695,11 +13615,9 @@ export type ParkDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type ParkDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type ParkDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -14709,11 +13627,9 @@ export type ParkDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type ParkDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type ParkDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -14723,11 +13639,9 @@ export type ParkDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type ParkDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type ParkDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -14737,11 +13651,9 @@ export type ParkDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type ParkDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type ParkDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -14751,11 +13663,9 @@ export type ParkDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ParkDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ParkDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -14765,11 +13675,9 @@ export type ParkDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type ParkDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type ParkDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -14779,11 +13687,9 @@ export type ParkDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type ParkDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type ParkDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -14792,7 +13698,6 @@ export type ParkDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type ParkDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -15081,7 +13986,6 @@ export type ParkVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type ParkVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -15090,11 +13994,9 @@ export type ParkVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type ParkVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type ParkVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -15104,11 +14006,9 @@ export type ParkVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type ParkVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type ParkVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -15118,11 +14018,9 @@ export type ParkVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type ParkVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type ParkVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -15132,11 +14030,9 @@ export type ParkVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type ParkVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type ParkVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -15146,11 +14042,9 @@ export type ParkVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ParkVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ParkVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -15160,11 +14054,9 @@ export type ParkVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type ParkVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type ParkVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -15174,11 +14066,9 @@ export type ParkVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type ParkVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type ParkVersionHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
@@ -15188,11 +14078,9 @@ export type ParkVersionHoursArgs = {
   where?: OperatingHourWhereInput;
 };
 
-
 export type ParkVersionHoursCountArgs = {
   where?: OperatingHourWhereInput;
 };
-
 
 export type ParkVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -15202,11 +14090,9 @@ export type ParkVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type ParkVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type ParkVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -15216,11 +14102,9 @@ export type ParkVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type ParkVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type ParkVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -15230,11 +14114,9 @@ export type ParkVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type ParkVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type ParkVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -15244,11 +14126,9 @@ export type ParkVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type ParkVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type ParkVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -15258,11 +14138,9 @@ export type ParkVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ParkVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ParkVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -15272,11 +14150,9 @@ export type ParkVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type ParkVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type ParkVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -15286,11 +14162,9 @@ export type ParkVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type ParkVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type ParkVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -15299,7 +14173,6 @@ export type ParkVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type ParkVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -15517,78 +14390,81 @@ export type PasswordState = {
   isSet: Scalars['Boolean']['output'];
 };
 
-export type Plan = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Plan';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  autoRedirectToExternalWebsite?: Maybe<Scalars['Int']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  code?: Maybe<Array<PlanCode>>;
-  codeCount?: Maybe<Scalars['Int']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  components?: Maybe<Array<Plan>>;
-  componentsCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentDocument?: Maybe<PlanDocument>;
-  currentVersion?: Maybe<PlanVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  draftDocument?: Maybe<PlanDocument>;
-  drafts?: Maybe<Array<PlanDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  effort?: Maybe<ExternalLink>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parent?: Maybe<Plan>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  pastDocuments?: Maybe<Array<PlanDocument>>;
-  pastDocumentsCount?: Maybe<Scalars['Int']['output']>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<PlanVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Plan = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Plan';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    autoRedirectToExternalWebsite?: Maybe<Scalars['Int']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    code?: Maybe<Array<PlanCode>>;
+    codeCount?: Maybe<Scalars['Int']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    components?: Maybe<Array<Plan>>;
+    componentsCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentDocument?: Maybe<PlanDocument>;
+    currentVersion?: Maybe<PlanVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    draftDocument?: Maybe<PlanDocument>;
+    drafts?: Maybe<Array<PlanDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    effort?: Maybe<ExternalLink>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parent?: Maybe<Plan>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    pastDocuments?: Maybe<Array<PlanDocument>>;
+    pastDocumentsCount?: Maybe<Scalars['Int']['output']>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    type?: Maybe<Scalars['String']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<PlanVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type PlanActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -15598,11 +14474,9 @@ export type PlanActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PlanActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PlanAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -15612,11 +14486,9 @@ export type PlanAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type PlanAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type PlanBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -15626,11 +14498,9 @@ export type PlanBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type PlanBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type PlanCodeArgs = {
   cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
@@ -15640,11 +14510,9 @@ export type PlanCodeArgs = {
   where?: PlanCodeWhereInput;
 };
 
-
 export type PlanCodeCountArgs = {
   where?: PlanCodeWhereInput;
 };
-
 
 export type PlanCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -15654,11 +14522,9 @@ export type PlanCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type PlanCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type PlanComponentsArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -15668,11 +14534,9 @@ export type PlanComponentsArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PlanComponentsCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PlanContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -15682,11 +14546,9 @@ export type PlanContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PlanContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PlanDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -15696,11 +14558,9 @@ export type PlanDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PlanDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PlanDraftsArgs = {
   cursor?: InputMaybe<PlanDraftWhereUniqueInput>;
@@ -15710,11 +14570,9 @@ export type PlanDraftsArgs = {
   where?: PlanDraftWhereInput;
 };
 
-
 export type PlanDraftsCountArgs = {
   where?: PlanDraftWhereInput;
 };
-
 
 export type PlanEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -15724,11 +14582,9 @@ export type PlanEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type PlanEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type PlanFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -15738,11 +14594,9 @@ export type PlanFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type PlanFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type PlanOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -15752,11 +14606,9 @@ export type PlanOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type PlanOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type PlanParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -15766,11 +14618,9 @@ export type PlanParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type PlanParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type PlanPastDocumentsArgs = {
   cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
@@ -15780,11 +14630,9 @@ export type PlanPastDocumentsArgs = {
   where?: PlanDocumentWhereInput;
 };
 
-
 export type PlanPastDocumentsCountArgs = {
   where?: PlanDocumentWhereInput;
 };
-
 
 export type PlanPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -15794,11 +14642,9 @@ export type PlanPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PlanPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PlanPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -15808,11 +14654,9 @@ export type PlanPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type PlanPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type PlanServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -15822,11 +14666,9 @@ export type PlanServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type PlanServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type PlanTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -15836,11 +14678,9 @@ export type PlanTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PlanTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PlanTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -15850,11 +14690,9 @@ export type PlanTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type PlanTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type PlanTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -15864,11 +14702,9 @@ export type PlanTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type PlanTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type PlanUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -15878,11 +14714,9 @@ export type PlanUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type PlanUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type PlanVersionsArgs = {
   cursor?: InputMaybe<PlanVersionWhereUniqueInput>;
@@ -15891,7 +14725,6 @@ export type PlanVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: PlanVersionWhereInput;
 };
-
 
 export type PlanVersionsCountArgs = {
   where?: PlanVersionWhereInput;
@@ -16147,7 +14980,6 @@ export type PlanDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type PlanDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -16156,11 +14988,9 @@ export type PlanDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PlanDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PlanDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -16170,11 +15000,9 @@ export type PlanDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type PlanDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type PlanDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -16184,11 +15012,9 @@ export type PlanDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type PlanDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type PlanDraftCodeArgs = {
   cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
@@ -16198,11 +15024,9 @@ export type PlanDraftCodeArgs = {
   where?: PlanCodeWhereInput;
 };
 
-
 export type PlanDraftCodeCountArgs = {
   where?: PlanCodeWhereInput;
 };
-
 
 export type PlanDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -16212,11 +15036,9 @@ export type PlanDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type PlanDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type PlanDraftComponentsArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -16226,11 +15048,9 @@ export type PlanDraftComponentsArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PlanDraftComponentsCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PlanDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -16240,11 +15060,9 @@ export type PlanDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PlanDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PlanDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -16254,11 +15072,9 @@ export type PlanDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PlanDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PlanDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -16268,11 +15084,9 @@ export type PlanDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type PlanDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type PlanDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -16282,11 +15096,9 @@ export type PlanDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type PlanDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type PlanDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -16296,11 +15108,9 @@ export type PlanDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type PlanDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type PlanDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -16310,11 +15120,9 @@ export type PlanDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type PlanDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type PlanDraftPastDocumentsArgs = {
   cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
@@ -16324,11 +15132,9 @@ export type PlanDraftPastDocumentsArgs = {
   where?: PlanDocumentWhereInput;
 };
 
-
 export type PlanDraftPastDocumentsCountArgs = {
   where?: PlanDocumentWhereInput;
 };
-
 
 export type PlanDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -16338,11 +15144,9 @@ export type PlanDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PlanDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PlanDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -16352,11 +15156,9 @@ export type PlanDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type PlanDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type PlanDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -16366,11 +15168,9 @@ export type PlanDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type PlanDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type PlanDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -16380,11 +15180,9 @@ export type PlanDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PlanDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PlanDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -16394,11 +15192,9 @@ export type PlanDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type PlanDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type PlanDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -16408,11 +15204,9 @@ export type PlanDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type PlanDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type PlanDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -16421,7 +15215,6 @@ export type PlanDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type PlanDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -16763,7 +15556,6 @@ export type PlanVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type PlanVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -16772,11 +15564,9 @@ export type PlanVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PlanVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PlanVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -16786,11 +15576,9 @@ export type PlanVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type PlanVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type PlanVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -16800,11 +15588,9 @@ export type PlanVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type PlanVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type PlanVersionCodeArgs = {
   cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
@@ -16814,11 +15600,9 @@ export type PlanVersionCodeArgs = {
   where?: PlanCodeWhereInput;
 };
 
-
 export type PlanVersionCodeCountArgs = {
   where?: PlanCodeWhereInput;
 };
-
 
 export type PlanVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -16828,11 +15612,9 @@ export type PlanVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type PlanVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type PlanVersionComponentsArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -16842,11 +15624,9 @@ export type PlanVersionComponentsArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PlanVersionComponentsCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PlanVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -16856,11 +15636,9 @@ export type PlanVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PlanVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PlanVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -16870,11 +15648,9 @@ export type PlanVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PlanVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PlanVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -16884,11 +15660,9 @@ export type PlanVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type PlanVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type PlanVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -16898,11 +15672,9 @@ export type PlanVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type PlanVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type PlanVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -16912,11 +15684,9 @@ export type PlanVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type PlanVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type PlanVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -16926,11 +15696,9 @@ export type PlanVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type PlanVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type PlanVersionPastDocumentsArgs = {
   cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
@@ -16940,11 +15708,9 @@ export type PlanVersionPastDocumentsArgs = {
   where?: PlanDocumentWhereInput;
 };
 
-
 export type PlanVersionPastDocumentsCountArgs = {
   where?: PlanDocumentWhereInput;
 };
-
 
 export type PlanVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -16954,11 +15720,9 @@ export type PlanVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PlanVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PlanVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -16968,11 +15732,9 @@ export type PlanVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type PlanVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type PlanVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -16982,11 +15744,9 @@ export type PlanVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type PlanVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type PlanVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -16996,11 +15756,9 @@ export type PlanVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PlanVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PlanVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -17010,11 +15768,9 @@ export type PlanVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type PlanVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type PlanVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -17024,11 +15780,9 @@ export type PlanVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type PlanVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type PlanVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -17037,7 +15791,6 @@ export type PlanVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type PlanVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -17284,43 +16037,45 @@ export type PlanWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Policy = BasePage & BasePageWithActions & BasePageWithSlug & WithTitle & {
-  __typename?: 'Policy';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<PolicyVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<PolicyDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  owner?: Maybe<User>;
-  policies?: Maybe<Array<Policy>>;
-  policiesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<PolicyVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Policy = BasePage &
+  BasePageWithActions &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Policy';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<PolicyVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<PolicyDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    owner?: Maybe<User>;
+    policies?: Maybe<Array<Policy>>;
+    policiesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<PolicyVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type PolicyActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -17330,11 +16085,9 @@ export type PolicyActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PolicyActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PolicyContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -17344,11 +16097,9 @@ export type PolicyContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PolicyContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PolicyDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -17358,11 +16109,9 @@ export type PolicyDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PolicyDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PolicyDraftsArgs = {
   cursor?: InputMaybe<PolicyDraftWhereUniqueInput>;
@@ -17372,11 +16121,9 @@ export type PolicyDraftsArgs = {
   where?: PolicyDraftWhereInput;
 };
 
-
 export type PolicyDraftsCountArgs = {
   where?: PolicyDraftWhereInput;
 };
-
 
 export type PolicyPoliciesArgs = {
   cursor?: InputMaybe<PolicyWhereUniqueInput>;
@@ -17386,11 +16133,9 @@ export type PolicyPoliciesArgs = {
   where?: PolicyWhereInput;
 };
 
-
 export type PolicyPoliciesCountArgs = {
   where?: PolicyWhereInput;
 };
-
 
 export type PolicyTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -17400,11 +16145,9 @@ export type PolicyTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PolicyTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PolicyUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -17414,11 +16157,9 @@ export type PolicyUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type PolicyUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type PolicyVersionsArgs = {
   cursor?: InputMaybe<PolicyVersionWhereUniqueInput>;
@@ -17427,7 +16168,6 @@ export type PolicyVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: PolicyVersionWhereInput;
 };
-
 
 export type PolicyVersionsCountArgs = {
   where?: PolicyVersionWhereInput;
@@ -17489,7 +16229,6 @@ export type PolicyDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type PolicyDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -17498,11 +16237,9 @@ export type PolicyDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PolicyDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PolicyDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -17512,11 +16249,9 @@ export type PolicyDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PolicyDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PolicyDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -17526,11 +16261,9 @@ export type PolicyDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PolicyDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PolicyDraftPoliciesArgs = {
   cursor?: InputMaybe<PolicyWhereUniqueInput>;
@@ -17540,11 +16273,9 @@ export type PolicyDraftPoliciesArgs = {
   where?: PolicyWhereInput;
 };
 
-
 export type PolicyDraftPoliciesCountArgs = {
   where?: PolicyWhereInput;
 };
-
 
 export type PolicyDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -17554,11 +16285,9 @@ export type PolicyDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PolicyDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PolicyDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -17567,7 +16296,6 @@ export type PolicyDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type PolicyDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -17786,7 +16514,6 @@ export type PolicyVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type PolicyVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -17795,11 +16522,9 @@ export type PolicyVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PolicyVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PolicyVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -17809,11 +16534,9 @@ export type PolicyVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PolicyVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PolicyVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -17823,11 +16546,9 @@ export type PolicyVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PolicyVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PolicyVersionPoliciesArgs = {
   cursor?: InputMaybe<PolicyWhereUniqueInput>;
@@ -17837,11 +16558,9 @@ export type PolicyVersionPoliciesArgs = {
   where?: PolicyWhereInput;
 };
 
-
 export type PolicyVersionPoliciesCountArgs = {
   where?: PolicyWhereInput;
 };
-
 
 export type PolicyVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -17851,11 +16570,9 @@ export type PolicyVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PolicyVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PolicyVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -17864,7 +16581,6 @@ export type PolicyVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type PolicyVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -18097,70 +16813,73 @@ export type PropositionWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type PublicNotice = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'PublicNotice';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<PublicNoticeVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<PublicNoticeDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  effectiveDate?: Maybe<Scalars['DateTime']['output']>;
-  endDate?: Maybe<Scalars['DateTime']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  type?: Maybe<Scalars['String']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  urgency?: Maybe<Scalars['Int']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<PublicNoticeVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type PublicNotice = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'PublicNotice';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<PublicNoticeVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<PublicNoticeDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    effectiveDate?: Maybe<Scalars['DateTime']['output']>;
+    endDate?: Maybe<Scalars['DateTime']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    type?: Maybe<Scalars['String']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    urgency?: Maybe<Scalars['Int']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<PublicNoticeVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type PublicNoticeActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -18170,11 +16889,9 @@ export type PublicNoticeActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PublicNoticeActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PublicNoticeAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -18184,11 +16901,9 @@ export type PublicNoticeAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type PublicNoticeAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type PublicNoticeBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -18198,11 +16913,9 @@ export type PublicNoticeBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type PublicNoticeBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type PublicNoticeCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -18212,11 +16925,9 @@ export type PublicNoticeCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type PublicNoticeCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type PublicNoticeContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -18226,11 +16937,9 @@ export type PublicNoticeContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PublicNoticeContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PublicNoticeDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -18240,11 +16949,9 @@ export type PublicNoticeDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PublicNoticeDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PublicNoticeDraftsArgs = {
   cursor?: InputMaybe<PublicNoticeDraftWhereUniqueInput>;
@@ -18254,11 +16961,9 @@ export type PublicNoticeDraftsArgs = {
   where?: PublicNoticeDraftWhereInput;
 };
 
-
 export type PublicNoticeDraftsCountArgs = {
   where?: PublicNoticeDraftWhereInput;
 };
-
 
 export type PublicNoticeEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -18268,11 +16973,9 @@ export type PublicNoticeEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type PublicNoticeEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type PublicNoticeFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -18282,11 +16985,9 @@ export type PublicNoticeFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type PublicNoticeFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type PublicNoticeOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -18296,11 +16997,9 @@ export type PublicNoticeOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type PublicNoticeOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type PublicNoticeParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -18310,11 +17009,9 @@ export type PublicNoticeParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type PublicNoticeParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type PublicNoticePlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -18324,11 +17021,9 @@ export type PublicNoticePlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PublicNoticePlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PublicNoticePublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -18338,11 +17033,9 @@ export type PublicNoticePublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type PublicNoticePublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type PublicNoticeServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -18352,11 +17045,9 @@ export type PublicNoticeServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type PublicNoticeServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type PublicNoticeTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -18366,11 +17057,9 @@ export type PublicNoticeTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PublicNoticeTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PublicNoticeTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -18380,11 +17069,9 @@ export type PublicNoticeTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type PublicNoticeTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type PublicNoticeTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -18394,11 +17081,9 @@ export type PublicNoticeTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type PublicNoticeTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type PublicNoticeUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -18408,11 +17093,9 @@ export type PublicNoticeUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type PublicNoticeUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type PublicNoticeVersionsArgs = {
   cursor?: InputMaybe<PublicNoticeVersionWhereUniqueInput>;
@@ -18421,7 +17104,6 @@ export type PublicNoticeVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: PublicNoticeVersionWhereInput;
 };
-
 
 export type PublicNoticeVersionsCountArgs = {
   where?: PublicNoticeVersionWhereInput;
@@ -18526,7 +17208,6 @@ export type PublicNoticeDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type PublicNoticeDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -18535,11 +17216,9 @@ export type PublicNoticeDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PublicNoticeDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PublicNoticeDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -18549,11 +17228,9 @@ export type PublicNoticeDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type PublicNoticeDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type PublicNoticeDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -18563,11 +17240,9 @@ export type PublicNoticeDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type PublicNoticeDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type PublicNoticeDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -18577,11 +17252,9 @@ export type PublicNoticeDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type PublicNoticeDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type PublicNoticeDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -18591,11 +17264,9 @@ export type PublicNoticeDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PublicNoticeDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PublicNoticeDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -18605,11 +17276,9 @@ export type PublicNoticeDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PublicNoticeDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PublicNoticeDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -18619,11 +17288,9 @@ export type PublicNoticeDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type PublicNoticeDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type PublicNoticeDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -18633,11 +17300,9 @@ export type PublicNoticeDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type PublicNoticeDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type PublicNoticeDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -18647,11 +17312,9 @@ export type PublicNoticeDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type PublicNoticeDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type PublicNoticeDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -18661,11 +17324,9 @@ export type PublicNoticeDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type PublicNoticeDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type PublicNoticeDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -18675,11 +17336,9 @@ export type PublicNoticeDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PublicNoticeDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PublicNoticeDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -18689,11 +17348,9 @@ export type PublicNoticeDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type PublicNoticeDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type PublicNoticeDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -18703,11 +17360,9 @@ export type PublicNoticeDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type PublicNoticeDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type PublicNoticeDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -18717,11 +17372,9 @@ export type PublicNoticeDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PublicNoticeDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PublicNoticeDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -18731,11 +17384,9 @@ export type PublicNoticeDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type PublicNoticeDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type PublicNoticeDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -18745,11 +17396,9 @@ export type PublicNoticeDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type PublicNoticeDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type PublicNoticeDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -18758,7 +17407,6 @@ export type PublicNoticeDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type PublicNoticeDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -19076,7 +17724,6 @@ export type PublicNoticeVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type PublicNoticeVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -19085,11 +17732,9 @@ export type PublicNoticeVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type PublicNoticeVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type PublicNoticeVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -19099,11 +17744,9 @@ export type PublicNoticeVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type PublicNoticeVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type PublicNoticeVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -19113,11 +17756,9 @@ export type PublicNoticeVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type PublicNoticeVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type PublicNoticeVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -19127,11 +17768,9 @@ export type PublicNoticeVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type PublicNoticeVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type PublicNoticeVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -19141,11 +17780,9 @@ export type PublicNoticeVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type PublicNoticeVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type PublicNoticeVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -19155,11 +17792,9 @@ export type PublicNoticeVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type PublicNoticeVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type PublicNoticeVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -19169,11 +17804,9 @@ export type PublicNoticeVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type PublicNoticeVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type PublicNoticeVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -19183,11 +17816,9 @@ export type PublicNoticeVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type PublicNoticeVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type PublicNoticeVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -19197,11 +17828,9 @@ export type PublicNoticeVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type PublicNoticeVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type PublicNoticeVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -19211,11 +17840,9 @@ export type PublicNoticeVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type PublicNoticeVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type PublicNoticeVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -19225,11 +17852,9 @@ export type PublicNoticeVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type PublicNoticeVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type PublicNoticeVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -19239,11 +17864,9 @@ export type PublicNoticeVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type PublicNoticeVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type PublicNoticeVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -19253,11 +17876,9 @@ export type PublicNoticeVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type PublicNoticeVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type PublicNoticeVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -19267,11 +17888,9 @@ export type PublicNoticeVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type PublicNoticeVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type PublicNoticeVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -19281,11 +17900,9 @@ export type PublicNoticeVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type PublicNoticeVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type PublicNoticeVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -19295,11 +17912,9 @@ export type PublicNoticeVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type PublicNoticeVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type PublicNoticeVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -19308,7 +17923,6 @@ export type PublicNoticeVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type PublicNoticeVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -19759,11 +18373,9 @@ export type Query = {
   usersCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type QueryAlertArgs = {
   where: AlertWhereUniqueInput;
 };
-
 
 export type QueryAlertsArgs = {
   cursor?: InputMaybe<AlertWhereUniqueInput>;
@@ -19773,21 +18385,17 @@ export type QueryAlertsArgs = {
   where?: AlertWhereInput;
 };
 
-
 export type QueryAlertsCountArgs = {
   where?: AlertWhereInput;
 };
-
 
 export type QueryAssemblyDistrictArgs = {
   where: AssemblyDistrictWhereUniqueInput;
 };
 
-
 export type QueryAssemblyDistrictDraftArgs = {
   where: AssemblyDistrictDraftWhereUniqueInput;
 };
-
 
 export type QueryAssemblyDistrictDraftsArgs = {
   cursor?: InputMaybe<AssemblyDistrictDraftWhereUniqueInput>;
@@ -19797,16 +18405,13 @@ export type QueryAssemblyDistrictDraftsArgs = {
   where?: AssemblyDistrictDraftWhereInput;
 };
 
-
 export type QueryAssemblyDistrictDraftsCountArgs = {
   where?: AssemblyDistrictDraftWhereInput;
 };
 
-
 export type QueryAssemblyDistrictVersionArgs = {
   where: AssemblyDistrictVersionWhereUniqueInput;
 };
-
 
 export type QueryAssemblyDistrictVersionsArgs = {
   cursor?: InputMaybe<AssemblyDistrictVersionWhereUniqueInput>;
@@ -19816,11 +18421,9 @@ export type QueryAssemblyDistrictVersionsArgs = {
   where?: AssemblyDistrictVersionWhereInput;
 };
 
-
 export type QueryAssemblyDistrictVersionsCountArgs = {
   where?: AssemblyDistrictVersionWhereInput;
 };
-
 
 export type QueryAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -19830,21 +18433,17 @@ export type QueryAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type QueryAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type QueryBoardArgs = {
   where: BoardWhereUniqueInput;
 };
 
-
 export type QueryBoardDraftArgs = {
   where: BoardDraftWhereUniqueInput;
 };
-
 
 export type QueryBoardDraftsArgs = {
   cursor?: InputMaybe<BoardDraftWhereUniqueInput>;
@@ -19854,16 +18453,13 @@ export type QueryBoardDraftsArgs = {
   where?: BoardDraftWhereInput;
 };
 
-
 export type QueryBoardDraftsCountArgs = {
   where?: BoardDraftWhereInput;
 };
 
-
 export type QueryBoardPageArgs = {
   where?: BoardPageWhereUniqueInput;
 };
-
 
 export type QueryBoardPagesArgs = {
   cursor?: InputMaybe<BoardPageWhereUniqueInput>;
@@ -19873,16 +18469,13 @@ export type QueryBoardPagesArgs = {
   where?: BoardPageWhereInput;
 };
 
-
 export type QueryBoardPagesCountArgs = {
   where?: BoardPageWhereInput;
 };
 
-
 export type QueryBoardVersionArgs = {
   where: BoardVersionWhereUniqueInput;
 };
-
 
 export type QueryBoardVersionsArgs = {
   cursor?: InputMaybe<BoardVersionWhereUniqueInput>;
@@ -19892,11 +18485,9 @@ export type QueryBoardVersionsArgs = {
   where?: BoardVersionWhereInput;
 };
 
-
 export type QueryBoardVersionsCountArgs = {
   where?: BoardVersionWhereInput;
 };
-
 
 export type QueryBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -19906,11 +18497,9 @@ export type QueryBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type QueryBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type QueryCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -19920,21 +18509,17 @@ export type QueryCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type QueryCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type QueryCommunityArgs = {
   where: CommunityWhereUniqueInput;
 };
 
-
 export type QueryCommunityDraftArgs = {
   where: CommunityDraftWhereUniqueInput;
 };
-
 
 export type QueryCommunityDraftsArgs = {
   cursor?: InputMaybe<CommunityDraftWhereUniqueInput>;
@@ -19944,16 +18529,13 @@ export type QueryCommunityDraftsArgs = {
   where?: CommunityDraftWhereInput;
 };
 
-
 export type QueryCommunityDraftsCountArgs = {
   where?: CommunityDraftWhereInput;
 };
 
-
 export type QueryCommunityVersionArgs = {
   where: CommunityVersionWhereUniqueInput;
 };
-
 
 export type QueryCommunityVersionsArgs = {
   cursor?: InputMaybe<CommunityVersionWhereUniqueInput>;
@@ -19963,21 +18545,17 @@ export type QueryCommunityVersionsArgs = {
   where?: CommunityVersionWhereInput;
 };
 
-
 export type QueryCommunityVersionsCountArgs = {
   where?: CommunityVersionWhereInput;
 };
-
 
 export type QueryContactArgs = {
   where: ContactWhereUniqueInput;
 };
 
-
 export type QueryContactListItemArgs = {
   where: ContactListItemWhereUniqueInput;
 };
-
 
 export type QueryContactListItemsArgs = {
   cursor?: InputMaybe<ContactListItemWhereUniqueInput>;
@@ -19987,11 +18565,9 @@ export type QueryContactListItemsArgs = {
   where?: ContactListItemWhereInput;
 };
 
-
 export type QueryContactListItemsCountArgs = {
   where?: ContactListItemWhereInput;
 };
-
 
 export type QueryContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -20001,21 +18577,17 @@ export type QueryContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type QueryContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type QueryDocumentArgs = {
   where: DocumentWhereUniqueInput;
 };
 
-
 export type QueryDocumentCollectionArgs = {
   where: DocumentCollectionWhereUniqueInput;
 };
-
 
 export type QueryDocumentCollectionsArgs = {
   cursor?: InputMaybe<DocumentCollectionWhereUniqueInput>;
@@ -20025,16 +18597,13 @@ export type QueryDocumentCollectionsArgs = {
   where?: DocumentCollectionWhereInput;
 };
 
-
 export type QueryDocumentCollectionsCountArgs = {
   where?: DocumentCollectionWhereInput;
 };
 
-
 export type QueryDocumentListItemArgs = {
   where: DocumentListItemWhereUniqueInput;
 };
-
 
 export type QueryDocumentListItemsArgs = {
   cursor?: InputMaybe<DocumentListItemWhereUniqueInput>;
@@ -20044,11 +18613,9 @@ export type QueryDocumentListItemsArgs = {
   where?: DocumentListItemWhereInput;
 };
 
-
 export type QueryDocumentListItemsCountArgs = {
   where?: DocumentListItemWhereInput;
 };
-
 
 export type QueryDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -20058,16 +18625,13 @@ export type QueryDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type QueryDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type QueryEarlyVotingLocationArgs = {
   where: EarlyVotingLocationWhereUniqueInput;
 };
-
 
 export type QueryEarlyVotingLocationsArgs = {
   cursor?: InputMaybe<EarlyVotingLocationWhereUniqueInput>;
@@ -20077,21 +18641,17 @@ export type QueryEarlyVotingLocationsArgs = {
   where?: EarlyVotingLocationWhereInput;
 };
 
-
 export type QueryEarlyVotingLocationsCountArgs = {
   where?: EarlyVotingLocationWhereInput;
 };
-
 
 export type QueryElectionArgs = {
   where: ElectionWhereUniqueInput;
 };
 
-
 export type QueryElectionDraftArgs = {
   where: ElectionDraftWhereUniqueInput;
 };
-
 
 export type QueryElectionDraftsArgs = {
   cursor?: InputMaybe<ElectionDraftWhereUniqueInput>;
@@ -20101,16 +18661,13 @@ export type QueryElectionDraftsArgs = {
   where?: ElectionDraftWhereInput;
 };
 
-
 export type QueryElectionDraftsCountArgs = {
   where?: ElectionDraftWhereInput;
 };
 
-
 export type QueryElectionResultArgs = {
   where: ElectionResultWhereUniqueInput;
 };
-
 
 export type QueryElectionResultsArgs = {
   cursor?: InputMaybe<ElectionResultWhereUniqueInput>;
@@ -20120,16 +18677,13 @@ export type QueryElectionResultsArgs = {
   where?: ElectionResultWhereInput;
 };
 
-
 export type QueryElectionResultsCountArgs = {
   where?: ElectionResultWhereInput;
 };
 
-
 export type QueryElectionVersionArgs = {
   where: ElectionVersionWhereUniqueInput;
 };
-
 
 export type QueryElectionVersionsArgs = {
   cursor?: InputMaybe<ElectionVersionWhereUniqueInput>;
@@ -20139,11 +18693,9 @@ export type QueryElectionVersionsArgs = {
   where?: ElectionVersionWhereInput;
 };
 
-
 export type QueryElectionVersionsCountArgs = {
   where?: ElectionVersionWhereInput;
 };
-
 
 export type QueryElectionsArgs = {
   cursor?: InputMaybe<ElectionWhereUniqueInput>;
@@ -20153,16 +18705,13 @@ export type QueryElectionsArgs = {
   where?: ElectionWhereInput;
 };
 
-
 export type QueryElectionsCountArgs = {
   where?: ElectionWhereInput;
 };
 
-
 export type QueryElectionsPageArgs = {
   where?: ElectionsPageWhereUniqueInput;
 };
-
 
 export type QueryElectionsPagesArgs = {
   cursor?: InputMaybe<ElectionsPageWhereUniqueInput>;
@@ -20172,21 +18721,17 @@ export type QueryElectionsPagesArgs = {
   where?: ElectionsPageWhereInput;
 };
 
-
 export type QueryElectionsPagesCountArgs = {
   where?: ElectionsPageWhereInput;
 };
-
 
 export type QueryEventArgs = {
   where: EventWhereUniqueInput;
 };
 
-
 export type QueryEventDraftArgs = {
   where: EventDraftWhereUniqueInput;
 };
-
 
 export type QueryEventDraftsArgs = {
   cursor?: InputMaybe<EventDraftWhereUniqueInput>;
@@ -20196,16 +18741,13 @@ export type QueryEventDraftsArgs = {
   where?: EventDraftWhereInput;
 };
 
-
 export type QueryEventDraftsCountArgs = {
   where?: EventDraftWhereInput;
 };
 
-
 export type QueryEventVersionArgs = {
   where: EventVersionWhereUniqueInput;
 };
-
 
 export type QueryEventVersionsArgs = {
   cursor?: InputMaybe<EventVersionWhereUniqueInput>;
@@ -20215,11 +18757,9 @@ export type QueryEventVersionsArgs = {
   where?: EventVersionWhereInput;
 };
 
-
 export type QueryEventVersionsCountArgs = {
   where?: EventVersionWhereInput;
 };
-
 
 export type QueryEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -20229,16 +18769,13 @@ export type QueryEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type QueryEventsCountArgs = {
   where?: EventWhereInput;
 };
 
-
 export type QueryExternalLinkArgs = {
   where: ExternalLinkWhereUniqueInput;
 };
-
 
 export type QueryExternalLinksArgs = {
   cursor?: InputMaybe<ExternalLinkWhereUniqueInput>;
@@ -20248,11 +18785,9 @@ export type QueryExternalLinksArgs = {
   where?: ExternalLinkWhereInput;
 };
 
-
 export type QueryExternalLinksCountArgs = {
   where?: ExternalLinkWhereInput;
 };
-
 
 export type QueryFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -20262,21 +18797,17 @@ export type QueryFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type QueryFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type QueryFacilityArgs = {
   where: FacilityWhereUniqueInput;
 };
 
-
 export type QueryFacilityDraftArgs = {
   where: FacilityDraftWhereUniqueInput;
 };
-
 
 export type QueryFacilityDraftsArgs = {
   cursor?: InputMaybe<FacilityDraftWhereUniqueInput>;
@@ -20286,16 +18817,13 @@ export type QueryFacilityDraftsArgs = {
   where?: FacilityDraftWhereInput;
 };
 
-
 export type QueryFacilityDraftsCountArgs = {
   where?: FacilityDraftWhereInput;
 };
 
-
 export type QueryFacilityListItemArgs = {
   where: FacilityListItemWhereUniqueInput;
 };
-
 
 export type QueryFacilityListItemsArgs = {
   cursor?: InputMaybe<FacilityListItemWhereUniqueInput>;
@@ -20305,16 +18833,13 @@ export type QueryFacilityListItemsArgs = {
   where?: FacilityListItemWhereInput;
 };
 
-
 export type QueryFacilityListItemsCountArgs = {
   where?: FacilityListItemWhereInput;
 };
 
-
 export type QueryFacilityVersionArgs = {
   where: FacilityVersionWhereUniqueInput;
 };
-
 
 export type QueryFacilityVersionsArgs = {
   cursor?: InputMaybe<FacilityVersionWhereUniqueInput>;
@@ -20324,16 +18849,13 @@ export type QueryFacilityVersionsArgs = {
   where?: FacilityVersionWhereInput;
 };
 
-
 export type QueryFacilityVersionsCountArgs = {
   where?: FacilityVersionWhereInput;
 };
 
-
 export type QueryFeaturedItemArgs = {
   where: FeaturedItemWhereUniqueInput;
 };
-
 
 export type QueryFeaturedItemsArgs = {
   cursor?: InputMaybe<FeaturedItemWhereUniqueInput>;
@@ -20343,28 +18865,23 @@ export type QueryFeaturedItemsArgs = {
   where?: FeaturedItemWhereInput;
 };
 
-
 export type QueryFeaturedItemsCountArgs = {
   where?: FeaturedItemWhereInput;
 };
-
 
 export type QueryGetInternalLinkArgs = {
   id: Scalars['ID']['input'];
   type: Scalars['String']['input'];
 };
 
-
 export type QueryGetPageArgs = {
   slug: Scalars['String']['input'];
   type: Scalars['String']['input'];
 };
 
-
 export type QueryHighlightArgs = {
   where: HighlightWhereUniqueInput;
 };
-
 
 export type QueryHighlightsArgs = {
   cursor?: InputMaybe<HighlightWhereUniqueInput>;
@@ -20374,16 +18891,13 @@ export type QueryHighlightsArgs = {
   where?: HighlightWhereInput;
 };
 
-
 export type QueryHighlightsCountArgs = {
   where?: HighlightWhereInput;
 };
 
-
 export type QueryHomePageArgs = {
   where?: HomePageWhereUniqueInput;
 };
-
 
 export type QueryHomePagesArgs = {
   cursor?: InputMaybe<HomePageWhereUniqueInput>;
@@ -20393,16 +18907,13 @@ export type QueryHomePagesArgs = {
   where?: HomePageWhereInput;
 };
 
-
 export type QueryHomePagesCountArgs = {
   where?: HomePageWhereInput;
 };
 
-
 export type QueryImageArgs = {
   where: ImageWhereUniqueInput;
 };
-
 
 export type QueryImagesArgs = {
   cursor?: InputMaybe<ImageWhereUniqueInput>;
@@ -20412,16 +18923,13 @@ export type QueryImagesArgs = {
   where?: ImageWhereInput;
 };
 
-
 export type QueryImagesCountArgs = {
   where?: ImageWhereInput;
 };
 
-
 export type QueryInternalLinkArgs = {
   where: InternalLinkWhereUniqueInput;
 };
-
 
 export type QueryInternalLinksArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -20431,21 +18939,17 @@ export type QueryInternalLinksArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type QueryInternalLinksCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type QueryInternalSearchArgs = {
   query?: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type QueryLandingPageArgs = {
   where: LandingPageWhereUniqueInput;
 };
-
 
 export type QueryLandingPagesArgs = {
   cursor?: InputMaybe<LandingPageWhereUniqueInput>;
@@ -20455,16 +18959,13 @@ export type QueryLandingPagesArgs = {
   where?: LandingPageWhereInput;
 };
 
-
 export type QueryLandingPagesCountArgs = {
   where?: LandingPageWhereInput;
 };
 
-
 export type QueryLocationArgs = {
   where: LocationWhereUniqueInput;
 };
-
 
 export type QueryLocationsArgs = {
   cursor?: InputMaybe<LocationWhereUniqueInput>;
@@ -20474,16 +18975,13 @@ export type QueryLocationsArgs = {
   where?: LocationWhereInput;
 };
 
-
 export type QueryLocationsCountArgs = {
   where?: LocationWhereInput;
 };
 
-
 export type QueryOperatingHourArgs = {
   where: OperatingHourWhereUniqueInput;
 };
-
 
 export type QueryOperatingHoursArgs = {
   cursor?: InputMaybe<OperatingHourWhereUniqueInput>;
@@ -20493,21 +18991,17 @@ export type QueryOperatingHoursArgs = {
   where?: OperatingHourWhereInput;
 };
 
-
 export type QueryOperatingHoursCountArgs = {
   where?: OperatingHourWhereInput;
 };
-
 
 export type QueryOrgUnitArgs = {
   where: OrgUnitWhereUniqueInput;
 };
 
-
 export type QueryOrgUnitDraftArgs = {
   where: OrgUnitDraftWhereUniqueInput;
 };
-
 
 export type QueryOrgUnitDraftsArgs = {
   cursor?: InputMaybe<OrgUnitDraftWhereUniqueInput>;
@@ -20517,16 +19011,13 @@ export type QueryOrgUnitDraftsArgs = {
   where?: OrgUnitDraftWhereInput;
 };
 
-
 export type QueryOrgUnitDraftsCountArgs = {
   where?: OrgUnitDraftWhereInput;
 };
 
-
 export type QueryOrgUnitVersionArgs = {
   where: OrgUnitVersionWhereUniqueInput;
 };
-
 
 export type QueryOrgUnitVersionsArgs = {
   cursor?: InputMaybe<OrgUnitVersionWhereUniqueInput>;
@@ -20536,11 +19027,9 @@ export type QueryOrgUnitVersionsArgs = {
   where?: OrgUnitVersionWhereInput;
 };
 
-
 export type QueryOrgUnitVersionsCountArgs = {
   where?: OrgUnitVersionWhereInput;
 };
-
 
 export type QueryOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -20550,16 +19039,13 @@ export type QueryOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type QueryOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type QueryPageViewArgs = {
   where: PageViewWhereUniqueInput;
 };
-
 
 export type QueryPageViewsArgs = {
   cursor?: InputMaybe<PageViewWhereUniqueInput>;
@@ -20569,21 +19055,17 @@ export type QueryPageViewsArgs = {
   where?: PageViewWhereInput;
 };
 
-
 export type QueryPageViewsCountArgs = {
   where?: PageViewWhereInput;
 };
-
 
 export type QueryParkArgs = {
   where: ParkWhereUniqueInput;
 };
 
-
 export type QueryParkDraftArgs = {
   where: ParkDraftWhereUniqueInput;
 };
-
 
 export type QueryParkDraftsArgs = {
   cursor?: InputMaybe<ParkDraftWhereUniqueInput>;
@@ -20593,16 +19075,13 @@ export type QueryParkDraftsArgs = {
   where?: ParkDraftWhereInput;
 };
 
-
 export type QueryParkDraftsCountArgs = {
   where?: ParkDraftWhereInput;
 };
 
-
 export type QueryParkVersionArgs = {
   where: ParkVersionWhereUniqueInput;
 };
-
 
 export type QueryParkVersionsArgs = {
   cursor?: InputMaybe<ParkVersionWhereUniqueInput>;
@@ -20612,11 +19091,9 @@ export type QueryParkVersionsArgs = {
   where?: ParkVersionWhereInput;
 };
 
-
 export type QueryParkVersionsCountArgs = {
   where?: ParkVersionWhereInput;
 };
-
 
 export type QueryParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -20626,21 +19103,17 @@ export type QueryParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type QueryParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type QueryPlanArgs = {
   where: PlanWhereUniqueInput;
 };
 
-
 export type QueryPlanCodeArgs = {
   where: PlanCodeWhereUniqueInput;
 };
-
 
 export type QueryPlanCodesArgs = {
   cursor?: InputMaybe<PlanCodeWhereUniqueInput>;
@@ -20650,16 +19123,13 @@ export type QueryPlanCodesArgs = {
   where?: PlanCodeWhereInput;
 };
 
-
 export type QueryPlanCodesCountArgs = {
   where?: PlanCodeWhereInput;
 };
 
-
 export type QueryPlanDocumentArgs = {
   where: PlanDocumentWhereUniqueInput;
 };
-
 
 export type QueryPlanDocumentsArgs = {
   cursor?: InputMaybe<PlanDocumentWhereUniqueInput>;
@@ -20669,16 +19139,13 @@ export type QueryPlanDocumentsArgs = {
   where?: PlanDocumentWhereInput;
 };
 
-
 export type QueryPlanDocumentsCountArgs = {
   where?: PlanDocumentWhereInput;
 };
 
-
 export type QueryPlanDraftArgs = {
   where: PlanDraftWhereUniqueInput;
 };
-
 
 export type QueryPlanDraftsArgs = {
   cursor?: InputMaybe<PlanDraftWhereUniqueInput>;
@@ -20688,16 +19155,13 @@ export type QueryPlanDraftsArgs = {
   where?: PlanDraftWhereInput;
 };
 
-
 export type QueryPlanDraftsCountArgs = {
   where?: PlanDraftWhereInput;
 };
 
-
 export type QueryPlanVersionArgs = {
   where: PlanVersionWhereUniqueInput;
 };
-
 
 export type QueryPlanVersionsArgs = {
   cursor?: InputMaybe<PlanVersionWhereUniqueInput>;
@@ -20707,11 +19171,9 @@ export type QueryPlanVersionsArgs = {
   where?: PlanVersionWhereInput;
 };
 
-
 export type QueryPlanVersionsCountArgs = {
   where?: PlanVersionWhereInput;
 };
-
 
 export type QueryPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -20721,11 +19183,9 @@ export type QueryPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type QueryPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type QueryPoliciesArgs = {
   cursor?: InputMaybe<PolicyWhereUniqueInput>;
@@ -20735,21 +19195,17 @@ export type QueryPoliciesArgs = {
   where?: PolicyWhereInput;
 };
 
-
 export type QueryPoliciesCountArgs = {
   where?: PolicyWhereInput;
 };
-
 
 export type QueryPolicyArgs = {
   where: PolicyWhereUniqueInput;
 };
 
-
 export type QueryPolicyDraftArgs = {
   where: PolicyDraftWhereUniqueInput;
 };
-
 
 export type QueryPolicyDraftsArgs = {
   cursor?: InputMaybe<PolicyDraftWhereUniqueInput>;
@@ -20759,16 +19215,13 @@ export type QueryPolicyDraftsArgs = {
   where?: PolicyDraftWhereInput;
 };
 
-
 export type QueryPolicyDraftsCountArgs = {
   where?: PolicyDraftWhereInput;
 };
 
-
 export type QueryPolicyVersionArgs = {
   where: PolicyVersionWhereUniqueInput;
 };
-
 
 export type QueryPolicyVersionsArgs = {
   cursor?: InputMaybe<PolicyVersionWhereUniqueInput>;
@@ -20778,16 +19231,13 @@ export type QueryPolicyVersionsArgs = {
   where?: PolicyVersionWhereInput;
 };
 
-
 export type QueryPolicyVersionsCountArgs = {
   where?: PolicyVersionWhereInput;
 };
 
-
 export type QueryPropositionArgs = {
   where: PropositionWhereUniqueInput;
 };
-
 
 export type QueryPropositionsArgs = {
   cursor?: InputMaybe<PropositionWhereUniqueInput>;
@@ -20797,21 +19247,17 @@ export type QueryPropositionsArgs = {
   where?: PropositionWhereInput;
 };
 
-
 export type QueryPropositionsCountArgs = {
   where?: PropositionWhereInput;
 };
-
 
 export type QueryPublicNoticeArgs = {
   where: PublicNoticeWhereUniqueInput;
 };
 
-
 export type QueryPublicNoticeDraftArgs = {
   where: PublicNoticeDraftWhereUniqueInput;
 };
-
 
 export type QueryPublicNoticeDraftsArgs = {
   cursor?: InputMaybe<PublicNoticeDraftWhereUniqueInput>;
@@ -20821,16 +19267,13 @@ export type QueryPublicNoticeDraftsArgs = {
   where?: PublicNoticeDraftWhereInput;
 };
 
-
 export type QueryPublicNoticeDraftsCountArgs = {
   where?: PublicNoticeDraftWhereInput;
 };
 
-
 export type QueryPublicNoticeVersionArgs = {
   where: PublicNoticeVersionWhereUniqueInput;
 };
-
 
 export type QueryPublicNoticeVersionsArgs = {
   cursor?: InputMaybe<PublicNoticeVersionWhereUniqueInput>;
@@ -20840,11 +19283,9 @@ export type QueryPublicNoticeVersionsArgs = {
   where?: PublicNoticeVersionWhereInput;
 };
 
-
 export type QueryPublicNoticeVersionsCountArgs = {
   where?: PublicNoticeVersionWhereInput;
 };
-
 
 export type QueryPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -20854,16 +19295,13 @@ export type QueryPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type QueryPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type QueryRedirectArgs = {
   where: RedirectWhereUniqueInput;
 };
-
 
 export type QueryRedirectsArgs = {
   cursor?: InputMaybe<RedirectWhereUniqueInput>;
@@ -20873,21 +19311,17 @@ export type QueryRedirectsArgs = {
   where?: RedirectWhereInput;
 };
 
-
 export type QueryRedirectsCountArgs = {
   where?: RedirectWhereInput;
 };
-
 
 export type QueryServiceArgs = {
   where: ServiceWhereUniqueInput;
 };
 
-
 export type QueryServiceDraftArgs = {
   where: ServiceDraftWhereUniqueInput;
 };
-
 
 export type QueryServiceDraftsArgs = {
   cursor?: InputMaybe<ServiceDraftWhereUniqueInput>;
@@ -20897,16 +19331,13 @@ export type QueryServiceDraftsArgs = {
   where?: ServiceDraftWhereInput;
 };
 
-
 export type QueryServiceDraftsCountArgs = {
   where?: ServiceDraftWhereInput;
 };
 
-
 export type QueryServiceVersionArgs = {
   where: ServiceVersionWhereUniqueInput;
 };
-
 
 export type QueryServiceVersionsArgs = {
   cursor?: InputMaybe<ServiceVersionWhereUniqueInput>;
@@ -20916,11 +19347,9 @@ export type QueryServiceVersionsArgs = {
   where?: ServiceVersionWhereInput;
 };
 
-
 export type QueryServiceVersionsCountArgs = {
   where?: ServiceVersionWhereInput;
 };
-
 
 export type QueryServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -20930,16 +19359,13 @@ export type QueryServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type QueryServicesCountArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type QueryTagArgs = {
   where: TagWhereUniqueInput;
 };
-
 
 export type QueryTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -20949,11 +19375,9 @@ export type QueryTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type QueryTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type QueryTopPagesArgs = {
   after?: InputMaybe<Scalars['DateTime']['input']>;
@@ -20961,16 +19385,13 @@ export type QueryTopPagesArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
 };
 
-
 export type QueryTopicArgs = {
   where: TopicWhereUniqueInput;
 };
 
-
 export type QueryTopicDraftArgs = {
   where: TopicDraftWhereUniqueInput;
 };
-
 
 export type QueryTopicDraftsArgs = {
   cursor?: InputMaybe<TopicDraftWhereUniqueInput>;
@@ -20980,16 +19401,13 @@ export type QueryTopicDraftsArgs = {
   where?: TopicDraftWhereInput;
 };
 
-
 export type QueryTopicDraftsCountArgs = {
   where?: TopicDraftWhereInput;
 };
 
-
 export type QueryTopicVersionArgs = {
   where: TopicVersionWhereUniqueInput;
 };
-
 
 export type QueryTopicVersionsArgs = {
   cursor?: InputMaybe<TopicVersionWhereUniqueInput>;
@@ -20999,11 +19417,9 @@ export type QueryTopicVersionsArgs = {
   where?: TopicVersionWhereInput;
 };
 
-
 export type QueryTopicVersionsCountArgs = {
   where?: TopicVersionWhereInput;
 };
-
 
 export type QueryTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -21013,21 +19429,17 @@ export type QueryTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type QueryTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type QueryTrailArgs = {
   where: TrailWhereUniqueInput;
 };
 
-
 export type QueryTrailDraftArgs = {
   where: TrailDraftWhereUniqueInput;
 };
-
 
 export type QueryTrailDraftsArgs = {
   cursor?: InputMaybe<TrailDraftWhereUniqueInput>;
@@ -21037,16 +19449,13 @@ export type QueryTrailDraftsArgs = {
   where?: TrailDraftWhereInput;
 };
 
-
 export type QueryTrailDraftsCountArgs = {
   where?: TrailDraftWhereInput;
 };
 
-
 export type QueryTrailVersionArgs = {
   where: TrailVersionWhereUniqueInput;
 };
-
 
 export type QueryTrailVersionsArgs = {
   cursor?: InputMaybe<TrailVersionWhereUniqueInput>;
@@ -21056,11 +19465,9 @@ export type QueryTrailVersionsArgs = {
   where?: TrailVersionWhereInput;
 };
 
-
 export type QueryTrailVersionsCountArgs = {
   where?: TrailVersionWhereInput;
 };
-
 
 export type QueryTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -21070,16 +19477,13 @@ export type QueryTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type QueryTrailsCountArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type QueryUrlArgs = {
   where: UrlWhereUniqueInput;
 };
-
 
 export type QueryUrlsArgs = {
   cursor?: InputMaybe<UrlWhereUniqueInput>;
@@ -21089,21 +19493,17 @@ export type QueryUrlsArgs = {
   where?: UrlWhereInput;
 };
 
-
 export type QueryUrlsCountArgs = {
   where?: UrlWhereInput;
 };
-
 
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
 
-
 export type QueryUserGroupArgs = {
   where: UserGroupWhereUniqueInput;
 };
-
 
 export type QueryUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -21113,11 +19513,9 @@ export type QueryUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type QueryUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type QueryUsersArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
@@ -21127,14 +19525,13 @@ export type QueryUsersArgs = {
   where?: UserWhereInput;
 };
 
-
 export type QueryUsersCountArgs = {
   where?: UserWhereInput;
 };
 
 export enum QueryMode {
   Default = 'default',
-  Insensitive = 'insensitive'
+  Insensitive = 'insensitive',
 }
 
 export type Redirect = {
@@ -21194,69 +19591,71 @@ export type RedirectWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
-export type Service = BasePage & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Service';
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<ServiceVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<ServiceDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  editorNotes?: Maybe<Scalars['String']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  primaryAction?: Maybe<ExternalLink>;
-  primaryContact?: Maybe<Contact>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  secondaryActions?: Maybe<Array<ExternalLink>>;
-  secondaryActionsCount?: Maybe<Scalars['Int']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<ServiceVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Service = BasePage &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Service';
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<ServiceVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<ServiceDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    editorNotes?: Maybe<Scalars['String']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    primaryAction?: Maybe<ExternalLink>;
+    primaryContact?: Maybe<Contact>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    secondaryActions?: Maybe<Array<ExternalLink>>;
+    secondaryActionsCount?: Maybe<Scalars['Int']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<ServiceVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type ServiceAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -21266,11 +19665,9 @@ export type ServiceAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type ServiceAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type ServiceBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -21280,11 +19677,9 @@ export type ServiceBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type ServiceBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type ServiceCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -21294,11 +19689,9 @@ export type ServiceCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type ServiceCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type ServiceContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -21308,11 +19701,9 @@ export type ServiceContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type ServiceContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type ServiceDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -21322,11 +19713,9 @@ export type ServiceDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ServiceDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ServiceDraftsArgs = {
   cursor?: InputMaybe<ServiceDraftWhereUniqueInput>;
@@ -21336,11 +19725,9 @@ export type ServiceDraftsArgs = {
   where?: ServiceDraftWhereInput;
 };
 
-
 export type ServiceDraftsCountArgs = {
   where?: ServiceDraftWhereInput;
 };
-
 
 export type ServiceEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -21350,11 +19737,9 @@ export type ServiceEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type ServiceEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type ServiceFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -21364,11 +19749,9 @@ export type ServiceFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type ServiceFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type ServiceOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -21378,11 +19761,9 @@ export type ServiceOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type ServiceOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type ServiceParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -21392,11 +19773,9 @@ export type ServiceParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type ServiceParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type ServicePlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -21406,11 +19785,9 @@ export type ServicePlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type ServicePlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type ServicePublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -21420,11 +19797,9 @@ export type ServicePublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type ServicePublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type ServiceSecondaryActionsArgs = {
   cursor?: InputMaybe<ExternalLinkWhereUniqueInput>;
@@ -21434,11 +19809,9 @@ export type ServiceSecondaryActionsArgs = {
   where?: ExternalLinkWhereInput;
 };
 
-
 export type ServiceSecondaryActionsCountArgs = {
   where?: ExternalLinkWhereInput;
 };
-
 
 export type ServiceServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -21448,11 +19821,9 @@ export type ServiceServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type ServiceServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type ServiceTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -21462,11 +19833,9 @@ export type ServiceTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ServiceTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ServiceTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -21476,11 +19845,9 @@ export type ServiceTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type ServiceTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type ServiceTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -21490,11 +19857,9 @@ export type ServiceTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type ServiceTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type ServiceUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -21504,11 +19869,9 @@ export type ServiceUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type ServiceUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type ServiceVersionsArgs = {
   cursor?: InputMaybe<ServiceVersionWhereUniqueInput>;
@@ -21517,7 +19880,6 @@ export type ServiceVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: ServiceVersionWhereInput;
 };
-
 
 export type ServiceVersionsCountArgs = {
   where?: ServiceVersionWhereInput;
@@ -21620,7 +19982,6 @@ export type ServiceDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type ServiceDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
   orderBy?: Array<AssemblyDistrictOrderByInput>;
@@ -21629,11 +19990,9 @@ export type ServiceDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type ServiceDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type ServiceDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -21643,11 +20002,9 @@ export type ServiceDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type ServiceDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type ServiceDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -21657,11 +20014,9 @@ export type ServiceDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type ServiceDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type ServiceDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -21671,11 +20026,9 @@ export type ServiceDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type ServiceDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type ServiceDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -21685,11 +20038,9 @@ export type ServiceDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ServiceDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ServiceDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -21699,11 +20050,9 @@ export type ServiceDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type ServiceDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type ServiceDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -21713,11 +20062,9 @@ export type ServiceDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type ServiceDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type ServiceDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -21727,11 +20074,9 @@ export type ServiceDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type ServiceDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type ServiceDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -21741,11 +20086,9 @@ export type ServiceDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type ServiceDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type ServiceDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -21755,11 +20098,9 @@ export type ServiceDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type ServiceDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type ServiceDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -21769,11 +20110,9 @@ export type ServiceDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type ServiceDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type ServiceDraftSecondaryActionsArgs = {
   cursor?: InputMaybe<ExternalLinkWhereUniqueInput>;
@@ -21783,11 +20122,9 @@ export type ServiceDraftSecondaryActionsArgs = {
   where?: ExternalLinkWhereInput;
 };
 
-
 export type ServiceDraftSecondaryActionsCountArgs = {
   where?: ExternalLinkWhereInput;
 };
-
 
 export type ServiceDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -21797,11 +20134,9 @@ export type ServiceDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type ServiceDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type ServiceDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -21811,11 +20146,9 @@ export type ServiceDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ServiceDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ServiceDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -21825,11 +20158,9 @@ export type ServiceDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type ServiceDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type ServiceDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -21839,11 +20170,9 @@ export type ServiceDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type ServiceDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type ServiceDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -21852,7 +20181,6 @@ export type ServiceDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type ServiceDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -22159,7 +20487,6 @@ export type ServiceVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type ServiceVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
   orderBy?: Array<AssemblyDistrictOrderByInput>;
@@ -22168,11 +20495,9 @@ export type ServiceVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type ServiceVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type ServiceVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -22182,11 +20507,9 @@ export type ServiceVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type ServiceVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type ServiceVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -22196,11 +20519,9 @@ export type ServiceVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type ServiceVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type ServiceVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -22210,11 +20531,9 @@ export type ServiceVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type ServiceVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type ServiceVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -22224,11 +20543,9 @@ export type ServiceVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type ServiceVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type ServiceVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -22238,11 +20555,9 @@ export type ServiceVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type ServiceVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type ServiceVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -22252,11 +20567,9 @@ export type ServiceVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type ServiceVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type ServiceVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -22266,11 +20579,9 @@ export type ServiceVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type ServiceVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type ServiceVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -22280,11 +20591,9 @@ export type ServiceVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type ServiceVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type ServiceVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -22294,11 +20603,9 @@ export type ServiceVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type ServiceVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type ServiceVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -22308,11 +20615,9 @@ export type ServiceVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type ServiceVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type ServiceVersionSecondaryActionsArgs = {
   cursor?: InputMaybe<ExternalLinkWhereUniqueInput>;
@@ -22322,11 +20627,9 @@ export type ServiceVersionSecondaryActionsArgs = {
   where?: ExternalLinkWhereInput;
 };
 
-
 export type ServiceVersionSecondaryActionsCountArgs = {
   where?: ExternalLinkWhereInput;
 };
-
 
 export type ServiceVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -22336,11 +20639,9 @@ export type ServiceVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type ServiceVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type ServiceVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -22350,11 +20651,9 @@ export type ServiceVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type ServiceVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type ServiceVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -22364,11 +20663,9 @@ export type ServiceVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type ServiceVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type ServiceVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -22378,11 +20675,9 @@ export type ServiceVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type ServiceVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type ServiceVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -22391,7 +20686,6 @@ export type ServiceVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type ServiceVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -22705,68 +20999,71 @@ export type TopPage = {
   totalViews: Scalars['Int']['output'];
 };
 
-export type Topic = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Topic';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  boards?: Maybe<Array<Board>>;
-  boardsCount?: Maybe<Scalars['Int']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  currentVersion?: Maybe<TopicVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  drafts?: Maybe<Array<TopicDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  facilities?: Maybe<Array<Facility>>;
-  facilitiesCount?: Maybe<Scalars['Int']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  highlights?: Maybe<Array<Highlight>>;
-  highlightsCount?: Maybe<Scalars['Int']['output']>;
-  id: Scalars['ID']['output'];
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  parks?: Maybe<Array<Park>>;
-  parksCount?: Maybe<Scalars['Int']['output']>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  trails?: Maybe<Array<Trail>>;
-  trailsCount?: Maybe<Scalars['Int']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<TopicVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-};
-
+export type Topic = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Topic';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    boards?: Maybe<Array<Board>>;
+    boardsCount?: Maybe<Scalars['Int']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    currentVersion?: Maybe<TopicVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    drafts?: Maybe<Array<TopicDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    facilities?: Maybe<Array<Facility>>;
+    facilitiesCount?: Maybe<Scalars['Int']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    highlights?: Maybe<Array<Highlight>>;
+    highlightsCount?: Maybe<Scalars['Int']['output']>;
+    id: Scalars['ID']['output'];
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    parks?: Maybe<Array<Park>>;
+    parksCount?: Maybe<Scalars['Int']['output']>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    trails?: Maybe<Array<Trail>>;
+    trailsCount?: Maybe<Scalars['Int']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<TopicVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+  };
 
 export type TopicActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -22776,11 +21073,9 @@ export type TopicActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type TopicActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type TopicAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -22790,11 +21085,9 @@ export type TopicAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type TopicAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type TopicBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -22804,11 +21097,9 @@ export type TopicBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type TopicBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type TopicCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -22818,11 +21109,9 @@ export type TopicCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type TopicCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type TopicContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -22832,11 +21121,9 @@ export type TopicContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type TopicContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type TopicDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -22846,11 +21133,9 @@ export type TopicDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type TopicDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type TopicDraftsArgs = {
   cursor?: InputMaybe<TopicDraftWhereUniqueInput>;
@@ -22860,11 +21145,9 @@ export type TopicDraftsArgs = {
   where?: TopicDraftWhereInput;
 };
 
-
 export type TopicDraftsCountArgs = {
   where?: TopicDraftWhereInput;
 };
-
 
 export type TopicEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -22874,11 +21157,9 @@ export type TopicEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type TopicEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type TopicFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -22888,11 +21169,9 @@ export type TopicFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type TopicFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type TopicHighlightsArgs = {
   cursor?: InputMaybe<HighlightWhereUniqueInput>;
@@ -22902,11 +21181,9 @@ export type TopicHighlightsArgs = {
   where?: HighlightWhereInput;
 };
 
-
 export type TopicHighlightsCountArgs = {
   where?: HighlightWhereInput;
 };
-
 
 export type TopicOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -22916,11 +21193,9 @@ export type TopicOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type TopicOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type TopicParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -22930,11 +21205,9 @@ export type TopicParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type TopicParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type TopicPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -22944,11 +21217,9 @@ export type TopicPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type TopicPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type TopicPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -22958,11 +21229,9 @@ export type TopicPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type TopicPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type TopicServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -22972,11 +21241,9 @@ export type TopicServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type TopicServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type TopicTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -22986,11 +21253,9 @@ export type TopicTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type TopicTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type TopicTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -23000,11 +21265,9 @@ export type TopicTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type TopicTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type TopicTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -23014,11 +21277,9 @@ export type TopicTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type TopicTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type TopicUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -23028,11 +21289,9 @@ export type TopicUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type TopicUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type TopicVersionsArgs = {
   cursor?: InputMaybe<TopicVersionWhereUniqueInput>;
@@ -23041,7 +21300,6 @@ export type TopicVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: TopicVersionWhereInput;
 };
-
 
 export type TopicVersionsCountArgs = {
   where?: TopicVersionWhereInput;
@@ -23141,7 +21399,6 @@ export type TopicDraft = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type TopicDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -23150,11 +21407,9 @@ export type TopicDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type TopicDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type TopicDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -23164,11 +21419,9 @@ export type TopicDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type TopicDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type TopicDraftBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -23178,11 +21431,9 @@ export type TopicDraftBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type TopicDraftBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type TopicDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -23192,11 +21443,9 @@ export type TopicDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type TopicDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type TopicDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -23206,11 +21455,9 @@ export type TopicDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type TopicDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type TopicDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -23220,11 +21467,9 @@ export type TopicDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type TopicDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type TopicDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -23234,11 +21479,9 @@ export type TopicDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type TopicDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type TopicDraftFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -23248,11 +21491,9 @@ export type TopicDraftFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type TopicDraftFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type TopicDraftHighlightsArgs = {
   cursor?: InputMaybe<HighlightWhereUniqueInput>;
@@ -23262,11 +21503,9 @@ export type TopicDraftHighlightsArgs = {
   where?: HighlightWhereInput;
 };
 
-
 export type TopicDraftHighlightsCountArgs = {
   where?: HighlightWhereInput;
 };
-
 
 export type TopicDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -23276,11 +21515,9 @@ export type TopicDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type TopicDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type TopicDraftParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -23290,11 +21527,9 @@ export type TopicDraftParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type TopicDraftParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type TopicDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -23304,11 +21539,9 @@ export type TopicDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type TopicDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type TopicDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -23318,11 +21551,9 @@ export type TopicDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type TopicDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type TopicDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -23332,11 +21563,9 @@ export type TopicDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type TopicDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type TopicDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -23346,11 +21575,9 @@ export type TopicDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type TopicDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type TopicDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -23360,11 +21587,9 @@ export type TopicDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type TopicDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type TopicDraftTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -23374,11 +21599,9 @@ export type TopicDraftTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type TopicDraftTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type TopicDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -23387,7 +21610,6 @@ export type TopicDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type TopicDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -23683,7 +21905,6 @@ export type TopicVersion = {
   userGroupsCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type TopicVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -23692,11 +21913,9 @@ export type TopicVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type TopicVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type TopicVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -23706,11 +21925,9 @@ export type TopicVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type TopicVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type TopicVersionBoardsArgs = {
   cursor?: InputMaybe<BoardWhereUniqueInput>;
@@ -23720,11 +21937,9 @@ export type TopicVersionBoardsArgs = {
   where?: BoardWhereInput;
 };
 
-
 export type TopicVersionBoardsCountArgs = {
   where?: BoardWhereInput;
 };
-
 
 export type TopicVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -23734,11 +21949,9 @@ export type TopicVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type TopicVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type TopicVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -23748,11 +21961,9 @@ export type TopicVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type TopicVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type TopicVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -23762,11 +21973,9 @@ export type TopicVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type TopicVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type TopicVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -23776,11 +21985,9 @@ export type TopicVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type TopicVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type TopicVersionFacilitiesArgs = {
   cursor?: InputMaybe<FacilityWhereUniqueInput>;
@@ -23790,11 +21997,9 @@ export type TopicVersionFacilitiesArgs = {
   where?: FacilityWhereInput;
 };
 
-
 export type TopicVersionFacilitiesCountArgs = {
   where?: FacilityWhereInput;
 };
-
 
 export type TopicVersionHighlightsArgs = {
   cursor?: InputMaybe<HighlightWhereUniqueInput>;
@@ -23804,11 +22009,9 @@ export type TopicVersionHighlightsArgs = {
   where?: HighlightWhereInput;
 };
 
-
 export type TopicVersionHighlightsCountArgs = {
   where?: HighlightWhereInput;
 };
-
 
 export type TopicVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -23818,11 +22021,9 @@ export type TopicVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type TopicVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type TopicVersionParksArgs = {
   cursor?: InputMaybe<ParkWhereUniqueInput>;
@@ -23832,11 +22033,9 @@ export type TopicVersionParksArgs = {
   where?: ParkWhereInput;
 };
 
-
 export type TopicVersionParksCountArgs = {
   where?: ParkWhereInput;
 };
-
 
 export type TopicVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -23846,11 +22045,9 @@ export type TopicVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type TopicVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type TopicVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -23860,11 +22057,9 @@ export type TopicVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type TopicVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type TopicVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -23874,11 +22069,9 @@ export type TopicVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type TopicVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type TopicVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -23888,11 +22081,9 @@ export type TopicVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type TopicVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type TopicVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -23902,11 +22093,9 @@ export type TopicVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type TopicVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type TopicVersionTrailsArgs = {
   cursor?: InputMaybe<TrailWhereUniqueInput>;
@@ -23916,11 +22105,9 @@ export type TopicVersionTrailsArgs = {
   where?: TrailWhereInput;
 };
 
-
 export type TopicVersionTrailsCountArgs = {
   where?: TrailWhereInput;
 };
-
 
 export type TopicVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -23929,7 +22116,6 @@ export type TopicVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type TopicVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -24142,81 +22328,84 @@ export type TopicWhereUniqueInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Trail = BasePage & BasePageWithActions & BasePageWithDefaultRelationships & BasePageWithSlug & WithTitle & {
-  __typename?: 'Trail';
-  actions?: Maybe<Array<InternalLink>>;
-  actionsCount?: Maybe<Scalars['Int']['output']>;
-  address?: Maybe<Location>;
-  assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
-  assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
-  atv?: Maybe<Scalars['Boolean']['output']>;
-  biking?: Maybe<Scalars['Boolean']['output']>;
-  body?: Maybe<Scalars['String']['output']>;
-  canEdit?: Maybe<Scalars['String']['output']>;
-  communities?: Maybe<Array<Community>>;
-  communitiesCount?: Maybe<Scalars['Int']['output']>;
-  contacts?: Maybe<Array<Contact>>;
-  contactsCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['DateTime']['output']>;
-  crossCountrySkiing?: Maybe<Scalars['Boolean']['output']>;
-  currentVersion?: Maybe<TrailVersion>;
-  description?: Maybe<Scalars['String']['output']>;
-  difficulty?: Maybe<Scalars['String']['output']>;
-  dirtBiking?: Maybe<Scalars['Boolean']['output']>;
-  documents?: Maybe<Array<Document>>;
-  documentsCount?: Maybe<Scalars['Int']['output']>;
-  dogWalking?: Maybe<Scalars['Boolean']['output']>;
-  drafts?: Maybe<Array<TrailDraft>>;
-  draftsCount?: Maybe<Scalars['Int']['output']>;
-  elevationChange?: Maybe<Scalars['String']['output']>;
-  events?: Maybe<Array<Event>>;
-  eventsCount?: Maybe<Scalars['Int']['output']>;
-  fall?: Maybe<Scalars['Boolean']['output']>;
-  frisbeeGolf?: Maybe<Scalars['Boolean']['output']>;
-  heroImage?: Maybe<Scalars['String']['output']>;
-  hiking?: Maybe<Scalars['Boolean']['output']>;
-  horsebackRiding?: Maybe<Scalars['Boolean']['output']>;
-  id: Scalars['ID']['output'];
-  length?: Maybe<Scalars['String']['output']>;
-  liveUrl?: Maybe<Scalars['String']['output']>;
-  maintainer?: Maybe<Scalars['String']['output']>;
-  makeDrafts?: Maybe<Scalars['String']['output']>;
-  mushing?: Maybe<Scalars['Boolean']['output']>;
-  open?: Maybe<Scalars['Boolean']['output']>;
-  orgUnits?: Maybe<Array<OrgUnit>>;
-  orgUnitsCount?: Maybe<Scalars['Int']['output']>;
-  owner?: Maybe<User>;
-  park?: Maybe<Park>;
-  plans?: Maybe<Array<Plan>>;
-  plansCount?: Maybe<Scalars['Int']['output']>;
-  publicNotices?: Maybe<Array<PublicNotice>>;
-  publicNoticesCount?: Maybe<Scalars['Int']['output']>;
-  publishAt?: Maybe<Scalars['DateTime']['output']>;
-  redirect?: Maybe<Redirect>;
-  reviewDate?: Maybe<Scalars['DateTime']['output']>;
-  running?: Maybe<Scalars['Boolean']['output']>;
-  services?: Maybe<Array<Service>>;
-  servicesCount?: Maybe<Scalars['Int']['output']>;
-  slug?: Maybe<Scalars['String']['output']>;
-  snowMachining?: Maybe<Scalars['Boolean']['output']>;
-  snowshoeing?: Maybe<Scalars['Boolean']['output']>;
-  spring?: Maybe<Scalars['Boolean']['output']>;
-  status?: Maybe<Scalars['String']['output']>;
-  summer?: Maybe<Scalars['Boolean']['output']>;
-  tags?: Maybe<Array<Tag>>;
-  tagsCount?: Maybe<Scalars['Int']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  topics?: Maybe<Array<Topic>>;
-  topicsCount?: Maybe<Scalars['Int']['output']>;
-  unpublishAt?: Maybe<Scalars['DateTime']['output']>;
-  updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  userGroups?: Maybe<Array<UserGroup>>;
-  userGroupsCount?: Maybe<Scalars['Int']['output']>;
-  versions?: Maybe<Array<TrailVersion>>;
-  versionsCount?: Maybe<Scalars['Int']['output']>;
-  winter?: Maybe<Scalars['Boolean']['output']>;
-};
-
+export type Trail = BasePage &
+  BasePageWithActions &
+  BasePageWithDefaultRelationships &
+  BasePageWithSlug &
+  WithTitle & {
+    __typename?: 'Trail';
+    actions?: Maybe<Array<InternalLink>>;
+    actionsCount?: Maybe<Scalars['Int']['output']>;
+    address?: Maybe<Location>;
+    assemblyDistricts?: Maybe<Array<AssemblyDistrict>>;
+    assemblyDistrictsCount?: Maybe<Scalars['Int']['output']>;
+    atv?: Maybe<Scalars['Boolean']['output']>;
+    biking?: Maybe<Scalars['Boolean']['output']>;
+    body?: Maybe<Scalars['String']['output']>;
+    canEdit?: Maybe<Scalars['String']['output']>;
+    communities?: Maybe<Array<Community>>;
+    communitiesCount?: Maybe<Scalars['Int']['output']>;
+    contacts?: Maybe<Array<Contact>>;
+    contactsCount?: Maybe<Scalars['Int']['output']>;
+    createdAt?: Maybe<Scalars['DateTime']['output']>;
+    crossCountrySkiing?: Maybe<Scalars['Boolean']['output']>;
+    currentVersion?: Maybe<TrailVersion>;
+    description?: Maybe<Scalars['String']['output']>;
+    difficulty?: Maybe<Scalars['String']['output']>;
+    dirtBiking?: Maybe<Scalars['Boolean']['output']>;
+    documents?: Maybe<Array<Document>>;
+    documentsCount?: Maybe<Scalars['Int']['output']>;
+    dogWalking?: Maybe<Scalars['Boolean']['output']>;
+    drafts?: Maybe<Array<TrailDraft>>;
+    draftsCount?: Maybe<Scalars['Int']['output']>;
+    elevationChange?: Maybe<Scalars['String']['output']>;
+    events?: Maybe<Array<Event>>;
+    eventsCount?: Maybe<Scalars['Int']['output']>;
+    fall?: Maybe<Scalars['Boolean']['output']>;
+    frisbeeGolf?: Maybe<Scalars['Boolean']['output']>;
+    heroImage?: Maybe<Scalars['String']['output']>;
+    hiking?: Maybe<Scalars['Boolean']['output']>;
+    horsebackRiding?: Maybe<Scalars['Boolean']['output']>;
+    id: Scalars['ID']['output'];
+    length?: Maybe<Scalars['String']['output']>;
+    liveUrl?: Maybe<Scalars['String']['output']>;
+    maintainer?: Maybe<Scalars['String']['output']>;
+    makeDrafts?: Maybe<Scalars['String']['output']>;
+    mushing?: Maybe<Scalars['Boolean']['output']>;
+    open?: Maybe<Scalars['Boolean']['output']>;
+    orgUnits?: Maybe<Array<OrgUnit>>;
+    orgUnitsCount?: Maybe<Scalars['Int']['output']>;
+    owner?: Maybe<User>;
+    park?: Maybe<Park>;
+    plans?: Maybe<Array<Plan>>;
+    plansCount?: Maybe<Scalars['Int']['output']>;
+    publicNotices?: Maybe<Array<PublicNotice>>;
+    publicNoticesCount?: Maybe<Scalars['Int']['output']>;
+    publishAt?: Maybe<Scalars['DateTime']['output']>;
+    redirect?: Maybe<Redirect>;
+    reviewDate?: Maybe<Scalars['DateTime']['output']>;
+    running?: Maybe<Scalars['Boolean']['output']>;
+    services?: Maybe<Array<Service>>;
+    servicesCount?: Maybe<Scalars['Int']['output']>;
+    slug?: Maybe<Scalars['String']['output']>;
+    snowMachining?: Maybe<Scalars['Boolean']['output']>;
+    snowshoeing?: Maybe<Scalars['Boolean']['output']>;
+    spring?: Maybe<Scalars['Boolean']['output']>;
+    status?: Maybe<Scalars['String']['output']>;
+    summer?: Maybe<Scalars['Boolean']['output']>;
+    tags?: Maybe<Array<Tag>>;
+    tagsCount?: Maybe<Scalars['Int']['output']>;
+    title?: Maybe<Scalars['String']['output']>;
+    topics?: Maybe<Array<Topic>>;
+    topicsCount?: Maybe<Scalars['Int']['output']>;
+    unpublishAt?: Maybe<Scalars['DateTime']['output']>;
+    updatedAt?: Maybe<Scalars['DateTime']['output']>;
+    userGroups?: Maybe<Array<UserGroup>>;
+    userGroupsCount?: Maybe<Scalars['Int']['output']>;
+    versions?: Maybe<Array<TrailVersion>>;
+    versionsCount?: Maybe<Scalars['Int']['output']>;
+    winter?: Maybe<Scalars['Boolean']['output']>;
+  };
 
 export type TrailActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
@@ -24226,11 +22415,9 @@ export type TrailActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type TrailActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type TrailAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -24240,11 +22427,9 @@ export type TrailAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type TrailAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type TrailCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -24254,11 +22439,9 @@ export type TrailCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type TrailCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type TrailContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -24268,11 +22451,9 @@ export type TrailContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type TrailContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type TrailDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -24282,11 +22463,9 @@ export type TrailDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type TrailDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type TrailDraftsArgs = {
   cursor?: InputMaybe<TrailDraftWhereUniqueInput>;
@@ -24296,11 +22475,9 @@ export type TrailDraftsArgs = {
   where?: TrailDraftWhereInput;
 };
 
-
 export type TrailDraftsCountArgs = {
   where?: TrailDraftWhereInput;
 };
-
 
 export type TrailEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -24310,11 +22487,9 @@ export type TrailEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type TrailEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type TrailOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -24324,11 +22499,9 @@ export type TrailOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type TrailOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type TrailPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -24338,11 +22511,9 @@ export type TrailPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type TrailPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type TrailPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -24352,11 +22523,9 @@ export type TrailPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type TrailPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type TrailServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -24366,11 +22535,9 @@ export type TrailServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type TrailServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type TrailTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -24380,11 +22547,9 @@ export type TrailTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type TrailTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type TrailTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -24394,11 +22559,9 @@ export type TrailTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type TrailTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type TrailUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -24408,11 +22571,9 @@ export type TrailUserGroupsArgs = {
   where?: UserGroupWhereInput;
 };
 
-
 export type TrailUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
 };
-
 
 export type TrailVersionsArgs = {
   cursor?: InputMaybe<TrailVersionWhereUniqueInput>;
@@ -24421,7 +22582,6 @@ export type TrailVersionsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: TrailVersionWhereInput;
 };
-
 
 export type TrailVersionsCountArgs = {
   where?: TrailVersionWhereInput;
@@ -24552,7 +22712,6 @@ export type TrailDraft = {
   winter?: Maybe<Scalars['Boolean']['output']>;
 };
 
-
 export type TrailDraftActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -24561,11 +22720,9 @@ export type TrailDraftActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type TrailDraftActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type TrailDraftAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -24575,11 +22732,9 @@ export type TrailDraftAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type TrailDraftAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type TrailDraftCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -24589,11 +22744,9 @@ export type TrailDraftCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type TrailDraftCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type TrailDraftContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -24603,11 +22756,9 @@ export type TrailDraftContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type TrailDraftContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type TrailDraftDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -24617,11 +22768,9 @@ export type TrailDraftDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type TrailDraftDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type TrailDraftEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -24631,11 +22780,9 @@ export type TrailDraftEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type TrailDraftEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type TrailDraftOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -24645,11 +22792,9 @@ export type TrailDraftOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type TrailDraftOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type TrailDraftPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -24659,11 +22804,9 @@ export type TrailDraftPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type TrailDraftPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type TrailDraftPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -24673,11 +22816,9 @@ export type TrailDraftPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type TrailDraftPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type TrailDraftServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -24687,11 +22828,9 @@ export type TrailDraftServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type TrailDraftServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type TrailDraftTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -24701,11 +22840,9 @@ export type TrailDraftTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type TrailDraftTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type TrailDraftTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -24715,11 +22852,9 @@ export type TrailDraftTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type TrailDraftTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type TrailDraftUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -24728,7 +22863,6 @@ export type TrailDraftUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type TrailDraftUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -25151,7 +23285,6 @@ export type TrailVersion = {
   winter?: Maybe<Scalars['Boolean']['output']>;
 };
 
-
 export type TrailVersionActionsArgs = {
   cursor?: InputMaybe<InternalLinkWhereUniqueInput>;
   orderBy?: Array<InternalLinkOrderByInput>;
@@ -25160,11 +23293,9 @@ export type TrailVersionActionsArgs = {
   where?: InternalLinkWhereInput;
 };
 
-
 export type TrailVersionActionsCountArgs = {
   where?: InternalLinkWhereInput;
 };
-
 
 export type TrailVersionAssemblyDistrictsArgs = {
   cursor?: InputMaybe<AssemblyDistrictWhereUniqueInput>;
@@ -25174,11 +23305,9 @@ export type TrailVersionAssemblyDistrictsArgs = {
   where?: AssemblyDistrictWhereInput;
 };
 
-
 export type TrailVersionAssemblyDistrictsCountArgs = {
   where?: AssemblyDistrictWhereInput;
 };
-
 
 export type TrailVersionCommunitiesArgs = {
   cursor?: InputMaybe<CommunityWhereUniqueInput>;
@@ -25188,11 +23317,9 @@ export type TrailVersionCommunitiesArgs = {
   where?: CommunityWhereInput;
 };
 
-
 export type TrailVersionCommunitiesCountArgs = {
   where?: CommunityWhereInput;
 };
-
 
 export type TrailVersionContactsArgs = {
   cursor?: InputMaybe<ContactWhereUniqueInput>;
@@ -25202,11 +23329,9 @@ export type TrailVersionContactsArgs = {
   where?: ContactWhereInput;
 };
 
-
 export type TrailVersionContactsCountArgs = {
   where?: ContactWhereInput;
 };
-
 
 export type TrailVersionDocumentsArgs = {
   cursor?: InputMaybe<DocumentWhereUniqueInput>;
@@ -25216,11 +23341,9 @@ export type TrailVersionDocumentsArgs = {
   where?: DocumentWhereInput;
 };
 
-
 export type TrailVersionDocumentsCountArgs = {
   where?: DocumentWhereInput;
 };
-
 
 export type TrailVersionEventsArgs = {
   cursor?: InputMaybe<EventWhereUniqueInput>;
@@ -25230,11 +23353,9 @@ export type TrailVersionEventsArgs = {
   where?: EventWhereInput;
 };
 
-
 export type TrailVersionEventsCountArgs = {
   where?: EventWhereInput;
 };
-
 
 export type TrailVersionOrgUnitsArgs = {
   cursor?: InputMaybe<OrgUnitWhereUniqueInput>;
@@ -25244,11 +23365,9 @@ export type TrailVersionOrgUnitsArgs = {
   where?: OrgUnitWhereInput;
 };
 
-
 export type TrailVersionOrgUnitsCountArgs = {
   where?: OrgUnitWhereInput;
 };
-
 
 export type TrailVersionPlansArgs = {
   cursor?: InputMaybe<PlanWhereUniqueInput>;
@@ -25258,11 +23377,9 @@ export type TrailVersionPlansArgs = {
   where?: PlanWhereInput;
 };
 
-
 export type TrailVersionPlansCountArgs = {
   where?: PlanWhereInput;
 };
-
 
 export type TrailVersionPublicNoticesArgs = {
   cursor?: InputMaybe<PublicNoticeWhereUniqueInput>;
@@ -25272,11 +23389,9 @@ export type TrailVersionPublicNoticesArgs = {
   where?: PublicNoticeWhereInput;
 };
 
-
 export type TrailVersionPublicNoticesCountArgs = {
   where?: PublicNoticeWhereInput;
 };
-
 
 export type TrailVersionServicesArgs = {
   cursor?: InputMaybe<ServiceWhereUniqueInput>;
@@ -25286,11 +23401,9 @@ export type TrailVersionServicesArgs = {
   where?: ServiceWhereInput;
 };
 
-
 export type TrailVersionServicesCountArgs = {
   where?: ServiceWhereInput;
 };
-
 
 export type TrailVersionTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
@@ -25300,11 +23413,9 @@ export type TrailVersionTagsArgs = {
   where?: TagWhereInput;
 };
 
-
 export type TrailVersionTagsCountArgs = {
   where?: TagWhereInput;
 };
-
 
 export type TrailVersionTopicsArgs = {
   cursor?: InputMaybe<TopicWhereUniqueInput>;
@@ -25314,11 +23425,9 @@ export type TrailVersionTopicsArgs = {
   where?: TopicWhereInput;
 };
 
-
 export type TrailVersionTopicsCountArgs = {
   where?: TopicWhereInput;
 };
-
 
 export type TrailVersionUserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
@@ -25327,7 +23436,6 @@ export type TrailVersionUserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type TrailVersionUserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -25647,7 +23755,6 @@ export type Url = WithTitle & {
   url?: Maybe<Scalars['String']['output']>;
 };
 
-
 export type UrlTagsArgs = {
   cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
@@ -25655,7 +23762,6 @@ export type UrlTagsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: TagWhereInput;
 };
-
 
 export type UrlTagsCountArgs = {
   where?: TagWhereInput;
@@ -25744,7 +23850,6 @@ export type User = {
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
-
 export type UserGroupsArgs = {
   cursor?: InputMaybe<UserGroupWhereUniqueInput>;
   orderBy?: Array<UserGroupOrderByInput>;
@@ -25752,7 +23857,6 @@ export type UserGroupsArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserGroupWhereInput;
 };
-
 
 export type UserGroupsCountArgs = {
   where?: UserGroupWhereInput;
@@ -25779,7 +23883,6 @@ export type UserGroup = {
   usersCount?: Maybe<Scalars['Int']['output']>;
 };
 
-
 export type UserGroupUsersArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: Array<UserOrderByInput>;
@@ -25787,7 +23890,6 @@ export type UserGroupUsersArgs = {
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: UserWhereInput;
 };
-
 
 export type UserGroupUsersCountArgs = {
   where?: UserWhereInput;
@@ -25999,82 +24101,922 @@ export type CreateDocumentsMutationVariables = Exact<{
   data: Array<DocumentCreateInput> | DocumentCreateInput;
 }>;
 
-
-export type CreateDocumentsMutation = { __typename?: 'Mutation', createDocuments?: Array<{ __typename?: 'Document', id: string, title?: string | null, file?: { __typename?: 'FileFieldOutput', filename: string, filesize: number, url: string } | null, tags?: Array<{ __typename?: 'Tag', id: string, name?: string | null }> | null } | null> | null };
+export type CreateDocumentsMutation = {
+  __typename?: 'Mutation';
+  createDocuments?: Array<{
+    __typename?: 'Document';
+    id: string;
+    title?: string | null;
+    file?: {
+      __typename?: 'FileFieldOutput';
+      filename: string;
+      filesize: number;
+      url: string;
+    } | null;
+    tags?: Array<{
+      __typename?: 'Tag';
+      id: string;
+      name?: string | null;
+    }> | null;
+  } | null> | null;
+};
 
 export type TagsQueryVariables = Exact<{
   query?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type TagsQuery = { __typename?: 'Query', tags?: Array<{ __typename?: 'Tag', id: string, name?: string | null }> | null };
+export type TagsQuery = {
+  __typename?: 'Query';
+  tags?: Array<{ __typename?: 'Tag'; id: string; name?: string | null }> | null;
+};
 
 export type QueryQueryVariables = Exact<{
   query?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type QueryQuery = { __typename?: 'Query', documentCollections?: Array<{ __typename?: 'DocumentCollection', id: string, title?: string | null }> | null };
+export type QueryQuery = {
+  __typename?: 'Query';
+  documentCollections?: Array<{
+    __typename?: 'DocumentCollection';
+    id: string;
+    title?: string | null;
+  }> | null;
+};
 
 export type GetServicesQueryVariables = Exact<{
   where: ServiceWhereInput;
 }>;
 
-
-export type GetServicesQuery = { __typename?: 'Query', services?: Array<{ __typename?: 'Service', title?: string | null, slug?: string | null, id: string }> | null };
+export type GetServicesQuery = {
+  __typename?: 'Query';
+  services?: Array<{
+    __typename?: 'Service';
+    title?: string | null;
+    slug?: string | null;
+    id: string;
+  }> | null;
+};
 
 export type GetPageQueryVariables = Exact<{
   query: Scalars['String']['input'];
 }>;
 
-
-export type GetPageQuery = { __typename?: 'Query', internalSearch?: Array<{ __typename?: 'AssemblyDistrict', id: string, title?: string | null } | { __typename?: 'Board', id: string, title?: string | null } | { __typename?: 'BoardPage', id: string, title?: string | null } | { __typename?: 'Community', id: string, title?: string | null } | { __typename?: 'Document', id: string, title?: string | null } | { __typename?: 'ElectionsPage', id: string, title?: string | null } | { __typename?: 'Facility', id: string, title?: string | null } | { __typename?: 'HomePage', id: string, title?: string | null } | { __typename?: 'OrgUnit', id: string, title?: string | null } | { __typename?: 'Park', id: string, title?: string | null } | { __typename?: 'Plan', id: string, title?: string | null } | { __typename?: 'Policy', id: string, title?: string | null } | { __typename?: 'PublicNotice', id: string, title?: string | null } | { __typename?: 'Service', id: string, title?: string | null } | { __typename?: 'Topic', id: string, title?: string | null } | { __typename?: 'Trail', id: string, title?: string | null } | { __typename?: 'Url', id: string, title?: string | null } | null> | null };
+export type GetPageQuery = {
+  __typename?: 'Query';
+  internalSearch?: Array<
+    | { __typename?: 'AssemblyDistrict'; id: string; title?: string | null }
+    | { __typename?: 'Board'; id: string; title?: string | null }
+    | { __typename?: 'BoardPage'; id: string; title?: string | null }
+    | { __typename?: 'Community'; id: string; title?: string | null }
+    | { __typename?: 'Document'; id: string; title?: string | null }
+    | { __typename?: 'ElectionsPage'; id: string; title?: string | null }
+    | { __typename?: 'Facility'; id: string; title?: string | null }
+    | { __typename?: 'HomePage'; id: string; title?: string | null }
+    | { __typename?: 'OrgUnit'; id: string; title?: string | null }
+    | { __typename?: 'Park'; id: string; title?: string | null }
+    | { __typename?: 'Plan'; id: string; title?: string | null }
+    | { __typename?: 'Policy'; id: string; title?: string | null }
+    | { __typename?: 'PublicNotice'; id: string; title?: string | null }
+    | { __typename?: 'Service'; id: string; title?: string | null }
+    | { __typename?: 'Topic'; id: string; title?: string | null }
+    | { __typename?: 'Trail'; id: string; title?: string | null }
+    | { __typename?: 'Url'; id: string; title?: string | null }
+    | null
+  > | null;
+};
 
 export type DocumentCollectionQueryVariables = Exact<{
   where: DocumentCollectionWhereUniqueInput;
 }>;
 
-
-export type DocumentCollectionQuery = { __typename?: 'Query', documentCollection?: { __typename?: 'DocumentCollection', id: string, title?: string | null, documents?: Array<{ __typename?: 'Document', id: string, title?: string | null, file?: { __typename?: 'FileFieldOutput', filename: string, filesize: number, url: string } | null }> | null } | null };
+export type DocumentCollectionQuery = {
+  __typename?: 'Query';
+  documentCollection?: {
+    __typename?: 'DocumentCollection';
+    id: string;
+    title?: string | null;
+    documents?: Array<{
+      __typename?: 'Document';
+      id: string;
+      title?: string | null;
+      file?: {
+        __typename?: 'FileFieldOutput';
+        filename: string;
+        filesize: number;
+        url: string;
+      } | null;
+    }> | null;
+  } | null;
+};
 
 export type DocumentCollectionsQueryVariables = Exact<{
   where: DocumentCollectionWhereInput;
 }>;
 
-
-export type DocumentCollectionsQuery = { __typename?: 'Query', documentCollections?: Array<{ __typename?: 'DocumentCollection', id: string, title?: string | null }> | null };
+export type DocumentCollectionsQuery = {
+  __typename?: 'Query';
+  documentCollections?: Array<{
+    __typename?: 'DocumentCollection';
+    id: string;
+    title?: string | null;
+  }> | null;
+};
 
 export type GetInternalLinkQueryVariables = Exact<{
   id: Scalars['ID']['input'];
   type: Scalars['String']['input'];
 }>;
 
-
-export type GetInternalLinkQuery = { __typename?: 'Query', getInternalLink?: { __typename: 'AssemblyDistrict', id: string, title?: string | null } | { __typename: 'Board', id: string, title?: string | null } | { __typename: 'BoardPage', id: string, title?: string | null } | { __typename: 'Community', id: string, title?: string | null } | { __typename: 'Document', id: string, title?: string | null } | { __typename: 'ElectionsPage', id: string, title?: string | null } | { __typename: 'Facility', id: string, title?: string | null } | { __typename: 'HomePage', id: string, title?: string | null } | { __typename: 'OrgUnit', id: string, title?: string | null } | { __typename: 'Park', id: string, title?: string | null } | { __typename: 'Plan', id: string, title?: string | null } | { __typename: 'Policy', id: string, title?: string | null } | { __typename: 'PublicNotice', id: string, title?: string | null } | { __typename: 'Service', id: string, title?: string | null } | { __typename: 'Topic', id: string, title?: string | null } | { __typename: 'Trail', id: string, title?: string | null } | { __typename: 'Url', id: string, title?: string | null } | null };
+export type GetInternalLinkQuery = {
+  __typename?: 'Query';
+  getInternalLink?:
+    | { __typename: 'AssemblyDistrict'; id: string; title?: string | null }
+    | { __typename: 'Board'; id: string; title?: string | null }
+    | { __typename: 'BoardPage'; id: string; title?: string | null }
+    | { __typename: 'Community'; id: string; title?: string | null }
+    | { __typename: 'Document'; id: string; title?: string | null }
+    | { __typename: 'ElectionsPage'; id: string; title?: string | null }
+    | { __typename: 'Facility'; id: string; title?: string | null }
+    | { __typename: 'HomePage'; id: string; title?: string | null }
+    | { __typename: 'OrgUnit'; id: string; title?: string | null }
+    | { __typename: 'Park'; id: string; title?: string | null }
+    | { __typename: 'Plan'; id: string; title?: string | null }
+    | { __typename: 'Policy'; id: string; title?: string | null }
+    | { __typename: 'PublicNotice'; id: string; title?: string | null }
+    | { __typename: 'Service'; id: string; title?: string | null }
+    | { __typename: 'Topic'; id: string; title?: string | null }
+    | { __typename: 'Trail'; id: string; title?: string | null }
+    | { __typename: 'Url'; id: string; title?: string | null }
+    | null;
+};
 
 export type LinkSearchQueryVariables = Exact<{
   query?: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type LinkSearchQuery = { __typename?: 'Query', internalSearch?: Array<{ __typename: 'AssemblyDistrict', id: string, title?: string | null } | { __typename: 'Board', id: string, title?: string | null } | { __typename: 'BoardPage', id: string, title?: string | null } | { __typename: 'Community', id: string, title?: string | null } | { __typename: 'Document', id: string, title?: string | null } | { __typename: 'ElectionsPage', id: string, title?: string | null } | { __typename: 'Facility', id: string, title?: string | null } | { __typename: 'HomePage', id: string, title?: string | null } | { __typename: 'OrgUnit', id: string, title?: string | null } | { __typename: 'Park', id: string, title?: string | null } | { __typename: 'Plan', id: string, title?: string | null } | { __typename: 'Policy', id: string, title?: string | null } | { __typename: 'PublicNotice', id: string, title?: string | null } | { __typename: 'Service', id: string, title?: string | null } | { __typename: 'Topic', id: string, title?: string | null } | { __typename: 'Trail', id: string, title?: string | null } | { __typename: 'Url', id: string, title?: string | null } | null> | null };
+export type LinkSearchQuery = {
+  __typename?: 'Query';
+  internalSearch?: Array<
+    | { __typename: 'AssemblyDistrict'; id: string; title?: string | null }
+    | { __typename: 'Board'; id: string; title?: string | null }
+    | { __typename: 'BoardPage'; id: string; title?: string | null }
+    | { __typename: 'Community'; id: string; title?: string | null }
+    | { __typename: 'Document'; id: string; title?: string | null }
+    | { __typename: 'ElectionsPage'; id: string; title?: string | null }
+    | { __typename: 'Facility'; id: string; title?: string | null }
+    | { __typename: 'HomePage'; id: string; title?: string | null }
+    | { __typename: 'OrgUnit'; id: string; title?: string | null }
+    | { __typename: 'Park'; id: string; title?: string | null }
+    | { __typename: 'Plan'; id: string; title?: string | null }
+    | { __typename: 'Policy'; id: string; title?: string | null }
+    | { __typename: 'PublicNotice'; id: string; title?: string | null }
+    | { __typename: 'Service'; id: string; title?: string | null }
+    | { __typename: 'Topic'; id: string; title?: string | null }
+    | { __typename: 'Trail'; id: string; title?: string | null }
+    | { __typename: 'Url'; id: string; title?: string | null }
+    | null
+  > | null;
+};
 
 export type UploadImageMutationVariables = Exact<{
   upload: Scalars['Upload']['input'];
   title: Scalars['String']['input'];
 }>;
 
+export type UploadImageMutation = {
+  __typename?: 'Mutation';
+  createImage?: {
+    __typename?: 'Image';
+    file?: { __typename?: 'ImageFieldOutput'; url: string } | null;
+  } | null;
+};
 
-export type UploadImageMutation = { __typename?: 'Mutation', createImage?: { __typename?: 'Image', file?: { __typename?: 'ImageFieldOutput', url: string } | null } | null };
-
-
-export const CreateDocumentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDocuments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocumentCreateInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDocuments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"filesize"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<CreateDocumentsMutation, CreateDocumentsMutationVariables>;
-export const TagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Tags"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"name"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"contains"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"mode"},"value":{"kind":"EnumValue","value":"insensitive"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<TagsQuery, TagsQueryVariables>;
-export const QueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Query"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"documentCollections"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"contains"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"mode"},"value":{"kind":"EnumValue","value":"insensitive"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;
-export const GetServicesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetServices"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ServiceWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"services"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetServicesQuery, GetServicesQueryVariables>;
-export const GetPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"internalSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WithTitle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetPageQuery, GetPageQueryVariables>;
-export const DocumentCollectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DocumentCollection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocumentCollectionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"documentCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"filesize"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]}}]} as unknown as DocumentNode<DocumentCollectionQuery, DocumentCollectionQueryVariables>;
-export const DocumentCollectionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DocumentCollections"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DocumentCollectionWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"documentCollections"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<DocumentCollectionsQuery, DocumentCollectionsQueryVariables>;
-export const GetInternalLinkDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetInternalLink"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"type"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getInternalLink"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"type"},"value":{"kind":"Variable","name":{"kind":"Name","value":"type"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WithTitle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetInternalLinkQuery, GetInternalLinkQueryVariables>;
-export const LinkSearchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LinkSearch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"query"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"internalSearch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"query"},"value":{"kind":"Variable","name":{"kind":"Name","value":"query"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WithTitle"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<LinkSearchQuery, LinkSearchQueryVariables>;
-export const UploadImageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadImage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"upload"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Upload"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"title"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createImage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"title"},"value":{"kind":"Variable","name":{"kind":"Name","value":"title"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"file"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"upload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"upload"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<UploadImageMutation, UploadImageMutationVariables>;
+export const CreateDocumentsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreateDocuments' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'data' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'ListType',
+              type: {
+                kind: 'NonNullType',
+                type: {
+                  kind: 'NamedType',
+                  name: { kind: 'Name', value: 'DocumentCreateInput' },
+                },
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createDocuments' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'data' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'file' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'filename' },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'filesize' },
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'tags' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateDocumentsMutation,
+  CreateDocumentsMutationVariables
+>;
+export const TagsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Tags' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'query' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'tags' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'name' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'contains' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'query' },
+                            },
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'mode' },
+                            value: { kind: 'EnumValue', value: 'insensitive' },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<TagsQuery, TagsQueryVariables>;
+export const QueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Query' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'query' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+          defaultValue: { kind: 'StringValue', value: '', block: false },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'documentCollections' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'title' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'contains' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'query' },
+                            },
+                          },
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'mode' },
+                            value: { kind: 'EnumValue', value: 'insensitive' },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<QueryQuery, QueryQueryVariables>;
+export const GetServicesDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetServices' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'ServiceWhereInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'services' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'slug' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetServicesQuery, GetServicesQueryVariables>;
+export const GetPageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetPage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'query' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'internalSearch' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'query' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'query' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'WithTitle' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetPageQuery, GetPageQueryVariables>;
+export const DocumentCollectionDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'DocumentCollection' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: {
+                kind: 'Name',
+                value: 'DocumentCollectionWhereUniqueInput',
+              },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'documentCollection' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'documents' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'file' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'filename' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'filesize' },
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'url' },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DocumentCollectionQuery,
+  DocumentCollectionQueryVariables
+>;
+export const DocumentCollectionsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'DocumentCollections' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'where' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'DocumentCollectionWhereInput' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'documentCollections' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'where' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'where' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DocumentCollectionsQuery,
+  DocumentCollectionsQueryVariables
+>;
+export const GetInternalLinkDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'GetInternalLink' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'type' } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'getInternalLink' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'id' },
+                },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'type' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'type' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'WithTitle' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetInternalLinkQuery,
+  GetInternalLinkQueryVariables
+>;
+export const LinkSearchDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'LinkSearch' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'query' },
+          },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'internalSearch' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'query' },
+                value: {
+                  kind: 'Variable',
+                  name: { kind: 'Name', value: 'query' },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'WithTitle' },
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<LinkSearchQuery, LinkSearchQueryVariables>;
+export const UploadImageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UploadImage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'upload' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'Upload' },
+            },
+          },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: {
+            kind: 'Variable',
+            name: { kind: 'Name', value: 'title' },
+          },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'String' },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createImage' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'data' },
+                value: {
+                  kind: 'ObjectValue',
+                  fields: [
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'title' },
+                      value: {
+                        kind: 'Variable',
+                        name: { kind: 'Name', value: 'title' },
+                      },
+                    },
+                    {
+                      kind: 'ObjectField',
+                      name: { kind: 'Name', value: 'file' },
+                      value: {
+                        kind: 'ObjectValue',
+                        fields: [
+                          {
+                            kind: 'ObjectField',
+                            name: { kind: 'Name', value: 'upload' },
+                            value: {
+                              kind: 'Variable',
+                              name: { kind: 'Name', value: 'upload' },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'file' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UploadImageMutation, UploadImageMutationVariables>;

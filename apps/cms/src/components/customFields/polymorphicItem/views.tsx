@@ -1,11 +1,6 @@
-import {
-  FieldContainer,
-  FieldDescription,
-  FieldLabel,
-} from '@keystone-ui/fields';
+import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
@@ -42,13 +37,13 @@ function PrettyData({ data }: { data?: ItemValue | undefined }) {
 }
 export const Field = ({ field, value }: FieldProps<typeof controller>) => {
   return !value ? null : (
-    <FieldContainer>
-      <FieldLabel>{field.path}</FieldLabel>
-      <FieldDescription id={`${field.path}-description`}>
+    <div className="mb-4">
+      <FieldLabel>{field.fieldKey}</FieldLabel>
+      <FieldDescription id={`${field.fieldKey}-description`}>
         {field.description}
       </FieldDescription>
       <PrettyData data={value} />
-    </FieldContainer>
+    </div>
   );
 };
 
@@ -56,32 +51,20 @@ export const Cell: CellComponent = ({
   item,
   field,
 }: ComponentProps<CellComponent>) => {
-  return <PrettyData data={item[field.path]} />;
-};
-
-export const CardValue: CardValueComponent = ({
-  item,
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <FieldContainer>
-      <FieldLabel>{field.label}</FieldLabel>
-      <PrettyData data={item[field.path]} />
-    </FieldContainer>
-  );
+  return <PrettyData data={item[field.fieldKey] as ItemValue | undefined} />;
 };
 
 export const controller = (
   config: FieldControllerConfig<{ query: string }>,
 ): FieldController<ItemValue | undefined | null> => {
   return {
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: `${config.path}${config.fieldMeta.query}`,
+    graphqlSelection: `${config.fieldKey}${config.fieldMeta.query}`,
     defaultValue: undefined,
     deserialize: (data) => {
-      return data[config.path];
+      return data[config.fieldKey];
     },
     serialize: () => ({}),
   };

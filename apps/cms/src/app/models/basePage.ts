@@ -1,4 +1,4 @@
-import { BaseFields, graphql } from '@keystone-6/core';
+import { BaseFields, g } from '@keystone-6/core';
 import {
   BasePageOptions,
   contactRelationship,
@@ -32,8 +32,8 @@ export function basePage(
 ): BaseFields<any> {
   return {
     canEdit: virtual({
-      label: 'Insufficient Access',
       ui: {
+        label: 'Insufficient Access',
         createView: {
           fieldMode: 'hidden',
         },
@@ -52,8 +52,8 @@ export function basePage(
         },
         views: './src/components/customFields/InsufficientAccessField.tsx',
       },
-      field: graphql.field({
-        type: graphql.String,
+      field: g.field({
+        type: g.String,
         resolve() {
           return 'You do not have permission to edit this page. Any changes you make will not be saved. Please contact support to get access to this page';
         },
@@ -89,7 +89,15 @@ export function basePage(
       hooks: {
         ...opts?.customTextOpts?.hooks,
         afterOperation: async (args) => {
-          await opts?.customTextOpts?.hooks?.afterOperation?.(args);
+          const userHook = opts?.customTextOpts?.hooks?.afterOperation;
+          if (typeof userHook === 'function') {
+            await userHook(args);
+          } else if (
+            typeof userHook === 'object' &&
+            userHook[args.operation]
+          ) {
+            await userHook[args.operation]!(args as any);
+          }
           const markdown = args.item?.body as string | undefined | null;
           if (!markdown) return;
           const json = await markdownToTipTapJson(markdown as string);
@@ -126,15 +134,6 @@ export function basePage(
           itemView: {
             fieldPosition: 'sidebar',
           },
-          displayMode: 'cards',
-          cardFields: ['label', 'url'],
-          inlineCreate: {
-            fields: ['label', 'url'],
-          },
-          inlineConnect: true,
-          inlineEdit: {
-            fields: ['label', 'url'],
-          },
         },
         many: false,
       }),
@@ -146,15 +145,6 @@ export function basePage(
         ui: {
           itemView: {
             fieldPosition: 'sidebar',
-          },
-          displayMode: 'cards',
-          cardFields: ['label', 'url'],
-          inlineCreate: {
-            fields: ['label', 'url'],
-          },
-          inlineConnect: true,
-          inlineEdit: {
-            fields: ['label', 'url'],
           },
         },
         many: true,
@@ -168,10 +158,6 @@ export function basePage(
           itemView: {
             fieldPosition: 'sidebar',
           },
-          displayMode: 'cards',
-          cardFields: ['label', 'item'],
-          inlineCreate: { fields: ['label', 'selectItem'] },
-          inlineEdit: { fields: ['label', 'selectItem'] },
         },
         many: true,
       }),
@@ -181,13 +167,6 @@ export function basePage(
       documents: relationship({
         ref: 'Document',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
     }),
 
@@ -196,15 +175,6 @@ export function basePage(
         ref: 'Location',
         many: false,
         ui: {
-          displayMode: 'cards',
-          cardFields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
-          inlineCreate: {
-            fields: ['title', 'lineOne', 'lineTwo', 'city', 'state', 'zip'],
-          },
-          inlineEdit: {
-            fields: ['lineOne', 'lineTwo', 'city', 'state', 'zip'],
-          },
-          inlineConnect: true,
           itemView: {
             fieldPosition: 'sidebar',
           },
@@ -221,16 +191,6 @@ export function basePage(
       hours: relationship({
         ref: 'OperatingHour',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['day', 'open', 'close'],
-          inlineCreate: {
-            fields: ['day', 'open', 'close'],
-          },
-          inlineEdit: {
-            fields: ['day', 'open', 'close'],
-          },
-        },
       }),
     }),
 
@@ -356,8 +316,8 @@ export function basePage(
     hideSideNav: checkbox({
       defaultValue: false,
 
-      label: 'Hide Side Navigation',
       ui: {
+        label: 'Hide Side Navigation',
         description:
           'If checked, the side navigation will be hidden on the front-end for this page.',
         itemView: {

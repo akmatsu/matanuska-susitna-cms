@@ -15,7 +15,10 @@ export const Image = list({
     ...titleAndDescription({ isUnique: false }),
     tags: tags('images'),
     file: image({
-      storage: appConfig.nodeEnv === 'production' ? 's3Images' : 'localImages',
+      storage:
+        appConfig.nodeEnv === 'production'
+          ? appConfig.storage.s3Images
+          : appConfig.storage.localImages,
       ui: {
         listView: {
           fieldMode: 'read',

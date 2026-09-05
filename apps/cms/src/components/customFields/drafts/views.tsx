@@ -1,28 +1,26 @@
 'use client';
 
-import { CellContainer, CellLink } from '@keystone-6/core/admin-ui/components';
+import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import {
   CellComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
-import { Button } from '@keystone-ui/button';
-import { FieldContainer } from '@keystone-ui/fields';
+import { Button } from '@keystar/ui/button';
 
 import { useParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { plural, singular } from 'pluralize';
 import { DraftFieldMeta } from '.';
 import { ComponentProps, useState } from 'react';
-import { useToasts } from '@keystone-ui/toast';
+import { toastQueue } from '@keystar/ui/toast';
 import kebabCase from 'voca/kebab_case';
 
 export function Field({ field }: FieldProps<typeof controller>) {
   const router = useRouter();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  const { addToast } = useToasts();
 
   const listSlug = plural(kebabCase(field.listName)).toLowerCase();
   const queryParam = encodeURIComponent(field.query ?? '');
@@ -52,41 +50,31 @@ export function Field({ field }: FieldProps<typeof controller>) {
       router.push(`/${singular(listSlug)}-drafts/${result.draftId}`);
     } catch (error: any) {
       console.error('Error creating draft:', error);
-      addToast({
-        title: 'Error',
-        message: `Failed to create draft: ${error?.message}`,
-        tone: 'negative',
-      });
+      toastQueue.critical(`Error: Failed to create draft: ${error?.message}`);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <FieldContainer>
+    <div className="mb-4">
       <div className="flex items-center gap-2">
-        <Button onClick={handleCreateDraft}>Create a new Draft</Button>
+        <Button onPress={handleCreateDraft}>Create a new Draft</Button>
       </div>
-    </FieldContainer>
+    </div>
   );
 }
 
 export const Cell: CellComponent = ({
   item,
   field,
-  linkTo,
 }: ComponentProps<CellComponent>) => {
-  const value = item[field.path] + '';
-  return linkTo ? (
-    <CellLink {...linkTo}>{value}</CellLink>
-  ) : (
-    <CellContainer>{value}</CellContainer>
-  );
+  const value = item[field.fieldKey] + '';
+  return <CellContainer>{value}</CellContainer>;
 };
-Cell.supportsLinkTo = true;
 
 export function CardValue() {
-  return <FieldContainer>Card</FieldContainer>;
+  return <div className="mb-4">Card</div>;
 }
 
 export const controller = (
@@ -95,15 +83,15 @@ export const controller = (
   return {
     query: config.fieldMeta.query ?? '',
     listName: config.fieldMeta.listName,
-    path: config.path,
+    fieldKey: config.fieldKey,
     label: config.label,
     description: config.description,
-    graphqlSelection: config.path,
+    graphqlSelection: config.fieldKey,
     defaultValue: null,
     deserialize: (data) => {
-      const drafts = data[config.path];
+      const drafts = data[config.fieldKey];
       return Array.isArray(drafts) ? drafts.map((draft) => draft.id) : null;
     },
-    serialize: (value) => ({ [config.path]: value }),
+    serialize: (value) => ({ [config.fieldKey]: value }),
   };
 };
