@@ -9,9 +9,8 @@ import {
 } from '@milkdown/kit/component/image-block';
 import {
   ApolloCache,
-  DefaultContext,
   FetchResult,
-  MutationFunctionOptions,
+  useMutation,
 } from '@keystone-6/core/admin-ui/apollo';
 import {
   Exact,
@@ -22,17 +21,19 @@ import {
 export function configureImageBlockFeature(
   editor: Editor,
   uploadImage: (
-    options?:
-      | MutationFunctionOptions<
-          UploadImageMutation,
-          Exact<{
-            upload: Scalars['Upload']['input'];
-            title: Scalars['String']['input'];
-          }>,
-          DefaultContext,
-          ApolloCache<any>
-        >
-      | undefined,
+    options: useMutation.MutationFunctionOptions<
+      UploadImageMutation,
+      Exact<{
+        upload: Scalars['Upload']['input'];
+        title: Scalars['String']['input'];
+      }>,
+      ApolloCache
+    > & {
+      variables: {
+        upload: Scalars['Upload']['input'];
+        title: Scalars['String']['input'];
+      };
+    },
   ) => Promise<FetchResult<UploadImageMutation>>,
 ) {
   editor

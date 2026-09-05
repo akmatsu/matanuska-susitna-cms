@@ -4,7 +4,6 @@ import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import Link from 'next/link';
 import { ComponentProps, useEffect, useState, type MouseEvent } from 'react';
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
@@ -107,20 +106,8 @@ export const Cell: CellComponent = ({
 }: ComponentProps<CellComponent>) => {
   return (
     <CellContainer>
-      <p>{item.heroImage}</p>
+      <p>{item.heroImage as string}</p>
     </CellContainer>
-  );
-};
-
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <div className="mb-4">
-      <FieldLabel>{field.label}</FieldLabel>
-
-      <p>I AM THE CARD YAYAYAY</p>
-    </div>
   );
 };
 

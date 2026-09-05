@@ -1,4 +1,8 @@
 import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+import {
+  GetInternalLinkQuery,
+  GetInternalLinkQueryVariables,
+} from '../../../../../../../graphql/graphql';
 
 const q = gql`
   query GetInternalLink($id: ID!, $type: String!) {
@@ -13,7 +17,7 @@ const q = gql`
 `;
 
 export function useGetLinkInfo(id: string, type: string) {
-  return useQuery(q, {
+  return useQuery<GetInternalLinkQuery, GetInternalLinkQueryVariables>(q, {
     variables: {
       id,
       type,

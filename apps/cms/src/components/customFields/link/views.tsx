@@ -6,7 +6,6 @@ import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import { FieldLabel, FieldDescription } from '@keystar/ui/field';
 
 import {
-  type CardValueComponent,
   type CellComponent,
   type FieldController,
   type FieldControllerConfig,
@@ -111,17 +110,6 @@ export const Cell: CellComponent = ({
   return <CellContainer>{value}</CellContainer>;
 };
 
-export const CardValue: CardValueComponent = ({
-  item,
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <div className="mb-4">
-      <FieldLabel>{field.label}</FieldLabel>
-      {item[field.fieldKey]}
-    </div>
-  );
-};
 
 export const controller = (
   config: FieldControllerConfig<any>,

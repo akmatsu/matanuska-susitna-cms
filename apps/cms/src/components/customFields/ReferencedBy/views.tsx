@@ -1,6 +1,5 @@
 import React, { ComponentProps } from 'react';
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
@@ -40,17 +39,6 @@ export const Cell: CellComponent = () => {
     <CellContainer>
       <p>I AM A CELL</p>
     </CellContainer>
-  );
-};
-
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <div className="mb-4">
-      <FieldLabel>{field.label}</FieldLabel>
-      <p>I AM THE CARD YAYAYAY</p>
-    </div>
   );
 };
 

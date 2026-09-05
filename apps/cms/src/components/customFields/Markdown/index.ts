@@ -1,4 +1,5 @@
 import {
+  type BaseFieldTypeInfo,
   type BaseListTypeInfo,
   fieldType,
   type FieldTypeFunc,
@@ -8,7 +9,7 @@ import { g } from '@keystone-6/core';
 import type { GArg, GInputObjectType, GList, GNonNull } from '@graphql-ts/schema';
 
 type TextFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
-  CommonFieldConfig<ListTypeInfo> & {
+  CommonFieldConfig<ListTypeInfo, BaseFieldTypeInfo> & {
     isIndexed?: boolean | 'unique';
   };
 

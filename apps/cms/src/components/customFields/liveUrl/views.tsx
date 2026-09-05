@@ -1,6 +1,5 @@
 'use client';
 import {
-  CardValueComponent,
   CellComponent,
   FieldControllerConfig,
   FieldProps,
@@ -30,21 +29,11 @@ export function Field({ field, value }: FieldProps<typeof controller>) {
 export const Cell: CellComponent = ({
   item,
 }: ComponentProps<CellComponent>) => {
+  const value = item.liveUrl as string;
   return (
     <CellContainer>
-      <Link href={item.liveUrl}>{item.liveUrl}</Link>
+      <Link href={value}>{value}</Link>
     </CellContainer>
-  );
-};
-
-export const CardValue: CardValueComponent = ({
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <div className="mb-4">
-      <FieldLabel>{field.label}</FieldLabel>
-      <p>I AM THE CARD YAYAYAY</p>
-    </div>
   );
 };
 

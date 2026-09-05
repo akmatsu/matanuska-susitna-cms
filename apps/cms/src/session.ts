@@ -1,8 +1,11 @@
-import type { Context } from '@keystone-6/core/admin-ui/apollo';
+import type { KeystoneContext } from '@keystone-6/core/types';
+import type { TypeInfo } from '../generated/keystone/types';
 import { AuthOptions, DefaultSession, getServerSession } from 'next-auth';
 import { DefaultJWT } from 'next-auth/jwt';
 import AzureADProvider from 'next-auth/providers/azure-ad';
 import { logger } from './configs/logger';
+
+type Context = KeystoneContext<TypeInfo<Session>>;
 
 let _keystoneContext: Context = (globalThis as any)._keystoneContext;
 

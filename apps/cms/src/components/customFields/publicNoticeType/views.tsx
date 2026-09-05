@@ -2,7 +2,6 @@
 
 import { CellContainer } from '@keystone-6/core/admin-ui/components';
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
@@ -108,20 +107,6 @@ export const Cell: CellComponent<typeof controller> = ({ item, field }) => {
   const value = item[field.fieldKey] + '';
 
   return <CellContainer>{value}</CellContainer>;
-};
-
-export const CardValue: CardValueComponent<typeof controller> = ({
-  item,
-  field,
-}) => {
-  const value = item[field.fieldKey] + '';
-
-  return (
-    <div className="mb-4">
-      <FieldLabel>{value}</FieldLabel>
-      {value}
-    </div>
-  );
 };
 
 export type AdminTextFieldMeta = {
@@ -235,6 +220,19 @@ export const controller = (
           ),
         },
       }),
+      parseGraphQL(value) {
+        return Object.entries(value ?? {}).flatMap(([type, val]) => {
+          if ((type === 'in' || type === 'notIn') && Array.isArray(val)) {
+            return [
+              {
+                type: type === 'notIn' ? 'not_matches' : 'matches',
+                value: val.map((v) => ({ label: String(v), value: String(v) })),
+              },
+            ];
+          }
+          return [];
+        });
+      },
       Label({ type, value }) {
         if (!value.length) {
           return type === 'not_matches' ? `is set` : `has no value`;

@@ -1,5 +1,6 @@
 import { g } from '@keystone-6/core';
 import {
+  BaseFieldTypeInfo,
   BaseListTypeInfo,
   CommonFieldConfig,
   fieldType,
@@ -7,7 +8,7 @@ import {
 } from '@keystone-6/core/types';
 
 type LinkFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
-  CommonFieldConfig<ListTypeInfo> & {
+  CommonFieldConfig<ListTypeInfo, BaseFieldTypeInfo> & {
     isIndex?: boolean | 'unique';
   };
 

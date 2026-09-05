@@ -2,13 +2,13 @@ import { BaseFields, g, group } from '@keystone-6/core';
 import { allowAll, denyAll } from '@keystone-6/core/access';
 import {
   relationship,
-  RelationshipFieldConfig,
   select,
   text,
   timestamp,
   virtual,
 } from '@keystone-6/core/fields';
 import {
+  BaseFieldTypeInfo,
   BaseItem,
   BaseListTypeInfo,
   CommonFieldConfig,
@@ -137,7 +137,7 @@ export function timestampField(opts?: {
   isNullable?: boolean;
   isRequired?: boolean;
   hideView?: boolean;
-  hooks?: FieldHooks<any>;
+  hooks?: FieldHooks<any, BaseFieldTypeInfo>;
   hideCreateView?: boolean;
 }) {
   const isFilterable = opts?.isFilterable ?? true;
@@ -407,7 +407,7 @@ export const slug = text({
   },
 });
 
-export const owner = relationship<any>({
+export const owner = relationship({
   ref: 'User',
   ui: {
     description:
@@ -490,13 +490,6 @@ export function documentRelationship() {
   return relationship({
     ref: 'Document',
     many: true,
-    ui: {
-      displayMode: 'cards',
-      inlineConnect: true,
-      cardFields: ['title', 'description', 'file', 'tags'],
-      inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-      inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-    },
   });
 }
 
@@ -504,18 +497,11 @@ export function documentRelationshipSingle() {
   return relationship({
     ref: 'Document',
     many: false,
-    ui: {
-      displayMode: 'cards',
-      inlineConnect: true,
-      cardFields: ['title', 'description', 'file', 'tags'],
-      inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-      inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-    },
   });
 }
 
 export function userGroups<T extends BaseListTypeInfo = any>() {
-  return relationship<T>({
+  return relationship<T, 'UserGroup'>({
     ref: `UserGroup`,
     many: true,
     ui: {
@@ -666,18 +652,9 @@ export async function typesenseDelete({
   }
 }
 
-export function cardsUi<T extends BaseListTypeInfo>(fields: string[]) {
-  return {
-    displayMode: 'cards' as const,
-    cardFields: fields,
-    inlineCreate: { fields },
-    inlineEdit: { fields },
-  } satisfies RelationshipFieldConfig<T, string>['ui'];
-}
-
 export const sidebar = {
   itemView: { fieldPosition: 'sidebar' },
-} satisfies CommonFieldConfig<BaseListTypeInfo>['ui'];
+} satisfies CommonFieldConfig<BaseListTypeInfo, BaseFieldTypeInfo>['ui'];
 
 const TOGGLE_TYPES = [
   { label: 'Yes', value: 1 },

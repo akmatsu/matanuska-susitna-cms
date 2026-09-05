@@ -29,18 +29,6 @@ export const FacilityListItem = list({
     }),
     facility: relationship({
       ref: 'Facility',
-
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        inlineEdit: {
-          fields: ['title', 'address', 'hours'],
-        },
-        inlineCreate: {
-          fields: ['title', 'address', 'hours'],
-        },
-        cardFields: ['title', 'address', 'hours'],
-      },
     }),
   },
 });

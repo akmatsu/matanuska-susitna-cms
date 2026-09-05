@@ -18,14 +18,6 @@ export const ExternalLink = list({
     }),
     url: relationship({
       ref: 'Url',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['title', 'url', 'owner'],
-        inlineCreate: {
-          fields: ['title', 'url'],
-        },
-        inlineConnect: true,
-      },
     }),
   },
 });

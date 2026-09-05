@@ -1,7 +1,6 @@
 import { FieldDescription, FieldLabel } from '@keystar/ui/field';
 
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
@@ -52,19 +51,7 @@ export const Cell: CellComponent = ({
   item,
   field,
 }: ComponentProps<CellComponent>) => {
-  return <PrettyData data={item[field.fieldKey]} />;
-};
-
-export const CardValue: CardValueComponent = ({
-  item,
-  field,
-}: ComponentProps<CardValueComponent>) => {
-  return (
-    <div className="mb-4">
-      <FieldLabel>{field.label}</FieldLabel>
-      <PrettyData data={item[field.fieldKey]} />
-    </div>
-  );
+  return <PrettyData data={item[field.fieldKey] as ItemValue | undefined} />;
 };
 
 export const controller = (

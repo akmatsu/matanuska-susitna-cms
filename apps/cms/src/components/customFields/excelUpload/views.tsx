@@ -6,7 +6,6 @@ import { FieldLabel } from '@keystar/ui/field';
 import clsx from 'clsx';
 import * as XLSX from 'xlsx';
 import {
-  CardValueComponent,
   CellComponent,
   FieldController,
   FieldControllerConfig,
@@ -201,15 +200,6 @@ export const controller = (
       [config.fieldKey]: value,
     }),
   };
-};
-
-export const CardValue: CardValueComponent<typeof controller> = ({ field }) => {
-  const value = field.sheetName;
-  return (
-    <div>
-      {value && Array.isArray(value) ? `${value.length} rows` : 'No data'}
-    </div>
-  );
 };
 
 export const Cell: CellComponent<typeof controller> = (props) => {

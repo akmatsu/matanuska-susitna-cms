@@ -24,12 +24,6 @@ const featuredItem = list({
     icon: iconSelect,
     linkedItem: relationship({
       ref: 'InternalLink',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['label', 'item'],
-        inlineCreate: { fields: ['label', 'selectItem'] },
-        inlineEdit: { fields: ['label', 'selectItem'] },
-      },
     }),
   },
   hooks: {
@@ -72,12 +66,6 @@ const HomePage = list({
     featuredItems: relationship({
       ref: 'featuredItem',
       many: true,
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['linkedItem', 'order', 'icon'],
-        inlineEdit: { fields: ['linkedItem', 'order', 'icon'] },
-        inlineCreate: { fields: ['linkedItem', 'order', 'icon'] },
-      },
     }),
     ...timestamps,
   },

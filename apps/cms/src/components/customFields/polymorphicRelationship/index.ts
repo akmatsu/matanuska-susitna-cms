@@ -1,12 +1,13 @@
 import { json } from '@keystone-6/core/fields';
 import {
+  BaseFieldTypeInfo,
   BaseListTypeInfo,
   CommonFieldConfig,
   FieldTypeFunc,
 } from '@keystone-6/core/types';
 
 export function polymorphicRelationship<ListTypeInfo extends BaseListTypeInfo>(
-  config: CommonFieldConfig<ListTypeInfo> = {},
+  config: CommonFieldConfig<ListTypeInfo, BaseFieldTypeInfo> = {},
 ): FieldTypeFunc<ListTypeInfo> {
   return json({
     ...config,

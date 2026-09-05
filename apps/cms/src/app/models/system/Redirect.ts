@@ -19,12 +19,6 @@ export const Redirect = list({
     }),
     to: relationship({
       ref: 'InternalLink',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['label', 'item'],
-        inlineCreate: { fields: ['label', 'selectItem'] },
-        inlineEdit: { fields: ['label', 'selectItem'] },
-      },
       access: {
         read: { item: allowAll, filter: allowAll, order: allowAll },
       },

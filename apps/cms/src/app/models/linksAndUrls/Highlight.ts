@@ -76,12 +76,6 @@ export const Highlight = list({
     message: text({ ui: { displayMode: 'textarea' } }),
     linkedItem: relationship({
       ref: 'InternalLink',
-      ui: {
-        displayMode: 'cards',
-        cardFields: ['label', 'item'],
-        inlineCreate: { fields: ['label', 'selectItem'] },
-        inlineEdit: { fields: ['label', 'selectItem'] },
-      },
       hooks: {
         async beforeOperation({ context, operation, item }) {
           if (operation === 'delete') {

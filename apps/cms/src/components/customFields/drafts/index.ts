@@ -1,5 +1,6 @@
 import { g } from '@keystone-6/core';
 import {
+  BaseFieldTypeInfo,
   BaseListTypeInfo,
   CommonFieldConfig,
   fieldType,
@@ -13,7 +14,7 @@ export type DraftFieldMeta = {
 };
 
 export type DraftFieldConfig<ListTypeInfo extends BaseListTypeInfo> =
-  CommonFieldConfig<ListTypeInfo> & {
+  CommonFieldConfig<ListTypeInfo, BaseFieldTypeInfo> & {
     ui?: DraftFieldMeta;
   };
 

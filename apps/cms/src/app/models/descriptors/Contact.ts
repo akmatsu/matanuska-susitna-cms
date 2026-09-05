@@ -104,15 +104,6 @@ export const Contact = list({
         itemView: {
           fieldPosition: 'sidebar',
         },
-        displayMode: 'cards',
-        cardFields: ['label', 'url'],
-        inlineCreate: {
-          fields: ['label', 'url'],
-        },
-        inlineConnect: true,
-        inlineEdit: {
-          fields: ['label', 'url'],
-        },
       },
       many: false,
     }),

@@ -25,17 +25,6 @@ const {
 
       directory: relationship({
         ref: 'Document',
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: {
-            fields: ['title', 'description', 'file', 'tags'],
-          },
-          inlineEdit: {
-            fields: ['title', 'description', 'file', 'tags'],
-          },
-        },
       }),
 
       directoryExcel: excelUpload({
@@ -52,37 +41,16 @@ const {
       linkToAgendas: relationship({
         ref: 'ExternalLink',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['label', 'url'],
-          inlineCreate: {
-            fields: ['label', 'url'],
-          },
-        },
       }),
 
       linkToResolutions: relationship({
         ref: 'ExternalLink',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['label', 'url'],
-          inlineCreate: {
-            fields: ['label', 'url'],
-          },
-        },
       }),
 
       linkToPublicOpinionMessage: relationship({
         ref: 'ExternalLink',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['label', 'url'],
-          inlineCreate: {
-            fields: ['label', 'url'],
-          },
-        },
       }),
 
       type: select({

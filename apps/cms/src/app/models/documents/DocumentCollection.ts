@@ -23,13 +23,6 @@ export const DocumentCollection = list({
     documents: relationship({
       ref: 'Document.collections',
       many: true,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title'],
-        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
 
     // newDocuments: documentRelationshipMany(),

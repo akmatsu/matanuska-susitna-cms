@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 export function useBlockProvider() {
   const ref = useRef<HTMLDivElement>(null);
   const [loading, get] = useInstance();
-  const provider = useRef<BlockProvider>();
+  const provider = useRef<BlockProvider | undefined>(undefined);
 
   useEffect(() => {
     const div = ref.current;

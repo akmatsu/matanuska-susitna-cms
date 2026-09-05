@@ -81,7 +81,7 @@ export default function BulkDocumentUpload() {
       >
         <DropDownSearchField
           label="Document Collections"
-          data={collections.data?.documentCollections}
+          data={collections.data?.documentCollections ?? undefined}
           onChange={setSelectedCollections}
           onQueryChange={searchCollections}
           value={selectedCollections}
@@ -89,7 +89,7 @@ export default function BulkDocumentUpload() {
         />
         <DropDownSearchField
           label="Tags"
-          data={tags.data?.tags}
+          data={tags.data?.tags ?? undefined}
           onChange={setSelectedTags}
           onQueryChange={searchTags}
           value={selectedTags}

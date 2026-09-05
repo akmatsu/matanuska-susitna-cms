@@ -51,13 +51,6 @@ const Proposition = list({
     document: relationship({
       ref: 'Document',
       many: false,
-      ui: {
-        displayMode: 'cards',
-        inlineConnect: true,
-        cardFields: ['title', 'description', 'file', 'tags'],
-        inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-        inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-      },
     }),
     description: customText(),
     election: relationship({
@@ -127,15 +120,6 @@ const {
           absenteeVotingApplication: relationship({
             ref: 'Document',
             many: false,
-            ui: {
-              displayMode: 'cards',
-              inlineConnect: true,
-              cardFields: ['title', 'description', 'file', 'tags'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-            },
           }),
           earlyVotingStartDate: timestamp({
             access: {
@@ -163,15 +147,6 @@ const {
           candidateFilingDocuments: relationship({
             ref: 'Document',
             many: true,
-            ui: {
-              displayMode: 'cards',
-              inlineConnect: true,
-              cardFields: ['title', 'description', 'file', 'tags'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-            },
           }),
           candidatePacketAvailability: timestamp({
             access: {
@@ -208,15 +183,6 @@ const {
           electionOfficialApplication: relationship({
             ref: 'Document',
             many: false,
-            ui: {
-              displayMode: 'cards',
-              inlineConnect: true,
-              cardFields: ['title', 'description', 'file', 'tags'],
-              inlineCreate: {
-                fields: ['title', 'description', 'file', 'tags'],
-              },
-              inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-            },
           }),
 
           electionOfficialApplicationDeadline: timestamp({
@@ -234,65 +200,28 @@ const {
       candidates: relationship({
         ref: 'Document',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       documents: relationship({
         ref: 'Document',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       propositions: relationshipController({
         ref: 'Proposition',
         listName: 'election',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['order', 'title', 'description', 'document'],
-          inlineCreate: {
-            fields: ['order', 'title', 'description', 'document'],
-          },
-          inlineEdit: { fields: ['order', 'title', 'description', 'document'] },
-        },
         opts,
       }),
 
       electionBrochure: relationship({
         ref: 'Document',
         many: false,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       electionBallots: relationship({
         ref: 'Document',
         many: true,
-        ui: {
-          displayMode: 'cards',
-          inlineConnect: true,
-          cardFields: ['title', 'description', 'file', 'tags'],
-          inlineCreate: { fields: ['title', 'description', 'file', 'tags'] },
-          inlineEdit: { fields: ['title', 'description', 'file', 'tags'] },
-        },
       }),
 
       result: mapRelationShip(
@@ -300,12 +229,6 @@ const {
         listKey,
         {
           many: false,
-          ui: {
-            displayMode: 'cards',
-            cardFields: ['document', 'isOfficial'],
-            inlineCreate: { fields: ['document', 'isOfficial'] },
-            inlineConnect: true,
-          },
         },
         opts,
       ),

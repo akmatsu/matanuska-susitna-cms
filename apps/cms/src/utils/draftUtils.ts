@@ -2,12 +2,23 @@ import { singular } from 'pluralize';
 import { capitalizeFirstLetter } from '.';
 import { CommonContext } from '../controllers/types';
 import { Prisma } from '../../generated/prisma/client';
+import type { RuntimeDataModel } from '@prisma/client/runtime/client';
 import {
   BaseListTypeInfo,
   KeystoneContextFromListTypeInfo,
 } from '@keystone-6/core/types';
 import { relationalDisplayFields } from './typesense';
 import v from 'voca';
+
+/**
+ * Prisma 7 removed the public DMMF export (`Prisma.dmmf`) that used to expose
+ * model/field metadata for reflection. The same data is still assembled into
+ * each client instance's runtimeDataModel, but only as an internal property -
+ * there's no supported public API for it, so this reaches in directly.
+ */
+type PrismaClientWithRuntimeDataModel = {
+  _runtimeDataModel: RuntimeDataModel;
+};
 
 export type Mode = 'create' | 'update';
 export type ModelDelegateKey = Uncapitalize<Prisma.ModelName>;
@@ -96,9 +107,8 @@ export function getUpdatedData(
   id: string,
   ctx: Context,
 ) {
-  const delegate = ctx.sudo().prisma[
-    modelKey
-  ] as unknown as DelegateWithFindUnique;
+  const prismaClient = ctx.sudo().prisma;
+  const delegate = prismaClient[modelKey] as unknown as DelegateWithFindUnique;
 
   const select = buildSelectObject({
     key: modelKey,
@@ -112,6 +122,7 @@ export function getUpdatedData(
       'currentVersion',
       'isLive',
     ],
+    prismaClient,
   });
 
   return delegate.findUnique({
@@ -124,6 +135,8 @@ export async function getSearchDataMany(
   modelKey: ModelDelegateKey,
   ctx: Context,
 ) {
+  const prismaClient = ctx.sudo().prisma;
+
   const select = buildSelectObject({
     key: modelKey,
     mode: 'names',
@@ -145,11 +158,10 @@ export async function getSearchDataMany(
       'type',
       'hours',
     ],
+    prismaClient,
   });
 
-  const delegate = ctx.sudo().prisma[
-    modelKey
-  ] as unknown as DelegateWithFindUnique;
+  const delegate = prismaClient[modelKey] as unknown as DelegateWithFindUnique;
 
   if (!delegate) console.log('No delegate!');
 
@@ -164,6 +176,8 @@ export async function getSearchData(
   id: string | number,
   ctx: Context,
 ) {
+  const prismaClient = ctx.sudo().prisma;
+
   const select = buildSelectObject({
     key: modelKey,
     mode: 'names',
@@ -185,11 +199,10 @@ export async function getSearchData(
       'type',
       'hours',
     ],
+    prismaClient,
   });
 
-  const delegate = ctx.sudo().prisma[
-    modelKey
-  ] as unknown as DelegateWithFindUnique;
+  const delegate = prismaClient[modelKey] as unknown as DelegateWithFindUnique;
 
   return delegate?.findUnique({
     where: { id },
@@ -284,12 +297,20 @@ export const publishUpdatedData: PublishUpdateFn = (
   return delegate.update(buildPublishPayload(data, customData));
 };
 
-function getPrismaModel(modelName: string) {
-  return Prisma.dmmf.datamodel.models.find((m) => m.name === modelName);
+function getPrismaModel(
+  modelName: string,
+  prismaClient: unknown,
+) {
+  const { models } = (prismaClient as PrismaClientWithRuntimeDataModel)
+    ._runtimeDataModel;
+  return models[modelName];
 }
 
-function buildSelectObjectForRelationship(modelName: string) {
-  const targetModel = getPrismaModel(modelName);
+function buildSelectObjectForRelationship(
+  modelName: string,
+  prismaClient: unknown,
+) {
+  const targetModel = getPrismaModel(modelName, prismaClient);
   if (!targetModel) return null;
 
   const preferredDisplayFields = relationalDisplayFields;
@@ -309,6 +330,7 @@ export function buildSelectObject({
   key,
   excludeFields = [],
   mode = 'ids',
+  prismaClient,
 }: {
   key: string;
   excludeFields?: string[];
@@ -321,9 +343,10 @@ export function buildSelectObject({
    * 'ids' mode only grabs IDs from related items.
    * */
   mode?: 'names' | 'ids';
+  prismaClient: unknown;
 }) {
   const modelName = capitalizeFirstLetter(key);
-  const model = getPrismaModel(modelName);
+  const model = getPrismaModel(modelName, prismaClient);
 
   const selectObj: Record<
     string,
@@ -347,7 +370,10 @@ export function buildSelectObject({
       return;
     }
 
-    const relationSelect = buildSelectObjectForRelationship(field.type);
+    const relationSelect = buildSelectObjectForRelationship(
+      field.type,
+      prismaClient,
+    );
     if (!relationSelect) return;
 
     selectObj[field.name] = { select: relationSelect };

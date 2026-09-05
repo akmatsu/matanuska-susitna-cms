@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
 import {
-  CardValueComponent,
   FieldController,
   FieldControllerConfig,
   FieldProps,
 } from '@keystone-6/core/types';
 import { ListView } from '@keystar/ui/list-view';
 import { Item, Picker } from '@keystar/ui/picker';
-import { ComponentProps } from 'react';
 
 export function Field(props: FieldProps<typeof controller>) {
   const selectedKey = props.value.value?.value ?? null;
@@ -37,18 +35,6 @@ export function Field(props: FieldProps<typeof controller>) {
     </Picker>
   );
 }
-
-export const CardValue: CardValueComponent = (
-  props: ComponentProps<CardValueComponent>,
-) => {
-  return (
-    <div>
-      <span className={props.item.icon}>
-        {props.item.icon ? '' : 'No icon selected'}
-      </span>
-    </div>
-  );
-};
 
 export type AdminSelectFieldMeta = {
   options: readonly { label: string; value: string | number }[];
@@ -160,6 +146,19 @@ export const controller = (
           ),
         },
       }),
+      parseGraphQL(value) {
+        return Object.entries(value ?? {}).flatMap(([type, val]) => {
+          if ((type === 'in' || type === 'notIn') && Array.isArray(val)) {
+            const matched = optionsWithStringValues.filter((o) =>
+              val.map(String).includes(o.value),
+            );
+            return [
+              { type: type === 'notIn' ? 'not_matches' : 'matches', value: matched },
+            ];
+          }
+          return [];
+        });
+      },
       Label({ type, value }) {
         if (!value.length) {
           return type === 'not_matches' ? `is set` : `has no value`;

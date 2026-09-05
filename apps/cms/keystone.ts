@@ -71,9 +71,6 @@ export default config<TypeInfo<Session>>({
   // https://keystonejs.com/docs/config/session
   session: nextAuthSessionStrategy,
 
-  // https://keystonejs.com/docs/guides/images-and-files
-  storage: appConfig.storage,
-
   // https://keystonejs.com/docs/reference/telemetry#how-to-opt-out
   telemetry: false,
 

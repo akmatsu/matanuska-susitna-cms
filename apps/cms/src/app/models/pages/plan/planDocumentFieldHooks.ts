@@ -1,13 +1,13 @@
-import { FieldHooks } from '@keystone-6/core/types';
+import { BaseFieldTypeInfo, FieldHooks } from '@keystone-6/core/types';
 import { Lists } from '../../../../../generated/keystone/types';
 import { Prisma } from '../../../../../generated/prisma/client';
 
 // Types
 
 interface PlanDocumentFieldHooks {
-  currentDocument: FieldHooks<Lists.Plan.TypeInfo>;
-  draftDocument: FieldHooks<Lists.Plan.TypeInfo>;
-  pastDocuments: FieldHooks<Lists.Plan.TypeInfo>;
+  currentDocument: FieldHooks<Lists.Plan.TypeInfo, BaseFieldTypeInfo>;
+  draftDocument: FieldHooks<Lists.Plan.TypeInfo, BaseFieldTypeInfo>;
+  pastDocuments: FieldHooks<Lists.Plan.TypeInfo, BaseFieldTypeInfo>;
 }
 
 // Helpers
@@ -28,7 +28,7 @@ const disconnect = {
 /**
  * Contains all of the field hooks for the Plan Document fields on the {@link Plan} model
  */
-export const planDocumentFieldHooks = {
+export const planDocumentFieldHooks: PlanDocumentFieldHooks = {
   currentDocument: {
     /** @see {@link https://keystonejs.com/docs/config/hooks#resolve-input} */
     resolveInput({ resolvedData, item, operation, fieldKey }) {
@@ -85,4 +85,4 @@ export const planDocumentFieldHooks = {
       return resolvedData[fieldKey];
     },
   },
-} satisfies PlanDocumentFieldHooks;
+};

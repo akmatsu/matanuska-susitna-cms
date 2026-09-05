@@ -16,10 +16,10 @@ export const eventRelationship = (opts?: {
   refField?: string;
   many?: boolean;
 }) => {
-  return relationship({
-    ref: opts?.refField ? `Event.${opts.refField}` : 'Event',
-    many: opts?.many,
-  });
+  const ref = opts?.refField ? `Event.${opts.refField}` : 'Event';
+  return opts?.many
+    ? relationship({ ref, many: true })
+    : relationship({ ref, many: false });
 };
 
 export const EventSeries = list({
