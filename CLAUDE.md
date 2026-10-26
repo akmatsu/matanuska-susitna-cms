@@ -196,7 +196,7 @@ The project uses **integration tests with a real database** over mocks. When run
 
 ### Debugging
 - **Logs**: Check console output from `pnpm cms:dev` and worker processes
-- **Log file**: `/logs/app.log` (Pino output; useful for debugging workers, controllers, and NextAuth)
+- **Production logs**: Pino writes JSON to stdout. On the server, run `docker compose logs -f web publish-worker page-views-worker` in `/opt/cms`
 - **Logger**: `/src/configs/logger.ts` uses Pino; set `DEBUG=cms:*` in env for verbose output
 - **GraphQL playground**: Built into Keystone admin UI at `/admin/graphql`
 - **Session issues**: Check auth flow in `/src/session.ts` and middleware in `keystone.ts` `pageMiddleware`
@@ -273,12 +273,13 @@ The admin UI at `/admin/pages/typesense.tsx` hits these endpoints; treat endpoin
 - Create new migration: `pnpm migrations:create` → edit `.prisma/migrations/[timestamp]_[name]/migration.sql` → `pnpm cms:migrate`
 - Do NOT manually edit applied migrations; create new ones instead
 
-### Deployment Flow (GitHub Actions)
-1. Builds the app
-2. Packages built assets and migrations
-3. Deploys to server, sets environment variables
-4. Runs `pnpm cms:migrate` automatically
-5. Workers restart
+### Deployment Flow (GitHub Actions + Docker)
+See `docs/DEPLOYING.md` for the full runbook.
+1. A push to `main` (prod) or `stage` builds one arm64 image from `/Dockerfile` and pushes it to GHCR as `sha-<commit>`
+2. The workflow writes `cms.env` from GitHub environment secrets and copies it plus `docker-compose.yml` to `/opt/cms`
+3. On the host: `docker compose pull`, then `docker compose run --rm migrate`, then `docker compose up -d`
+4. Traefik (the msb-edge-proxy stack in `/opt/edge`) handles TLS through Let's Encrypt and routes to the `web` container
+5. S3 uses the EC2 instance role; there are no S3 keys in the env
 
 ## Git Branch Guidance
 
@@ -321,8 +322,8 @@ The repository uses conventional commit messages and semantic versioning via `se
 | --- | --- | --- |
 | Migration fails | SQL syntax or schema conflict | Check `schema.prisma` for conflicts; review migration SQL |
 | GraphQL query returns wrong type | Type discriminator field missing or renamed | Verify field exists on model; update `__resolveType` in `keystone.ts` |
-| TypeSense out of sync | Reindex job failed | Check `/logs/app.log`; run `pnpm typesense:import:*` manually or `/typesense/reindex` endpoint |
-| Publish job stalled | Worker crashed or Redis disconnected | Restart worker; check Redis connection in `/logs/app.log` |
+| TypeSense out of sync | Reindex job failed | Check `docker compose logs`; run `pnpm typesense:import:*` manually or `/typesense/reindex` endpoint |
+| Publish job stalled | Worker crashed or Redis disconnected | Restart worker; check Redis connection in `docker compose logs` |
 | Admin UI won't load | Session/auth issue | Check Entra AD credentials, CORS origin, and auth flow in `/src/session.ts` |
 | Duplicate publish jobs in queue | Job ID format mismatch | Ensure jobs are named `publish:<List>Draft:<id>` to match worker expectations |
 | `npm ERR! notsup Packages don't support node v...` | Node version mismatch | Use Node 20+ (check `package.json` for pinned version) |

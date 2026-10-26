@@ -27,6 +27,11 @@ export const routes: (
   app: Express,
   context: KeystoneContext<TypeInfo<Session>>,
 ) => MaybePromise<void> = async (app, commonContext) => {
+  // Docker and Traefik poll this to decide if the web container can take traffic.
+  app.get('/_healthcheck', (req, res) => {
+    res.json({ status: 'pass' });
+  });
+
   app.post(
     '/typesense/create-collections',
     json(),

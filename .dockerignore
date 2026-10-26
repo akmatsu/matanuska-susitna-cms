@@ -1,0 +1,17 @@
+.git
+.github
+.vscode
+.turbo
+**/.turbo
+**/node_modules
+**/.env*
+!**/.env.example
+**/.keystone
+**/logs
+**/*.log
+**/*.tsbuildinfo
+apps/cms/public/document-files
+apps/cms/public/image-files
+apps/cms/scripts/migration-logs
+docker-compose*.yml
+cms.env

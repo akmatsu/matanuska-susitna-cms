@@ -31,22 +31,20 @@ export const appConfig = {
     process.env.NODE_ENV === 'production'
       ? 'https://matsu.gov'
       : 'http://localhost:3000',
+  // S3 has no access keys on purpose. The AWS SDK finds credentials on its
+  // own; in production that is the EC2 instance role.
   storage: {
     s3Documents: {
       kind: 's3',
       type: 'file',
       bucketName: process.env.S3_BUCKET_NAME,
       region: process.env.S3_REGION,
-      accessKeyId: process.env.S3_ACCESS_KEY_ID,
-      secretAccessKey: process.env.SECRET_ACCESS_KEY,
     } as StorageConfig,
     s3Images: {
       kind: 's3',
       type: 'image',
       bucketName: process.env.S3_BUCKET_NAME,
       region: process.env.S3_REGION,
-      accessKeyId: process.env.S3_ACCESS_KEY_ID,
-      secretAccessKey: process.env.SECRET_ACCESS_KEY,
     } as StorageConfig,
     localDocuments: {
       kind: 'local',

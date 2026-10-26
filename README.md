@@ -100,13 +100,7 @@ apps/
 
 ## Deployment
 
-The project includes GitHub Actions workflows for automated deployment. The deployment process:
-
-1. Builds the application
-2. Packages required files
-3. Deploys to the specified server
-4. Sets up environment variables
-5. Runs database migrations
+The CMS runs in Docker on its EC2 host. A push to `main` builds a new image in GitHub Actions and deploys it. See [docs/DEPLOYING.md](./docs/DEPLOYING.md) for how it works, how to set up a new host, and how to roll back.
 
 ## Available Scripts
 

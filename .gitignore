@@ -146,3 +146,7 @@ keystone.db
 # One-off migration script change logs (contain PII, not for source control)
 **/scripts/migration-logs/
 
+
+# Docker: host-only env and local overrides
+cms.env
+docker-compose.override.yml

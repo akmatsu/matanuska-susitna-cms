@@ -1,0 +1,66 @@
+# Production stack for one CMS host. See docs/DEPLOYING.md.
+#
+# Two env files are involved, and they do different jobs:
+# - .env fills in the ${...} values in this file (IMAGE_TAG, CMS_HOST).
+# - cms.env holds the app's settings and secrets and is passed into the
+#   containers. Compose does not expand ${...} inside cms.env.
+name: cms
+
+x-cms: &cms
+  image: ghcr.io/akmatsu/matanuska-susitna-cms:${IMAGE_TAG:?IMAGE_TAG must be set in .env}
+  env_file: cms.env
+  restart: always
+  networks: [cms]
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: '5'
+
+services:
+  web:
+    <<: *cms
+    command: ['keystone', 'start']
+    networks: [cms, edge]
+    healthcheck:
+      # Use 127.0.0.1, not localhost. Traefik silently drops unhealthy
+      # containers, and localhost can resolve to IPv6 first.
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3333/_healthcheck').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.cms.rule=Host(`${CMS_HOST:?CMS_HOST must be set in .env}`)
+      - traefik.http.routers.cms.entrypoints=websecure
+      - traefik.http.routers.cms.tls.certresolver=le
+      - traefik.http.services.cms.loadbalancer.server.port=3333
+
+  publish-worker:
+    <<: *cms
+    command: ['tsx', './src/redis/publish/worker.ts']
+
+  page-views-worker:
+    <<: *cms
+    command: ['tsx', './src/redis/processPageViews/worker.ts']
+
+  # Not started by `up`. Run it once per deploy, before `up`:
+  #   docker compose run --rm migrate
+  # Running it here, and not in each container, stops three processes from
+  # racing to apply the same migration.
+  migrate:
+    <<: *cms
+    command: ['keystone', 'prisma', 'migrate', 'deploy']
+    restart: 'no'
+    profiles: [tools]
+
+networks:
+  cms:
+  # Created by the msb-edge-proxy stack on the same host.
+  edge:
+    external: true

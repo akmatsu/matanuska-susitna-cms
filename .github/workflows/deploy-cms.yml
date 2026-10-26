@@ -1,3 +1,4 @@
+# release.yml listens for this workflow by name. Rename both together.
 name: Deploy CMS to EC2
 
 on:
@@ -7,26 +8,71 @@ on:
       - stage
     paths:
       - 'apps/cms/**'
+      - 'pnpm-lock.yaml'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - 'docker-compose.yml'
       - '.github/workflows/deploy-cms.yml'
 
 permissions:
-  id-token: write
   contents: read
 
+env:
+  IMAGE: ghcr.io/akmatsu/matanuska-susitna-cms
+
 jobs:
+  build:
+    name: Build image
+    # The EC2 hosts are arm64, so build natively on an arm runner.
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Log in to GHCR
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          platforms: linux/arm64
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:sha-${{ github.sha }}
+            ${{ env.IMAGE }}:${{ github.ref_name }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
   deploy:
     name: Deploy (${{ github.ref_name }})
+    needs: build
     environment: ${{ github.ref_name == 'stage' && 'cms-stage' || 'cms-prod' }}
     concurrency:
       group: ci-${{github.ref}}
       cancel-in-progress: false
     runs-on: ubuntu-24.04-arm
+    permissions:
+      id-token: write
+      contents: read
+      packages: read
     env:
       AWS_INSTANCE_SG_ID: ${{ github.ref_name == 'stage' && secrets.STAGE_AWS_INSTANCE_SG_ID || secrets.AWS_INSTANCE_SG_ID }}
       EC2_DEPLOY_ROLE_ARN: ${{ secrets.EC2_DEPLOY_ROLE_ARN }}
       EC2_SSH_PRIVATE_KEY: ${{ github.ref_name == 'stage' && secrets.STAGE_EC2_SSH_PRIVATE_KEY || secrets.EC2_SSH_PRIVATE_KEY }}
       EC2_SERVER_HOST: ${{ github.ref_name == 'stage' && secrets.STAGE_EC2_SERVER_HOST || secrets.EC2_SERVER_HOST }}
       EC2_SERVER_USER: ${{ github.ref_name == 'stage' && secrets.STAGE_EC2_SERVER_USER || secrets.EC2_SERVER_USER }}
+      CMS_HOST: ${{ github.ref_name == 'stage' && 'cms.stage.matsu.gov' || 'cms.matsu.gov' }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_USER: ${{ secrets.DB_USER }}
       DB_HOST: ${{ github.ref_name == 'stage' && secrets.STAGE_DB_HOST || secrets.DB_HOST }}
@@ -34,8 +80,6 @@ jobs:
       SESSION_SECRET: ${{ github.ref_name == 'stage' && secrets.STAGE_SESSION_SECRET || secrets.SESSION_SECRET }}
       S3_BUCKET_NAME: ${{ github.ref_name == 'stage' && secrets.STAGE_S3_BUCKET_NAME || secrets.S3_BUCKET_NAME }}
       S3_REGION: ${{ secrets.S3_REGION }}
-      S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
-      S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
       TYPESENSE_API_KEY: ${{ github.ref_name == 'stage' && secrets.STAGE_TYPESENSE_API_KEY || secrets.TYPESENSE_API_KEY }}
       GOV_DELIVERY_USERNAME: ${{ github.ref_name == 'stage' && secrets.STAGE_GOV_DELIVERY_USERNAME || secrets.GOV_DELIVERY_USERNAME }}
       GOV_DELIVERY_PASSWORD: ${{ github.ref_name == 'stage' && secrets.STAGE_GOV_DELIVERY_PASSWORD || secrets.GOV_DELIVERY_PASSWORD }}
@@ -49,7 +93,7 @@ jobs:
       TYPESENSE_NL_SEARCH_MODEL_API_URL: ${{ github.ref_name == 'stage' && secrets.STAGE_TYPESENSE_NL_SEARCH_MODEL_API_URL || secrets.TYPESENSE_NL_SEARCH_MODEL_API_URL }}
     steps:
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a # v4
         with:
           role-to-assume: ${{ env.EC2_DEPLOY_ROLE_ARN }}
           role-session-name: github-actions-deploy-cms-session
@@ -57,7 +101,7 @@ jobs:
 
       - name: Get runner IP address
         id: ip
-        uses: haythem/public-ip@v1.3
+        uses: haythem/public-ip@bdddd92c198b0955f0b494a8ebeac529754262ff # v1.3
 
       - name: Whitelist GitHub action IP address
         run: |
@@ -68,17 +112,20 @@ jobs:
             --cidr ${{steps.ip.outputs.ipv4}}/32
 
       - name: Add SSH Key
-        uses: kielabokkie/ssh-key-and-known-hosts-action@v1.4.1
+        uses: kielabokkie/ssh-key-and-known-hosts-action@5b675129e6aa73a496c939eb1f4a9fe4502fc324 # v1.4.1
         with:
           ssh-private-key: ${{ env.EC2_SSH_PRIVATE_KEY }}
           ssh-host: ${{ env.EC2_SERVER_HOST }}
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - name: 'Create Env File'
+      # S3 has no keys here on purpose. The containers use the EC2 instance
+      # role.
+      - name: Create env file
         run: |
-          cat <<EOT > ./apps/cms/.env
+          umask 077
+          cat <<EOT > ./cms.env
           DATABASE=${{env.DB_NAME}}
           DATABASE_USER=${{env.DB_USER}}
           DATABASE_HOST=${{env.DB_HOST}}
@@ -88,16 +135,14 @@ jobs:
           DATABASE_PROTOCOL=postgres
           WEB_PORT=3333
           ORIGIN_HOST=${{github.ref_name == 'stage' && 'https://stage.matsu.gov' || 'https://www.matsu.gov'}}
-          NEXTAUTH_URL=${{github.ref_name == 'stage' && 'https://cms.stage.matsu.gov' || 'https://cms.matsu.gov'}}
+          NEXTAUTH_URL=https://${{env.CMS_HOST}}
           SESSION_SECRET=${{env.SESSION_SECRET}}
           AD_TENANT_ID=${{secrets.AD_TENANT_ID}}
           AD_CLIENT_ID=${{secrets.AD_CLIENT_ID}}
           AD_CLIENT_SECRET=${{secrets.AD_CLIENT_SECRET}}
-          AD_REDIRECT_HOST=${{github.ref_name == 'stage' && 'https://cms.stage.matsu.gov' || 'https://cms.matsu.gov'}}
+          AD_REDIRECT_HOST=https://${{env.CMS_HOST}}
           S3_BUCKET_NAME=${{env.S3_BUCKET_NAME}}
           S3_REGION=${{env.S3_REGION}}
-          S3_ACCESS_KEY_ID=${{env.S3_ACCESS_KEY_ID}}
-          S3_SECRET_ACCESS_KEY=${{env.S3_SECRET_ACCESS_KEY}}
           TYPESENSE_API_KEY=${{env.TYPESENSE_API_KEY}}
           TYPESENSE_HOST=${{github.ref_name == 'stage' && 'search-internal.stage.matsu.gov' || 'search.matsu.gov'}}
           TYPESENSE_PORT=443
@@ -114,82 +159,31 @@ jobs:
           TYPESENSE_NL_SEARCH_MODEL_API_URL=${{env.TYPESENSE_NL_SEARCH_MODEL_API_URL}}
           EOT
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          run_install: false
+      - name: Upload compose and env files
+        run: |
+          scp -p cms.env docker-compose.yml ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }}:/opt/cms/
 
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
-      - name: Install Dependencies
-        run: pnpm install --filter cms --workspace-root
-
-      - name: Build CMS
-        run: pnpm run cms:build
-
-      - name: Zip the required files
-        run: zip -rq --symlinks cms.zip ./apps/cms/ ./node_modules/ ./package.json ./pnpm-lock.yaml ./pnpm-workspace.yaml ./turbo.json ./.npmrc
-
-      - name: SSH into the server and ensure cms directory exists
+      - name: Pull, migrate, and restart
         run: |
           ssh -o ServerAliveInterval=60 ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }} << 'EOF'
-            mkdir -p ./cms
-          EOF
+            set -euo pipefail
+            cd /opt/cms
+            chmod 600 cms.env
 
-      - name: Upload zipped repo to server
-        run: |
-          scp cms.zip ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }}:/home/${{ env.EC2_SERVER_USER }}/cms
+            # .env pins the image. To roll back, set IMAGE_TAG to an older
+            # sha in this file and run `docker compose up -d`.
+            printf 'IMAGE_TAG=%s\nCMS_HOST=%s\n' 'sha-${{ github.sha }}' '${{ env.CMS_HOST }}' > .env
 
-      - name: SSH into the server and deploy
-        run: |
-          ssh -o ServerAliveInterval=60 ${{ env.EC2_SERVER_USER }}@${{ env.EC2_SERVER_HOST }} << 'EOF'
-            set -e
-            
-            # Load nvm
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+            # This token only works while the job runs, so log out after the pull.
+            echo '${{ secrets.GITHUB_TOKEN }}' | docker login ghcr.io -u '${{ github.actor }}' --password-stdin
+            docker compose pull
+            docker logout ghcr.io
 
-            # Load nvm
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+            docker compose run --rm migrate
+            docker compose up -d --remove-orphans
 
-            # Use Node.js
-            nvm use 22.21.0
-            
-            # Create temp and backup directory if they don't exist
-            mkdir -p ./cms/active
-            cd ./cms
-
-            # Unzip the files in the temp folder
-            unzip -q -o ./cms.zip -d ./temp
-
-            # Stop the pm2 server
-            pm2 stop all || true
-
-            # Move the active folder to backup
-            mv ./active ./backup
-            
-            # Move the temp folder to active
-            mv ./temp ./active
-            cd ./active
-
-            # Run database migrations
-            pnpm run cms:migrate
-
-            # Start the production server
-            pm2 reload cms || pm2 start pnpm --name cms -- run cms:start
-            pm2 reload cms-publish-worker || pm2 start pnpm --name cms-publish-worker -- run cms:publish-worker
-            pm2 reload cms-process-page-views-worker || pm2 start pnpm --name cms-process-page-views-worker -- run cms:process-page-views-worker
-            
-            # Remove temporary folders.
-            rm -rf ../cms.zip
-            rm -rf ../backup
+            # Keep a week of old images so a rollback does not need a pull.
+            docker image prune -af --filter 'until=168h'
           EOF
 
       - name: Remove GitHub actions IP from security group
