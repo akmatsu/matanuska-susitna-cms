@@ -41,10 +41,12 @@ export function Field({ field }: FieldProps<typeof controller>) {
         },
       );
 
+      // The body may not be JSON (e.g. a proxy error page), so fall back to the status.
+      const result = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        throw new Error('Failed to publish draft');
+        throw new Error(result?.error || `${res.status}: ${res.statusText}`);
       }
-      const result = await res.json();
 
       router.push(`/${listSlug}/${result.publishedId}`);
     } catch (error: any) {

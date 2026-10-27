@@ -37,10 +37,12 @@ export function Field({ field }: FieldProps<typeof controller>) {
         method: 'POST',
       });
 
+      // The body may not be JSON (e.g. a proxy error page), so fall back to the status.
+      const result = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        throw new Error('Failed to create draft');
+        throw new Error(result?.error || `${res.status}: ${res.statusText}`);
       }
-      const result = await res.json();
 
       if (!result.draftId) {
         throw new Error('Draft could not be created');
