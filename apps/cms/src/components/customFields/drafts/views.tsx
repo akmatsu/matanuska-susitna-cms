@@ -33,12 +33,9 @@ export function Field({ field }: FieldProps<typeof controller>) {
     try {
       setLoading(true);
 
-      const res = await fetch(
-        `/${listSlug}/${id}/drafts?query=${queryParam}`,
-        {
-          method: 'POST',
-        },
-      );
+      const res = await fetch(`/${listSlug}/${id}/drafts?query=${queryParam}`, {
+        method: 'POST',
+      });
 
       if (!res.ok) {
         throw new Error('Failed to create draft');

@@ -34,9 +34,12 @@ export function Field({ field }: FieldProps<typeof controller>) {
     try {
       setLoading(true);
 
-      const res = await fetch(`/publish/${listSlug}/${id}?query=${queryParam}`, {
-        method: 'PATCH',
-      });
+      const res = await fetch(
+        `/publish/${listSlug}/${id}?query=${queryParam}`,
+        {
+          method: 'PATCH',
+        },
+      );
 
       if (!res.ok) {
         throw new Error('Failed to publish draft');
