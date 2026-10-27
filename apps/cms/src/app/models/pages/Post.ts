@@ -74,11 +74,12 @@ const {
     many: false,
     hooks: {
       resolveInput: ({ context, operation, item, resolvedData, fieldKey }) => {
+        // No session when a background job saves the post (e.g. scheduled unpublish)
         const activeUser = context.session;
-        if (operation === 'create' && activeUser.id) {
+        if (operation === 'create' && activeUser?.id) {
           return { connect: { id: activeUser.id } };
         }
-        if (operation === 'update' && !item.authorId && activeUser.id) {
+        if (operation === 'update' && !item.authorId && activeUser?.id) {
           return { connect: { id: activeUser.id } };
         }
         return resolvedData?.[fieldKey];
