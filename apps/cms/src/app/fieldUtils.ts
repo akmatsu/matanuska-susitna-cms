@@ -210,49 +210,50 @@ export function publishable(opts?: {
               item: originalItem,
               fieldKey,
             }) => {
-              let muffins = null;
-              if (opts?.unPublishRequired) {
-                const newStatus = updatedData?.['status'];
-                const unpublishAt = updatedData?.['unpublishAt'];
-                const itemUnpublishAt = originalItem?.['unpublishAt'];
+              // Keystone runs this hook on every save, even when unpublishAt
+              // is not in the input. Return the input as-is so we never
+              // overwrite a saved date (undefined means "leave unchanged").
+              if (!opts?.unPublishRequired) return updatedData?.[fieldKey];
 
-                // When publishing a new item and unpublish is required,
-                if (newStatus === 'published') {
-                  // If unpublishAt is a valid date, return it.
-                  if (unpublishAt && isDate(unpublishAt)) {
-                    // If unpublishAt is in the past, return a default unpublishAt date of 14 days from now.
-                    if (unpublishAt < new Date()) {
-                      const defaultUnpublishAt = new Date();
-                      defaultUnpublishAt.setDate(
-                        defaultUnpublishAt.getDate() + 14,
-                      );
-                      muffins = defaultUnpublishAt;
-                    } else {
-                      muffins = unpublishAt;
-                    }
-                    // If unpublishAt is not a valid date, check if the original item has an unpublishAt date. If it does, return that. If it doesn't, return a default unpublishAt date of 14 days from now.
-                  } else if (itemUnpublishAt && isDate(itemUnpublishAt)) {
-                    // If itemUnpublishAt is in the past, return a default unpublishAt date of 14 days from now.
-                    if (itemUnpublishAt < new Date()) {
-                      const defaultUnpublishAt = new Date();
-                      defaultUnpublishAt.setDate(
-                        defaultUnpublishAt.getDate() + 14,
-                      );
-                      muffins = defaultUnpublishAt;
-                    } else {
-                      muffins = itemUnpublishAt;
-                    }
-                  } else {
+              let muffins = null;
+              const newStatus = updatedData?.['status'];
+              const unpublishAt = updatedData?.['unpublishAt'];
+              const itemUnpublishAt = originalItem?.['unpublishAt'];
+
+              // When publishing a new item and unpublish is required,
+              if (newStatus === 'published') {
+                // If unpublishAt is a valid date, return it.
+                if (unpublishAt && isDate(unpublishAt)) {
+                  // If unpublishAt is in the past, return a default unpublishAt date of 14 days from now.
+                  if (unpublishAt < new Date()) {
                     const defaultUnpublishAt = new Date();
                     defaultUnpublishAt.setDate(
                       defaultUnpublishAt.getDate() + 14,
                     );
-
                     muffins = defaultUnpublishAt;
+                  } else {
+                    muffins = unpublishAt;
+                  }
+                  // If unpublishAt is not a valid date, check if the original item has an unpublishAt date. If it does, return that. If it doesn't, return a default unpublishAt date of 14 days from now.
+                } else if (itemUnpublishAt && isDate(itemUnpublishAt)) {
+                  // If itemUnpublishAt is in the past, return a default unpublishAt date of 14 days from now.
+                  if (itemUnpublishAt < new Date()) {
+                    const defaultUnpublishAt = new Date();
+                    defaultUnpublishAt.setDate(
+                      defaultUnpublishAt.getDate() + 14,
+                    );
+                    muffins = defaultUnpublishAt;
+                  } else {
+                    muffins = itemUnpublishAt;
                   }
                 } else {
-                  muffins = updatedData?.[fieldKey] || originalItem?.[fieldKey];
+                  const defaultUnpublishAt = new Date();
+                  defaultUnpublishAt.setDate(defaultUnpublishAt.getDate() + 14);
+
+                  muffins = defaultUnpublishAt;
                 }
+              } else {
+                muffins = updatedData?.[fieldKey] || originalItem?.[fieldKey];
               }
 
               return muffins;
