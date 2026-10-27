@@ -36,7 +36,19 @@ export async function handleDraftPublish(
     throw new Error('Draft not found');
   }
 
-  const published = await publishUpdatedDataDB(modelKey, draft, context);
+  // A draft copies the original's unpublish date. If that date has passed,
+  // keeping it would fail validation (unpublish date before publish date).
+  // Clear it so publishing works. Lists that require an unpublish date then
+  // get their default from the unpublishAt hook.
+  const unpublishAtPassed =
+    draft.unpublishAt && new Date(draft.unpublishAt) <= new Date();
+
+  const published = await publishUpdatedDataDB(
+    modelKey,
+    draft,
+    context,
+    unpublishAtPassed ? { unpublishAt: null } : undefined,
+  );
 
   if (!published) {
     throw new Error('Could not find original item');
@@ -241,16 +253,16 @@ function buildPublishPayload(
 ) {
   return {
     where: { id: original.id },
-    data: mapDataFields(
-      data,
-      {
-        title: title.split(' ---')[0],
-        status: 'published',
-        publishAt: new Date().toISOString(),
-        ...customData,
-      },
-      'update',
-    ),
+    data: {
+      ...mapDataFields(data, {}, 'update'),
+      // Set these after the draft data. The draft holds a copy of the
+      // original's publishAt, which would otherwise win, so the publish
+      // date would never update.
+      title: title.split(' ---')[0],
+      status: 'published',
+      publishAt: new Date().toISOString(),
+      ...customData,
+    },
   } as const;
 }
 
