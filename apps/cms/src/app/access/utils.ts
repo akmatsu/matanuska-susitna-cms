@@ -109,39 +109,3 @@ export const filterByPubStatus: Filter = {
     };
   },
 };
-
-/**
- * Filters out unpublished items from query results from public requests.
- */
-export const filterByPubDates: Filter = {
-  query: async ({ session }: BaseAccessArgs<BaseListTypeInfo>) => {
-    if (session) return {};
-    return {
-      AND: [
-        {
-          publishAt: {
-            lte: getDatetimeISOString(),
-          },
-        },
-        {
-          OR: [
-            {
-              publishAt: {
-                gte: getDatetimeISOString(),
-              },
-            },
-            {
-              unpublishAt: {
-                equals: null,
-              },
-            },
-          ],
-        },
-      ],
-    };
-  },
-};
-
-export function getDatetimeISOString(date = new Date(Date.now())): string {
-  return date.toISOString();
-}
