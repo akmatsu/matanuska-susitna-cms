@@ -321,7 +321,7 @@ The repository uses conventional commit messages and semantic versioning via `se
 | --- | --- | --- |
 | Migration fails | SQL syntax or schema conflict | Check `schema.prisma` for conflicts; review migration SQL |
 | GraphQL query returns wrong type | Type discriminator field missing or renamed | Verify field exists on model; update `__resolveType` in `keystone.ts` |
-| TypeSense out of sync | Reindex job failed | Check `/logs/app.log`; run `pnpm typesense:import:*` manually or `/typesense/reindex` endpoint |
+| TypeSense out of sync | Reindex job failed | Check `/logs/app.log`; run `pnpm typesense:import:*` manually, or call the reindex endpoint with an allowed Origin: `curl -X POST -H 'Origin: https://cms.matsu.gov' https://cms.matsu.gov/typesense/reindex` (stage: `https://cms.stage.matsu.gov`, local: `http://localhost:3333`). The `/typesense/*` routes reject requests without an allowed Origin or Referer header. |
 | Publish job stalled | Worker crashed or Redis disconnected | Restart worker; check Redis connection in `/logs/app.log` |
 | Admin UI won't load | Session/auth issue | Check Entra AD credentials, CORS origin, and auth flow in `/src/session.ts` |
 | Duplicate publish jobs in queue | Job ID format mismatch | Ensure jobs are named `publish:<List>Draft:<id>` to match worker expectations |

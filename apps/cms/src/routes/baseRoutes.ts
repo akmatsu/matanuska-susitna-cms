@@ -22,11 +22,16 @@ import {
 } from '../controllers/DraftAndVersionControllers';
 import { countPageView } from '../controllers/pageViewsController';
 import { getGovDeliveryTopics } from '../utils/govDelivery';
+import { requireAllowedOrigin } from './originAllowlist';
 
 export const routes: (
   app: Express,
   context: KeystoneContext<TypeInfo<Session>>,
 ) => MaybePromise<void> = async (app, commonContext) => {
+  // Must be registered before the /typesense/* routes below. Uses `/typesense/*`
+  // and not `/typesense`, so the admin UI page at /typesense still loads.
+  app.all('/typesense/*', requireAllowedOrigin);
+
   app.post(
     '/typesense/create-collections',
     json(),
