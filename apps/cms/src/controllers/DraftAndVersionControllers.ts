@@ -9,6 +9,13 @@ import {
 
 import { logger } from '../configs/logger';
 
+// Keystone throws KS_VALIDATION_FAILURE when the saved data breaks a field
+// rule (for example, a select value that is no longer an option). That is a
+// problem with the data, not the server, so report it as a 400.
+function errorStatus(error: any) {
+  return error?.extensions?.code === 'KS_VALIDATION_FAILURE' ? 400 : 500;
+}
+
 export const createDraft: RequestControllerWithContext =
   (context) => async (req, res) => {
     try {
@@ -32,7 +39,9 @@ export const createDraft: RequestControllerWithContext =
       });
     } catch (error: any) {
       logger.error(error, 'Error creating draft');
-      return res.status(500).json({ error: 'Failed to create draft' });
+      return res
+        .status(errorStatus(error))
+        .json({ error: error?.message || 'Failed to create draft' });
     }
   };
 
@@ -57,11 +66,9 @@ export const publishDraft: RequestControllerWithContext =
         return res.status(404).json({ error: error.message });
       }
 
-      if (error.message) {
-        return res.status(500).json({ error: error.message });
-      }
-
-      return res.status(500).json({ error: 'Failed to publish draft' });
+      return res
+        .status(errorStatus(error))
+        .json({ error: error?.message || 'Failed to publish draft' });
     }
   };
 
@@ -90,6 +97,8 @@ export const republishVersion: RequestControllerWithContext =
       });
     } catch (error: any) {
       logger.error(error, 'Error republishing version');
-      return res.status(500).json({ error: 'Failed to republish version' });
+      return res
+        .status(errorStatus(error))
+        .json({ error: error?.message || 'Failed to republish version' });
     }
   };
