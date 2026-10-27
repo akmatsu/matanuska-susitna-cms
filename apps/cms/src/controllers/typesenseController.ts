@@ -5,6 +5,7 @@ import type {
 } from './types';
 import {
   COLLECTIONS,
+  NO_END_DATE,
   noHitSearchConfiguration,
   noHitSearchRuleName,
   PAGE_TYPES,
@@ -298,7 +299,10 @@ async function _coordinateCollectionReset(
   await _deleteCollection(collection.name);
   if (opts?.recreate || opts?.updateSchema) await _createCollection(collection);
   if (opts?.updateSchema && existingDocs)
-    await _addDocsToCollection(collection.name, existingDocs);
+    await _addDocsToCollection(
+      collection.name,
+      _fillMissingEndDates(collection.name, existingDocs),
+    );
 
   logger.info(`Collection ${collection.name} deleted successfully`);
 }
@@ -374,6 +378,25 @@ function _runAsyncTask(taskName: string, task: () => Promise<void>) {
     });
 
   return true;
+}
+
+/**
+ * `end_date` is required, so page docs exported before the field existed
+ * would be rejected on re-import. Give them the "never ends" value so they stay
+ * searchable. Run an import-pages afterwards to set the real end dates.
+ */
+function _fillMissingEndDates(collectionName: string, docs: string) {
+  if (collectionName !== TYPESENSE_COLLECTIONS.PAGES) return docs;
+
+  return docs
+    .split('\n')
+    .filter(Boolean)
+    .map((line) => {
+      const doc = JSON.parse(line);
+      doc.end_date ??= NO_END_DATE;
+      return JSON.stringify(doc);
+    })
+    .join('\n');
 }
 
 function _deleteCollection(name: string) {

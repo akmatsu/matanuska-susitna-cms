@@ -11,6 +11,7 @@ export type TypeSensePageDocument = {
   body?: string;
   action_label?: string;
   published_at?: number;
+  end_date: number;
   tags?: string[];
   url?: string;
   districts?: string[];
@@ -23,6 +24,15 @@ export type TypeSensePageDocument = {
 export const TYPESENSE_COLLECTIONS = {
   PAGES: 'pages',
 };
+
+/**
+ * `end_date` value (Unix seconds) for docs that have no end date.
+ * TypeSense can't filter on "field is missing", so every doc needs an end date.
+ * This far-future value means "never ends", so `end_date:>now` filters keep these docs.
+ */
+export const NO_END_DATE = Math.floor(
+  new Date('9999-12-31T23:59:59Z').getTime() / 1000,
+);
 
 // Keep non-sensitive NL model settings in code.
 // Keep only secret credentials in env variables.
@@ -61,6 +71,7 @@ export const COLLECTIONS: CollectionCreateSchema[] = [
       { name: 'body', type: 'string', optional: true },
       { name: 'action_label', type: 'string', optional: true },
       { name: 'published_at', type: 'int64', optional: true, sort: true },
+      { name: 'end_date', type: 'int64' },
       { name: 'tags', type: 'string[]', optional: true, facet: true },
       { name: 'url', type: 'string', optional: true },
       { name: 'districts', type: 'string[]', optional: true, facet: true },
@@ -169,6 +180,9 @@ export function toSearchableObj(
     id: `${item.id}${appendId ?? ''}`,
     slug: item.slug || appendId?.replace(/^-/, ''),
     title: item.title,
+    end_date: item.endDate
+      ? Math.floor(new Date(item.endDate).getTime() / 1000)
+      : NO_END_DATE,
   };
 
   const bodyParts: string[] = [];
