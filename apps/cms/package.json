@@ -20,6 +20,7 @@
     "migration:status": "keystone prisma migrate status",
     "start:publish-worker": "tsx ./src/redis/publish/worker.ts",
     "start:process-page-views-worker": "tsx ./src/redis/processPageViews/worker.ts",
+    "start:unpublish-expired-worker": "tsx ./src/redis/unpublishExpired/worker.ts",
     "db:seed": "tsx ./seed-data.ts",
     "codegen": "pnpm exec graphql-codegen --config ./codegen.ts",
     "codegen:watch": "pnpm exec graphql-codegen --config ./codegen.ts --watch",

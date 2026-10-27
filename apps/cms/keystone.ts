@@ -10,6 +10,7 @@ import {
   connectRedis,
   getPublishQueueEvents,
   scheduleProcessPageViewsJob,
+  scheduleUnpublishExpiredJob,
 } from './src/redis';
 import { mergeSchemas } from '@graphql-tools/schema';
 import { KeystoneContext } from '@keystone-6/core/types';
@@ -33,6 +34,7 @@ export default config<TypeInfo<Session>>({
       await connectRedis();
       getPublishQueueEvents();
       await scheduleProcessPageViewsJob();
+      await scheduleUnpublishExpiredJob();
     },
   },
 
