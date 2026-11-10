@@ -23,8 +23,9 @@ import { markdownToTipTapJson } from '../src/utils/toTipTap/markdownToTipTapJson
  *   new versions, no TypeSense updates, and no change to publish state.
  * - It keeps each row's existing `updatedAt`, because the page content did
  *   not really change.
- * - It only writes a row if `content` is still null at write time, so it is
- *   safe to run more than once and will not overwrite an editor's save.
+ * - It only writes a row if `content`, `body`, and `updatedAt` are unchanged
+ *   since it was read. So it is safe to run more than once, and it skips any
+ *   row an editor saves while the script is running.
  *
  * Usage:
  *   npx tsx scripts/backfillServiceContent.ts            # dry run, no writes
@@ -63,10 +64,18 @@ async function main() {
         continue;
       }
 
-      // Re-check that content is still null so we never overwrite a save
-      // that happened while this script was running.
+      // Only write if the row is exactly as we read it. Checking `content`
+      // alone is not enough: if an editor clears `body`, the save hook
+      // skips empty bodies and leaves `content` null, so we would write
+      // the removed text back. Matching `body` and `updatedAt` too means
+      // any save made while this script runs causes the row to be skipped.
       const res = await prisma.service.updateMany({
-        where: { id: row.id, content: { equals: Prisma.DbNull } },
+        where: {
+          id: row.id,
+          content: { equals: Prisma.DbNull },
+          body: row.body,
+          updatedAt: row.updatedAt,
+        },
         data: { content, updatedAt: row.updatedAt },
       });
 
@@ -86,7 +95,7 @@ async function main() {
   );
   console.log(`  Matching rows:   ${rows.length}`);
   console.log(`  ${execute ? 'Updated' : 'Would update'}:    ${updated}`);
-  if (execute) console.log(`  Skipped (content set meanwhile): ${skipped}`);
+  if (execute) console.log(`  Skipped (row changed meanwhile): ${skipped}`);
   console.log(`  Failed:          ${failed.length}`);
 
   for (const f of failed) {
