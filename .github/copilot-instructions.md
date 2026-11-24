@@ -1,3 +1,10 @@
+**Database Schema Freeze**
+
+- The database schema in this repo is frozen. This repo is being sunset, and control of the schema has been handed off to the new CMS system. Schema changes must happen there, not here.
+- Do not add, remove, or rename lists or stored (non-virtual) fields, change field config that affects the database (type, `isRequired`/`isNullable`, `isIndexed`, `isUnique`, `defaultValue`, relationships), hand-edit [apps/cms/schema.prisma](apps/cms/schema.prisma), or create, edit, or delete migrations in [apps/cms/migrations](apps/cms/migrations).
+- Still allowed: changes that leave the schema alone (hooks, access control, resolvers, controllers, workers, admin UI, virtual fields, UI-only field options) and applying existing migrations with `pnpm run cms:migrate`.
+- `keystone dev` regenerates `schema.prisma` from the models, so after your change `git diff apps/cms/schema.prisma` must be empty. If a task needs a schema change, stop and say so instead of working around the freeze.
+
 **Architecture**
 
 - `apps/cms` is a standalone Keystone 6 app; [apps/cms/keystone.ts](apps/cms/keystone.ts) wires DB/Redis, injects custom Express routes, and extends GraphQL with helpers like `getPage`, `internalSearch`, and `topPages`.
@@ -42,7 +49,7 @@
 
 **GraphQL & Data**
 
-- Prisma schema is at [apps/cms/schema.prisma](apps/cms/schema.prisma) with migrations under [apps/cms/migrations](apps/cms/migrations); run `pnpm run cms:migrate` (deploy) or `pnpm --filter=cms run migrations` (dev) whenever schema changes.
+- Prisma schema is at [apps/cms/schema.prisma](apps/cms/schema.prisma) with migrations under [apps/cms/migrations](apps/cms/migrations). Both are frozen (see **Database Schema Freeze**); only run `pnpm run cms:migrate` to apply the existing migrations.
 - GraphQL client artifacts are generated via [apps/cms/codegen.ts](apps/cms/codegen.ts); after editing queries in `src` or `admin`, run `pnpm --filter=cms run codegen` to refresh types in [apps/cms/src/graphql](apps/cms/src/graphql).
 
 **Developer Workflow**
