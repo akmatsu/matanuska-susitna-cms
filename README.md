@@ -2,6 +2,15 @@
 
 A modern headless CMS built with [Keystone.js](https://keystonejs.com/), featuring GraphQL API, TypeSense search integration, and Azure AD authentication.
 
+> [!IMPORTANT]
+> **The database schema is frozen.** This repo is being sunset. The new CMS system now controls the database schema, so schema changes must be made there, not here.
+>
+> Do not add, remove, or rename models or stored fields. Do not change field settings that affect the database, such as the type, required/nullable, indexes, defaults, or relationships. Do not edit `apps/cms/schema.prisma` or create, edit, or delete migrations.
+>
+> You can still make changes that leave the schema alone, like bug fixes in hooks, access control, or the admin UI. Running `pnpm run cms:migrate` to apply the existing migrations is also fine.
+>
+> To check your change, run `pnpm run cms:dev` (it rebuilds `schema.prisma` from the models), then run `git diff apps/cms/schema.prisma`. It should show no changes.
+
 ## Features
 
 - 🚀 Headless CMS powered by Keystone.js
@@ -115,7 +124,7 @@ Review root [package.json](./package.json).
 ## Contributing
 
 1. Create a new branch for your feature
-2. Make your changes
+2. Make your changes. Do not change the database schema (see the [schema freeze note](#cms-content-management-system) at the top).
 3. [Submit a pull request in GitHub](https://github.com/akmatsu/matanuska-susitna-cms/pulls)
 
 ## License
