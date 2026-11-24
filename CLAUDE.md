@@ -6,6 +6,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **headless CMS built with Keystone.js**, serving as the content management system for the Matanuska-Susitna Borough. It exposes a GraphQL API for flexible content delivery and features full-text search via TypeSense, draft/publish workflows, role-based access control, and integrations with Azure AD (Entra ID) for authentication, S3 for media storage, and GovDelivery for notifications.
 
+## Database Schema Freeze
+
+**The database schema in this repo is frozen.** This repo is being sunset. Control of the database schema has been handed off to the new CMS system, so schema changes must happen there, not here.
+
+Do not make any change that alters the database schema. This includes:
+
+- Adding, removing, or renaming Keystone lists (models).
+- Adding, removing, or renaming stored (non-virtual) fields.
+- Changing field config that affects the database, such as the field type, `isRequired`/`isNullable`, `isIndexed`, `isUnique`, `defaultValue`, or relationships.
+- Hand-editing `apps/cms/schema.prisma`.
+- Creating, editing, or deleting migrations (`pnpm migrations:create`, `pnpm --filter=cms run migrations`, or files in `apps/cms/migrations/`).
+
+Still allowed:
+
+- Changes that leave the schema alone: bug fixes in hooks, access control, resolvers, controllers, workers, and admin UI, plus virtual fields and UI-only field options.
+- Applying the existing migrations with `pnpm cms:migrate` (for local setup and deploys).
+
+A quick check: `keystone dev` regenerates `apps/cms/schema.prisma` from the models. After your change, `git diff apps/cms/schema.prisma` must be empty.
+
+If a task needs a schema change, stop and tell the user. Do not work around the freeze.
+
 ## Technology Stack
 
 - **Framework**: Keystone.js 6
@@ -93,7 +114,7 @@ pnpm cms:start
 # Database migrations
 pnpm cms:migrate
 
-# Create a new migration (creates empty migration file)
+# Create a new migration. Do NOT use: the schema is frozen (see Database Schema Freeze)
 pnpm migrations:create
 
 # Reset database (destructive—drops and reapplies all migrations)
@@ -209,6 +230,8 @@ Shared field definitions live in `/src/app/fieldUtils.ts`: slugs, hero images, c
 
 ### Adding a New Model
 
+> **Frozen.** Adding a model changes the database schema. Do not do this in this repo; see [Database Schema Freeze](#database-schema-freeze). The steps below are kept for reference only.
+
 1. Create a new file in `/src/app/models/` (e.g., `myModel.ts`)
 2. For page-like content, derive from `basePage()` (via `DraftAndVersionsFactory`) to inherit draft/version trio, publish hooks, and RBAC
 3. For non-page models, define a Keystone `list()` manually with access control via role helpers in `/src/app/access/`
@@ -270,8 +293,7 @@ The admin UI at `/admin/pages/typesense.tsx` hits these endpoints; treat endpoin
 ### Migrations
 - Stored in `/migrations/` with timestamps
 - Apply pending migrations: `pnpm cms:migrate`
-- Create new migration: `pnpm migrations:create` → edit `.prisma/migrations/[timestamp]_[name]/migration.sql` → `pnpm cms:migrate`
-- Do NOT manually edit applied migrations; create new ones instead
+- **No new migrations.** The schema is frozen (see [Database Schema Freeze](#database-schema-freeze)). Do not create, edit, or delete migrations.
 
 ### Deployment Flow (GitHub Actions)
 1. Builds the app
